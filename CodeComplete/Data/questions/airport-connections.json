@@ -1,0 +1,1494 @@
+{
+  "Summary": {
+    "Name": "Airport Connections",
+    "Category": "Graphs",
+    "Difficulty": 5,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-05-04T00:00:00Z",
+      "number": 110,
+      "timeOne": 0,
+      "timeTwo": 1600,
+      "url": "https://player.vimeo.com/video/334183153"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Start by creating a graph out of the inputs. Each airport should be a vertex in the graph, and each route should be an edge. The graph should be directed with potential cycles, since it's possible for there to be round-trip flights between airports or for some series of flights to eventually lead back to an arbitrary starting point. How can this graph be useful?\nUsing the graph mentioned in Hint #1, try getting all of the airports that are unreachable from the starting airport. This can be done using depth-first search. Is the number of unreachable airports the answer? If not, what extra information do you need to get to the answer?\nA single unreachable airport could have connections to a bunch of other unreachable airports, potentially making it more \"valuable\", since adding one connection to it would make many other airports reachable.\nCalculate the number of unreachable airports that are reachable from each unreachable airport (this can be done using depth-first search), sort them in descending order according to this number, and count the minimum number of connections that need to be added by iterating through this sorted list of unreachable airports, removing every unreachable airport's unreachable connections as you go through the list.\n",
+  "SpaceTime": "O(a * (a + r) + a + r + alog(a)) time | O(a + r) space - where a is the number of airports and r is the number of routes\n",
+  "PromptHTML": "<p>\n  <i\n    >For the purpose of this question, the phrases \"airport route\" and \"airport\n    connection\" are used interchangeably.</i\n  >\n</p>\n<p>\n  You're given a list of airports (three-letter codes like <span>\"JFK\"</span>),\n  a list of routes (one-way flights from one airport to another like\n  <span>[\"JFK\", \"SFO\"]</span>), and a starting airport.\n</p>\n<p>\n  Write a function that returns the minimum number of airport connections\n  (one-way flights) that need to be added in order for someone to be able to\n  reach any airport in the list, starting at the starting airport.\n</p>\n<p>\n  Note that routes only allow you to fly in one direction; for instance,\n  the route\n  <span>[\"JFK\", \"SFO\"]</span> only allows you to fly from <span>\"JFK\"</span> to\n  <span>\"SFO\"</span>.\n</p>\n<p>\n  Also note that the connections don't have to be direct; it's okay if an\n  airport can only be reached from the starting airport by stopping at other\n  airports first.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">airports</span> = [\n  \"BGI\", \"CDG\", \"DEL\", \"DOH\", \"DSM\", \"EWR\", \"EYW\", \"HND\", \"ICN\",\n  \"JFK\", \"LGA\", \"LHR\", \"ORD\", \"SAN\", \"SFO\", \"SIN\", \"TLV\", \"BUD\",\n]\n<span class=\"CodeEditor-promptParameter\">routes</span> = [\n  [\"DSM\", \"ORD\"],\n  [\"ORD\", \"BGI\"],\n  [\"BGI\", \"LGA\"],\n  [\"SIN\", \"CDG\"],\n  [\"CDG\", \"SIN\"],\n  [\"CDG\", \"BUD\"],\n  [\"DEL\", \"DOH\"],\n  [\"DEL\", \"CDG\"],\n  [\"TLV\", \"DEL\"],\n  [\"EWR\", \"HND\"],\n  [\"HND\", \"ICN\"],\n  [\"HND\", \"JFK\"],\n  [\"ICN\", \"JFK\"],\n  [\"JFK\", \"LGA\"],\n  [\"EYW\", \"LHR\"],\n  [\"LHR\", \"SFO\"],\n  [\"SFO\", \"SAN\"],\n  [\"SFO\", \"DSM\"],\n  [\"SAN\", \"EYW\"],\n]\n<span class=\"CodeEditor-promptParameter\">startingAirport</span> = \"LGA\"\n</pre>\n<h3>Sample Output</h3>\n<pre>\n3 <span class=\"CodeEditor-promptComment\">// [\"LGA\", \"TLV\"], [\"LGA\", \"SFO\"], and [\"LGA\", \"EWR\"]</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "airports",
+      "Example": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "Schema": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array",
+        "uniqueItems": true
+      }
+    },
+    {
+      "Name": "routes",
+      "Example": [
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "ORD",
+          "BGI"
+        ],
+        [
+          "BGI",
+          "LGA"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "CDG",
+          "SIN"
+        ],
+        [
+          "CDG",
+          "BUD"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DEL",
+          "CDG"
+        ],
+        [
+          "TLV",
+          "DEL"
+        ],
+        [
+          "EWR",
+          "HND"
+        ],
+        [
+          "HND",
+          "ICN"
+        ],
+        [
+          "HND",
+          "JFK"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "EYW",
+          "LHR"
+        ],
+        [
+          "LHR",
+          "SFO"
+        ],
+        [
+          "SFO",
+          "SAN"
+        ],
+        [
+          "SFO",
+          "DSM"
+        ],
+        [
+          "SAN",
+          "EYW"
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "startingAirport",
+      "Example": "LGA",
+      "Schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint airportConnections(vector<string> airports, vector<vector<string>> routes,\n                       string startingAirport) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "vector<string> AIRPORTS = {\n    \"BGI\", \"CDG\", \"DEL\", \"DOH\", \"DSM\", \"EWR\", \"EYW\", \"HND\", \"ICN\",\n    \"JFK\", \"LGA\", \"LHR\", \"ORD\", \"SAN\", \"SFO\", \"SIN\", \"TLV\", \"BUD\",\n};\n\nstring STARTING_AIRPORT = \"LGA\";\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<string>> routes = {};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 17);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"LGA\", \"ORD\"}, {\"LGA\", \"EYW\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 14);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<vector<string>> routes = {{\"LGA\", \"DSM\"}, {\"DSM\", \"ORD\"},\n                                       {\"LGA\", \"EYW\"}, {\"EYW\", \"JFK\"},\n                                       {\"EYW\", \"EWR\"}, {\"JFK\", \"ICN\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 11);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"DSM\", \"ORD\"}, {\"LGA\", \"EYW\"}, {\"EYW\", \"JFK\"},\n          {\"EYW\", \"EWR\"}, {\"JFK\", \"ICN\"}, {\"LGA\", \"ICN\"}, {\"ICN\", \"ORD\"},\n          {\"ICN\", \"EWR\"}, {\"JFK\", \"DSM\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 11);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"DSM\", \"ORD\"}, {\"LGA\", \"EYW\"}, {\"EYW\", \"JFK\"},\n          {\"EYW\", \"EWR\"}, {\"JFK\", \"ICN\"}, {\"LGA\", \"ICN\"}, {\"ICN\", \"ORD\"},\n          {\"ICN\", \"EWR\"}, {\"JFK\", \"DSM\"}, {\"ICN\", \"JFK\"}, {\"ORD\", \"DSM\"},\n          {\"DSM\", \"LGA\"}, {\"JFK\", \"LGA\"}, {\"JFK\", \"HND\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 10);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"DSM\", \"ORD\"}, {\"LGA\", \"EYW\"}, {\"EYW\", \"JFK\"},\n          {\"EYW\", \"EWR\"}, {\"JFK\", \"ICN\"}, {\"LGA\", \"ICN\"}, {\"ICN\", \"ORD\"},\n          {\"ICN\", \"EWR\"}, {\"JFK\", \"DSM\"}, {\"ICN\", \"JFK\"}, {\"ORD\", \"DSM\"},\n          {\"DSM\", \"LGA\"}, {\"JFK\", \"LGA\"}, {\"JFK\", \"HND\"}, {\"SFO\", \"SIN\"},\n          {\"SFO\", \"CDG\"}, {\"SFO\", \"LHR\"}, {\"LHR\", \"DEL\"}, {\"DEL\", \"BGI\"},\n          {\"DEL\", \"DOH\"}, {\"DOH\", \"SAN\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"DSM\", \"ORD\"}, {\"EYW\", \"JFK\"}, {\"EYW\", \"EWR\"},\n          {\"JFK\", \"ICN\"}, {\"LGA\", \"ICN\"}, {\"ICN\", \"ORD\"}, {\"ICN\", \"EWR\"},\n          {\"JFK\", \"DSM\"}, {\"ICN\", \"JFK\"}, {\"ORD\", \"DSM\"}, {\"DSM\", \"LGA\"},\n          {\"JFK\", \"LGA\"}, {\"JFK\", \"HND\"}, {\"SFO\", \"SIN\"}, {\"SFO\", \"CDG\"},\n          {\"SFO\", \"LHR\"}, {\"LHR\", \"DEL\"}, {\"DEL\", \"BGI\"}, {\"DEL\", \"DOH\"},\n          {\"DOH\", \"SAN\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 4);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"SIN\", \"BGI\"}, {\"SIN\", \"CDG\"}, {\"SIN\", \"DEL\"},\n          {\"SIN\", \"DOH\"}, {\"SIN\", \"DSM\"}, {\"SIN\", \"EWR\"}, {\"SIN\", \"EYW\"},\n          {\"SIN\", \"HND\"}, {\"SIN\", \"ICN\"}, {\"SIN\", \"JFK\"}, {\"SIN\", \"LHR\"},\n          {\"SIN\", \"ORD\"}, {\"SFO\", \"SIN\"}, {\"SFO\", \"SAN\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"DSM\", \"ORD\"}, {\"SIN\", \"BGI\"}, {\"SIN\", \"CDG\"},\n          {\"CDG\", \"DEL\"}, {\"DEL\", \"DOH\"}, {\"DEL\", \"CDG\"}, {\"DEL\", \"EWR\"},\n          {\"HND\", \"ICN\"}, {\"ICN\", \"JFK\"}, {\"JFK\", \"LGA\"}, {\"JFK\", \"SFO\"},\n          {\"EYW\", \"LHR\"}, {\"SFO\", \"ORD\"}, {\"SFO\", \"LGA\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"DSM\", \"ORD\"}, {\"SIN\", \"BGI\"}, {\"SIN\", \"CDG\"},\n          {\"CDG\", \"DEL\"}, {\"DEL\", \"DOH\"}, {\"DEL\", \"CDG\"}, {\"DEL\", \"EWR\"},\n          {\"HND\", \"ICN\"}, {\"ICN\", \"JFK\"}, {\"JFK\", \"LGA\"}, {\"JFK\", \"SFO\"},\n          {\"EYW\", \"LHR\"}, {\"SFO\", \"ORD\"}, {\"SFO\", \"LGA\"}, {\"SFO\", \"SIN\"},\n          {\"CDG\", \"EYW\"}, {\"LGA\", \"SAN\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<vector<string>> routes = {\n          {\"LGA\", \"DSM\"}, {\"DSM\", \"ORD\"}, {\"SIN\", \"BGI\"}, {\"SIN\", \"CDG\"},\n          {\"CDG\", \"DEL\"}, {\"DEL\", \"DOH\"}, {\"DEL\", \"CDG\"}, {\"DEL\", \"EWR\"},\n          {\"HND\", \"ICN\"}, {\"ICN\", \"JFK\"}, {\"JFK\", \"LGA\"}, {\"JFK\", \"SFO\"},\n          {\"EYW\", \"LHR\"}, {\"SFO\", \"ORD\"}, {\"SFO\", \"LGA\"}, {\"SFO\", \"SIN\"},\n          {\"CDG\", \"EYW\"}, {\"ORD\", \"HND\"}, {\"HND\", \"SAN\"}, {\"LGA\", \"TLV\"},\n          {\"LGA\", \"BUD\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 0);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      vector<vector<string>> routes = {\n          {\"DSM\", \"ORD\"}, {\"ORD\", \"BGI\"}, {\"BGI\", \"LGA\"}, {\"SIN\", \"CDG\"},\n          {\"CDG\", \"DEL\"}, {\"DEL\", \"DOH\"}, {\"DOH\", \"SIN\"}, {\"EWR\", \"HND\"},\n          {\"HND\", \"ICN\"}, {\"ICN\", \"JFK\"}, {\"JFK\", \"LGA\"}, {\"EYW\", \"LHR\"},\n          {\"LHR\", \"SFO\"}, {\"SFO\", \"SAN\"}, {\"SAN\", \"EYW\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6);\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      vector<vector<string>> routes = {\n          {\"DSM\", \"ORD\"}, {\"ORD\", \"BGI\"}, {\"BGI\", \"LGA\"}, {\"SIN\", \"CDG\"},\n          {\"CDG\", \"DEL\"}, {\"DEL\", \"DOH\"}, {\"DOH\", \"SIN\"}, {\"EWR\", \"HND\"},\n          {\"HND\", \"ICN\"}, {\"ICN\", \"JFK\"}, {\"JFK\", \"LGA\"}, {\"EYW\", \"LHR\"},\n          {\"LHR\", \"SFO\"}, {\"SFO\", \"SAN\"}, {\"SFO\", \"ORD\"}, {\"SAN\", \"EYW\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6);\n    });\n\n    RunTest(\"Test Case 14\", []() {\n      vector<vector<string>> routes = {\n          {\"DSM\", \"ORD\"}, {\"ORD\", \"BGI\"}, {\"BGI\", \"LGA\"}, {\"SIN\", \"CDG\"},\n          {\"CDG\", \"DEL\"}, {\"DEL\", \"DOH\"}, {\"DOH\", \"SIN\"}, {\"EWR\", \"HND\"},\n          {\"HND\", \"ICN\"}, {\"ICN\", \"JFK\"}, {\"JFK\", \"LGA\"}, {\"EYW\", \"LHR\"},\n          {\"LHR\", \"SFO\"}, {\"SFO\", \"SAN\"}, {\"SFO\", \"DSM\"}, {\"SAN\", \"EYW\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 5);\n    });\n\n    RunTest(\"Test Case 15\", []() {\n      vector<vector<string>> routes = {\n          {\"DSM\", \"ORD\"}, {\"ORD\", \"BGI\"}, {\"BGI\", \"LGA\"}, {\"SIN\", \"CDG\"},\n          {\"CDG\", \"SIN\"}, {\"CDG\", \"BUD\"}, {\"DEL\", \"DOH\"}, {\"DEL\", \"CDG\"},\n          {\"TLV\", \"DEL\"}, {\"EWR\", \"HND\"}, {\"HND\", \"ICN\"}, {\"HND\", \"JFK\"},\n          {\"ICN\", \"JFK\"}, {\"JFK\", \"LGA\"}, {\"EYW\", \"LHR\"}, {\"LHR\", \"SFO\"},\n          {\"SFO\", \"SAN\"}, {\"SFO\", \"DSM\"}, {\"SAN\", \"EYW\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nvector<string> AIRPORTS = {\n    \"BGI\", \"CDG\", \"DEL\", \"DOH\", \"DSM\", \"EWR\", \"EYW\", \"HND\", \"ICN\",\n    \"JFK\", \"LGA\", \"LHR\", \"ORD\", \"SAN\", \"SFO\", \"SIN\", \"TLV\", \"BUD\",\n};\n\nstring STARTING_AIRPORT = \"LGA\";\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<string>> routes = {\n          {\"DSM\", \"ORD\"}, {\"ORD\", \"BGI\"}, {\"BGI\", \"LGA\"}, {\"SIN\", \"CDG\"},\n          {\"CDG\", \"SIN\"}, {\"CDG\", \"BUD\"}, {\"DEL\", \"DOH\"}, {\"DEL\", \"CDG\"},\n          {\"TLV\", \"DEL\"}, {\"EWR\", \"HND\"}, {\"HND\", \"ICN\"}, {\"HND\", \"JFK\"},\n          {\"ICN\", \"JFK\"}, {\"JFK\", \"LGA\"}, {\"EYW\", \"LHR\"}, {\"LHR\", \"SFO\"},\n          {\"SFO\", \"SAN\"}, {\"SFO\", \"DSM\"}, {\"SAN\", \"EYW\"}};\n      assert(airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\n#include <algorithm>\nusing namespace std;\n\nclass AirportNode {\npublic:\n  string airport;\n  vector<string> connections;\n  bool isReachable;\n  vector<string> unreachableConnections;\n\n  AirportNode(string airport) {\n    this->airport = airport;\n    connections = {};\n    isReachable = true;\n    unreachableConnections = {};\n  }\n};\n\nunordered_map<string, AirportNode *>\ncreateAirportGraph(vector<string> airports, vector<vector<string>> routes);\nvector<AirportNode *>\ngetUnreachableAirportNodes(unordered_map<string, AirportNode *> airportGraph,\n                           vector<string> airports, string startingAirport);\nvoid depthFirstTraverseAirports(\n    unordered_map<string, AirportNode *> airportGraph, string airport,\n    unordered_map<string, bool> *visitedAirports);\nvoid markUnreachableConnections(\n    unordered_map<string, AirportNode *> airportGraph,\n    vector<AirportNode *> unreachableAirportNodes);\nvoid depthFirstAddUnreachableConnections(\n    unordered_map<string, AirportNode *> airportGraph, string airport,\n    vector<string> *unreachableConnections,\n    unordered_map<string, bool> *visitedAirports);\nint getMinNumberOfNewConnections(\n    unordered_map<string, AirportNode *> airportGraph,\n    vector<AirportNode *> unreachableAirportNodes);\n\n// O(a * (a + r) + a + r + alog(a)) time | O(a + r) space - where a is the\n// number of airports and r is the number of routes\nint airportConnections(vector<string> airports, vector<vector<string>> routes,\n                       string startingAirport) {\n  unordered_map<string, AirportNode *> airportGraph =\n      createAirportGraph(airports, routes);\n  vector<AirportNode *> unreachableAirportNodes =\n      getUnreachableAirportNodes(airportGraph, airports, startingAirport);\n  markUnreachableConnections(airportGraph, unreachableAirportNodes);\n  return getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes);\n}\n\n// O(a + r) time | O(a + r) space\nunordered_map<string, AirportNode *>\ncreateAirportGraph(vector<string> airports, vector<vector<string>> routes) {\n  unordered_map<string, AirportNode *> airportGraph = {};\n  for (string airport : airports) {\n    airportGraph[airport] = new AirportNode(airport);\n  }\n  for (vector<string> route : routes) {\n    string airport = route[0];\n    string connection = route[1];\n    airportGraph[airport]->connections.push_back(connection);\n  }\n  return airportGraph;\n}\n\n// O(a + r) time | O(a) space\nvector<AirportNode *>\ngetUnreachableAirportNodes(unordered_map<string, AirportNode *> airportGraph,\n                           vector<string> airports, string startingAirport) {\n  unordered_map<string, bool> visitedAirports = {};\n  depthFirstTraverseAirports(airportGraph, startingAirport, &visitedAirports);\n\n  vector<AirportNode *> unreachableAirportNodes = {};\n  for (string airport : airports) {\n    if (visitedAirports.find(airport) != visitedAirports.end())\n      continue;\n    AirportNode *airportNode = airportGraph[airport];\n    airportNode->isReachable = false;\n    unreachableAirportNodes.push_back(airportNode);\n  }\n  return unreachableAirportNodes;\n}\n\nvoid depthFirstTraverseAirports(\n    unordered_map<string, AirportNode *> airportGraph, string airport,\n    unordered_map<string, bool> *visitedAirports) {\n  if (visitedAirports->find(airport) != visitedAirports->end())\n    return;\n  visitedAirports->insert({airport, true});\n  vector<string> connections = airportGraph[airport]->connections;\n  for (string connection : connections) {\n    depthFirstTraverseAirports(airportGraph, connection, visitedAirports);\n  }\n}\n\n// O(a * (a + r)) time | O(a) space\nvoid markUnreachableConnections(\n    unordered_map<string, AirportNode *> airportGraph,\n    vector<AirportNode *> unreachableAirportNodes) {\n  for (AirportNode *airportNode : unreachableAirportNodes) {\n    string airport = airportNode->airport;\n    vector<string> unreachableConnections = {};\n    unordered_map<string, bool> visitedAirports = {};\n    depthFirstAddUnreachableConnections(\n        airportGraph, airport, &unreachableConnections, &visitedAirports);\n    airportNode->unreachableConnections = unreachableConnections;\n  }\n}\n\nvoid depthFirstAddUnreachableConnections(\n    unordered_map<string, AirportNode *> airportGraph, string airport,\n    vector<string> *unreachableConnections,\n    unordered_map<string, bool> *visitedAirports) {\n  if (airportGraph[airport]->isReachable)\n    return;\n  if (visitedAirports->find(airport) != visitedAirports->end())\n    return;\n  visitedAirports->insert({airport, true});\n  unreachableConnections->push_back(airport);\n  vector<string> connections = airportGraph[airport]->connections;\n  for (string connection : connections) {\n    depthFirstAddUnreachableConnections(\n        airportGraph, connection, unreachableConnections, visitedAirports);\n  }\n}\n\n// O(alog(a) + a + r) time | O(1) space\nint getMinNumberOfNewConnections(\n    unordered_map<string, AirportNode *> airportGraph,\n    vector<AirportNode *> unreachableAirportNodes) {\n  sort(unreachableAirportNodes.begin(), unreachableAirportNodes.end(),\n       [](AirportNode *a1, AirportNode *a2) -> bool {\n         return a2->unreachableConnections.size() <\n                a1->unreachableConnections.size();\n       });\n\n  int numberOfNewConnections = 0;\n  for (AirportNode *airportNode : unreachableAirportNodes) {\n    if (airportNode->isReachable)\n      continue;\n    numberOfNewConnections++;\n    for (string connection : airportNode->unreachableConnections) {\n      airportGraph[connection]->isReachable = true;\n    }\n  }\n  return numberOfNewConnections;\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static int AirportConnections(\n\t\tList<string> airports,\n\t\tList<List<string> > routes,\n\t\tstring startingAirport\n\t\t) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\n\tList<string> AIRPORTS = new List<string>(){\n\t\t\"BGI\",\n\t\t\"CDG\",\n\t\t\"DEL\",\n\t\t\"DOH\",\n\t\t\"DSM\",\n\t\t\"EWR\",\n\t\t\"EYW\",\n\t\t\"HND\",\n\t\t\"ICN\",\n\t\t\"JFK\",\n\t\t\"LGA\",\n\t\t\"LHR\",\n\t\t\"ORD\",\n\t\t\"SAN\",\n\t\t\"SFO\",\n\t\t\"SIN\",\n\t\t\"TLV\",\n\t\t\"BUD\"\n\t};\n\n\tstring STARTING_AIRPORT = \"LGA\";\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 17);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"EYW\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 14);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"EYW\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"ICN\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 11);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"EYW\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"DSM\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 11);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"EYW\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"HND\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 10);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"EYW\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LHR\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DOH\", \"SAN\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LHR\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DOH\", \"SAN\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"EYW\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SAN\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"SFO\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"LGA\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"SFO\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"EYW\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"SAN\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"EWR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"SFO\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"EYW\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"SAN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"TLV\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LGA\", \"BUD\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"BGI\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DOH\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EWR\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LHR\", \"SFO\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SAN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SAN\", \"EYW\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"BGI\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DOH\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EWR\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LHR\", \"SFO\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SAN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SAN\", \"EYW\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"BGI\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DOH\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EWR\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LHR\", \"SFO\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SAN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SAN\", \"EYW\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 5);\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"BGI\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"BUD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"TLV\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EWR\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LHR\", \"SFO\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SAN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SAN\", \"EYW\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 3);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\n\tList<string> AIRPORTS = new List<string>(){\n\t\t\"BGI\",\n\t\t\"CDG\",\n\t\t\"DEL\",\n\t\t\"DOH\",\n\t\t\"DSM\",\n\t\t\"EWR\",\n\t\t\"EYW\",\n\t\t\"HND\",\n\t\t\"ICN\",\n\t\t\"JFK\",\n\t\t\"LGA\",\n\t\t\"LHR\",\n\t\t\"ORD\",\n\t\t\"SAN\",\n\t\t\"SFO\",\n\t\t\"SIN\",\n\t\t\"TLV\",\n\t\t\"BUD\"\n\t};\n\n\tstring STARTING_AIRPORT = \"LGA\";\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<List<string> > routes = new List<List<string> >();\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DSM\", \"ORD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ORD\", \"BGI\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"BGI\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SIN\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"SIN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"CDG\", \"BUD\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"DOH\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"DEL\", \"CDG\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"TLV\", \"DEL\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EWR\", \"HND\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"ICN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"HND\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"ICN\", \"JFK\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"JFK\", \"LGA\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"EYW\", \"LHR\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"LHR\", \"SFO\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"SAN\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SFO\", \"DSM\"\n\t\t});\n\t\troutes.Add(new List<string>(){\n\t\t\t\"SAN\", \"EYW\"\n\t\t});\n\t\tUtils.AssertTrue(Program.AirportConnections(AIRPORTS, routes,\n\t\t  STARTING_AIRPORT) == 3);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\n\t// O(a * (a + r) + a + r + alog(a)) time | O(a + r) space - where a is the number of airports and r is the number of routes\n\tpublic static int AirportConnections(\n\t\tList<string> airports,\n\t\tList<List<string> > routes,\n\t\tstring startingAirport\n\t\t) {\n\t\tDictionary<string, AirportNode> airportGraph = createAirportGraph(airports, routes);\n\t\tList<AirportNode> unreachableAirportNodes = getUnreachableAirportNodes(airportGraph,\n\t\t    airports,\n\t\t    startingAirport);\n\t\tmarkUnreachableConnections(airportGraph, unreachableAirportNodes);\n\t\treturn getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes);\n\t}\n\n\t// O(a + r) time | O(a + r) space\n\tpublic static Dictionary<string, AirportNode> createAirportGraph(\n\t\tList<string> airports,\n\t\tList<List<string> > routes\n\t\t) {\n\t\tDictionary<string,\n\t\t  AirportNode> airportGraph = new Dictionary<string, AirportNode>();\n\t\tforeach (string airport in airports) {\n\t\t\tairportGraph.Add(airport, new AirportNode(airport));\n\t\t}\n\t\tforeach (List<string> route in routes) {\n\t\t\tstring airport = route[0];\n\t\t\tstring connection = route[1];\n\t\t\tairportGraph[airport].connections.Add(connection);\n\t\t}\n\t\treturn airportGraph;\n\t}\n\n\t// O(a + r) time | O(a) space\n\tpublic static List<AirportNode> getUnreachableAirportNodes(\n\t\tDictionary<string, AirportNode> airportGraph,\n\t\tList<string> airports,\n\t\tstring startingAirport\n\t\t) {\n\t\tHashSet<string> visitedAirports = new HashSet<string>();\n\t\tdepthFirstTraverseAirports(airportGraph, startingAirport, visitedAirports);\n\n\t\tList<AirportNode> unreachableAirportNodes = new List<AirportNode>();\n\t\tforeach (string airport in airports) {\n\t\t\tif (visitedAirports.Contains(airport)) continue;\n\t\t\tAirportNode airportNode = airportGraph[airport];\n\t\t\tairportNode.isReachable = false;\n\t\t\tunreachableAirportNodes.Add(airportNode);\n\t\t}\n\t\treturn unreachableAirportNodes;\n\t}\n\n\tpublic static void depthFirstTraverseAirports(\n\t\tDictionary<string, AirportNode> airportGraph,\n\t\tstring airport,\n\t\tHashSet<string> visitedAirports\n\t\t) {\n\t\tif (visitedAirports.Contains(airport)) return;\n\t\tvisitedAirports.Add(airport);\n\t\tList<string> connections = airportGraph[airport].connections;\n\t\tforeach (string connection in connections) {\n\t\t\tdepthFirstTraverseAirports(airportGraph, connection, visitedAirports);\n\t\t}\n\t}\n\n\t// O(a * (a + r)) time | O(a) space\n\tpublic static void markUnreachableConnections(\n\t\tDictionary<string, AirportNode> airportGraph,\n\t\tList<AirportNode> unreachableAirportNodes\n\t\t) {\n\t\tforeach (AirportNode airportNode in unreachableAirportNodes) {\n\t\t\tstring airport = airportNode.airport;\n\t\t\tList<string> unreachableConnections = new List<string>();\n\t\t\tHashSet<string> visitedAirports = new HashSet<string>();\n\t\t\tdepthFirstAddUnreachableConnections(airportGraph, airport,\n\t\t\t  unreachableConnections,\n\t\t\t  visitedAirports);\n\t\t\tairportNode.unreachableConnections = unreachableConnections;\n\t\t}\n\t}\n\n\tpublic static void depthFirstAddUnreachableConnections(\n\t\tDictionary<string, AirportNode> airportGraph,\n\t\tstring airport,\n\t\tList<string> unreachableConnections,\n\t\tHashSet<string> visitedAirports\n\t\t) {\n\t\tif (airportGraph[airport].isReachable) return;\n\t\tif (visitedAirports.Contains(airport)) return;\n\t\tvisitedAirports.Add(airport);\n\t\tunreachableConnections.Add(airport);\n\t\tList<string> connections = airportGraph[airport].connections;\n\t\tforeach (string connection in connections) {\n\t\t\tdepthFirstAddUnreachableConnections(airportGraph, connection,\n\t\t\t  unreachableConnections,\n\t\t\t  visitedAirports);\n\t\t}\n\t}\n\n\t// O(alog(a) + a + r) time | O(1) space\n\tpublic static int getMinNumberOfNewConnections(\n\t\tDictionary<string, AirportNode> airportGraph,\n\t\tList<AirportNode> unreachableAirportNodes\n\t\t) {\n\t\tunreachableAirportNodes.Sort((a1,\n\t\t  a2) => a2.unreachableConnections.Count -\n\t\t  a1.unreachableConnections.Count);\n\t\tint numberOfNewConnections = 0;\n\t\tforeach (AirportNode airportNode in unreachableAirportNodes) {\n\t\t\tif (airportNode.isReachable) continue;\n\t\t\tnumberOfNewConnections++;\n\t\t\tforeach (string connection in airportNode.unreachableConnections) {\n\t\t\t\tairportGraph[connection].isReachable = true;\n\t\t\t}\n\t\t}\n\t\treturn numberOfNewConnections;\n\t}\n\n\tpublic class AirportNode {\n\t\tpublic string airport;\n\t\tpublic List<string> connections;\n\t\tpublic bool isReachable;\n\t\tpublic List<string> unreachableConnections;\n\n\t\tpublic AirportNode(string airport) {\n\t\t\tthis.airport = airport;\n\t\t\tconnections = new List<string>();\n\t\t\tisReachable = true;\n\t\t\tunreachableConnections = new List<string>();\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc AirportConnections(airports []string, routes [][]string, startingAirport string) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nvar Airports = []string{\n\t\"BGI\",\n\t\"CDG\",\n\t\"DEL\",\n\t\"DOH\",\n\t\"DSM\",\n\t\"EWR\",\n\t\"EYW\",\n\t\"HND\",\n\t\"ICN\",\n\t\"JFK\",\n\t\"LGA\",\n\t\"LHR\",\n\t\"ORD\",\n\t\"SAN\",\n\t\"SFO\",\n\t\"SIN\",\n\t\"TLV\",\n\t\"BUD\",\n}\n\nvar StartingAirport = \"LGA\"\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\troutes := [][]string{}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 17\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"LGA\", \"ORD\"},\n\t\t{\"LGA\", \"EYW\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 14\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"LGA\", \"EYW\"},\n\t\t{\"EYW\", \"JFK\"},\n\t\t{\"EYW\", \"EWR\"},\n\t\t{\"JFK\", \"ICN\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 11\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"LGA\", \"EYW\"},\n\t\t{\"EYW\", \"JFK\"},\n\t\t{\"EYW\", \"EWR\"},\n\t\t{\"JFK\", \"ICN\"},\n\t\t{\"LGA\", \"ICN\"},\n\t\t{\"ICN\", \"ORD\"},\n\t\t{\"ICN\", \"EWR\"},\n\t\t{\"JFK\", \"DSM\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 11\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"LGA\", \"EYW\"},\n\t\t{\"EYW\", \"JFK\"},\n\t\t{\"EYW\", \"EWR\"},\n\t\t{\"JFK\", \"ICN\"},\n\t\t{\"LGA\", \"ICN\"},\n\t\t{\"ICN\", \"ORD\"},\n\t\t{\"ICN\", \"EWR\"},\n\t\t{\"JFK\", \"DSM\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"ORD\", \"DSM\"},\n\t\t{\"DSM\", \"LGA\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"JFK\", \"HND\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 10\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"LGA\", \"EYW\"},\n\t\t{\"EYW\", \"JFK\"},\n\t\t{\"EYW\", \"EWR\"},\n\t\t{\"JFK\", \"ICN\"},\n\t\t{\"LGA\", \"ICN\"},\n\t\t{\"ICN\", \"ORD\"},\n\t\t{\"ICN\", \"EWR\"},\n\t\t{\"JFK\", \"DSM\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"ORD\", \"DSM\"},\n\t\t{\"DSM\", \"LGA\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"JFK\", \"HND\"},\n\t\t{\"SFO\", \"SIN\"},\n\t\t{\"SFO\", \"CDG\"},\n\t\t{\"SFO\", \"LHR\"},\n\t\t{\"LHR\", \"DEL\"},\n\t\t{\"DEL\", \"BGI\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DOH\", \"SAN\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 3\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"EYW\", \"JFK\"},\n\t\t{\"EYW\", \"EWR\"},\n\t\t{\"JFK\", \"ICN\"},\n\t\t{\"LGA\", \"ICN\"},\n\t\t{\"ICN\", \"ORD\"},\n\t\t{\"ICN\", \"EWR\"},\n\t\t{\"JFK\", \"DSM\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"ORD\", \"DSM\"},\n\t\t{\"DSM\", \"LGA\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"JFK\", \"HND\"},\n\t\t{\"SFO\", \"SIN\"},\n\t\t{\"SFO\", \"CDG\"},\n\t\t{\"SFO\", \"LHR\"},\n\t\t{\"LHR\", \"DEL\"},\n\t\t{\"DEL\", \"BGI\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DOH\", \"SAN\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 4\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"SIN\", \"BGI\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"SIN\", \"DEL\"},\n\t\t{\"SIN\", \"DOH\"},\n\t\t{\"SIN\", \"DSM\"},\n\t\t{\"SIN\", \"EWR\"},\n\t\t{\"SIN\", \"EYW\"},\n\t\t{\"SIN\", \"HND\"},\n\t\t{\"SIN\", \"ICN\"},\n\t\t{\"SIN\", \"JFK\"},\n\t\t{\"SIN\", \"LHR\"},\n\t\t{\"SIN\", \"ORD\"},\n\t\t{\"SFO\", \"SIN\"},\n\t\t{\"SFO\", \"SAN\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 3\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"SIN\", \"BGI\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"CDG\", \"DEL\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DEL\", \"CDG\"},\n\t\t{\"DEL\", \"EWR\"},\n\t\t{\"HND\", \"ICN\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"JFK\", \"SFO\"},\n\t\t{\"EYW\", \"LHR\"},\n\t\t{\"SFO\", \"ORD\"},\n\t\t{\"SFO\", \"LGA\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 6\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"SIN\", \"BGI\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"CDG\", \"DEL\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DEL\", \"CDG\"},\n\t\t{\"DEL\", \"EWR\"},\n\t\t{\"HND\", \"ICN\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"JFK\", \"SFO\"},\n\t\t{\"EYW\", \"LHR\"},\n\t\t{\"SFO\", \"ORD\"},\n\t\t{\"SFO\", \"LGA\"},\n\t\t{\"SFO\", \"SIN\"},\n\t\t{\"CDG\", \"EYW\"},\n\t\t{\"LGA\", \"SAN\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 3\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"LGA\", \"DSM\"},\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"SIN\", \"BGI\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"CDG\", \"DEL\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DEL\", \"CDG\"},\n\t\t{\"DEL\", \"EWR\"},\n\t\t{\"HND\", \"ICN\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"JFK\", \"SFO\"},\n\t\t{\"EYW\", \"LHR\"},\n\t\t{\"SFO\", \"ORD\"},\n\t\t{\"SFO\", \"LGA\"},\n\t\t{\"SFO\", \"SIN\"},\n\t\t{\"CDG\", \"EYW\"},\n\t\t{\"ORD\", \"HND\"},\n\t\t{\"HND\", \"SAN\"},\n\t\t{\"LGA\", \"TLV\"},\n\t\t{\"LGA\", \"BUD\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 0\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"ORD\", \"BGI\"},\n\t\t{\"BGI\", \"LGA\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"CDG\", \"DEL\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DOH\", \"SIN\"},\n\t\t{\"EWR\", \"HND\"},\n\t\t{\"HND\", \"ICN\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"EYW\", \"LHR\"},\n\t\t{\"LHR\", \"SFO\"},\n\t\t{\"SFO\", \"SAN\"},\n\t\t{\"SAN\", \"EYW\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 6\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"ORD\", \"BGI\"},\n\t\t{\"BGI\", \"LGA\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"CDG\", \"DEL\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DOH\", \"SIN\"},\n\t\t{\"EWR\", \"HND\"},\n\t\t{\"HND\", \"ICN\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"EYW\", \"LHR\"},\n\t\t{\"LHR\", \"SFO\"},\n\t\t{\"SFO\", \"SAN\"},\n\t\t{\"SFO\", \"ORD\"},\n\t\t{\"SAN\", \"EYW\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 6\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"ORD\", \"BGI\"},\n\t\t{\"BGI\", \"LGA\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"CDG\", \"DEL\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DOH\", \"SIN\"},\n\t\t{\"EWR\", \"HND\"},\n\t\t{\"HND\", \"ICN\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"EYW\", \"LHR\"},\n\t\t{\"LHR\", \"SFO\"},\n\t\t{\"SFO\", \"SAN\"},\n\t\t{\"SFO\", \"DSM\"},\n\t\t{\"SAN\", \"EYW\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 5\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"ORD\", \"BGI\"},\n\t\t{\"BGI\", \"LGA\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"CDG\", \"SIN\"},\n\t\t{\"CDG\", \"BUD\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DEL\", \"CDG\"},\n\t\t{\"TLV\", \"DEL\"},\n\t\t{\"EWR\", \"HND\"},\n\t\t{\"HND\", \"ICN\"},\n\t\t{\"HND\", \"JFK\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"EYW\", \"LHR\"},\n\t\t{\"LHR\", \"SFO\"},\n\t\t{\"SFO\", \"SAN\"},\n\t\t{\"SFO\", \"DSM\"},\n\t\t{\"SAN\", \"EYW\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 3\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nvar Airports = []string{\n\t\"BGI\",\n\t\"CDG\",\n\t\"DEL\",\n\t\"DOH\",\n\t\"DSM\",\n\t\"EWR\",\n\t\"EYW\",\n\t\"HND\",\n\t\"ICN\",\n\t\"JFK\",\n\t\"LGA\",\n\t\"LHR\",\n\t\"ORD\",\n\t\"SAN\",\n\t\"SFO\",\n\t\"SIN\",\n\t\"TLV\",\n\t\"BUD\",\n}\n\nvar StartingAirport = \"LGA\"\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\troutes := [][]string{\n\t\t{\"DSM\", \"ORD\"},\n\t\t{\"ORD\", \"BGI\"},\n\t\t{\"BGI\", \"LGA\"},\n\t\t{\"SIN\", \"CDG\"},\n\t\t{\"CDG\", \"SIN\"},\n\t\t{\"CDG\", \"BUD\"},\n\t\t{\"DEL\", \"DOH\"},\n\t\t{\"DEL\", \"CDG\"},\n\t\t{\"TLV\", \"DEL\"},\n\t\t{\"EWR\", \"HND\"},\n\t\t{\"HND\", \"ICN\"},\n\t\t{\"HND\", \"JFK\"},\n\t\t{\"ICN\", \"JFK\"},\n\t\t{\"JFK\", \"LGA\"},\n\t\t{\"EYW\", \"LHR\"},\n\t\t{\"LHR\", \"SFO\"},\n\t\t{\"SFO\", \"SAN\"},\n\t\t{\"SFO\", \"DSM\"},\n\t\t{\"SAN\", \"EYW\"},\n\t}\n\toutput := AirportConnections(Airports, routes, StartingAirport)\n\texpected := 3\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"sort\"\n\ntype AirportNode struct {\n\tAirport                string\n\tConnections            []string\n\tIsReachable            bool\n\tUnreachableConnections []string\n}\n\nfunc NewAirportNode(airport string) *AirportNode {\n\treturn &AirportNode{\n\t\tAirport:                airport,\n\t\tConnections:            []string{},\n\t\tIsReachable:            true,\n\t\tUnreachableConnections: []string{},\n\t}\n}\n\n// O(a * (a + r) + a + r + alog(a)) time | O(a + r) space - where a is the number of airports and r is the number of routes\nfunc AirportConnections(airports []string, routes [][]string, startingAirport string) int {\n\tairportGraph := createAirportGraph(airports, routes)\n\tunreachableAirportNodes := getUnreachableAirportNodes(airportGraph, airports, startingAirport)\n\tmarkUnreachableConnections(airportGraph, unreachableAirportNodes)\n\treturn getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes)\n}\n\n// O(a + r) time | O(a + r) space\nfunc createAirportGraph(airports []string, routes [][]string) map[string]*AirportNode {\n\tairportGraph := map[string]*AirportNode{}\n\tfor _, airport := range airports {\n\t\tairportGraph[airport] = NewAirportNode(airport)\n\t}\n\tfor _, route := range routes {\n\t\tairport, connection := route[0], route[1]\n\t\tairportGraph[airport].Connections = append(airportGraph[airport].Connections, connection)\n\t}\n\treturn airportGraph\n}\n\n// O(a + r) time | O(a) space\nfunc getUnreachableAirportNodes(\n\tairportGraph map[string]*AirportNode, airports []string, startingAirport string,\n) []*AirportNode {\n\tvisitedAirports := map[string]bool{}\n\tdepthFirstTraverseAirports(airportGraph, startingAirport, visitedAirports)\n\n\tunreachableAirportNodes := []*AirportNode{}\n\tfor _, airport := range airports {\n\t\tif _, found := visitedAirports[airport]; found {\n\t\t\tcontinue\n\t\t}\n\t\tairportNode := airportGraph[airport]\n\t\tairportNode.IsReachable = false\n\t\tunreachableAirportNodes = append(unreachableAirportNodes, airportNode)\n\t}\n\treturn unreachableAirportNodes\n}\n\nfunc depthFirstTraverseAirports(\n\tairportGraph map[string]*AirportNode, airport string, visitedAirports map[string]bool,\n) {\n\tif _, found := visitedAirports[airport]; found {\n\t\treturn\n\t}\n\tvisitedAirports[airport] = true\n\tconnections := airportGraph[airport].Connections\n\tfor _, connection := range connections {\n\t\tdepthFirstTraverseAirports(airportGraph, connection, visitedAirports)\n\t}\n}\n\n// O(a * (a + r)) time | O(a) space\nfunc markUnreachableConnections(\n\tairportGraph map[string]*AirportNode, unreachableAirportNodes []*AirportNode,\n) {\n\tfor _, airportNode := range unreachableAirportNodes {\n\t\tairport := airportNode.Airport\n\t\tunreachableConnections := []string{}\n\t\tvisitedAirports := map[string]bool{}\n\t\tdepthFirstAddUnreachableConnections(airportGraph, airport, &unreachableConnections, visitedAirports)\n\t\tairportNode.UnreachableConnections = unreachableConnections\n\t}\n\treturn\n}\n\nfunc depthFirstAddUnreachableConnections(\n\tairportGraph map[string]*AirportNode, airport string,\n\tunreachableConnections *[]string, visitedAirports map[string]bool,\n) {\n\tif airportGraph[airport].IsReachable {\n\t\treturn\n\t} else if _, found := visitedAirports[airport]; found {\n\t\treturn\n\t}\n\tvisitedAirports[airport] = true\n\t*unreachableConnections = append(*unreachableConnections, airport)\n\tconnections := airportGraph[airport].Connections\n\tfor _, connection := range connections {\n\t\tdepthFirstAddUnreachableConnections(airportGraph, connection, unreachableConnections, visitedAirports)\n\t}\n}\n\n// O(alog(a) + a + r) time | O(1) space\nfunc getMinNumberOfNewConnections(\n\tairportGraph map[string]*AirportNode, unreachableAirportNodes []*AirportNode,\n) int {\n\tsort.SliceStable(unreachableAirportNodes, func(i, j int) bool {\n\t\ta1, a2 := unreachableAirportNodes[i], unreachableAirportNodes[j]\n\t\treturn len(a1.UnreachableConnections) > len(a2.UnreachableConnections)\n\t})\n\tnumberOfNewConnections := 0\n\tfor _, node := range unreachableAirportNodes {\n\t\tif node.IsReachable {\n\t\t\tcontinue\n\t\t}\n\t\tnumberOfNewConnections++\n\t\tfor _, connection := range node.UnreachableConnections {\n\t\t\tairportGraph[connection].IsReachable = true\n\t\t}\n\t}\n\treturn numberOfNewConnections\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int airportConnections(\n      List<String> airports, List<List<String>> routes, String startingAirport) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n\n  List<String> AIRPORTS =\n      new ArrayList<String>(\n          Arrays.asList(\n              \"BGI\", \"CDG\", \"DEL\", \"DOH\", \"DSM\", \"EWR\", \"EYW\", \"HND\", \"ICN\", \"JFK\", \"LGA\", \"LHR\",\n              \"ORD\", \"SAN\", \"SFO\", \"SIN\", \"TLV\", \"BUD\"));\n\n  String STARTING_AIRPORT = \"LGA\";\n\n  @Test\n  public void TestCase1() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 17);\n  }\n\n  @Test\n  public void TestCase2() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"EYW\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 14);\n  }\n\n  @Test\n  public void TestCase3() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"EYW\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"ICN\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 11);\n  }\n\n  @Test\n  public void TestCase4() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"EYW\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"DSM\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 11);\n  }\n\n  @Test\n  public void TestCase5() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"EYW\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"HND\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 10);\n  }\n\n  @Test\n  public void TestCase6() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"EYW\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LHR\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DOH\", \"SAN\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n  }\n\n  @Test\n  public void TestCase7() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LHR\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DOH\", \"SAN\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 4);\n  }\n\n  @Test\n  public void TestCase8() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"EYW\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SAN\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n  }\n\n  @Test\n  public void TestCase9() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"SFO\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"LGA\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6);\n  }\n\n  @Test\n  public void TestCase10() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"SFO\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"EYW\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"SAN\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n  }\n\n  @Test\n  public void TestCase11() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"EWR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"SFO\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"EYW\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"SAN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"TLV\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LGA\", \"BUD\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 0);\n  }\n\n  @Test\n  public void TestCase12() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"BGI\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DOH\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EWR\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LHR\", \"SFO\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SAN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SAN\", \"EYW\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6);\n  }\n\n  @Test\n  public void TestCase13() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"BGI\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DOH\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EWR\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LHR\", \"SFO\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SAN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SAN\", \"EYW\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6);\n  }\n\n  @Test\n  public void TestCase14() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"BGI\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DOH\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EWR\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LHR\", \"SFO\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SAN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SAN\", \"EYW\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 5);\n  }\n\n  @Test\n  public void TestCase15() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"BGI\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"BUD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"TLV\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EWR\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LHR\", \"SFO\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SAN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SAN\", \"EYW\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n\n  List<String> AIRPORTS =\n      new ArrayList<String>(\n          Arrays.asList(\n              \"BGI\", \"CDG\", \"DEL\", \"DOH\", \"DSM\", \"EWR\", \"EYW\", \"HND\", \"ICN\", \"JFK\", \"LGA\", \"LHR\",\n              \"ORD\", \"SAN\", \"SFO\", \"SIN\", \"TLV\", \"BUD\"));\n\n  String STARTING_AIRPORT = \"LGA\";\n\n  @Test\n  public void TestCase1() {\n    List<List<String>> routes = new ArrayList<List<String>>();\n    routes.add(new ArrayList<String>(Arrays.asList(\"DSM\", \"ORD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ORD\", \"BGI\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"BGI\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SIN\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"SIN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"CDG\", \"BUD\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"DOH\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"DEL\", \"CDG\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"TLV\", \"DEL\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EWR\", \"HND\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"ICN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"HND\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"ICN\", \"JFK\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"JFK\", \"LGA\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"EYW\", \"LHR\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"LHR\", \"SFO\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"SAN\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SFO\", \"DSM\")));\n    routes.add(new ArrayList<String>(Arrays.asList(\"SAN\", \"EYW\")));\n    Utils.assertTrue(Program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n\n  // O(a * (a + r) + a + r + alog(a)) time | O(a + r) space - where a is the number of airports and\n  // r is the number of routes\n  public static int airportConnections(\n      List<String> airports, List<List<String>> routes, String startingAirport) {\n    Map<String, AirportNode> airportGraph = createAirportGraph(airports, routes);\n    List<AirportNode> unreachableAirportNodes =\n        getUnreachableAirportNodes(airportGraph, airports, startingAirport);\n    markUnreachableConnections(airportGraph, unreachableAirportNodes);\n    return getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes);\n  }\n\n  // O(a + r) time | O(a + r) space\n  public static Map<String, AirportNode> createAirportGraph(\n      List<String> airports, List<List<String>> routes) {\n    Map<String, AirportNode> airportGraph = new HashMap<String, AirportNode>();\n    for (String airport : airports) {\n      airportGraph.put(airport, new AirportNode(airport));\n    }\n    for (List<String> route : routes) {\n      String airport = route.get(0);\n      String connection = route.get(1);\n      airportGraph.get(airport).connections.add(connection);\n    }\n    return airportGraph;\n  }\n\n  // O(a + r) time | O(a) space\n  public static List<AirportNode> getUnreachableAirportNodes(\n      Map<String, AirportNode> airportGraph, List<String> airports, String startingAirport) {\n    Set<String> visitedAirports = new HashSet<String>();\n    depthFirstTraverseAirports(airportGraph, startingAirport, visitedAirports);\n\n    List<AirportNode> unreachableAirportNodes = new ArrayList<AirportNode>();\n    for (String airport : airports) {\n      if (visitedAirports.contains(airport)) continue;\n      AirportNode airportNode = airportGraph.get(airport);\n      airportNode.isReachable = false;\n      unreachableAirportNodes.add(airportNode);\n    }\n    return unreachableAirportNodes;\n  }\n\n  public static void depthFirstTraverseAirports(\n      Map<String, AirportNode> airportGraph, String airport, Set<String> visitedAirports) {\n    if (visitedAirports.contains(airport)) return;\n    visitedAirports.add(airport);\n    List<String> connections = airportGraph.get(airport).connections;\n    for (String connection : connections) {\n      depthFirstTraverseAirports(airportGraph, connection, visitedAirports);\n    }\n  }\n\n  // O(a * (a + r)) time | O(a) space\n  public static void markUnreachableConnections(\n      Map<String, AirportNode> airportGraph, List<AirportNode> unreachableAirportNodes) {\n    for (AirportNode airportNode : unreachableAirportNodes) {\n      String airport = airportNode.airport;\n      List<String> unreachableConnections = new ArrayList<String>();\n      Set<String> visitedAirports = new HashSet<String>();\n      depthFirstAddUnreachableConnections(\n          airportGraph, airport, unreachableConnections, visitedAirports);\n      airportNode.unreachableConnections = unreachableConnections;\n    }\n  }\n\n  public static void depthFirstAddUnreachableConnections(\n      Map<String, AirportNode> airportGraph,\n      String airport,\n      List<String> unreachableConnections,\n      Set<String> visitedAirports) {\n    if (airportGraph.get(airport).isReachable) return;\n    if (visitedAirports.contains(airport)) return;\n    visitedAirports.add(airport);\n    unreachableConnections.add(airport);\n    List<String> connections = airportGraph.get(airport).connections;\n    for (String connection : connections) {\n      depthFirstAddUnreachableConnections(\n          airportGraph, connection, unreachableConnections, visitedAirports);\n    }\n  }\n\n  // O(alog(a) + a + r) time | O(1) space\n  public static int getMinNumberOfNewConnections(\n      Map<String, AirportNode> airportGraph, List<AirportNode> unreachableAirportNodes) {\n    unreachableAirportNodes.sort(\n        (a1, a2) -> a2.unreachableConnections.size() - a1.unreachableConnections.size());\n    int numberOfNewConnections = 0;\n    for (AirportNode airportNode : unreachableAirportNodes) {\n      if (airportNode.isReachable) continue;\n      numberOfNewConnections++;\n      for (String connection : airportNode.unreachableConnections) {\n        airportGraph.get(connection).isReachable = true;\n      }\n    }\n    return numberOfNewConnections;\n  }\n\n  static class AirportNode {\n    String airport;\n    List<String> connections;\n    boolean isReachable;\n    List<String> unreachableConnections;\n\n    public AirportNode(String airport) {\n      this.airport = airport;\n      connections = new ArrayList<String>();\n      isReachable = true;\n      unreachableConnections = new ArrayList<String>();\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function airportConnections(airports, routes, startingAirport) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.airportConnections = airportConnections;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nconst AIRPORTS = [\n  'BGI',\n  'CDG',\n  'DEL',\n  'DOH',\n  'DSM',\n  'EWR',\n  'EYW',\n  'HND',\n  'ICN',\n  'JFK',\n  'LGA',\n  'LHR',\n  'ORD',\n  'SAN',\n  'SFO',\n  'SIN',\n  'TLV',\n  'BUD',\n];\n\nconst STARTING_AIRPORT = 'LGA';\n\nit('Test Case #1', function () {\n  const routes = [];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(17);\n});\n\nit('Test Case #2', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['LGA', 'ORD'],\n    ['LGA', 'EYW'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(14);\n});\n\nit('Test Case #3', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['DSM', 'ORD'],\n    ['LGA', 'EYW'],\n    ['EYW', 'JFK'],\n    ['EYW', 'EWR'],\n    ['JFK', 'ICN'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(11);\n});\n\nit('Test Case #4', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['DSM', 'ORD'],\n    ['LGA', 'EYW'],\n    ['EYW', 'JFK'],\n    ['EYW', 'EWR'],\n    ['JFK', 'ICN'],\n    ['LGA', 'ICN'],\n    ['ICN', 'ORD'],\n    ['ICN', 'EWR'],\n    ['JFK', 'DSM'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(11);\n});\n\nit('Test Case #5', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['DSM', 'ORD'],\n    ['LGA', 'EYW'],\n    ['EYW', 'JFK'],\n    ['EYW', 'EWR'],\n    ['JFK', 'ICN'],\n    ['LGA', 'ICN'],\n    ['ICN', 'ORD'],\n    ['ICN', 'EWR'],\n    ['JFK', 'DSM'],\n    ['ICN', 'JFK'],\n    ['ORD', 'DSM'],\n    ['DSM', 'LGA'],\n    ['JFK', 'LGA'],\n    ['JFK', 'HND'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(10);\n});\n\nit('Test Case #6', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['DSM', 'ORD'],\n    ['LGA', 'EYW'],\n    ['EYW', 'JFK'],\n    ['EYW', 'EWR'],\n    ['JFK', 'ICN'],\n    ['LGA', 'ICN'],\n    ['ICN', 'ORD'],\n    ['ICN', 'EWR'],\n    ['JFK', 'DSM'],\n    ['ICN', 'JFK'],\n    ['ORD', 'DSM'],\n    ['DSM', 'LGA'],\n    ['JFK', 'LGA'],\n    ['JFK', 'HND'],\n    ['SFO', 'SIN'],\n    ['SFO', 'CDG'],\n    ['SFO', 'LHR'],\n    ['LHR', 'DEL'],\n    ['DEL', 'BGI'],\n    ['DEL', 'DOH'],\n    ['DOH', 'SAN'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(3);\n});\n\nit('Test Case #7', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['DSM', 'ORD'],\n    ['EYW', 'JFK'],\n    ['EYW', 'EWR'],\n    ['JFK', 'ICN'],\n    ['LGA', 'ICN'],\n    ['ICN', 'ORD'],\n    ['ICN', 'EWR'],\n    ['JFK', 'DSM'],\n    ['ICN', 'JFK'],\n    ['ORD', 'DSM'],\n    ['DSM', 'LGA'],\n    ['JFK', 'LGA'],\n    ['JFK', 'HND'],\n    ['SFO', 'SIN'],\n    ['SFO', 'CDG'],\n    ['SFO', 'LHR'],\n    ['LHR', 'DEL'],\n    ['DEL', 'BGI'],\n    ['DEL', 'DOH'],\n    ['DOH', 'SAN'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(4);\n});\n\nit('Test Case #8', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['SIN', 'BGI'],\n    ['SIN', 'CDG'],\n    ['SIN', 'DEL'],\n    ['SIN', 'DOH'],\n    ['SIN', 'DSM'],\n    ['SIN', 'EWR'],\n    ['SIN', 'EYW'],\n    ['SIN', 'HND'],\n    ['SIN', 'ICN'],\n    ['SIN', 'JFK'],\n    ['SIN', 'LHR'],\n    ['SIN', 'ORD'],\n    ['SFO', 'SIN'],\n    ['SFO', 'SAN'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(3);\n});\n\nit('Test Case #9', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['DSM', 'ORD'],\n    ['SIN', 'BGI'],\n    ['SIN', 'CDG'],\n    ['CDG', 'DEL'],\n    ['DEL', 'DOH'],\n    ['DEL', 'CDG'],\n    ['DEL', 'EWR'],\n    ['HND', 'ICN'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['JFK', 'SFO'],\n    ['EYW', 'LHR'],\n    ['SFO', 'ORD'],\n    ['SFO', 'LGA'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(6);\n});\n\nit('Test Case #10', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['DSM', 'ORD'],\n    ['SIN', 'BGI'],\n    ['SIN', 'CDG'],\n    ['CDG', 'DEL'],\n    ['DEL', 'DOH'],\n    ['DEL', 'CDG'],\n    ['DEL', 'EWR'],\n    ['HND', 'ICN'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['JFK', 'SFO'],\n    ['EYW', 'LHR'],\n    ['SFO', 'ORD'],\n    ['SFO', 'LGA'],\n    ['SFO', 'SIN'],\n    ['CDG', 'EYW'],\n    ['LGA', 'SAN'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(3);\n});\n\nit('Test Case #11', function () {\n  const routes = [\n    ['LGA', 'DSM'],\n    ['DSM', 'ORD'],\n    ['SIN', 'BGI'],\n    ['SIN', 'CDG'],\n    ['CDG', 'DEL'],\n    ['DEL', 'DOH'],\n    ['DEL', 'CDG'],\n    ['DEL', 'EWR'],\n    ['HND', 'ICN'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['JFK', 'SFO'],\n    ['EYW', 'LHR'],\n    ['SFO', 'ORD'],\n    ['SFO', 'LGA'],\n    ['SFO', 'SIN'],\n    ['CDG', 'EYW'],\n    ['ORD', 'HND'],\n    ['HND', 'SAN'],\n    ['LGA', 'TLV'],\n    ['LGA', 'BUD'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(0);\n});\n\nit('Test Case #12', function () {\n  const routes = [\n    ['DSM', 'ORD'],\n    ['ORD', 'BGI'],\n    ['BGI', 'LGA'],\n    ['SIN', 'CDG'],\n    ['CDG', 'DEL'],\n    ['DEL', 'DOH'],\n    ['DOH', 'SIN'],\n    ['EWR', 'HND'],\n    ['HND', 'ICN'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['EYW', 'LHR'],\n    ['LHR', 'SFO'],\n    ['SFO', 'SAN'],\n    ['SAN', 'EYW'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(6);\n});\n\nit('Test Case #13', function () {\n  const routes = [\n    ['DSM', 'ORD'],\n    ['ORD', 'BGI'],\n    ['BGI', 'LGA'],\n    ['SIN', 'CDG'],\n    ['CDG', 'DEL'],\n    ['DEL', 'DOH'],\n    ['DOH', 'SIN'],\n    ['EWR', 'HND'],\n    ['HND', 'ICN'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['EYW', 'LHR'],\n    ['LHR', 'SFO'],\n    ['SFO', 'SAN'],\n    ['SFO', 'ORD'],\n    ['SAN', 'EYW'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(6);\n});\n\nit('Test Case #14', function () {\n  const routes = [\n    ['DSM', 'ORD'],\n    ['ORD', 'BGI'],\n    ['BGI', 'LGA'],\n    ['SIN', 'CDG'],\n    ['CDG', 'DEL'],\n    ['DEL', 'DOH'],\n    ['DOH', 'SIN'],\n    ['EWR', 'HND'],\n    ['HND', 'ICN'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['EYW', 'LHR'],\n    ['LHR', 'SFO'],\n    ['SFO', 'SAN'],\n    ['SFO', 'DSM'],\n    ['SAN', 'EYW'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(5);\n});\n\nit('Test Case #15', function () {\n  const routes = [\n    ['DSM', 'ORD'],\n    ['ORD', 'BGI'],\n    ['BGI', 'LGA'],\n    ['SIN', 'CDG'],\n    ['CDG', 'SIN'],\n    ['CDG', 'BUD'],\n    ['DEL', 'DOH'],\n    ['DEL', 'CDG'],\n    ['TLV', 'DEL'],\n    ['EWR', 'HND'],\n    ['HND', 'ICN'],\n    ['HND', 'JFK'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['EYW', 'LHR'],\n    ['LHR', 'SFO'],\n    ['SFO', 'SAN'],\n    ['SFO', 'DSM'],\n    ['SAN', 'EYW'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(3);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nconst AIRPORTS = [\n  'BGI',\n  'CDG',\n  'DEL',\n  'DOH',\n  'DSM',\n  'EWR',\n  'EYW',\n  'HND',\n  'ICN',\n  'JFK',\n  'LGA',\n  'LHR',\n  'ORD',\n  'SAN',\n  'SFO',\n  'SIN',\n  'TLV',\n  'BUD',\n];\n\nconst STARTING_AIRPORT = 'LGA';\n\nit('Test Case #1', function () {\n  const routes = [\n    ['DSM', 'ORD'],\n    ['ORD', 'BGI'],\n    ['BGI', 'LGA'],\n    ['SIN', 'CDG'],\n    ['CDG', 'SIN'],\n    ['CDG', 'BUD'],\n    ['DEL', 'DOH'],\n    ['DEL', 'CDG'],\n    ['TLV', 'DEL'],\n    ['EWR', 'HND'],\n    ['HND', 'ICN'],\n    ['HND', 'JFK'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['EYW', 'LHR'],\n    ['LHR', 'SFO'],\n    ['SFO', 'SAN'],\n    ['SFO', 'DSM'],\n    ['SAN', 'EYW'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(3);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(a * (a + r) + a + r + alog(a)) time | O(a + r) space - where a is the number of airports and r is the number of routes\nfunction airportConnections(airports, routes, startingAirport) {\n  const airportGraph = createAirportGraph(airports, routes);\n  const unreachableAirportNodes = getUnreachableAirportNodes(airportGraph, airports, startingAirport);\n  markUnreachableConnections(airportGraph, unreachableAirportNodes);\n  return getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes);\n}\n\n// O(a + r) time | O(a + r) space\nfunction createAirportGraph(airports, routes) {\n  const airportGraph = {};\n  for (const airport of airports) {\n    airportGraph[airport] = new AirportNode(airport);\n  }\n  for (const route of routes) {\n    const [airport, connection] = route;\n    airportGraph[airport].connections.push(connection);\n  }\n  return airportGraph;\n}\n\n// O(a + r) time | O(a) space\nfunction getUnreachableAirportNodes(airportGraph, airports, startingAirport) {\n  const visitedAirports = {};\n  depthFirstTraverseAirports(airportGraph, startingAirport, visitedAirports);\n\n  const unreachableAirportNodes = [];\n  for (const airport of airports) {\n    if (airport in visitedAirports) continue;\n    const airportNode = airportGraph[airport];\n    airportNode.isReachable = false;\n    unreachableAirportNodes.push(airportNode);\n  }\n  return unreachableAirportNodes;\n}\n\nfunction depthFirstTraverseAirports(airportGraph, airport, visitedAirports) {\n  if (airport in visitedAirports) return;\n  visitedAirports[airport] = true;\n  const {connections} = airportGraph[airport];\n  for (const connection of connections) {\n    depthFirstTraverseAirports(airportGraph, connection, visitedAirports);\n  }\n}\n\n// O(a * (a + r)) time | O(a) space\nfunction markUnreachableConnections(airportGraph, unreachableAirportNodes) {\n  for (const airportNode of unreachableAirportNodes) {\n    const {airport} = airportNode;\n    const unreachableConnections = [];\n    depthFirstAddUnreachableConnections(airportGraph, airport, unreachableConnections, {});\n    airportNode.unreachableConnections = unreachableConnections;\n  }\n}\n\nfunction depthFirstAddUnreachableConnections(airportGraph, airport, unreachableConnections, visitedAirports) {\n  if (airportGraph[airport].isReachable) return;\n  if (airport in visitedAirports) return;\n  visitedAirports[airport] = true;\n  unreachableConnections.push(airport);\n  const {connections} = airportGraph[airport];\n  for (const connection of connections) {\n    depthFirstAddUnreachableConnections(airportGraph, connection, unreachableConnections, visitedAirports);\n  }\n}\n\n// O(alog(a) + a + r) time | O(1) space\nfunction getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes) {\n  unreachableAirportNodes.sort((a1, a2) => a2.unreachableConnections.length - a1.unreachableConnections.length);\n\n  let numberOfNewConnections = 0;\n  for (const airportNode of unreachableAirportNodes) {\n    if (airportNode.isReachable) continue;\n    numberOfNewConnections++;\n    for (const connection of airportNode.unreachableConnections) {\n      airportGraph[connection].isReachable = true;\n    }\n  }\n  return numberOfNewConnections;\n}\n\nclass AirportNode {\n  constructor(airport) {\n    this.airport = airport;\n    this.connections = [];\n    this.isReachable = true;\n    this.unreachableConnections = [];\n  }\n}\n\nexports.airportConnections = airportConnections;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def airportConnections(airports, routes, startingAirport):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nAIRPORTS = [\n    \"BGI\",\n    \"CDG\",\n    \"DEL\",\n    \"DOH\",\n    \"DSM\",\n    \"EWR\",\n    \"EYW\",\n    \"HND\",\n    \"ICN\",\n    \"JFK\",\n    \"LGA\",\n    \"LHR\",\n    \"ORD\",\n    \"SAN\",\n    \"SFO\",\n    \"SIN\",\n    \"TLV\",\n    \"BUD\",\n]\n\nSTARTING_AIRPORT = \"LGA\"\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        routes = []\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 17)\n\n    def test_case_2(self):\n        routes = [[\"LGA\", \"DSM\"], [\"LGA\", \"ORD\"], [\"LGA\", \"EYW\"]]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 14)\n\n    def test_case_3(self):\n        routes = [[\"LGA\", \"DSM\"], [\"DSM\", \"ORD\"], [\"LGA\", \"EYW\"], [\"EYW\", \"JFK\"], [\"EYW\", \"EWR\"], [\"JFK\", \"ICN\"]]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 11)\n\n    def test_case_4(self):\n        routes = [\n            [\"LGA\", \"DSM\"],\n            [\"DSM\", \"ORD\"],\n            [\"LGA\", \"EYW\"],\n            [\"EYW\", \"JFK\"],\n            [\"EYW\", \"EWR\"],\n            [\"JFK\", \"ICN\"],\n            [\"LGA\", \"ICN\"],\n            [\"ICN\", \"ORD\"],\n            [\"ICN\", \"EWR\"],\n            [\"JFK\", \"DSM\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 11)\n\n    def test_case_5(self):\n        routes = [\n            [\"LGA\", \"DSM\"],\n            [\"DSM\", \"ORD\"],\n            [\"LGA\", \"EYW\"],\n            [\"EYW\", \"JFK\"],\n            [\"EYW\", \"EWR\"],\n            [\"JFK\", \"ICN\"],\n            [\"LGA\", \"ICN\"],\n            [\"ICN\", \"ORD\"],\n            [\"ICN\", \"EWR\"],\n            [\"JFK\", \"DSM\"],\n            [\"ICN\", \"JFK\"],\n            [\"ORD\", \"DSM\"],\n            [\"DSM\", \"LGA\"],\n            [\"JFK\", \"LGA\"],\n            [\"JFK\", \"HND\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 10)\n\n    def test_case_6(self):\n        routes = [\n            [\"LGA\", \"DSM\"],\n            [\"DSM\", \"ORD\"],\n            [\"LGA\", \"EYW\"],\n            [\"EYW\", \"JFK\"],\n            [\"EYW\", \"EWR\"],\n            [\"JFK\", \"ICN\"],\n            [\"LGA\", \"ICN\"],\n            [\"ICN\", \"ORD\"],\n            [\"ICN\", \"EWR\"],\n            [\"JFK\", \"DSM\"],\n            [\"ICN\", \"JFK\"],\n            [\"ORD\", \"DSM\"],\n            [\"DSM\", \"LGA\"],\n            [\"JFK\", \"LGA\"],\n            [\"JFK\", \"HND\"],\n            [\"SFO\", \"SIN\"],\n            [\"SFO\", \"CDG\"],\n            [\"SFO\", \"LHR\"],\n            [\"LHR\", \"DEL\"],\n            [\"DEL\", \"BGI\"],\n            [\"DEL\", \"DOH\"],\n            [\"DOH\", \"SAN\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3)\n\n    def test_case_7(self):\n        routes = [\n            [\"LGA\", \"DSM\"],\n            [\"DSM\", \"ORD\"],\n            [\"EYW\", \"JFK\"],\n            [\"EYW\", \"EWR\"],\n            [\"JFK\", \"ICN\"],\n            [\"LGA\", \"ICN\"],\n            [\"ICN\", \"ORD\"],\n            [\"ICN\", \"EWR\"],\n            [\"JFK\", \"DSM\"],\n            [\"ICN\", \"JFK\"],\n            [\"ORD\", \"DSM\"],\n            [\"DSM\", \"LGA\"],\n            [\"JFK\", \"LGA\"],\n            [\"JFK\", \"HND\"],\n            [\"SFO\", \"SIN\"],\n            [\"SFO\", \"CDG\"],\n            [\"SFO\", \"LHR\"],\n            [\"LHR\", \"DEL\"],\n            [\"DEL\", \"BGI\"],\n            [\"DEL\", \"DOH\"],\n            [\"DOH\", \"SAN\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 4)\n\n    def test_case_8(self):\n        routes = [\n            [\"LGA\", \"DSM\"],\n            [\"SIN\", \"BGI\"],\n            [\"SIN\", \"CDG\"],\n            [\"SIN\", \"DEL\"],\n            [\"SIN\", \"DOH\"],\n            [\"SIN\", \"DSM\"],\n            [\"SIN\", \"EWR\"],\n            [\"SIN\", \"EYW\"],\n            [\"SIN\", \"HND\"],\n            [\"SIN\", \"ICN\"],\n            [\"SIN\", \"JFK\"],\n            [\"SIN\", \"LHR\"],\n            [\"SIN\", \"ORD\"],\n            [\"SFO\", \"SIN\"],\n            [\"SFO\", \"SAN\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3)\n\n    def test_case_9(self):\n        routes = [\n            [\"LGA\", \"DSM\"],\n            [\"DSM\", \"ORD\"],\n            [\"SIN\", \"BGI\"],\n            [\"SIN\", \"CDG\"],\n            [\"CDG\", \"DEL\"],\n            [\"DEL\", \"DOH\"],\n            [\"DEL\", \"CDG\"],\n            [\"DEL\", \"EWR\"],\n            [\"HND\", \"ICN\"],\n            [\"ICN\", \"JFK\"],\n            [\"JFK\", \"LGA\"],\n            [\"JFK\", \"SFO\"],\n            [\"EYW\", \"LHR\"],\n            [\"SFO\", \"ORD\"],\n            [\"SFO\", \"LGA\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6)\n\n    def test_case_10(self):\n        routes = [\n            [\"LGA\", \"DSM\"],\n            [\"DSM\", \"ORD\"],\n            [\"SIN\", \"BGI\"],\n            [\"SIN\", \"CDG\"],\n            [\"CDG\", \"DEL\"],\n            [\"DEL\", \"DOH\"],\n            [\"DEL\", \"CDG\"],\n            [\"DEL\", \"EWR\"],\n            [\"HND\", \"ICN\"],\n            [\"ICN\", \"JFK\"],\n            [\"JFK\", \"LGA\"],\n            [\"JFK\", \"SFO\"],\n            [\"EYW\", \"LHR\"],\n            [\"SFO\", \"ORD\"],\n            [\"SFO\", \"LGA\"],\n            [\"SFO\", \"SIN\"],\n            [\"CDG\", \"EYW\"],\n            [\"LGA\", \"SAN\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3)\n\n    def test_case_11(self):\n        routes = [\n            [\"LGA\", \"DSM\"],\n            [\"DSM\", \"ORD\"],\n            [\"SIN\", \"BGI\"],\n            [\"SIN\", \"CDG\"],\n            [\"CDG\", \"DEL\"],\n            [\"DEL\", \"DOH\"],\n            [\"DEL\", \"CDG\"],\n            [\"DEL\", \"EWR\"],\n            [\"HND\", \"ICN\"],\n            [\"ICN\", \"JFK\"],\n            [\"JFK\", \"LGA\"],\n            [\"JFK\", \"SFO\"],\n            [\"EYW\", \"LHR\"],\n            [\"SFO\", \"ORD\"],\n            [\"SFO\", \"LGA\"],\n            [\"SFO\", \"SIN\"],\n            [\"CDG\", \"EYW\"],\n            [\"ORD\", \"HND\"],\n            [\"HND\", \"SAN\"],\n            [\"LGA\", \"TLV\"],\n            [\"LGA\", \"BUD\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 0)\n\n    def test_case_12(self):\n        routes = [\n            [\"DSM\", \"ORD\"],\n            [\"ORD\", \"BGI\"],\n            [\"BGI\", \"LGA\"],\n            [\"SIN\", \"CDG\"],\n            [\"CDG\", \"DEL\"],\n            [\"DEL\", \"DOH\"],\n            [\"DOH\", \"SIN\"],\n            [\"EWR\", \"HND\"],\n            [\"HND\", \"ICN\"],\n            [\"ICN\", \"JFK\"],\n            [\"JFK\", \"LGA\"],\n            [\"EYW\", \"LHR\"],\n            [\"LHR\", \"SFO\"],\n            [\"SFO\", \"SAN\"],\n            [\"SAN\", \"EYW\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6)\n\n    def test_case_13(self):\n        routes = [\n            [\"DSM\", \"ORD\"],\n            [\"ORD\", \"BGI\"],\n            [\"BGI\", \"LGA\"],\n            [\"SIN\", \"CDG\"],\n            [\"CDG\", \"DEL\"],\n            [\"DEL\", \"DOH\"],\n            [\"DOH\", \"SIN\"],\n            [\"EWR\", \"HND\"],\n            [\"HND\", \"ICN\"],\n            [\"ICN\", \"JFK\"],\n            [\"JFK\", \"LGA\"],\n            [\"EYW\", \"LHR\"],\n            [\"LHR\", \"SFO\"],\n            [\"SFO\", \"SAN\"],\n            [\"SFO\", \"ORD\"],\n            [\"SAN\", \"EYW\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 6)\n\n    def test_case_14(self):\n        routes = [\n            [\"DSM\", \"ORD\"],\n            [\"ORD\", \"BGI\"],\n            [\"BGI\", \"LGA\"],\n            [\"SIN\", \"CDG\"],\n            [\"CDG\", \"DEL\"],\n            [\"DEL\", \"DOH\"],\n            [\"DOH\", \"SIN\"],\n            [\"EWR\", \"HND\"],\n            [\"HND\", \"ICN\"],\n            [\"ICN\", \"JFK\"],\n            [\"JFK\", \"LGA\"],\n            [\"EYW\", \"LHR\"],\n            [\"LHR\", \"SFO\"],\n            [\"SFO\", \"SAN\"],\n            [\"SFO\", \"DSM\"],\n            [\"SAN\", \"EYW\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 5)\n\n    def test_case_15(self):\n        routes = [\n            [\"DSM\", \"ORD\"],\n            [\"ORD\", \"BGI\"],\n            [\"BGI\", \"LGA\"],\n            [\"SIN\", \"CDG\"],\n            [\"CDG\", \"SIN\"],\n            [\"CDG\", \"BUD\"],\n            [\"DEL\", \"DOH\"],\n            [\"DEL\", \"CDG\"],\n            [\"TLV\", \"DEL\"],\n            [\"EWR\", \"HND\"],\n            [\"HND\", \"ICN\"],\n            [\"HND\", \"JFK\"],\n            [\"ICN\", \"JFK\"],\n            [\"JFK\", \"LGA\"],\n            [\"EYW\", \"LHR\"],\n            [\"LHR\", \"SFO\"],\n            [\"SFO\", \"SAN\"],\n            [\"SFO\", \"DSM\"],\n            [\"SAN\", \"EYW\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nAIRPORTS = [\n    \"BGI\",\n    \"CDG\",\n    \"DEL\",\n    \"DOH\",\n    \"DSM\",\n    \"EWR\",\n    \"EYW\",\n    \"HND\",\n    \"ICN\",\n    \"JFK\",\n    \"LGA\",\n    \"LHR\",\n    \"ORD\",\n    \"SAN\",\n    \"SFO\",\n    \"SIN\",\n    \"TLV\",\n    \"BUD\",\n]\n\nSTARTING_AIRPORT = \"LGA\"\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        routes = [\n            [\"DSM\", \"ORD\"],\n            [\"ORD\", \"BGI\"],\n            [\"BGI\", \"LGA\"],\n            [\"SIN\", \"CDG\"],\n            [\"CDG\", \"SIN\"],\n            [\"CDG\", \"BUD\"],\n            [\"DEL\", \"DOH\"],\n            [\"DEL\", \"CDG\"],\n            [\"TLV\", \"DEL\"],\n            [\"EWR\", \"HND\"],\n            [\"HND\", \"ICN\"],\n            [\"HND\", \"JFK\"],\n            [\"ICN\", \"JFK\"],\n            [\"JFK\", \"LGA\"],\n            [\"EYW\", \"LHR\"],\n            [\"LHR\", \"SFO\"],\n            [\"SFO\", \"SAN\"],\n            [\"SFO\", \"DSM\"],\n            [\"SAN\", \"EYW\"],\n        ]\n        self.assertTrue(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT) == 3)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(a * (a + r) + a + r + alog(a)) time | O(a + r) space - where a is the number of airports and r is the number of routes\ndef airportConnections(airports, routes, startingAirport):\n    airportGraph = createAirportGraph(airports, routes)\n    unreachableAirportNodes = getUnreachableAirportNodes(airportGraph, airports, startingAirport)\n    markUnreachableConnections(airportGraph, unreachableAirportNodes)\n    return getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes)\n\n\n# O(a + r) time | O(a + r) space\ndef createAirportGraph(airports, routes):\n    airportGraph = {}\n    for airport in airports:\n        airportGraph[airport] = AirportNode(airport)\n    for route in routes:\n        airport, connection = route\n        airportGraph[airport].connections.append(connection)\n    return airportGraph\n\n\n# O(a + r) time | O(a) space\ndef getUnreachableAirportNodes(airportGraph, airports, startingAirport):\n    visitedAirports = {}\n    depthFirstTraverseAirports(airportGraph, startingAirport, visitedAirports)\n\n    unreachableAirportNodes = []\n    for airport in airports:\n        if airport in visitedAirports:\n            continue\n        airportNode = airportGraph[airport]\n        airportNode.isReachable = False\n        unreachableAirportNodes.append(airportNode)\n    return unreachableAirportNodes\n\n\ndef depthFirstTraverseAirports(airportGraph, airport, visitedAirports):\n    if airport in visitedAirports:\n        return\n    visitedAirports[airport] = True\n    connections = airportGraph[airport].connections\n    for connection in connections:\n        depthFirstTraverseAirports(airportGraph, connection, visitedAirports)\n\n\n# O(a * (a + r)) time | O(a) space\ndef markUnreachableConnections(airportGraph, unreachableAirportNodes):\n    for airportNode in unreachableAirportNodes:\n        airport = airportNode.airport\n        unreachableConnections = []\n        depthFirstAddUnreachableConnections(airportGraph, airport, unreachableConnections, {})\n        airportNode.unreachableConnections = unreachableConnections\n\n\ndef depthFirstAddUnreachableConnections(airportGraph, airport, unreachableConnections, visitedAirports):\n    if airportGraph[airport].isReachable:\n        return\n    if airport in visitedAirports:\n        return\n    visitedAirports[airport] = True\n    unreachableConnections.append(airport)\n    connections = airportGraph[airport].connections\n    for connection in connections:\n        depthFirstAddUnreachableConnections(airportGraph, connection, unreachableConnections, visitedAirports)\n\n\n# O(alog(a) + a + r) time | O(1) space\ndef getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes):\n    unreachableAirportNodes.sort(key=lambda airport: len(airport.unreachableConnections), reverse=True)\n\n    numberOfNewConnections = 0\n    for airportNode in unreachableAirportNodes:\n        if airportNode.isReachable:\n            continue\n        numberOfNewConnections += 1\n        for connection in airportNode.unreachableConnections:\n            airportGraph[connection].isReachable = True\n    return numberOfNewConnections\n\n\nclass AirportNode:\n    def __init__(self, airport):\n        self.airport = airport\n        self.connections = []\n        self.isReachable = True\n        self.unreachableConnections = []\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func airportConnections(_ airports: [String], _ routes: [[String]], _ startingAirport: String) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "let STARTING_AIRPORT = \"LGA\"\n\nlet AIRPORTS = [\n  \"BGI\",\n  \"CDG\",\n  \"DEL\",\n  \"DOH\",\n  \"DSM\",\n  \"EWR\",\n  \"EYW\",\n  \"HND\",\n  \"ICN\",\n  \"JFK\",\n  \"LGA\",\n  \"LHR\",\n  \"ORD\",\n  \"SAN\",\n  \"SFO\",\n  \"SIN\",\n  \"TLV\",\n  \"BUD\",\n]\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let firstRoutes = [[String]]()\n      let result = program.airportConnections(AIRPORTS, firstRoutes, STARTING_AIRPORT)\n      try assertEqual(17, result)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let secondRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"LGA\", \"ORD\"],\n        [\"LGA\", \"EYW\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, secondRoutes, STARTING_AIRPORT)\n      try assertEqual(14, result)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let thirdRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"DSM\", \"ORD\"],\n        [\"LGA\", \"EYW\"],\n        [\"EYW\", \"JFK\"],\n        [\"EYW\", \"EWR\"],\n        [\"JFK\", \"ICN\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, thirdRoutes, STARTING_AIRPORT)\n      try assertEqual(11, result)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let fourthRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"DSM\", \"ORD\"],\n        [\"LGA\", \"EYW\"],\n        [\"EYW\", \"JFK\"],\n        [\"EYW\", \"EWR\"],\n        [\"JFK\", \"ICN\"],\n        [\"LGA\", \"ICN\"],\n        [\"ICN\", \"ORD\"],\n        [\"ICN\", \"EWR\"],\n        [\"JFK\", \"DSM\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, fourthRoutes, STARTING_AIRPORT)\n      try assertEqual(11, result)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let fiftRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"DSM\", \"ORD\"],\n        [\"LGA\", \"EYW\"],\n        [\"EYW\", \"JFK\"],\n        [\"EYW\", \"EWR\"],\n        [\"JFK\", \"ICN\"],\n        [\"LGA\", \"ICN\"],\n        [\"ICN\", \"ORD\"],\n        [\"ICN\", \"EWR\"],\n        [\"JFK\", \"DSM\"],\n        [\"ICN\", \"JFK\"],\n        [\"ORD\", \"DSM\"],\n        [\"DSM\", \"LGA\"],\n        [\"JFK\", \"LGA\"],\n        [\"JFK\", \"HND\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, fiftRoutes, STARTING_AIRPORT)\n      try assertEqual(10, result)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let sixthRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"DSM\", \"ORD\"],\n        [\"LGA\", \"EYW\"],\n        [\"EYW\", \"JFK\"],\n        [\"EYW\", \"EWR\"],\n        [\"JFK\", \"ICN\"],\n        [\"LGA\", \"ICN\"],\n        [\"ICN\", \"ORD\"],\n        [\"ICN\", \"EWR\"],\n        [\"JFK\", \"DSM\"],\n        [\"ICN\", \"JFK\"],\n        [\"ORD\", \"DSM\"],\n        [\"DSM\", \"LGA\"],\n        [\"JFK\", \"LGA\"],\n        [\"JFK\", \"HND\"],\n        [\"SFO\", \"SIN\"],\n        [\"SFO\", \"CDG\"],\n        [\"SFO\", \"LHR\"],\n        [\"LHR\", \"DEL\"],\n        [\"DEL\", \"BGI\"],\n        [\"DEL\", \"DOH\"],\n        [\"DOH\", \"SAN\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, sixthRoutes, STARTING_AIRPORT)\n      try assertEqual(3, result)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let seventhRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"DSM\", \"ORD\"],\n        [\"EYW\", \"JFK\"],\n        [\"EYW\", \"EWR\"],\n        [\"JFK\", \"ICN\"],\n        [\"LGA\", \"ICN\"],\n        [\"ICN\", \"ORD\"],\n        [\"ICN\", \"EWR\"],\n        [\"JFK\", \"DSM\"],\n        [\"ICN\", \"JFK\"],\n        [\"ORD\", \"DSM\"],\n        [\"DSM\", \"LGA\"],\n        [\"JFK\", \"LGA\"],\n        [\"JFK\", \"HND\"],\n        [\"SFO\", \"SIN\"],\n        [\"SFO\", \"CDG\"],\n        [\"SFO\", \"LHR\"],\n        [\"LHR\", \"DEL\"],\n        [\"DEL\", \"BGI\"],\n        [\"DEL\", \"DOH\"],\n        [\"DOH\", \"SAN\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, seventhRoutes, STARTING_AIRPORT)\n      try assertEqual(4, result)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let eighthRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"SIN\", \"BGI\"],\n        [\"SIN\", \"CDG\"],\n        [\"SIN\", \"DEL\"],\n        [\"SIN\", \"DOH\"],\n        [\"SIN\", \"DSM\"],\n        [\"SIN\", \"EWR\"],\n        [\"SIN\", \"EYW\"],\n        [\"SIN\", \"HND\"],\n        [\"SIN\", \"ICN\"],\n        [\"SIN\", \"JFK\"],\n        [\"SIN\", \"LHR\"],\n        [\"SIN\", \"ORD\"],\n        [\"SFO\", \"SIN\"],\n        [\"SFO\", \"SAN\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, eighthRoutes, STARTING_AIRPORT)\n      try assertEqual(3, result)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let ninthRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"DSM\", \"ORD\"],\n        [\"SIN\", \"BGI\"],\n        [\"SIN\", \"CDG\"],\n        [\"CDG\", \"DEL\"],\n        [\"DEL\", \"DOH\"],\n        [\"DEL\", \"CDG\"],\n        [\"DEL\", \"EWR\"],\n        [\"HND\", \"ICN\"],\n        [\"ICN\", \"JFK\"],\n        [\"JFK\", \"LGA\"],\n        [\"JFK\", \"SFO\"],\n        [\"EYW\", \"LHR\"],\n        [\"SFO\", \"ORD\"],\n        [\"SFO\", \"LGA\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, ninthRoutes, STARTING_AIRPORT)\n      try assertEqual(6, result)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let tenthRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"DSM\", \"ORD\"],\n        [\"SIN\", \"BGI\"],\n        [\"SIN\", \"CDG\"],\n        [\"CDG\", \"DEL\"],\n        [\"DEL\", \"DOH\"],\n        [\"DEL\", \"CDG\"],\n        [\"DEL\", \"EWR\"],\n        [\"HND\", \"ICN\"],\n        [\"ICN\", \"JFK\"],\n        [\"JFK\", \"LGA\"],\n        [\"JFK\", \"SFO\"],\n        [\"EYW\", \"LHR\"],\n        [\"SFO\", \"ORD\"],\n        [\"SFO\", \"LGA\"],\n        [\"SFO\", \"SIN\"],\n        [\"CDG\", \"EYW\"],\n        [\"LGA\", \"SAN\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, tenthRoutes, STARTING_AIRPORT)\n      try assertEqual(3, result)\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let eleventhRoutes = [\n        [\"LGA\", \"DSM\"],\n        [\"DSM\", \"ORD\"],\n        [\"SIN\", \"BGI\"],\n        [\"SIN\", \"CDG\"],\n        [\"CDG\", \"DEL\"],\n        [\"DEL\", \"DOH\"],\n        [\"DEL\", \"CDG\"],\n        [\"DEL\", \"EWR\"],\n        [\"HND\", \"ICN\"],\n        [\"ICN\", \"JFK\"],\n        [\"JFK\", \"LGA\"],\n        [\"JFK\", \"SFO\"],\n        [\"EYW\", \"LHR\"],\n        [\"SFO\", \"ORD\"],\n        [\"SFO\", \"LGA\"],\n        [\"SFO\", \"SIN\"],\n        [\"CDG\", \"EYW\"],\n        [\"ORD\", \"HND\"],\n        [\"HND\", \"SAN\"],\n        [\"LGA\", \"TLV\"],\n        [\"LGA\", \"BUD\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, eleventhRoutes, STARTING_AIRPORT)\n      try assertEqual(0, result)\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      let twelfthRoutes = [\n        [\"DSM\", \"ORD\"],\n        [\"ORD\", \"BGI\"],\n        [\"BGI\", \"LGA\"],\n        [\"SIN\", \"CDG\"],\n        [\"CDG\", \"DEL\"],\n        [\"DEL\", \"DOH\"],\n        [\"DOH\", \"SIN\"],\n        [\"EWR\", \"HND\"],\n        [\"HND\", \"ICN\"],\n        [\"ICN\", \"JFK\"],\n        [\"JFK\", \"LGA\"],\n        [\"EYW\", \"LHR\"],\n        [\"LHR\", \"SFO\"],\n        [\"SFO\", \"SAN\"],\n        [\"SAN\", \"EYW\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, twelfthRoutes, STARTING_AIRPORT)\n      try assertEqual(6, result)\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      let thirteenthRoutes = [\n        [\"DSM\", \"ORD\"],\n        [\"ORD\", \"BGI\"],\n        [\"BGI\", \"LGA\"],\n        [\"SIN\", \"CDG\"],\n        [\"CDG\", \"DEL\"],\n        [\"DEL\", \"DOH\"],\n        [\"DOH\", \"SIN\"],\n        [\"EWR\", \"HND\"],\n        [\"HND\", \"ICN\"],\n        [\"ICN\", \"JFK\"],\n        [\"JFK\", \"LGA\"],\n        [\"EYW\", \"LHR\"],\n        [\"LHR\", \"SFO\"],\n        [\"SFO\", \"SAN\"],\n        [\"SFO\", \"ORD\"],\n        [\"SAN\", \"EYW\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, thirteenthRoutes, STARTING_AIRPORT)\n      try assertEqual(6, result)\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      let fourteenthRoutes = [\n        [\"DSM\", \"ORD\"],\n        [\"ORD\", \"BGI\"],\n        [\"BGI\", \"LGA\"],\n        [\"SIN\", \"CDG\"],\n        [\"CDG\", \"DEL\"],\n        [\"DEL\", \"DOH\"],\n        [\"DOH\", \"SIN\"],\n        [\"EWR\", \"HND\"],\n        [\"HND\", \"ICN\"],\n        [\"ICN\", \"JFK\"],\n        [\"JFK\", \"LGA\"],\n        [\"EYW\", \"LHR\"],\n        [\"LHR\", \"SFO\"],\n        [\"SFO\", \"SAN\"],\n        [\"SFO\", \"DSM\"],\n        [\"SAN\", \"EYW\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, fourteenthRoutes, STARTING_AIRPORT)\n      try assertEqual(5, result)\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      let fifteenthRoutes = [\n        [\"DSM\", \"ORD\"],\n        [\"ORD\", \"BGI\"],\n        [\"BGI\", \"LGA\"],\n        [\"SIN\", \"CDG\"],\n        [\"CDG\", \"SIN\"],\n        [\"CDG\", \"BUD\"],\n        [\"DEL\", \"DOH\"],\n        [\"DEL\", \"CDG\"],\n        [\"TLV\", \"DEL\"],\n        [\"EWR\", \"HND\"],\n        [\"HND\", \"ICN\"],\n        [\"HND\", \"JFK\"],\n        [\"ICN\", \"JFK\"],\n        [\"JFK\", \"LGA\"],\n        [\"EYW\", \"LHR\"],\n        [\"LHR\", \"SFO\"],\n        [\"SFO\", \"SAN\"],\n        [\"SFO\", \"DSM\"],\n        [\"SAN\", \"EYW\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, fifteenthRoutes, STARTING_AIRPORT)\n      try assertEqual(3, result)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nlet STARTING_AIRPORT = \"LGA\"\n\nlet AIRPORTS = [\n  \"BGI\",\n  \"CDG\",\n  \"DEL\",\n  \"DOH\",\n  \"DSM\",\n  \"EWR\",\n  \"EYW\",\n  \"HND\",\n  \"ICN\",\n  \"JFK\",\n  \"LGA\",\n  \"LHR\",\n  \"ORD\",\n  \"SAN\",\n  \"SFO\",\n  \"SIN\",\n  \"TLV\",\n  \"BUD\",\n]\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let fifteenthRoutes = [\n        [\"DSM\", \"ORD\"],\n        [\"ORD\", \"BGI\"],\n        [\"BGI\", \"LGA\"],\n        [\"SIN\", \"CDG\"],\n        [\"CDG\", \"SIN\"],\n        [\"CDG\", \"BUD\"],\n        [\"DEL\", \"DOH\"],\n        [\"DEL\", \"CDG\"],\n        [\"TLV\", \"DEL\"],\n        [\"EWR\", \"HND\"],\n        [\"HND\", \"ICN\"],\n        [\"HND\", \"JFK\"],\n        [\"ICN\", \"JFK\"],\n        [\"JFK\", \"LGA\"],\n        [\"EYW\", \"LHR\"],\n        [\"LHR\", \"SFO\"],\n        [\"SFO\", \"SAN\"],\n        [\"SFO\", \"DSM\"],\n        [\"SAN\", \"EYW\"],\n      ]\n      let result = program.airportConnections(AIRPORTS, fifteenthRoutes, STARTING_AIRPORT)\n      try assertEqual(3, result)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(a * (a + r) + (a + r) + alog(a)) time | O(a + r) space\n  func airportConnections(_ airports: [String], _ routes: [[String]], _ startingAirport: String) -> Int {\n    var airportGraph = createAirportGraph(airports, routes)\n    var unreachableAirportNodes = getUnreachableAirportNodes(airports, &airportGraph, startingAirport)\n    addChildrenToUnreachableAirportNodes(airportGraph, unreachableAirportNodes)\n\n    return getMinimumNumberOfNewConnections(&airportGraph, &unreachableAirportNodes)\n  }\n\n  // O(a + r) time | O(a + r) space\n  func createAirportGraph(_ airports: [String], _ routes: [[String]]) -> [String: AirportNode] {\n    var airportGraph = [String: AirportNode]()\n\n    for airportCode in airports {\n      airportGraph[airportCode] = AirportNode(airportCode)\n    }\n\n    for route in routes {\n      let origin = route[0]\n      let destination = route[1]\n\n      if let airportNode = airportGraph[origin] {\n        airportNode.directConnections.append(destination)\n        airportGraph[origin] = airportNode\n      }\n    }\n\n    return airportGraph\n  }\n\n  // O(a + r) time | O(a) space\n  func getUnreachableAirportNodes(_ airports: [String], _ airportsGraph: inout [String: AirportNode], _ startingAirport: String) -> [AirportNode] {\n    var visitedAirports = [String: Bool]()\n    depthFirstTraverseAirports(airportsGraph, startingAirport, &visitedAirports)\n\n    var unreachableAirportNodes = [AirportNode]()\n    for airportCode in airports {\n      if visitedAirports.keys.contains(airportCode) {\n        continue\n      }\n\n      if let airportNode = airportsGraph[airportCode] {\n        airportNode.isReachable = false\n        airportsGraph[airportCode] = airportNode\n        unreachableAirportNodes.append(airportNode)\n      }\n    }\n\n    return unreachableAirportNodes\n  }\n\n  func depthFirstTraverseAirports(_ airportsGraph: [String: AirportNode], _ airport: String, _ visitedAirports: inout [String: Bool]) {\n    if visitedAirports.keys.contains(airport) {\n      return\n    }\n\n    visitedAirports[airport] = true\n\n    if let airportNode = airportsGraph[airport] {\n      let directConnections = airportNode.directConnections\n\n      for connection in directConnections {\n        depthFirstTraverseAirports(airportsGraph, connection, &visitedAirports)\n      }\n    }\n  }\n\n  // O(a * (a + r)) time | O(a) space\n  func addChildrenToUnreachableAirportNodes(_ airportsGraph: [String: AirportNode], _ unreachableAirportNodes: [AirportNode]) {\n    for airportNode in unreachableAirportNodes {\n      var visitedAirports = [String: Bool]()\n      var childConnections = [String]()\n      let airportCode = airportNode.airportCode\n\n      depthFirstAddChildConnections(airportCode, airportsGraph, &visitedAirports, &childConnections)\n      airportNode.allChildConnections = childConnections\n    }\n  }\n\n  func depthFirstAddChildConnections(_ airportCode: String, _ airportsGraph: [String: AirportNode], _ visitedAirports: inout [String: Bool], _ childConnections: inout [String]) {\n    if visitedAirports.keys.contains(airportCode) {\n      return\n    }\n\n    if let airportNode = airportsGraph[airportCode], airportNode.isReachable {\n      return\n    }\n\n    visitedAirports[airportCode] = true\n    childConnections.append(airportCode)\n\n    if let airportNode = airportsGraph[airportCode] {\n      let directConnections = airportNode.directConnections\n\n      for connection in directConnections {\n        depthFirstAddChildConnections(connection, airportsGraph, &visitedAirports, &childConnections)\n      }\n    }\n  }\n\n  // O(alog(a) + a + r) time | O(1) space\n  func getMinimumNumberOfNewConnections(_ airportGraph: inout [String: AirportNode], _ unreachableAirportNodes: inout [AirportNode]) -> Int {\n    var numberOfNewConnections = 0\n    unreachableAirportNodes = unreachableAirportNodes.sorted(by: { $0.allChildConnections.count > $1.allChildConnections.count })\n\n    for airportNode in unreachableAirportNodes {\n      if airportNode.isReachable {\n        continue\n      }\n\n      numberOfNewConnections += 1\n\n      for child in airportNode.allChildConnections {\n        if let airportNode = airportGraph[child] {\n          airportNode.isReachable = true\n          airportGraph[child] = airportNode\n        }\n      }\n    }\n\n    return numberOfNewConnections\n  }\n\n  class AirportNode {\n    let airportCode: String\n    var isReachable = true\n    var directConnections = [String]()\n    var allChildConnections = [String]()\n\n    init(_ airportCode: String) {\n      self.airportCode = airportCode\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function airportConnections(airports: string[], routes: [string, string][], startingAirport: string) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nconst AIRPORTS = [\n  'BGI',\n  'CDG',\n  'DEL',\n  'DOH',\n  'DSM',\n  'EWR',\n  'EYW',\n  'HND',\n  'ICN',\n  'JFK',\n  'LGA',\n  'LHR',\n  'ORD',\n  'SAN',\n  'SFO',\n  'SIN',\n  'TLV',\n  'BUD',\n];\n\nconst STARTING_AIRPORT = 'LGA';\n\nit('Test Case #1', function () {\n  const routes: [string, string][] = [\n    ['DSM', 'ORD'],\n    ['ORD', 'BGI'],\n    ['BGI', 'LGA'],\n    ['SIN', 'CDG'],\n    ['CDG', 'SIN'],\n    ['CDG', 'BUD'],\n    ['DEL', 'DOH'],\n    ['DEL', 'CDG'],\n    ['TLV', 'DEL'],\n    ['EWR', 'HND'],\n    ['HND', 'ICN'],\n    ['HND', 'JFK'],\n    ['ICN', 'JFK'],\n    ['JFK', 'LGA'],\n    ['EYW', 'LHR'],\n    ['LHR', 'SFO'],\n    ['SFO', 'SAN'],\n    ['SFO', 'DSM'],\n    ['SAN', 'EYW'],\n  ];\n  chai.expect(program.airportConnections(AIRPORTS, routes, STARTING_AIRPORT)).to.deep.equal(3);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface AirportGraph {\n  [key: string]: AirportNode;\n}\n\ninterface VisitedAirports {\n  [key: string]: boolean;\n}\n\n// O(a * (a + r) + a + r + alog(a)) time | O(a + r) space - where a is the number of airports and r is the number of routes\nexport function airportConnections(airports: string[], routes: [string, string][], startingAirport: string): number {\n  const airportGraph = createAirportGraph(airports, routes);\n  const unreachableAirportNodes = getUnreachableAirportNodes(airportGraph, airports, startingAirport);\n  markUnreachableConnections(airportGraph, unreachableAirportNodes);\n  return getMinNumberOfNewConnections(airportGraph, unreachableAirportNodes);\n}\n\n// O(a + r) time | O(a + r) space\nfunction createAirportGraph(airports: string[], routes: [string, string][]) {\n  const airportGraph: AirportGraph = {};\n  for (const airport of airports) {\n    airportGraph[airport] = new AirportNode(airport);\n  }\n  for (const route of routes) {\n    const [airport, connection] = route;\n    airportGraph[airport].connections.push(connection);\n  }\n  return airportGraph;\n}\n\n// O(a + r) time | O(a) space\nfunction getUnreachableAirportNodes(airportGraph: AirportGraph, airports: string[], startingAirport: string) {\n  const visitedAirports: VisitedAirports = {};\n  depthFirstTraverseAirports(airportGraph, startingAirport, visitedAirports);\n\n  const unreachableAirportNodes: AirportNode[] = [];\n  for (const airport of airports) {\n    if (airport in visitedAirports) continue;\n    const airportNode = airportGraph[airport];\n    airportNode.isReachable = false;\n    unreachableAirportNodes.push(airportNode);\n  }\n  return unreachableAirportNodes;\n}\n\nfunction depthFirstTraverseAirports(airportGraph: AirportGraph, airport: string, visitedAirports: VisitedAirports) {\n  if (airport in visitedAirports) return;\n  visitedAirports[airport] = true;\n  const {connections} = airportGraph[airport];\n  for (const connection of connections) {\n    depthFirstTraverseAirports(airportGraph, connection, visitedAirports);\n  }\n}\n\n// O(a * (a + r)) time | O(a) space\nfunction markUnreachableConnections(airportGraph: AirportGraph, unreachableAirportNodes: AirportNode[]) {\n  for (const airportNode of unreachableAirportNodes) {\n    const {airport} = airportNode;\n    const unreachableConnections: string[] = [];\n    depthFirstAddUnreachableConnections(airportGraph, airport, unreachableConnections, {});\n    airportNode.unreachableConnections = unreachableConnections;\n  }\n}\n\nfunction depthFirstAddUnreachableConnections(\n  airportGraph: AirportGraph,\n  airport: string,\n  unreachableConnections: string[],\n  visitedAirports: VisitedAirports,\n) {\n  if (airportGraph[airport].isReachable) return;\n  if (airport in visitedAirports) return;\n  visitedAirports[airport] = true;\n  unreachableConnections.push(airport);\n  const {connections} = airportGraph[airport];\n  for (const connection of connections) {\n    depthFirstAddUnreachableConnections(airportGraph, connection, unreachableConnections, visitedAirports);\n  }\n}\n\n// O(alog(a) + a + r) time | O(1) space\nfunction getMinNumberOfNewConnections(airportGraph: AirportGraph, unreachableAirportNodes: AirportNode[]) {\n  unreachableAirportNodes.sort((a1, a2) => a2.unreachableConnections.length - a1.unreachableConnections.length);\n\n  let numberOfNewConnections = 0;\n  for (const airportNode of unreachableAirportNodes) {\n    if (airportNode.isReachable) continue;\n    numberOfNewConnections++;\n    for (const connection of airportNode.unreachableConnections) {\n      airportGraph[connection].isReachable = true;\n    }\n  }\n  return numberOfNewConnections;\n}\n\nclass AirportNode {\n  airport: string;\n  connections: string[];\n  isReachable: boolean;\n  unreachableConnections: string[];\n\n  constructor(airport: string) {\n    this.airport = airport;\n    this.connections = [];\n    this.isReachable = true;\n    this.unreachableConnections = [];\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "ORD",
+          "BGI"
+        ],
+        [
+          "BGI",
+          "LGA"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "CDG",
+          "SIN"
+        ],
+        [
+          "CDG",
+          "BUD"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DEL",
+          "CDG"
+        ],
+        [
+          "TLV",
+          "DEL"
+        ],
+        [
+          "EWR",
+          "HND"
+        ],
+        [
+          "HND",
+          "ICN"
+        ],
+        [
+          "HND",
+          "JFK"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "EYW",
+          "LHR"
+        ],
+        [
+          "LHR",
+          "SFO"
+        ],
+        [
+          "SFO",
+          "SAN"
+        ],
+        [
+          "SFO",
+          "DSM"
+        ],
+        [
+          "SAN",
+          "EYW"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "LGA",
+          "ORD"
+        ],
+        [
+          "LGA",
+          "EYW"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "LGA",
+          "EYW"
+        ],
+        [
+          "EYW",
+          "JFK"
+        ],
+        [
+          "EYW",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "ICN"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "LGA",
+          "EYW"
+        ],
+        [
+          "EYW",
+          "JFK"
+        ],
+        [
+          "EYW",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "ICN"
+        ],
+        [
+          "LGA",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "ORD"
+        ],
+        [
+          "ICN",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "DSM"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "LGA",
+          "EYW"
+        ],
+        [
+          "EYW",
+          "JFK"
+        ],
+        [
+          "EYW",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "ICN"
+        ],
+        [
+          "LGA",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "ORD"
+        ],
+        [
+          "ICN",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "DSM"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "ORD",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "HND"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "LGA",
+          "EYW"
+        ],
+        [
+          "EYW",
+          "JFK"
+        ],
+        [
+          "EYW",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "ICN"
+        ],
+        [
+          "LGA",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "ORD"
+        ],
+        [
+          "ICN",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "DSM"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "ORD",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "HND"
+        ],
+        [
+          "SFO",
+          "SIN"
+        ],
+        [
+          "SFO",
+          "CDG"
+        ],
+        [
+          "SFO",
+          "LHR"
+        ],
+        [
+          "LHR",
+          "DEL"
+        ],
+        [
+          "DEL",
+          "BGI"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DOH",
+          "SAN"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "EYW",
+          "JFK"
+        ],
+        [
+          "EYW",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "ICN"
+        ],
+        [
+          "LGA",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "ORD"
+        ],
+        [
+          "ICN",
+          "EWR"
+        ],
+        [
+          "JFK",
+          "DSM"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "ORD",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "HND"
+        ],
+        [
+          "SFO",
+          "SIN"
+        ],
+        [
+          "SFO",
+          "CDG"
+        ],
+        [
+          "SFO",
+          "LHR"
+        ],
+        [
+          "LHR",
+          "DEL"
+        ],
+        [
+          "DEL",
+          "BGI"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DOH",
+          "SAN"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "SIN",
+          "BGI"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "SIN",
+          "DEL"
+        ],
+        [
+          "SIN",
+          "DOH"
+        ],
+        [
+          "SIN",
+          "DSM"
+        ],
+        [
+          "SIN",
+          "EWR"
+        ],
+        [
+          "SIN",
+          "EYW"
+        ],
+        [
+          "SIN",
+          "HND"
+        ],
+        [
+          "SIN",
+          "ICN"
+        ],
+        [
+          "SIN",
+          "JFK"
+        ],
+        [
+          "SIN",
+          "LHR"
+        ],
+        [
+          "SIN",
+          "ORD"
+        ],
+        [
+          "SFO",
+          "SIN"
+        ],
+        [
+          "SFO",
+          "SAN"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "SIN",
+          "BGI"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "CDG",
+          "DEL"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DEL",
+          "CDG"
+        ],
+        [
+          "DEL",
+          "EWR"
+        ],
+        [
+          "HND",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "SFO"
+        ],
+        [
+          "EYW",
+          "LHR"
+        ],
+        [
+          "SFO",
+          "ORD"
+        ],
+        [
+          "SFO",
+          "LGA"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "SIN",
+          "BGI"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "CDG",
+          "DEL"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DEL",
+          "CDG"
+        ],
+        [
+          "DEL",
+          "EWR"
+        ],
+        [
+          "HND",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "SFO"
+        ],
+        [
+          "EYW",
+          "LHR"
+        ],
+        [
+          "SFO",
+          "ORD"
+        ],
+        [
+          "SFO",
+          "LGA"
+        ],
+        [
+          "SFO",
+          "SIN"
+        ],
+        [
+          "CDG",
+          "EYW"
+        ],
+        [
+          "LGA",
+          "SAN"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "LGA",
+          "DSM"
+        ],
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "SIN",
+          "BGI"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "CDG",
+          "DEL"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DEL",
+          "CDG"
+        ],
+        [
+          "DEL",
+          "EWR"
+        ],
+        [
+          "HND",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "JFK",
+          "SFO"
+        ],
+        [
+          "EYW",
+          "LHR"
+        ],
+        [
+          "SFO",
+          "ORD"
+        ],
+        [
+          "SFO",
+          "LGA"
+        ],
+        [
+          "SFO",
+          "SIN"
+        ],
+        [
+          "CDG",
+          "EYW"
+        ],
+        [
+          "ORD",
+          "HND"
+        ],
+        [
+          "HND",
+          "SAN"
+        ],
+        [
+          "LGA",
+          "TLV"
+        ],
+        [
+          "LGA",
+          "BUD"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "ORD",
+          "BGI"
+        ],
+        [
+          "BGI",
+          "LGA"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "CDG",
+          "DEL"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DOH",
+          "SIN"
+        ],
+        [
+          "EWR",
+          "HND"
+        ],
+        [
+          "HND",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "EYW",
+          "LHR"
+        ],
+        [
+          "LHR",
+          "SFO"
+        ],
+        [
+          "SFO",
+          "SAN"
+        ],
+        [
+          "SAN",
+          "EYW"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "ORD",
+          "BGI"
+        ],
+        [
+          "BGI",
+          "LGA"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "CDG",
+          "DEL"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DOH",
+          "SIN"
+        ],
+        [
+          "EWR",
+          "HND"
+        ],
+        [
+          "HND",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "EYW",
+          "LHR"
+        ],
+        [
+          "LHR",
+          "SFO"
+        ],
+        [
+          "SFO",
+          "SAN"
+        ],
+        [
+          "SFO",
+          "ORD"
+        ],
+        [
+          "SAN",
+          "EYW"
+        ]
+      ],
+      "startingAirport": "LGA"
+    },
+    {
+      "airports": [
+        "BGI",
+        "CDG",
+        "DEL",
+        "DOH",
+        "DSM",
+        "EWR",
+        "EYW",
+        "HND",
+        "ICN",
+        "JFK",
+        "LGA",
+        "LHR",
+        "ORD",
+        "SAN",
+        "SFO",
+        "SIN",
+        "TLV",
+        "BUD"
+      ],
+      "routes": [
+        [
+          "DSM",
+          "ORD"
+        ],
+        [
+          "ORD",
+          "BGI"
+        ],
+        [
+          "BGI",
+          "LGA"
+        ],
+        [
+          "SIN",
+          "CDG"
+        ],
+        [
+          "CDG",
+          "DEL"
+        ],
+        [
+          "DEL",
+          "DOH"
+        ],
+        [
+          "DOH",
+          "SIN"
+        ],
+        [
+          "EWR",
+          "HND"
+        ],
+        [
+          "HND",
+          "ICN"
+        ],
+        [
+          "ICN",
+          "JFK"
+        ],
+        [
+          "JFK",
+          "LGA"
+        ],
+        [
+          "EYW",
+          "LHR"
+        ],
+        [
+          "LHR",
+          "SFO"
+        ],
+        [
+          "SFO",
+          "SAN"
+        ],
+        [
+          "SFO",
+          "DSM"
+        ],
+        [
+          "SAN",
+          "EYW"
+        ]
+      ],
+      "startingAirport": "LGA"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      3,
+      17,
+      14,
+      11,
+      11,
+      10,
+      3,
+      4,
+      3,
+      6,
+      3,
+      0,
+      6,
+      6,
+      5
+    ]
+  ]
+}

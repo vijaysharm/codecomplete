@@ -1,0 +1,1062 @@
+{
+  "Summary": {
+    "Name": "Right Sibling Tree",
+    "Category": "Binary Trees",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "date": "2020-03-29T00:00:00Z",
+      "number": 362,
+      "timeOne": 0,
+      "timeTwo": 1658,
+      "url": "https://player.vimeo.com/video/401287346"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try to identify a pattern or formula that determines how to reach a given node's right sibling.\nThere are two patterns: if a node is the left child of another node, its right sibling is its parent's right child; if a node is the right child of another node, its right sibling is its parent's right sibling's left child.\nYou'll need to a find a way to quickly access a node's parent's right child and a node's parent's right sibling; this won't be trivial because the second one implies that the parent node's original right pointer has been overwritten.\nRecursively traverse the binary tree and sequence the transformation operations as follows: at any given node, recursively transform its left subtree into a right sibling tree, then edit the given node's right pointer to point to its right sibling, and then finally recursively transform its right subtree into a right sibling tree. This sequencing of operations will allow left child nodes to always access their parent's right child (before their parent's right pointer gets overwritten to point to the parent's right sibling) and will allow right child nodes to always access their parent's right sibling (after their parent's right pointer has gotten overwritten to point to the parent's right sibling).",
+  "SpaceTime": "O(n) time | O(d) space - where n is the number of nodes in the Binary Tree and d is the depth (height) of the Binary Tree",
+  "PromptHTML": "<p>\n  Write a function that takes in a Binary Tree, transforms it into a Right\n  Sibling Tree, and returns its root.\n</p>\n<p>\n  A Right Sibling Tree is obtained by making every node in a Binary Tree have\n  its <span>right</span> property point to its right sibling (the node\n  immediately to its right on the same level) instead of its right child.\n</p>\n<p>\n  Note that once the transformation is complete, some nodes might no longer have\n  a node pointing to them. For example, in the sample output below, the node\n  with value <span>10</span> no longer has any inbound pointers and is\n  effectively unreachable.\n</p>\n<p>\n  The transformation should be done in place, meaning that the original data\n  structure should be mutated (no new structure should be created).\n</p>\n<p>\n  Each <span>BinaryTree</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. Children\n  nodes can either be <span>BinaryTree</span> nodes themselves or\n  <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> =     1\n      /         \\\n     2           3\n   /   \\       /   \\\n  4     5     6     7\n / \\     \\   /     / \\\n8   9    10 11    12 13\n           /\n          14\n</pre>\n<h3>Sample Output</h3>\n<pre>\n           1 <span class=\"CodeEditor-promptComment\">// the root node with value 1</span>\n      /\n     2-----------3\n   /           /\n  4-----5-----6-----7\n /           /     /\n8---9    10-11    12-13 <span class=\"CodeEditor-promptComment\">// the node with value 10 no longer has a node pointing to it</span>\n           /\n          14\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "10",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": "11",
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": "12",
+            "right": "13",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "11",
+            "left": "14",
+            "right": null,
+            "value": 11
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          }
+        ],
+        "root": "1"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>left</span> and <span>right</span>\npointers and by the <span>root</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\n// This is the class of the input root. Do not edit it.\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left = NULL;\n  BinaryTree *right = NULL;\n\n  BinaryTree(int value);\n};\n\nBinaryTree *rightSiblingTree(BinaryTree *root) {\n  // Write your code here.\n  return root;\n}\n",
+      "StartingTest": "#include <queue>\n\nBinaryTree::BinaryTree(int value) { this->value = value; }\n\nBinaryTree *insertBinaryTree(BinaryTree *tree, vector<int> values);\nvector<int> getDfsOrder(BinaryTree *tree);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2});\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1, 2};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3});\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1, 2, 3};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4});\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1, 2, 4, 3};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5});\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1, 2, 4, 5, 3};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6});\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1, 2, 4, 5, 6, 3, 6};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6});\n      root->left->right->left = new BinaryTree(7);\n      root->left->right->right = new BinaryTree(8);\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1, 2, 4, 5, 7, 8, 6, 3, 6};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6, 7, 8, 9});\n      root->left->right->right = new BinaryTree(10);\n      root->right->left->left = new BinaryTree(11);\n      root->right->right->left = new BinaryTree(12);\n      root->right->right->right = new BinaryTree(13);\n      root->right->left->left->left = new BinaryTree(14);\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1,  2,  4, 8, 9,  5,  6, 11, 14, 7,\n                              12, 13, 3, 6, 11, 14, 7, 12, 13};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1,  2,  4,  8,  9,  10, 11, 12, 13, 14, 15, 5,\n                              10, 11, 12, 13, 14, 15, 6,  12, 13, 14, 15, 7,\n                              14, 15, 3,  6,  12, 13, 14, 15, 7,  14, 15};\n      assert(expected == actual);\n    });\n  }\n};\n\nBinaryTree *insertBinaryTree(BinaryTree *tree, vector<int> values) {\n  if (values.size() == 0)\n    return tree;\n\n  queue<BinaryTree *> nodesQueue({tree});\n  while (nodesQueue.size() > 0) {\n    BinaryTree *current = nodesQueue.front();\n    nodesQueue.pop();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[0]);\n      break;\n    }\n    nodesQueue.push(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[0]);\n      break;\n    }\n    nodesQueue.push(current->right);\n  }\n\n  values.erase(values.begin());\n  return insertBinaryTree(tree, values);\n}\n\nvector<int> getDfsOrder(BinaryTree *tree) {\n  vector<int> values = {tree->value};\n  if (tree->left != NULL) {\n    auto sub = getDfsOrder(tree->left);\n    values.insert(values.end(), sub.begin(), sub.end());\n  }\n  if (tree->right != NULL) {\n    auto sub = getDfsOrder(tree->right);\n    values.insert(values.end(), sub.begin(), sub.end());\n  }\n  return values;\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <queue>\n\nBinaryTree::BinaryTree(int value) { this->value = value; }\n\nBinaryTree *insertBinaryTree(BinaryTree *tree, vector<int> values);\nvector<int> getDfsOrder(BinaryTree *tree);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6, 7, 8, 9});\n      root->left->right->right = new BinaryTree(10);\n      root->right->left->left = new BinaryTree(11);\n      root->right->right->left = new BinaryTree(12);\n      root->right->right->right = new BinaryTree(13);\n      root->right->left->left->left = new BinaryTree(14);\n      BinaryTree *mutatedRoot = rightSiblingTree(root);\n      vector<int> actual = getDfsOrder(mutatedRoot);\n      vector<int> expected = {1,  2,  4, 8, 9,  5,  6, 11, 14, 7,\n                              12, 13, 3, 6, 11, 14, 7, 12, 13};\n      assert(expected == actual);\n    });\n  }\n};\n\nBinaryTree *insertBinaryTree(BinaryTree *tree, vector<int> values) {\n  if (values.size() == 0)\n    return tree;\n\n  queue<BinaryTree *> nodesQueue({tree});\n  while (nodesQueue.size() > 0) {\n    BinaryTree *current = nodesQueue.front();\n    nodesQueue.pop();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[0]);\n      break;\n    }\n    nodesQueue.push(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[0]);\n      break;\n    }\n    nodesQueue.push(current->right);\n  }\n\n  values.erase(values.begin());\n  return insertBinaryTree(tree, values);\n}\n\nvector<int> getDfsOrder(BinaryTree *tree) {\n  vector<int> values = {tree->value};\n  if (tree->left != NULL) {\n    auto sub = getDfsOrder(tree->left);\n    values.insert(values.end(), sub.begin(), sub.end());\n  }\n  if (tree->right != NULL) {\n    auto sub = getDfsOrder(tree->right);\n    values.insert(values.end(), sub.begin(), sub.end());\n  }\n  return values;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left = NULL;\n  BinaryTree *right = NULL;\n\n  BinaryTree(int value);\n};\n\nvoid mutate(BinaryTree *node, BinaryTree *parent, bool isLeftChild);\n\n// O(n) time | O(d) space - where n is the number of nodes in the Binary Tree\n// and d is the depth (height) of the Binary Tree\nBinaryTree *rightSiblingTree(BinaryTree *root) {\n  mutate(root, NULL, false);\n  return root;\n}\n\nvoid mutate(BinaryTree *node, BinaryTree *parent, bool isLeftChild) {\n  if (node == NULL)\n    return;\n\n  auto left = node->left;\n  auto right = node->right;\n  mutate(left, node, true);\n  if (parent == NULL) {\n    node->right = NULL;\n  } else if (isLeftChild) {\n    node->right = parent->right;\n  } else {\n    if (parent->right == NULL) {\n      node->right = NULL;\n    } else {\n      node->right = parent->right->left;\n    }\n  }\n  mutate(right, node, false);\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static BinaryTree RightSiblingTree(BinaryTree root) {\n\t\t// Write your code here.\n\t\treturn root;\n\t}\n\n\t// This is the class of the input root. Do not edit it.\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left = null;\n\t\tpublic BinaryTree right = null;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2});\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3});\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4});\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 4, 3\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5});\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 4, 5, 3\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6});\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 4, 5, 6, 3, 6\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6});\n\t\troot.left.right.left = new Program.BinaryTree(7);\n\t\troot.left.right.right = new Program.BinaryTree(8);\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 4, 5, 7, 8, 6, 3, 6\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6, 7, 8, 9});\n\t\troot.left.right.right = new Program.BinaryTree(10);\n\t\troot.right.left.left = new Program.BinaryTree(11);\n\t\troot.right.right.left = new Program.BinaryTree(12);\n\t\troot.right.right.right = new Program.BinaryTree(13);\n\t\troot.right.left.left.left = new Program.BinaryTree(14);\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 4, 8, 9, 10, 11, 12, 13, 14, 15, 5,\n\t\t\t10, 11, 12, 13, 14, 15, 6, 12, 13, 14, 15, 7, 14, 15,\n\t\t\t3, 6, 12, 13, 14, 15, 7, 14, 15\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\tpublic void insert(Program.BinaryTree root, int[] values) {\n\t\tinsert(root, values, 0);\n\t}\n\n\tpublic void insert(Program.BinaryTree root, int[] values, int i) {\n\t\tif (i >= values.Length) {\n\t\t\treturn;\n\t\t}\n\t\tQueue<Program.BinaryTree> queue = new Queue<Program.BinaryTree>();\n\t\tqueue.Enqueue(root);\n\t\twhile (queue.Count > 0) {\n\t\t\tProgram.BinaryTree current = queue.Dequeue();\n\t\t\tif (current.left == null) {\n\t\t\t\tcurrent.left = new Program.BinaryTree(values[i]);\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tqueue.Enqueue(current.left);\n\t\t\tif (current.right == null) {\n\t\t\t\tcurrent.right = new Program.BinaryTree(values[i]);\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tqueue.Enqueue(current.right);\n\t\t}\n\t\tinsert(root, values, i + 1);\n\t}\n\n\tpublic List<int> getDfsOrder(Program.BinaryTree tree) {\n\t\tList<int> values = new List<int>();\n\t\tvalues.Add(tree.value);\n\t\tif (tree.left != null) {\n\t\t\tvalues.AddRange(getDfsOrder(tree.left));\n\t\t}\n\t\tif (tree.right != null) {\n\t\t\tvalues.AddRange(getDfsOrder(tree.right));\n\t\t}\n\t\treturn values;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6, 7, 8, 9});\n\t\troot.left.right.right = new Program.BinaryTree(10);\n\t\troot.right.left.left = new Program.BinaryTree(11);\n\t\troot.right.right.left = new Program.BinaryTree(12);\n\t\troot.right.right.right = new Program.BinaryTree(13);\n\t\troot.right.left.left.left = new Program.BinaryTree(14);\n\t\tProgram.BinaryTree mutatedRoot = Program.RightSiblingTree(root);\n\t\tList<int> actual = getDfsOrder(mutatedRoot);\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\tpublic void insert(Program.BinaryTree root, int[] values) {\n\t\tinsert(root, values, 0);\n\t}\n\n\tpublic void insert(Program.BinaryTree root, int[] values, int i) {\n\t\tif (i >= values.Length) {\n\t\t\treturn;\n\t\t}\n\t\tQueue<Program.BinaryTree> queue = new Queue<Program.BinaryTree>();\n\t\tqueue.Enqueue(root);\n\t\twhile (queue.Count > 0) {\n\t\t\tProgram.BinaryTree current = queue.Dequeue();\n\t\t\tif (current.left == null) {\n\t\t\t\tcurrent.left = new Program.BinaryTree(values[i]);\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tqueue.Enqueue(current.left);\n\t\t\tif (current.right == null) {\n\t\t\t\tcurrent.right = new Program.BinaryTree(values[i]);\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tqueue.Enqueue(current.right);\n\t\t}\n\t\tinsert(root, values, i + 1);\n\t}\n\n\tpublic List<int> getDfsOrder(Program.BinaryTree tree) {\n\t\tList<int> values = new List<int>();\n\t\tvalues.Add(tree.value);\n\t\tif (tree.left != null) {\n\t\t\tvalues.AddRange(getDfsOrder(tree.left));\n\t\t}\n\t\tif (tree.right != null) {\n\t\t\tvalues.AddRange(getDfsOrder(tree.right));\n\t\t}\n\t\treturn values;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(d) space - where n is the number of nodes in\n\t// the Binary Tree and d is the depth (height) of the Binary Tree\n\tpublic static BinaryTree RightSiblingTree(BinaryTree root) {\n\t\tmutate(root, null, false);\n\t\treturn root;\n\t}\n\n\tpublic static void mutate(BinaryTree node, BinaryTree parent, bool isLeftChild) {\n\t\tif (node == null) return;\n\n\t\tvar left = node.left;\n\t\tvar right = node.right;\n\t\tmutate(left, node, true);\n\t\tif (parent == null) {\n\t\t\tnode.right = null;\n\t\t} else if (isLeftChild) {\n\t\t\tnode.right = parent.right;\n\t\t} else{\n\t\t\tif (parent.right == null) {\n\t\t\t\tnode.right = null;\n\t\t\t} else {\n\t\t\t\tnode.right = parent.right.left;\n\t\t\t}\n\t\t}\n\t\tmutate(right, node, false);\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left = null;\n\t\tpublic BinaryTree right = null;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\n// This is the class of the input root. Do not edit it.\ntype BinaryTree struct {\n\tValue int\n\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\nfunc RightSiblingTree(root *BinaryTree) *BinaryTree {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBinaryTree(value int) *BinaryTree {\n\treturn &BinaryTree{Value: value}\n}\n\nfunc (tree *BinaryTree) insert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tvar current *BinaryTree\n\t\tqueue, current = queue[1:], queue[0]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\treturn tree\n\t\t}\n\t\tqueue = append(queue, current.Left)\n\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\treturn tree\n\t\t}\n\t\tqueue = append(queue, current.Right)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) insertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) getDfsOrder() []int {\n\tvals := []int{tree.Value}\n\tif tree.Left != nil {\n\t\tvals = append(vals, tree.Left.getDfsOrder()...)\n\t}\n\tif tree.Right != nil {\n\t\tvals = append(vals, tree.Right.getDfsOrder()...)\n\t}\n\treturn vals\n}\n\nfunc TestCase1(t *TestCase) {\n\troot := NewBinaryTree(1)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase2(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase3(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2, 3}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase4(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2, 4, 3}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase5(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2, 4, 5, 3}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase6(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2, 4, 5, 6, 3, 6}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase7(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6)\n\troot.Left.Right.Left = NewBinaryTree(7)\n\troot.Left.Right.Right = NewBinaryTree(8)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2, 4, 5, 7, 8, 6, 3, 6}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase8(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6, 7, 8, 9)\n\troot.Left.Right.Right = NewBinaryTree(10)\n\troot.Right.Left.Left = NewBinaryTree(11)\n\troot.Right.Right.Left = NewBinaryTree(12)\n\troot.Right.Right.Right = NewBinaryTree(13)\n\troot.Right.Left.Left.Left = NewBinaryTree(14)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase9(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2, 4, 8, 9, 10, 11, 12, 13, 14, 15, 5,\n\t\t10, 11, 12, 13, 14, 15, 6, 12, 13, 14, 15, 7, 14, 15,\n\t\t3, 6, 12, 13, 14, 15, 7, 14, 15}\n\trequire.Equal(t, expected, actual)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBinaryTree(value int) *BinaryTree {\n\treturn &BinaryTree{Value: value}\n}\n\nfunc (tree *BinaryTree) insert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tvar current *BinaryTree\n\t\tqueue, current = queue[1:], queue[0]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\treturn tree\n\t\t}\n\t\tqueue = append(queue, current.Left)\n\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\treturn tree\n\t\t}\n\t\tqueue = append(queue, current.Right)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) insertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) getDfsOrder() []int {\n\tvals := []int{tree.Value}\n\tif tree.Left != nil {\n\t\tvals = append(vals, tree.Left.getDfsOrder()...)\n\t}\n\tif tree.Right != nil {\n\t\tvals = append(vals, tree.Right.getDfsOrder()...)\n\t}\n\treturn vals\n}\n\nfunc TestCase1(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6, 7, 8, 9)\n\troot.Left.Right.Right = NewBinaryTree(10)\n\troot.Right.Left.Left = NewBinaryTree(11)\n\troot.Right.Right.Left = NewBinaryTree(12)\n\troot.Right.Right.Right = NewBinaryTree(13)\n\troot.Right.Left.Left.Left = NewBinaryTree(14)\n\tmutatedRoot := RightSiblingTree(root)\n\tactual := mutatedRoot.getDfsOrder()\n\texpected := []int{1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13}\n\trequire.Equal(t, expected, actual)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue int\n\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\n// O(n) time | O(d) space - where n is the number of nodes in\n// the Binary Tree and d is the depth (height) of the Binary Tree\nfunc RightSiblingTree(root *BinaryTree) *BinaryTree {\n\tmutate(root, nil, false)\n\treturn root\n}\n\nfunc mutate(node, parent *BinaryTree, isLeftChild bool) {\n\tif node == nil {\n\t\treturn\n\t}\n\n\tleft, right := node.Left, node.Right\n\tmutate(left, node, true)\n\tif parent == nil {\n\t\tnode.Right = nil\n\t} else if isLeftChild {\n\t\tnode.Right = parent.Right\n\t} else {\n\t\tif parent.Right == nil {\n\t\t\tnode.Right = nil\n\t\t} else {\n\t\t\tnode.Right = parent.Right.Left\n\t\t}\n\t}\n\tmutate(right, node, false)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static BinaryTree rightSiblingTree(BinaryTree root) {\n    // Write your code here.\n    return root;\n  }\n\n  // This is the class of the input root. Do not edit it.\n  static class BinaryTree {\n    int value;\n    BinaryTree left = null;\n    BinaryTree right = null;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase2() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2});\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1, 2);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase3() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3});\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1, 2, 3);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase4() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4});\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1, 2, 4, 3);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase5() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5});\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1, 2, 4, 5, 3);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase6() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6});\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1, 2, 4, 5, 6, 3, 6);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase7() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6});\n    root.left.right.left = new Program.BinaryTree(7);\n    root.left.right.right = new Program.BinaryTree(8);\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1, 2, 4, 5, 7, 8, 6, 3, 6);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase8() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6, 7, 8, 9});\n    root.left.right.right = new Program.BinaryTree(10);\n    root.right.left.left = new Program.BinaryTree(11);\n    root.right.right.left = new Program.BinaryTree(12);\n    root.right.right.right = new Program.BinaryTree(13);\n    root.right.left.left.left = new Program.BinaryTree(14);\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase9() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected =\n        Arrays.asList(\n            1, 2, 4, 8, 9, 10, 11, 12, 13, 14, 15, 5, 10, 11, 12, 13, 14, 15, 6, 12, 13, 14, 15, 7,\n            14, 15, 3, 6, 12, 13, 14, 15, 7, 14, 15);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  public void insert(Program.BinaryTree root, int[] values) {\n    insert(root, values, 0);\n  }\n\n  public void insert(Program.BinaryTree root, int[] values, int i) {\n    if (i >= values.length) {\n      return;\n    }\n    Deque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n    queue.addLast(root);\n    while (queue.size() > 0) {\n      Program.BinaryTree current = queue.pollFirst();\n      if (current.left == null) {\n        current.left = new Program.BinaryTree(values[i]);\n        break;\n      }\n      queue.addLast(current.left);\n      if (current.right == null) {\n        current.right = new Program.BinaryTree(values[i]);\n        break;\n      }\n      queue.addLast(current.right);\n    }\n    insert(root, values, i + 1);\n  }\n\n  public List<Integer> getDfsOrder(Program.BinaryTree tree) {\n    List<Integer> values = new ArrayList<Integer>();\n    values.add(tree.value);\n    if (tree.left != null) {\n      values.addAll(getDfsOrder(tree.left));\n    }\n    if (tree.right != null) {\n      values.addAll(getDfsOrder(tree.right));\n    }\n    return values;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6, 7, 8, 9});\n    root.left.right.right = new Program.BinaryTree(10);\n    root.right.left.left = new Program.BinaryTree(11);\n    root.right.right.left = new Program.BinaryTree(12);\n    root.right.right.right = new Program.BinaryTree(13);\n    root.right.left.left.left = new Program.BinaryTree(14);\n    Program.BinaryTree mutatedRoot = Program.rightSiblingTree(root);\n    List<Integer> actual = getDfsOrder(mutatedRoot);\n    var expected = Arrays.asList(1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  public void insert(Program.BinaryTree root, int[] values) {\n    insert(root, values, 0);\n  }\n\n  public void insert(Program.BinaryTree root, int[] values, int i) {\n    if (i >= values.length) {\n      return;\n    }\n    Deque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n    queue.addLast(root);\n    while (queue.size() > 0) {\n      Program.BinaryTree current = queue.pollFirst();\n      if (current.left == null) {\n        current.left = new Program.BinaryTree(values[i]);\n        break;\n      }\n      queue.addLast(current.left);\n      if (current.right == null) {\n        current.right = new Program.BinaryTree(values[i]);\n        break;\n      }\n      queue.addLast(current.right);\n    }\n    insert(root, values, i + 1);\n  }\n\n  public List<Integer> getDfsOrder(Program.BinaryTree tree) {\n    List<Integer> values = new ArrayList<Integer>();\n    values.add(tree.value);\n    if (tree.left != null) {\n      values.addAll(getDfsOrder(tree.left));\n    }\n    if (tree.right != null) {\n      values.addAll(getDfsOrder(tree.right));\n    }\n    return values;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(d) space - where n is the number of nodes in\n  // the Binary Tree and d is the depth (height) of the Binary Tree\n  public static BinaryTree rightSiblingTree(BinaryTree root) {\n    mutate(root, null, false);\n    return root;\n  }\n\n  public static void mutate(BinaryTree node, BinaryTree parent, boolean isLeftChild) {\n    if (node == null) return;\n\n    var left = node.left;\n    var right = node.right;\n    mutate(left, node, true);\n    if (parent == null) {\n      node.right = null;\n    } else if (isLeftChild) {\n      node.right = parent.right;\n    } else {\n      if (parent.right == null) {\n        node.right = null;\n      } else {\n        node.right = parent.right.left;\n      }\n    }\n    mutate(right, node, false);\n  }\n\n  static class BinaryTree {\n    int value;\n    BinaryTree left = null;\n    BinaryTree right = null;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// This is the class of the input root. Do not edit it.\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nfunction rightSiblingTree(root) {\n  // Write your code here.\n}\n\n// Do not edit the lines below.\nexports.BinaryTree = BinaryTree;\nexports.rightSiblingTree = rightSiblingTree;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nit('Test Case #2', function () {\n  const root = new BinaryTree(1).insert([2]);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1, 2];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nit('Test Case #3', function () {\n  const root = new BinaryTree(1).insert([2, 3]);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1, 2, 3];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nit('Test Case #4', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4]);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1, 2, 4, 3];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nit('Test Case #5', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5]);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1, 2, 4, 5, 3];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nit('Test Case #6', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6]);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1, 2, 4, 5, 6, 3, 6];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nit('Test Case #7', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6]);\n  root.left.right.left = new BinaryTree(7);\n  root.left.right.right = new BinaryTree(8);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1, 2, 4, 5, 7, 8, 6, 3, 6];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nit('Test Case #8', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9]);\n  root.left.right.right = new BinaryTree(10);\n  root.right.left.left = new BinaryTree(11);\n  root.right.right.left = new BinaryTree(12);\n  root.right.right.right = new BinaryTree(13);\n  root.right.left.left.left = new BinaryTree(14);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nit('Test Case #9', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [\n    1,\n    2,\n    4,\n    8,\n    9,\n    10,\n    11,\n    12,\n    13,\n    14,\n    15,\n    5,\n    10,\n    11,\n    12,\n    13,\n    14,\n    15,\n    6,\n    12,\n    13,\n    14,\n    15,\n    7,\n    14,\n    15,\n    3,\n    6,\n    12,\n    13,\n    14,\n    15,\n    7,\n    14,\n    15,\n  ];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nclass BinaryTree extends program.BinaryTree {\n  constructor(value) {\n    super(value);\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n\n  getDfsOrder(values) {\n    values.push(this.value);\n    if (this.left !== null) {\n      this.left.getDfsOrder(values);\n    }\n    if (this.right !== null) {\n      this.right.getDfsOrder(values);\n    }\n    return values;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9]);\n  root.left.right.right = new BinaryTree(10);\n  root.right.left.left = new BinaryTree(11);\n  root.right.right.left = new BinaryTree(12);\n  root.right.right.right = new BinaryTree(13);\n  root.right.left.left.left = new BinaryTree(14);\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = mutatedRoot.getDfsOrder([]);\n  const expected = [1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nclass BinaryTree extends program.BinaryTree {\n  constructor(value) {\n    super(value);\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n\n  getDfsOrder(values) {\n    values.push(this.value);\n    if (this.left !== null) {\n      this.left.getDfsOrder(values);\n    }\n    if (this.right !== null) {\n      this.right.getDfsOrder(values);\n    }\n    return values;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(d) space - where n is the number of nodes in the Binary Tree and d is the depth (height) of the Binary Tree\nfunction rightSiblingTree(root) {\n  mutate(root, null, null);\n  return root;\n}\n\nfunction mutate(node, parent, isLeftChild) {\n  if (node === null) return;\n  const {left, right} = node;\n  mutate(left, node, true);\n  if (parent === null) {\n    node.right = null;\n  } else if (isLeftChild) {\n    node.right = parent.right;\n  } else {\n    if (parent.right === null) {\n      node.right = null;\n    } else {\n      node.right = parent.right.left;\n    }\n  }\n  mutate(right, node, false);\n}\n\nexports.BinaryTree = BinaryTree;\nexports.rightSiblingTree = rightSiblingTree;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# This is the class of the input root. Do not edit it.\nclass BinaryTree:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\n\ndef rightSiblingTree(root):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        root = BinaryTree(1)\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1]\n        self.assertEqual(dfsOrder, expected)\n\n    def test_case_2(self):\n        root = BinaryTree(1).insert([2])\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1, 2]\n        self.assertEqual(dfsOrder, expected)\n\n    def test_case_3(self):\n        root = BinaryTree(1).insert([2, 3])\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1, 2, 3]\n        self.assertEqual(dfsOrder, expected)\n\n    def test_case_4(self):\n        root = BinaryTree(1).insert([2, 3, 4])\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1, 2, 4, 3]\n        self.assertEqual(dfsOrder, expected)\n\n    def test_case_5(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5])\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1, 2, 4, 5, 3]\n        self.assertEqual(dfsOrder, expected)\n\n    def test_case_6(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6])\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1, 2, 4, 5, 6, 3, 6]\n        self.assertEqual(dfsOrder, expected)\n\n    def test_case_7(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6])\n        root.left.right.left = BinaryTree(7)\n        root.left.right.right = BinaryTree(8)\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1, 2, 4, 5, 7, 8, 6, 3, 6]\n        self.assertEqual(dfsOrder, expected)\n\n    def test_case_8(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9])\n        root.left.right.right = BinaryTree(10)\n        root.right.left.left = BinaryTree(11)\n        root.right.right.left = BinaryTree(12)\n        root.right.right.right = BinaryTree(13)\n        root.right.left.left.left = BinaryTree(14)\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13]\n        self.assertEqual(dfsOrder, expected)\n\n    def test_case_9(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [\n            1,\n            2,\n            4,\n            8,\n            9,\n            10,\n            11,\n            12,\n            13,\n            14,\n            15,\n            5,\n            10,\n            11,\n            12,\n            13,\n            14,\n            15,\n            6,\n            12,\n            13,\n            14,\n            15,\n            7,\n            14,\n            15,\n            3,\n            6,\n            12,\n            13,\n            14,\n            15,\n            7,\n            14,\n            15,\n        ]\n        self.assertEqual(dfsOrder, expected)\n\n\nclass BinaryTree(program.BinaryTree):\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n\n    def getDfsOrder(self, values):\n        values.append(self.value)\n        if self.left is not None:\n            self.left.getDfsOrder(values)\n        if self.right is not None:\n            self.right.getDfsOrder(values)\n        return values\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9])\n        root.left.right.right = BinaryTree(10)\n        root.right.left.left = BinaryTree(11)\n        root.right.right.left = BinaryTree(12)\n        root.right.right.right = BinaryTree(13)\n        root.right.left.left.left = BinaryTree(14)\n        mutatedRoot = program.rightSiblingTree(root)\n        dfsOrder = mutatedRoot.getDfsOrder([])\n        expected = [1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13]\n        self.assertEqual(dfsOrder, expected)\n\n\nclass BinaryTree(program.BinaryTree):\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n\n    def getDfsOrder(self, values):\n        values.append(self.value)\n        if self.left is not None:\n            self.left.getDfsOrder(values)\n        if self.right is not None:\n            self.right.getDfsOrder(values)\n        return values\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\n\n# O(n) time | O(d) space - where n is the number of nodes in the Binary Tree and d is the depth (height) of the Binary Tree\ndef rightSiblingTree(root):\n    mutate(root, None, None)\n    return root\n\n\ndef mutate(node, parent, isLeftChild):\n    if node is None:\n        return\n    left, right = node.left, node.right\n    mutate(left, node, True)\n    if parent is None:\n        node.right = None\n    elif isLeftChild:\n        node.right = parent.right\n    else:\n        if parent.right is None:\n            node.right = None\n        else:\n            node.right = parent.right.left\n    mutate(right, node, False)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is the class of the input root. Do not edit it.\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  func rightSiblingTree(root: BinaryTree) -> BinaryTree {\n    // Write your code here.\n    return root\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1)\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2])\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3])\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2, 3]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4])\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2, 4, 3]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5])\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2, 4, 5, 3]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6])\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2, 4, 5, 6, 3, 6]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6])\n      root.left?.right?.left = TestBinaryTree(value: 7)\n      root.left?.right?.right = TestBinaryTree(value: 8)\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2, 4, 5, 7, 8, 6, 3, 6]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6, 7, 8, 9])\n      root.left?.right?.right = TestBinaryTree(value: 10)\n      root.right?.left?.left = TestBinaryTree(value: 11)\n      root.right?.right?.left = TestBinaryTree(value: 12)\n      root.right?.right?.right = TestBinaryTree(value: 13)\n      root.right?.left?.left?.left = TestBinaryTree(value: 14)\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2, 4, 8, 9, 10, 11, 12, 13, 14, 15, 5,\n                      10, 11, 12, 13, 14, 15, 6, 12, 13, 14, 15, 7, 14, 15,\n                      3, 6, 12, 13, 14, 15, 7, 14, 15]\n      try assertEqual(expected, actual)\n    }\n  }\n}\n\nclass TestBinaryTree: Program.BinaryTree {\n  func insert(value: Int) -> TestBinaryTree {\n    var queue = [self as Program.BinaryTree]\n    while queue.count > 0 {\n      var current = queue[0]\n      queue.removeFirst()\n      if let left = current.left {\n        queue.append(left)\n      } else {\n        current.left = TestBinaryTree(value: value)\n        return self\n      }\n\n      if let right = current.right {\n        queue.append(right)\n      } else {\n        current.right = TestBinaryTree(value: value)\n        return self\n      }\n    }\n    return self\n  }\n\n  func insertAll(values: [Int]) -> TestBinaryTree {\n    for v in values {\n      insert(value: v)\n    }\n    return self\n  }\n}\n\nfunc getDfsOrder(tree: Program.BinaryTree) -> [Int] {\n  var result = [tree.value]\n  if let left = tree.left {\n    var sub = getDfsOrder(tree: left)\n    result.append(contentsOf: sub)\n  }\n  if let right = tree.right {\n    var sub = getDfsOrder(tree: right)\n    result.append(contentsOf: sub)\n  }\n  return result\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6, 7, 8, 9])\n      root.left?.right?.right = TestBinaryTree(value: 10)\n      root.right?.left?.left = TestBinaryTree(value: 11)\n      root.right?.right?.left = TestBinaryTree(value: 12)\n      root.right?.right?.right = TestBinaryTree(value: 13)\n      root.right?.left?.left?.left = TestBinaryTree(value: 14)\n      var mutatedRoot = program.rightSiblingTree(root: root)\n      var actual = getDfsOrder(tree: mutatedRoot)\n      var expected = [1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13]\n      try assertEqual(expected, actual)\n    }\n  }\n}\n\nclass TestBinaryTree: Program.BinaryTree {\n  func insert(value: Int) -> TestBinaryTree {\n    var queue = [self as Program.BinaryTree]\n    while queue.count > 0 {\n      var current = queue[0]\n      queue.removeFirst()\n      if let left = current.left {\n        queue.append(left)\n      } else {\n        current.left = TestBinaryTree(value: value)\n        return self\n      }\n\n      if let right = current.right {\n        queue.append(right)\n      } else {\n        current.right = TestBinaryTree(value: value)\n        return self\n      }\n    }\n    return self\n  }\n\n  func insertAll(values: [Int]) -> TestBinaryTree {\n    for v in values {\n      insert(value: v)\n    }\n    return self\n  }\n}\n\nfunc getDfsOrder(tree: Program.BinaryTree) -> [Int] {\n  var result = [tree.value]\n  if let left = tree.left {\n    var sub = getDfsOrder(tree: left)\n    result.append(contentsOf: sub)\n  }\n  if let right = tree.right {\n    var sub = getDfsOrder(tree: right)\n    result.append(contentsOf: sub)\n  }\n  return result\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  // O(n) time | O(d) space - where n is the number of nodes in\n  // the Binary Tree and d is the depth (height) of the Binary Tree\n  func rightSiblingTree(root: BinaryTree) -> BinaryTree {\n    mutate(node: root, parent: nil, isLeftChild: false)\n    return root\n  }\n\n  func mutate(node: BinaryTree?, parent: BinaryTree?, isLeftChild: Bool) {\n    if let tree = node {\n      var left = tree.left\n      var right = tree.right\n      mutate(node: left, parent: tree, isLeftChild: true)\n      if let p = parent {\n        if isLeftChild {\n          tree.right = p.right\n        } else {\n          if let right = p.right {\n            tree.right = right.left\n          } else {\n            tree.right = nil\n          }\n        }\n      } else {\n        tree.right = nil\n      }\n\n      mutate(node: right, parent: tree, isLeftChild: false)\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// This is the class of the input root. Do not edit it.\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexport function rightSiblingTree(root: BinaryTree) {\n  // Write your code here.\n  return root;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nexport class BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1);\n  root.left = new BinaryTree(2);\n  root.right = new BinaryTree(3);\n  root.left.left = new BinaryTree(4);\n  root.left.right = new BinaryTree(5);\n  root.right.left = new BinaryTree(6);\n  root.right.right = new BinaryTree(7);\n  root.left.left.left = new BinaryTree(8);\n  root.left.left.right = new BinaryTree(9);\n  root.left.right.right = new BinaryTree(10);\n  root.right.left.left = new BinaryTree(11);\n  root.right.right.left = new BinaryTree(12);\n  root.right.right.right = new BinaryTree(13);\n  root.right.left.left.left = new BinaryTree(14);\n\n  const mutatedRoot = program.rightSiblingTree(root);\n  const dfsOrder = getDfsOrder(mutatedRoot, []);\n  const expected = [1, 2, 4, 8, 9, 5, 6, 11, 14, 7, 12, 13, 3, 6, 11, 14, 7, 12, 13];\n  chai.expect(dfsOrder).to.deep.equal(expected);\n});\n\nfunction getDfsOrder(tree: BinaryTree, values: number[]) {\n  values.push(tree.value);\n  if (tree.left !== null) {\n    getDfsOrder(tree.left, values);\n  }\n  if (tree.right !== null) {\n    getDfsOrder(tree.right, values);\n  }\n  return values;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(d) space - where n is the number of nodes in the Binary Tree and d is the depth (height) of the Binary Tree\nexport function rightSiblingTree(root: BinaryTree) {\n  mutate(root, null, null);\n  return root;\n}\n\nfunction mutate(node: BinaryTree | null, parent: BinaryTree | null, isLeftChild: boolean | null) {\n  if (node === null) return;\n  const {left, right} = node;\n  mutate(left, node, true);\n  if (parent === null) {\n    node.right = null;\n  } else if (isLeftChild) {\n    node.right = parent.right;\n  } else {\n    if (parent.right === null) {\n      node.right = null;\n    } else {\n      node.right = parent.right.left;\n    }\n  }\n  mutate(right, node, false);\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": "12",
+            "right": "13",
+            "value": 7
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "6",
+            "left": "11",
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "11",
+            "left": "14",
+            "right": null,
+            "value": 11
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "10",
+            "value": 5
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "7",
+            "right": "8",
+            "value": 5
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": "14",
+            "right": "15",
+            "value": 7
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "6",
+            "left": "12",
+            "right": "13",
+            "value": 6
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": "11",
+            "value": 5
+          },
+          {
+            "id": "11",
+            "left": null,
+            "right": null,
+            "value": 11
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          }
+        ],
+        "root": "1"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": "11",
+            "right": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": "12",
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": "13",
+            "value": 12
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "11",
+            "left": "14",
+            "right": null,
+            "value": 11
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "6",
+            "value": 5
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "6",
+            "value": 5
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "7",
+            "right": "6",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": "12",
+            "right": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": "14",
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": "15",
+            "value": 14
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": "13",
+            "value": 12
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": "14",
+            "value": 13
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": "6",
+            "value": 5
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": "11",
+            "value": 10
+          },
+          {
+            "id": "11",
+            "left": null,
+            "right": "12",
+            "value": 11
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": "10",
+            "value": 9
+          }
+        ],
+        "root": "1"
+      }
+    ]
+  ]
+}

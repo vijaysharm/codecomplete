@@ -1,0 +1,787 @@
+{
+  "Summary": {
+    "Name": "River Sizes",
+    "Category": "Graphs",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 105,
+      "timeOne": 0,
+      "timeTwo": 1390,
+      "url": "https://player.vimeo.com/video/249312783"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Since you must return the sizes of rivers, which consist of horizontally and vertically adjacent 1s in the input matrix, you must somehow keep track of groups of neighboring 1s as you traverse the matrix. Try treating the matrix as a graph, where each element in the matrix is a node in the graph with up to 4 neighboring nodes (above, below, to the left, and to the right), and traverse it using a popular graph-traversal algorithm like Depth-first Search or Breadth-first Search.\nBy traversing the matrix using DFS or BFS as mentioned in Hint #1, any time that you encounter a 1 you can traverse the entire river that this 1 is a part of (and keep track of its size) by simply iterating through the given node's neighboring nodes and their own neighboring nodes so long as the nodes are 1s.\nNaturally, many nodes in the graph mentioned in Hint #1 will have overlapping neighboring nodes, and as you traverse the matrix, you will undoubtedly encounter nodes that you have previously visited. In order to prevent mistakenly calculating the same river's size multiple times and to avoid doing needless computational work, try keeping track of every node that you visit in an auxiliary data structure and only performing important computations on unvisited nodes. What data structure would be ideal here?\n",
+  "SpaceTime": "O(wh) time | O(wh) space - where w and h are the width and height of the input matrix\n",
+  "PromptHTML": "<p>\n  You're given a two-dimensional array (a matrix) of potentially unequal height\n  and width containing only <span>0</span>s and <span>1</span>s. Each\n  <span>0</span> represents land, and each <span>1</span> represents part of a\n  river. A river consists of any number of <span>1</span>s that are either\n  horizontally or vertically adjacent (but not diagonally adjacent). The number\n  of adjacent <span>1</span>s forming a river determine its size.\n</p>\n<p>\n  Write a function that returns an array of the sizes of all rivers represented\n  in the input matrix. The sizes don't need to be in any particular order.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">matrix</span> = [\n  [1, 0, 0, 1, 0],\n  [1, 0, 1, 0, 0],\n  [0, 0, 1, 0, 1],\n  [1, 0, 1, 0, 1],\n  [1, 0, 1, 1, 0],\n]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[1, 2, 2, 2, 5] <span class=\"CodeEditor-promptComment\">// the numbers could be ordered differently</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "matrix",
+      "Example": [
+        [
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          0
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> riverSizes(vector<vector<int>> matrix) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "#include <algorithm>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> testInput{{0}};\n      vector<int> expected{};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<vector<int>> testInput{{1}};\n      vector<int> expected{1};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<vector<int>> testInput{{1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0}};\n      vector<int> expected{1, 2, 3};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<vector<int>> testInput{\n          {1, 0, 0, 1},\n          {1, 0, 1, 0},\n          {0, 0, 1, 0},\n          {1, 0, 1, 0},\n      };\n      vector<int> expected{1, 1, 2, 3};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<vector<int>> testInput{\n          {1, 0, 0, 1, 0}, {1, 0, 1, 0, 0}, {0, 0, 1, 0, 1},\n          {1, 0, 1, 0, 1}, {1, 0, 1, 1, 0},\n      };\n      vector<int> expected{1, 2, 2, 2, 5};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<vector<int>> testInput{\n          {1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0},\n          {1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0},\n          {0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1},\n          {1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0},\n          {1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1},\n      };\n      vector<int> expected{1, 1, 2, 2, 5, 21};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<vector<int>> testInput{\n          {1, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 1, 0, 0},\n          {0, 0, 0, 1, 0, 0, 0}, {0, 0, 1, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 0},\n          {1, 0, 0, 0, 0, 0, 1},\n      };\n      vector<int> expected{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<vector<int>> testInput{\n          {1, 0, 0, 0, 0, 0, 1}, {0, 1, 0, 0, 0, 1, 0}, {0, 0, 1, 0, 1, 0, 0},\n          {0, 0, 1, 1, 1, 0, 0}, {0, 0, 1, 0, 1, 0, 0}, {0, 1, 0, 0, 0, 1, 0},\n          {1, 0, 0, 0, 0, 0, 1},\n      };\n      vector<int> expected{1, 1, 1, 1, 1, 1, 1, 1, 7};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<vector<int>> testInput{\n          {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0},\n          {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0},\n          {0, 0, 0, 0, 0, 0, 0},\n      };\n      vector<int> expected{};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<vector<int>> testInput{\n          {1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1},\n          {1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1},\n          {1, 1, 1, 1, 1, 1, 1},\n      };\n      vector<int> expected{49};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<vector<int>> testInput{\n          {1, 1, 0, 0, 0, 0, 1, 1},\n          {1, 0, 1, 1, 1, 1, 0, 1},\n          {0, 1, 1, 0, 0, 0, 1, 1},\n      };\n      vector<int> expected{3, 5, 6};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      vector<vector<int>> testInput{\n          {1, 1, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 0}, {1, 0, 1}, {0, 1, 0},\n          {1, 0, 0}, {1, 0, 0}, {0, 0, 0}, {1, 0, 0}, {1, 0, 1}, {1, 1, 1},\n      };\n      vector<int> expected{1, 1, 2, 6, 10};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <algorithm>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> testInput{\n          {1, 0, 0, 1, 0}, {1, 0, 1, 0, 0}, {0, 0, 1, 0, 1},\n          {1, 0, 1, 0, 1}, {1, 0, 1, 1, 0},\n      };\n      vector<int> expected{1, 2, 2, 2, 5};\n      vector<int> output = riverSizes(testInput);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nvoid traverseNode(int i, int j, vector<vector<int>> matrix,\n                  vector<vector<int>> *visited, vector<int> *sizes);\nvector<vector<int>> getUnvisitedNeighbors(int i, int j,\n                                          vector<vector<int>> matrix,\n                                          vector<vector<int>> visited);\n\n// O(wh) time | O(wh) space\nvector<int> riverSizes(vector<vector<int>> matrix) {\n  vector<int> sizes = {};\n  vector<vector<int>> visited(matrix.size(),\n                              vector<int>(matrix[0].size(), false));\n  for (int i = 0; i < matrix.size(); i++) {\n    for (int j = 0; j < matrix[i].size(); j++) {\n      if (visited[i][j]) {\n        continue;\n      }\n      traverseNode(i, j, matrix, &visited, &sizes);\n    }\n  }\n  return sizes;\n}\n\nvoid traverseNode(int i, int j, vector<vector<int>> matrix,\n                  vector<vector<int>> *visited, vector<int> *sizes) {\n  int currentRiverSize = 0;\n  vector<vector<int>> nodesToExplore{{i, j}};\n  while (nodesToExplore.size() != 0) {\n    vector<int> currentNode = nodesToExplore.back();\n    nodesToExplore.pop_back();\n    i = currentNode[0];\n    j = currentNode[1];\n    if (visited->at(i)[j]) {\n      continue;\n    }\n    visited->at(i)[j] = true;\n    if (matrix[i][j] == 0) {\n      continue;\n    }\n    currentRiverSize++;\n    vector<vector<int>> unvisitedNeighbors =\n        getUnvisitedNeighbors(i, j, matrix, *visited);\n    for (vector<int> neighbor : unvisitedNeighbors) {\n      nodesToExplore.push_back(neighbor);\n    }\n  }\n  if (currentRiverSize > 0) {\n    sizes->push_back(currentRiverSize);\n  }\n}\n\nvector<vector<int>> getUnvisitedNeighbors(int i, int j,\n                                          vector<vector<int>> matrix,\n                                          vector<vector<int>> visited) {\n  vector<vector<int>> unvisitedNeighbors{};\n  if (i > 0 && !visited[i - 1][j]) {\n    unvisitedNeighbors.push_back({i - 1, j});\n  }\n  if (i < matrix.size() - 1 && !visited[i + 1][j]) {\n    unvisitedNeighbors.push_back({i + 1, j});\n  }\n  if (j > 0 && !visited[i][j - 1]) {\n    unvisitedNeighbors.push_back({i, j - 1});\n  }\n  if (j < matrix[0].size() - 1 && !visited[i][j + 1]) {\n    unvisitedNeighbors.push_back({i, j + 1});\n  }\n  return unvisitedNeighbors;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<int> RiverSizes(int[,] matrix) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[,] input = {{0}};\n\t\tint[] expected = {};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[,] input = {{1}};\n\t\tint[] expected = {1};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[,] input = {{1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0}};\n\t\tint[] expected = {1, 2, 3};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[,] input = {\n\t\t\t{1, 0, 0, 1},\n\t\t\t{1, 0, 1, 0},\n\t\t\t{0, 0, 1, 0},\n\t\t\t{1, 0, 1, 0},\n\t\t};\n\t\tint[] expected = {1, 1, 2, 3};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[,] input = {\n\t\t\t{1, 0, 0, 1, 0},\n\t\t\t{1, 0, 1, 0, 0},\n\t\t\t{0, 0, 1, 0, 1},\n\t\t\t{1, 0, 1, 0, 1},\n\t\t\t{1, 0, 1, 1, 0},\n\t\t};\n\t\tint[] expected = {1, 2, 2, 2, 5};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[,] input = {\n\t\t\t{1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0},\n\t\t\t{1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0},\n\t\t\t{0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1},\n\t\t\t{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0},\n\t\t\t{1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1},\n\t\t};\n\t\tint[] expected = {1, 1, 2, 2, 5, 21};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[,] input = {\n\t\t\t{1, 0, 0, 0, 0, 0, 1},\n\t\t\t{0, 1, 0, 0, 0, 1, 0},\n\t\t\t{0, 0, 1, 0, 1, 0, 0},\n\t\t\t{0, 0, 0, 1, 0, 0, 0},\n\t\t\t{0, 0, 1, 0, 1, 0, 0},\n\t\t\t{0, 1, 0, 0, 0, 1, 0},\n\t\t\t{1, 0, 0, 0, 0, 0, 1},\n\t\t};\n\t\tint[] expected = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[,] input = {\n\t\t\t{1, 0, 0, 0, 0, 0, 1},\n\t\t\t{0, 1, 0, 0, 0, 1, 0},\n\t\t\t{0, 0, 1, 0, 1, 0, 0},\n\t\t\t{0, 0, 1, 1, 1, 0, 0},\n\t\t\t{0, 0, 1, 0, 1, 0, 0},\n\t\t\t{0, 1, 0, 0, 0, 1, 0},\n\t\t\t{1, 0, 0, 0, 0, 0, 1},\n\t\t};\n\t\tint[] expected = {1, 1, 1, 1, 1, 1, 1, 1, 7};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[,] input = {\n\t\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t};\n\t\tint[] expected = {};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[,] input = {\n\t\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t};\n\t\tint[] expected = {49};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[,] input = {\n\t\t\t{1, 1, 0, 0, 0, 0, 1, 1},\n\t\t\t{1, 0, 1, 1, 1, 1, 0, 1},\n\t\t\t{0, 1, 1, 0, 0, 0, 1, 1},\n\t\t};\n\t\tint[] expected = {3, 5, 6};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tint[,] input = {\n\t\t\t{1, 1, 0},\n\t\t\t{1, 0, 1},\n\t\t\t{1, 1, 1},\n\t\t\t{1, 1, 0},\n\t\t\t{1, 0, 1},\n\t\t\t{0, 1, 0},\n\t\t\t{1, 0, 0},\n\t\t\t{1, 0, 0},\n\t\t\t{0, 0, 0},\n\t\t\t{1, 0, 0},\n\t\t\t{1, 0, 1},\n\t\t\t{1, 1, 1},\n\t\t};\n\t\tint[] expected = {1, 1, 2, 6, 10};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\tpublic static bool compare(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[,] input = {\n\t\t\t{1, 0, 0, 1, 0},\n\t\t\t{1, 0, 1, 0, 0},\n\t\t\t{0, 0, 1, 0, 1},\n\t\t\t{1, 0, 1, 0, 1},\n\t\t\t{1, 0, 1, 1, 0},\n\t\t};\n\t\tint[] expected = {1, 2, 2, 2, 5};\n\t\tList<int> output = Program.RiverSizes(input);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\tpublic static bool compare(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(wh) time | O(wh) space\n\tpublic static List<int> RiverSizes(int[,] matrix) {\n\t\tList<int> sizes = new List<int>();\n\t\tbool[,] visited = new bool[matrix.GetLength(0),matrix.GetLength(1)];\n\t\tfor (int i = 0; i < matrix.GetLength(0); i++) {\n\t\t\tfor (int j = 0; j < matrix.GetLength(1); j++) {\n\t\t\t\tif (visited[i,j]) {\n\t\t\t\t\tcontinue;\n\t\t\t\t}\n\t\t\t\ttraverseNode(i, j, matrix, visited, sizes);\n\t\t\t}\n\t\t}\n\t\treturn sizes;\n\t}\n\n\tpublic static void traverseNode(int i, int j, int[,] matrix, bool[,] visited,\n\t  List<int> sizes) {\n\t\tint currentRiverSize = 0;\n\t\tStack<int[]> nodesToExplore = new Stack<int[]>();\n\t\tnodesToExplore.Push(new int[] {i, j});\n\t\twhile (nodesToExplore.Count != 0) {\n\t\t\tint[] currentNode = nodesToExplore.Pop();\n\t\t\ti = currentNode[0];\n\t\t\tj = currentNode[1];\n\t\t\tif (visited[i,j]) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tvisited[i,j] = true;\n\t\t\tif (matrix[i,j] == 0) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tcurrentRiverSize++;\n\t\t\tList<int[]> unvisitedNeighbors =\n\t\t\t  getUnvisitedNeighbors(i, j, matrix, visited);\n            foreach (var neighbor in unvisitedNeighbors) {\n                nodesToExplore.Push(neighbor);\n            }\n\t\t}\n\t\tif (currentRiverSize > 0) {\n\t\t\tsizes.Add(currentRiverSize);\n\t\t}\n\t}\n\n\tpublic static List<int[]> getUnvisitedNeighbors(int i, int j, int[,] matrix, bool[,\n\t  ] visited) {\n\t\tList<int[]> unvisitedNeighbors = new List<int[]>();\n\t\tif (i > 0 && !visited[i - 1,j]) {\n\t\t\tunvisitedNeighbors.Add(new int[] {i - 1, j});\n\t\t}\n\t\tif (i < matrix.GetLength(0) - 1 && !visited[i + 1,j]) {\n\t\t\tunvisitedNeighbors.Add(new int[] {i + 1, j});\n\t\t}\n\t\tif (j > 0 && !visited[i,j - 1]) {\n\t\t\tunvisitedNeighbors.Add(new int[] {i, j - 1});\n\t\t}\n\t\tif (j < matrix.GetLength(1) - 1 && !visited[i,j + 1]) {\n\t\t\tunvisitedNeighbors.Add(new int[] {i, j + 1});\n\t\t}\n\t\treturn unvisitedNeighbors;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc RiverSizes(matrix [][]int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"reflect\"\n\t\"sort\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{}\n\tinput := [][]int{\n\t\t{0},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := []int{1}\n\tinput := [][]int{\n\t\t{1},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := []int{1, 2, 3}\n\tinput := [][]int{\n\t\t{1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := []int{1, 1, 2, 3}\n\tinput := [][]int{\n\t\t{1, 0, 0, 1},\n\t\t{1, 0, 1, 0},\n\t\t{0, 0, 1, 0},\n\t\t{1, 0, 1, 0},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := []int{1, 2, 2, 2, 5}\n\tinput := [][]int{\n\t\t{1, 0, 0, 1, 0},\n\t\t{1, 0, 1, 0, 0},\n\t\t{0, 0, 1, 0, 1},\n\t\t{1, 0, 1, 0, 1},\n\t\t{1, 0, 1, 1, 0},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := []int{1, 1, 2, 2, 5, 21}\n\tinput := [][]int{\n\t\t{1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0},\n\t\t{1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0},\n\t\t{0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1},\n\t\t{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0},\n\t\t{1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := []int{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}\n\tinput := [][]int{\n\t\t{1, 0, 0, 0, 0, 0, 1},\n\t\t{0, 1, 0, 0, 0, 1, 0},\n\t\t{0, 0, 1, 0, 1, 0, 0},\n\t\t{0, 0, 0, 1, 0, 0, 0},\n\t\t{0, 0, 1, 0, 1, 0, 0},\n\t\t{0, 1, 0, 0, 0, 1, 0},\n\t\t{1, 0, 0, 0, 0, 0, 1},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := []int{1, 1, 1, 1, 1, 1, 1, 1, 7}\n\tinput := [][]int{\n\t\t{1, 0, 0, 0, 0, 0, 1},\n\t\t{0, 1, 0, 0, 0, 1, 0},\n\t\t{0, 0, 1, 0, 1, 0, 0},\n\t\t{0, 0, 1, 1, 1, 0, 0},\n\t\t{0, 0, 1, 0, 1, 0, 0},\n\t\t{0, 1, 0, 0, 0, 1, 0},\n\t\t{1, 0, 0, 0, 0, 0, 1},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := []int{}\n\tinput := [][]int{\n\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t{0, 0, 0, 0, 0, 0, 0},\n\t\t{0, 0, 0, 0, 0, 0, 0},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := []int{49}\n\tinput := [][]int{\n\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t{1, 1, 1, 1, 1, 1, 1},\n\t\t{1, 1, 1, 1, 1, 1, 1},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := []int{3, 5, 6}\n\tinput := [][]int{\n\t\t{1, 1, 0, 0, 0, 0, 1, 1},\n\t\t{1, 0, 1, 1, 1, 1, 0, 1},\n\t\t{0, 1, 1, 0, 0, 0, 1, 1},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\texpected := []int{1, 1, 2, 6, 10}\n\tinput := [][]int{\n\t\t{1, 1, 0},\n\t\t{1, 0, 1},\n\t\t{1, 1, 1},\n\t\t{1, 1, 0},\n\t\t{1, 0, 1},\n\t\t{0, 1, 0},\n\t\t{1, 0, 0},\n\t\t{1, 0, 0},\n\t\t{0, 0, 0},\n\t\t{1, 0, 0},\n\t\t{1, 0, 1},\n\t\t{1, 1, 1},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"reflect\"\n\t\"sort\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{1, 2, 2, 2, 5}\n\tinput := [][]int{\n\t\t{1, 0, 0, 1, 0},\n\t\t{1, 0, 1, 0, 0},\n\t\t{0, 0, 1, 0, 1},\n\t\t{1, 0, 1, 0, 1},\n\t\t{1, 0, 1, 1, 0},\n\t}\n\toutput := RiverSizes(input)\n\tsort.Ints(output)\n\tif !reflect.DeepEqual(expected, output) {\n\t\tt.Fail()\n\t}\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(wh) time | O(wh) space\nfunc RiverSizes(matrix [][]int) []int {\n\tsizes := []int{}\n\tvisited := make([][]bool, len(matrix))\n\tfor i := range visited {\n\t\tvisited[i] = make([]bool, len(matrix[i]))\n\t}\n\tfor i := range matrix {\n\t\tfor j := range matrix[i] {\n\t\t\tif visited[i][j] {\n\t\t\t\tcontinue\n\t\t\t}\n\t\t\tsizes = traverseNode(i, j, matrix, visited, sizes)\n\t\t}\n\t}\n\treturn sizes\n}\n\nfunc traverseNode(i, j int, matrix [][]int, visited [][]bool, sizes []int) []int {\n\tcurrentRiverSize := 0\n\tnodesToExplore := [][]int{{i, j}}\n\tfor len(nodesToExplore) > 0 {\n\t\tcurrentNode := nodesToExplore[0]\n\t\tnodesToExplore = nodesToExplore[1:]\n\t\ti, j := currentNode[0], currentNode[1]\n\t\tif visited[i][j] {\n\t\t\tcontinue\n\t\t}\n\t\tvisited[i][j] = true\n\t\tif matrix[i][j] == 0 {\n\t\t\tcontinue\n\t\t}\n\t\tcurrentRiverSize += 1\n\t\tunvisitedNeighbors := getUnvisitedNeighbors(i, j, matrix, visited)\n\t\tfor _, neighbor := range unvisitedNeighbors {\n\t\t\tnodesToExplore = append(nodesToExplore, neighbor)\n\t\t}\n\t}\n\tif currentRiverSize > 0 {\n\t\tsizes = append(sizes, currentRiverSize)\n\t}\n\treturn sizes\n}\n\nfunc getUnvisitedNeighbors(i, j int, matrix [][]int, visited [][]bool) [][]int {\n\tunvisitedNeighbors := [][]int{}\n\tif i > 0 && !visited[i-1][j] {\n\t\tunvisitedNeighbors = append(unvisitedNeighbors, []int{i - 1, j})\n\t}\n\tif i < len(matrix)-1 && !visited[i+1][j] {\n\t\tunvisitedNeighbors = append(unvisitedNeighbors, []int{i + 1, j})\n\t}\n\tif j > 0 && !visited[i][j-1] {\n\t\tunvisitedNeighbors = append(unvisitedNeighbors, []int{i, j - 1})\n\t}\n\tif j < len(matrix[0])-1 && !visited[i][j+1] {\n\t\tunvisitedNeighbors = append(unvisitedNeighbors, []int{i, j + 1})\n\t}\n\treturn unvisitedNeighbors\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<Integer> riverSizes(int[][] matrix) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[][] input = {{0}};\n    int[] expected = {};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[][] input = {{1}};\n    int[] expected = {1};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[][] input = {{1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0}};\n    int[] expected = {1, 2, 3};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[][] input = {\n      {1, 0, 0, 1},\n      {1, 0, 1, 0},\n      {0, 0, 1, 0},\n      {1, 0, 1, 0},\n    };\n    int[] expected = {1, 1, 2, 3};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[][] input = {\n      {1, 0, 0, 1, 0},\n      {1, 0, 1, 0, 0},\n      {0, 0, 1, 0, 1},\n      {1, 0, 1, 0, 1},\n      {1, 0, 1, 1, 0},\n    };\n    int[] expected = {1, 2, 2, 2, 5};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[][] input = {\n      {1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0},\n      {1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0},\n      {0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1},\n      {1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0},\n      {1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1},\n    };\n    int[] expected = {1, 1, 2, 2, 5, 21};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[][] input = {\n      {1, 0, 0, 0, 0, 0, 1},\n      {0, 1, 0, 0, 0, 1, 0},\n      {0, 0, 1, 0, 1, 0, 0},\n      {0, 0, 0, 1, 0, 0, 0},\n      {0, 0, 1, 0, 1, 0, 0},\n      {0, 1, 0, 0, 0, 1, 0},\n      {1, 0, 0, 0, 0, 0, 1},\n    };\n    int[] expected = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[][] input = {\n      {1, 0, 0, 0, 0, 0, 1},\n      {0, 1, 0, 0, 0, 1, 0},\n      {0, 0, 1, 0, 1, 0, 0},\n      {0, 0, 1, 1, 1, 0, 0},\n      {0, 0, 1, 0, 1, 0, 0},\n      {0, 1, 0, 0, 0, 1, 0},\n      {1, 0, 0, 0, 0, 0, 1},\n    };\n    int[] expected = {1, 1, 1, 1, 1, 1, 1, 1, 7};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    int[][] input = {\n      {0, 0, 0, 0, 0, 0, 0},\n      {0, 0, 0, 0, 0, 0, 0},\n      {0, 0, 0, 0, 0, 0, 0},\n      {0, 0, 0, 0, 0, 0, 0},\n      {0, 0, 0, 0, 0, 0, 0},\n      {0, 0, 0, 0, 0, 0, 0},\n      {0, 0, 0, 0, 0, 0, 0},\n    };\n    int[] expected = {};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase10() {\n    int[][] input = {\n      {1, 1, 1, 1, 1, 1, 1},\n      {1, 1, 1, 1, 1, 1, 1},\n      {1, 1, 1, 1, 1, 1, 1},\n      {1, 1, 1, 1, 1, 1, 1},\n      {1, 1, 1, 1, 1, 1, 1},\n      {1, 1, 1, 1, 1, 1, 1},\n      {1, 1, 1, 1, 1, 1, 1},\n    };\n    int[] expected = {49};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase11() {\n    int[][] input = {\n      {1, 1, 0, 0, 0, 0, 1, 1},\n      {1, 0, 1, 1, 1, 1, 0, 1},\n      {0, 1, 1, 0, 0, 0, 1, 1},\n    };\n    int[] expected = {3, 5, 6};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase12() {\n    int[][] input = {\n      {1, 1, 0},\n      {1, 0, 1},\n      {1, 1, 1},\n      {1, 1, 0},\n      {1, 0, 1},\n      {0, 1, 0},\n      {1, 0, 0},\n      {1, 0, 0},\n      {0, 0, 0},\n      {1, 0, 0},\n      {1, 0, 1},\n      {1, 1, 1},\n    };\n    int[] expected = {1, 1, 2, 6, 10};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  public static boolean compare(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[][] input = {\n      {1, 0, 0, 1, 0},\n      {1, 0, 1, 0, 0},\n      {0, 0, 1, 0, 1},\n      {1, 0, 1, 0, 1},\n      {1, 0, 1, 1, 0},\n    };\n    int[] expected = {1, 2, 2, 2, 5};\n    List<Integer> output = Program.riverSizes(input);\n    Collections.sort(output);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  public static boolean compare(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(wh) time | O(wh) space\n  public static List<Integer> riverSizes(int[][] matrix) {\n    List<Integer> sizes = new ArrayList<Integer>();\n    boolean[][] visited = new boolean[matrix.length][matrix[0].length];\n    for (int i = 0; i < matrix.length; i++) {\n      for (int j = 0; j < matrix[0].length; j++) {\n        if (visited[i][j]) {\n          continue;\n        }\n        traverseNode(i, j, matrix, visited, sizes);\n      }\n    }\n    return sizes;\n  }\n\n  public static void traverseNode(\n      int i, int j, int[][] matrix, boolean[][] visited, List<Integer> sizes) {\n    int currentRiverSize = 0;\n    Stack<Integer[]> nodesToExplore = new Stack<Integer[]>();\n    nodesToExplore.push(new Integer[] {i, j});\n    while (!nodesToExplore.empty()) {\n      Integer[] currentNode = nodesToExplore.pop();\n      i = currentNode[0];\n      j = currentNode[1];\n      if (visited[i][j]) {\n        continue;\n      }\n      visited[i][j] = true;\n      if (matrix[i][j] == 0) {\n        continue;\n      }\n      currentRiverSize++;\n      List<Integer[]> unvisitedNeighbors = getUnvisitedNeighbors(i, j, matrix, visited);\n      for (Integer[] neighbor : unvisitedNeighbors) {\n        nodesToExplore.add(neighbor);\n      }\n    }\n    if (currentRiverSize > 0) {\n      sizes.add(currentRiverSize);\n    }\n  }\n\n  public static List<Integer[]> getUnvisitedNeighbors(\n      int i, int j, int[][] matrix, boolean[][] visited) {\n    List<Integer[]> unvisitedNeighbors = new ArrayList<Integer[]>();\n    if (i > 0 && !visited[i - 1][j]) {\n      unvisitedNeighbors.add(new Integer[] {i - 1, j});\n    }\n    if (i < matrix.length - 1 && !visited[i + 1][j]) {\n      unvisitedNeighbors.add(new Integer[] {i + 1, j});\n    }\n    if (j > 0 && !visited[i][j - 1]) {\n      unvisitedNeighbors.add(new Integer[] {i, j - 1});\n    }\n    if (j < matrix[0].length - 1 && !visited[i][j + 1]) {\n      unvisitedNeighbors.add(new Integer[] {i, j + 1});\n    }\n    return unvisitedNeighbors;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function riverSizes(matrix) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.riverSizes = riverSizes;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const testInput = [[0]];\n  const expected = [];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #2', function () {\n  const testInput = [[1]];\n  const expected = [1];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #3', function () {\n  const testInput = [[1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0]];\n  const expected = [1, 2, 3];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #4', function () {\n  const testInput = [\n    [1, 0, 0, 1],\n    [1, 0, 1, 0],\n    [0, 0, 1, 0],\n    [1, 0, 1, 0],\n  ];\n  const expected = [1, 1, 2, 3];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #5', function () {\n  const testInput = [\n    [1, 0, 0, 1, 0],\n    [1, 0, 1, 0, 0],\n    [0, 0, 1, 0, 1],\n    [1, 0, 1, 0, 1],\n    [1, 0, 1, 1, 0],\n  ];\n  const expected = [1, 2, 2, 2, 5];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #6', function () {\n  const testInput = [\n    [1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0],\n    [1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0],\n    [0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1],\n    [1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0],\n    [1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1],\n  ];\n  const expected = [1, 1, 2, 2, 5, 21];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #7', function () {\n  const testInput = [\n    [1, 0, 0, 0, 0, 0, 1],\n    [0, 1, 0, 0, 0, 1, 0],\n    [0, 0, 1, 0, 1, 0, 0],\n    [0, 0, 0, 1, 0, 0, 0],\n    [0, 0, 1, 0, 1, 0, 0],\n    [0, 1, 0, 0, 0, 1, 0],\n    [1, 0, 0, 0, 0, 0, 1],\n  ];\n  const expected = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #8', function () {\n  const testInput = [\n    [1, 0, 0, 0, 0, 0, 1],\n    [0, 1, 0, 0, 0, 1, 0],\n    [0, 0, 1, 0, 1, 0, 0],\n    [0, 0, 1, 1, 1, 0, 0],\n    [0, 0, 1, 0, 1, 0, 0],\n    [0, 1, 0, 0, 0, 1, 0],\n    [1, 0, 0, 0, 0, 0, 1],\n  ];\n  const expected = [1, 1, 1, 1, 1, 1, 1, 1, 7];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #9', function () {\n  const testInput = [\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n    [0, 0, 0, 0, 0, 0, 0],\n  ];\n  const expected = [];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #10', function () {\n  const testInput = [\n    [1, 1, 1, 1, 1, 1, 1],\n    [1, 1, 1, 1, 1, 1, 1],\n    [1, 1, 1, 1, 1, 1, 1],\n    [1, 1, 1, 1, 1, 1, 1],\n    [1, 1, 1, 1, 1, 1, 1],\n    [1, 1, 1, 1, 1, 1, 1],\n    [1, 1, 1, 1, 1, 1, 1],\n  ];\n  const expected = [49];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #11', function () {\n  const testInput = [\n    [1, 1, 0, 0, 0, 0, 1, 1],\n    [1, 0, 1, 1, 1, 1, 0, 1],\n    [0, 1, 1, 0, 0, 0, 1, 1],\n  ];\n  const expected = [3, 5, 6];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n\nit('Test Case #12', function () {\n  const testInput = [\n    [1, 1, 0],\n    [1, 0, 1],\n    [1, 1, 1],\n    [1, 1, 0],\n    [1, 0, 1],\n    [0, 1, 0],\n    [1, 0, 0],\n    [1, 0, 0],\n    [0, 0, 0],\n    [1, 0, 0],\n    [1, 0, 1],\n    [1, 1, 1],\n  ];\n  const expected = [1, 1, 2, 6, 10];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const testInput = [\n    [1, 0, 0, 1, 0],\n    [1, 0, 1, 0, 0],\n    [0, 0, 1, 0, 1],\n    [1, 0, 1, 0, 1],\n    [1, 0, 1, 1, 0],\n  ];\n  const expected = [1, 2, 2, 2, 5];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(wh) time | O(wh) space\nfunction riverSizes(matrix) {\n  const sizes = [];\n  const visited = matrix.map(row => row.map(value => false));\n  for (let i = 0; i < matrix.length; i++) {\n    for (let j = 0; j < matrix[i].length; j++) {\n      if (visited[i][j]) continue;\n      traverseNode(i, j, matrix, visited, sizes);\n    }\n  }\n  return sizes;\n}\n\nfunction traverseNode(i, j, matrix, visited, sizes) {\n  let currentRiverSize = 0;\n  const nodesToExplore = [[i, j]];\n  while (nodesToExplore.length) {\n    const currentNode = nodesToExplore.pop();\n    i = currentNode[0];\n    j = currentNode[1];\n    if (visited[i][j]) continue;\n    visited[i][j] = true;\n    if (matrix[i][j] === 0) continue;\n    currentRiverSize++;\n    const unvisitedNeighbors = getUnvisitedNeighbors(i, j, matrix, visited);\n    for (const neighbor of unvisitedNeighbors) {\n      nodesToExplore.push(neighbor);\n    }\n  }\n  if (currentRiverSize > 0) sizes.push(currentRiverSize);\n}\n\nfunction getUnvisitedNeighbors(i, j, matrix, visited) {\n  const unvisitedNeighbors = [];\n  if (i > 0 && !visited[i - 1][j]) unvisitedNeighbors.push([i - 1, j]);\n  if (i < matrix.length - 1 && !visited[i + 1][j]) unvisitedNeighbors.push([i + 1, j]);\n  if (j > 0 && !visited[i][j - 1]) unvisitedNeighbors.push([i, j - 1]);\n  if (j < matrix[0].length - 1 && !visited[i][j + 1]) unvisitedNeighbors.push([i, j + 1]);\n  return unvisitedNeighbors;\n}\n\nexports.riverSizes = riverSizes;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def riverSizes(matrix):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        testInput = [[0]]\n        expected = []\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_2(self):\n        testInput = [[1]]\n        expected = [1]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_3(self):\n        testInput = [[1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0]]\n        expected = [1, 2, 3]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_4(self):\n        testInput = [[1, 0, 0, 1], [1, 0, 1, 0], [0, 0, 1, 0], [1, 0, 1, 0]]\n        expected = [1, 1, 2, 3]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_5(self):\n        testInput = [[1, 0, 0, 1, 0], [1, 0, 1, 0, 0], [0, 0, 1, 0, 1], [1, 0, 1, 0, 1], [1, 0, 1, 1, 0]]\n        expected = [1, 2, 2, 2, 5]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_6(self):\n        testInput = [\n            [1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0],\n            [1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0],\n            [0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1],\n            [1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0],\n            [1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1],\n        ]\n        expected = [1, 1, 2, 2, 5, 21]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_7(self):\n        testInput = [\n            [1, 0, 0, 0, 0, 0, 1],\n            [0, 1, 0, 0, 0, 1, 0],\n            [0, 0, 1, 0, 1, 0, 0],\n            [0, 0, 0, 1, 0, 0, 0],\n            [0, 0, 1, 0, 1, 0, 0],\n            [0, 1, 0, 0, 0, 1, 0],\n            [1, 0, 0, 0, 0, 0, 1],\n        ]\n        expected = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_8(self):\n        testInput = [\n            [1, 0, 0, 0, 0, 0, 1],\n            [0, 1, 0, 0, 0, 1, 0],\n            [0, 0, 1, 0, 1, 0, 0],\n            [0, 0, 1, 1, 1, 0, 0],\n            [0, 0, 1, 0, 1, 0, 0],\n            [0, 1, 0, 0, 0, 1, 0],\n            [1, 0, 0, 0, 0, 0, 1],\n        ]\n        expected = [1, 1, 1, 1, 1, 1, 1, 1, 7]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_9(self):\n        testInput = [\n            [0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0],\n            [0, 0, 0, 0, 0, 0, 0],\n        ]\n        expected = []\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_10(self):\n        testInput = [\n            [1, 1, 1, 1, 1, 1, 1],\n            [1, 1, 1, 1, 1, 1, 1],\n            [1, 1, 1, 1, 1, 1, 1],\n            [1, 1, 1, 1, 1, 1, 1],\n            [1, 1, 1, 1, 1, 1, 1],\n            [1, 1, 1, 1, 1, 1, 1],\n            [1, 1, 1, 1, 1, 1, 1],\n        ]\n        expected = [49]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_11(self):\n        testInput = [[1, 1, 0, 0, 0, 0, 1, 1], [1, 0, 1, 1, 1, 1, 0, 1], [0, 1, 1, 0, 0, 0, 1, 1]]\n        expected = [3, 5, 6]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n\n    def test_case_12(self):\n        testInput = [\n            [1, 1, 0],\n            [1, 0, 1],\n            [1, 1, 1],\n            [1, 1, 0],\n            [1, 0, 1],\n            [0, 1, 0],\n            [1, 0, 0],\n            [1, 0, 0],\n            [0, 0, 0],\n            [1, 0, 0],\n            [1, 0, 1],\n            [1, 1, 1],\n        ]\n        expected = [1, 1, 2, 6, 10]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        testInput = [[1, 0, 0, 1, 0], [1, 0, 1, 0, 0], [0, 0, 1, 0, 1], [1, 0, 1, 0, 1], [1, 0, 1, 1, 0]]\n        expected = [1, 2, 2, 2, 5]\n        self.assertEqual(sorted(program.riverSizes(testInput)), expected)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(wh) time | O(wh) space\ndef riverSizes(matrix):\n    sizes = []\n    visited = [[False for value in row] for row in matrix]\n    for i in range(len(matrix)):\n        for j in range(len(matrix[i])):\n            if visited[i][j]:\n                continue\n            traverseNode(i, j, matrix, visited, sizes)\n    return sizes\n\n\ndef traverseNode(i, j, matrix, visited, sizes):\n    currentRiverSize = 0\n    nodesToExplore = [[i, j]]\n    while len(nodesToExplore):\n        currentNode = nodesToExplore.pop()\n        i = currentNode[0]\n        j = currentNode[1]\n        if visited[i][j]:\n            continue\n        visited[i][j] = True\n        if matrix[i][j] == 0:\n            continue\n        currentRiverSize += 1\n        unvisitedNeighbors = getUnvisitedNeighbors(i, j, matrix, visited)\n        for neighbor in unvisitedNeighbors:\n            nodesToExplore.append(neighbor)\n    if currentRiverSize > 0:\n        sizes.append(currentRiverSize)\n\n\ndef getUnvisitedNeighbors(i, j, matrix, visited):\n    unvisitedNeighbors = []\n    if i > 0 and not visited[i - 1][j]:\n        unvisitedNeighbors.append([i - 1, j])\n    if i < len(matrix) - 1 and not visited[i + 1][j]:\n        unvisitedNeighbors.append([i + 1, j])\n    if j > 0 and not visited[i][j - 1]:\n        unvisitedNeighbors.append([i, j - 1])\n    if j < len(matrix[0]) - 1 and not visited[i][j + 1]:\n        unvisitedNeighbors.append([i, j + 1])\n    return unvisitedNeighbors\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func riverSizes(_ matrix: [[Int]]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let Matrix = [[0]]\n      let Expected: [Int] = []\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let Matrix = [[1]]\n      let Expected = [1]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let Matrix = [[1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0]]\n      let Expected = [1, 2, 3]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let Matrix = [\n        [1, 0, 0, 1],\n        [1, 0, 1, 0],\n        [0, 0, 1, 0],\n        [1, 0, 1, 0],\n      ]\n      let Expected = [1, 1, 2, 3]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let Matrix = [\n        [1, 0, 0, 1, 0],\n        [1, 0, 1, 0, 0],\n        [0, 0, 1, 0, 1],\n        [1, 0, 1, 0, 1],\n        [1, 0, 1, 1, 0],\n      ]\n      let Expected = [1, 2, 2, 2, 5]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let Matrix = [\n        [1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0],\n        [1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0],\n        [0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1],\n        [1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0],\n        [1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1],\n      ]\n      let Expected = [1, 1, 2, 2, 5, 21]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let Matrix = [\n        [1, 0, 0, 0, 0, 0, 1],\n        [0, 1, 0, 0, 0, 1, 0],\n        [0, 0, 1, 0, 1, 0, 0],\n        [0, 0, 0, 1, 0, 0, 0],\n        [0, 0, 1, 0, 1, 0, 0],\n        [0, 1, 0, 0, 0, 1, 0],\n        [1, 0, 0, 0, 0, 0, 1],\n      ]\n      let Expected = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let Matrix = [\n        [1, 0, 0, 0, 0, 0, 1],\n        [0, 1, 0, 0, 0, 1, 0],\n        [0, 0, 1, 0, 1, 0, 0],\n        [0, 0, 1, 1, 1, 0, 0],\n        [0, 0, 1, 0, 1, 0, 0],\n        [0, 1, 0, 0, 0, 1, 0],\n        [1, 0, 0, 0, 0, 0, 1],\n      ]\n      let Expected = [1, 1, 1, 1, 1, 1, 1, 1, 7]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let Matrix = [\n        [0, 0, 0, 0, 0, 0, 0],\n        [0, 0, 0, 0, 0, 0, 0],\n        [0, 0, 0, 0, 0, 0, 0],\n        [0, 0, 0, 0, 0, 0, 0],\n        [0, 0, 0, 0, 0, 0, 0],\n        [0, 0, 0, 0, 0, 0, 0],\n        [0, 0, 0, 0, 0, 0, 0],\n      ]\n      let Expected: [Int] = []\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let Matrix = [\n        [1, 1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1, 1],\n        [1, 1, 1, 1, 1, 1, 1],\n      ]\n      let Expected = [49]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let Matrix = [\n        [1, 1, 0, 0, 0, 0, 1, 1],\n        [1, 0, 1, 1, 1, 1, 0, 1],\n        [0, 1, 1, 0, 0, 0, 1, 1],\n      ]\n      let Expected = [3, 5, 6]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      let Matrix = [\n        [1, 1, 0],\n        [1, 0, 1],\n        [1, 1, 1],\n        [1, 1, 0],\n        [1, 0, 1],\n        [0, 1, 0],\n        [1, 0, 0],\n        [1, 0, 0],\n        [0, 0, 0],\n        [1, 0, 0],\n        [1, 0, 1],\n        [1, 1, 1],\n      ]\n      let Expected = [1, 1, 2, 6, 10]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let Matrix = [\n        [1, 0, 0, 1, 0],\n        [1, 0, 1, 0, 0],\n        [0, 0, 1, 0, 1],\n        [1, 0, 1, 0, 1],\n        [1, 0, 1, 1, 0],\n      ]\n      let Expected = [1, 2, 2, 2, 5]\n      let RiverSizes = program.riverSizes(Matrix).sorted()\n      try assertEqual(Expected, RiverSizes)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(wh) time | O(wh) space\n  func riverSizes(_ matrix: [[Int]]) -> [Int] {\n    var sizes: [Int] = []\n    var visited: [[Bool]] = matrix.map { $0.map { $0 == 2 } }\n    for var i in 0 ..< matrix.count {\n      for var j in 0 ..< matrix[i].count {\n        if visited[i][j] { continue }\n        traverseNode(i, j, matrix, &visited, &sizes)\n      }\n    }\n    return sizes\n  }\n\n  func traverseNode(_ k: Int, _ l: Int, _ matrix: [[Int]], _ visited: inout [[Bool]], _ sizes: inout [Int]) {\n    var i = k\n    var j = l\n    var currentRiverSize = 0\n    var nodesToExplore = [[i, j]]\n    while nodesToExplore.count > 0 {\n      let currentNode = nodesToExplore.popLast()!\n\n      i = currentNode[0]\n      j = currentNode[1]\n      if visited[i][j] { continue }\n      visited[i][j] = true\n\n      if matrix[i][j] == 0 { continue }\n      currentRiverSize += 1\n\n      let unvisitedNeighbors = getUnvisitedNeighbors(i, j, matrix, visited)\n      for node in unvisitedNeighbors {\n        nodesToExplore.append(node)\n      }\n    }\n    if currentRiverSize > 0 { sizes.append(currentRiverSize) }\n  }\n\n  func getUnvisitedNeighbors(_ i: Int, _ j: Int, _ matrix: [[Int]], _ visited: [[Bool]]) -> [[Int]] {\n    var unvisitedNeighbors: [[Int]] = []\n\n    if i > 0, !visited[i - 1][j] {\n      unvisitedNeighbors.append([i - 1, j])\n    }\n    if i < matrix.count - 1, !visited[i + 1][j] {\n      unvisitedNeighbors.append([i + 1, j])\n    }\n    if j > 0, !visited[i][j - 1] {\n      unvisitedNeighbors.append([i, j - 1])\n    }\n    if j < matrix[i].count - 1, !visited[i][j + 1] {\n      unvisitedNeighbors.append([i, j + 1])\n    }\n    return unvisitedNeighbors\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function riverSizes(matrix: number[][]) {\n  // Write your code here.\n  return [-1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const testInput = [\n    [1, 0, 0, 1, 0],\n    [1, 0, 1, 0, 0],\n    [0, 0, 1, 0, 1],\n    [1, 0, 1, 0, 1],\n    [1, 0, 1, 1, 0],\n  ];\n  const expected = [1, 2, 2, 2, 5];\n  chai.expect(program.riverSizes(testInput).sort((a, b) => a - b)).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(wh) time | O(wh) space\nexport function riverSizes(matrix: number[][]) {\n  const sizes: number[] = [];\n  const visited: boolean[][] = matrix.map(row => row.map(value => false));\n  for (let i = 0; i < matrix.length; i++) {\n    for (let j = 0; j < matrix[i].length; j++) {\n      if (visited[i][j]) continue;\n      traverseNode(i, j, matrix, visited, sizes);\n    }\n  }\n  return sizes;\n}\n\nfunction traverseNode(i: number, j: number, matrix: number[][], visited: boolean[][], sizes: number[]) {\n  let currentRiverSize = 0;\n  const nodesToExplore = [[i, j]];\n  while (nodesToExplore.length) {\n    const currentNode = nodesToExplore.pop()!;\n    i = currentNode[0];\n    j = currentNode[1];\n    if (visited[i][j]) continue;\n    visited[i][j] = true;\n    if (matrix[i][j] === 0) continue;\n    currentRiverSize++;\n    const unvisitedNeighbors = getUnvisitedNeighbors(i, j, matrix, visited);\n    for (const neighbor of unvisitedNeighbors) {\n      nodesToExplore.push(neighbor);\n    }\n  }\n  if (currentRiverSize > 0) sizes.push(currentRiverSize);\n}\n\nfunction getUnvisitedNeighbors(i: number, j: number, matrix: number[][], visited: boolean[][]) {\n  const unvisitedNeighbors: number[][] = [];\n  if (i > 0 && !visited[i - 1][j]) unvisitedNeighbors.push([i - 1, j]);\n  if (i < matrix.length - 1 && !visited[i + 1][j]) unvisitedNeighbors.push([i + 1, j]);\n  if (j > 0 && !visited[i][j - 1]) unvisitedNeighbors.push([i, j - 1]);\n  if (j < matrix[0].length - 1 && !visited[i][j + 1]) unvisitedNeighbors.push([i, j + 1]);\n  return unvisitedNeighbors;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          0
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "matrix": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        2,
+        1,
+        5,
+        2,
+        2
+      ],
+      [],
+      [
+        1
+      ],
+      [
+        3,
+        2,
+        1
+      ],
+      [
+        2,
+        1,
+        3,
+        1
+      ],
+      [
+        2,
+        1,
+        21,
+        5,
+        2,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        7,
+        1,
+        1,
+        1,
+        1
+      ],
+      [],
+      [
+        49
+      ],
+      [
+        3,
+        5,
+        6
+      ],
+      [
+        10,
+        1,
+        1,
+        2,
+        6
+      ]
+    ]
+  ]
+}

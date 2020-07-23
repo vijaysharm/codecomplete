@@ -1,0 +1,173 @@
+{
+  "Summary": {
+    "Name": "Longest Substring Without Duplication",
+    "Category": "Strings",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 4,
+      "timeOne": 0,
+      "timeTwo": 1309,
+      "url": "https://player.vimeo.com/video/225764436"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try traversing the input string and storing the last position at which you see each character in a hash table. How can this help you solve the given problem?\nAs you traverse the input string, keep track of a starting index variable. This variable, as its name suggests, should represent the most recent index from which you could start a substring with no duplicate characters, ending at your current index. Use the hash table mentioned in Hint #1 to update this variable correctly, and update the longest substring as you go.\n",
+  "SpaceTime": "O(n) time | O(min(n, a)) space - where n is the length of the input string and a is the length of the character alphabet represented in the input string\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a string and returns its longest substring\n  without duplicate characters.\n</p>\n<p>You can assume that there will only be one longest substring without duplication.</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">string</span> = \"clementisacap\"\n</pre>\n<h3>Sample Output</h3>\n<pre>\n\"mentisac\"\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "string",
+      "Example": "clementisacap",
+      "Schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nstring longestSubstringWithoutDuplication(string str) {\n  // Write your code here.\n  return \"\";\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(longestSubstringWithoutDuplication(\"a\") == \"a\"); });\n\n    RunTest(\n        []() { assert(longestSubstringWithoutDuplication(\"abc\") == \"abc\"); });\n\n    RunTest(\n        []() { assert(longestSubstringWithoutDuplication(\"abcb\") == \"abc\"); });\n\n    RunTest(\"Test Case 2\", []() {\n      assert(longestSubstringWithoutDuplication(\"abcdeabcdefc\") == \"abcdef\");\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      assert(longestSubstringWithoutDuplication(\"abccdeaabbcddef\") == \"cdea\");\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      assert(longestSubstringWithoutDuplication(\"abacacacaaabacaaaeaaafa\") ==\n             \"bac\");\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      assert(longestSubstringWithoutDuplication(\"abcdabcef\") == \"dabcef\");\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      assert(longestSubstringWithoutDuplication(\"abcbde\") == \"cbde\");\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(longestSubstringWithoutDuplication(\"clementisacap\") == \"mentisac\");\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(longestSubstringWithoutDuplication(\"clementisanarm\") == \"mentisa\");\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(longestSubstringWithoutDuplication(\"clementisacap\") == \"mentisac\");\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <unordered_map>\n#include <vector>\nusing namespace std;\n\n// O(n) time | O(min(n, a)) space\nstring longestSubstringWithoutDuplication(string str) {\n  unordered_map<char, int> lastSeen;\n  vector<int> longest{0, 1};\n  int startIdx = 0;\n  for (int i = 0; i < str.length(); i++) {\n    char character = str[i];\n    if (lastSeen.find(character) != lastSeen.end()) {\n      startIdx = max(startIdx, lastSeen[character] + 1);\n    }\n    if (longest[1] - longest[0] < i + 1 - startIdx) {\n      longest = {startIdx, i + 1};\n    }\n    lastSeen[character] = i;\n  }\n  string result = str.substr(longest[0], longest[1] - longest[0]);\n  return result;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static string LongestSubstringWithoutDuplication(string str) {\n\t\t// Write your code here\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"a\").Equals(\"a\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"abc\").Equals(\"abc\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"abcb\").Equals(\"abc\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"abcdeabcdefc\").Equals(\n\t\t\t  \"abcdef\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\n\t\t\t  \"abccdeaabbcddef\").Equals(\"cdea\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\n\t\t\t  \"abacacacaaabacaaaeaaafa\").Equals(\"bac\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"abcdabcef\").Equals(\n\t\t\t  \"dabcef\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"abcbde\").Equals(\"cbde\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"clementisacap\").Equals(\n\t\t\t  \"mentisac\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"clementisanarm\").Equals(\n\t\t\t  \"mentisa\"));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.LongestSubstringWithoutDuplication(\"clementisacap\").Equals(\n\t\t\t  \"mentisac\"));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(min(n, a)) space\n\tpublic static string LongestSubstringWithoutDuplication(string str) {\n\t\tDictionary<char, int> lastSeen = new Dictionary<char, int>();\n\t\tint[] longest = {0, 1};\n\t\tint startIdx = 0;\n\t\tfor (int i = 0; i < str.Length; i++) {\n\t\t\tchar c = str[i];\n\t\t\tif (lastSeen.ContainsKey(c)) {\n\t\t\t\tstartIdx = Math.Max(startIdx, lastSeen[c] + 1);\n\t\t\t}\n\t\t\tif (longest[1] - longest[0] < i + 1 - startIdx) {\n\t\t\t\tlongest = new int[] {startIdx, i + 1};\n\t\t\t}\n\t\t\tlastSeen[c] = i;\n\t\t}\n\t\tstring result = str.Substring(longest[0], longest[1] - longest[0]);\n\t\treturn result;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc LongestSubstringWithoutDuplication(str string) string {\n\t// Write your code here.\n\treturn \"\"\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := \"a\"\n\toutput := LongestSubstringWithoutDuplication(\"a\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := \"abc\"\n\toutput := LongestSubstringWithoutDuplication(\"abc\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := \"abc\"\n\toutput := LongestSubstringWithoutDuplication(\"abcb\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := \"abcdef\"\n\toutput := LongestSubstringWithoutDuplication(\"abcdeabcdefc\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := \"cdea\"\n\toutput := LongestSubstringWithoutDuplication(\"abccdeaabbcddef\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := \"bac\"\n\toutput := LongestSubstringWithoutDuplication(\"abacacacaaabacaaaeaaafa\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := \"dabcef\"\n\toutput := LongestSubstringWithoutDuplication(\"abcdabcef\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := \"cbde\"\n\toutput := LongestSubstringWithoutDuplication(\"abcbde\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := \"mentisac\"\n\toutput := LongestSubstringWithoutDuplication(\"clementisacap\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := \"mentisa\"\n\toutput := LongestSubstringWithoutDuplication(\"clementisanarm\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := \"mentisac\"\n\toutput := LongestSubstringWithoutDuplication(\"clementisacap\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype substring struct {\n\tleft  int\n\tright int\n}\n\nfunc (ss substring) length() int { return ss.right - ss.left }\n\n// O(n) time | O(min(n, a)) space\nfunc LongestSubstringWithoutDuplication(str string) string {\n\tlastSeen := map[rune]int{}\n\tlongest := substring{0, 1}\n\tstartIndex := 0\n\tfor i, char := range str {\n\t\tif seenIndex, found := lastSeen[char]; found &&\n\t\t\tstartIndex < seenIndex+1 {\n\t\t\tstartIndex = seenIndex + 1\n\t\t}\n\t\tif longest.length() < i+1-startIndex {\n\t\t\tlongest = substring{startIndex, i + 1}\n\t\t}\n\t\tlastSeen[char] = i\n\t}\n\treturn str[longest.left:longest.right]\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static String longestSubstringWithoutDuplication(String str) {\n    // Write your code here\n    return \"\";\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.longestSubstringWithoutDuplication(\"a\").equals(\"a\"));\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.longestSubstringWithoutDuplication(\"abc\").equals(\"abc\"));\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.longestSubstringWithoutDuplication(\"abcb\").equals(\"abc\"));\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.longestSubstringWithoutDuplication(\"abcdeabcdefc\").equals(\"abcdef\"));\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.longestSubstringWithoutDuplication(\"abccdeaabbcddef\").equals(\"cdea\"));\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(\n        Program.longestSubstringWithoutDuplication(\"abacacacaaabacaaaeaaafa\").equals(\"bac\"));\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.longestSubstringWithoutDuplication(\"abcdabcef\").equals(\"dabcef\"));\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.longestSubstringWithoutDuplication(\"abcbde\").equals(\"cbde\"));\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(\n        Program.longestSubstringWithoutDuplication(\"clementisacap\").equals(\"mentisac\"));\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(\n        Program.longestSubstringWithoutDuplication(\"clementisanarm\").equals(\"mentisa\"));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(\n        Program.longestSubstringWithoutDuplication(\"clementisacap\").equals(\"mentisac\"));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(min(n, a)) space\n  public static String longestSubstringWithoutDuplication(String str) {\n    Map<Character, Integer> lastSeen = new HashMap<Character, Integer>();\n    int[] longest = {0, 1};\n    int startIdx = 0;\n    for (int i = 0; i < str.length(); i++) {\n      char c = str.charAt(i);\n      if (lastSeen.containsKey(c)) {\n        startIdx = Math.max(startIdx, lastSeen.get(c) + 1);\n      }\n      if (longest[1] - longest[0] < i + 1 - startIdx) {\n        longest = new int[] {startIdx, i + 1};\n      }\n      lastSeen.put(c, i);\n    }\n    String result = str.substring(longest[0], longest[1]);\n    return result;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function longestSubstringWithoutDuplication(string) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.longestSubstringWithoutDuplication = longestSubstringWithoutDuplication;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('a')).to.deep.equal('a');\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('abc')).to.deep.equal('abc');\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('abcb')).to.deep.equal('abc');\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('abcdeabcdefc')).to.deep.equal('abcdef');\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('abccdeaabbcddef')).to.deep.equal('cdea');\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('abacacacaaabacaaaeaaafa')).to.deep.equal('bac');\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('abcdabcef')).to.deep.equal('dabcef');\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('abcbde')).to.deep.equal('cbde');\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('clementisacap')).to.deep.equal('mentisac');\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('clementisanarm')).to.deep.equal('mentisa');\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('clementisacap')).to.deep.equal('mentisac');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(min(n, a)) space\nfunction longestSubstringWithoutDuplication(string) {\n  const lastSeen = {};\n  let longest = [0, 1];\n  let startIdx = 0;\n  for (let i = 0; i < string.length; i++) {\n    const char = string[i];\n    if (char in lastSeen) {\n      startIdx = Math.max(startIdx, lastSeen[char] + 1);\n    }\n    if (longest[1] - longest[0] < i + 1 - startIdx) {\n      longest = [startIdx, i + 1];\n    }\n    lastSeen[char] = i;\n  }\n  return string.slice(longest[0], longest[1]);\n}\n\nexports.longestSubstringWithoutDuplication = longestSubstringWithoutDuplication;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def longestSubstringWithoutDuplication(string):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"a\"), \"a\")\n\n    def test_case_2(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"abc\"), \"abc\")\n\n    def test_case_3(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"abcb\"), \"abc\")\n\n    def test_case_4(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"abcdeabcdefc\"), \"abcdef\")\n\n    def test_case_5(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"abccdeaabbcddef\"), \"cdea\")\n\n    def test_case_6(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"abacacacaaabacaaaeaaafa\"), \"bac\")\n\n    def test_case_7(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"abcdabcef\"), \"dabcef\")\n\n    def test_case_8(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"abcbde\"), \"cbde\")\n\n    def test_case_9(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"clementisacap\"), \"mentisac\")\n\n    def test_case_10(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"clementisanarm\"), \"mentisa\")\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.longestSubstringWithoutDuplication(\"clementisacap\"), \"mentisac\")\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(min(n, a)) space\ndef longestSubstringWithoutDuplication(string):\n    lastSeen = {}\n    longest = [0, 1]\n    startIdx = 0\n    for i, char in enumerate(string):\n        if char in lastSeen:\n            startIdx = max(startIdx, lastSeen[char] + 1)\n        if longest[1] - longest[0] < i + 1 - startIdx:\n            longest = [startIdx, i + 1]\n        lastSeen[char] = i\n    return string[longest[0] : longest[1]]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func longestSubstringWithoutDuplication(_ string: String) -> String {\n    // Write your code here.\n    return \"\"\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(\"a\", program.longestSubstringWithoutDuplication(\"a\"))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(\"abc\", program.longestSubstringWithoutDuplication(\"abc\"))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(\"abc\", program.longestSubstringWithoutDuplication(\"abcb\"))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(\"abcdef\", program.longestSubstringWithoutDuplication(\"abcdeabcdefc\"))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(\"cdea\", program.longestSubstringWithoutDuplication(\"abccdeaabbcddef\"))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(\"bac\", program.longestSubstringWithoutDuplication(\"abacacacaaabacaaaeaaafa\"))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(\"dabcef\", program.longestSubstringWithoutDuplication(\"abcdabcef\"))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(\"cbde\", program.longestSubstringWithoutDuplication(\"abcbde\"))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(\"mentisac\", program.longestSubstringWithoutDuplication(\"clementisacap\"))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(\"mentisa\", program.longestSubstringWithoutDuplication(\"clementisanarm\"))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(\"mentisac\", program.longestSubstringWithoutDuplication(\"clementisacap\"))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(min(n, a)) space\n  func longestSubstringWithoutDuplication(_ string: String) -> String {\n    var startingPointer = 0\n    var indicesOfLongestSubstring = [0, 1]\n    var indicesDictionary = [Character: Int]()\n\n    for (index, character) in string.enumerated() {\n      if let index = indicesDictionary[character] {\n        startingPointer = max(startingPointer, index + 1)\n      }\n\n      if indicesOfLongestSubstring[1] - indicesOfLongestSubstring[0] < index + 1 - startingPointer {\n        indicesOfLongestSubstring = [startingPointer, index + 1]\n      }\n\n      indicesDictionary[character] = index\n    }\n\n    let start = indicesOfLongestSubstring[0]\n    let startingIndex = string.index(string.startIndex, offsetBy: start)\n\n    let end = indicesOfLongestSubstring[1]\n    let endingIndex = string.index(string.startIndex, offsetBy: end)\n\n    return String(string[startingIndex ..< endingIndex])\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function longestSubstringWithoutDuplication(string: string) {\n  // Write your code here.\n  return '';\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.longestSubstringWithoutDuplication('clementisacap')).to.deep.equal('mentisac');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(min(n, a)) space\nexport function longestSubstringWithoutDuplication(string: string) {\n  const lastSeen: {[key: string]: number} = {};\n  let longest = [0, 1];\n  let startIdx = 0;\n  for (let i = 0; i < string.length; i++) {\n    const char = string[i];\n    if (char in lastSeen) {\n      startIdx = Math.max(startIdx, lastSeen[char] + 1);\n    }\n    if (longest[1] - longest[0] < i + 1 - startIdx) {\n      longest = [startIdx, i + 1];\n    }\n    lastSeen[char] = i;\n  }\n  return string.slice(longest[0], longest[1]);\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "string": "clementisacap"
+    },
+    {
+      "string": "a"
+    },
+    {
+      "string": "abc"
+    },
+    {
+      "string": "abcb"
+    },
+    {
+      "string": "abcdeabcdefc"
+    },
+    {
+      "string": "abccdeaabbcddef"
+    },
+    {
+      "string": "abacacacaaabacaaaeaaafa"
+    },
+    {
+      "string": "abcdabcef"
+    },
+    {
+      "string": "abcbde"
+    },
+    {
+      "string": "clementisanarm"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      "mentisac",
+      "a",
+      "abc",
+      "abc",
+      "abcdef",
+      "cdea",
+      "bac",
+      "dabcef",
+      "cbde",
+      "mentisa"
+    ]
+  ]
+}

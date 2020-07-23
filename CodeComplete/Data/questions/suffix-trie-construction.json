@@ -1,0 +1,1164 @@
+{
+  "Summary": {
+    "Name": "Suffix Trie Construction",
+    "Category": "Tries",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 201,
+      "timeOne": 0,
+      "timeTwo": 1426,
+      "url": "https://player.vimeo.com/video/243526904"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Building a suffix-trie-like data structure consists of essentially storing every suffix of a given string in a trie. To do so, iterate through the input string one character at a time and insert every substring starting at each character and ending at the end of the string into the trie.\nTo insert a string into the trie, start by adding the first character of the string into the root node of the trie and mapping it to an empty hash table if it isn't already there. Then, iterate through the rest of the string inserting each of the remaining characters into the previous character's corresponding node (or hash table) in the trie, making sure to add an endSymbol \"*\" at the end.\nSearching the trie for a specific string should follow a nearly identical logic to the one used to add a string in the trie.\n",
+  "SpaceTime": "Creation: O(n^2) time | O(n^2) space - where n is the length of the input string\nSearching: O(m) time | O(1) space - where m is the length of the input string\n",
+  "PromptHTML": "<p>\n  Write a <span>SuffixTrie</span> class for a Suffix-Trie-like data structure.\n  The class should have a <span>root</span> property set to be the root node of\n  the trie and should support:\n</p>\n<ul>\n  <li>\n    - Creating the trie from a string; this will be done by calling the\n    <span>populateSuffixTrieFrom</span> method upon class instantiation, which\n    should populate the <span>root</span> of the class.\n  </li>\n  <li>- Searching for strings in the trie.</li>\n</ul>\n<p>\n  Note that every string added to the trie should end with the special\n  <span>endSymbol</span> character: <span>\"*\"</span>.\n</p>\n<p>\n  If you're unfamiliar with Suffix Tries, we recommend watching the\n  Conceptual Overview section of this question's video explanation before\n  starting to code.\n</p>\n<h3>Sample Input (for creation)</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">string</span> = \"babc\"\n</pre>\n<h3>Sample Output (for creation)</h3>\n<pre>\n<span class=\"CodeEditor-promptComment\">The structure below is the root of the trie.</span>\n{\n  \"c\": {\"*\": true},\n  \"b\": {\n    \"c\": {\"*\": true},\n    \"a\": {\"b\": {\"c\": {\"*\": true}}},\n  },\n  \"a\": {\"b\": {\"c\": {\"*\": true}}},\n}\n</pre>\n<h3>\n  Sample Input (for searching in the suffix trie above)\n</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">string</span> = \"abc\"\n</pre>\n<h3>\n  Sample Output (for searching in the suffix trie above)\n</h3>\n<pre>\ntrue\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "string",
+      "Example": "babc",
+      "Schema": {
+        "type": "string"
+      }
+    },
+    {
+      "Name": "classMethodsToCall",
+      "Example": [
+        {
+          "arguments": [
+            "abc"
+          ],
+          "method": "contains"
+        }
+      ],
+      "Schema": {
+        "description": "These methods will be called in the order that they appear in below\non a <span>SuffixTrie</span> built from the <span>string</span> and with their respective arguments.\n",
+        "items": {
+          "properties": {
+            "arguments": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 1,
+              "minItems": 1,
+              "type": "array"
+            },
+            "method": {
+              "enum": [
+                "contains"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "arguments"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <unordered_map>\nusing namespace std;\n\n// Do not edit the class below except for the\n// populateSuffixTrieFrom and contains methods.\n// Feel free to add new properties and methods\n// to the class.\nclass TrieNode {\npublic:\n  unordered_map<char, TrieNode *> children;\n};\n\nclass SuffixTrie {\npublic:\n  TrieNode *root;\n  char endSymbol;\n\n  SuffixTrie(string str) {\n    this->root = new TrieNode();\n    this->endSymbol = '*';\n    this->populateSuffixTrieFrom(str);\n  }\n\n  void populateSuffixTrieFrom(string str) {\n    // Write your code here.\n  }\n\n  bool contains(string str) {\n    // Write your code here.\n    return false;\n  }\n};\n",
+      "StartingTest": "class SuffixTrieTest {\npublic:\n  TrieNode *root;\n  char endSymbol;\n\n  SuffixTrieTest(string str) {\n    this->root = new TrieNode();\n    this->endSymbol = '*';\n    this->populateSuffixTrieFrom(str);\n  }\n\n  void populateSuffixTrieFrom(string str) {\n    for (int i = 0; i < str.length(); i++) {\n      this->insertSubstringStartingAt(i, str);\n    }\n  }\n\n  void insertSubstringStartingAt(int i, string str) {\n    TrieNode *node = this->root;\n    for (int j = i; j < str.length(); j++) {\n      char letter = str[j];\n      if (node->children.find(letter) == node->children.end()) {\n        TrieNode *newNode = new TrieNode();\n        node->children.insert({letter, newNode});\n      }\n      node = node->children[letter];\n    }\n    node->children.insert({this->endSymbol, NULL});\n  }\n\n  bool contains(string str) {\n    TrieNode *node = this->root;\n    for (char letter : str) {\n      if (node->children.find(letter) == node->children.end()) {\n        return false;\n      }\n      node = node->children[letter];\n    }\n    return node->children.find(this->endSymbol) == node->children.end() ? false\n                                                                        : true;\n  }\n};\n\nbool compareTries(TrieNode *t1, TrieNode *t2) {\n  if (t1->children.size() != t2->children.size()) {\n    return false;\n  }\n  for (auto elem : t1->children) {\n    auto it = t2->children.find(elem.first);\n    if (it == t2->children.end()) {\n      return false;\n    } else if (elem.second != NULL && !compareTries(elem.second, it->second)) {\n      return false;\n    }\n  }\n  return true;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      string word1 = \"test\";\n      SuffixTrie test1(word1);\n      SuffixTrieTest trie1(word1);\n      for (int i = word1.length() - 1; i >= 0; i--) {\n        string substring = word1.substr(i);\n        assert(test1.contains(substring) == true);\n      }\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      string word2 = \"invisible\";\n      SuffixTrie test2(word2);\n      SuffixTrieTest trie2(word2);\n      for (int i = word2.length() - 1; i >= 0; i--) {\n        string substring = word2.substr(i);\n        assert(test2.contains(substring) == true);\n      }\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      string word3 = \"123456789\";\n      SuffixTrie test3(word3);\n      SuffixTrieTest trie3(word3);\n      for (int i = word3.length() - 1; i >= 0; i--) {\n        string substring = word3.substr(i);\n        assert(test3.contains(substring) == true);\n      }\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      string word4 = \"testtest\";\n      SuffixTrie test4(word4);\n      SuffixTrieTest trie4(word4);\n      for (int i = word4.length() - 1; i >= 0; i--) {\n        string substring = word4.substr(i);\n        assert(test4.contains(substring) == true);\n      }\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      string word5 = \"ttttttttt\";\n      SuffixTrie test5(word5);\n      SuffixTrieTest trie5(word5);\n      for (int i = word5.length() - 1; i >= 0; i--) {\n        string substring = word5.substr(i);\n        assert(test5.contains(substring) == true);\n      }\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      string word6 = \"babc\";\n      SuffixTrie test6(word6);\n      SuffixTrieTest trie6(word6);\n      for (int i = word6.length() - 1; i >= 0; i--) {\n        string substring = word6.substr(i);\n        assert(test6.contains(substring) == true);\n      }\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      string word1 = \"test\";\n      SuffixTrie test1(word1);\n      SuffixTrieTest trie1(word1);\n      assert(compareTries(test1.root, trie1.root) == true);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      string word2 = \"invisible\";\n      SuffixTrie test2(word2);\n      SuffixTrieTest trie2(word2);\n      assert(compareTries(test2.root, trie2.root) == true);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      string word3 = \"123456789\";\n      SuffixTrie test3(word3);\n      SuffixTrieTest trie3(word3);\n      assert(compareTries(test3.root, trie3.root) == true);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      string word4 = \"testtest\";\n      SuffixTrie test4(word4);\n      SuffixTrieTest trie4(word4);\n      assert(compareTries(test4.root, trie4.root) == true);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      string word5 = \"ttttttttt\";\n      SuffixTrie test5(word5);\n      SuffixTrieTest trie5(word5);\n      assert(compareTries(test5.root, trie5.root) == true);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      string word6 = \"babc\";\n      SuffixTrie test6(word6);\n      SuffixTrieTest trie6(word6);\n      assert(compareTries(test6.root, trie6.root) == true);\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      string word1 = \"test\";\n      SuffixTrie test1(word1);\n      SuffixTrieTest trie1(word1);\n      assert(test1.contains(\"tes\") == false);\n    });\n\n    RunTest(\"Test Case 14\", []() {\n      string word1 = \"test\";\n      SuffixTrie test1(word1);\n      SuffixTrieTest trie1(word1);\n      assert(test1.contains(\"nvisibl\") == false);\n    });\n\n    RunTest(\"Test Case 15\", []() {\n      string word1 = \"test\";\n      SuffixTrie test1(word1);\n      SuffixTrieTest trie1(word1);\n      assert(test1.contains(\"45567\") == false);\n    });\n\n    RunTest(\"Test Case 16\", []() {\n      string word1 = \"test\";\n      SuffixTrie test1(word1);\n      SuffixTrieTest trie1(word1);\n      assert(test1.contains(\"tt\") == false);\n    });\n\n    RunTest(\"Test Case 17\", []() {\n      string word1 = \"test\";\n      SuffixTrie test1(word1);\n      SuffixTrieTest trie1(word1);\n      assert(test1.contains(\"vvv\") == false);\n    });\n\n    RunTest(\"Test Case 18\", []() {\n      string word1 = \"test\";\n      SuffixTrie test1(word1);\n      SuffixTrieTest trie1(word1);\n      assert(test1.contains(\"bab\") == false);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      string word1 = \"babc\";\n      SuffixTrie actual(word1);\n      assert(actual.contains(\"abc\") == true);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <unordered_map>\nusing namespace std;\n\nclass TrieNode {\npublic:\n  unordered_map<char, TrieNode *> children;\n};\n\nclass SuffixTrie {\npublic:\n  TrieNode *root;\n  char endSymbol;\n\n  SuffixTrie(string str) {\n    this->root = new TrieNode();\n    this->endSymbol = '*';\n    this->populateSuffixTrieFrom(str);\n  }\n\n  // O(n^2) time | O(n^2) space\n  void populateSuffixTrieFrom(string str) {\n    for (int i = 0; i < str.length(); i++) {\n      this->insertSubstringStartingAt(i, str);\n    }\n  }\n\n  void insertSubstringStartingAt(int i, string str) {\n    TrieNode *node = this->root;\n    for (int j = i; j < str.length(); j++) {\n      char letter = str[j];\n      if (node->children.find(letter) == node->children.end()) {\n        TrieNode *newNode = new TrieNode();\n        node->children.insert({letter, newNode});\n      }\n      node = node->children[letter];\n    }\n    node->children.insert({this->endSymbol, NULL});\n  }\n\n  // O(m) time | O(1) space\n  bool contains(string str) {\n    TrieNode *node = this->root;\n    for (char letter : str) {\n      if (node->children.find(letter) == node->children.end()) {\n        return false;\n      }\n      node = node->children[letter];\n    }\n    return node->children.find(this->endSymbol) != node->children.end();\n  }\n};\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\t// Do not edit the class below except for the\n\t// PopulateSuffixTrieFrom and Contains methods.\n\t// Feel free to add new properties and methods\n\t// to the class.\n\tpublic class TrieNode {\n\t\tpublic Dictionary<char, TrieNode> Children = new Dictionary<char, TrieNode>();\n\t}\n\n\tpublic class SuffixTrie {\n\t\tpublic TrieNode root = new TrieNode();\n\t\tpublic char endSymbol = '*';\n\n\t\tpublic SuffixTrie(string str) {\n\t\t\tPopulateSuffixTrieFrom(str);\n\t\t}\n\n\t\tpublic void PopulateSuffixTrieFrom(string str) {\n\t\t\t// Write your code here.\n\t\t}\n\n\t\tpublic bool Contains(string str) {\n\t\t\t// Write your code here.\n\t\t\treturn false;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tstatic string word1 = \"test\";\n\tstatic string word2 = \"invisible\";\n\tstatic string word3 = \"123456789\";\n\tstatic string word4 = \"testtest\";\n\tstatic string word5 = \"ttttttttt\";\n\tstatic string word6 = \"babc\";\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n\t\tfor (int i = word1.Length - 1; i >= 0; i--) {\n\t\t\tstring substring = word1.Substring(i);\n\t\t\tUtils.AssertTrue(trie1.Contains(substring));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tProgram.SuffixTrie trie2 = new Program.SuffixTrie(word2);\n\t\tfor (int i = word2.Length - 1; i >= 0; i--) {\n\t\t\tstring substring = word2.Substring(i);\n\t\t\tUtils.AssertTrue(trie2.Contains(substring));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tProgram.SuffixTrie trie3 = new Program.SuffixTrie(word3);\n\t\tfor (int i = word3.Length - 1; i >= 0; i--) {\n\t\t\tstring substring = word3.Substring(i);\n\t\t\tUtils.AssertTrue(trie3.Contains(substring));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tProgram.SuffixTrie trie4 = new Program.SuffixTrie(word4);\n\t\tfor (int i = word4.Length - 1; i >= 0; i--) {\n\t\t\tstring substring = word4.Substring(i);\n\t\t\tUtils.AssertTrue(trie4.Contains(substring));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tProgram.SuffixTrie trie5 = new Program.SuffixTrie(word5);\n\t\tfor (int i = word5.Length - 1; i >= 0; i--) {\n\t\t\tstring substring = word5.Substring(i);\n\t\t\tUtils.AssertTrue(trie5.Contains(substring));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tProgram.SuffixTrie trie6 = new Program.SuffixTrie(word6);\n\t\tfor (int i = word6.Length - 1; i >= 0; i--) {\n\t\t\tstring substring = word6.Substring(i);\n\t\t\tUtils.AssertTrue(trie6.Contains(substring));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tProgram.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n\t\tSuffixTrieTest trie1Test = new SuffixTrieTest(word1);\n\t\tUtils.AssertTrue(compareTries(trie1.root, trie1Test.root));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tProgram.SuffixTrie trie2 = new Program.SuffixTrie(word2);\n\t\tSuffixTrieTest trie2Test = new SuffixTrieTest(word2);\n\t\tUtils.AssertTrue(compareTries(trie2.root, trie2Test.root));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tProgram.SuffixTrie trie3 = new Program.SuffixTrie(word3);\n\t\tSuffixTrieTest trie3Test = new SuffixTrieTest(word3);\n\t\tUtils.AssertTrue(compareTries(trie3.root, trie3Test.root));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tProgram.SuffixTrie trie4 = new Program.SuffixTrie(word4);\n\t\tSuffixTrieTest trie4Test = new SuffixTrieTest(word4);\n\t\tUtils.AssertTrue(compareTries(trie4.root, trie4Test.root));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tProgram.SuffixTrie trie5 = new Program.SuffixTrie(word5);\n\t\tSuffixTrieTest trie5Test = new SuffixTrieTest(word5);\n\t\tUtils.AssertTrue(compareTries(trie5.root, trie5Test.root));\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tProgram.SuffixTrie trie6 = new Program.SuffixTrie(word6);\n\t\tSuffixTrieTest trie6Test = new SuffixTrieTest(word6);\n\t\tUtils.AssertTrue(compareTries(trie6.root, trie6Test.root));\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tProgram.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n\t\tUtils.AssertTrue(!trie1.Contains(\"tes\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tProgram.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n\t\tUtils.AssertTrue(!trie1.Contains(\"nvisibl\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tProgram.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n\t\tUtils.AssertTrue(!trie1.Contains(\"45567\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase16() {\n\t\tProgram.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n\t\tUtils.AssertTrue(!trie1.Contains(\"tt\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase17() {\n\t\tProgram.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n\t\tUtils.AssertTrue(!trie1.Contains(\"vvv\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase18() {\n\t\tProgram.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n\t\tUtils.AssertTrue(!trie1.Contains(\"bab\"));\n\t}\n\n\tpublic bool compareTries(Program.TrieNode t1, TrieNode t2) {\n\t\tif (t1.Children.Count != t2.Children.Count) {\n\t\t\treturn false;\n\t\t}\n\t\tforeach (var entry in t1.Children.ToArray()) {\n\t\t\tchar key = entry.Key;\n\t\t\tif (key == '*') {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tProgram.TrieNode value = entry.Value;\n\t\t\tif (!t2.Children.ContainsKey(key)) {\n\t\t\t\treturn false;\n\t\t\t} else if (value != null & !compareTries(value, t2.Children[key])) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\tpublic class TrieNode {\n\t\tpublic Dictionary<char, TrieNode> Children = new Dictionary<char, TrieNode>();\n\t}\n\n\tpublic class SuffixTrieTest {\n\t\tpublic TrieNode root = new TrieNode();\n\t\tpublic char endSymbol = '*';\n\n\t\tpublic SuffixTrieTest(string s) {\n\t\t\tPopulateSuffixTrieFrom(s);\n\t\t}\n\n\t\tpublic void PopulateSuffixTrieFrom(string s) {\n\t\t\tfor (int i = 0; i < s.Length; i++) {\n\t\t\t\tinsertSubstringStartingAt(i, s);\n\t\t\t}\n\t\t}\n\n\t\tpublic void insertSubstringStartingAt(int i, string s) {\n\t\t\tTrieNode node = root;\n\t\t\tfor (int j = i; j < s.Length; j++) {\n\t\t\t\tchar letter = s[j];\n\t\t\t\tif (!node.Children.ContainsKey(letter)) {\n\t\t\t\t\tTrieNode newNode = new TrieNode();\n\t\t\t\t\tnode.Children.Add(letter, newNode);\n\t\t\t\t}\n\t\t\t\tnode = node.Children[letter];\n\t\t\t}\n\t\t\tnode.Children.Add(endSymbol, null);\n\t\t}\n\n\t\tpublic bool Contains(string s) {\n\t\t\tTrieNode node  = root;\n\t\t\tfor (int i = 0; i < s.Length; i++) {\n\t\t\t\tchar letter = s[i];\n\t\t\t\tif (!node.Children.ContainsKey(letter)) {\n\t\t\t\t\treturn false;\n\t\t\t\t}\n\t\t\t\tnode = node.Children[letter];\n\t\t\t}\n\t\t\treturn node.Children.ContainsKey(endSymbol);\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.SuffixTrie trie = new Program.SuffixTrie(\"babc\");\n\t\tUtils.AssertTrue(trie.Contains(\"abc\"));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\tpublic class TrieNode {\n\t\tpublic Dictionary<char, TrieNode> Children = new Dictionary<char, TrieNode>();\n\t}\n\n\tpublic class SuffixTrie {\n\t\tpublic TrieNode root = new TrieNode();\n\t\tpublic char endSymbol = '*';\n\n\t\tpublic SuffixTrie(string str) {\n\t\t\tPopulateSuffixTrieFrom(str);\n\t\t}\n\n\t\t// O(n^2) time | O(n^2) space\n\t\tpublic void PopulateSuffixTrieFrom(string str) {\n\t\t\tfor (int i = 0; i < str.Length; i++) {\n\t\t\t\tinsertSubstringStartingAt(i, str);\n\t\t\t}\n\t\t}\n\n\t\tpublic void insertSubstringStartingAt(int i, string str) {\n\t\t\tTrieNode node = root;\n\t\t\tfor (int j = i; j < str.Length; j++) {\n\t\t\t\tchar letter = str[j];\n\t\t\t\tif (!node.Children.ContainsKey(letter)) {\n\t\t\t\t\tTrieNode newNode = new TrieNode();\n\t\t\t\t\tnode.Children.Add(letter, newNode);\n\t\t\t\t}\n\t\t\t\tnode = node.Children[letter];\n\t\t\t}\n\t\t\tnode.Children[endSymbol] = null;\n\t\t}\n\n\t\t// O(m) time | O(1) space\n\t\tpublic bool Contains(string str) {\n\t\t\tTrieNode node  = root;\n\t\t\tfor (int i = 0; i < str.Length; i++) {\n\t\t\t\tchar letter = str[i];\n\t\t\t\tif (!node.Children.ContainsKey(letter)) {\n\t\t\t\t\treturn false;\n\t\t\t\t}\n\t\t\t\tnode = node.Children[letter];\n\t\t\t}\n\t\t\treturn node.Children.ContainsKey(endSymbol);\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\n// Do not edit the class below except for the\n// PopulateSuffixTrieFrom and Contains methods.\n// Feel free to add new properties and methods\n// to the class.\ntype SuffixTrie map[byte]SuffixTrie\n\n// Feel free to add to this function.\nfunc NewSuffixTrie() SuffixTrie {\n\ttrie := SuffixTrie{}\n\treturn trie\n}\n\nfunc (trie SuffixTrie) PopulateSuffixTrieFrom(str string) {\n\t// Write your code here.\n}\n\nfunc (trie SuffixTrie) Contains(str string) bool {\n\t// Write your code here.\n\treturn false\n}\n",
+      "StartingTest": "package main\n\nfunc (trie SuffixTrie) Equals(other SuffixTrie) bool {\n\tif len(trie) != len(other) {\n\t\treturn false\n\t}\n\tfor key, child := range trie {\n\t\totherchild, found := other[key]\n\t\tif !found {\n\t\t\treturn false\n\t\t} else if child != nil && !child.Equals(otherchild) {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n\nfunc TrieFromString(str string) SuffixTrie {\n\ttrie := SuffixTrie{}\n\ttrie.PopulateSuffixTrieFrom(str)\n\treturn trie\n}\n\nvar (\n\tword1 = \"test\"\n\tword2 = \"invisible\"\n\tword3 = \"1234556789\"\n\tword4 = \"testtest\"\n\tword5 = \"ttttttttt\"\n\tword6 = \"babc\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tword := word1\n\toutput := TrieFromString(word)\n\tfor i := range word {\n\t\tif !output.Contains(word[i:]) {\n\t\t\tt.Fail()\n\t\t}\n\t}\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tword := word2\n\toutput := TrieFromString(word)\n\tfor i := range word {\n\t\tif !output.Contains(word[i:]) {\n\t\t\tt.Fail()\n\t\t}\n\t}\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tword := word3\n\toutput := TrieFromString(word)\n\tfor i := range word {\n\t\tif !output.Contains(word[i:]) {\n\t\t\tt.Fail()\n\t\t}\n\t}\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tword := word4\n\toutput := TrieFromString(word)\n\tfor i := range word {\n\t\tif !output.Contains(word[i:]) {\n\t\t\tt.Fail()\n\t\t}\n\t}\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tword := word5\n\toutput := TrieFromString(word)\n\tfor i := range word {\n\t\tif !output.Contains(word[i:]) {\n\t\t\tt.Fail()\n\t\t}\n\t}\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tword := word6\n\toutput := TrieFromString(word)\n\tfor i := range word {\n\t\tif !output.Contains(word[i:]) {\n\t\t\tt.Fail()\n\t\t}\n\t}\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\ttrie := TrieFromString(word1)\n\texpected := SuffixTrie{\n\t\t't': {\n\t\t\t'*': nil,\n\t\t\t'e': {'s': {'t': {'*': nil}}},\n\t\t},\n\t\t's': {'t': {'*': nil}},\n\t\t'e': {'s': {'t': {'*': nil}}},\n\t}\n\tif !trie.Equals(expected) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\ttrie := TrieFromString(word2)\n\texpected := SuffixTrie{\n\t\t'e': {'*': nil},\n\t\t'l': {'e': {'*': nil}},\n\t\t'b': {'l': {'e': {'*': nil}}},\n\t\t'i': {\n\t\t\t'b': {'l': {'e': {'*': nil}}},\n\t\t\t's': {'i': {'b': {'l': {'e': {'*': nil}}}}},\n\t\t\t'n': {'v': {'i': {'s': {'i': {'b': {'l': {'e': {'*': nil}}}}}}}},\n\t\t},\n\t\t's': {'i': {'b': {'l': {'e': {'*': nil}}}}},\n\t\t'v': {'i': {'s': {'i': {'b': {'l': {'e': {'*': nil}}}}}}},\n\t\t'n': {'v': {'i': {'s': {'i': {'b': {'l': {'e': {'*': nil}}}}}}}},\n\t}\n\tif !trie.Equals(expected) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\ttrie := TrieFromString(word3)\n\texpected := SuffixTrie{\n\t\t'9': {'*': nil},\n\t\t'8': {'9': {'*': nil}},\n\t\t'7': {'8': {'9': {'*': nil}}},\n\t\t'6': {'7': {'8': {'9': {'*': nil}}}},\n\t\t'5': {\n\t\t\t'6': {'7': {'8': {'9': {'*': nil}}}},\n\t\t\t'5': {'6': {'7': {'8': {'9': {'*': nil}}}}},\n\t\t},\n\t\t'4': {'5': {'5': {'6': {'7': {'8': {'9': {'*': nil}}}}}}},\n\t\t'3': {'4': {'5': {'5': {'6': {'7': {'8': {'9': {'*': nil}}}}}}}},\n\t\t'2': {'3': {'4': {'5': {'5': {'6': {'7': {'8': {'9': {'*': nil}}}}}}}}},\n\t\t'1': {'2': {'3': {'4': {'5': {'5': {'6': {'7': {'8': {'9': {'*': nil}}}}}}}}}},\n\t}\n\tif !trie.Equals(expected) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\ttrie := TrieFromString(word4)\n\texpected := SuffixTrie{\n\t\t'e': {'s': {'t': {\n\t\t\t'*': nil,\n\t\t\t't': {'e': {'s': {'t': {'*': nil}}}}}},\n\t\t},\n\t\t't': {\n\t\t\t'*': nil,\n\t\t\t'e': {'s': {'t': {\n\t\t\t\t'*': nil,\n\t\t\t\t't': {'e': {'s': {'t': {'*': nil}}}}}},\n\t\t\t},\n\t\t\t't': {'e': {'s': {'t': {'*': nil}}}},\n\t\t},\n\t\t's': {'t': {\n\t\t\t'*': nil,\n\t\t\t't': {'e': {'s': {'t': {'*': nil}}}}},\n\t\t},\n\t}\n\tif !trie.Equals(expected) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\ttrie := TrieFromString(word5)\n\texpected := SuffixTrie{\n\t\t't': {\n\t\t\t'*': nil,\n\t\t\t't': {\n\t\t\t\t'*': nil,\n\t\t\t\t't': {\n\t\t\t\t\t'*': nil,\n\t\t\t\t\t't': {\n\t\t\t\t\t\t'*': nil,\n\t\t\t\t\t\t't': {\n\t\t\t\t\t\t\t'*': nil,\n\t\t\t\t\t\t\t't': {\n\t\t\t\t\t\t\t\t'*': nil,\n\t\t\t\t\t\t\t\t't': {\n\t\t\t\t\t\t\t\t\t'*': nil,\n\t\t\t\t\t\t\t\t\t't': {\n\t\t\t\t\t\t\t\t\t\t'*': nil,\n\t\t\t\t\t\t\t\t\t\t't': {'*': nil}}}}}}}}},\n\t}\n\tif !trie.Equals(expected) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\ttrie := TrieFromString(word6)\n\texpected := SuffixTrie{\n\t\t'c': {'*': nil},\n\t\t'b': {\n\t\t\t'c': {'*': nil},\n\t\t\t'a': {'b': {'c': {'*': nil}}},\n\t\t},\n\t\t'a': {'b': {'c': {'*': nil}}},\n\t}\n\tif !trie.Equals(expected) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\ttrie := TrieFromString(word1)\n\tif trie.Contains(\"tes\") {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\ttrie := TrieFromString(word2)\n\tif trie.Contains(\"nvisibl\") {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\ttrie := TrieFromString(word3)\n\tif trie.Contains(\"45567\") {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase16(t *TestCase) {\n\ttrie := TrieFromString(word4)\n\tif trie.Contains(\"tt\") {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase17(t *TestCase) {\n\ttrie := TrieFromString(word5)\n\tif trie.Contains(\"vvv\") {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase18(t *TestCase) {\n\ttrie := TrieFromString(word6)\n\tif trie.Contains(\"bab\") {\n\t\tt.Fail()\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport \"github.com/stretchr/testify/require\"\n\nfunc (trie SuffixTrie) Equals(other SuffixTrie) bool {\n\tif len(trie) != len(other) {\n\t\treturn false\n\t}\n\tfor key, child := range trie {\n\t\totherchild, found := other[key]\n\t\tif !found {\n\t\t\treturn false\n\t\t} else if child != nil && !child.Equals(otherchild) {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n\nfunc TrieFromString(str string) SuffixTrie {\n\ttrie := SuffixTrie{}\n\ttrie.PopulateSuffixTrieFrom(str)\n\treturn trie\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\ttrie := TrieFromString(\"babc\")\n\texpected := SuffixTrie{\n\t\t'c': {'*': nil},\n\t\t'b': {\n\t\t\t'c': {'*': nil},\n\t\t\t'a': {'b': {'c': {'*': nil}}},\n\t\t},\n\t\t'a': {'b': {'c': {'*': nil}}},\n\t}\n\trequire.True(t, trie.Equals(expected))\n\trequire.True(t, trie.Contains(\"abc\"))\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype SuffixTrie map[byte]SuffixTrie\n\nfunc NewSuffixTrie() SuffixTrie {\n\ttrie := SuffixTrie{}\n\treturn trie\n}\n\n// O(n^2) time | O(n^2) space\nfunc (trie SuffixTrie) PopulateSuffixTrieFrom(str string) {\n\tfor i := range str {\n\t\tnode := trie\n\t\tfor j := i; j < len(str); j++ {\n\t\t\tletter := str[j]\n\t\t\tif _, found := node[letter]; !found {\n\t\t\t\tnode[letter] = NewSuffixTrie()\n\t\t\t}\n\t\t\tnode = node[letter]\n\t\t}\n\t\tnode['*'] = nil\n\t}\n}\n\n// O(m) time | O(1) space\nfunc (trie SuffixTrie) Contains(str string) bool {\n\tnode := trie\n\tfor i := 0; i < len(str); i++ {\n\t\tletter := str[i]\n\t\tif _, found := node[letter]; !found {\n\t\t\treturn false\n\t\t}\n\t\tnode = node[letter]\n\t}\n\t_, found := node['*']\n\treturn found\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  // Do not edit the class below except for the\n  // populateSuffixTrieFrom and contains methods.\n  // Feel free to add new properties and methods\n  // to the class.\n  static class TrieNode {\n    Map<Character, TrieNode> children = new HashMap<Character, TrieNode>();\n  }\n\n  static class SuffixTrie {\n    TrieNode root = new TrieNode();\n    char endSymbol = '*';\n\n    public SuffixTrie(String str) {\n      populateSuffixTrieFrom(str);\n    }\n\n    public void populateSuffixTrieFrom(String str) {\n      // Write your code here.\n    }\n\n    public boolean contains(String str) {\n      // Write your code here.\n      return false;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  String word1 = \"test\";\n  Program.SuffixTrie trie1 = new Program.SuffixTrie(word1);\n  SuffixTrieTest trie1Test = new SuffixTrieTest(word1);\n  String word2 = \"invisible\";\n  Program.SuffixTrie trie2 = new Program.SuffixTrie(word2);\n  SuffixTrieTest trie2Test = new SuffixTrieTest(word2);\n  String word3 = \"123456789\";\n  Program.SuffixTrie trie3 = new Program.SuffixTrie(word3);\n  SuffixTrieTest trie3Test = new SuffixTrieTest(word3);\n  String word4 = \"testtest\";\n  Program.SuffixTrie trie4 = new Program.SuffixTrie(word4);\n  SuffixTrieTest trie4Test = new SuffixTrieTest(word4);\n  String word5 = \"ttttttttt\";\n  Program.SuffixTrie trie5 = new Program.SuffixTrie(word5);\n  SuffixTrieTest trie5Test = new SuffixTrieTest(word5);\n  String word6 = \"babc\";\n  Program.SuffixTrie trie6 = new Program.SuffixTrie(word6);\n  SuffixTrieTest trie6Test = new SuffixTrieTest(word6);\n\n  @Test\n  public void TestCase1() {\n    for (int i = word1.length() - 1; i >= 0; i--) {\n      String substring = word1.substring(i);\n      Utils.assertTrue(trie1.contains(substring));\n    }\n  }\n\n  @Test\n  public void TestCase2() {\n    for (int i = word2.length() - 1; i >= 0; i--) {\n      String substring = word2.substring(i);\n      Utils.assertTrue(trie2.contains(substring));\n    }\n  }\n\n  @Test\n  public void TestCase3() {\n    for (int i = word3.length() - 1; i >= 0; i--) {\n      String substring = word3.substring(i);\n      Utils.assertTrue(trie3.contains(substring));\n    }\n  }\n\n  @Test\n  public void TestCase4() {\n    for (int i = word4.length() - 1; i >= 0; i--) {\n      String substring = word4.substring(i);\n      Utils.assertTrue(trie4.contains(substring));\n    }\n  }\n\n  @Test\n  public void TestCase5() {\n    for (int i = word5.length() - 1; i >= 0; i--) {\n      String substring = word5.substring(i);\n      Utils.assertTrue(trie5.contains(substring));\n    }\n  }\n\n  @Test\n  public void TestCase6() {\n    for (int i = word6.length() - 1; i >= 0; i--) {\n      String substring = word6.substring(i);\n      Utils.assertTrue(trie6.contains(substring));\n    }\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(compareTries(trie1.root, trie1Test.root));\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(compareTries(trie2.root, trie2Test.root));\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(compareTries(trie3.root, trie3Test.root));\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(compareTries(trie4.root, trie4Test.root));\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(compareTries(trie5.root, trie5Test.root));\n  }\n\n  @Test\n  public void TestCase12() {\n    Utils.assertTrue(compareTries(trie6.root, trie6Test.root));\n  }\n\n  @Test\n  public void TestCase13() {\n    Utils.assertTrue(!trie1.contains(\"tes\"));\n  }\n\n  @Test\n  public void TestCase14() {\n    Utils.assertTrue(!trie1.contains(\"nvisibl\"));\n  }\n\n  @Test\n  public void TestCase15() {\n    Utils.assertTrue(!trie1.contains(\"45567\"));\n  }\n\n  @Test\n  public void TestCase16() {\n    Utils.assertTrue(!trie1.contains(\"tt\"));\n  }\n\n  @Test\n  public void TestCase17() {\n    Utils.assertTrue(!trie1.contains(\"vvv\"));\n  }\n\n  @Test\n  public void TestCase18() {\n    Utils.assertTrue(!trie1.contains(\"bab\"));\n  }\n\n  public boolean compareTries(Program.TrieNode t1, TrieNode t2) {\n    if (t1.children.size() != t2.children.size()) {\n      return false;\n    }\n    for (HashMap.Entry<Character, Program.TrieNode> entry : t1.children.entrySet()) {\n      Character key = entry.getKey();\n      if (key == '*') {\n        continue;\n      }\n      Program.TrieNode value = entry.getValue();\n      if (!t2.children.containsKey(key)) {\n        return false;\n      } else if (value != null & !compareTries(value, t2.children.get(key))) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  static class TrieNode {\n    Map<Character, TrieNode> children = new HashMap<Character, TrieNode>();\n  }\n\n  static class SuffixTrieTest {\n    TrieNode root = new TrieNode();\n    char endSymbol = '*';\n\n    public SuffixTrieTest(String s) {\n      populateSuffixTrieFrom(s);\n    }\n\n    public void populateSuffixTrieFrom(String s) {\n      for (int i = 0; i < s.length(); i++) {\n        insertSubstringStartingAt(i, s);\n      }\n    }\n\n    public void insertSubstringStartingAt(int i, String s) {\n      TrieNode node = root;\n      for (int j = i; j < s.length(); j++) {\n        char letter = s.charAt(j);\n        if (!node.children.containsKey(letter)) {\n          TrieNode newNode = new TrieNode();\n          node.children.put(letter, newNode);\n        }\n        node = node.children.get(letter);\n      }\n      node.children.put(endSymbol, null);\n    }\n\n    public boolean contains(String s) {\n      TrieNode node = root;\n      for (int i = 0; i < s.length(); i++) {\n        char letter = s.charAt(i);\n        if (!node.children.containsKey(letter)) {\n          return false;\n        }\n        node = node.children.get(letter);\n      }\n      return node.children.containsKey(endSymbol);\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    var trie = new Program.SuffixTrie(\"babc\");\n    Utils.assertTrue(trie.contains(\"abc\"));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  static class TrieNode {\n    Map<Character, TrieNode> children = new HashMap<Character, TrieNode>();\n  }\n\n  static class SuffixTrie {\n    TrieNode root = new TrieNode();\n    char endSymbol = '*';\n\n    public SuffixTrie(String str) {\n      populateSuffixTrieFrom(str);\n    }\n\n    // O(n^2) time | O(n^2) space\n    public void populateSuffixTrieFrom(String str) {\n      for (int i = 0; i < str.length(); i++) {\n        insertSubstringStartingAt(i, str);\n      }\n    }\n\n    public void insertSubstringStartingAt(int i, String str) {\n      TrieNode node = root;\n      for (int j = i; j < str.length(); j++) {\n        char letter = str.charAt(j);\n        if (!node.children.containsKey(letter)) {\n          TrieNode newNode = new TrieNode();\n          node.children.put(letter, newNode);\n        }\n        node = node.children.get(letter);\n      }\n      node.children.put(endSymbol, null);\n    }\n\n    // O(m) time | O(1) space\n    public boolean contains(String str) {\n      TrieNode node = root;\n      for (int i = 0; i < str.length(); i++) {\n        char letter = str.charAt(i);\n        if (!node.children.containsKey(letter)) {\n          return false;\n        }\n        node = node.children.get(letter);\n      }\n      return node.children.containsKey(endSymbol);\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// Do not edit the class below except for the\n// populateSuffixTrieFrom and contains methods.\n// Feel free to add new properties and methods\n// to the class.\nclass SuffixTrie {\n  constructor(string) {\n    this.root = {};\n    this.endSymbol = '*';\n    this.populateSuffixTrieFrom(string);\n  }\n\n  populateSuffixTrieFrom(string) {\n    // Write your code here.\n  }\n\n  contains(string) {\n    // Write your code here.\n  }\n}\n\n// Do not edit the line below.\nexports.SuffixTrie = SuffixTrie;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nconst word1 = 'test';\nconst test1 = new program.SuffixTrie(word1);\nconst trie1 = {\n  t: {\n    '*': true,\n    e: {s: {t: {'*': true}}},\n  },\n  s: {t: {'*': true}},\n  e: {s: {t: {'*': true}}},\n};\n\nconst word2 = 'invisible';\nconst test2 = new program.SuffixTrie(word2);\nconst trie2 = {\n  e: {'*': true},\n  l: {e: {'*': true}},\n  b: {l: {e: {'*': true}}},\n  i: {\n    b: {l: {e: {'*': true}}},\n    s: {i: {b: {l: {e: {'*': true}}}}},\n    n: {v: {i: {s: {i: {b: {l: {e: {'*': true}}}}}}}},\n  },\n  s: {i: {b: {l: {e: {'*': true}}}}},\n  v: {i: {s: {i: {b: {l: {e: {'*': true}}}}}}},\n  n: {v: {i: {s: {i: {b: {l: {e: {'*': true}}}}}}}},\n};\n\nconst word3 = '1234556789';\nconst test3 = new program.SuffixTrie(word3);\nconst trie3 = {\n  '9': {'*': true},\n  '8': {'9': {'*': true}},\n  '7': {'8': {'9': {'*': true}}},\n  '6': {'7': {'8': {'9': {'*': true}}}},\n  '5': {\n    '6': {'7': {'8': {'9': {'*': true}}}},\n    '5': {'6': {'7': {'8': {'9': {'*': true}}}}},\n  },\n  '4': {'5': {'5': {'6': {'7': {'8': {'9': {'*': true}}}}}}},\n  '3': {\n    '4': {'5': {'5': {'6': {'7': {'8': {'9': {'*': true}}}}}}},\n  },\n  '2': {\n    '3': {\n      '4': {'5': {'5': {'6': {'7': {'8': {'9': {'*': true}}}}}}},\n    },\n  },\n  '1': {\n    '2': {\n      '3': {\n        '4': {'5': {'5': {'6': {'7': {'8': {'9': {'*': true}}}}}}},\n      },\n    },\n  },\n};\n\nconst word4 = 'testtest';\nconst test4 = new program.SuffixTrie(word4);\nconst trie4 = {\n  e: {\n    s: {\n      t: {\n        '*': true,\n        t: {e: {s: {t: {'*': true}}}},\n      },\n    },\n  },\n  t: {\n    '*': true,\n    e: {\n      s: {\n        t: {\n          '*': true,\n          t: {e: {s: {t: {'*': true}}}},\n        },\n      },\n    },\n    t: {e: {s: {t: {'*': true}}}},\n  },\n  s: {\n    t: {\n      '*': true,\n      t: {e: {s: {t: {'*': true}}}},\n    },\n  },\n};\n\nconst word5 = 'ttttttttt';\nconst test5 = new program.SuffixTrie(word5);\nconst trie5 = {\n  t: {\n    '*': true,\n    t: {\n      '*': true,\n      t: {\n        '*': true,\n        t: {\n          '*': true,\n          t: {\n            '*': true,\n            t: {\n              '*': true,\n              t: {\n                '*': true,\n                t: {\n                  '*': true,\n                  t: {'*': true},\n                },\n              },\n            },\n          },\n        },\n      },\n    },\n  },\n};\n\nconst word6 = 'babc';\nconst test6 = new program.SuffixTrie(word6);\nconst trie6 = {\n  c: {'*': true},\n  b: {\n    c: {'*': true},\n    a: {b: {c: {'*': true}}},\n  },\n  a: {b: {c: {'*': true}}},\n};\n\nit('Test Case #1', function () {\n  for (let i = word1.length - 1; i >= 0; i--) {\n    const substring = word1.slice(i);\n    chai.expect(test1.contains(substring)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #2', function () {\n  for (let i = word2.length - 1; i >= 0; i--) {\n    const substring = word2.slice(i);\n    chai.expect(test2.contains(substring)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #3', function () {\n  for (let i = word3.length - 1; i >= 0; i--) {\n    const substring = word3.slice(i);\n    chai.expect(test3.contains(substring)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #4', function () {\n  for (let i = word4.length - 1; i >= 0; i--) {\n    const substring = word4.slice(i);\n    chai.expect(test4.contains(substring)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #5', function () {\n  for (let i = word5.length - 1; i >= 0; i--) {\n    const substring = word5.slice(i);\n    chai.expect(test5.contains(substring)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #6', function () {\n  for (let i = word6.length - 1; i >= 0; i--) {\n    const substring = word6.slice(i);\n    chai.expect(test6.contains(substring)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #7', function () {\n  chai.expect(test1.root).to.deep.equal(trie1);\n});\n\nit('Test Case #8', function () {\n  chai.expect(test2.root).to.deep.equal(trie2);\n});\n\nit('Test Case #9', function () {\n  chai.expect(test3.root).to.deep.equal(trie3);\n});\n\nit('Test Case #10', function () {\n  chai.expect(test4.root).to.deep.equal(trie4);\n});\n\nit('Test Case #11', function () {\n  chai.expect(test5.root).to.deep.equal(trie5);\n});\n\nit('Test Case #12', function () {\n  chai.expect(test6.root).to.deep.equal(trie6);\n});\n\nit('Test Case #13', function () {\n  chai.expect(test1.contains('tes')).to.deep.equal(false);\n});\n\nit('Test Case #14', function () {\n  chai.expect(test2.contains('nvisibl')).to.deep.equal(false);\n});\n\nit('Test Case #15', function () {\n  chai.expect(test3.contains('45567')).to.deep.equal(false);\n});\n\nit('Test Case #16', function () {\n  chai.expect(test4.contains('tt')).to.deep.equal(false);\n});\n\nit('Test Case #17', function () {\n  chai.expect(test5.contains('vvv')).to.deep.equal(false);\n});\n\nit('Test Case #18', function () {\n  chai.expect(test6.contains('bab')).to.deep.equal(false);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const trie = new program.SuffixTrie('babc');\n  const expected = {\n    c: {'*': true},\n    b: {\n      c: {'*': true},\n      a: {b: {c: {'*': true}}},\n    },\n    a: {b: {c: {'*': true}}},\n  };\n  chai.expect(trie.root).to.deep.equal(expected);\n  chai.expect(trie.contains('abc')).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass SuffixTrie {\n  constructor(string) {\n    this.root = {};\n    this.endSymbol = '*';\n    this.populateSuffixTrieFrom(string);\n  }\n\n  // O(n^2) time | O(n^2) space\n  populateSuffixTrieFrom(string) {\n    for (let i = 0; i < string.length; i++) {\n      this.insertSubstringStartingAt(i, string);\n    }\n  }\n\n  insertSubstringStartingAt(i, string) {\n    let node = this.root;\n    for (let j = i; j < string.length; j++) {\n      const letter = string[j];\n      if (!(letter in node)) node[letter] = {};\n      node = node[letter];\n    }\n    node[this.endSymbol] = true;\n  }\n\n  // O(m) time | O(1) space\n  contains(string) {\n    let node = this.root;\n    for (const letter of string) {\n      if (!(letter in node)) return false;\n      node = node[letter];\n    }\n    return this.endSymbol in node;\n  }\n}\n\nexports.SuffixTrie = SuffixTrie;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# Do not edit the class below except for the\n# populateSuffixTrieFrom and contains methods.\n# Feel free to add new properties and methods\n# to the class.\nclass SuffixTrie:\n    def __init__(self, string):\n        self.root = {}\n        self.endSymbol = \"*\"\n        self.populateSuffixTrieFrom(string)\n\n    def populateSuffixTrieFrom(self, string):\n        # Write your code here.\n        pass\n\n    def contains(self, string):\n        # Write your code here.\n        pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nword1 = \"test\"\ntest1 = program.SuffixTrie(word1)\ntrie1 = {\"t\": {\"*\": True, \"e\": {\"s\": {\"t\": {\"*\": True}}}}, \"s\": {\"t\": {\"*\": True}}, \"e\": {\"s\": {\"t\": {\"*\": True}}}}\n\nword2 = \"invisible\"\ntest2 = program.SuffixTrie(word2)\ntrie2 = {\n    \"e\": {\"*\": True},\n    \"l\": {\"e\": {\"*\": True}},\n    \"b\": {\"l\": {\"e\": {\"*\": True}}},\n    \"i\": {\n        \"b\": {\"l\": {\"e\": {\"*\": True}}},\n        \"s\": {\"i\": {\"b\": {\"l\": {\"e\": {\"*\": True}}}}},\n        \"n\": {\"v\": {\"i\": {\"s\": {\"i\": {\"b\": {\"l\": {\"e\": {\"*\": True}}}}}}}},\n    },\n    \"s\": {\"i\": {\"b\": {\"l\": {\"e\": {\"*\": True}}}}},\n    \"v\": {\"i\": {\"s\": {\"i\": {\"b\": {\"l\": {\"e\": {\"*\": True}}}}}}},\n    \"n\": {\"v\": {\"i\": {\"s\": {\"i\": {\"b\": {\"l\": {\"e\": {\"*\": True}}}}}}}},\n}\n\nword3 = \"1234556789\"\ntest3 = program.SuffixTrie(word3)\ntrie3 = {\n    \"9\": {\"*\": True},\n    \"8\": {\"9\": {\"*\": True}},\n    \"7\": {\"8\": {\"9\": {\"*\": True}}},\n    \"6\": {\"7\": {\"8\": {\"9\": {\"*\": True}}}},\n    \"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"*\": True}}}}, \"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"*\": True}}}}}},\n    \"4\": {\"5\": {\"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"*\": True}}}}}}},\n    \"3\": {\"4\": {\"5\": {\"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"*\": True}}}}}}}},\n    \"2\": {\"3\": {\"4\": {\"5\": {\"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"*\": True}}}}}}}}},\n    \"1\": {\"2\": {\"3\": {\"4\": {\"5\": {\"5\": {\"6\": {\"7\": {\"8\": {\"9\": {\"*\": True}}}}}}}}}},\n}\n\nword4 = \"testtest\"\ntest4 = program.SuffixTrie(word4)\ntrie4 = {\n    \"e\": {\"s\": {\"t\": {\"*\": True, \"t\": {\"e\": {\"s\": {\"t\": {\"*\": True}}}}}}},\n    \"t\": {\n        \"*\": True,\n        \"e\": {\"s\": {\"t\": {\"*\": True, \"t\": {\"e\": {\"s\": {\"t\": {\"*\": True}}}}}}},\n        \"t\": {\"e\": {\"s\": {\"t\": {\"*\": True}}}},\n    },\n    \"s\": {\"t\": {\"*\": True, \"t\": {\"e\": {\"s\": {\"t\": {\"*\": True}}}}}},\n}\n\nword5 = \"ttttttttt\"\ntest5 = program.SuffixTrie(word5)\ntrie5 = {\n    \"t\": {\n        \"*\": True,\n        \"t\": {\n            \"*\": True,\n            \"t\": {\n                \"*\": True,\n                \"t\": {\n                    \"*\": True,\n                    \"t\": {\"*\": True, \"t\": {\"*\": True, \"t\": {\"*\": True, \"t\": {\"*\": True, \"t\": {\"*\": True}}}}},\n                },\n            },\n        },\n    }\n}\n\nword6 = \"babc\"\ntest6 = program.SuffixTrie(word6)\ntrie6 = {\"c\": {\"*\": True}, \"b\": {\"c\": {\"*\": True}, \"a\": {\"b\": {\"c\": {\"*\": True}}}}, \"a\": {\"b\": {\"c\": {\"*\": True}}}}\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        for i in reversed(range(len(word1))):\n            substring = word1[i:]\n            self.assertEqual(test1.contains(substring), True)\n\n    def test_case_2(self):\n        for i in reversed(range(len(word2))):\n            substring = word2[i:]\n            self.assertEqual(test2.contains(substring), True)\n\n    def test_case_3(self):\n        for i in reversed(range(len(word3))):\n            substring = word3[i:]\n            self.assertEqual(test3.contains(substring), True)\n\n    def test_case_4(self):\n        for i in reversed(range(len(word4))):\n            substring = word4[i:]\n            self.assertEqual(test4.contains(substring), True)\n\n    def test_case_5(self):\n        for i in reversed(range(len(word5))):\n            substring = word5[i:]\n            self.assertEqual(test5.contains(substring), True)\n\n    def test_case_6(self):\n        for i in reversed(range(len(word6))):\n            substring = word6[i:]\n            self.assertEqual(test6.contains(substring), True)\n\n    def test_case_7(self):\n        self.assertEqual(test1.root, trie1)\n\n    def test_case_8(self):\n        self.assertEqual(test2.root, trie2)\n\n    def test_case_9(self):\n        self.assertEqual(test3.root, trie3)\n\n    def test_case_10(self):\n        self.assertEqual(test4.root, trie4)\n\n    def test_case_11(self):\n        self.assertEqual(test5.root, trie5)\n\n    def test_case_12(self):\n        self.assertEqual(test6.root, trie6)\n\n    def test_case_13(self):\n        self.assertEqual(test1.contains(\"tes\"), False)\n\n    def test_case_14(self):\n        self.assertEqual(test2.contains(\"nvisibl\"), False)\n\n    def test_case_15(self):\n        self.assertEqual(test3.contains(\"45567\"), False)\n\n    def test_case_16(self):\n        self.assertEqual(test4.contains(\"tt\"), False)\n\n    def test_case_17(self):\n        self.assertEqual(test5.contains(\"vvv\"), False)\n\n    def test_case_18(self):\n        self.assertEqual(test6.contains(\"bab\"), False)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        trie = program.SuffixTrie(\"babc\")\n        expected = {\n            \"c\": {\"*\": True},\n            \"b\": {\"c\": {\"*\": True}, \"a\": {\"b\": {\"c\": {\"*\": True}}}},\n            \"a\": {\"b\": {\"c\": {\"*\": True}}},\n        }\n        self.assertEqual(trie.root, expected)\n        self.assertTrue(trie.contains(\"abc\"))\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass SuffixTrie:\n    def __init__(self, string):\n        self.root = {}\n        self.endSymbol = \"*\"\n        self.populateSuffixTrieFrom(string)\n\n    # O(n^2) time | O(n^2) space\n    def populateSuffixTrieFrom(self, string):\n        for i in range(len(string)):\n            self.insertSubstringStartingAt(i, string)\n\n    def insertSubstringStartingAt(self, i, string):\n        node = self.root\n        for j in range(i, len(string)):\n            letter = string[j]\n            if letter not in node:\n                node[letter] = {}\n            node = node[letter]\n        node[self.endSymbol] = True\n\n    # O(m) time | O(1) space\n    def contains(self, string):\n        node = self.root\n        for letter in string:\n            if letter not in node:\n                return False\n            node = node[letter]\n        return self.endSymbol in node\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // Do not edit the class below except for the\n  // populateSuffixTrieFrom and contains methods.\n  // Feel free to add new properties and methods\n  // to the class.\n  class TrieNode {\n    var children: [String: Any] = [:]\n  }\n\n  class SuffixTrie {\n    var root = TrieNode()\n    let endSymbol = \"*\"\n\n    init(string: String) {\n      populateSuffixTrieFrom(string: string)\n    }\n\n    func populateSuffixTrieFrom(string: String) {\n      // Write your code here.\n    }\n\n    func contains(string: String) -> Bool {\n      // Write your code here.\n      return false\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let firstWord = \"test\"\n      let trie = Program.SuffixTrie(string: firstWord)\n      try testTrie(word: firstWord, trie: trie)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let secondWord = \"invisible\"\n      let trie = Program.SuffixTrie(string: secondWord)\n      try testTrie(word: secondWord, trie: trie)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let thirdWord = \"1234556789\"\n      let trie = Program.SuffixTrie(string: thirdWord)\n      try testTrie(word: thirdWord, trie: trie)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let fourthWord = \"testtest\"\n      let trie = Program.SuffixTrie(string: fourthWord)\n      try testTrie(word: fourthWord, trie: trie)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let fifthWord = \"ttttttttt\"\n      let trie = Program.SuffixTrie(string: fifthWord)\n      try testTrie(word: fifthWord, trie: trie)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let sixthWord = \"babc\"\n      let trie = Program.SuffixTrie(string: sixthWord)\n      try testTrie(word: sixthWord, trie: trie)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let firstWord = \"test\"\n      let trie = Program.SuffixTrie(string: firstWord)\n      try testTrie(word: firstWord, trie: trie)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let secondWord = \"invisible\"\n      let trie = Program.SuffixTrie(string: secondWord)\n      try testTrie(word: secondWord, trie: trie)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let thirdWord = \"1234556789\"\n      let trie = Program.SuffixTrie(string: thirdWord)\n      try testTrie(word: thirdWord, trie: trie)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let fourthWord = \"testtest\"\n      let trie = Program.SuffixTrie(string: fourthWord)\n      try testTrie(word: fourthWord, trie: trie)\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let fifthWord = \"ttttttttt\"\n      let trie = Program.SuffixTrie(string: fifthWord)\n      try testTrie(word: fifthWord, trie: trie)\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      let sixthWord = \"babc\"\n      let trie = Program.SuffixTrie(string: sixthWord)\n      try testTrie(word: sixthWord, trie: trie)\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      let firstWord = \"test\"\n      let trie = Program.SuffixTrie(string: firstWord)\n      try assertEqual(false, trie.contains(string: \"tes\"))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      let secondWord = \"invisible\"\n      let trie = Program.SuffixTrie(string: secondWord)\n      try assertEqual(false, trie.contains(string: \"nvisibl\"))\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      let thirdWord = \"1234556789\"\n      let trie = Program.SuffixTrie(string: thirdWord)\n      try assertEqual(false, trie.contains(string: \"45567\"))\n    }\n    runTest(\"Test Case 16\") { () throws -> Void in\n      let fourthWord = \"testtest\"\n      let trie = Program.SuffixTrie(string: fourthWord)\n      try assertEqual(false, trie.contains(string: \"tt\"))\n    }\n    runTest(\"Test Case 17\") { () throws -> Void in\n      let fifthWord = \"ttttttttt\"\n      let trie = Program.SuffixTrie(string: fifthWord)\n      try assertEqual(false, trie.contains(string: \"vvv\"))\n    }\n    runTest(\"Test Case 18\") { () throws -> Void in\n      let sixthWord = \"babc\"\n      let trie = Program.SuffixTrie(string: sixthWord)\n      try assertEqual(false, trie.contains(string: \"bab\"))\n    }\n  }\n\n  func testTrie(word: String, trie: Program.SuffixTrie) throws {\n    for i in (0 ... word.count - 1).reversed() {\n      let index = word.index(word.startIndex, offsetBy: i)\n      let substring = String(word.suffix(from: index))\n\n      try assert(trie.contains(string: substring))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let trie = Program.SuffixTrie(string: \"babc\")\n      try assert(trie.contains(string: \"abc\"))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class TrieNode {\n    var children: [String: Any] = [:]\n  }\n\n  class SuffixTrie {\n    var root = TrieNode()\n    let endSymbol = \"*\"\n\n    init(string: String) {\n      populateSuffixTrieFrom(string: string)\n    }\n\n    // O(n^2) time | O(n^2) space\n    func populateSuffixTrieFrom(string: String) {\n      for i in 0 ..< string.count {\n        insertSubstringStartingAt(index: i, string: string, root: root)\n      }\n    }\n\n    func insertSubstringStartingAt(index: Int, string: String, root: TrieNode) {\n      var node = root\n\n      for j in index ..< string.count {\n        let jStringIndex = string.index(string.startIndex, offsetBy: j)\n        let jthCharacter = String(string[jStringIndex])\n\n        if !node.children.keys.contains(jthCharacter) {\n          node.children[jthCharacter] = TrieNode()\n        }\n\n        let nextNode = node.children[jthCharacter] as! TrieNode\n        node = nextNode\n      }\n\n      node.children[endSymbol] = true\n    }\n\n    // O(m) time | O(1) space\n    func contains(string: String) -> Bool {\n      var node = root\n\n      for character in string {\n        let stringifiedCharacter = String(character)\n\n        if !node.children.keys.contains(stringifiedCharacter) {\n          return false\n        }\n\n        let nextNode = node.children[stringifiedCharacter] as! TrieNode\n        node = nextNode\n      }\n\n      let reachedTheEnd = node.children[endSymbol] != nil\n      return reachedTheEnd\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "interface TrieNode {\n  [key: string]: TrieNode | boolean;\n}\n\n// Do not edit the class below except for the\n// populateSuffixTrieFrom and contains methods.\n// Feel free to add new properties and methods\n// to the class.\nexport class SuffixTrie {\n  root: TrieNode;\n  endSymbol: string;\n\n  constructor(string: string) {\n    this.root = {};\n    this.endSymbol = '*';\n    this.populateSuffixTrieFrom(string);\n  }\n\n  populateSuffixTrieFrom(string: string) {\n    // Write your code here.\n  }\n\n  contains(string: string) {\n    // Write your code here.\n    return false;\n  }\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const trie = new program.SuffixTrie('babc');\n  const expected = {\n    c: {'*': true},\n    b: {\n      c: {'*': true},\n      a: {b: {c: {'*': true}}},\n    },\n    a: {b: {c: {'*': true}}},\n  };\n  chai.expect(trie.root).to.deep.equal(expected);\n  chai.expect(trie.contains('abc')).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface TrieNode {\n  [key: string]: TrieNode | boolean;\n}\n\nexport class SuffixTrie {\n  root: TrieNode;\n  endSymbol: string;\n\n  constructor(string: string) {\n    this.root = {};\n    this.endSymbol = '*';\n    this.populateSuffixTrieFrom(string);\n  }\n\n  // O(n^2) time | O(n^2) space\n  populateSuffixTrieFrom(string: string) {\n    for (let i = 0; i < string.length; i++) {\n      this.insertSubstringStartingAt(i, string);\n    }\n  }\n\n  insertSubstringStartingAt(i: number, string: string) {\n    let node = this.root;\n    for (let j = i; j < string.length; j++) {\n      const letter = string[j];\n      if (!(letter in node)) node[letter] = {};\n      node = node[letter] as TrieNode;\n    }\n    node[this.endSymbol] = true;\n  }\n\n  // O(m) time | O(1) space\n  contains(string: string) {\n    let node = this.root;\n    for (const letter of string) {\n      if (!(letter in node)) return false;\n      node = node[letter] as TrieNode;\n    }\n    return this.endSymbol in node;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "abc"
+          ],
+          "method": "contains"
+        }
+      ],
+      "string": "babc"
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "t"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "st"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "est"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "test"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "tes"
+          ],
+          "method": "contains"
+        }
+      ],
+      "string": "test"
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "e"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "le"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "ble"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "ible"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "sible"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "isible"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "visible"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "nvisible"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "invisible"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "nvisibl"
+          ],
+          "method": "contains"
+        }
+      ],
+      "string": "invisible"
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "9"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "89"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "789"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "6789"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "56789"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "456789"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "3456789"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "23456789"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "123456789"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "45567"
+          ],
+          "method": "contains"
+        }
+      ],
+      "string": "1234556789"
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "t"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "st"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "est"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "test"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "ttest"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "sttest"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "esttest"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "testtest"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "tt"
+          ],
+          "method": "contains"
+        }
+      ],
+      "string": "testtest"
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "t"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "tt"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "ttt"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "tttt"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "ttttt"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "tttttt"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "ttttttt"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "tttttttt"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "ttttttttt"
+          ],
+          "method": "contains"
+        },
+        {
+          "arguments": [
+            "vvv"
+          ],
+          "method": "contains"
+        }
+      ],
+      "string": "ttttttttt"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "methodCallResults": [
+          {
+            "arguments": [
+              "abc"
+            ],
+            "method": "contains",
+            "output": true
+          }
+        ],
+        "trie": {
+          "a": {
+            "b": {
+              "c": {
+                "*": true
+              }
+            }
+          },
+          "b": {
+            "a": {
+              "b": {
+                "c": {
+                  "*": true
+                }
+              }
+            },
+            "c": {
+              "*": true
+            }
+          },
+          "c": {
+            "*": true
+          }
+        }
+      },
+      {
+        "methodCallResults": [
+          {
+            "arguments": [
+              "t"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "st"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "est"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "test"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "tes"
+            ],
+            "method": "contains",
+            "output": false
+          }
+        ],
+        "trie": {
+          "e": {
+            "s": {
+              "t": {
+                "*": true
+              }
+            }
+          },
+          "s": {
+            "t": {
+              "*": true
+            }
+          },
+          "t": {
+            "*": true,
+            "e": {
+              "s": {
+                "t": {
+                  "*": true
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "methodCallResults": [
+          {
+            "arguments": [
+              "e"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "le"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "ble"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "ible"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "sible"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "isible"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "visible"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "nvisible"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "invisible"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "nvisibl"
+            ],
+            "method": "contains",
+            "output": false
+          }
+        ],
+        "trie": {
+          "b": {
+            "l": {
+              "e": {
+                "*": true
+              }
+            }
+          },
+          "e": {
+            "*": true
+          },
+          "i": {
+            "b": {
+              "l": {
+                "e": {
+                  "*": true
+                }
+              }
+            },
+            "n": {
+              "v": {
+                "i": {
+                  "s": {
+                    "i": {
+                      "b": {
+                        "l": {
+                          "e": {
+                            "*": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "s": {
+              "i": {
+                "b": {
+                  "l": {
+                    "e": {
+                      "*": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "l": {
+            "e": {
+              "*": true
+            }
+          },
+          "n": {
+            "v": {
+              "i": {
+                "s": {
+                  "i": {
+                    "b": {
+                      "l": {
+                        "e": {
+                          "*": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "s": {
+            "i": {
+              "b": {
+                "l": {
+                  "e": {
+                    "*": true
+                  }
+                }
+              }
+            }
+          },
+          "v": {
+            "i": {
+              "s": {
+                "i": {
+                  "b": {
+                    "l": {
+                      "e": {
+                        "*": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "methodCallResults": [
+          {
+            "arguments": [
+              "9"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "89"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "789"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "6789"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "56789"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "456789"
+            ],
+            "method": "contains",
+            "output": false
+          },
+          {
+            "arguments": [
+              "3456789"
+            ],
+            "method": "contains",
+            "output": false
+          },
+          {
+            "arguments": [
+              "23456789"
+            ],
+            "method": "contains",
+            "output": false
+          },
+          {
+            "arguments": [
+              "123456789"
+            ],
+            "method": "contains",
+            "output": false
+          },
+          {
+            "arguments": [
+              "45567"
+            ],
+            "method": "contains",
+            "output": false
+          }
+        ],
+        "trie": {
+          "1": {
+            "2": {
+              "3": {
+                "4": {
+                  "5": {
+                    "5": {
+                      "6": {
+                        "7": {
+                          "8": {
+                            "9": {
+                              "*": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "2": {
+            "3": {
+              "4": {
+                "5": {
+                  "5": {
+                    "6": {
+                      "7": {
+                        "8": {
+                          "9": {
+                            "*": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "3": {
+            "4": {
+              "5": {
+                "5": {
+                  "6": {
+                    "7": {
+                      "8": {
+                        "9": {
+                          "*": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4": {
+            "5": {
+              "5": {
+                "6": {
+                  "7": {
+                    "8": {
+                      "9": {
+                        "*": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5": {
+            "5": {
+              "6": {
+                "7": {
+                  "8": {
+                    "9": {
+                      "*": true
+                    }
+                  }
+                }
+              }
+            },
+            "6": {
+              "7": {
+                "8": {
+                  "9": {
+                    "*": true
+                  }
+                }
+              }
+            }
+          },
+          "6": {
+            "7": {
+              "8": {
+                "9": {
+                  "*": true
+                }
+              }
+            }
+          },
+          "7": {
+            "8": {
+              "9": {
+                "*": true
+              }
+            }
+          },
+          "8": {
+            "9": {
+              "*": true
+            }
+          },
+          "9": {
+            "*": true
+          }
+        }
+      },
+      {
+        "methodCallResults": [
+          {
+            "arguments": [
+              "t"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "st"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "est"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "test"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "ttest"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "sttest"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "esttest"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "testtest"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "tt"
+            ],
+            "method": "contains",
+            "output": false
+          }
+        ],
+        "trie": {
+          "e": {
+            "s": {
+              "t": {
+                "*": true,
+                "t": {
+                  "e": {
+                    "s": {
+                      "t": {
+                        "*": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "s": {
+            "t": {
+              "*": true,
+              "t": {
+                "e": {
+                  "s": {
+                    "t": {
+                      "*": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "t": {
+            "*": true,
+            "e": {
+              "s": {
+                "t": {
+                  "*": true,
+                  "t": {
+                    "e": {
+                      "s": {
+                        "t": {
+                          "*": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "t": {
+              "e": {
+                "s": {
+                  "t": {
+                    "*": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "methodCallResults": [
+          {
+            "arguments": [
+              "t"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "tt"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "ttt"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "tttt"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "ttttt"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "tttttt"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "ttttttt"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "tttttttt"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "ttttttttt"
+            ],
+            "method": "contains",
+            "output": true
+          },
+          {
+            "arguments": [
+              "vvv"
+            ],
+            "method": "contains",
+            "output": false
+          }
+        ],
+        "trie": {
+          "t": {
+            "*": true,
+            "t": {
+              "*": true,
+              "t": {
+                "*": true,
+                "t": {
+                  "*": true,
+                  "t": {
+                    "*": true,
+                    "t": {
+                      "*": true,
+                      "t": {
+                        "*": true,
+                        "t": {
+                          "*": true,
+                          "t": {
+                            "*": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  ]
+}

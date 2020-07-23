@@ -1,0 +1,222 @@
+{
+  "Summary": {
+    "Name": "Nth Fibonacci",
+    "Category": "Recursion",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "number": 601,
+      "timeOne": 0,
+      "timeTwo": 1475,
+      "url": "https://player.vimeo.com/video/226676573"
+    }
+  },
+  "Prompt": "",
+  "Hints": "The formula to generate the nth Fibonacci number can be written as follows: F(n) = F(n - 1) + F(n - 2). Think of the case(s) for which this formula doesn't apply (the base case(s)) and try to implement a simple recursive algorithm to find the nth Fibonacci number with this formula.\nWhat are the runtime implications of solving this problem as is described in Hint #1? Can you use memoization (caching) to improve the performance of your algorithm?\nRealize that to calculate any single Fibonacci number you only need to have the two previous Fibonacci numbers. Knowing this, can you implement an iterative algorithm to solve this question, storing only the last two Fibonacci numbers at any given time?\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the input number\n",
+  "PromptHTML": "\n<p>\n  The Fibonacci sequence is defined as follows: the first number of the sequence\n  is <span>0</span>, the second number is <span>1</span>, and the nth number is the sum of the (n - 1)th\n  and (n - 2)th numbers. Write a function that takes in an integer\n  <span>n</span> and returns the nth Fibonacci number.\n</p>\n<p>\n  Important note: the Fibonacci sequence is often defined with its first two\n  numbers as <span>F0 = 0</span> and <span>F1 = 1</span>. For the purpose of\n  this question, the first Fibonacci number is <span>F0</span>; therefore,\n  <span>getNthFib(1)</span> is equal to <span>F0</span>, <span>getNthFib(2)</span>\n  is equal to <span>F1</span>, etc..\n</p>\n<h3>Sample Input #1</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">n</span> = 2\n</pre>\n<h3>Sample Output #1</h3>\n<pre>\n1 <span class=\"CodeEditor-promptComment\">// 0, 1</span>\n</pre>\n<h3>Sample Input #2</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">n</span> = 6\n</pre>\n<h3>Sample Output #2</h3>\n<pre>\n5 <span class=\"CodeEditor-promptComment\">// 0, 1, 1, 2, 3, 5</span>\n</pre>\n",
+  "Notes": "<p>Nothing to see here.</p>\n",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "n",
+      "Example": 6,
+      "Schema": {
+        "minimum": 1,
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nint getNthFib(int n) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() { assert(getNthFib(1) == 0); });\n\n    RunTest(\"Test Case 2\", []() { assert(getNthFib(2) == 1); });\n\n    RunTest(\"Test Case 3\", []() { assert(getNthFib(3) == 1); });\n\n    RunTest(\"Test Case 4\", []() { assert(getNthFib(4) == 2); });\n\n    RunTest(\"Test Case 5\", []() { assert(getNthFib(5) == 3); });\n\n    RunTest(\"Test Case 6\", []() { assert(getNthFib(6) == 5); });\n\n    RunTest(\"Test Case 7\", []() { assert(getNthFib(7) == 8); });\n\n    RunTest(\"Test Case 8\", []() { assert(getNthFib(8) == 13); });\n\n    RunTest(\"Test Case 9\", []() { assert(getNthFib(9) == 21); });\n\n    RunTest(\"Test Case 10\", []() { assert(getNthFib(10) == 34); });\n\n    RunTest(\"Test Case 11\", []() { assert(getNthFib(11) == 55); });\n\n    RunTest(\"Test Case 12\", []() { assert(getNthFib(12) == 89); });\n\n    RunTest(\"Test Case 13\", []() { assert(getNthFib(13) == 144); });\n\n    RunTest(\"Test Case 14\", []() { assert(getNthFib(14) == 233); });\n\n    RunTest(\"Test Case 15\", []() { assert(getNthFib(15) == 377); });\n\n    RunTest(\"Test Case 16\", []() { assert(getNthFib(16) == 610); });\n\n    RunTest(\"Test Case 17\", []() { assert(getNthFib(17) == 987); });\n\n    RunTest(\"Test Case 18\", []() { assert(getNthFib(18) == 1597); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() { assert(getNthFib(6) == 5); });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(2^n) time | O(n) space\nint getNthFib(int n) {\n  if (n == 2) {\n    return 1;\n  } else if (n == 1) {\n    return 0;\n  } else {\n    return getNthFib(n - 1) + getNthFib(n - 2);\n  }\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <unordered_map>\nusing namespace std;\n\nint getNthFib(int n);\nint helper(int n, unordered_map<int, int> memoize);\n\n// O(n) time | O(n) space\nint getNthFib(int n) {\n  unordered_map<int, int> memoize({{1, 0}, {2, 1}});\n  return helper(n, memoize);\n}\n\nint helper(int n, unordered_map<int, int> memoize) {\n  if (memoize.find(n) != memoize.end()) {\n    return memoize[n];\n  } else {\n    memoize[n] = helper(n - 1, memoize) + helper(n - 2, memoize);\n    return memoize[n];\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n) time | O(1) space\nint getNthFib(int n) {\n  int lastTwo[] = {0, 1};\n  int counter = 3;\n  while (counter <= n) {\n    int nextFib = lastTwo[0] + lastTwo[1];\n    lastTwo[0] = lastTwo[1];\n    lastTwo[1] = nextFib;\n    counter++;\n  }\n  return n > 1 ? lastTwo[1] : lastTwo[0];\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int GetNthFib(int n) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertEquals(0, Program.GetNthFib(1));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertEquals(1, Program.GetNthFib(2) );\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertEquals(1, Program.GetNthFib(3) );\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertEquals(2, Program.GetNthFib(4) );\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertEquals(3, Program.GetNthFib(5) );\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertEquals(5, Program.GetNthFib(6) );\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertEquals(8, Program.GetNthFib(7) );\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertEquals(13, Program.GetNthFib(8) );\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertEquals(21, Program.GetNthFib(9) );\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertEquals(34, Program.GetNthFib(10) );\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tUtils.AssertEquals(55, Program.GetNthFib(11) );\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tUtils.AssertEquals(89, Program.GetNthFib(12) );\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tUtils.AssertEquals(144, Program.GetNthFib(13));\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tUtils.AssertEquals(233, Program.GetNthFib(14));\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tUtils.AssertEquals(377, Program.GetNthFib(15));\n\t}\n\n\t[Test]\n\tpublic void TestCase16() {\n\t\tUtils.AssertEquals(610, Program.GetNthFib(16));\n\t}\n\n\t[Test]\n\tpublic void TestCase17() {\n\t\tUtils.AssertEquals(987, Program.GetNthFib(17));\n\t}\n\n\t[Test]\n\tpublic void TestCase18() {\n\t\tUtils.AssertEquals(1597, Program.GetNthFib(18));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertEquals(5, Program.GetNthFib(6) );\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(2^n) time | O(n) space\n\tpublic static int GetNthFib(int n) {\n\t\tif (n == 2) {\n\t\t\treturn 1;\n\t\t} else if (n == 1) {\n\t\t\treturn 0;\n\t\t} else {\n\t\t\treturn GetNthFib(n - 1) + GetNthFib(n - 2);\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static int GetNthFib(int n) {\n\t\tDictionary<int, int> memoize = new Dictionary<int, int>();\n\t\tmemoize.Add(1, 0);\n\t\tmemoize.Add(2, 1);\n\t\treturn GetNthFib(n, memoize);\n\t}\n\n\tpublic static int GetNthFib(int n, Dictionary<int, int> memoize) {\n\t\tif (memoize.ContainsKey(n)) {\n\t\t\treturn memoize[n];\n\t\t} else {\n\t\t\tmemoize.Add(n, GetNthFib(n - 1, memoize) + GetNthFib(n - 2, memoize));\n\t\t\treturn memoize[n];\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static int GetNthFib(int n) {\n\t\tint[] lastTwo = {0, 1};\n\t\tint counter = 3;\n\t\twhile (counter <= n) {\n\t\t\tint nextFib = lastTwo[0] + lastTwo[1];\n\t\t\tlastTwo[0] = lastTwo[1];\n\t\t\tlastTwo[1] = nextFib;\n\t\t\tcounter++;\n\t\t}\n\t\treturn n > 1 ? lastTwo[1] : lastTwo[0];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc GetNthFib(n int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 0\n\toutput := GetNthFib(1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(3)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := 2\n\toutput := GetNthFib(4)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := 3\n\toutput := GetNthFib(5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := 5\n\toutput := GetNthFib(6)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := 8\n\toutput := GetNthFib(7)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := 13\n\toutput := GetNthFib(8)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := 21\n\toutput := GetNthFib(9)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := 34\n\toutput := GetNthFib(10)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := 55\n\toutput := GetNthFib(11)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\texpected := 89\n\toutput := GetNthFib(12)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\texpected := 144\n\toutput := GetNthFib(13)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\texpected := 233\n\toutput := GetNthFib(14)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\texpected := 377\n\toutput := GetNthFib(15)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase16(t *TestCase) {\n\texpected := 610\n\toutput := GetNthFib(16)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase17(t *TestCase) {\n\texpected := 987\n\toutput := GetNthFib(17)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase18(t *TestCase) {\n\texpected := 1597\n\toutput := GetNthFib(18)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 5\n\toutput := GetNthFib(6)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(2^n) time | O(n) space\nfunc GetNthFib(n int) int {\n\tif n == 2 {\n\t\treturn 1\n\t} else if n == 1 {\n\t\treturn 0\n\t}\n\treturn GetNthFib(n-1) + GetNthFib(n-2)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space\nfunc GetNthFib(n int) int {\n\treturn helper(n, map[int]int{\n\t\t1: 0,\n\t\t2: 1,\n\t})\n}\n\nfunc helper(n int, memoize map[int]int) int {\n\tif val, found := memoize[n]; found {\n\t\treturn val\n\t}\n\tmemoize[n] = helper(n-1, memoize) + helper(n-2, memoize)\n\treturn memoize[n]\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space\nfunc GetNthFib(n int) int {\n\tlastTwo := []int{0, 1}\n\tcounter := 3\n\tfor counter <= n {\n\t\tnextFib := lastTwo[0] + lastTwo[1]\n\t\tlastTwo = []int{lastTwo[1], nextFib}\n\t\tcounter += 1\n\t}\n\tif n > 1 {\n\t\treturn lastTwo[1]\n\t}\n\treturn lastTwo[0]\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int getNthFib(int n) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.getNthFib(1) == 0);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.getNthFib(2) == 1);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.getNthFib(3) == 1);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.getNthFib(4) == 2);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.getNthFib(5) == 3);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.getNthFib(6) == 5);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.getNthFib(7) == 8);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.getNthFib(8) == 13);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(Program.getNthFib(9) == 21);\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(Program.getNthFib(10) == 34);\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(Program.getNthFib(11) == 55);\n  }\n\n  @Test\n  public void TestCase12() {\n    Utils.assertTrue(Program.getNthFib(12) == 89);\n  }\n\n  @Test\n  public void TestCase13() {\n    Utils.assertTrue(Program.getNthFib(13) == 144);\n  }\n\n  @Test\n  public void TestCase14() {\n    Utils.assertTrue(Program.getNthFib(14) == 233);\n  }\n\n  @Test\n  public void TestCase15() {\n    Utils.assertTrue(Program.getNthFib(15) == 377);\n  }\n\n  @Test\n  public void TestCase16() {\n    Utils.assertTrue(Program.getNthFib(16) == 610);\n  }\n\n  @Test\n  public void TestCase17() {\n    Utils.assertTrue(Program.getNthFib(17) == 987);\n  }\n\n  @Test\n  public void TestCase18() {\n    Utils.assertTrue(Program.getNthFib(18) == 1597);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.getNthFib(6) == 5);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(2^n) time | O(n) space\n  public static int getNthFib(int n) {\n    if (n == 2) {\n      return 1;\n    } else if (n == 1) {\n      return 0;\n    } else {\n      return getNthFib(n - 1) + getNthFib(n - 2);\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space\n  public static int getNthFib(int n) {\n    Map<Integer, Integer> memoize = new HashMap<Integer, Integer>();\n    memoize.put(1, 0);\n    memoize.put(2, 1);\n    return getNthFib(n, memoize);\n  }\n\n  public static int getNthFib(int n, Map<Integer, Integer> memoize) {\n    if (memoize.containsKey(n)) {\n      return memoize.get(n);\n    } else {\n      memoize.put(n, getNthFib(n - 1, memoize) + getNthFib(n - 2, memoize));\n      return memoize.get(n);\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static int getNthFib(int n) {\n    int[] lastTwo = {0, 1};\n    int counter = 3;\n    while (counter <= n) {\n      int nextFib = lastTwo[0] + lastTwo[1];\n      lastTwo[0] = lastTwo[1];\n      lastTwo[1] = nextFib;\n      counter++;\n    }\n    return n > 1 ? lastTwo[1] : lastTwo[0];\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function getNthFib(n) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.getNthFib = getNthFib;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.getNthFib(1)).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.getNthFib(2)).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.getNthFib(3)).to.deep.equal(1);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.getNthFib(4)).to.deep.equal(2);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.getNthFib(5)).to.deep.equal(3);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.getNthFib(6)).to.deep.equal(5);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.getNthFib(7)).to.deep.equal(8);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.getNthFib(8)).to.deep.equal(13);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.getNthFib(9)).to.deep.equal(21);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.getNthFib(10)).to.deep.equal(34);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.getNthFib(11)).to.deep.equal(55);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.getNthFib(12)).to.deep.equal(89);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.getNthFib(13)).to.deep.equal(144);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.getNthFib(14)).to.deep.equal(233);\n});\n\nit('Test Case #15', function () {\n  chai.expect(program.getNthFib(15)).to.deep.equal(377);\n});\n\nit('Test Case #16', function () {\n  chai.expect(program.getNthFib(16)).to.deep.equal(610);\n});\n\nit('Test Case #17', function () {\n  chai.expect(program.getNthFib(17)).to.deep.equal(987);\n});\n\nit('Test Case #18', function () {\n  chai.expect(program.getNthFib(18)).to.deep.equal(1597);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.getNthFib(6)).to.deep.equal(5);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(2^n) time | O(n) space\nfunction getNthFib(n) {\n  if (n === 2) {\n    return 1;\n  } else if (n === 1) {\n    return 0;\n  } else {\n    return getNthFib(n - 1) + getNthFib(n - 2);\n  }\n}\n\nexports.getNthFib = getNthFib;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction getNthFib(n, memoize = {1: 0, 2: 1}) {\n  if (n in memoize) {\n    return memoize[n];\n  } else {\n    memoize[n] = getNthFib(n - 1, memoize) + getNthFib(n - 2, memoize);\n    return memoize[n];\n  }\n}\n\nexports.getNthFib = getNthFib;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nfunction getNthFib(n) {\n  const lastTwo = [0, 1];\n  let counter = 3;\n  while (counter <= n) {\n    const nextFib = lastTwo[0] + lastTwo[1];\n    lastTwo[0] = lastTwo[1];\n    lastTwo[1] = nextFib;\n    counter++;\n  }\n  return n > 1 ? lastTwo[1] : lastTwo[0];\n}\n\nexports.getNthFib = getNthFib;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def getNthFib(n):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.getNthFib(1), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.getNthFib(2), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.getNthFib(3), 1)\n\n    def test_case_4(self):\n        self.assertEqual(program.getNthFib(4), 2)\n\n    def test_case_5(self):\n        self.assertEqual(program.getNthFib(5), 3)\n\n    def test_case_6(self):\n        self.assertEqual(program.getNthFib(6), 5)\n\n    def test_case_7(self):\n        self.assertEqual(program.getNthFib(7), 8)\n\n    def test_case_8(self):\n        self.assertEqual(program.getNthFib(8), 13)\n\n    def test_case_9(self):\n        self.assertEqual(program.getNthFib(9), 21)\n\n    def test_case_10(self):\n        self.assertEqual(program.getNthFib(10), 34)\n\n    def test_case_11(self):\n        self.assertEqual(program.getNthFib(11), 55)\n\n    def test_case_12(self):\n        self.assertEqual(program.getNthFib(12), 89)\n\n    def test_case_13(self):\n        self.assertEqual(program.getNthFib(13), 144)\n\n    def test_case_14(self):\n        self.assertEqual(program.getNthFib(14), 233)\n\n    def test_case_15(self):\n        self.assertEqual(program.getNthFib(15), 377)\n\n    def test_case_16(self):\n        self.assertEqual(program.getNthFib(16), 610)\n\n    def test_case_17(self):\n        self.assertEqual(program.getNthFib(17), 987)\n\n    def test_case_18(self):\n        self.assertEqual(program.getNthFib(18), 1597)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.getNthFib(6), 5)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(2^n) time | O(n) space\ndef getNthFib(n):\n    if n == 2:\n        return 1\n    elif n == 1:\n        return 0\n    else:\n        return getNthFib(n - 1) + getNthFib(n - 2)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef getNthFib(n, memoize={1: 0, 2: 1}):\n    if n in memoize:\n        return memoize[n]\n    else:\n        memoize[n] = getNthFib(n - 1, memoize) + getNthFib(n - 2, memoize)\n        return memoize[n]\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space\ndef getNthFib(n):\n    lastTwo = [0, 1]\n    counter = 3\n    while counter <= n:\n        nextFib = lastTwo[0] + lastTwo[1]\n        lastTwo[0] = lastTwo[1]\n        lastTwo[1] = nextFib\n        counter += 1\n    return lastTwo[1] if n > 1 else lastTwo[0]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func getNthFib(n: Int) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(0, program.getNthFib(n: 1))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(1, program.getNthFib(n: 2))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(1, program.getNthFib(n: 3))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(2, program.getNthFib(n: 4))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(3, program.getNthFib(n: 5))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(5, program.getNthFib(n: 6))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(8, program.getNthFib(n: 7))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(13, program.getNthFib(n: 8))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(21, program.getNthFib(n: 9))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(34, program.getNthFib(n: 10))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(55, program.getNthFib(n: 11))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(89, program.getNthFib(n: 12))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(144, program.getNthFib(n: 13))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual(233, program.getNthFib(n: 14))\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      try assertEqual(377, program.getNthFib(n: 15))\n    }\n    runTest(\"Test Case 16\") { () throws -> Void in\n      try assertEqual(610, program.getNthFib(n: 16))\n    }\n    runTest(\"Test Case 17\") { () throws -> Void in\n      try assertEqual(987, program.getNthFib(n: 17))\n    }\n    runTest(\"Test Case 18\") { () throws -> Void in\n      try assertEqual(1597, program.getNthFib(n: 18))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(5, program.getNthFib(n: 6))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(2^n) time | O(n) space\n  func getNthFib(n: Int) -> Int {\n    if n == 2 {\n      return 1\n    } else if n == 1 {\n      return 0\n    } else {\n      return getNthFib(n: n - 1) + getNthFib(n: n - 2)\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func getNthFib(n: Int) -> Int {\n    var memoize = [1: 0, 2: 1]\n    return helper(n: n, memoize: &memoize)\n  }\n\n  func helper(n: Int, memoize: inout [Int: Int]) -> Int {\n    if memoize.keys.contains(n) {\n      return memoize[n]!\n    }\n    memoize[n] = helper(n: n - 1, memoize: &memoize) + helper(n: n - 2, memoize: &memoize)\n    return memoize[n]!\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  func getNthFib(n: Int) -> Int {\n    var lastTwo = [0, 1]\n    var counter = 3\n    while counter <= n {\n      let nextFib = lastTwo[0] + lastTwo[1]\n      lastTwo[0] = lastTwo[1]\n      lastTwo[1] = nextFib\n\n      counter = counter + 1\n    }\n    return n > 1 ? lastTwo[1] : lastTwo[0]\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function getNthFib(n: number) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.getNthFib(6)).to.deep.equal(5);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(2^n) time | O(n) space\nexport function getNthFib(n: number): number {\n  if (n === 2) {\n    return 1;\n  } else if (n === 1) {\n    return 0;\n  } else {\n    return getNthFib(n - 1) + getNthFib(n - 2);\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface Cache {\n  [key: number]: number;\n}\n\n// O(n) time | O(n) space\nexport function getNthFib(n: number, memoize: Cache = {1: 0, 2: 1}) {\n  if (n in memoize) {\n    return memoize[n];\n  } else {\n    memoize[n] = getNthFib(n - 1, memoize) + getNthFib(n - 2, memoize);\n    return memoize[n];\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nexport function getNthFib(n: number) {\n  const lastTwo: [number, number] = [0, 1];\n  let counter = 3;\n  while (counter <= n) {\n    const nextFib = lastTwo[0] + lastTwo[1];\n    lastTwo[0] = lastTwo[1];\n    lastTwo[1] = nextFib;\n    counter++;\n  }\n  return n > 1 ? lastTwo[1] : lastTwo[0];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "n": 6
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 3
+    },
+    {
+      "n": 4
+    },
+    {
+      "n": 5
+    },
+    {
+      "n": 7
+    },
+    {
+      "n": 8
+    },
+    {
+      "n": 9
+    },
+    {
+      "n": 10
+    },
+    {
+      "n": 11
+    },
+    {
+      "n": 12
+    },
+    {
+      "n": 13
+    },
+    {
+      "n": 14
+    },
+    {
+      "n": 15
+    },
+    {
+      "n": 16
+    },
+    {
+      "n": 17
+    },
+    {
+      "n": 18
+    }
+  ],
+  "JSONAnswers": [
+    [
+      5,
+      0,
+      1,
+      1,
+      2,
+      3,
+      8,
+      13,
+      21,
+      34,
+      55,
+      89,
+      144,
+      233,
+      377,
+      610,
+      987,
+      1597
+    ]
+  ]
+}

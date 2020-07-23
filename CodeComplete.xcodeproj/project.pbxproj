@@ -1,0 +1,1321 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		42CFAB3124950E630006C268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3024950E630006C268 /* AppDelegate.swift */; };
+		42CFAB3324950E630006C268 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3224950E630006C268 /* SceneDelegate.swift */; };
+		42CFAB3524950E630006C268 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3424950E630006C268 /* ViewController.swift */; };
+		42CFAB3A24950E650006C268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB3924950E650006C268 /* Assets.xcassets */; };
+		42CFAB3D24950E650006C268 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB3B24950E650006C268 /* LaunchScreen.storyboard */; };
+		42CFABAC249510780006C268 /* airport-connections.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB47249510780006C268 /* airport-connections.json */; };
+		42CFABAD249510780006C268 /* all-kinds-of-node-depths.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB48249510780006C268 /* all-kinds-of-node-depths.json */; };
+		42CFABAE249510780006C268 /* apartment-hunting.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB49249510780006C268 /* apartment-hunting.json */; };
+		42CFABAF249510780006C268 /* balanced-brackets.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4A249510780006C268 /* balanced-brackets.json */; };
+		42CFABB0249510780006C268 /* binary-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4B249510780006C268 /* binary-search.json */; };
+		42CFABB1249510780006C268 /* boggle-board.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4C249510780006C268 /* boggle-board.json */; };
+		42CFABB2249510780006C268 /* branch-sums.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4D249510780006C268 /* branch-sums.json */; };
+		42CFABB3249510780006C268 /* breadth-first-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4E249510780006C268 /* breadth-first-search.json */; };
+		42CFABB4249510780006C268 /* bst-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4F249510780006C268 /* bst-construction.json */; };
+		42CFABB5249510780006C268 /* bst-traversal.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB50249510780006C268 /* bst-traversal.json */; };
+		42CFABB6249510780006C268 /* bubble-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB51249510780006C268 /* bubble-sort.json */; };
+		42CFABB7249510780006C268 /* caesar-cipher-encryptor.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB52249510780006C268 /* caesar-cipher-encryptor.json */; };
+		42CFABB8249510780006C268 /* calendar-matching.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB53249510780006C268 /* calendar-matching.json */; };
+		42CFABB9249510780006C268 /* continuous-median.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB54249510780006C268 /* continuous-median.json */; };
+		42CFABBA249510780006C268 /* depth-first-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB55249510780006C268 /* depth-first-search.json */; };
+		42CFABBB249510780006C268 /* disk-stacking.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB56249510780006C268 /* disk-stacking.json */; };
+		42CFABBC249510780006C268 /* find-closest-value-in-bst.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB57249510780006C268 /* find-closest-value-in-bst.json */; };
+		42CFABBD249510780006C268 /* find-loop.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB58249510780006C268 /* find-loop.json */; };
+		42CFABBE249510780006C268 /* find-three-largest-numbers.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB59249510780006C268 /* find-three-largest-numbers.json */; };
+		42CFABBF249510780006C268 /* flatten-binary-tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5A249510780006C268 /* flatten-binary-tree.json */; };
+		42CFABC0249510780006C268 /* four-number-sum.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5B249510780006C268 /* four-number-sum.json */; };
+		42CFABC1249510780006C268 /* group-anagrams.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5C249510780006C268 /* group-anagrams.json */; };
+		42CFABC2249510780006C268 /* heap-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5D249510780006C268 /* heap-sort.json */; };
+		42CFABC3249510780006C268 /* insertion-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5E249510780006C268 /* insertion-sort.json */; };
+		42CFABC4249510780006C268 /* interweaving-strings.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5F249510780006C268 /* interweaving-strings.json */; };
+		42CFABC5249510780006C268 /* invert-binary-tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB60249510780006C268 /* invert-binary-tree.json */; };
+		42CFABC6249510780006C268 /* iterative-in-order-traversal.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB61249510780006C268 /* iterative-in-order-traversal.json */; };
+		42CFABC7249510780006C268 /* kadane's-algorithm.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB62249510780006C268 /* kadane's-algorithm.json */; };
+		42CFABC8249510780006C268 /* knapsack-problem.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB63249510780006C268 /* knapsack-problem.json */; };
+		42CFABC9249510780006C268 /* knuth—morris—pratt-algorithm.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB64249510780006C268 /* knuth—morris—pratt-algorithm.json */; };
+		42CFABCA249510780006C268 /* largest-range.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB65249510780006C268 /* largest-range.json */; };
+		42CFABCB249510780006C268 /* levenshtein-distance.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB66249510780006C268 /* levenshtein-distance.json */; };
+		42CFABCC249510780006C268 /* linked-list-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB67249510780006C268 /* linked-list-construction.json */; };
+		42CFABCD249510780006C268 /* longest-common-subsequence.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB68249510780006C268 /* longest-common-subsequence.json */; };
+		42CFABCE249510780006C268 /* longest-increasing-subsequence.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB69249510780006C268 /* longest-increasing-subsequence.json */; };
+		42CFABCF249510780006C268 /* longest-palindromic-substring.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6A249510780006C268 /* longest-palindromic-substring.json */; };
+		42CFABD0249510780006C268 /* longest-peak.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6B249510780006C268 /* longest-peak.json */; };
+		42CFABD1249510780006C268 /* longest-string-chain.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6C249510780006C268 /* longest-string-chain.json */; };
+		42CFABD2249510780006C268 /* longest-substring-without-duplication.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6D249510780006C268 /* longest-substring-without-duplication.json */; };
+		42CFABD3249510780006C268 /* lowest-common-manager.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6E249510780006C268 /* lowest-common-manager.json */; };
+		42CFABD4249510780006C268 /* lru-cache.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6F249510780006C268 /* lru-cache.json */; };
+		42CFABD5249510780006C268 /* max-path-sum-in-binary-tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB70249510780006C268 /* max-path-sum-in-binary-tree.json */; };
+		42CFABD6249510780006C268 /* max-profit-with-k-transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB71249510780006C268 /* max-profit-with-k-transactions.json */; };
+		42CFABD7249510780006C268 /* max-subset-sum-no-adjacent.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB72249510780006C268 /* max-subset-sum-no-adjacent.json */; };
+		42CFABD8249510780006C268 /* max-sum-increasing-subsequence.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB73249510780006C268 /* max-sum-increasing-subsequence.json */; };
+		42CFABD9249510780006C268 /* merge-linked-lists.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB74249510780006C268 /* merge-linked-lists.json */; };
+		42CFABDA249510780006C268 /* merge-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB75249510780006C268 /* merge-sort.json */; };
+		42CFABDB249510780006C268 /* merge-sorted-arrays.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB76249510780006C268 /* merge-sorted-arrays.json */; };
+		42CFABDC249510780006C268 /* min-heap-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB77249510780006C268 /* min-heap-construction.json */; };
+		42CFABDD249510780006C268 /* min-height-bst.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB78249510780006C268 /* min-height-bst.json */; };
+		42CFABDE249510780006C268 /* min-max-stack-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB79249510780006C268 /* min-max-stack-construction.json */; };
+		42CFABDF249510780006C268 /* min-number-of-coins-for-change.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7A249510780006C268 /* min-number-of-coins-for-change.json */; };
+		42CFABE0249510780006C268 /* min-number-of-jumps.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7B249510780006C268 /* min-number-of-jumps.json */; };
+		42CFABE1249510780006C268 /* min-rewards.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7C249510780006C268 /* min-rewards.json */; };
+		42CFABE2249510780006C268 /* monotonic-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7D249510780006C268 /* monotonic-array.json */; };
+		42CFABE3249510780006C268 /* move-element-to-end.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7E249510780006C268 /* move-element-to-end.json */; };
+		42CFABE4249510780006C268 /* multi-string-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7F249510780006C268 /* multi-string-search.json */; };
+		42CFABE5249510780006C268 /* node-depths.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB80249510780006C268 /* node-depths.json */; };
+		42CFABE6249510780006C268 /* nth-fibonacci.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB81249510780006C268 /* nth-fibonacci.json */; };
+		42CFABE7249510780006C268 /* number-of-binary-tree-topologies.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB82249510780006C268 /* number-of-binary-tree-topologies.json */; };
+		42CFABE8249510780006C268 /* number-of-ways-to-make-change.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB83249510780006C268 /* number-of-ways-to-make-change.json */; };
+		42CFABE9249510780006C268 /* numbers-in-pi.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB84249510780006C268 /* numbers-in-pi.json */; };
+		42CFABEA249510780006C268 /* palindrome-check.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB85249510780006C268 /* palindrome-check.json */; };
+		42CFABEB249510780006C268 /* palindrome-partitioning-min-cuts.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB86249510780006C268 /* palindrome-partitioning-min-cuts.json */; };
+		42CFABEC249510780006C268 /* pattern-matcher.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB87249510780006C268 /* pattern-matcher.json */; };
+		42CFABED249510780006C268 /* permutations.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB88249510780006C268 /* permutations.json */; };
+		42CFABEE249510780006C268 /* powerset.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB89249510780006C268 /* powerset.json */; };
+		42CFABEF249510780006C268 /* product-sum.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8A249510780006C268 /* product-sum.json */; };
+		42CFABF0249510780006C268 /* quick-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8B249510780006C268 /* quick-sort.json */; };
+		42CFABF1249510780006C268 /* quickselect.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8C249510780006C268 /* quickselect.json */; };
+		42CFABF2249510780006C268 /* rearrange-linked-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8D249510780006C268 /* rearrange-linked-list.json */; };
+		42CFABF3249510780006C268 /* rectangle-mania.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8E249510780006C268 /* rectangle-mania.json */; };
+		42CFABF4249510780006C268 /* remove-kth-node-from-end.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8F249510780006C268 /* remove-kth-node-from-end.json */; };
+		42CFABF5249510780006C268 /* reverse-linked-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB90249510780006C268 /* reverse-linked-list.json */; };
+		42CFABF6249510780006C268 /* right-sibling-tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB91249510780006C268 /* right-sibling-tree.json */; };
+		42CFABF7249510780006C268 /* right-smaller-than.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB92249510780006C268 /* right-smaller-than.json */; };
+		42CFABF8249510780006C268 /* river-sizes.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB93249510780006C268 /* river-sizes.json */; };
+		42CFABF9249510780006C268 /* same-bsts.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB94249510780006C268 /* same-bsts.json */; };
+		42CFABFA249510780006C268 /* search-for-range.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB95249510780006C268 /* search-for-range.json */; };
+		42CFABFB249510780006C268 /* search-in-sorted-matrix.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB96249510780006C268 /* search-in-sorted-matrix.json */; };
+		42CFABFC249510780006C268 /* selection-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB97249510780006C268 /* selection-sort.json */; };
+		42CFABFD249510780006C268 /* shift-linked-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB98249510780006C268 /* shift-linked-list.json */; };
+		42CFABFE249510780006C268 /* shifted-binary-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB99249510780006C268 /* shifted-binary-search.json */; };
+		42CFABFF249510780006C268 /* shorten-path.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9A249510780006C268 /* shorten-path.json */; };
+		42CFAC00249510780006C268 /* single-cycle-check.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9B249510780006C268 /* single-cycle-check.json */; };
+		42CFAC01249510780006C268 /* smallest-difference.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9C249510780006C268 /* smallest-difference.json */; };
+		42CFAC02249510780006C268 /* smallest-substring-containing.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9D249510780006C268 /* smallest-substring-containing.json */; };
+		42CFAC03249510780006C268 /* spiral-traverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9E249510780006C268 /* spiral-traverse.json */; };
+		42CFAC04249510780006C268 /* square-of-zeroes.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9F249510780006C268 /* square-of-zeroes.json */; };
+		42CFAC05249510780006C268 /* subarray-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA0249510780006C268 /* subarray-sort.json */; };
+		42CFAC06249510780006C268 /* suffix-trie-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA1249510780006C268 /* suffix-trie-construction.json */; };
+		42CFAC07249510780006C268 /* three-number-sum.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA2249510780006C268 /* three-number-sum.json */; };
+		42CFAC08249510780006C268 /* topological-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA3249510780006C268 /* topological-sort.json */; };
+		42CFAC09249510780006C268 /* two-number-sum.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA4249510780006C268 /* two-number-sum.json */; };
+		42CFAC0A249510780006C268 /* underscorify-substring.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA5249510780006C268 /* underscorify-substring.json */; };
+		42CFAC0B249510780006C268 /* validate-bst.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA6249510780006C268 /* validate-bst.json */; };
+		42CFAC0C249510780006C268 /* validate-subsequence.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA7249510780006C268 /* validate-subsequence.json */; };
+		42CFAC0D249510780006C268 /* water-area.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA8249510780006C268 /* water-area.json */; };
+		42CFAC0E249510780006C268 /* youngest-common-ancestor.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA9249510780006C268 /* youngest-common-ancestor.json */; };
+		42CFAC0F249510780006C268 /* zigzag-traverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABAA249510780006C268 /* zigzag-traverse.json */; };
+		42CFAC10249510780006C268 /* question-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABAB249510780006C268 /* question-list.json */; };
+		42CFAC12249511890006C268 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAC11249511890006C268 /* Models.swift */; };
+		42CFAC142495311D0006C268 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAC132495311D0006C268 /* QuestionViewController.swift */; };
+		42CFAC162495323D0006C268 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAC152495323D0006C268 /* Views.swift */; };
+		42CFAC18249695260006C268 /* JavaScriptLexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAC17249695250006C268 /* JavaScriptLexer.swift */; };
+		42CFAC1A24969CDE0006C268 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAC1924969CDE0006C268 /* Theme.swift */; };
+		42CFAC24249C39690006C268 /* CodeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAC23249C39680006C268 /* CodeEngine.swift */; };
+		42CFACD1249C4DAA0006C268 /* chai.js in Resources */ = {isa = PBXBuildFile; fileRef = 42CFACD0249C4DAA0006C268 /* chai.js */; };
+		42CFACDA249FCCAB0006C268 /* CodeCompleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFACD9249FCCAB0006C268 /* CodeCompleteTests.swift */; };
+		42CFACE1249FCD140006C268 /* chai.js in Resources */ = {isa = PBXBuildFile; fileRef = 42CFACD0249C4DAA0006C268 /* chai.js */; };
+		42CFACE2249FCD190006C268 /* question-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABAB249510780006C268 /* question-list.json */; };
+		42CFACE3249FCD220006C268 /* airport-connections.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB47249510780006C268 /* airport-connections.json */; };
+		42CFACE4249FCD220006C268 /* all-kinds-of-node-depths.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB48249510780006C268 /* all-kinds-of-node-depths.json */; };
+		42CFACE5249FCD220006C268 /* apartment-hunting.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB49249510780006C268 /* apartment-hunting.json */; };
+		42CFACE6249FCD220006C268 /* balanced-brackets.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4A249510780006C268 /* balanced-brackets.json */; };
+		42CFACE7249FCD220006C268 /* binary-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4B249510780006C268 /* binary-search.json */; };
+		42CFACE8249FCD220006C268 /* boggle-board.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4C249510780006C268 /* boggle-board.json */; };
+		42CFACE9249FCD220006C268 /* branch-sums.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4D249510780006C268 /* branch-sums.json */; };
+		42CFACEA249FCD220006C268 /* breadth-first-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4E249510780006C268 /* breadth-first-search.json */; };
+		42CFACEB249FCD220006C268 /* bst-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB4F249510780006C268 /* bst-construction.json */; };
+		42CFACEC249FCD220006C268 /* bst-traversal.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB50249510780006C268 /* bst-traversal.json */; };
+		42CFACED249FCD220006C268 /* bubble-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB51249510780006C268 /* bubble-sort.json */; };
+		42CFACEE249FCD220006C268 /* caesar-cipher-encryptor.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB52249510780006C268 /* caesar-cipher-encryptor.json */; };
+		42CFACEF249FCD220006C268 /* calendar-matching.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB53249510780006C268 /* calendar-matching.json */; };
+		42CFACF0249FCD220006C268 /* continuous-median.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB54249510780006C268 /* continuous-median.json */; };
+		42CFACF1249FCD220006C268 /* depth-first-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB55249510780006C268 /* depth-first-search.json */; };
+		42CFACF2249FCD220006C268 /* disk-stacking.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB56249510780006C268 /* disk-stacking.json */; };
+		42CFACF3249FCD220006C268 /* find-closest-value-in-bst.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB57249510780006C268 /* find-closest-value-in-bst.json */; };
+		42CFACF4249FCD220006C268 /* find-loop.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB58249510780006C268 /* find-loop.json */; };
+		42CFACF5249FCD220006C268 /* find-three-largest-numbers.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB59249510780006C268 /* find-three-largest-numbers.json */; };
+		42CFACF6249FCD220006C268 /* flatten-binary-tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5A249510780006C268 /* flatten-binary-tree.json */; };
+		42CFACF7249FCD220006C268 /* four-number-sum.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5B249510780006C268 /* four-number-sum.json */; };
+		42CFACF8249FCD220006C268 /* group-anagrams.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5C249510780006C268 /* group-anagrams.json */; };
+		42CFACF9249FCD220006C268 /* heap-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5D249510780006C268 /* heap-sort.json */; };
+		42CFACFA249FCD220006C268 /* insertion-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5E249510780006C268 /* insertion-sort.json */; };
+		42CFACFB249FCD220006C268 /* interweaving-strings.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB5F249510780006C268 /* interweaving-strings.json */; };
+		42CFACFC249FCD220006C268 /* invert-binary-tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB60249510780006C268 /* invert-binary-tree.json */; };
+		42CFACFD249FCD220006C268 /* iterative-in-order-traversal.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB61249510780006C268 /* iterative-in-order-traversal.json */; };
+		42CFACFE249FCD220006C268 /* kadane's-algorithm.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB62249510780006C268 /* kadane's-algorithm.json */; };
+		42CFACFF249FCD220006C268 /* knapsack-problem.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB63249510780006C268 /* knapsack-problem.json */; };
+		42CFAD00249FCD220006C268 /* knuth—morris—pratt-algorithm.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB64249510780006C268 /* knuth—morris—pratt-algorithm.json */; };
+		42CFAD01249FCD220006C268 /* largest-range.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB65249510780006C268 /* largest-range.json */; };
+		42CFAD02249FCD220006C268 /* levenshtein-distance.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB66249510780006C268 /* levenshtein-distance.json */; };
+		42CFAD03249FCD220006C268 /* linked-list-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB67249510780006C268 /* linked-list-construction.json */; };
+		42CFAD04249FCD220006C268 /* longest-common-subsequence.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB68249510780006C268 /* longest-common-subsequence.json */; };
+		42CFAD05249FCD220006C268 /* longest-increasing-subsequence.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB69249510780006C268 /* longest-increasing-subsequence.json */; };
+		42CFAD06249FCD220006C268 /* longest-palindromic-substring.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6A249510780006C268 /* longest-palindromic-substring.json */; };
+		42CFAD07249FCD220006C268 /* longest-peak.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6B249510780006C268 /* longest-peak.json */; };
+		42CFAD08249FCD220006C268 /* longest-string-chain.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6C249510780006C268 /* longest-string-chain.json */; };
+		42CFAD09249FCD220006C268 /* longest-substring-without-duplication.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6D249510780006C268 /* longest-substring-without-duplication.json */; };
+		42CFAD0A249FCD220006C268 /* lowest-common-manager.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6E249510780006C268 /* lowest-common-manager.json */; };
+		42CFAD0B249FCD220006C268 /* lru-cache.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB6F249510780006C268 /* lru-cache.json */; };
+		42CFAD0C249FCD220006C268 /* max-path-sum-in-binary-tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB70249510780006C268 /* max-path-sum-in-binary-tree.json */; };
+		42CFAD0D249FCD220006C268 /* max-profit-with-k-transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB71249510780006C268 /* max-profit-with-k-transactions.json */; };
+		42CFAD0E249FCD220006C268 /* max-subset-sum-no-adjacent.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB72249510780006C268 /* max-subset-sum-no-adjacent.json */; };
+		42CFAD0F249FCD220006C268 /* max-sum-increasing-subsequence.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB73249510780006C268 /* max-sum-increasing-subsequence.json */; };
+		42CFAD10249FCD220006C268 /* merge-linked-lists.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB74249510780006C268 /* merge-linked-lists.json */; };
+		42CFAD11249FCD220006C268 /* merge-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB75249510780006C268 /* merge-sort.json */; };
+		42CFAD12249FCD220006C268 /* merge-sorted-arrays.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB76249510780006C268 /* merge-sorted-arrays.json */; };
+		42CFAD13249FCD220006C268 /* min-heap-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB77249510780006C268 /* min-heap-construction.json */; };
+		42CFAD14249FCD220006C268 /* min-height-bst.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB78249510780006C268 /* min-height-bst.json */; };
+		42CFAD15249FCD220006C268 /* min-max-stack-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB79249510780006C268 /* min-max-stack-construction.json */; };
+		42CFAD16249FCD220006C268 /* min-number-of-coins-for-change.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7A249510780006C268 /* min-number-of-coins-for-change.json */; };
+		42CFAD17249FCD220006C268 /* min-number-of-jumps.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7B249510780006C268 /* min-number-of-jumps.json */; };
+		42CFAD18249FCD220006C268 /* min-rewards.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7C249510780006C268 /* min-rewards.json */; };
+		42CFAD19249FCD220006C268 /* monotonic-array.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7D249510780006C268 /* monotonic-array.json */; };
+		42CFAD1A249FCD220006C268 /* move-element-to-end.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7E249510780006C268 /* move-element-to-end.json */; };
+		42CFAD1B249FCD220006C268 /* multi-string-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB7F249510780006C268 /* multi-string-search.json */; };
+		42CFAD1C249FCD220006C268 /* node-depths.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB80249510780006C268 /* node-depths.json */; };
+		42CFAD1D249FCD220006C268 /* nth-fibonacci.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB81249510780006C268 /* nth-fibonacci.json */; };
+		42CFAD1E249FCD220006C268 /* number-of-binary-tree-topologies.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB82249510780006C268 /* number-of-binary-tree-topologies.json */; };
+		42CFAD1F249FCD220006C268 /* number-of-ways-to-make-change.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB83249510780006C268 /* number-of-ways-to-make-change.json */; };
+		42CFAD20249FCD220006C268 /* numbers-in-pi.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB84249510780006C268 /* numbers-in-pi.json */; };
+		42CFAD21249FCD220006C268 /* palindrome-check.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB85249510780006C268 /* palindrome-check.json */; };
+		42CFAD22249FCD220006C268 /* palindrome-partitioning-min-cuts.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB86249510780006C268 /* palindrome-partitioning-min-cuts.json */; };
+		42CFAD23249FCD220006C268 /* pattern-matcher.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB87249510780006C268 /* pattern-matcher.json */; };
+		42CFAD24249FCD220006C268 /* permutations.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB88249510780006C268 /* permutations.json */; };
+		42CFAD25249FCD220006C268 /* powerset.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB89249510780006C268 /* powerset.json */; };
+		42CFAD26249FCD220006C268 /* product-sum.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8A249510780006C268 /* product-sum.json */; };
+		42CFAD27249FCD220006C268 /* quick-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8B249510780006C268 /* quick-sort.json */; };
+		42CFAD28249FCD220006C268 /* quickselect.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8C249510780006C268 /* quickselect.json */; };
+		42CFAD29249FCD220006C268 /* rearrange-linked-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8D249510780006C268 /* rearrange-linked-list.json */; };
+		42CFAD2A249FCD220006C268 /* rectangle-mania.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8E249510780006C268 /* rectangle-mania.json */; };
+		42CFAD2B249FCD220006C268 /* remove-kth-node-from-end.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB8F249510780006C268 /* remove-kth-node-from-end.json */; };
+		42CFAD2C249FCD220006C268 /* reverse-linked-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB90249510780006C268 /* reverse-linked-list.json */; };
+		42CFAD2D249FCD220006C268 /* right-sibling-tree.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB91249510780006C268 /* right-sibling-tree.json */; };
+		42CFAD2E249FCD220006C268 /* right-smaller-than.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB92249510780006C268 /* right-smaller-than.json */; };
+		42CFAD2F249FCD220006C268 /* river-sizes.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB93249510780006C268 /* river-sizes.json */; };
+		42CFAD30249FCD220006C268 /* same-bsts.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB94249510780006C268 /* same-bsts.json */; };
+		42CFAD31249FCD220006C268 /* search-for-range.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB95249510780006C268 /* search-for-range.json */; };
+		42CFAD32249FCD220006C268 /* search-in-sorted-matrix.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB96249510780006C268 /* search-in-sorted-matrix.json */; };
+		42CFAD33249FCD220006C268 /* selection-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB97249510780006C268 /* selection-sort.json */; };
+		42CFAD34249FCD220006C268 /* shift-linked-list.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB98249510780006C268 /* shift-linked-list.json */; };
+		42CFAD35249FCD220006C268 /* shifted-binary-search.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB99249510780006C268 /* shifted-binary-search.json */; };
+		42CFAD36249FCD220006C268 /* shorten-path.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9A249510780006C268 /* shorten-path.json */; };
+		42CFAD37249FCD220006C268 /* single-cycle-check.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9B249510780006C268 /* single-cycle-check.json */; };
+		42CFAD38249FCD220006C268 /* smallest-difference.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9C249510780006C268 /* smallest-difference.json */; };
+		42CFAD39249FCD220006C268 /* smallest-substring-containing.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9D249510780006C268 /* smallest-substring-containing.json */; };
+		42CFAD3A249FCD220006C268 /* spiral-traverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9E249510780006C268 /* spiral-traverse.json */; };
+		42CFAD3B249FCD220006C268 /* square-of-zeroes.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAB9F249510780006C268 /* square-of-zeroes.json */; };
+		42CFAD3C249FCD220006C268 /* subarray-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA0249510780006C268 /* subarray-sort.json */; };
+		42CFAD3D249FCD220006C268 /* suffix-trie-construction.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA1249510780006C268 /* suffix-trie-construction.json */; };
+		42CFAD3E249FCD220006C268 /* three-number-sum.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA2249510780006C268 /* three-number-sum.json */; };
+		42CFAD3F249FCD220006C268 /* topological-sort.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA3249510780006C268 /* topological-sort.json */; };
+		42CFAD40249FCD220006C268 /* two-number-sum.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA4249510780006C268 /* two-number-sum.json */; };
+		42CFAD41249FCD220006C268 /* underscorify-substring.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA5249510780006C268 /* underscorify-substring.json */; };
+		42CFAD42249FCD220006C268 /* validate-bst.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA6249510780006C268 /* validate-bst.json */; };
+		42CFAD43249FCD220006C268 /* validate-subsequence.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA7249510780006C268 /* validate-subsequence.json */; };
+		42CFAD44249FCD220006C268 /* water-area.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA8249510780006C268 /* water-area.json */; };
+		42CFAD45249FCD220006C268 /* youngest-common-ancestor.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABA9249510780006C268 /* youngest-common-ancestor.json */; };
+		42CFAD46249FCD220006C268 /* zigzag-traverse.json in Resources */ = {isa = PBXBuildFile; fileRef = 42CFABAA249510780006C268 /* zigzag-traverse.json */; };
+		42CFAD47249FCD900006C268 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAC11249511890006C268 /* Models.swift */; };
+		42CFAD48249FCD940006C268 /* CodeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAC23249C39680006C268 /* CodeEngine.swift */; };
+		42CFAD4A24A0BBF60006C268 /* json-stringify-pretty-compact.js in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAD4924A0BBF50006C268 /* json-stringify-pretty-compact.js */; };
+		42CFAD6B24AA01C40006C268 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAD6A24AA01C40006C268 /* PurchaseService.swift */; };
+		42CFAD6C24AA01D40006C268 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAD6A24AA01C40006C268 /* PurchaseService.swift */; };
+		42CFAD6E24AA02030006C268 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAD6D24AA02030006C268 /* Database.swift */; };
+		42CFAD6F24AA02080006C268 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAD6D24AA02030006C268 /* Database.swift */; };
+		42CFAD7324AAB9F90006C268 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAD7224AAB9F90006C268 /* Service.swift */; };
+		42CFAD7524AACFAF0006C268 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42CFAD7424AACFAF0006C268 /* StoreKit.framework */; };
+		42CFAD7824AC01120006C268 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAD7724AC01120006C268 /* SettingsViewController.swift */; };
+		42CFAD7A24AC0C240006C268 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAD7924AC0C230006C268 /* GoogleService-Info.plist */; };
+		804526FD6A818CCCD7FD7D70 /* Pods_CodeComplete.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E39C23FFEB29BD59FAE10F /* Pods_CodeComplete.framework */; };
+		FBDF75C7DE11333BE4F3D093 /* Pods_CodeCompleteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836CB8B0E1E3B72FFCC11E87 /* Pods_CodeCompleteTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		42CFACDC249FCCAB0006C268 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 42CFAB2524950E620006C268 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42CFAB2C24950E630006C268;
+			remoteInfo = CodeComplete;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		42CFAB2D24950E630006C268 /* Code Complete.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code Complete.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42CFAB3024950E630006C268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		42CFAB3224950E630006C268 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		42CFAB3424950E630006C268 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		42CFAB3924950E650006C268 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		42CFAB3C24950E650006C268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		42CFAB3E24950E650006C268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42CFAB47249510780006C268 /* airport-connections.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "airport-connections.json"; sourceTree = "<group>"; };
+		42CFAB48249510780006C268 /* all-kinds-of-node-depths.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "all-kinds-of-node-depths.json"; sourceTree = "<group>"; };
+		42CFAB49249510780006C268 /* apartment-hunting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "apartment-hunting.json"; sourceTree = "<group>"; };
+		42CFAB4A249510780006C268 /* balanced-brackets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "balanced-brackets.json"; sourceTree = "<group>"; };
+		42CFAB4B249510780006C268 /* binary-search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "binary-search.json"; sourceTree = "<group>"; };
+		42CFAB4C249510780006C268 /* boggle-board.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "boggle-board.json"; sourceTree = "<group>"; };
+		42CFAB4D249510780006C268 /* branch-sums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "branch-sums.json"; sourceTree = "<group>"; };
+		42CFAB4E249510780006C268 /* breadth-first-search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "breadth-first-search.json"; sourceTree = "<group>"; };
+		42CFAB4F249510780006C268 /* bst-construction.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "bst-construction.json"; sourceTree = "<group>"; };
+		42CFAB50249510780006C268 /* bst-traversal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "bst-traversal.json"; sourceTree = "<group>"; };
+		42CFAB51249510780006C268 /* bubble-sort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "bubble-sort.json"; sourceTree = "<group>"; };
+		42CFAB52249510780006C268 /* caesar-cipher-encryptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "caesar-cipher-encryptor.json"; sourceTree = "<group>"; };
+		42CFAB53249510780006C268 /* calendar-matching.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "calendar-matching.json"; sourceTree = "<group>"; };
+		42CFAB54249510780006C268 /* continuous-median.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "continuous-median.json"; sourceTree = "<group>"; };
+		42CFAB55249510780006C268 /* depth-first-search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "depth-first-search.json"; sourceTree = "<group>"; };
+		42CFAB56249510780006C268 /* disk-stacking.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "disk-stacking.json"; sourceTree = "<group>"; };
+		42CFAB57249510780006C268 /* find-closest-value-in-bst.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "find-closest-value-in-bst.json"; sourceTree = "<group>"; };
+		42CFAB58249510780006C268 /* find-loop.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "find-loop.json"; sourceTree = "<group>"; };
+		42CFAB59249510780006C268 /* find-three-largest-numbers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "find-three-largest-numbers.json"; sourceTree = "<group>"; };
+		42CFAB5A249510780006C268 /* flatten-binary-tree.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "flatten-binary-tree.json"; sourceTree = "<group>"; };
+		42CFAB5B249510780006C268 /* four-number-sum.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "four-number-sum.json"; sourceTree = "<group>"; };
+		42CFAB5C249510780006C268 /* group-anagrams.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "group-anagrams.json"; sourceTree = "<group>"; };
+		42CFAB5D249510780006C268 /* heap-sort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "heap-sort.json"; sourceTree = "<group>"; };
+		42CFAB5E249510780006C268 /* insertion-sort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "insertion-sort.json"; sourceTree = "<group>"; };
+		42CFAB5F249510780006C268 /* interweaving-strings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "interweaving-strings.json"; sourceTree = "<group>"; };
+		42CFAB60249510780006C268 /* invert-binary-tree.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "invert-binary-tree.json"; sourceTree = "<group>"; };
+		42CFAB61249510780006C268 /* iterative-in-order-traversal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "iterative-in-order-traversal.json"; sourceTree = "<group>"; };
+		42CFAB62249510780006C268 /* kadane's-algorithm.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "kadane's-algorithm.json"; sourceTree = "<group>"; };
+		42CFAB63249510780006C268 /* knapsack-problem.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "knapsack-problem.json"; sourceTree = "<group>"; };
+		42CFAB64249510780006C268 /* knuth—morris—pratt-algorithm.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "knuth—morris—pratt-algorithm.json"; sourceTree = "<group>"; };
+		42CFAB65249510780006C268 /* largest-range.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "largest-range.json"; sourceTree = "<group>"; };
+		42CFAB66249510780006C268 /* levenshtein-distance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "levenshtein-distance.json"; sourceTree = "<group>"; };
+		42CFAB67249510780006C268 /* linked-list-construction.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "linked-list-construction.json"; sourceTree = "<group>"; };
+		42CFAB68249510780006C268 /* longest-common-subsequence.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "longest-common-subsequence.json"; sourceTree = "<group>"; };
+		42CFAB69249510780006C268 /* longest-increasing-subsequence.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "longest-increasing-subsequence.json"; sourceTree = "<group>"; };
+		42CFAB6A249510780006C268 /* longest-palindromic-substring.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "longest-palindromic-substring.json"; sourceTree = "<group>"; };
+		42CFAB6B249510780006C268 /* longest-peak.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "longest-peak.json"; sourceTree = "<group>"; };
+		42CFAB6C249510780006C268 /* longest-string-chain.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "longest-string-chain.json"; sourceTree = "<group>"; };
+		42CFAB6D249510780006C268 /* longest-substring-without-duplication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "longest-substring-without-duplication.json"; sourceTree = "<group>"; };
+		42CFAB6E249510780006C268 /* lowest-common-manager.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lowest-common-manager.json"; sourceTree = "<group>"; };
+		42CFAB6F249510780006C268 /* lru-cache.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "lru-cache.json"; sourceTree = "<group>"; };
+		42CFAB70249510780006C268 /* max-path-sum-in-binary-tree.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "max-path-sum-in-binary-tree.json"; sourceTree = "<group>"; };
+		42CFAB71249510780006C268 /* max-profit-with-k-transactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "max-profit-with-k-transactions.json"; sourceTree = "<group>"; };
+		42CFAB72249510780006C268 /* max-subset-sum-no-adjacent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "max-subset-sum-no-adjacent.json"; sourceTree = "<group>"; };
+		42CFAB73249510780006C268 /* max-sum-increasing-subsequence.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "max-sum-increasing-subsequence.json"; sourceTree = "<group>"; };
+		42CFAB74249510780006C268 /* merge-linked-lists.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "merge-linked-lists.json"; sourceTree = "<group>"; };
+		42CFAB75249510780006C268 /* merge-sort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "merge-sort.json"; sourceTree = "<group>"; };
+		42CFAB76249510780006C268 /* merge-sorted-arrays.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "merge-sorted-arrays.json"; sourceTree = "<group>"; };
+		42CFAB77249510780006C268 /* min-heap-construction.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "min-heap-construction.json"; sourceTree = "<group>"; };
+		42CFAB78249510780006C268 /* min-height-bst.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "min-height-bst.json"; sourceTree = "<group>"; };
+		42CFAB79249510780006C268 /* min-max-stack-construction.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "min-max-stack-construction.json"; sourceTree = "<group>"; };
+		42CFAB7A249510780006C268 /* min-number-of-coins-for-change.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "min-number-of-coins-for-change.json"; sourceTree = "<group>"; };
+		42CFAB7B249510780006C268 /* min-number-of-jumps.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "min-number-of-jumps.json"; sourceTree = "<group>"; };
+		42CFAB7C249510780006C268 /* min-rewards.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "min-rewards.json"; sourceTree = "<group>"; };
+		42CFAB7D249510780006C268 /* monotonic-array.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "monotonic-array.json"; sourceTree = "<group>"; };
+		42CFAB7E249510780006C268 /* move-element-to-end.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "move-element-to-end.json"; sourceTree = "<group>"; };
+		42CFAB7F249510780006C268 /* multi-string-search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "multi-string-search.json"; sourceTree = "<group>"; };
+		42CFAB80249510780006C268 /* node-depths.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "node-depths.json"; sourceTree = "<group>"; };
+		42CFAB81249510780006C268 /* nth-fibonacci.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "nth-fibonacci.json"; sourceTree = "<group>"; };
+		42CFAB82249510780006C268 /* number-of-binary-tree-topologies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "number-of-binary-tree-topologies.json"; sourceTree = "<group>"; };
+		42CFAB83249510780006C268 /* number-of-ways-to-make-change.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "number-of-ways-to-make-change.json"; sourceTree = "<group>"; };
+		42CFAB84249510780006C268 /* numbers-in-pi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "numbers-in-pi.json"; sourceTree = "<group>"; };
+		42CFAB85249510780006C268 /* palindrome-check.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "palindrome-check.json"; sourceTree = "<group>"; };
+		42CFAB86249510780006C268 /* palindrome-partitioning-min-cuts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "palindrome-partitioning-min-cuts.json"; sourceTree = "<group>"; };
+		42CFAB87249510780006C268 /* pattern-matcher.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "pattern-matcher.json"; sourceTree = "<group>"; };
+		42CFAB88249510780006C268 /* permutations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = permutations.json; sourceTree = "<group>"; };
+		42CFAB89249510780006C268 /* powerset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = powerset.json; sourceTree = "<group>"; };
+		42CFAB8A249510780006C268 /* product-sum.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "product-sum.json"; sourceTree = "<group>"; };
+		42CFAB8B249510780006C268 /* quick-sort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "quick-sort.json"; sourceTree = "<group>"; };
+		42CFAB8C249510780006C268 /* quickselect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = quickselect.json; sourceTree = "<group>"; };
+		42CFAB8D249510780006C268 /* rearrange-linked-list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "rearrange-linked-list.json"; sourceTree = "<group>"; };
+		42CFAB8E249510780006C268 /* rectangle-mania.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "rectangle-mania.json"; sourceTree = "<group>"; };
+		42CFAB8F249510780006C268 /* remove-kth-node-from-end.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remove-kth-node-from-end.json"; sourceTree = "<group>"; };
+		42CFAB90249510780006C268 /* reverse-linked-list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "reverse-linked-list.json"; sourceTree = "<group>"; };
+		42CFAB91249510780006C268 /* right-sibling-tree.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "right-sibling-tree.json"; sourceTree = "<group>"; };
+		42CFAB92249510780006C268 /* right-smaller-than.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "right-smaller-than.json"; sourceTree = "<group>"; };
+		42CFAB93249510780006C268 /* river-sizes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "river-sizes.json"; sourceTree = "<group>"; };
+		42CFAB94249510780006C268 /* same-bsts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "same-bsts.json"; sourceTree = "<group>"; };
+		42CFAB95249510780006C268 /* search-for-range.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "search-for-range.json"; sourceTree = "<group>"; };
+		42CFAB96249510780006C268 /* search-in-sorted-matrix.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "search-in-sorted-matrix.json"; sourceTree = "<group>"; };
+		42CFAB97249510780006C268 /* selection-sort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "selection-sort.json"; sourceTree = "<group>"; };
+		42CFAB98249510780006C268 /* shift-linked-list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "shift-linked-list.json"; sourceTree = "<group>"; };
+		42CFAB99249510780006C268 /* shifted-binary-search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "shifted-binary-search.json"; sourceTree = "<group>"; };
+		42CFAB9A249510780006C268 /* shorten-path.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "shorten-path.json"; sourceTree = "<group>"; };
+		42CFAB9B249510780006C268 /* single-cycle-check.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "single-cycle-check.json"; sourceTree = "<group>"; };
+		42CFAB9C249510780006C268 /* smallest-difference.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "smallest-difference.json"; sourceTree = "<group>"; };
+		42CFAB9D249510780006C268 /* smallest-substring-containing.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "smallest-substring-containing.json"; sourceTree = "<group>"; };
+		42CFAB9E249510780006C268 /* spiral-traverse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "spiral-traverse.json"; sourceTree = "<group>"; };
+		42CFAB9F249510780006C268 /* square-of-zeroes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "square-of-zeroes.json"; sourceTree = "<group>"; };
+		42CFABA0249510780006C268 /* subarray-sort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "subarray-sort.json"; sourceTree = "<group>"; };
+		42CFABA1249510780006C268 /* suffix-trie-construction.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "suffix-trie-construction.json"; sourceTree = "<group>"; };
+		42CFABA2249510780006C268 /* three-number-sum.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "three-number-sum.json"; sourceTree = "<group>"; };
+		42CFABA3249510780006C268 /* topological-sort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "topological-sort.json"; sourceTree = "<group>"; };
+		42CFABA4249510780006C268 /* two-number-sum.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "two-number-sum.json"; sourceTree = "<group>"; };
+		42CFABA5249510780006C268 /* underscorify-substring.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "underscorify-substring.json"; sourceTree = "<group>"; };
+		42CFABA6249510780006C268 /* validate-bst.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "validate-bst.json"; sourceTree = "<group>"; };
+		42CFABA7249510780006C268 /* validate-subsequence.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "validate-subsequence.json"; sourceTree = "<group>"; };
+		42CFABA8249510780006C268 /* water-area.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "water-area.json"; sourceTree = "<group>"; };
+		42CFABA9249510780006C268 /* youngest-common-ancestor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "youngest-common-ancestor.json"; sourceTree = "<group>"; };
+		42CFABAA249510780006C268 /* zigzag-traverse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "zigzag-traverse.json"; sourceTree = "<group>"; };
+		42CFABAB249510780006C268 /* question-list.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "question-list.json"; sourceTree = "<group>"; };
+		42CFAC11249511890006C268 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		42CFAC132495311D0006C268 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		42CFAC152495323D0006C268 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
+		42CFAC17249695250006C268 /* JavaScriptLexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavaScriptLexer.swift; sourceTree = "<group>"; };
+		42CFAC1924969CDE0006C268 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		42CFAC1C2497032C0006C268 /* Metropolis-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Metropolis-Medium.otf"; sourceTree = "<group>"; };
+		42CFAC23249C39680006C268 /* CodeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEngine.swift; sourceTree = "<group>"; };
+		42CFACD0249C4DAA0006C268 /* chai.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = chai.js; sourceTree = "<group>"; };
+		42CFACD2249E23020006C268 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		42CFACD7249FCCAA0006C268 /* CodeCompleteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeCompleteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		42CFACD9249FCCAB0006C268 /* CodeCompleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCompleteTests.swift; sourceTree = "<group>"; };
+		42CFACDB249FCCAB0006C268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42CFAD4924A0BBF50006C268 /* json-stringify-pretty-compact.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "json-stringify-pretty-compact.js"; sourceTree = "<group>"; };
+		42CFAD6A24AA01C40006C268 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
+		42CFAD6D24AA02030006C268 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		42CFAD7224AAB9F90006C268 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		42CFAD7424AACFAF0006C268 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		42CFAD7624AACFBB0006C268 /* Code Complete.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Code Complete.entitlements"; sourceTree = "<group>"; };
+		42CFAD7724AC01120006C268 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		42CFAD7924AC0C230006C268 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		42CFAD7C24B2378A0006C268 /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
+		46A52447C2491EC05CFEA1DC /* Pods-CodeComplete.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeComplete.release.xcconfig"; path = "Target Support Files/Pods-CodeComplete/Pods-CodeComplete.release.xcconfig"; sourceTree = "<group>"; };
+		75E39C23FFEB29BD59FAE10F /* Pods_CodeComplete.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodeComplete.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CD477A6090C8E96D5FBC608 /* Pods-CodeCompleteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeCompleteTests.release.xcconfig"; path = "Target Support Files/Pods-CodeCompleteTests/Pods-CodeCompleteTests.release.xcconfig"; sourceTree = "<group>"; };
+		836CB8B0E1E3B72FFCC11E87 /* Pods_CodeCompleteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodeCompleteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2486941D33851A5FF804EF1 /* Pods-CodeComplete.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeComplete.debug.xcconfig"; path = "Target Support Files/Pods-CodeComplete/Pods-CodeComplete.debug.xcconfig"; sourceTree = "<group>"; };
+		FB36729F815EE332B84E900E /* Pods-CodeCompleteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeCompleteTests.debug.xcconfig"; path = "Target Support Files/Pods-CodeCompleteTests/Pods-CodeCompleteTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		42CFAB2A24950E630006C268 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				804526FD6A818CCCD7FD7D70 /* Pods_CodeComplete.framework in Frameworks */,
+				42CFAD7524AACFAF0006C268 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42CFACD4249FCCAA0006C268 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBDF75C7DE11333BE4F3D093 /* Pods_CodeCompleteTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		026BF4A8F2677DF36E169070 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				42CFAD7424AACFAF0006C268 /* StoreKit.framework */,
+				75E39C23FFEB29BD59FAE10F /* Pods_CodeComplete.framework */,
+				836CB8B0E1E3B72FFCC11E87 /* Pods_CodeCompleteTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		42CFAB2424950E620006C268 = {
+			isa = PBXGroup;
+			children = (
+				42CFAB2F24950E630006C268 /* CodeComplete */,
+				42CFACD8249FCCAB0006C268 /* CodeCompleteTests */,
+				42CFAB2E24950E630006C268 /* Products */,
+				9C6C5E059B4C71A3468D8C42 /* Pods */,
+				026BF4A8F2677DF36E169070 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		42CFAB2E24950E630006C268 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				42CFAB2D24950E630006C268 /* Code Complete.app */,
+				42CFACD7249FCCAA0006C268 /* CodeCompleteTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		42CFAB2F24950E630006C268 /* CodeComplete */ = {
+			isa = PBXGroup;
+			children = (
+				42CFAC25249C3C9B0006C268 /* Resources */,
+				42CFAB452495103B0006C268 /* Data */,
+				42CFAB44249510320006C268 /* Fonts */,
+				42CFAB3924950E650006C268 /* Assets.xcassets */,
+				42CFAB3B24950E650006C268 /* LaunchScreen.storyboard */,
+				42CFAB3E24950E650006C268 /* Info.plist */,
+				42CFAD7924AC0C230006C268 /* GoogleService-Info.plist */,
+				42CFAD7624AACFBB0006C268 /* Code Complete.entitlements */,
+				42CFACD2249E23020006C268 /* README.md */,
+				42CFAD7C24B2378A0006C268 /* Bridge.h */,
+				42CFAB3024950E630006C268 /* AppDelegate.swift */,
+				42CFAB3224950E630006C268 /* SceneDelegate.swift */,
+				42CFAB3424950E630006C268 /* ViewController.swift */,
+				42CFAC132495311D0006C268 /* QuestionViewController.swift */,
+				42CFAD7724AC01120006C268 /* SettingsViewController.swift */,
+				42CFAC152495323D0006C268 /* Views.swift */,
+				42CFAC11249511890006C268 /* Models.swift */,
+				42CFAC17249695250006C268 /* JavaScriptLexer.swift */,
+				42CFAC1924969CDE0006C268 /* Theme.swift */,
+				42CFAC23249C39680006C268 /* CodeEngine.swift */,
+				42CFAD7224AAB9F90006C268 /* Service.swift */,
+				42CFAD6A24AA01C40006C268 /* PurchaseService.swift */,
+				42CFAD6D24AA02030006C268 /* Database.swift */,
+			);
+			path = CodeComplete;
+			sourceTree = "<group>";
+		};
+		42CFAB44249510320006C268 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				42CFAC1C2497032C0006C268 /* Metropolis-Medium.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		42CFAB452495103B0006C268 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				42CFABAB249510780006C268 /* question-list.json */,
+				42CFAB46249510780006C268 /* questions */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		42CFAB46249510780006C268 /* questions */ = {
+			isa = PBXGroup;
+			children = (
+				42CFAB47249510780006C268 /* airport-connections.json */,
+				42CFAB48249510780006C268 /* all-kinds-of-node-depths.json */,
+				42CFAB49249510780006C268 /* apartment-hunting.json */,
+				42CFAB4A249510780006C268 /* balanced-brackets.json */,
+				42CFAB4B249510780006C268 /* binary-search.json */,
+				42CFAB4C249510780006C268 /* boggle-board.json */,
+				42CFAB4D249510780006C268 /* branch-sums.json */,
+				42CFAB4E249510780006C268 /* breadth-first-search.json */,
+				42CFAB4F249510780006C268 /* bst-construction.json */,
+				42CFAB50249510780006C268 /* bst-traversal.json */,
+				42CFAB51249510780006C268 /* bubble-sort.json */,
+				42CFAB52249510780006C268 /* caesar-cipher-encryptor.json */,
+				42CFAB53249510780006C268 /* calendar-matching.json */,
+				42CFAB54249510780006C268 /* continuous-median.json */,
+				42CFAB55249510780006C268 /* depth-first-search.json */,
+				42CFAB56249510780006C268 /* disk-stacking.json */,
+				42CFAB57249510780006C268 /* find-closest-value-in-bst.json */,
+				42CFAB58249510780006C268 /* find-loop.json */,
+				42CFAB59249510780006C268 /* find-three-largest-numbers.json */,
+				42CFAB5A249510780006C268 /* flatten-binary-tree.json */,
+				42CFAB5B249510780006C268 /* four-number-sum.json */,
+				42CFAB5C249510780006C268 /* group-anagrams.json */,
+				42CFAB5D249510780006C268 /* heap-sort.json */,
+				42CFAB5E249510780006C268 /* insertion-sort.json */,
+				42CFAB5F249510780006C268 /* interweaving-strings.json */,
+				42CFAB60249510780006C268 /* invert-binary-tree.json */,
+				42CFAB61249510780006C268 /* iterative-in-order-traversal.json */,
+				42CFAB62249510780006C268 /* kadane's-algorithm.json */,
+				42CFAB63249510780006C268 /* knapsack-problem.json */,
+				42CFAB64249510780006C268 /* knuth—morris—pratt-algorithm.json */,
+				42CFAB65249510780006C268 /* largest-range.json */,
+				42CFAB66249510780006C268 /* levenshtein-distance.json */,
+				42CFAB67249510780006C268 /* linked-list-construction.json */,
+				42CFAB68249510780006C268 /* longest-common-subsequence.json */,
+				42CFAB69249510780006C268 /* longest-increasing-subsequence.json */,
+				42CFAB6A249510780006C268 /* longest-palindromic-substring.json */,
+				42CFAB6B249510780006C268 /* longest-peak.json */,
+				42CFAB6C249510780006C268 /* longest-string-chain.json */,
+				42CFAB6D249510780006C268 /* longest-substring-without-duplication.json */,
+				42CFAB6E249510780006C268 /* lowest-common-manager.json */,
+				42CFAB6F249510780006C268 /* lru-cache.json */,
+				42CFAB70249510780006C268 /* max-path-sum-in-binary-tree.json */,
+				42CFAB71249510780006C268 /* max-profit-with-k-transactions.json */,
+				42CFAB72249510780006C268 /* max-subset-sum-no-adjacent.json */,
+				42CFAB73249510780006C268 /* max-sum-increasing-subsequence.json */,
+				42CFAB74249510780006C268 /* merge-linked-lists.json */,
+				42CFAB75249510780006C268 /* merge-sort.json */,
+				42CFAB76249510780006C268 /* merge-sorted-arrays.json */,
+				42CFAB77249510780006C268 /* min-heap-construction.json */,
+				42CFAB78249510780006C268 /* min-height-bst.json */,
+				42CFAB79249510780006C268 /* min-max-stack-construction.json */,
+				42CFAB7A249510780006C268 /* min-number-of-coins-for-change.json */,
+				42CFAB7B249510780006C268 /* min-number-of-jumps.json */,
+				42CFAB7C249510780006C268 /* min-rewards.json */,
+				42CFAB7D249510780006C268 /* monotonic-array.json */,
+				42CFAB7E249510780006C268 /* move-element-to-end.json */,
+				42CFAB7F249510780006C268 /* multi-string-search.json */,
+				42CFAB80249510780006C268 /* node-depths.json */,
+				42CFAB81249510780006C268 /* nth-fibonacci.json */,
+				42CFAB82249510780006C268 /* number-of-binary-tree-topologies.json */,
+				42CFAB83249510780006C268 /* number-of-ways-to-make-change.json */,
+				42CFAB84249510780006C268 /* numbers-in-pi.json */,
+				42CFAB85249510780006C268 /* palindrome-check.json */,
+				42CFAB86249510780006C268 /* palindrome-partitioning-min-cuts.json */,
+				42CFAB87249510780006C268 /* pattern-matcher.json */,
+				42CFAB88249510780006C268 /* permutations.json */,
+				42CFAB89249510780006C268 /* powerset.json */,
+				42CFAB8A249510780006C268 /* product-sum.json */,
+				42CFAB8B249510780006C268 /* quick-sort.json */,
+				42CFAB8C249510780006C268 /* quickselect.json */,
+				42CFAB8D249510780006C268 /* rearrange-linked-list.json */,
+				42CFAB8E249510780006C268 /* rectangle-mania.json */,
+				42CFAB8F249510780006C268 /* remove-kth-node-from-end.json */,
+				42CFAB90249510780006C268 /* reverse-linked-list.json */,
+				42CFAB91249510780006C268 /* right-sibling-tree.json */,
+				42CFAB92249510780006C268 /* right-smaller-than.json */,
+				42CFAB93249510780006C268 /* river-sizes.json */,
+				42CFAB94249510780006C268 /* same-bsts.json */,
+				42CFAB95249510780006C268 /* search-for-range.json */,
+				42CFAB96249510780006C268 /* search-in-sorted-matrix.json */,
+				42CFAB97249510780006C268 /* selection-sort.json */,
+				42CFAB98249510780006C268 /* shift-linked-list.json */,
+				42CFAB99249510780006C268 /* shifted-binary-search.json */,
+				42CFAB9A249510780006C268 /* shorten-path.json */,
+				42CFAB9B249510780006C268 /* single-cycle-check.json */,
+				42CFAB9C249510780006C268 /* smallest-difference.json */,
+				42CFAB9D249510780006C268 /* smallest-substring-containing.json */,
+				42CFAB9E249510780006C268 /* spiral-traverse.json */,
+				42CFAB9F249510780006C268 /* square-of-zeroes.json */,
+				42CFABA0249510780006C268 /* subarray-sort.json */,
+				42CFABA1249510780006C268 /* suffix-trie-construction.json */,
+				42CFABA2249510780006C268 /* three-number-sum.json */,
+				42CFABA3249510780006C268 /* topological-sort.json */,
+				42CFABA4249510780006C268 /* two-number-sum.json */,
+				42CFABA5249510780006C268 /* underscorify-substring.json */,
+				42CFABA6249510780006C268 /* validate-bst.json */,
+				42CFABA7249510780006C268 /* validate-subsequence.json */,
+				42CFABA8249510780006C268 /* water-area.json */,
+				42CFABA9249510780006C268 /* youngest-common-ancestor.json */,
+				42CFABAA249510780006C268 /* zigzag-traverse.json */,
+			);
+			path = questions;
+			sourceTree = "<group>";
+		};
+		42CFAC25249C3C9B0006C268 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				42CFAD4924A0BBF50006C268 /* json-stringify-pretty-compact.js */,
+				42CFACD0249C4DAA0006C268 /* chai.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		42CFACD8249FCCAB0006C268 /* CodeCompleteTests */ = {
+			isa = PBXGroup;
+			children = (
+				42CFACD9249FCCAB0006C268 /* CodeCompleteTests.swift */,
+				42CFACDB249FCCAB0006C268 /* Info.plist */,
+			);
+			path = CodeCompleteTests;
+			sourceTree = "<group>";
+		};
+		9C6C5E059B4C71A3468D8C42 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A2486941D33851A5FF804EF1 /* Pods-CodeComplete.debug.xcconfig */,
+				46A52447C2491EC05CFEA1DC /* Pods-CodeComplete.release.xcconfig */,
+				FB36729F815EE332B84E900E /* Pods-CodeCompleteTests.debug.xcconfig */,
+				7CD477A6090C8E96D5FBC608 /* Pods-CodeCompleteTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		42CFAB2C24950E630006C268 /* CodeComplete */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42CFAB4124950E650006C268 /* Build configuration list for PBXNativeTarget "CodeComplete" */;
+			buildPhases = (
+				814E2D0E7FE8A850E6A99E29 /* [CP] Check Pods Manifest.lock */,
+				42CFAB2924950E630006C268 /* Sources */,
+				42CFAB2A24950E630006C268 /* Frameworks */,
+				42CFAB2B24950E630006C268 /* Resources */,
+				8FCCB5F0348FE92578CF7881 /* [CP] Embed Pods Frameworks */,
+				42CFAD7B24AE558F0006C268 /* Firebase Crashlytics */,
+				A91ED22CF233C94396DC2435 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CodeComplete;
+			productName = CodeComplete;
+			productReference = 42CFAB2D24950E630006C268 /* Code Complete.app */;
+			productType = "com.apple.product-type.application";
+		};
+		42CFACD6249FCCAA0006C268 /* CodeCompleteTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42CFACDE249FCCAB0006C268 /* Build configuration list for PBXNativeTarget "CodeCompleteTests" */;
+			buildPhases = (
+				326D07E51DB654E2728041F4 /* [CP] Check Pods Manifest.lock */,
+				42CFACD3249FCCAA0006C268 /* Sources */,
+				42CFACD4249FCCAA0006C268 /* Frameworks */,
+				42CFACD5249FCCAA0006C268 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				42CFACDD249FCCAB0006C268 /* PBXTargetDependency */,
+			);
+			name = CodeCompleteTests;
+			productName = CodeCompleteTests;
+			productReference = 42CFACD7249FCCAA0006C268 /* CodeCompleteTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		42CFAB2524950E620006C268 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1150;
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = "Vijay Sharma";
+				TargetAttributes = {
+					42CFAB2C24950E630006C268 = {
+						CreatedOnToolsVersion = 11.5;
+					};
+					42CFACD6249FCCAA0006C268 = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = 42CFAB2C24950E630006C268;
+					};
+				};
+			};
+			buildConfigurationList = 42CFAB2824950E620006C268 /* Build configuration list for PBXProject "CodeComplete" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 42CFAB2424950E620006C268;
+			productRefGroup = 42CFAB2E24950E630006C268 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				42CFAB2C24950E630006C268 /* CodeComplete */,
+				42CFACD6249FCCAA0006C268 /* CodeCompleteTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		42CFAB2B24950E630006C268 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42CFABBF249510780006C268 /* flatten-binary-tree.json in Resources */,
+				42CFABE7249510780006C268 /* number-of-binary-tree-topologies.json in Resources */,
+				42CFABF5249510780006C268 /* reverse-linked-list.json in Resources */,
+				42CFABEB249510780006C268 /* palindrome-partitioning-min-cuts.json in Resources */,
+				42CFABD5249510780006C268 /* max-path-sum-in-binary-tree.json in Resources */,
+				42CFABDD249510780006C268 /* min-height-bst.json in Resources */,
+				42CFABE8249510780006C268 /* number-of-ways-to-make-change.json in Resources */,
+				42CFABCE249510780006C268 /* longest-increasing-subsequence.json in Resources */,
+				42CFABC5249510780006C268 /* invert-binary-tree.json in Resources */,
+				42CFAC00249510780006C268 /* single-cycle-check.json in Resources */,
+				42CFABB8249510780006C268 /* calendar-matching.json in Resources */,
+				42CFAD7A24AC0C240006C268 /* GoogleService-Info.plist in Resources */,
+				42CFABCD249510780006C268 /* longest-common-subsequence.json in Resources */,
+				42CFABBE249510780006C268 /* find-three-largest-numbers.json in Resources */,
+				42CFAC0E249510780006C268 /* youngest-common-ancestor.json in Resources */,
+				42CFABEC249510780006C268 /* pattern-matcher.json in Resources */,
+				42CFAC05249510780006C268 /* subarray-sort.json in Resources */,
+				42CFAC08249510780006C268 /* topological-sort.json in Resources */,
+				42CFAC0D249510780006C268 /* water-area.json in Resources */,
+				42CFABD6249510780006C268 /* max-profit-with-k-transactions.json in Resources */,
+				42CFAC10249510780006C268 /* question-list.json in Resources */,
+				42CFABF7249510780006C268 /* right-smaller-than.json in Resources */,
+				42CFABD4249510780006C268 /* lru-cache.json in Resources */,
+				42CFABC2249510780006C268 /* heap-sort.json in Resources */,
+				42CFAC01249510780006C268 /* smallest-difference.json in Resources */,
+				42CFABD3249510780006C268 /* lowest-common-manager.json in Resources */,
+				42CFABD8249510780006C268 /* max-sum-increasing-subsequence.json in Resources */,
+				42CFABC1249510780006C268 /* group-anagrams.json in Resources */,
+				42CFABC7249510780006C268 /* kadane's-algorithm.json in Resources */,
+				42CFABC8249510780006C268 /* knapsack-problem.json in Resources */,
+				42CFAD4A24A0BBF60006C268 /* json-stringify-pretty-compact.js in Resources */,
+				42CFABB5249510780006C268 /* bst-traversal.json in Resources */,
+				42CFABBB249510780006C268 /* disk-stacking.json in Resources */,
+				42CFAC0A249510780006C268 /* underscorify-substring.json in Resources */,
+				42CFABC4249510780006C268 /* interweaving-strings.json in Resources */,
+				42CFABAE249510780006C268 /* apartment-hunting.json in Resources */,
+				42CFABE9249510780006C268 /* numbers-in-pi.json in Resources */,
+				42CFABB9249510780006C268 /* continuous-median.json in Resources */,
+				42CFABF6249510780006C268 /* right-sibling-tree.json in Resources */,
+				42CFABFD249510780006C268 /* shift-linked-list.json in Resources */,
+				42CFABE1249510780006C268 /* min-rewards.json in Resources */,
+				42CFABC3249510780006C268 /* insertion-sort.json in Resources */,
+				42CFABCA249510780006C268 /* largest-range.json in Resources */,
+				42CFABB1249510780006C268 /* boggle-board.json in Resources */,
+				42CFABD2249510780006C268 /* longest-substring-without-duplication.json in Resources */,
+				42CFAC0F249510780006C268 /* zigzag-traverse.json in Resources */,
+				42CFABC9249510780006C268 /* knuth—morris—pratt-algorithm.json in Resources */,
+				42CFAC07249510780006C268 /* three-number-sum.json in Resources */,
+				42CFABB3249510780006C268 /* breadth-first-search.json in Resources */,
+				42CFACD1249C4DAA0006C268 /* chai.js in Resources */,
+				42CFABF0249510780006C268 /* quick-sort.json in Resources */,
+				42CFABFF249510780006C268 /* shorten-path.json in Resources */,
+				42CFAB3D24950E650006C268 /* LaunchScreen.storyboard in Resources */,
+				42CFAC02249510780006C268 /* smallest-substring-containing.json in Resources */,
+				42CFABCF249510780006C268 /* longest-palindromic-substring.json in Resources */,
+				42CFABE2249510780006C268 /* monotonic-array.json in Resources */,
+				42CFABB0249510780006C268 /* binary-search.json in Resources */,
+				42CFABFE249510780006C268 /* shifted-binary-search.json in Resources */,
+				42CFAC03249510780006C268 /* spiral-traverse.json in Resources */,
+				42CFAC06249510780006C268 /* suffix-trie-construction.json in Resources */,
+				42CFABAC249510780006C268 /* airport-connections.json in Resources */,
+				42CFABBD249510780006C268 /* find-loop.json in Resources */,
+				42CFABF2249510780006C268 /* rearrange-linked-list.json in Resources */,
+				42CFABED249510780006C268 /* permutations.json in Resources */,
+				42CFABFA249510780006C268 /* search-for-range.json in Resources */,
+				42CFABEA249510780006C268 /* palindrome-check.json in Resources */,
+				42CFABE3249510780006C268 /* move-element-to-end.json in Resources */,
+				42CFAC0B249510780006C268 /* validate-bst.json in Resources */,
+				42CFAB3A24950E650006C268 /* Assets.xcassets in Resources */,
+				42CFABDB249510780006C268 /* merge-sorted-arrays.json in Resources */,
+				42CFABDA249510780006C268 /* merge-sort.json in Resources */,
+				42CFABE4249510780006C268 /* multi-string-search.json in Resources */,
+				42CFABCB249510780006C268 /* levenshtein-distance.json in Resources */,
+				42CFABF9249510780006C268 /* same-bsts.json in Resources */,
+				42CFABD0249510780006C268 /* longest-peak.json in Resources */,
+				42CFABE5249510780006C268 /* node-depths.json in Resources */,
+				42CFABDE249510780006C268 /* min-max-stack-construction.json in Resources */,
+				42CFAC04249510780006C268 /* square-of-zeroes.json in Resources */,
+				42CFABD1249510780006C268 /* longest-string-chain.json in Resources */,
+				42CFABE0249510780006C268 /* min-number-of-jumps.json in Resources */,
+				42CFABDF249510780006C268 /* min-number-of-coins-for-change.json in Resources */,
+				42CFABF8249510780006C268 /* river-sizes.json in Resources */,
+				42CFABAD249510780006C268 /* all-kinds-of-node-depths.json in Resources */,
+				42CFABC0249510780006C268 /* four-number-sum.json in Resources */,
+				42CFABBC249510780006C268 /* find-closest-value-in-bst.json in Resources */,
+				42CFABD9249510780006C268 /* merge-linked-lists.json in Resources */,
+				42CFABBA249510780006C268 /* depth-first-search.json in Resources */,
+				42CFABC6249510780006C268 /* iterative-in-order-traversal.json in Resources */,
+				42CFABE6249510780006C268 /* nth-fibonacci.json in Resources */,
+				42CFAC0C249510780006C268 /* validate-subsequence.json in Resources */,
+				42CFABAF249510780006C268 /* balanced-brackets.json in Resources */,
+				42CFABFB249510780006C268 /* search-in-sorted-matrix.json in Resources */,
+				42CFABDC249510780006C268 /* min-heap-construction.json in Resources */,
+				42CFABEF249510780006C268 /* product-sum.json in Resources */,
+				42CFABF3249510780006C268 /* rectangle-mania.json in Resources */,
+				42CFABD7249510780006C268 /* max-subset-sum-no-adjacent.json in Resources */,
+				42CFABB6249510780006C268 /* bubble-sort.json in Resources */,
+				42CFAC09249510780006C268 /* two-number-sum.json in Resources */,
+				42CFABB7249510780006C268 /* caesar-cipher-encryptor.json in Resources */,
+				42CFABEE249510780006C268 /* powerset.json in Resources */,
+				42CFABF4249510780006C268 /* remove-kth-node-from-end.json in Resources */,
+				42CFABCC249510780006C268 /* linked-list-construction.json in Resources */,
+				42CFABF1249510780006C268 /* quickselect.json in Resources */,
+				42CFABB4249510780006C268 /* bst-construction.json in Resources */,
+				42CFABFC249510780006C268 /* selection-sort.json in Resources */,
+				42CFABB2249510780006C268 /* branch-sums.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42CFACD5249FCCAA0006C268 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42CFAD20249FCD220006C268 /* numbers-in-pi.json in Resources */,
+				42CFAD26249FCD220006C268 /* product-sum.json in Resources */,
+				42CFAD03249FCD220006C268 /* linked-list-construction.json in Resources */,
+				42CFAD22249FCD220006C268 /* palindrome-partitioning-min-cuts.json in Resources */,
+				42CFACF0249FCD220006C268 /* continuous-median.json in Resources */,
+				42CFAD28249FCD220006C268 /* quickselect.json in Resources */,
+				42CFACFA249FCD220006C268 /* insertion-sort.json in Resources */,
+				42CFAD00249FCD220006C268 /* knuth—morris—pratt-algorithm.json in Resources */,
+				42CFACED249FCD220006C268 /* bubble-sort.json in Resources */,
+				42CFAD41249FCD220006C268 /* underscorify-substring.json in Resources */,
+				42CFAD2B249FCD220006C268 /* remove-kth-node-from-end.json in Resources */,
+				42CFAD3F249FCD220006C268 /* topological-sort.json in Resources */,
+				42CFAD17249FCD220006C268 /* min-number-of-jumps.json in Resources */,
+				42CFACFE249FCD220006C268 /* kadane's-algorithm.json in Resources */,
+				42CFAD40249FCD220006C268 /* two-number-sum.json in Resources */,
+				42CFAD13249FCD220006C268 /* min-heap-construction.json in Resources */,
+				42CFACF4249FCD220006C268 /* find-loop.json in Resources */,
+				42CFACE1249FCD140006C268 /* chai.js in Resources */,
+				42CFAD16249FCD220006C268 /* min-number-of-coins-for-change.json in Resources */,
+				42CFAD43249FCD220006C268 /* validate-subsequence.json in Resources */,
+				42CFAD3A249FCD220006C268 /* spiral-traverse.json in Resources */,
+				42CFAD01249FCD220006C268 /* largest-range.json in Resources */,
+				42CFAD08249FCD220006C268 /* longest-string-chain.json in Resources */,
+				42CFAD0C249FCD220006C268 /* max-path-sum-in-binary-tree.json in Resources */,
+				42CFACF5249FCD220006C268 /* find-three-largest-numbers.json in Resources */,
+				42CFAD23249FCD220006C268 /* pattern-matcher.json in Resources */,
+				42CFAD0F249FCD220006C268 /* max-sum-increasing-subsequence.json in Resources */,
+				42CFACE5249FCD220006C268 /* apartment-hunting.json in Resources */,
+				42CFAD18249FCD220006C268 /* min-rewards.json in Resources */,
+				42CFAD1A249FCD220006C268 /* move-element-to-end.json in Resources */,
+				42CFAD42249FCD220006C268 /* validate-bst.json in Resources */,
+				42CFACF7249FCD220006C268 /* four-number-sum.json in Resources */,
+				42CFACF1249FCD220006C268 /* depth-first-search.json in Resources */,
+				42CFACE2249FCD190006C268 /* question-list.json in Resources */,
+				42CFACF9249FCD220006C268 /* heap-sort.json in Resources */,
+				42CFAD15249FCD220006C268 /* min-max-stack-construction.json in Resources */,
+				42CFACF3249FCD220006C268 /* find-closest-value-in-bst.json in Resources */,
+				42CFAD05249FCD220006C268 /* longest-increasing-subsequence.json in Resources */,
+				42CFAD0A249FCD220006C268 /* lowest-common-manager.json in Resources */,
+				42CFAD1B249FCD220006C268 /* multi-string-search.json in Resources */,
+				42CFACEE249FCD220006C268 /* caesar-cipher-encryptor.json in Resources */,
+				42CFACE4249FCD220006C268 /* all-kinds-of-node-depths.json in Resources */,
+				42CFAD32249FCD220006C268 /* search-in-sorted-matrix.json in Resources */,
+				42CFAD34249FCD220006C268 /* shift-linked-list.json in Resources */,
+				42CFAD3D249FCD220006C268 /* suffix-trie-construction.json in Resources */,
+				42CFAD29249FCD220006C268 /* rearrange-linked-list.json in Resources */,
+				42CFAD06249FCD220006C268 /* longest-palindromic-substring.json in Resources */,
+				42CFACE6249FCD220006C268 /* balanced-brackets.json in Resources */,
+				42CFAD09249FCD220006C268 /* longest-substring-without-duplication.json in Resources */,
+				42CFACEF249FCD220006C268 /* calendar-matching.json in Resources */,
+				42CFAD3E249FCD220006C268 /* three-number-sum.json in Resources */,
+				42CFACEB249FCD220006C268 /* bst-construction.json in Resources */,
+				42CFACFF249FCD220006C268 /* knapsack-problem.json in Resources */,
+				42CFACE7249FCD220006C268 /* binary-search.json in Resources */,
+				42CFAD19249FCD220006C268 /* monotonic-array.json in Resources */,
+				42CFAD46249FCD220006C268 /* zigzag-traverse.json in Resources */,
+				42CFAD27249FCD220006C268 /* quick-sort.json in Resources */,
+				42CFAD36249FCD220006C268 /* shorten-path.json in Resources */,
+				42CFAD1D249FCD220006C268 /* nth-fibonacci.json in Resources */,
+				42CFACF2249FCD220006C268 /* disk-stacking.json in Resources */,
+				42CFAD2E249FCD220006C268 /* right-smaller-than.json in Resources */,
+				42CFAD1C249FCD220006C268 /* node-depths.json in Resources */,
+				42CFAD2C249FCD220006C268 /* reverse-linked-list.json in Resources */,
+				42CFAD24249FCD220006C268 /* permutations.json in Resources */,
+				42CFAD10249FCD220006C268 /* merge-linked-lists.json in Resources */,
+				42CFACE8249FCD220006C268 /* boggle-board.json in Resources */,
+				42CFAD12249FCD220006C268 /* merge-sorted-arrays.json in Resources */,
+				42CFAD3B249FCD220006C268 /* square-of-zeroes.json in Resources */,
+				42CFAD1F249FCD220006C268 /* number-of-ways-to-make-change.json in Resources */,
+				42CFAD14249FCD220006C268 /* min-height-bst.json in Resources */,
+				42CFAD45249FCD220006C268 /* youngest-common-ancestor.json in Resources */,
+				42CFAD33249FCD220006C268 /* selection-sort.json in Resources */,
+				42CFAD21249FCD220006C268 /* palindrome-check.json in Resources */,
+				42CFAD0E249FCD220006C268 /* max-subset-sum-no-adjacent.json in Resources */,
+				42CFACFB249FCD220006C268 /* interweaving-strings.json in Resources */,
+				42CFACEC249FCD220006C268 /* bst-traversal.json in Resources */,
+				42CFACE3249FCD220006C268 /* airport-connections.json in Resources */,
+				42CFAD3C249FCD220006C268 /* subarray-sort.json in Resources */,
+				42CFAD44249FCD220006C268 /* water-area.json in Resources */,
+				42CFACF6249FCD220006C268 /* flatten-binary-tree.json in Resources */,
+				42CFAD0B249FCD220006C268 /* lru-cache.json in Resources */,
+				42CFACE9249FCD220006C268 /* branch-sums.json in Resources */,
+				42CFAD38249FCD220006C268 /* smallest-difference.json in Resources */,
+				42CFAD35249FCD220006C268 /* shifted-binary-search.json in Resources */,
+				42CFAD11249FCD220006C268 /* merge-sort.json in Resources */,
+				42CFAD07249FCD220006C268 /* longest-peak.json in Resources */,
+				42CFAD2D249FCD220006C268 /* right-sibling-tree.json in Resources */,
+				42CFAD2F249FCD220006C268 /* river-sizes.json in Resources */,
+				42CFAD30249FCD220006C268 /* same-bsts.json in Resources */,
+				42CFACEA249FCD220006C268 /* breadth-first-search.json in Resources */,
+				42CFAD39249FCD220006C268 /* smallest-substring-containing.json in Resources */,
+				42CFAD37249FCD220006C268 /* single-cycle-check.json in Resources */,
+				42CFAD31249FCD220006C268 /* search-for-range.json in Resources */,
+				42CFACFD249FCD220006C268 /* iterative-in-order-traversal.json in Resources */,
+				42CFACFC249FCD220006C268 /* invert-binary-tree.json in Resources */,
+				42CFAD1E249FCD220006C268 /* number-of-binary-tree-topologies.json in Resources */,
+				42CFAD2A249FCD220006C268 /* rectangle-mania.json in Resources */,
+				42CFAD0D249FCD220006C268 /* max-profit-with-k-transactions.json in Resources */,
+				42CFAD25249FCD220006C268 /* powerset.json in Resources */,
+				42CFAD04249FCD220006C268 /* longest-common-subsequence.json in Resources */,
+				42CFAD02249FCD220006C268 /* levenshtein-distance.json in Resources */,
+				42CFACF8249FCD220006C268 /* group-anagrams.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		326D07E51DB654E2728041F4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CodeCompleteTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		42CFAD7B24AE558F0006C268 /* Firebase Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Firebase Crashlytics";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		814E2D0E7FE8A850E6A99E29 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CodeComplete-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FCCB5F0348FE92578CF7881 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CodeComplete/Pods-CodeComplete-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CodeComplete/Pods-CodeComplete-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CodeComplete/Pods-CodeComplete-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A91ED22CF233C94396DC2435 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CodeComplete/Pods-CodeComplete-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CodeComplete/Pods-CodeComplete-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CodeComplete/Pods-CodeComplete-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		42CFAB2924950E630006C268 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42CFAB3524950E630006C268 /* ViewController.swift in Sources */,
+				42CFAD6E24AA02030006C268 /* Database.swift in Sources */,
+				42CFAD7824AC01120006C268 /* SettingsViewController.swift in Sources */,
+				42CFAC142495311D0006C268 /* QuestionViewController.swift in Sources */,
+				42CFAC162495323D0006C268 /* Views.swift in Sources */,
+				42CFAB3124950E630006C268 /* AppDelegate.swift in Sources */,
+				42CFAD7324AAB9F90006C268 /* Service.swift in Sources */,
+				42CFAC18249695260006C268 /* JavaScriptLexer.swift in Sources */,
+				42CFAB3324950E630006C268 /* SceneDelegate.swift in Sources */,
+				42CFAC24249C39690006C268 /* CodeEngine.swift in Sources */,
+				42CFAC12249511890006C268 /* Models.swift in Sources */,
+				42CFAD6B24AA01C40006C268 /* PurchaseService.swift in Sources */,
+				42CFAC1A24969CDE0006C268 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		42CFACD3249FCCAA0006C268 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42CFAD6C24AA01D40006C268 /* PurchaseService.swift in Sources */,
+				42CFAD48249FCD940006C268 /* CodeEngine.swift in Sources */,
+				42CFACDA249FCCAB0006C268 /* CodeCompleteTests.swift in Sources */,
+				42CFAD6F24AA02080006C268 /* Database.swift in Sources */,
+				42CFAD47249FCD900006C268 /* Models.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		42CFACDD249FCCAB0006C268 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42CFAB2C24950E630006C268 /* CodeComplete */;
+			targetProxy = 42CFACDC249FCCAB0006C268 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		42CFAB3B24950E650006C268 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42CFAB3C24950E650006C268 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		42CFAB3F24950E650006C268 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		42CFAB4024950E650006C268 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		42CFAB4224950E650006C268 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A2486941D33851A5FF804EF1 /* Pods-CodeComplete.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "CodeComplete/Code Complete.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = R89W5J5L69;
+				INFOPLIST_FILE = CodeComplete/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
+				PRODUCT_NAME = "Code Complete";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		42CFAB4324950E650006C268 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 46A52447C2491EC05CFEA1DC /* Pods-CodeComplete.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "CodeComplete/Code Complete.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = R89W5J5L69;
+				INFOPLIST_FILE = CodeComplete/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
+				PRODUCT_NAME = "Code Complete";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		42CFACDF249FCCAB0006C268 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB36729F815EE332B84E900E /* Pods-CodeCompleteTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R89W5J5L69;
+				INFOPLIST_FILE = CodeCompleteTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeCompleteTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Code Complete.app/Code Complete";
+			};
+			name = Debug;
+		};
+		42CFACE0249FCCAB0006C268 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CD477A6090C8E96D5FBC608 /* Pods-CodeCompleteTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R89W5J5L69;
+				INFOPLIST_FILE = CodeCompleteTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeCompleteTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Code Complete.app/Code Complete";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		42CFAB2824950E620006C268 /* Build configuration list for PBXProject "CodeComplete" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42CFAB3F24950E650006C268 /* Debug */,
+				42CFAB4024950E650006C268 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42CFAB4124950E650006C268 /* Build configuration list for PBXNativeTarget "CodeComplete" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42CFAB4224950E650006C268 /* Debug */,
+				42CFAB4324950E650006C268 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		42CFACDE249FCCAB0006C268 /* Build configuration list for PBXNativeTarget "CodeCompleteTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42CFACDF249FCCAB0006C268 /* Debug */,
+				42CFACE0249FCCAB0006C268 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 42CFAB2524950E620006C268 /* Project object */;
+}

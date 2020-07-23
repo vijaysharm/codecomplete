@@ -1,0 +1,1671 @@
+{
+  "Summary": {
+    "Name": "Shift Linked List",
+    "Category": "Linked Lists",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "completed": false,
+      "date": "2020-05-11T00:00:00Z",
+      "number": 259,
+      "timeOne": 0,
+      "timeTwo": 1396,
+      "url": "https://player.vimeo.com/video/414931645"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Putting aside the cases where k is a negative integer, where k is 0, or where k is larger than the length of the linked list, what does shifting the linked list by k positions entail exactly?\nPutting aside the cases mentioned in Hint #1, shifting the linked list by k positions means moving the last k nodes in the linked list to the front of the linked list. What nodes in the linked list will you actually need to mutate?\nThere are four nodes that really matter in this entire process: the original tail of the linked list, which will point to the original head of the linked list, the original head of the linked list, which will be pointed to by the original tail of the linked list, the new tail of the linked list, and the new head of the linked list. Note that the new head is the node that the new tail points to in the original, unshifted linked list.\nYou can find the original tail of the linked list by simply traversing the linked list, starting at the original head of the linked list that you're given. You can find the new tail of the linked list by moving k positions from the original tail if k is positive (which means moving to the (lengthOfList - k)th position in the list, and you can easily count the length of the list as you traverse it to find its original tail). You can access the new head of the linked list once you've found its new tail, since it's the new tail's original next node. How will you handle the trickier values of k?",
+  "SpaceTime": "O(n) time | O(1) space - where n is the number of nodes in the Linked List",
+  "PromptHTML": "<p>\n  Write a function that takes in the head of a Singly Linked List and an integer\n  <span>k</span>, shifts the list in place (i.e., doesn't create a brand new\n  list) by k positions, and returns its new head.\n</p>\n<p>\n  Shifting a Linked List means moving its nodes forward or backward and wrapping\n  them around the list where appropriate. For example, shifting a Linked List\n  forward by one position would make its tail become the new head of the linked\n  list.\n</p>\n<p>\n  Whether nodes are moved forward or backward is determined by whether\n  <span>k</span> is positive or negative.\n</p>\n<p>\n  Each <span>LinkedList</span> node has an integer <span>value</span> as well as\n  a <span>next</span> node pointing to the next node in the list or to\n  <span>None</span> / <span>null</span> if it's the tail of the list.\n</p>\n<p>\n  You can assume that the input Linked List will always have at least one node;\n  in other words, the head will never be <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">head</span> = 0 -> 1 -> 2 -> 3 -> 4 -> 5 <span class=\"CodeEditor-promptComment\">// the head node with value 0</span>\n<span class=\"CodeEditor-promptParameter\">k</span> = 2\n</pre>\n<h3>Sample Output</h3>\n<pre>\n4 -> 5 -> 0 -> 1 -> 2 -> 3 <span class=\"CodeEditor-promptComment\">// the new head node with value 4</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "linkedlist",
+    "outputType": "linkedlist"
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "linkedList",
+      "Example": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      },
+      "Schema": {
+        "description": "A Singly Linked List is represented by a list of <span>nodes</span> and a <span>head</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>next</span> pointers and by the <span>head</span>.\n",
+        "properties": {
+          "head": {
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "next": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "next"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "head",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "Name": "k",
+      "Example": 2,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value) {\n    this->value = value;\n    next = NULL;\n  }\n};\n\nLinkedList *shiftLinkedList(LinkedList *head, int k) {\n  // Write your code here.\n  return NULL;\n}\n",
+      "StartingTest": "#include \"program.cpp\"\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input = {};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nvector<int> linkedListToArray(LinkedList* head) {\n  vector<int> array{};\n  auto current = head;\n  while (current != NULL) {\n    array.push_back(current->value);\n    current = current->next;\n  }\n  return array;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      auto head = new LinkedList(0);\n      head->next = new LinkedList(1);\n      head->next->next = new LinkedList(2);\n      head->next->next->next = new LinkedList(3);\n      head->next->next->next->next = new LinkedList(4);\n      head->next->next->next->next->next = new LinkedList(5);\n      auto result = shiftLinkedList(head, 2);\n      auto array = linkedListToArray(result);\n\n      vector<int> expected{4, 5, 0, 1, 2, 3};\n      assert(expected == array);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value) {\n    this->value = value;\n    next = NULL;\n  }\n};\n\n// O(n) time | O(1) space - where n is the number of nodes in the Linked List\nLinkedList *shiftLinkedList(LinkedList *head, int k) {\n  int listLength = 1;\n  LinkedList *listTail = head;\n  while (listTail->next != NULL) {\n    listTail = listTail->next;\n    listLength++;\n  }\n\n  int offset = abs(k) % listLength;\n  if (offset == 0)\n    return head;\n  int newTailPosition = k > 0 ? listLength - offset : offset;\n  LinkedList *newTail = head;\n  for (int i = 1; i < newTailPosition; i++) {\n    newTail = newTail->next;\n  }\n\n  LinkedList *newHead = newTail->next;\n  newTail->next = NULL;\n  listTail->next = head;\n  return newHead;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static LinkedList ShiftLinkedList(LinkedList head, int k) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic class LinkedList {\n\t\tpublic int value;\n\t\tpublic LinkedList next;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.value = value;\n\t\t\tnext = null;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar input = new int[] {};\n\t\tvar expected = true;\n\t\tvar actual = Program.isMonotonic(input);\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tpublic List<int> linkedListToArray(Program.LinkedList head) {\n\t\tvar array = new List<int>();\n\t\tvar current = head;\n\t\twhile (current != null) {\n\t\t\tarray.Add(current.value);\n\t\t\tcurrent = current.next;\n\t\t}\n\t\treturn array;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar head = new Program.LinkedList(0);\n\t\thead.next = new Program.LinkedList(1);\n\t\thead.next.next = new Program.LinkedList(2);\n\t\thead.next.next.next = new Program.LinkedList(3);\n\t\thead.next.next.next.next = new Program.LinkedList(4);\n\t\thead.next.next.next.next.next = new Program.LinkedList(5);\n\t\tvar result = Program.ShiftLinkedList(head, 2);\n\t\tvar array = this.linkedListToArray(result);\n\n\t\tvar expected = new List<int> {\n\t\t\t4, 5, 0, 1, 2, 3\n\t\t};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(expected, array));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(n) time | O(1) space - where n is the number of nodes in the Linked List\n\tpublic static LinkedList ShiftLinkedList(LinkedList head, int k) {\n\t\tint listLength = 1;\n\t\tLinkedList listTail = head;\n\t\twhile (listTail.next != null) {\n\t\t\tlistTail = listTail.next;\n\t\t\tlistLength++;\n\t\t}\n\n\t\tint offset = Math.Abs(k) % listLength;\n\t\tif (offset == 0) return head;\n\t\tint newTailPosition = k > 0 ? listLength - offset : offset;\n\t\tLinkedList newTail = head;\n\t\tfor (int i = 1; i < newTailPosition; i++) {\n\t\t\tnewTail = newTail.next;\n\t\t}\n\n\t\tLinkedList newHead = newTail.next;\n\t\tnewTail.next = null;\n\t\tlistTail.next = head;\n\t\treturn newHead;\n\t}\n\n\tpublic class LinkedList {\n\t\tpublic int value;\n\t\tpublic LinkedList next;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.value = value;\n\t\t\tnext = null;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\nfunc ShiftLinkedList(head *LinkedList, k int) *LinkedList {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 0\n\toutput := GetNthFib(1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(3)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc newLinkedList(n int) *LinkedList { return &LinkedList{Value: n} }\n\nfunc linkedListToArray(head *LinkedList) []int {\n\tarray := []int{}\n\tcurrent := head\n\tfor current != nil {\n\t\tarray = append(array, current.Value)\n\t\tcurrent = current.Next\n\t}\n\treturn array\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\thead := newLinkedList(0)\n\thead.Next = newLinkedList(1)\n\thead.Next.Next = newLinkedList(2)\n\thead.Next.Next.Next = newLinkedList(3)\n\thead.Next.Next.Next.Next = newLinkedList(4)\n\thead.Next.Next.Next.Next.Next = newLinkedList(5)\n\tresult := ShiftLinkedList(head, 2)\n\tarray := linkedListToArray(result)\n\n\texpected := []int{4, 5, 0, 1, 2, 3}\n\trequire.Equal(t, expected, array)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\n// O(n) time | O(1) space - where n is the number of nodes in the Linked List\nfunc ShiftLinkedList(head *LinkedList, k int) *LinkedList {\n\tlistLength := 1\n\tlistTail := head\n\tfor listTail.Next != nil {\n\t\tlistTail = listTail.Next\n\t\tlistLength += 1\n\t}\n\n\toffset := abs(k) % listLength\n\tif offset == 0 {\n\t\treturn head\n\t}\n\n\tnewTailPosition := listLength - offset\n\tif k <= 0 {\n\t\tnewTailPosition = offset\n\t}\n\n\tnewTail := head\n\tfor i := 1; i < newTailPosition; i++ {\n\t\tnewTail = newTail.Next\n\t}\n\n\tnewHead := newTail.Next\n\tnewTail.Next = nil\n\tlistTail.Next = head\n\treturn newHead\n}\n\nfunc abs(k int) int {\n\tif k > 0 {\n\t\treturn k\n\t}\n\treturn -k\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static LinkedList shiftLinkedList(LinkedList head, int k) {\n    // Write your code here.\n    return null;\n  }\n\n  static class LinkedList {\n    public int value;\n    public LinkedList next;\n\n    public LinkedList(int value) {\n      this.value = value;\n      next = null;\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input = new int[] {};\n    var expected = true;\n    var actual = Program.isMonotonic(input);\n    Utils.assertEquals(expected, actual);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n    public List<Integer> linkedListToArray(Program.LinkedList head) {\n        var array = new ArrayList<Integer>();\n        var current = head;\n        while (current != null) {\n            array.add(current.value);\n            current = current.next;\n        }\n        return array;\n    }\n\n\t@Test\n\tpublic void TestCase1() {\n        var head = new Program.LinkedList(0);\n        head.next = new Program.LinkedList(1);\n        head.next.next = new Program.LinkedList(2);\n        head.next.next.next = new Program.LinkedList(3);\n        head.next.next.next.next = new Program.LinkedList(4);\n        head.next.next.next.next.next = new Program.LinkedList(5);\n        var result = Program.shiftLinkedList(head, 2);\n        var array = this.linkedListToArray(result);\n\n        var expected = Arrays.asList(new Integer[]{4, 5, 0, 1, 2, 3});\n        Utils.assertTrue(expected.equals(array));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space - where n is the number of nodes in the Linked List\n  public static LinkedList shiftLinkedList(LinkedList head, int k) {\n    int listLength = 1;\n    LinkedList listTail = head;\n    while (listTail.next != null) {\n      listTail = listTail.next;\n      listLength++;\n    }\n\n    int offset = Math.abs(k) % listLength;\n    if (offset == 0) return head;\n    int newTailPosition = k > 0 ? listLength - offset : offset;\n    LinkedList newTail = head;\n    for (int i = 1; i < newTailPosition; i++) {\n      newTail = newTail.next;\n    }\n\n    LinkedList newHead = newTail.next;\n    newTail.next = null;\n    listTail.next = head;\n    return newHead;\n  }\n\n  static class LinkedList {\n    public int value;\n    public LinkedList next;\n\n    public LinkedList(int value) {\n      this.value = value;\n      next = null;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function shiftLinkedList(head, k) {\n  // Write your code here.\n}\n\n// This is the class of the input linked list.\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// Do not edit the line below.\nexports.shiftLinkedList = shiftLinkedList;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.getNthFib(1)).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.getNthFib(2)).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.getNthFib(3)).to.deep.equal(1);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nfunction linkedListToArray(head) {\n  const array = [];\n  let current = head;\n  while (current) {\n    array.push(current.value);\n    current = current.next;\n  }\n  return array;\n}\n\nit('Test Case #1', function () {\n  const head = new LinkedList(0);\n  head.next = new LinkedList(1);\n  head.next.next = new LinkedList(2);\n  head.next.next.next = new LinkedList(3);\n  head.next.next.next.next = new LinkedList(4);\n  head.next.next.next.next.next = new LinkedList(5);\n  const result = program.shiftLinkedList(head, 2);\n  const array = linkedListToArray(result);\n\n  var expected = [4, 5, 0, 1, 2, 3];\n  chai.expect(array).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the number of nodes in the Linked List\nfunction shiftLinkedList(head, k) {\n  let listLength = 1;\n  let listTail = head;\n  while (listTail.next !== null) {\n    listTail = listTail.next;\n    listLength++;\n  }\n\n  const offset = Math.abs(k) % listLength;\n  if (offset === 0) return head;\n\n  const newTailPosition = k > 0 ? listLength - offset : offset;\n  let newTail = head;\n  for (let i = 1; i < newTailPosition; i++) {\n    newTail = newTail.next;\n  }\n\n  const newHead = newTail.next;\n  newTail.next = null;\n  listTail.next = head;\n  return newHead;\n}\n\n// This is the class of the input linked list.\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nexports.shiftLinkedList = shiftLinkedList;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def shiftLinkedList(head, k):\n    # Write your code here.\n    pass\n\n\n# This is the class of the input linked list.\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.getNthFib(1), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.getNthFib(2), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.getNthFib(3), 1)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\ndef linkedListToArray(head):\n    array = []\n    current = head\n    while current is not None:\n        array.append(current.value)\n        current = current.next\n    return array\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        head = program.LinkedList(0)\n        head.next = program.LinkedList(1)\n        head.next.next = program.LinkedList(2)\n        head.next.next.next = program.LinkedList(3)\n        head.next.next.next.next = program.LinkedList(4)\n        head.next.next.next.next.next = program.LinkedList(5)\n        result = program.shiftLinkedList(head, 2)\n        array = linkedListToArray(result)\n\n        expected = [4, 5, 0, 1, 2, 3]\n        self.assertEqual(expected, array)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space - where n is the number of nodes in the Linked List\ndef shiftLinkedList(head, k):\n    listLength = 1\n    listTail = head\n    while listTail.next is not None:\n        listTail = listTail.next\n        listLength += 1\n\n    offset = abs(k) % listLength\n    if offset == 0:\n        return head\n\n    newTailPosition = listLength - offset if k > 0 else offset\n    newTail = head\n    for i in range(1, newTailPosition):\n        newTail = newTail.next\n\n    newHead = newTail.next\n    newTail.next = None\n    listTail.next = head\n    return newHead\n\n\n# This is the class of the input linked list.\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n      next = nil\n    }\n  }\n\n  static func shiftLinkedList(_ head: LinkedList, _ k: Int) -> LinkedList? {\n    // Write your code here.\n    return nil\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assert(getNthFib(n: 1) == 0)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assert(getNthFib(n: 2) == 1)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assert(getNthFib(n: 3) == 1)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nfunc linkedListToArray(_ head: Program.LinkedList?) -> [Int] {\n  var array = [Int]()\n  var current = head\n  while let c = current {\n    array.append(c.value)\n    current = c.next\n  }\n  return array\n}\n\nclass ProgramTest: TestSuite {\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let head = Program.LinkedList(value: 0)\n      head.next = Program.LinkedList(value: 1)\n      head.next!.next = Program.LinkedList(value: 2)\n      head.next!.next!.next = Program.LinkedList(value: 3)\n      head.next!.next!.next!.next = Program.LinkedList(value: 4)\n      head.next!.next!.next!.next!.next = Program.LinkedList(value: 5)\n      let result = Program.shiftLinkedList(head, 2)\n      let array = linkedListToArray(result)\n\n      let expected = [4, 5, 0, 1, 2, 3]\n      try assertEqual(expected, array)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n      next = nil\n    }\n  }\n\n  // O(n) time | O(1) space - where n is the number of nodes in the Linked List\n  static func shiftLinkedList(_ head: LinkedList, _ k: Int) -> LinkedList? {\n    var listLength = 1\n    var listTail = head\n\n    while let next = listTail.next {\n      listTail = next\n      listLength += 1\n    }\n\n    var offset = abs(k) % listLength\n    if offset == 0 {\n      return head\n    }\n\n    var newTailPosition = listLength - offset\n    if k <= 0 {\n      newTailPosition = offset\n    }\n\n    var newTail: LinkedList = head\n    for i in 1 ..< newTailPosition {\n      newTail = newTail.next!\n    }\n\n    var newHead = newTail.next\n    newTail.next = nil\n    listTail.next = head\n    return newHead\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function shiftLinkedList(head: LinkedList, k: number) {\n  // Write your code here.\n}\n\n// This is the class of the input linked list.\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nfunction linkedListToArray(head: LinkedList | null) {\n  const array: number[] = [];\n  let current: LinkedList | null = head;\n  while (current) {\n    array.push(current.value);\n    current = current.next;\n  }\n  return array;\n}\n\nit('Test Case #1', function () {\n  const head = new LinkedList(0);\n  head.next = new LinkedList(1);\n  head.next.next = new LinkedList(2);\n  head.next.next.next = new LinkedList(3);\n  head.next.next.next.next = new LinkedList(4);\n  head.next.next.next.next.next = new LinkedList(5);\n  const result = program.shiftLinkedList(head, 2);\n  const array = linkedListToArray(result);\n\n  var expected = [4, 5, 0, 1, 2, 3];\n  chai.expect(array).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the number of nodes in the Linked List\nexport function shiftLinkedList(head: LinkedList, k: number) {\n  let listLength = 1;\n  let listTail: LinkedList = head;\n  while (listTail.next !== null) {\n    listTail = listTail.next;\n    listLength++;\n  }\n\n  const offset = Math.abs(k) % listLength;\n  if (offset === 0) return head;\n\n  const newTailPosition = k > 0 ? listLength - offset : offset;\n  let newTail: LinkedList | null = head;\n  for (let i = 1; i < newTailPosition; i++) {\n    newTail = newTail!.next;\n  }\n\n  const newHead = newTail!.next;\n  newTail!.next = null;\n  listTail.next = head;\n  return newHead;\n}\n\n// This is the class of the input linked list.\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "k": 2,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 0,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 1,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 3,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 4,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 5,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 6,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 8,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 14,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 18,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -1,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -2,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -3,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -4,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -5,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -6,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -8,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -14,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": -18,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "k": 2,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "4",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "5",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "3",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "2",
+            "value": 5
+          }
+        ]
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "head": "4",
+        "nodes": [
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": null,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      },
+      {
+        "head": "5",
+        "nodes": [
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": null,
+            "value": 4
+          }
+        ]
+      },
+      {
+        "head": "3",
+        "nodes": [
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": null,
+            "value": 2
+          }
+        ]
+      },
+      {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": null,
+            "value": 1
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      },
+      {
+        "head": "4",
+        "nodes": [
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": null,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "head": "4",
+        "nodes": [
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": null,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": null,
+            "value": 1
+          }
+        ]
+      },
+      {
+        "head": "3",
+        "nodes": [
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": null,
+            "value": 2
+          }
+        ]
+      },
+      {
+        "head": "4",
+        "nodes": [
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": null,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "head": "5",
+        "nodes": [
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": null,
+            "value": 4
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      },
+      {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": null,
+            "value": 1
+          }
+        ]
+      },
+      {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "0",
+            "value": 5
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": null,
+            "value": 1
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      },
+      {
+        "head": "5",
+        "nodes": [
+          {
+            "id": "5",
+            "next": "2",
+            "value": 5
+          },
+          {
+            "id": "2",
+            "next": "0",
+            "value": 2
+          },
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "4",
+            "value": 1
+          },
+          {
+            "id": "4",
+            "next": "3",
+            "value": 4
+          },
+          {
+            "id": "3",
+            "next": null,
+            "value": 3
+          }
+        ]
+      }
+    ]
+  ]
+}

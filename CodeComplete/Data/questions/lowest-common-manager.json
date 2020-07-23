@@ -1,0 +1,2630 @@
+{
+  "Summary": {
+    "Name": "Lowest Common Manager",
+    "Category": "Recursion",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-05-04T00:00:00Z",
+      "number": 613,
+      "timeOne": 0,
+      "timeTwo": 1032,
+      "url": "https://player.vimeo.com/video/333642903"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Given a random subtree in the organizational chart, the manager at the root of that subtree is common to any two reports in the subtree.\nKnowing Hint #1, the lowest common manager to two reports in an organizational chart is the root of the lowest subtree containing those two reports. Find that lowest subtree to find the lowest common manager.\nTo find the lowest subtree containing both of the input reports, try recursively traversing the organizational chart and keeping track of the number of those reports contained in each subtree as well as the lowest common manager in each subtree. Some subtrees might contain neither of the two reports, some might contain one of them, and others might contain both; the first to contain both should return the lowest common manager for all of the subtrees above it that contain it, including the entire organizational chart.\n",
+  "SpaceTime": "O(n) time | O(d) space - where n is the number of people in the org and d is the depth (height) of the org chart",
+  "PromptHTML": "<p>\n  You're given three inputs, all of which are instances of an\n  <span>OrgChart</span> class that have a <span>directReports</span> property\n  pointing to their direct reports. The first input is the top manager in an\n  organizational chart (i.e., the only instance that isn't anybody else's direct\n  report), and the other two inputs are reports in the organizational chart.\n</p>\n<p>\n  Write a function that returns the lowest common manager to the two reports.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptComment\">// From the organizational chart below.</span>\n<span class=\"CodeEditor-promptParameter\">topManager</span> = Node A\n<span class=\"CodeEditor-promptParameter\">reportOne</span> = Node E\n<span class=\"CodeEditor-promptParameter\">reportTwo</span> = Node I\n          A\n       /     \\\n      B       C\n    /   \\   /   \\\n   D     E F     G\n /   \\\nH     I\n</pre>\n<h3>Sample Output</h3>\n<pre>\nNode B\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "topManager",
+      "Example": "A",
+      "Schema": {
+        "type": "string"
+      }
+    },
+    {
+      "Name": "reportOne",
+      "Example": "E",
+      "Schema": {
+        "type": "string"
+      }
+    },
+    {
+      "Name": "reportTwo",
+      "Example": "I",
+      "Schema": {
+        "type": "string"
+      }
+    },
+    {
+      "Name": "orgChart",
+      "Example": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "D",
+              "E"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "F",
+              "G"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "H",
+              "I"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          }
+        ]
+      },
+      "Schema": {
+        "description": "An <span>OrgChart</span> is represented by a list of <span>nodes</span>. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' lists of <span>directReports</span> and by the\n<span>topManager</span>, the <span>reportOne</span>, and the <span>reportTwo</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "directReports": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "directReports"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nclass OrgChart {\npublic:\n  char name;\n  vector<OrgChart *> directReports;\n\n  OrgChart(char name) {\n    this->name = name;\n    this->directReports = {};\n  }\n\n  void addDirectReports(vector<OrgChart *> directReports);\n};\n\nOrgChart *getLowestCommonManager(OrgChart *topManager, OrgChart *reportOne,\n                                 OrgChart *reportTwo) {\n  // Write your code here.\n  return NULL;\n}\n",
+      "StartingTest": "#include <unordered_map>\n\nvoid OrgChart::addDirectReports(vector<OrgChart *> directReports) {\n  for (OrgChart *directReport : directReports) {\n    this->directReports.push_back(directReport);\n  }\n}\n\nunordered_map<char, OrgChart *> getOrgcharts() {\n  unordered_map<char, OrgChart *> orgCharts;\n  string alphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\n  for (char a : alphabet) {\n    orgCharts.insert({a, new OrgChart(a)});\n  }\n\n  orgCharts.at('A')->addDirectReports({\n      orgCharts.at('B'),\n      orgCharts.at('C'),\n      orgCharts.at('D'),\n      orgCharts.at('E'),\n      orgCharts.at('F'),\n  });\n  orgCharts.at('B')->addDirectReports({\n      orgCharts.at('G'),\n      orgCharts.at('H'),\n      orgCharts.at('I'),\n  });\n  orgCharts.at('C')->addDirectReports({\n      orgCharts.at('J'),\n  });\n  orgCharts.at('D')->addDirectReports({\n      orgCharts.at('K'),\n      orgCharts.at('L'),\n  });\n  orgCharts.at('F')->addDirectReports({\n      orgCharts.at('M'),\n      orgCharts.at('N'),\n  });\n  orgCharts.at('H')->addDirectReports({\n      orgCharts.at('O'),\n      orgCharts.at('P'),\n      orgCharts.at('Q'),\n      orgCharts.at('R'),\n  });\n  orgCharts.at('K')->addDirectReports({\n      orgCharts.at('S'),\n  });\n  orgCharts.at('P')->addDirectReports({\n      orgCharts.at('T'),\n      orgCharts.at('U'),\n  });\n  orgCharts.at('R')->addDirectReports({\n      orgCharts.at('V'),\n  });\n  orgCharts.at('V')->addDirectReports({\n      orgCharts.at('W'),\n      orgCharts.at('X'),\n      orgCharts.at('Y'),\n  });\n  orgCharts.at('X')->addDirectReports({\n      orgCharts.at('Z'),\n  });\n  return orgCharts;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('A'), orgCharts.at('B'));\n      assert(lcm == orgCharts.at('A'));\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('B'), orgCharts.at('F'));\n      assert(lcm == orgCharts.at('A'));\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('G'), orgCharts.at('M'));\n      assert(lcm == orgCharts.at('A'));\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('U'), orgCharts.at('S'));\n      assert(lcm == orgCharts.at('A'));\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('Z'), orgCharts.at('M'));\n      assert(lcm == orgCharts.at('A'));\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('O'), orgCharts.at('I'));\n      assert(lcm == orgCharts.at('B'));\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('T'), orgCharts.at('Z'));\n      assert(lcm == orgCharts.at('H'));\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('T'), orgCharts.at('V'));\n      assert(lcm == orgCharts.at('H'));\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('T'), orgCharts.at('H'));\n      assert(lcm == orgCharts.at('H'));\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('W'), orgCharts.at('V'));\n      assert(lcm == orgCharts.at('V'));\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('Z'), orgCharts.at('B'));\n      assert(lcm == orgCharts.at('B'));\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('Q'), orgCharts.at('W'));\n      assert(lcm == orgCharts.at('H'));\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      auto orgCharts = getOrgcharts();\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('A'), orgCharts.at('Z'));\n      assert(lcm == orgCharts.at('A'));\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <unordered_map>\n\nvoid OrgChart::addDirectReports(vector<OrgChart *> directReports) {\n  for (OrgChart *directReport : directReports) {\n    this->directReports.push_back(directReport);\n  }\n}\n\nunordered_map<char, OrgChart *> getOrgcharts() {\n  unordered_map<char, OrgChart *> orgCharts;\n  string alphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\n  for (char a : alphabet) {\n    orgCharts.insert({a, new OrgChart(a)});\n  }\n  orgCharts.at('X')->addDirectReports({\n      orgCharts.at('Z'),\n  });\n  return orgCharts;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      auto orgCharts = getOrgcharts();\n      orgCharts.at('A')->addDirectReports({orgCharts.at('B'), orgCharts.at('C')});\n      orgCharts.at('B')->addDirectReports({orgCharts.at('D'), orgCharts.at('E')});\n      orgCharts.at('C')->addDirectReports({orgCharts.at('F'), orgCharts.at('G')});\n      orgCharts.at('D')->addDirectReports({orgCharts.at('H'), orgCharts.at('I')});\n\n      OrgChart *lcm = getLowestCommonManager(\n          orgCharts.at('A'), orgCharts.at('E'), orgCharts.at('I'));\n      assert(lcm == orgCharts.at('B'));\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass OrgChart {\npublic:\n  char name;\n  vector<OrgChart *> directReports;\n\n  OrgChart(char name) {\n    this->name = name;\n    this->directReports = {};\n  }\n\n  void addDirectReports(vector<OrgChart *> directReports);\n};\n\nstruct OrgInfo {\n  OrgChart *lowestCommonManager;\n  int numImportantReports;\n};\n\nOrgInfo getOrgInfo(OrgChart *manager, OrgChart *reportOne, OrgChart *reportTwo);\n\n// O(n) time | O(d) space - where n is the number of people\n// in the org and d is the depth (height) of the org chart\nOrgChart *getLowestCommonManager(OrgChart *topManager, OrgChart *reportOne,\n                                 OrgChart *reportTwo) {\n  return getOrgInfo(topManager, reportOne, reportTwo).lowestCommonManager;\n}\n\nOrgInfo getOrgInfo(OrgChart *manager, OrgChart *reportOne,\n                   OrgChart *reportTwo) {\n  int numImportantReports = 0;\n  for (OrgChart *directReport : manager->directReports) {\n    OrgInfo orgInfo = getOrgInfo(directReport, reportOne, reportTwo);\n    if (orgInfo.lowestCommonManager != NULL)\n      return orgInfo;\n    numImportantReports += orgInfo.numImportantReports;\n  }\n  if (manager == reportOne || manager == reportTwo)\n    numImportantReports++;\n  OrgChart *lowestCommonManager = numImportantReports == 2 ? manager : NULL;\n  OrgInfo newOrgInfo = {lowestCommonManager, numImportantReports};\n  return newOrgInfo;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\npublic class Program {\n\tpublic static OrgChart GetLowestCommonManager(OrgChart topManager, OrgChart reportOne,\n\t  OrgChart reportTwo) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic class OrgChart {\n\t\tpublic char name;\n\t\tpublic List<OrgChart> directReports;\n\n\t\tpublic OrgChart(char name) {\n\t\t\tthis.name = name;\n\t\t\tthis.directReports = new List<OrgChart>();\n\t\t}\n\n\t\t// This method is for testing only.\n\t\tpublic void addDirectReports(OrgChart[] directReports) {\n\t\t\tforeach (OrgChart directReport in directReports) {\n\t\t\t\tthis.directReports.Add(directReport);\n\t\t\t}\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\tstatic Dictionary<char, Program.OrgChart> orgCharts;\n\tstatic string alphabet;\n\n\tstatic ProgramTest() {\n\t\torgCharts = new Dictionary<char, Program.OrgChart>();\n\t\talphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\n\t\tforeach (char a in alphabet) {\n\t\t\torgCharts.Add(a, new Program.OrgChart(a));\n\t\t}\n\n\t\torgCharts['A'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['B'],\n\t\t\torgCharts['C'],\n\t\t\torgCharts['D'],\n\t\t\torgCharts['E'],\n\t\t\torgCharts['F']\n\t\t});\n\t\torgCharts['B'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['G'],\n\t\t\torgCharts['H'],\n\t\t\torgCharts['I']\n\t\t});\n\t\torgCharts['C'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['J']\n\t\t});\n\t\torgCharts['D'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['K'],\n\t\t\torgCharts['L']\n\t\t});\n\t\torgCharts['F'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['M'],\n\t\t\torgCharts['N']\n\t\t});\n\t\torgCharts['H'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['O'],\n\t\t\torgCharts['P'],\n\t\t\torgCharts['Q'],\n\t\t\torgCharts['R']\n\t\t});\n\t\torgCharts['K'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['S']\n\t\t});\n\t\torgCharts['P'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['T'],\n\t\t\torgCharts['U']\n\t\t});\n\t\torgCharts['R'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['V']\n\t\t});\n\t\torgCharts['V'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['W'],\n\t\t\torgCharts['X'],\n\t\t\torgCharts['Y']\n\t\t});\n\t\torgCharts['X'].addDirectReports(new Program.OrgChart[] {\n\t\t\torgCharts['Z']\n\t\t});\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['A'],\n\t\t    orgCharts['B']);\n\t\tUtils.AssertTrue(lcm == orgCharts['A']);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['B'],\n\t\t    orgCharts['F']);\n\t\tUtils.AssertTrue(lcm == orgCharts['A']);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['G'],\n\t\t    orgCharts['M']);\n\t\tUtils.AssertTrue(lcm == orgCharts['A']);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['U'],\n\t\t    orgCharts['S']);\n\t\tUtils.AssertTrue(lcm == orgCharts['A']);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['Z'],\n\t\t    orgCharts['M']);\n\t\tUtils.AssertTrue(lcm == orgCharts['A']);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['O'],\n\t\t    orgCharts['I']);\n\t\tUtils.AssertTrue(lcm == orgCharts['B']);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['T'],\n\t\t    orgCharts['Z']);\n\t\tUtils.AssertTrue(lcm == orgCharts['H']);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['T'],\n\t\t    orgCharts['V']);\n\t\tUtils.AssertTrue(lcm == orgCharts['H']);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['T'],\n\t\t    orgCharts['H']);\n\t\tUtils.AssertTrue(lcm == orgCharts['H']);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['W'],\n\t\t    orgCharts['V']);\n\t\tUtils.AssertTrue(lcm == orgCharts['V']);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['Z'],\n\t\t    orgCharts['B']);\n\t\tUtils.AssertTrue(lcm == orgCharts['B']);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['Q'],\n\t\t    orgCharts['W']);\n\t\tUtils.AssertTrue(lcm == orgCharts['H']);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['A'],\n\t\t    orgCharts['Z']);\n\t\tUtils.AssertTrue(lcm == orgCharts['A']);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tpublic Dictionary<char, Program.OrgChart> getOrgCharts() {\n\t\tvar orgCharts = new Dictionary<char, Program.OrgChart>();\n\t\tvar alphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\n\t\tforeach (char a in alphabet) {\n\t\t\torgCharts.Add(a, new Program.OrgChart(a));\n\t\t}\n\t\treturn orgCharts;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar orgCharts = getOrgCharts();\n\t\torgCharts['A'].addDirectReports(new Program.OrgChart[] {orgCharts['B'],\n\t\t                                                        orgCharts['C']});\n\t\torgCharts['B'].addDirectReports(new Program.OrgChart[] {orgCharts['D'],\n\t\t                                                        orgCharts['E']});\n\t\torgCharts['C'].addDirectReports(new Program.OrgChart[] {orgCharts['F'],\n\t\t                                                        orgCharts['G']});\n\t\torgCharts['D'].addDirectReports(new Program.OrgChart[] {orgCharts['H'],\n\t\t                                                        orgCharts['I']});\n\t\tProgram.OrgChart lcm = Program.GetLowestCommonManager(orgCharts['A'],\n\t\t    orgCharts['E'],\n\t\t    orgCharts['I']);\n\t\tUtils.AssertTrue(lcm == orgCharts['B']);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(d) space - where n is the number of people\n\t// in the org and d is the depth (height) of the org chart\n\tpublic static OrgChart GetLowestCommonManager(OrgChart topManager, OrgChart reportOne,\n\t  OrgChart reportTwo) {\n\t\treturn getOrgInfo(topManager, reportOne, reportTwo).lowestCommonManager;\n\t}\n\n\tpublic static OrgInfo getOrgInfo(OrgChart manager, OrgChart reportOne, OrgChart reportTwo) {\n\t\tint numImportantReports = 0;\n\t\tforeach (OrgChart directReport in manager.directReports) {\n\t\t\tOrgInfo orgInfo = getOrgInfo(directReport, reportOne, reportTwo);\n\t\t\tif (orgInfo.lowestCommonManager != null) return orgInfo;\n\t\t\tnumImportantReports += orgInfo.numImportantReports;\n\t\t}\n\t\tif (manager == reportOne || manager == reportTwo) numImportantReports++;\n\t\tOrgChart lowestCommonManager = numImportantReports == 2 ? manager : null;\n\t\tOrgInfo newOrgInfo = new OrgInfo(lowestCommonManager, numImportantReports);\n\t\treturn newOrgInfo;\n\t}\n\n\tpublic class OrgChart {\n\t\tpublic char name;\n\t\tpublic List<OrgChart> directReports;\n\n\t\tpublic OrgChart(char name) {\n\t\t\tthis.name = name;\n\t\t\tthis.directReports = new List<OrgChart>();\n\t\t}\n\n\t\t// This method is for testing only.\n\t\tpublic void addDirectReports(OrgChart[] directReports) {\n\t\t\tforeach (OrgChart directReport in directReports) {\n\t\t\t\tthis.directReports.Add(directReport);\n\t\t\t}\n\t\t}\n\t}\n\n\tpublic class OrgInfo {\n\t\tpublic OrgChart lowestCommonManager;\n\t\tpublic int numImportantReports;\n\n\t\tpublic OrgInfo(OrgChart lowestCommonManager, int numImportantReports) {\n\t\t\tthis.lowestCommonManager = lowestCommonManager;\n\t\t\tthis.numImportantReports = numImportantReports;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype OrgChart struct {\n\tName          string\n\tDirectReports []*OrgChart\n}\n\nfunc GetLowestCommonManager(org, reportOne, reportTwo *OrgChart) *OrgChart {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (chart *OrgChart) addDirectReports(reports ...*OrgChart) {\n\tchart.DirectReports = append(chart.DirectReports, reports...)\n}\n\nvar orgCharts = map[rune]*OrgChart{}\n\nfunc init() {\n\tfor _, r := range \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\" {\n\t\torgCharts[r] = &OrgChart{\n\t\t\tName:          string(r),\n\t\t\tDirectReports: []*OrgChart{},\n\t\t}\n\t}\n\n\torgCharts['A'].addDirectReports(\n\t\torgCharts['B'],\n\t\torgCharts['C'],\n\t\torgCharts['D'],\n\t\torgCharts['E'],\n\t\torgCharts['F'],\n\t)\n\torgCharts['B'].addDirectReports(\n\t\torgCharts['G'],\n\t\torgCharts['H'],\n\t\torgCharts['I'],\n\t)\n\torgCharts['C'].addDirectReports(\n\t\torgCharts['J'],\n\t)\n\torgCharts['D'].addDirectReports(\n\t\torgCharts['K'],\n\t\torgCharts['L'],\n\t)\n\torgCharts['F'].addDirectReports(\n\t\torgCharts['M'],\n\t\torgCharts['N'],\n\t)\n\torgCharts['H'].addDirectReports(\n\t\torgCharts['O'],\n\t\torgCharts['P'],\n\t\torgCharts['Q'],\n\t\torgCharts['R'],\n\t)\n\torgCharts['K'].addDirectReports(\n\t\torgCharts['S'],\n\t)\n\torgCharts['P'].addDirectReports(\n\t\torgCharts['T'],\n\t\torgCharts['U'],\n\t)\n\torgCharts['R'].addDirectReports(\n\t\torgCharts['V'],\n\t)\n\torgCharts['V'].addDirectReports(\n\t\torgCharts['W'],\n\t\torgCharts['X'],\n\t\torgCharts['Y'],\n\t)\n\torgCharts['X'].addDirectReports(\n\t\torgCharts['Z'],\n\t)\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['A'], orgCharts['B'])\n\trequire.Equal(t, lcm, orgCharts['A'], lcm)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['B'], orgCharts['F'])\n\trequire.Equal(t, orgCharts['A'], lcm)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['G'], orgCharts['M'])\n\trequire.Equal(t, orgCharts['A'], lcm)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['U'], orgCharts['S'])\n\trequire.Equal(t, orgCharts['A'], lcm)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['Z'], orgCharts['M'])\n\trequire.Equal(t, orgCharts['A'], lcm)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['O'], orgCharts['I'])\n\trequire.Equal(t, orgCharts['B'], lcm)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['T'], orgCharts['Z'])\n\trequire.Equal(t, orgCharts['H'], lcm)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['T'], orgCharts['V'])\n\trequire.Equal(t, orgCharts['H'], lcm)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['T'], orgCharts['H'])\n\trequire.Equal(t, orgCharts['H'], lcm)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['W'], orgCharts['V'])\n\trequire.Equal(t, orgCharts['V'], lcm)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['Z'], orgCharts['B'])\n\trequire.Equal(t, orgCharts['B'], lcm)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['Q'], orgCharts['W'])\n\trequire.Equal(t, orgCharts['H'], lcm)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['A'], orgCharts['Z'])\n\trequire.Equal(t, orgCharts['A'], lcm)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (chart *OrgChart) addDirectReports(reports ...*OrgChart) {\n\tchart.DirectReports = append(chart.DirectReports, reports...)\n}\n\nfunc getOrgCharts() map[rune]*OrgChart {\n\torgCharts := map[rune]*OrgChart{}\n\tfor _, r := range \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\" {\n\t\torgCharts[r] = &OrgChart{\n\t\t\tName:          string(r),\n\t\t\tDirectReports: []*OrgChart{},\n\t\t}\n\t}\n\treturn orgCharts\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\torgCharts := getOrgCharts()\n\torgCharts['A'].addDirectReports(orgCharts['B'], orgCharts['C'])\n\torgCharts['B'].addDirectReports(orgCharts['D'], orgCharts['E'])\n\torgCharts['C'].addDirectReports(orgCharts['F'], orgCharts['G'])\n\torgCharts['D'].addDirectReports(orgCharts['H'], orgCharts['I'])\n\tlcm := GetLowestCommonManager(orgCharts['A'], orgCharts['E'], orgCharts['I'])\n\trequire.Equal(t, lcm, orgCharts['B'], lcm)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype OrgChart struct {\n\tName          string\n\tDirectReports []*OrgChart\n}\n\n// O(n) time | O(d) space - where n is the number of people\n// in the org and d is the depth (height) of the org chart\nfunc GetLowestCommonManager(org, reportOne, reportTwo *OrgChart) *OrgChart {\n\treturn getOrgInfo(org, reportOne, reportTwo).lowestCommonManager\n}\n\ntype OrgInfo struct {\n\tlowestCommonManager *OrgChart\n\tnumImportantReports int\n}\n\nfunc getOrgInfo(manager, reportOne, reportTwo *OrgChart) OrgInfo {\n\tnumImportantReports := 0\n\tfor _, directReport := range manager.DirectReports {\n\t\torgInfo := getOrgInfo(directReport, reportOne, reportTwo)\n\t\tif orgInfo.lowestCommonManager != nil {\n\t\t\treturn orgInfo\n\t\t}\n\t\tnumImportantReports += orgInfo.numImportantReports\n\t}\n\tif manager == reportOne || manager == reportTwo {\n\t\tnumImportantReports++\n\t}\n\tvar lowestCommonManager *OrgChart\n\tif numImportantReports == 2 {\n\t\tlowestCommonManager = manager\n\t}\n\treturn OrgInfo{\n\t\tlowestCommonManager: lowestCommonManager,\n\t\tnumImportantReports: numImportantReports,\n\t}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static OrgChart getLowestCommonManager(\n      OrgChart topManager, OrgChart reportOne, OrgChart reportTwo) {\n    // Write your code here.\n    return null;\n  }\n\n  static class OrgChart {\n    public char name;\n    public List<OrgChart> directReports;\n\n    OrgChart(char name) {\n      this.name = name;\n      this.directReports = new ArrayList<OrgChart>();\n    }\n\n    // This method is for testing only.\n    public void addDirectReports(OrgChart[] directReports) {\n      for (OrgChart directReport : directReports) {\n        this.directReports.add(directReport);\n      }\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  static Map<Character, Program.OrgChart> orgCharts;\n  static String alphabet;\n\n  static {\n    orgCharts = new HashMap<Character, Program.OrgChart>();\n    alphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\n    for (char a : alphabet.toCharArray()) {\n      orgCharts.put(a, new Program.OrgChart(a));\n    }\n\n    orgCharts\n        .get('A')\n        .addDirectReports(\n            new Program.OrgChart[] {\n              orgCharts.get('B'),\n              orgCharts.get('C'),\n              orgCharts.get('D'),\n              orgCharts.get('E'),\n              orgCharts.get('F')\n            });\n    orgCharts\n        .get('B')\n        .addDirectReports(\n            new Program.OrgChart[] {orgCharts.get('G'), orgCharts.get('H'), orgCharts.get('I')});\n    orgCharts.get('C').addDirectReports(new Program.OrgChart[] {orgCharts.get('J')});\n    orgCharts\n        .get('D')\n        .addDirectReports(new Program.OrgChart[] {orgCharts.get('K'), orgCharts.get('L')});\n    orgCharts\n        .get('F')\n        .addDirectReports(new Program.OrgChart[] {orgCharts.get('M'), orgCharts.get('N')});\n    orgCharts\n        .get('H')\n        .addDirectReports(\n            new Program.OrgChart[] {\n              orgCharts.get('O'), orgCharts.get('P'), orgCharts.get('Q'), orgCharts.get('R')\n            });\n    orgCharts.get('K').addDirectReports(new Program.OrgChart[] {orgCharts.get('S')});\n    orgCharts\n        .get('P')\n        .addDirectReports(new Program.OrgChart[] {orgCharts.get('T'), orgCharts.get('U')});\n    orgCharts.get('R').addDirectReports(new Program.OrgChart[] {orgCharts.get('V')});\n    orgCharts\n        .get('V')\n        .addDirectReports(\n            new Program.OrgChart[] {orgCharts.get('W'), orgCharts.get('X'), orgCharts.get('Y')});\n    orgCharts.get('X').addDirectReports(new Program.OrgChart[] {orgCharts.get('Z')});\n  }\n\n  @Test\n  public void TestCase1() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('A'), orgCharts.get('B'));\n    Utils.assertTrue(lcm == orgCharts.get('A'));\n  }\n\n  @Test\n  public void TestCase2() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('B'), orgCharts.get('F'));\n    Utils.assertTrue(lcm == orgCharts.get('A'));\n  }\n\n  @Test\n  public void TestCase3() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('G'), orgCharts.get('M'));\n    Utils.assertTrue(lcm == orgCharts.get('A'));\n  }\n\n  @Test\n  public void TestCase4() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('U'), orgCharts.get('S'));\n    Utils.assertTrue(lcm == orgCharts.get('A'));\n  }\n\n  @Test\n  public void TestCase5() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('Z'), orgCharts.get('M'));\n    Utils.assertTrue(lcm == orgCharts.get('A'));\n  }\n\n  @Test\n  public void TestCase6() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('O'), orgCharts.get('I'));\n    Utils.assertTrue(lcm == orgCharts.get('B'));\n  }\n\n  @Test\n  public void TestCase7() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('T'), orgCharts.get('Z'));\n    Utils.assertTrue(lcm == orgCharts.get('H'));\n  }\n\n  @Test\n  public void TestCase8() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('T'), orgCharts.get('V'));\n    Utils.assertTrue(lcm == orgCharts.get('H'));\n  }\n\n  @Test\n  public void TestCase9() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('T'), orgCharts.get('H'));\n    Utils.assertTrue(lcm == orgCharts.get('H'));\n  }\n\n  @Test\n  public void TestCase10() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('W'), orgCharts.get('V'));\n    Utils.assertTrue(lcm == orgCharts.get('V'));\n  }\n\n  @Test\n  public void TestCase11() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('Z'), orgCharts.get('B'));\n    Utils.assertTrue(lcm == orgCharts.get('B'));\n  }\n\n  @Test\n  public void TestCase12() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('Q'), orgCharts.get('W'));\n    Utils.assertTrue(lcm == orgCharts.get('H'));\n  }\n\n  @Test\n  public void TestCase13() {\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('A'), orgCharts.get('Z'));\n    Utils.assertTrue(lcm == orgCharts.get('A'));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n\n  public HashMap<Character, Program.OrgChart> getOrgCharts() {\n    var orgCharts = new HashMap<Character, Program.OrgChart>();\n    var alphabet = \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";\n    for (char a : alphabet.toCharArray()) {\n      orgCharts.put(a, new Program.OrgChart(a));\n    }\n    orgCharts.get('X').addDirectReports(new Program.OrgChart[] {orgCharts.get('Z')});\n    return orgCharts;\n  }\n\n  @Test\n  public void TestCase1() {\n    var orgCharts = getOrgCharts();\n    orgCharts.get('A').addDirectReports(new Program.OrgChart[] {orgCharts.get('B'), orgCharts.get('C')});\n    orgCharts.get('B').addDirectReports(new Program.OrgChart[] {orgCharts.get('D'), orgCharts.get('E')});\n    orgCharts.get('C').addDirectReports(new Program.OrgChart[] {orgCharts.get('F'), orgCharts.get('G')});\n    orgCharts.get('D').addDirectReports(new Program.OrgChart[] {orgCharts.get('H'), orgCharts.get('I')});\n\n    Program.OrgChart lcm =\n        Program.getLowestCommonManager(orgCharts.get('A'), orgCharts.get('E'), orgCharts.get('I'));\n    Utils.assertTrue(lcm == orgCharts.get('B'));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(d) space - where n is the number of people\n  // in the org and d is the depth (height) of the org chart\n  public static OrgChart getLowestCommonManager(\n      OrgChart topManager, OrgChart reportOne, OrgChart reportTwo) {\n    return getOrgInfo(topManager, reportOne, reportTwo).lowestCommonManager;\n  }\n\n  public static OrgInfo getOrgInfo(OrgChart manager, OrgChart reportOne, OrgChart reportTwo) {\n    int numImportantReports = 0;\n    for (OrgChart directReport : manager.directReports) {\n      OrgInfo orgInfo = getOrgInfo(directReport, reportOne, reportTwo);\n      if (orgInfo.lowestCommonManager != null) return orgInfo;\n      numImportantReports += orgInfo.numImportantReports;\n    }\n    if (manager == reportOne || manager == reportTwo) numImportantReports++;\n    OrgChart lowestCommonManager = numImportantReports == 2 ? manager : null;\n    OrgInfo newOrgInfo = new OrgInfo(lowestCommonManager, numImportantReports);\n    return newOrgInfo;\n  }\n\n  static class OrgChart {\n    public char name;\n    public List<OrgChart> directReports;\n\n    OrgChart(char name) {\n      this.name = name;\n      this.directReports = new ArrayList<OrgChart>();\n    }\n\n    // This method is for testing only.\n    public void addDirectReports(OrgChart[] directReports) {\n      for (OrgChart directReport : directReports) {\n        this.directReports.add(directReport);\n      }\n    }\n  }\n\n  static class OrgInfo {\n    public OrgChart lowestCommonManager;\n    int numImportantReports;\n\n    OrgInfo(OrgChart lowestCommonManager, int numImportantReports) {\n      this.lowestCommonManager = lowestCommonManager;\n      this.numImportantReports = numImportantReports;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function getLowestCommonManager(topManager, reportOne, reportTwo) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.getLowestCommonManager = getLowestCommonManager;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass OrgChart {\n  constructor(name) {\n    this.name = name;\n    this.directReports = [];\n  }\n\n  addDirectReports(directReports) {\n    for (const directReport of directReports) {\n      this.directReports.push(directReport);\n    }\n  }\n}\n\nconst orgCharts = {};\nconst ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');\nfor (const letter of ALPHABET) {\n  orgCharts[letter] = new OrgChart(letter);\n}\norgCharts.A.addDirectReports([orgCharts.B, orgCharts.C, orgCharts.D, orgCharts.E, orgCharts.F]);\norgCharts.B.addDirectReports([orgCharts.G, orgCharts.H, orgCharts.I]);\norgCharts.C.addDirectReports([orgCharts.J]);\norgCharts.D.addDirectReports([orgCharts.K, orgCharts.L]);\norgCharts.F.addDirectReports([orgCharts.M, orgCharts.N]);\norgCharts.H.addDirectReports([orgCharts.O, orgCharts.P, orgCharts.Q, orgCharts.R]);\norgCharts.K.addDirectReports([orgCharts.S]);\norgCharts.P.addDirectReports([orgCharts.T, orgCharts.U]);\norgCharts.R.addDirectReports([orgCharts.V]);\norgCharts.V.addDirectReports([orgCharts.W, orgCharts.X, orgCharts.Y]);\norgCharts.X.addDirectReports([orgCharts.Z]);\n\nit('Test Case #1', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.A, orgCharts.B);\n  chai.expect(lcm).to.deep.equal(orgCharts.A);\n});\n\nit('Test Case #2', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.B, orgCharts.F);\n  chai.expect(lcm).to.deep.equal(orgCharts.A);\n});\n\nit('Test Case #3', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.G, orgCharts.M);\n  chai.expect(lcm).to.deep.equal(orgCharts.A);\n});\n\nit('Test Case #4', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.U, orgCharts.S);\n  chai.expect(lcm).to.deep.equal(orgCharts.A);\n});\n\nit('Test Case #5', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.Z, orgCharts.M);\n  chai.expect(lcm).to.deep.equal(orgCharts.A);\n});\n\nit('Test Case #6', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.O, orgCharts.I);\n  chai.expect(lcm).to.deep.equal(orgCharts.B);\n});\n\nit('Test Case #7', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.T, orgCharts.Z);\n  chai.expect(lcm).to.deep.equal(orgCharts.H);\n});\n\nit('Test Case #8', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.T, orgCharts.V);\n  chai.expect(lcm).to.deep.equal(orgCharts.H);\n});\n\nit('Test Case #9', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.T, orgCharts.H);\n  chai.expect(lcm).to.deep.equal(orgCharts.H);\n});\n\nit('Test Case #10', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.W, orgCharts.V);\n  chai.expect(lcm).to.deep.equal(orgCharts.V);\n});\n\nit('Test Case #11', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.Z, orgCharts.B);\n  chai.expect(lcm).to.deep.equal(orgCharts.B);\n});\n\nit('Test Case #12', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.Q, orgCharts.W);\n  chai.expect(lcm).to.deep.equal(orgCharts.H);\n});\n\nit('Test Case #13', function () {\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.A, orgCharts.Z);\n  chai.expect(lcm).to.deep.equal(orgCharts.A);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass OrgChart {\n  constructor(name) {\n    this.name = name;\n    this.directReports = [];\n  }\n\n  addDirectReports(directReports) {\n    for (const directReport of directReports) {\n      this.directReports.push(directReport);\n    }\n  }\n}\n\nfunction getOrgCharts() {\n  const orgCharts = {};\n  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');\n  for (const letter of ALPHABET) {\n    orgCharts[letter] = new OrgChart(letter);\n  }\n  return orgCharts;\n}\n\nit('Test Case #1', function () {\n  const orgCharts = getOrgCharts();\n  orgCharts['A'].addDirectReports([orgCharts['B'], orgCharts['C']]);\n  orgCharts['B'].addDirectReports([orgCharts['D'], orgCharts['E']]);\n  orgCharts['C'].addDirectReports([orgCharts['F'], orgCharts['G']]);\n  orgCharts['D'].addDirectReports([orgCharts['H'], orgCharts['I']]);\n\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.A, orgCharts.B);\n  chai.expect(lcm).to.deep.equal(orgCharts.A);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(d) space - where n is the number of people\n// in the org and d is the depth (height) of the org chart\nfunction getLowestCommonManager(topManager, reportOne, reportTwo) {\n  return getOrgInfo(topManager, reportOne, reportTwo).lowestCommonManager;\n}\n\nfunction getOrgInfo(manager, reportOne, reportTwo) {\n  let numImportantReports = 0;\n  for (const directReport of manager.directReports) {\n    const orgInfo = getOrgInfo(directReport, reportOne, reportTwo);\n    if (!!orgInfo.lowestCommonManager) return orgInfo;\n    numImportantReports += orgInfo.numImportantReports;\n  }\n  if (manager === reportOne || manager === reportTwo) numImportantReports++;\n  const lowestCommonManager = numImportantReports === 2 ? manager : null;\n  return {lowestCommonManager, numImportantReports};\n}\n\nexports.getLowestCommonManager = getLowestCommonManager;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def getLowestCommonManager(topManager, reportOne, reportTwo):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass OrgChart:\n    def __init__(self, name):\n        self.name = name\n        self.directReports = []\n\n    def addDirectReports(self, directReports):\n        for directReport in directReports:\n            self.directReports.append(directReport)\n\n    def copy(self):\n        newChart = OrgChart(self.name)\n        for directReport in self.directReports:\n            newChart.directReports.append(directReport.copy())\n        return newChart\n\n\nALPHABET = list(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\")\n\n\nclass TestProgram(unittest.TestCase):\n    def getOrgCharts(self):\n        orgCharts = {}\n        for letter in ALPHABET:\n            orgCharts[letter] = OrgChart(letter)\n        orgCharts[\"A\"].addDirectReports(\n            [orgCharts[\"B\"], orgCharts[\"C\"], orgCharts[\"D\"], orgCharts[\"E\"], orgCharts[\"F\"]]\n        )\n        orgCharts[\"B\"].addDirectReports([orgCharts[\"G\"], orgCharts[\"H\"], orgCharts[\"I\"]])\n        orgCharts[\"C\"].addDirectReports([orgCharts[\"J\"]])\n        orgCharts[\"D\"].addDirectReports([orgCharts[\"K\"], orgCharts[\"L\"]])\n        orgCharts[\"F\"].addDirectReports([orgCharts[\"M\"], orgCharts[\"N\"]])\n        orgCharts[\"H\"].addDirectReports([orgCharts[\"O\"], orgCharts[\"P\"], orgCharts[\"Q\"], orgCharts[\"R\"]])\n        orgCharts[\"K\"].addDirectReports([orgCharts[\"S\"]])\n        orgCharts[\"P\"].addDirectReports([orgCharts[\"T\"], orgCharts[\"U\"]])\n        orgCharts[\"R\"].addDirectReports([orgCharts[\"V\"]])\n        orgCharts[\"V\"].addDirectReports([orgCharts[\"W\"], orgCharts[\"X\"], orgCharts[\"Y\"]])\n        orgCharts[\"X\"].addDirectReports([orgCharts[\"Z\"]])\n        return orgCharts\n\n    def test_case_1(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"A\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"A\"], orgCharts[\"B\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_2(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"A\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"B\"], orgCharts[\"F\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_3(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"A\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"G\"], orgCharts[\"M\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_4(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"A\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"U\"], orgCharts[\"S\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_5(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"A\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"Z\"], orgCharts[\"M\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_6(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"B\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"O\"], orgCharts[\"I\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_7(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"H\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"T\"], orgCharts[\"Z\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_8(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"H\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"T\"], orgCharts[\"V\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_9(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"H\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"T\"], orgCharts[\"H\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_10(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"V\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"W\"], orgCharts[\"V\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_11(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"B\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"Z\"], orgCharts[\"B\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_12(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"H\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"Q\"], orgCharts[\"W\"])\n        self.assertEqual(lcm.name, expected.name)\n\n    def test_case_13(self):\n        orgCharts = self.getOrgCharts()\n        expected = orgCharts[\"A\"].copy()\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"A\"], orgCharts[\"Z\"])\n        self.assertEqual(lcm.name, expected.name)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass OrgChart:\n    def __init__(self, name):\n        self.name = name\n        self.directReports = []\n\n    def addDirectReports(self, directReports):\n        for directReport in directReports:\n            self.directReports.append(directReport)\n\n\nALPHABET = list(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\")\n\n\ndef getOrgCharts():\n    orgCharts = {}\n    for letter in ALPHABET:\n        orgCharts[letter] = OrgChart(letter)\n    return orgCharts\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        orgCharts = getOrgCharts()\n        orgCharts[\"A\"].addDirectReports([orgCharts[\"B\"], orgCharts[\"C\"]])\n        orgCharts[\"B\"].addDirectReports([orgCharts[\"D\"], orgCharts[\"E\"]])\n        orgCharts[\"C\"].addDirectReports([orgCharts[\"F\"], orgCharts[\"G\"]])\n        orgCharts[\"D\"].addDirectReports([orgCharts[\"H\"], orgCharts[\"I\"]])\n\n        lcm = program.getLowestCommonManager(orgCharts[\"A\"], orgCharts[\"E\"], orgCharts[\"I\"])\n        self.assertEqual(lcm.name, \"B\")\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(d) space - where n is the number of people\n# in the org and d is the depth (height) of the org chart\ndef getLowestCommonManager(topManager, reportOne, reportTwo):\n    return getOrgInfo(topManager, reportOne, reportTwo).lowestCommonManager\n\n\ndef getOrgInfo(manager, reportOne, reportTwo):\n    numImportantReports = 0\n    for directReport in manager.directReports:\n        orgInfo = getOrgInfo(directReport, reportOne, reportTwo)\n        if orgInfo.lowestCommonManager is not None:\n            return orgInfo\n        numImportantReports += orgInfo.numImportantReports\n    if manager == reportOne or manager == reportTwo:\n        numImportantReports += 1\n    lowestCommonManager = manager if numImportantReports == 2 else None\n    return OrgInfo(lowestCommonManager, numImportantReports)\n\n\nclass OrgInfo:\n    def __init__(self, lowestCommonManager, numImportantReports):\n        self.lowestCommonManager = lowestCommonManager\n        self.numImportantReports = numImportantReports\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is an input class. Do not edit.\n  class OrganizationalEntity {\n    let name: String\n    var directReports = [OrganizationalEntity]()\n\n    init(name: String) {\n      self.name = name\n    }\n  }\n\n  func getLowestCommonManager(_ topManager: OrganizationalEntity, _ reportOne: OrganizationalEntity, _ reportTwo: OrganizationalEntity) -> OrganizationalEntity? {\n    // Write your code here.\n    return nil\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  var organizationalChart = [Character: TestOrganizationalEntity]()\n\n  func buildOrg() {\n    var alphabet = Array(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\")\n\n    for letter in alphabet {\n      organizationalChart[letter] = TestOrganizationalEntity(name: String(letter))\n    }\n    organizationalChart[\"A\"]?.addDirectReports(directReports: [organizationalChart[\"B\"], organizationalChart[\"C\"], organizationalChart[\"D\"], organizationalChart[\"E\"], organizationalChart[\"F\"]])\n    organizationalChart[\"B\"]?.addDirectReports(directReports: [organizationalChart[\"G\"], organizationalChart[\"H\"], organizationalChart[\"I\"]])\n    organizationalChart[\"C\"]?.addDirectReports(directReports: [organizationalChart[\"J\"]])\n    organizationalChart[\"D\"]?.addDirectReports(directReports: [organizationalChart[\"K\"], organizationalChart[\"L\"]])\n    organizationalChart[\"F\"]?.addDirectReports(directReports: [organizationalChart[\"M\"], organizationalChart[\"N\"]])\n    organizationalChart[\"H\"]?.addDirectReports(directReports: [organizationalChart[\"O\"], organizationalChart[\"P\"], organizationalChart[\"Q\"], organizationalChart[\"R\"]])\n    organizationalChart[\"K\"]?.addDirectReports(directReports: [organizationalChart[\"S\"]])\n    organizationalChart[\"P\"]?.addDirectReports(directReports: [organizationalChart[\"T\"], organizationalChart[\"U\"]])\n    organizationalChart[\"R\"]?.addDirectReports(directReports: [organizationalChart[\"V\"]])\n    organizationalChart[\"V\"]?.addDirectReports(directReports: [organizationalChart[\"W\"], organizationalChart[\"X\"], organizationalChart[\"Y\"]])\n    organizationalChart[\"X\"]?.addDirectReports(directReports: [organizationalChart[\"Z\"]])\n  }\n\n  func test() {\n    let program = Program()\n    buildOrg()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let firstTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"A\"]!, organizationalChart[\"B\"]!)\n      try assert(firstTest === organizationalChart[\"A\"])\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let secondTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"B\"]!, organizationalChart[\"F\"]!)\n      try assert(secondTest === organizationalChart[\"A\"])\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let thirdTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"G\"]!, organizationalChart[\"M\"]!)\n      try assert(thirdTest === organizationalChart[\"A\"])\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let fourthTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"U\"]!, organizationalChart[\"S\"]!)\n      try assert(fourthTest === organizationalChart[\"A\"])\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let fifthTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"Z\"]!, organizationalChart[\"M\"]!)\n      try assert(fifthTest === organizationalChart[\"A\"])\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let sixthTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"O\"]!, organizationalChart[\"I\"]!)\n      try assert(sixthTest === organizationalChart[\"B\"])\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let seventhTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"T\"]!, organizationalChart[\"Z\"]!)\n      try assert(seventhTest === organizationalChart[\"H\"])\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let eightthTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"T\"]!, organizationalChart[\"V\"]!)\n      try assert(eightthTest === organizationalChart[\"H\"])\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let ninthTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"T\"]!, organizationalChart[\"H\"]!)\n      try assert(ninthTest === organizationalChart[\"H\"])\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let tenthTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"W\"]!, organizationalChart[\"V\"]!)\n      try assert(tenthTest === organizationalChart[\"V\"])\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let eleventhTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"Z\"]!, organizationalChart[\"B\"]!)\n      try assert(eleventhTest === organizationalChart[\"B\"])\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      let twelfthTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"Q\"]!, organizationalChart[\"W\"]!)\n      try assert(twelfthTest === organizationalChart[\"H\"])\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      let thirteenthTest = program.getLowestCommonManager(organizationalChart[\"A\"]!, organizationalChart[\"A\"]!, organizationalChart[\"Z\"]!)\n      try assert(thirteenthTest === organizationalChart[\"A\"])\n    }\n  }\n}\n\nclass TestOrganizationalEntity: Program.OrganizationalEntity {\n  func addDirectReports(directReports: [TestOrganizationalEntity?]) {\n    for directReport in directReports {\n      if let report = directReport {\n        self.directReports.append(report as Program.OrganizationalEntity)\n      }\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func getOrgChart() -> [Character: Program.OrganizationalEntity] {\n    var alphabet = Array(\"ABCDEFGHIJKLMNOPQRSTUVWXYZ\")\n\n    var orgChart = [Character: Program.OrganizationalEntity]()\n    for letter in alphabet {\n      orgChart[letter] = Program.OrganizationalEntity(name: String(letter))\n    }\n    return orgChart\n  }\n\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let orgCharts = getOrgChart()\n      orgCharts[\"A\"]?.addDirectReports([orgCharts[\"B\"], orgCharts[\"C\"]])\n      orgCharts[\"B\"]?.addDirectReports([orgCharts[\"D\"], orgCharts[\"E\"]])\n      orgCharts[\"C\"]?.addDirectReports([orgCharts[\"F\"], orgCharts[\"G\"]])\n      orgCharts[\"D\"]?.addDirectReports([orgCharts[\"H\"], orgCharts[\"I\"]])\n\n      let lcm = program.getLowestCommonManager(orgCharts[\"A\"]!, orgCharts[\"E\"]!, orgCharts[\"I\"]!)\n      try assert(lcm === orgCharts[\"B\"])\n    }\n  }\n}\n\nextension Program.OrganizationalEntity {\n  func addDirectReports(_ directReports: [Program.OrganizationalEntity?]) {\n    for directReport in directReports {\n      if let report = directReport {\n        self.directReports.append(report as Program.OrganizationalEntity)\n      }\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class OrganizationalEntity {\n    let name: String\n    var directReports = [OrganizationalEntity]()\n\n    init(name: String) {\n      self.name = name\n    }\n  }\n\n  // O(n) time | O(d) space\n  func getLowestCommonManager(_ topManager: OrganizationalEntity, _ reportOne: OrganizationalEntity, _ reportTwo: OrganizationalEntity) -> OrganizationalEntity? {\n    return getOrganizationalInfo(topManager, reportOne, reportTwo).0\n  }\n\n  func getOrganizationalInfo(_ manager: OrganizationalEntity, _ reportOne: OrganizationalEntity, _ reportTwo: OrganizationalEntity) -> (OrganizationalEntity?, Int) {\n    var numberOfImportantReports = 0\n\n    for directReport in manager.directReports {\n      let organizationalInfo = getOrganizationalInfo(directReport, reportOne, reportTwo)\n\n      if organizationalInfo.0 != nil {\n        return organizationalInfo\n      }\n\n      numberOfImportantReports += organizationalInfo.1\n    }\n\n    if manager === reportOne || manager === reportTwo {\n      numberOfImportantReports += 1\n    }\n\n    let lowestCommonManager = numberOfImportantReports == 2 ? manager : nil\n    return (lowestCommonManager, numberOfImportantReports)\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// This is an input class. Do not edit.\nclass OrgChart {\n  name: string;\n  directReports: OrgChart[];\n\n  constructor(name: string) {\n    this.name = name;\n    this.directReports = [];\n  }\n}\n\nexport function getLowestCommonManager(topManager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart): OrgChart {\n  // Write your code here.\n  return topManager;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass OrgChart {\n  name: string;\n  directReports: OrgChart[];\n\n  constructor(name: string) {\n    this.name = name;\n    this.directReports = [];\n  }\n\n  addDirectReports(directReports: OrgChart[]) {\n    for (const directReport of directReports) {\n      this.directReports.push(directReport);\n    }\n  }\n}\n\nfunction getOrgCharts() {\n  const orgCharts: {[key: string]: OrgChart} = {};\n  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');\n  for (const letter of ALPHABET) {\n    orgCharts[letter] = new OrgChart(letter);\n  }\n  return orgCharts;\n}\n\nit('Test Case #1', function () {\n  const orgCharts = getOrgCharts();\n  orgCharts['A'].addDirectReports([orgCharts['B'], orgCharts['C']]);\n  orgCharts['B'].addDirectReports([orgCharts['D'], orgCharts['E']]);\n  orgCharts['C'].addDirectReports([orgCharts['F'], orgCharts['G']]);\n  orgCharts['D'].addDirectReports([orgCharts['H'], orgCharts['I']]);\n\n  const lcm = program.getLowestCommonManager(orgCharts.A, orgCharts.A, orgCharts.B);\n  chai.expect(lcm).to.deep.equal(orgCharts.A);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass OrgChart {\n  name: string;\n  directReports: OrgChart[];\n\n  constructor(name: string) {\n    this.name = name;\n    this.directReports = [];\n  }\n}\n\ninterface OrgInfo {\n  lowestCommonManager: OrgChart | null;\n  numImportantReports: number;\n}\n\n// O(n) time | O(d) space - where n is the number of people\n// in the org and d is the depth (height) of the org chart\nexport function getLowestCommonManager(topManager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart) {\n  return getOrgInfo(topManager, reportOne, reportTwo).lowestCommonManager;\n}\n\nfunction getOrgInfo(manager: OrgChart, reportOne: OrgChart, reportTwo: OrgChart): OrgInfo {\n  let numImportantReports = 0;\n  for (const directReport of manager.directReports) {\n    const orgInfo = getOrgInfo(directReport, reportOne, reportTwo);\n    if (!!orgInfo.lowestCommonManager) return orgInfo;\n    numImportantReports += orgInfo.numImportantReports;\n  }\n  if (manager === reportOne || manager === reportTwo) numImportantReports++;\n  const lowestCommonManager = numImportantReports === 2 ? manager : null;\n  return {lowestCommonManager, numImportantReports};\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "D",
+              "E"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "F",
+              "G"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "H",
+              "I"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          }
+        ]
+      },
+      "reportOne": "E",
+      "reportTwo": "I",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "A",
+      "reportTwo": "B",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "B",
+      "reportTwo": "F",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "G",
+      "reportTwo": "M",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "U",
+      "reportTwo": "S",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "Z",
+      "reportTwo": "M",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "O",
+      "reportTwo": "I",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "T",
+      "reportTwo": "Z",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "T",
+      "reportTwo": "V",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "T",
+      "reportTwo": "H",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "W",
+      "reportTwo": "V",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "Z",
+      "reportTwo": "B",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "Q",
+      "reportTwo": "W",
+      "topManager": "A"
+    },
+    {
+      "orgChart": {
+        "nodes": [
+          {
+            "directReports": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "name": "A"
+          },
+          {
+            "directReports": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "name": "B"
+          },
+          {
+            "directReports": [
+              "J"
+            ],
+            "id": "C",
+            "name": "C"
+          },
+          {
+            "directReports": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "name": "D"
+          },
+          {
+            "directReports": [],
+            "id": "E",
+            "name": "E"
+          },
+          {
+            "directReports": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "name": "F"
+          },
+          {
+            "directReports": [],
+            "id": "G",
+            "name": "G"
+          },
+          {
+            "directReports": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "name": "H"
+          },
+          {
+            "directReports": [],
+            "id": "I",
+            "name": "I"
+          },
+          {
+            "directReports": [],
+            "id": "J",
+            "name": "J"
+          },
+          {
+            "directReports": [
+              "S"
+            ],
+            "id": "K",
+            "name": "K"
+          },
+          {
+            "directReports": [],
+            "id": "L",
+            "name": "L"
+          },
+          {
+            "directReports": [],
+            "id": "M",
+            "name": "M"
+          },
+          {
+            "directReports": [],
+            "id": "N",
+            "name": "N"
+          },
+          {
+            "directReports": [],
+            "id": "O",
+            "name": "O"
+          },
+          {
+            "directReports": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "name": "P"
+          },
+          {
+            "directReports": [],
+            "id": "Q",
+            "name": "Q"
+          },
+          {
+            "directReports": [
+              "V"
+            ],
+            "id": "R",
+            "name": "R"
+          },
+          {
+            "directReports": [],
+            "id": "S",
+            "name": "S"
+          },
+          {
+            "directReports": [],
+            "id": "T",
+            "name": "T"
+          },
+          {
+            "directReports": [],
+            "id": "U",
+            "name": "U"
+          },
+          {
+            "directReports": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "name": "V"
+          },
+          {
+            "directReports": [],
+            "id": "W",
+            "name": "W"
+          },
+          {
+            "directReports": [
+              "Z"
+            ],
+            "id": "X",
+            "name": "X"
+          },
+          {
+            "directReports": [],
+            "id": "Y",
+            "name": "Y"
+          },
+          {
+            "directReports": [],
+            "id": "Z",
+            "name": "Z"
+          }
+        ]
+      },
+      "reportOne": "A",
+      "reportTwo": "Z",
+      "topManager": "A"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "nodeId": "B"
+      },
+      {
+        "nodeId": "A"
+      },
+      {
+        "nodeId": "A"
+      },
+      {
+        "nodeId": "A"
+      },
+      {
+        "nodeId": "A"
+      },
+      {
+        "nodeId": "A"
+      },
+      {
+        "nodeId": "B"
+      },
+      {
+        "nodeId": "H"
+      },
+      {
+        "nodeId": "H"
+      },
+      {
+        "nodeId": "H"
+      },
+      {
+        "nodeId": "V"
+      },
+      {
+        "nodeId": "B"
+      },
+      {
+        "nodeId": "H"
+      },
+      {
+        "nodeId": "A"
+      }
+    ]
+  ]
+}

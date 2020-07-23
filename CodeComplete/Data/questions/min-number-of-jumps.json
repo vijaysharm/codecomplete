@@ -1,0 +1,359 @@
+{
+  "Summary": {
+    "Name": "Min Number Of Jumps",
+    "Category": "Dynamic Programming",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 657,
+      "timeOne": 0,
+      "timeTwo": 1556,
+      "url": "https://player.vimeo.com/video/224221528"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try building an array of the minimum number of jumps needed to go from index 0 to all indices. Start at index 0 and progressively build up the array, using previously calculated values to find next ones.\nBuilding the array mentioned in Hint #1 should be feasible using two for loops. In an effort to optimize your algorithm, realize that at any point in the array you know the farthest index that you can reach as well as the number of steps that you have left until you must \"consume\" a jump.\nAfter initializing your maximum reach as well as your current number of steps to the value stored at index 0, you can easily update your maximum reach as you traverse the input array by simply comparing it to the value stored at each index. You can also remove one step from your current number of steps at each index, since moving from one index to the next uses up one step. When your steps reach zero, find a way to calculate how many steps you actually have left using the maximum reach and the index that you're at.\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  You're given a non-empty array of positive integers where each integer represents the\n  maximum number of steps you can take forward in the array. For example, if the\n  element at index <span>1</span> is <span>3</span>, you can go from index\n  <span>1</span> to index <span>2</span>, <span>3</span>, or <span>4</span>.\n</p>\n<p>\n  Write a function that returns the minimum number of jumps needed to reach the\n  final index.\n</p>\n<p>\n  Note that jumping from index <span>i</span> to index <span>i + x</span> always\n  constitutes one jump, no matter how large <span>x</span> is.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n4 <span class=\"CodeEditor-promptComment\">// 3 --> (4 or 2) --> (2 or 3) --> 7 --> 3</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        3,
+        4,
+        2,
+        1,
+        2,
+        3,
+        7,
+        1,
+        1,
+        1,
+        3
+      ],
+      "Schema": {
+        "items": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint minNumberOfJumps(vector<int> array) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "vector<int> vector1{1};\nvector<int> vector2{1, 1};\nvector<int> vector3{3, 1};\nvector<int> vector4{1, 1, 1};\nvector<int> vector5{2, 1, 1};\nvector<int> vector6{2, 1, 2, 3, 1};\nvector<int> vector7{2, 1, 2, 3, 1, 1, 1};\nvector<int> vector8{2, 1, 2, 2, 1, 1, 1};\nvector<int> vector9{3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3};\nvector<int> vector10{3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 6, 2, 1, 1, 1, 1};\nvector<int> vector11{3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\nvector<int> vector12{3, 10, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\nvector<int> vector13{3, 12, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\nvector<int> vector14{3, 12, 2, 1, 2, 3, 15, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() { assert(minNumberOfJumps(vector1) == 0); });\n\n    RunTest(\"Test Case 2\", []() { assert(minNumberOfJumps(vector2) == 1); });\n\n    RunTest(\"Test Case 3\", []() { assert(minNumberOfJumps(vector3) == 1); });\n\n    RunTest(\"Test Case 4\", []() { assert(minNumberOfJumps(vector4) == 2); });\n\n    RunTest(\"Test Case 5\", []() { assert(minNumberOfJumps(vector5) == 1); });\n\n    RunTest(\"Test Case 6\", []() { assert(minNumberOfJumps(vector6) == 2); });\n\n    RunTest(\"Test Case 7\", []() { assert(minNumberOfJumps(vector7) == 3); });\n\n    RunTest(\"Test Case 8\", []() { assert(minNumberOfJumps(vector8) == 4); });\n\n    RunTest(\"Test Case 9\", []() { assert(minNumberOfJumps(vector9) == 4); });\n\n    RunTest(\"Test Case 10\", []() { assert(minNumberOfJumps(vector10) == 5); });\n\n    RunTest(\"Test Case 11\", []() { assert(minNumberOfJumps(vector11) == 7); });\n\n    RunTest(\"Test Case 12\", []() { assert(minNumberOfJumps(vector12) == 6); });\n\n    RunTest(\"Test Case 13\", []() { assert(minNumberOfJumps(vector13) == 5); });\n\n    RunTest(\"Test Case 14\", []() { assert(minNumberOfJumps(vector14) == 3); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input{3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3};\n      assert(minNumberOfJumps(input) == 4);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <climits>\nusing namespace std;\n\n// O(n^2) time | O(n) space\nint minNumberOfJumps(vector<int> array) {\n  vector<int> jumps(array.size(), INT_MAX);\n  jumps[0] = 0;\n  for (int i = 1; i < array.size(); i++) {\n    for (int j = 0; j < i; j++) {\n      if (array[j] >= i - j) {\n        jumps[i] = min(jumps[j] + 1, jumps[i]);\n      }\n    }\n  }\n  return jumps[jumps.size() - 1];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(n) time | O(1) space\nint minNumberOfJumps(vector<int> array) {\n  if (array.size() == 1) {\n    return 0;\n  }\n  int jumps = 0;\n  int maxReach = array[0];\n  int steps = array[0];\n  for (int i = 1; i < array.size() - 1; i++) {\n    maxReach = max(maxReach, i + array[i]);\n    steps--;\n    if (steps == 0) {\n      jumps++;\n      steps = maxReach - i;\n    }\n  }\n  return jumps + 1;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int MinNumberOfJumps(int[] array) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] input = {1,1 };\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] input = {3, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] input = {1, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] input = {2, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] input = {2, 1, 2, 3, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] input = {2, 1, 2, 3, 1, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] input = {2, 1, 2, 2, 1, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] input = {3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] input = {3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 6, 2, 1, 1, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 5);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[] input = {3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 7);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tint[] input = {3, 10, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tint[] input = {3, 12, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 5);\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tint[] input = {3, 12, 2, 1, 2, 3, 15, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 3);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3};\n\t\tUtils.AssertTrue(Program.MinNumberOfJumps(input) == 4);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\t// O(n^2) time | O(n) space\n\tpublic static int MinNumberOfJumps(int[] array) {\n\t\tint[] jumps = new int[array.Length];\n\t\tArray.Fill(jumps, Int32.MaxValue);\n\t\tjumps[0] = 0;\n\t\tfor (int i = 1; i < array.Length; i++) {\n\t\t\tfor (int j = 0; j < i; j++) {\n\t\t\t\tif (array[j] >= i -j) {\n\t\t\t\t\tjumps[i] = Math.Min(jumps[j] + 1, jumps[i]);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn jumps[jumps.Length - 1];\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static int MinNumberOfJumps(int[] array) {\n\t\tif (array.Length == 1) {\n\t\t\treturn 0;\n\t\t}\n\t\tint jumps = 0;\n\t\tint maxReach = array[0];\n\t\tint steps = array[0];\n\t\tfor (int i = 1; i < array.Length - 1; i++) {\n\t\t\tmaxReach = Math.Max(maxReach, i + array[i]);\n\t\t\tsteps--;\n\t\t\tif (steps == 0) {\n\t\t\t\tjumps++;\n\t\t\t\tsteps = maxReach - i;\n\t\t\t}\n\t\t}\n\t\treturn jumps + 1;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc MinNumberOfJumps(array []int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 0\n\toutput := MinNumberOfJumps([]int{1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := MinNumberOfJumps([]int{1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 1\n\toutput := MinNumberOfJumps([]int{3, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := 2\n\toutput := MinNumberOfJumps([]int{1, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := 1\n\toutput := MinNumberOfJumps([]int{2, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := 2\n\toutput := MinNumberOfJumps([]int{2, 1, 2, 3, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := 3\n\toutput := MinNumberOfJumps([]int{2, 1, 2, 3, 1, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := 4\n\toutput := MinNumberOfJumps([]int{2, 1, 2, 2, 1, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := 4\n\toutput := MinNumberOfJumps([]int{3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := 5\n\toutput := MinNumberOfJumps([]int{3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 6, 2, 1, 1, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := 7\n\toutput := MinNumberOfJumps([]int{3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\texpected := 6\n\toutput := MinNumberOfJumps([]int{3, 10, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\texpected := 5\n\toutput := MinNumberOfJumps([]int{3, 12, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\texpected := 3\n\toutput := MinNumberOfJumps([]int{3, 12, 2, 1, 2, 3, 15, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 4\n\toutput := MinNumberOfJumps([]int{3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3})\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n^2) time | O(n) space\nfunc MinNumberOfJumps(array []int) int {\n\tjumps := make([]int, len(array))\n\tfor i := range jumps {\n\t\tjumps[i] = -1\n\t}\n\tjumps[0] = 0\n\tfor i := 1; i < len(array); i++ {\n\t\tfor j := 0; j < i; j++ {\n\t\t\tif array[j] >= i-j && (jumps[i] == -1 || jumps[j]+1 < jumps[i]) {\n\t\t\t\tjumps[i] = jumps[j] + 1\n\t\t\t}\n\t\t}\n\t}\n\treturn jumps[len(array)-1]\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space\nfunc MinNumberOfJumps(array []int) int {\n\tif len(array) == 1 {\n\t\treturn 0\n\t}\n\tjumps := 0\n\tmaxReach := array[0]\n\tsteps := array[0]\n\tfor i := 1; i < len(array)-1; i++ {\n\t\tif i+array[i] > maxReach {\n\t\t\tmaxReach = i + array[i]\n\t\t}\n\t\tsteps -= 1\n\t\tif steps == 0 {\n\t\t\tjumps += 1\n\t\t\tsteps = maxReach - i\n\t\t}\n\t}\n\treturn jumps + 1\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int minNumberOfJumps(int[] array) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 0);\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] input = {1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 1);\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] input = {3, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 1);\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] input = {1, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 2);\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] input = {2, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 1);\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] input = {2, 1, 2, 3, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 2);\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] input = {2, 1, 2, 3, 1, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 3);\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] input = {2, 1, 2, 2, 1, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 4);\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] input = {3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 4);\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] input = {3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 6, 2, 1, 1, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 5);\n  }\n\n  @Test\n  public void TestCase11() {\n    int[] input = {3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 7);\n  }\n\n  @Test\n  public void TestCase12() {\n    int[] input = {3, 10, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 6);\n  }\n\n  @Test\n  public void TestCase13() {\n    int[] input = {3, 12, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 5);\n  }\n\n  @Test\n  public void TestCase14() {\n    int[] input = {3, 12, 2, 1, 2, 3, 15, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 3);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3};\n    Utils.assertTrue(Program.minNumberOfJumps(input) == 4);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.Arrays;\n\nclass Program {\n  // O(n^2) time | O(n) space\n  public static int minNumberOfJumps(int[] array) {\n    int[] jumps = new int[array.length];\n    Arrays.fill(jumps, Integer.MAX_VALUE);\n    jumps[0] = 0;\n    for (int i = 1; i < array.length; i++) {\n      for (int j = 0; j < i; j++) {\n        if (array[j] >= i - j) {\n          jumps[i] = Math.min(jumps[j] + 1, jumps[i]);\n        }\n      }\n    }\n    return jumps[jumps.length - 1];\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static int minNumberOfJumps(int[] array) {\n    if (array.length == 1) {\n      return 0;\n    }\n    int jumps = 0;\n    int maxReach = array[0];\n    int steps = array[0];\n    for (int i = 1; i < array.length - 1; i++) {\n      maxReach = Math.max(maxReach, i + array[i]);\n      steps--;\n      if (steps == 0) {\n        jumps++;\n        steps = maxReach - i;\n      }\n    }\n    return jumps + 1;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function minNumberOfJumps(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.minNumberOfJumps = minNumberOfJumps;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.minNumberOfJumps([1])).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.minNumberOfJumps([1, 1])).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.minNumberOfJumps([3, 1])).to.deep.equal(1);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.minNumberOfJumps([1, 1, 1])).to.deep.equal(2);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.minNumberOfJumps([2, 1, 1])).to.deep.equal(1);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.minNumberOfJumps([2, 1, 2, 3, 1])).to.deep.equal(2);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.minNumberOfJumps([2, 1, 2, 3, 1, 1, 1])).to.deep.equal(3);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.minNumberOfJumps([2, 1, 2, 2, 1, 1, 1])).to.deep.equal(4);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3])).to.deep.equal(4);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 6, 2, 1, 1, 1, 1])).to.deep.equal(5);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1])).to.deep.equal(7);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.minNumberOfJumps([3, 10, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1])).to.deep.equal(6);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.minNumberOfJumps([3, 12, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1])).to.deep.equal(5);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.minNumberOfJumps([3, 12, 2, 1, 2, 3, 15, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1])).to.deep.equal(3);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3])).to.deep.equal(4);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nfunction minNumberOfJumps(array) {\n  const jumps = new Array(array.length).fill(Infinity);\n  jumps[0] = 0;\n  for (let i = 1; i < array.length; i++) {\n    for (let j = 0; j < i; j++) {\n      if (array[j] >= i - j) {\n        jumps[i] = Math.min(jumps[j] + 1, jumps[i]);\n      }\n    }\n  }\n  return jumps[jumps.length - 1];\n}\n\nexports.minNumberOfJumps = minNumberOfJumps;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nfunction minNumberOfJumps(array) {\n  if (array.length === 1) return 0;\n  let jumps = 0;\n  let maxReach = array[0];\n  let steps = array[0];\n  for (let i = 1; i < array.length - 1; i++) {\n    maxReach = Math.max(maxReach, i + array[i]);\n    steps--;\n    if (steps === 0) {\n      jumps++;\n      steps = maxReach - i;\n    }\n  }\n  return jumps + 1;\n}\n\nexports.minNumberOfJumps = minNumberOfJumps;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def minNumberOfJumps(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.minNumberOfJumps([1]), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.minNumberOfJumps([1, 1]), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.minNumberOfJumps([3, 1]), 1)\n\n    def test_case_4(self):\n        self.assertEqual(program.minNumberOfJumps([1, 1, 1]), 2)\n\n    def test_case_5(self):\n        self.assertEqual(program.minNumberOfJumps([2, 1, 1]), 1)\n\n    def test_case_6(self):\n        self.assertEqual(program.minNumberOfJumps([2, 1, 2, 3, 1]), 2)\n\n    def test_case_7(self):\n        self.assertEqual(program.minNumberOfJumps([2, 1, 2, 3, 1, 1, 1]), 3)\n\n    def test_case_8(self):\n        self.assertEqual(program.minNumberOfJumps([2, 1, 2, 2, 1, 1, 1]), 4)\n\n    def test_case_9(self):\n        self.assertEqual(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3]), 4)\n\n    def test_case_10(self):\n        self.assertEqual(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 6, 2, 1, 1, 1, 1]), 5)\n\n    def test_case_11(self):\n        self.assertEqual(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1]), 7)\n\n    def test_case_12(self):\n        self.assertEqual(program.minNumberOfJumps([3, 10, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1]), 6)\n\n    def test_case_13(self):\n        self.assertEqual(program.minNumberOfJumps([3, 12, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1]), 5)\n\n    def test_case_14(self):\n        self.assertEqual(program.minNumberOfJumps([3, 12, 2, 1, 2, 3, 15, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1]), 3)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3]), 4)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space\ndef minNumberOfJumps(array):\n    jumps = [float(\"inf\") for x in array]\n    jumps[0] = 0\n    for i in range(1, len(array)):\n        for j in range(0, i):\n            if array[j] >= i - j:\n                jumps[i] = min(jumps[j] + 1, jumps[i])\n    return jumps[-1]\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space\ndef minNumberOfJumps(array):\n    if len(array) == 1:\n        return 0\n    jumps = 0\n    maxReach = array[0]\n    steps = array[0]\n    for i in range(1, len(array) - 1):\n        maxReach = max(maxReach, i + array[i])\n        steps -= 1\n        if steps == 0:\n            jumps += 1\n            steps = maxReach - i\n    return jumps + 1\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func minNumberOfJumps(array: [Int]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(0, program.minNumberOfJumps(array: [1]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(1, program.minNumberOfJumps(array: [1, 1]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(1, program.minNumberOfJumps(array: [3, 1]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(2, program.minNumberOfJumps(array: [1, 1, 1]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(1, program.minNumberOfJumps(array: [2, 1, 1]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(2, program.minNumberOfJumps(array: [2, 1, 2, 3, 1]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(3, program.minNumberOfJumps(array: [2, 1, 2, 3, 1, 1, 1]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(4, program.minNumberOfJumps(array: [2, 1, 2, 2, 1, 1, 1]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(4, program.minNumberOfJumps(array: [3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3]))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(5, program.minNumberOfJumps(array: [3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 6, 2, 1, 1, 1, 1]))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(7, program.minNumberOfJumps(array: [3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1]))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(6, program.minNumberOfJumps(array: [3, 10, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1]))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(5, program.minNumberOfJumps(array: [3, 12, 2, 1, 2, 3, 7, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1]))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual(3, program.minNumberOfJumps(array: [3, 12, 2, 1, 2, 3, 15, 1, 1, 1, 3, 2, 3, 2, 1, 1, 1, 1]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let output = program.minNumberOfJumps(array: [3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3])\n      try assertEqual(4, output)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(n) space\n  func minNumberOfJumps(array: [Int]) -> Int {\n    var jumps = Array(repeating: Int.max, count: array.count)\n\n    jumps[0] = 0\n\n    for i in 0 ..< array.count {\n      for j in 0 ..< i {\n        if array[j] + j >= i {\n          jumps[i] = min(jumps[i], jumps[j] + 1)\n        }\n      }\n    }\n\n    return jumps[jumps.count - 1]\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  func minNumberOfJumps(array: [Int]) -> Int {\n    if array.count == 1 {\n      return 0\n    }\n\n    var jumps = 0\n    var steps = array[0]\n    var maximumReach = array[0]\n\n    for i in 1 ..< array.count - 1 {\n      maximumReach = max(maximumReach, array[i] + i)\n\n      steps -= 1\n\n      if steps == 0 {\n        jumps += 1\n\n        steps = maximumReach - i\n      }\n    }\n\n    return jumps + 1\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function minNumberOfJumps(array: number[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.minNumberOfJumps([3, 4, 2, 1, 2, 3, 7, 1, 1, 1, 3])).to.deep.equal(4);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nexport function minNumberOfJumps(array: number[]) {\n  const jumps: number[] = new Array(array.length).fill(Infinity);\n  jumps[0] = 0;\n  for (let i = 1; i < array.length; i++) {\n    for (let j = 0; j < i; j++) {\n      if (array[j] >= i - j) {\n        jumps[i] = Math.min(jumps[j] + 1, jumps[i]);\n      }\n    }\n  }\n  return jumps[jumps.length - 1];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nexport function minNumberOfJumps(array: number[]) {\n  if (array.length === 1) return 0;\n  let jumps = 0;\n  let maxReach = array[0];\n  let steps = array[0];\n  for (let i = 1; i < array.length - 1; i++) {\n    maxReach = Math.max(maxReach, i + array[i]);\n    steps--;\n    if (steps === 0) {\n      jumps++;\n      steps = maxReach - i;\n    }\n  }\n  return jumps + 1;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        3,
+        4,
+        2,
+        1,
+        2,
+        3,
+        7,
+        1,
+        1,
+        1,
+        3
+      ]
+    },
+    {
+      "array": [
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        3,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        2,
+        1,
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "array": [
+        2,
+        1,
+        2,
+        3,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        2,
+        1,
+        2,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        3,
+        4,
+        2,
+        1,
+        2,
+        3,
+        7,
+        1,
+        1,
+        1,
+        3,
+        2,
+        6,
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        3,
+        4,
+        2,
+        1,
+        2,
+        3,
+        7,
+        1,
+        1,
+        1,
+        3,
+        2,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        3,
+        10,
+        2,
+        1,
+        2,
+        3,
+        7,
+        1,
+        1,
+        1,
+        3,
+        2,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        3,
+        12,
+        2,
+        1,
+        2,
+        3,
+        7,
+        1,
+        1,
+        1,
+        3,
+        2,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        3,
+        12,
+        2,
+        1,
+        2,
+        3,
+        15,
+        1,
+        1,
+        1,
+        3,
+        2,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      4,
+      0,
+      1,
+      1,
+      2,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      6,
+      5,
+      3
+    ]
+  ]
+}

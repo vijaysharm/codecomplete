@@ -1,0 +1,517 @@
+{
+  "Summary": {
+    "Name": "Subarray Sort",
+    "Category": "Arrays",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 459,
+      "timeOne": 0,
+      "timeTwo": 958,
+      "url": "https://player.vimeo.com/video/241820009"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Realize that even a single out-of-order number in the input array can call for a large subarray to have to be sorted. This is because, depending on how out-of-place the number is, it might need to be moved very far away from its original position in order to be in its sorted position.\nFind the smallest and largest numbers that are out of order in the input array. You should be able to do this in a single pass through the array.\nOnce you've found the smallest and largest out-of-order numbers mentioned in Hint #2, find their final sorted positions in the array. This should give you the extremities of the smallest subarray that needs to be sorted.\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in an array of at least two integers and that\n  returns an array of the starting and ending indices of the smallest subarray\n  in the input array that needs to be sorted in place in order for the entire\n  input array to be sorted.\n</p>\n<p>\n  If the input array is already sorted, the function should return\n  <span>[-1, -1]</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[3, 9]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        1,
+        2,
+        4,
+        7,
+        10,
+        11,
+        7,
+        12,
+        6,
+        7,
+        16,
+        18,
+        19
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 2,
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> subarraySort(vector<int> array) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{-1, -1};\n      assert(subarraySort({1, 2}) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> expected{0, 1};\n      assert(subarraySort({2, 1}) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> expected{3, 9};\n      assert(subarraySort({1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> expected{4, 9};\n      assert(subarraySort({1, 2, 4, 7, 10, 11, 7, 12, 7, 7, 16, 18, 19}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> expected{4, 6};\n      assert(subarraySort({1, 2, 4, 7, 10, 11, 7, 12, 13, 14, 16, 18, 19}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> expected{2, 4};\n      assert(subarraySort({1, 2, 8, 4, 5}) == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> expected{0, 12};\n      assert(subarraySort({4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> expected{0, 11};\n      assert(subarraySort({4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> expected{1, 11};\n      assert(subarraySort({-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<int> expected{1, 12};\n      assert(subarraySort({-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<int> expected{6, 7};\n      assert(subarraySort({1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 11}) == expected);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      vector<int> expected{6, 16};\n      assert(subarraySort({1, 2, 3, 4, 5, 6, 18, 7, 9, 10, 11, 12, 13, 14, 15,\n                           16, 17, 19}) == expected);\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      vector<int> expected{4, 24};\n      assert(subarraySort({1,  2, 3,  4,  5,  6,  18, 21, 22, 7,\n                           14, 9, 10, 11, 12, 13, 14, 15, 16, 17,\n                           19, 4, 14, 11, 6,  33, 35, 41, 55}) == expected);\n    });\n\n    RunTest(\"Test Case 14\", []() {\n      vector<int> expected{2, 19};\n      assert(subarraySort({1,  2,  20, 3,  4,  5,  6,  7,  8,  9,\n                           10, 11, 12, 13, 14, 15, 16, 17, 18, 19}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 15\", []() {\n      vector<int> expected{2, 19};\n      assert(subarraySort({1,  2,  3,  4,  5,  6,  7,  8,  9,  10,\n                           11, 12, 13, 14, 15, 16, 17, 18, 19, 2}) == expected);\n    });\n\n    RunTest(\"Test Case 16\", []() {\n      vector<int> expected{-1, -1};\n      assert(subarraySort({1,  2,  3,  4,  5,  6,  7,  8,  9,  10,\n                           11, 12, 13, 14, 15, 16, 17, 18, 19, 20}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 17\", []() {\n      vector<int> expected{-1, -1};\n      assert(subarraySort({0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) ==\n             expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{3, 9};\n      assert(subarraySort({1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19}) ==\n             expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <algorithm>\n#include <climits>\nusing namespace std;\n\nbool isOutOfOrder(int i, int num, vector<int> array);\n\n// O(n) time | O(1) space\nvector<int> subarraySort(vector<int> array) {\n  int minOutOfOrder = INT_MAX;\n  int maxOutOfOrder = INT_MIN;\n  for (int i = 0; i < array.size(); i++) {\n    int num = array[i];\n    if (isOutOfOrder(i, num, array)) {\n      minOutOfOrder = min(minOutOfOrder, num);\n      maxOutOfOrder = max(maxOutOfOrder, num);\n    }\n  }\n  if (minOutOfOrder == INT_MAX) {\n    return vector<int>{-1, -1};\n  }\n  int subarrayLeftIdx = 0;\n  while (minOutOfOrder >= array[subarrayLeftIdx]) {\n    subarrayLeftIdx++;\n  }\n  int subarrayRightIdx = array.size() - 1;\n  while (maxOutOfOrder <= array[subarrayRightIdx]) {\n    subarrayRightIdx--;\n  }\n  return vector<int>{subarrayLeftIdx, subarrayRightIdx};\n}\n\nbool isOutOfOrder(int i, int num, vector<int> array) {\n  if (i == 0) {\n    return num > array[i + 1];\n  }\n  if (i == array.size() - 1) {\n    return num < array[i - 1];\n  }\n  return num > array[i + 1] || num < array[i - 1];\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int[] SubarraySort(int[] array) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\n\npublic class ProgramTest {\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {-1, -1};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] expected = {0, 1};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {2, 1}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] expected = {3, 9};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 4,\n\t\t                                                                          7, 10, 11,\n\t\t                                                                          7, 12, 6,\n\t\t                                                                          7, 16, 18,\n\t\t                                                                          19}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] expected = {4, 9};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 4,\n\t\t                                                                          7, 10, 11,\n\t\t                                                                          7, 12, 7,\n\t\t                                                                          7, 16, 18,\n\t\t                                                                          19}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] expected = {4, 6};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 4,\n\t\t                                                                          7, 10, 11,\n\t\t                                                                          7, 12, 13,\n\t\t                                                                          14, 16,\n\t\t                                                                          18, 19}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] expected = {2, 4};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 8,\n\t\t                                                                          4, 5}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] expected = {0, 12};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {4, 8, 7,\n\t\t                                                                          12, 11, 9,\n\t\t                                                                          -1, 3, 9,\n\t\t                                                                          16, -15,\n\t\t                                                                          51, 7}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] expected = {0, 11};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {4, 8, 7,\n\t\t                                                                          12, 11, 9,\n\t\t                                                                          -1, 3, 9,\n\t\t                                                                          16, -15,\n\t\t                                                                          11, 57}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] expected = {1, 11};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {-41, 8, 7,\n\t\t                                                                          12, 11, 9,\n\t\t                                                                          -1, 3, 9,\n\t\t                                                                          16, -15,\n\t\t                                                                          11, 57}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] expected = {1, 12};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {-41, 8, 7,\n\t\t                                                                          12, 11, 9,\n\t\t                                                                          -1, 3, 9,\n\t\t                                                                          16, -15,\n\t\t                                                                          51, 7}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[] expected = {6, 7};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 3,\n\t\t                                                                          4, 5, 6,\n\t\t                                                                          8, 7, 9,\n\t\t                                                                          10, 11}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tint[] expected = {6, 16};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 3,\n\t\t                                                                          4, 5, 6,\n\t\t                                                                          18, 7, 9,\n\t\t                                                                          10, 11,\n\t\t                                                                          12, 13,\n\t\t                                                                          14, 15,\n\t\t                                                                          16, 17,\n\t\t                                                                          19}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tint[] expected = {4, 24};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 3,\n\t\t                                                                          4, 5, 6,\n\t\t                                                                          18, 21,\n\t\t                                                                          22, 7, 14,\n\t\t                                                                          9, 10, 11,\n\t\t                                                                          12, 13,\n\t\t                                                                          14, 15,\n\t\t                                                                          16, 17,\n\t\t                                                                          19, 4, 14,\n\t\t                                                                          11, 6, 33,\n\t\t                                                                          35, 41,\n\t\t                                                                          55}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tint[] expected = {2, 19};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 20,\n\t\t                                                                          3, 4, 5,\n\t\t                                                                          6, 7, 8,\n\t\t                                                                          9, 10, 11,\n\t\t                                                                          12, 13,\n\t\t                                                                          14, 15,\n\t\t                                                                          16, 17,\n\t\t                                                                          18, 19}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tint[] expected = {2, 19};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 3,\n\t\t                                                                          4, 5, 6,\n\t\t                                                                          7, 8, 9,\n\t\t                                                                          10, 11,\n\t\t                                                                          12, 13,\n\t\t                                                                          14, 15,\n\t\t                                                                          16, 17,\n\t\t                                                                          18, 19,\n\t\t                                                                          2}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase16() {\n\t\tint[] expected = {-1, -1};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 3,\n\t\t                                                                          4, 5, 6,\n\t\t                                                                          7, 8, 9,\n\t\t                                                                          10, 11,\n\t\t                                                                          12, 13,\n\t\t                                                                          14, 15,\n\t\t                                                                          16, 17,\n\t\t                                                                          18, 19,\n\t\t                                                                          20}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase17() {\n\t\tint[] expected = {-1, -1};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {0, 1, 1,\n\t\t                                                                          2, 3, 5,\n\t\t                                                                          8, 13, 21,\n\t\t                                                                          34, 55,\n\t\t                                                                          89}),\n\t\t  expected));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {3, 9};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SubarraySort(new int[] {1, 2, 4,\n\t\t                                                                          7, 10, 11,\n\t\t                                                                          7, 12, 6,\n\t\t                                                                          7, 16, 18,\n\t\t                                                                          19}),\n\t\t  expected));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static int[] SubarraySort(int[] array) {\n\t\tint minOutOfOrder = Int32.MaxValue;\n\t\tint maxOutOfOrder = Int32.MinValue;\n\t\tfor (int i = 0; i < array.Length; i++) {\n\t\t\tint num = array[i];\n\t\t\tif (isOutOfOrder(i, num, array)) {\n\t\t\t\tminOutOfOrder = Math.Min(minOutOfOrder, num);\n\t\t\t\tmaxOutOfOrder = Math.Max(maxOutOfOrder, num);\n\t\t\t}\n\t\t}\n\t\tif (minOutOfOrder == Int32.MaxValue) {\n\t\t\treturn new int[] {-1, -1};\n\t\t}\n\t\tint subarrayLeftIdx = 0;\n\t\twhile (minOutOfOrder >= array[subarrayLeftIdx]) {\n\t\t\tsubarrayLeftIdx++;\n\t\t}\n\t\tint subarrayRightIdx = array.Length - 1;\n\t\twhile (maxOutOfOrder <= array[subarrayRightIdx]) {\n\t\t\tsubarrayRightIdx--;\n\t\t}\n\t\treturn new int[] {subarrayLeftIdx, subarrayRightIdx};\n\t}\n\n\tpublic static bool isOutOfOrder(int i, int num, int[] array) {\n\t\tif (i == 0) {\n\t\t\treturn num > array[i + 1];\n\t\t}\n\t\tif (i == array.Length - 1) {\n\t\t\treturn num < array[i - 1];\n\t\t}\n\t\treturn num > array[i + 1] || num < array[i - 1];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc SubarraySort(array []int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{-1, -1}\n\toutput := SubarraySort([]int{1, 2})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := []int{0, 1}\n\toutput := SubarraySort([]int{2, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := []int{3, 9}\n\toutput := SubarraySort([]int{1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := []int{4, 9}\n\toutput := SubarraySort([]int{1, 2, 4, 7, 10, 11, 7, 12, 7, 7, 16, 18, 19})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := []int{4, 6}\n\toutput := SubarraySort([]int{1, 2, 4, 7, 10, 11, 7, 12, 13, 14, 16, 18, 19})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := []int{2, 4}\n\toutput := SubarraySort([]int{1, 2, 8, 4, 5})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := []int{0, 12}\n\toutput := SubarraySort([]int{4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := []int{0, 11}\n\toutput := SubarraySort([]int{4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := []int{1, 11}\n\toutput := SubarraySort([]int{-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := []int{1, 12}\n\toutput := SubarraySort([]int{-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := []int{6, 7}\n\toutput := SubarraySort([]int{1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 11})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\texpected := []int{6, 16}\n\toutput := SubarraySort([]int{1, 2, 3, 4, 5, 6, 18, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\texpected := []int{4, 24}\n\toutput := SubarraySort([]int{1, 2, 3, 4, 5, 6, 18, 21, 22, 7, 14, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 4, 14, 11, 6, 33, 35, 41, 55})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\texpected := []int{2, 19}\n\toutput := SubarraySort([]int{1, 2, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\texpected := []int{2, 19}\n\toutput := SubarraySort([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase16(t *TestCase) {\n\texpected := []int{-1, -1}\n\toutput := SubarraySort([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase17(t *TestCase) {\n\texpected := []int{-1, -1}\n\toutput := SubarraySort([]int{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89})\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{3, 9}\n\toutput := SubarraySort([]int{1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19})\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// O(n) time | O(1) space\nfunc SubarraySort(array []int) []int {\n\tminOutOfOrder, maxOutOfOrder := math.MaxInt32, math.MinInt32\n\tfor i, num := range array {\n\t\tif isOutOfOrder(i, num, array) {\n\t\t\tminOutOfOrder = min(minOutOfOrder, num)\n\t\t\tmaxOutOfOrder = max(maxOutOfOrder, num)\n\t\t}\n\t}\n\tif minOutOfOrder == math.MaxInt32 {\n\t\treturn []int{-1, -1}\n\t}\n\tsubarrayLeft := 0\n\tfor minOutOfOrder >= array[subarrayLeft] {\n\t\tsubarrayLeft += 1\n\t}\n\tsubarrayRight := len(array) - 1\n\tfor maxOutOfOrder <= array[subarrayRight] {\n\t\tsubarrayRight -= 1\n\t}\n\treturn []int{subarrayLeft, subarrayRight}\n}\n\nfunc isOutOfOrder(i int, num int, array []int) bool {\n\tif i == 0 {\n\t\treturn num > array[i+1]\n\t}\n\tif i == len(array)-1 {\n\t\treturn num < array[i-1]\n\t}\n\treturn num > array[i+1] || num < array[i-1]\n}\n\nfunc min(a, b int) int {\n\tif a < b {\n\t\treturn a\n\t}\n\treturn b\n}\n\nfunc max(a, b int) int {\n\tif a < b {\n\t\treturn b\n\t}\n\treturn a\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int[] subarraySort(int[] array) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.Arrays;\n\nclass ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    int[] expected = {-1, -1};\n    Utils.assertTrue(Arrays.equals(Program.subarraySort(new int[] {1, 2}), expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] expected = {0, 1};\n    Utils.assertTrue(Arrays.equals(Program.subarraySort(new int[] {2, 1}), expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] expected = {3, 9};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19}),\n            expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] expected = {4, 9};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {1, 2, 4, 7, 10, 11, 7, 12, 7, 7, 16, 18, 19}),\n            expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] expected = {4, 6};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {1, 2, 4, 7, 10, 11, 7, 12, 13, 14, 16, 18, 19}),\n            expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] expected = {2, 4};\n    Utils.assertTrue(Arrays.equals(Program.subarraySort(new int[] {1, 2, 8, 4, 5}), expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] expected = {0, 12};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7}),\n            expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] expected = {0, 11};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57}),\n            expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] expected = {1, 11};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57}),\n            expected));\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] expected = {1, 12};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7}),\n            expected));\n  }\n\n  @Test\n  public void TestCase11() {\n    int[] expected = {6, 7};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 11}), expected));\n  }\n\n  @Test\n  public void TestCase12() {\n    int[] expected = {6, 16};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(\n                new int[] {1, 2, 3, 4, 5, 6, 18, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19}),\n            expected));\n  }\n\n  @Test\n  public void TestCase13() {\n    int[] expected = {4, 24};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(\n                new int[] {\n                  1, 2, 3, 4, 5, 6, 18, 21, 22, 7, 14, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 4, 14,\n                  11, 6, 33, 35, 41, 55\n                }),\n            expected));\n  }\n\n  @Test\n  public void TestCase14() {\n    int[] expected = {2, 19};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(\n                new int[] {1, 2, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}),\n            expected));\n  }\n\n  @Test\n  public void TestCase15() {\n    int[] expected = {2, 19};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(\n                new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2}),\n            expected));\n  }\n\n  @Test\n  public void TestCase16() {\n    int[] expected = {-1, -1};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(\n                new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}),\n            expected));\n  }\n\n  @Test\n  public void TestCase17() {\n    int[] expected = {-1, -1};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}), expected));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.Arrays;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] expected = {3, 9};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.subarraySort(new int[] {1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19}),\n            expected));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static int[] subarraySort(int[] array) {\n    int minOutOfOrder = Integer.MAX_VALUE;\n    int maxOutOfOrder = Integer.MIN_VALUE;\n    for (int i = 0; i < array.length; i++) {\n      int num = array[i];\n      if (isOutOfOrder(i, num, array)) {\n        minOutOfOrder = Math.min(minOutOfOrder, num);\n        maxOutOfOrder = Math.max(maxOutOfOrder, num);\n      }\n    }\n    if (minOutOfOrder == Integer.MAX_VALUE) {\n      return new int[] {-1, -1};\n    }\n    int subarrayLeftIdx = 0;\n    while (minOutOfOrder >= array[subarrayLeftIdx]) {\n      subarrayLeftIdx++;\n    }\n    int subarrayRightIdx = array.length - 1;\n    while (maxOutOfOrder <= array[subarrayRightIdx]) {\n      subarrayRightIdx--;\n    }\n    return new int[] {subarrayLeftIdx, subarrayRightIdx};\n  }\n\n  public static boolean isOutOfOrder(int i, int num, int[] array) {\n    if (i == 0) {\n      return num > array[i + 1];\n    }\n    if (i == array.length - 1) {\n      return num < array[i - 1];\n    }\n    return num > array[i + 1] || num < array[i - 1];\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function subarraySort(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.subarraySort = subarraySort;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.subarraySort([1, 2])).to.deep.equal([-1, -1]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.subarraySort([2, 1])).to.deep.equal([0, 1]);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19])).to.deep.equal([3, 9]);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 7, 7, 16, 18, 19])).to.deep.equal([4, 9]);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 13, 14, 16, 18, 19])).to.deep.equal([4, 6]);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.subarraySort([1, 2, 8, 4, 5])).to.deep.equal([2, 4]);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.subarraySort([4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7])).to.deep.equal([0, 12]);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.subarraySort([4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57])).to.deep.equal([0, 11]);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.subarraySort([-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57])).to.deep.equal([1, 11]);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.subarraySort([-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7])).to.deep.equal([1, 12]);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.subarraySort([1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 11])).to.deep.equal([6, 7]);\n});\n\nit('Test Case #12', function () {\n  chai\n    .expect(program.subarraySort([1, 2, 3, 4, 5, 6, 18, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19]))\n    .to.deep.equal([6, 16]);\n});\n\nit('Test Case #13', function () {\n  chai\n    .expect(\n      program.subarraySort([\n        1,\n        2,\n        3,\n        4,\n        5,\n        6,\n        18,\n        21,\n        22,\n        7,\n        14,\n        9,\n        10,\n        11,\n        12,\n        13,\n        14,\n        15,\n        16,\n        17,\n        19,\n        4,\n        14,\n        11,\n        6,\n        33,\n        35,\n        41,\n        55,\n      ]),\n    )\n    .to.deep.equal([4, 24]);\n});\n\nit('Test Case #14', function () {\n  chai\n    .expect(program.subarraySort([1, 2, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]))\n    .to.deep.equal([2, 19]);\n});\n\nit('Test Case #15', function () {\n  chai\n    .expect(program.subarraySort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2]))\n    .to.deep.equal([2, 19]);\n});\n\nit('Test Case #16', function () {\n  chai\n    .expect(program.subarraySort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]))\n    .to.deep.equal([-1, -1]);\n});\n\nit('Test Case #17', function () {\n  chai.expect(program.subarraySort([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89])).to.deep.equal([-1, -1]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19])).to.deep.equal([3, 9]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nfunction subarraySort(array) {\n  let minOutOfOrder = Infinity;\n  let maxOutOfOrder = -Infinity;\n  for (let i = 0; i < array.length; i++) {\n    const num = array[i];\n    if (isOutOfOrder(i, num, array)) {\n      minOutOfOrder = Math.min(minOutOfOrder, num);\n      maxOutOfOrder = Math.max(maxOutOfOrder, num);\n    }\n  }\n  if (minOutOfOrder === Infinity) {\n    return [-1, -1];\n  }\n  let subarrayLeftIdx = 0;\n  while (minOutOfOrder >= array[subarrayLeftIdx]) {\n    subarrayLeftIdx++;\n  }\n  let subarrayRightIdx = array.length - 1;\n  while (maxOutOfOrder <= array[subarrayRightIdx]) {\n    subarrayRightIdx--;\n  }\n  return [subarrayLeftIdx, subarrayRightIdx];\n}\n\nfunction isOutOfOrder(i, num, array) {\n  if (i === 0) return num > array[i + 1];\n  if (i === array.length - 1) return num < array[i - 1];\n  return num > array[i + 1] || num < array[i - 1];\n}\n\nexports.subarraySort = subarraySort;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def subarraySort(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.subarraySort([1, 2]), [-1, -1])\n\n    def test_case_2(self):\n        self.assertEqual(program.subarraySort([2, 1]), [0, 1])\n\n    def test_case_3(self):\n        self.assertEqual(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19]), [3, 9])\n\n    def test_case_4(self):\n        self.assertEqual(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 7, 7, 16, 18, 19]), [4, 9])\n\n    def test_case_5(self):\n        self.assertEqual(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 13, 14, 16, 18, 19]), [4, 6])\n\n    def test_case_6(self):\n        self.assertEqual(program.subarraySort([1, 2, 8, 4, 5]), [2, 4])\n\n    def test_case_7(self):\n        self.assertEqual(program.subarraySort([4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7]), [0, 12])\n\n    def test_case_8(self):\n        self.assertEqual(program.subarraySort([4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57]), [0, 11])\n\n    def test_case_9(self):\n        self.assertEqual(program.subarraySort([-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57]), [1, 11])\n\n    def test_case_10(self):\n        self.assertEqual(program.subarraySort([-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7]), [1, 12])\n\n    def test_case_11(self):\n        self.assertEqual(program.subarraySort([1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 11]), [6, 7])\n\n    def test_case_12(self):\n        self.assertEqual(\n            program.subarraySort([1, 2, 3, 4, 5, 6, 18, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19]), [6, 16]\n        )\n\n    def test_case_13(self):\n        self.assertEqual(\n            program.subarraySort(\n                [\n                    1,\n                    2,\n                    3,\n                    4,\n                    5,\n                    6,\n                    18,\n                    21,\n                    22,\n                    7,\n                    14,\n                    9,\n                    10,\n                    11,\n                    12,\n                    13,\n                    14,\n                    15,\n                    16,\n                    17,\n                    19,\n                    4,\n                    14,\n                    11,\n                    6,\n                    33,\n                    35,\n                    41,\n                    55,\n                ]\n            ),\n            [4, 24],\n        )\n\n    def test_case_14(self):\n        self.assertEqual(\n            program.subarraySort([1, 2, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]), [2, 19]\n        )\n\n    def test_case_15(self):\n        self.assertEqual(\n            program.subarraySort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2]), [2, 19]\n        )\n\n    def test_case_16(self):\n        self.assertEqual(\n            program.subarraySort([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), [-1, -1]\n        )\n\n    def test_case_17(self):\n        self.assertEqual(program.subarraySort([0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]), [-1, -1])\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19]), [3, 9])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space\ndef subarraySort(array):\n    minOutOfOrder = float(\"inf\")\n    maxOutOfOrder = float(\"-inf\")\n    for i in range(len(array)):\n        num = array[i]\n        if isOutOfOrder(i, num, array):\n            minOutOfOrder = min(minOutOfOrder, num)\n            maxOutOfOrder = max(maxOutOfOrder, num)\n    if minOutOfOrder == float(\"inf\"):\n        return [-1, -1]\n    subarrayLeftIdx = 0\n    while minOutOfOrder >= array[subarrayLeftIdx]:\n        subarrayLeftIdx += 1\n    subarrayRightIdx = len(array) - 1\n    while maxOutOfOrder <= array[subarrayRightIdx]:\n        subarrayRightIdx -= 1\n    return [subarrayLeftIdx, subarrayRightIdx]\n\n\ndef isOutOfOrder(i, num, array):\n    if i == 0:\n        return num > array[i + 1]\n    if i == len(array) - 1:\n        return num < array[i - 1]\n    return num > array[i + 1] or num < array[i - 1]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func subarraySort(array: [Int]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual([-1, -1], program.subarraySort(array: [1, 2]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual([0, 1], program.subarraySort(array: [2, 1]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual([3, 9], program.subarraySort(array: [1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual([4, 9], program.subarraySort(array: [1, 2, 4, 7, 10, 11, 7, 12, 7, 7, 16, 18, 19]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual([4, 6], program.subarraySort(array: [1, 2, 4, 7, 10, 11, 7, 12, 13, 14, 16, 18, 19]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual([2, 4], program.subarraySort(array: [1, 2, 8, 4, 5]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual([0, 12], program.subarraySort(array: [4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual([0, 11], program.subarraySort(array: [4, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual([1, 11], program.subarraySort(array: [-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 11, 57]))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual([1, 12], program.subarraySort(array: [-41, 8, 7, 12, 11, 9, -1, 3, 9, 16, -15, 51, 7]))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual([6, 7], program.subarraySort(array: [1, 2, 3, 4, 5, 6, 8, 7, 9, 10, 11]))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual([6, 16], program.subarraySort(array: [1, 2, 3, 4, 5, 6, 18, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19]))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual([4, 24], program.subarraySort(array: [1, 2, 3, 4, 5, 6, 18, 21, 22, 7, 14, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 4, 14, 11, 6, 33, 35, 41, 55]))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual([2, 19], program.subarraySort(array: [1, 2, 20, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]))\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      try assertEqual([2, 19], program.subarraySort(array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2]))\n    }\n    runTest(\"Test Case 16\") { () throws -> Void in\n      try assertEqual([-1, -1], program.subarraySort(array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]))\n    }\n    runTest(\"Test Case 17\") { () throws -> Void in\n      try assertEqual([-1, -1], program.subarraySort(array: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual([3, 9], program.subarraySort(array: [1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  func subarraySort(array: [Int]) -> [Int] {\n    var minimumOutOfOrder = Int(Int16.max)\n    var maximumOutOfOrder = -Int(Int16.max)\n\n    for i in 0 ..< array.count {\n      let currentNumber = array[i]\n\n      if isOutOfOrder(i, array, currentNumber) {\n        minimumOutOfOrder = min(currentNumber, minimumOutOfOrder)\n        maximumOutOfOrder = max(currentNumber, maximumOutOfOrder)\n      }\n    }\n\n    if minimumOutOfOrder == Int(Int16.max) {\n      return [-1, -1]\n    }\n\n    var subarrayLeftIndex = 0\n    while minimumOutOfOrder >= array[subarrayLeftIndex] {\n      subarrayLeftIndex += 1\n    }\n\n    var subarrayRightIndex = array.count - 1\n    while maximumOutOfOrder <= array[subarrayRightIndex] {\n      subarrayRightIndex -= 1\n    }\n\n    return [subarrayLeftIndex, subarrayRightIndex]\n  }\n\n  func isOutOfOrder(_ i: Int, _ array: [Int], _ currentNumber: Int) -> Bool {\n    if i == 0 {\n      return currentNumber > array[i + 1]\n    } else if i == array.count - 1 {\n      return currentNumber < array[i - 1]\n    } else {\n      return currentNumber > array[i + 1] || currentNumber < array[i - 1]\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "type Range = [number, number];\n\nexport function subarraySort(array: number[]): Range {\n  // Write your code here.\n  return [-1, -1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.subarraySort([1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19])).to.deep.equal([3, 9]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Range = [number, number];\n\n// O(n) time | O(1) space\nexport function subarraySort(array: number[]): Range {\n  let minOutOfOrder = Infinity;\n  let maxOutOfOrder = -Infinity;\n  for (let i = 0; i < array.length; i++) {\n    const num = array[i];\n    if (isOutOfOrder(i, num, array)) {\n      minOutOfOrder = Math.min(minOutOfOrder, num);\n      maxOutOfOrder = Math.max(maxOutOfOrder, num);\n    }\n  }\n  if (minOutOfOrder === Infinity) {\n    return [-1, -1];\n  }\n  let subarrayLeftIdx = 0;\n  while (minOutOfOrder >= array[subarrayLeftIdx]) {\n    subarrayLeftIdx++;\n  }\n  let subarrayRightIdx = array.length - 1;\n  while (maxOutOfOrder <= array[subarrayRightIdx]) {\n    subarrayRightIdx--;\n  }\n  return [subarrayLeftIdx, subarrayRightIdx];\n}\n\nfunction isOutOfOrder(i: number, num: number, array: number[]) {\n  if (i === 0) return num > array[i + 1];\n  if (i === array.length - 1) return num < array[i - 1];\n  return num > array[i + 1] || num < array[i - 1];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        1,
+        2,
+        4,
+        7,
+        10,
+        11,
+        7,
+        12,
+        6,
+        7,
+        16,
+        18,
+        19
+      ]
+    },
+    {
+      "array": [
+        1,
+        2
+      ]
+    },
+    {
+      "array": [
+        2,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        4,
+        7,
+        10,
+        11,
+        7,
+        12,
+        7,
+        7,
+        16,
+        18,
+        19
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        4,
+        7,
+        10,
+        11,
+        7,
+        12,
+        13,
+        14,
+        16,
+        18,
+        19
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        8,
+        4,
+        5
+      ]
+    },
+    {
+      "array": [
+        4,
+        8,
+        7,
+        12,
+        11,
+        9,
+        -1,
+        3,
+        9,
+        16,
+        -15,
+        51,
+        7
+      ]
+    },
+    {
+      "array": [
+        4,
+        8,
+        7,
+        12,
+        11,
+        9,
+        -1,
+        3,
+        9,
+        16,
+        -15,
+        11,
+        57
+      ]
+    },
+    {
+      "array": [
+        -41,
+        8,
+        7,
+        12,
+        11,
+        9,
+        -1,
+        3,
+        9,
+        16,
+        -15,
+        11,
+        57
+      ]
+    },
+    {
+      "array": [
+        -41,
+        8,
+        7,
+        12,
+        11,
+        9,
+        -1,
+        3,
+        9,
+        16,
+        -15,
+        51,
+        7
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        7,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        18,
+        7,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        18,
+        21,
+        22,
+        7,
+        14,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        4,
+        14,
+        11,
+        6,
+        33,
+        35,
+        41,
+        55
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        20,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        2
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    {
+      "array": [
+        0,
+        1,
+        1,
+        2,
+        3,
+        5,
+        8,
+        13,
+        21,
+        34,
+        55,
+        89
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        3,
+        9
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        0,
+        12
+      ],
+      [
+        0,
+        11
+      ],
+      [
+        1,
+        11
+      ],
+      [
+        1,
+        12
+      ],
+      [
+        6,
+        7
+      ],
+      [
+        6,
+        16
+      ],
+      [
+        4,
+        24
+      ],
+      [
+        2,
+        19
+      ],
+      [
+        2,
+        19
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ]
+    ]
+  ]
+}

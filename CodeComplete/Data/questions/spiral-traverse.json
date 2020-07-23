@@ -1,0 +1,565 @@
+{
+  "Summary": {
+    "Name": "Spiral Traverse",
+    "Category": "Arrays",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "date": "2020-03-29T00:00:00Z",
+      "number": 468,
+      "timeOne": 0,
+      "timeTwo": 1063,
+      "url": "https://player.vimeo.com/video/401504134"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can think of the spiral that you have to traverse as a set of rectangle perimeters that progressively get smaller (i.e., that progressively move inwards in the two-dimensional array).\nGoing off of Hint #1, declare four variables: a starting row, a starting column, an ending row, and an ending column. These four variables represent the bounds of the first rectangle perimeter in the spiral that you have to traverse. Traverse that perimeter using those bounds, and then move the bounds inwards. End your algorithm once the starting row passes the ending row or the starting column passes the ending column.\nYou can solve this problem both iteratively and recursively following very similar logic.",
+  "SpaceTime": "O(n) time | O(n) space - where n is the total number of elements in the array",
+  "PromptHTML": "<p>\n  Write a function that takes in an n x m two-dimensional array (that can be\n  square-shaped when n === m) and returns a one-dimensional array of all the\n  array's elements in spiral order.\n</p>\n<p>\n  Spiral order starts at the top left corner of the two-dimensional array, goes\n  to the right, and proceeds in a spiral pattern all the way until every element\n  has been visited.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [\n  [1, 2, 3, 4],\n  [12, 13, 14, 5],\n  [11, 16, 15, 6],\n  [10, 9, 8, 7],\n]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]\n</pre>\n",
+  "Notes": "<p>\n  In the video explanation, we forget to mention the edge cases where the final\n  \"spiral section\" consists of a single row or a single column. Consider the\n  following two matrices:\n</p>\n<pre>\n[\n  [1,  2,  3,  4],\n  [10, 11, 12, 5],\n  [9,  8,  7,  6],\n]\n</pre>\n<pre>\n[\n  [1,  2,  3],\n  [12, 13, 4],\n  [11, 14, 5],\n  [10, 15, 6],\n  [9,  8,  7],\n]\n</pre>\n<p>\n  In the first matrix, the final section consists of a single row:<span\n    >[10, 11, 12]</span\n  >; in the second matrix, the final section consists of a single column:\n  <span>[13, 14, 15]</span>.\n</p>\n<p>\n  In order to avoid double-counting elements in these sections (i.e., counting\n  10, 11, 12,\n  <b>11</b> instead of just 10, 11, 12 in the first example, and counting 13,\n  14, 15, <b>14</b> instead of just 13, 14, 15 in the second example), we have\n  to add a couple of checks in our code to see if the <span>endRow</span> and\n  <span>endCol</span> are equal to the <span>startRow</span> and\n  <span>startCol</span>, respectively. If either of them are, we make sure to\n  break out of the loop we're in to avoid the double-counting.\n</p>\n",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          12,
+          13,
+          14,
+          5
+        ],
+        [
+          11,
+          16,
+          15,
+          6
+        ],
+        [
+          10,
+          9,
+          8,
+          7
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nvector<int> spiralTraverse(vector<vector<int>> array) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> input = {\n          {1},\n      };\n      vector<int> expected = {1};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 2\", []() {\n      vector<vector<int>> input = {\n          {1, 2},\n          {4, 3},\n      };\n      vector<int> expected = {1, 2, 3, 4};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 3\", []() {\n      vector<vector<int>> input = {\n          {1, 2, 3},\n          {8, 9, 4},\n          {7, 6, 5},\n      };\n      vector<int> expected = {1, 2, 3, 4, 5, 6, 7, 8, 9};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 4\", []() {\n      vector<vector<int>> input = {\n          {1, 2, 3, 4},\n          {12, 13, 14, 5},\n          {11, 16, 15, 6},\n          {10, 9, 8, 7},\n      };\n      vector<int> expected = {1, 2,  3,  4,  5,  6,  7,  8,\n                              9, 10, 11, 12, 13, 14, 15, 16};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 5\", []() {\n      vector<vector<int>> input = {\n          {1, 2, 3, 4, 5, 6},       {20, 21, 22, 23, 24, 7},\n          {19, 32, 33, 34, 25, 8},  {18, 31, 36, 35, 26, 9},\n          {17, 30, 29, 28, 27, 10}, {16, 15, 14, 13, 12, 11},\n      };\n      vector<int> expected = {1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,\n                              13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,\n                              25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 6\", []() {\n      vector<vector<int>> input = {\n          {1, 2, 3, 4, 5, 6, 7, 8, 9},\n          {22, 23, 24, 25, 26, 27, 28, 29, 10},\n          {21, 36, 35, 34, 33, 32, 31, 30, 11},\n          {20, 19, 18, 17, 16, 15, 14, 13, 12},\n      };\n      vector<int> expected = {1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,\n                              13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,\n                              25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 7\", []() {\n      vector<vector<int>> input = {\n          {1, 2, 3, 4},     {22, 23, 24, 5},  {21, 36, 25, 6},\n          {20, 35, 26, 7},  {19, 34, 27, 8},  {18, 33, 28, 9},\n          {17, 32, 29, 10}, {16, 31, 30, 11}, {15, 14, 13, 12},\n      };\n      vector<int> expected = {1,  2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,\n                              13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,\n                              25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 8\", []() {\n      vector<vector<int>> input = {\n          {1, 2, 3, 4},\n          {10, 11, 12, 5},\n          {9, 8, 7, 6},\n      };\n      vector<int> expected = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 9\", []() {\n      vector<vector<int>> input = {\n          {1, 2, 3}, {12, 13, 4}, {11, 14, 5}, {10, 15, 6}, {9, 8, 7},\n      };\n      vector<int> expected = {1, 2,  3,  4,  5,  6,  7, 8,\n                              9, 10, 11, 12, 13, 14, 15};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 4\", []() {\n      vector<vector<int>> input = {\n          {1, 2, 3, 4},\n          {12, 13, 14, 5},\n          {11, 16, 15, 6},\n          {10, 9, 8, 7},\n      };\n      vector<int> expected = {1, 2,  3,  4,  5,  6,  7,  8,\n                              9, 10, 11, 12, 13, 14, 15, 16};\n      vector<int> actual = spiralTraverse(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n) time | O(n) space - where n is the total number of elements in the array\nvector<int> spiralTraverse(vector<vector<int>> array) {\n  if (array.size() == 0)\n    return {};\n\n  vector<int> result = {};\n  int startRow = 0;\n  int endRow = array.size() - 1;\n  int startCol = 0;\n  int endCol = array[0].size() - 1;\n\n  while (startRow <= endRow && startCol <= endCol) {\n    for (int col = startCol; col <= endCol; col++) {\n      result.push_back(array[startRow][col]);\n    }\n\n    for (int row = startRow + 1; row <= endRow; row++) {\n      result.push_back(array[row][endCol]);\n    }\n\n    for (int col = endCol - 1; col >= startCol; col--) {\n      // Handle the edge case when there's a single row\n      // in the middle of the matrix. In this case, we don't\n      // want to double-count the values in this row, which\n      // we've already counted in the first for loop above.\n      // See Test Case 8 for an example of this edge case.\n      if (startRow == endRow)\n        break;\n      result.push_back(array[endRow][col]);\n    }\n\n    for (int row = endRow - 1; row > startRow; row--) {\n      // Handle the edge case when there's a single column\n      // in the middle of the matrix. In this case, we don't\n      // want to double-count the values in this column, which\n      // we've already counted in the second for loop above.\n      // See Test Case 9 for an example of this edge case.\n      if (startCol == endCol)\n        break;\n      result.push_back(array[row][startCol]);\n    }\n\n    startRow++;\n    endRow--;\n    startCol++;\n    endCol--;\n  }\n  return result;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n) time | O(n) space - where n is the total number of elements in the array\nvoid spiralFill(vector<vector<int>> array, int startRow, int endRow,\n                int startCol, int endCol, vector<int> &result) {\n  if (startRow > endRow || startCol > endCol) {\n    return;\n  }\n\n  for (int col = startCol; col <= endCol; col++) {\n    result.push_back(array[startRow][col]);\n  }\n\n  for (int row = startRow + 1; row <= endRow; row++) {\n    result.push_back(array[row][endCol]);\n  }\n\n  for (int col = endCol - 1; col >= startCol; col--) {\n    // Handle the edge case when there's a single row\n    // in the middle of the matrix. In this case, we don't\n    // want to double-count the values in this row, which\n    // we've already counted in the first for loop above.\n    // See Test Case 8 for an example of this edge case.\n    if (startRow == endRow)\n      break;\n    result.push_back(array[endRow][col]);\n  }\n\n  for (int row = endRow - 1; row >= startRow + 1; row--) {\n    // Handle the edge case when there's a single column\n    // in the middle of the matrix. In this case, we don't\n    // want to double-count the values in this column, which\n    // we've already counted in the second for loop above.\n    // See Test Case 9 for an example of this edge case.\n    if (startCol == endCol)\n      break;\n    result.push_back(array[row][startCol]);\n  }\n\n  spiralFill(array, startRow + 1, endRow - 1, startCol + 1, endCol - 1, result);\n}\n\nvector<int> spiralTraverse(vector<vector<int>> array) {\n  if (array.size() == 0)\n    return {};\n\n  vector<int> result = {};\n  spiralFill(array, 0, array.size() - 1, 0, array[0].size() - 1, result);\n  return result;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<int> SpiralTraverse(int[,] array) {\n\t\t// Write your code here.\n\t\treturn new List<int>();\n\t}\n}\n",
+      "StartingTest": "using System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[,] input = {\n\t\t\t{1},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[,] input = {\n\t\t\t{1, 2},\n\t\t\t{4, 3},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[,] input = {\n\t\t\t{1, 2, 3},\n\t\t\t{8, 9, 4},\n\t\t\t{7, 6, 5},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[,] input = {\n\t\t\t{1, 2, 3, 4},\n\t\t\t{12, 13, 14, 5},\n\t\t\t{11, 16, 15, 6},\n\t\t\t{10, 9, 8, 7},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[,] input = {\n\t\t\t{1, 2, 3, 4, 5, 6},\n\t\t\t{20, 21, 22, 23, 24, 7},\n\t\t\t{19, 32, 33, 34, 25, 8},\n\t\t\t{18, 31, 36, 35, 26, 9},\n\t\t\t{17, 30, 29, 28, 27, 10},\n\t\t\t{16, 15, 14, 13, 12, 11},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,\n\t\t\t18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,\n\t\t\t32, 33, 34, 35, 36\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[,] input = {\n\t\t\t{1, 2, 3, 4, 5, 6, 7, 8, 9},\n\t\t\t{22, 23, 24, 25, 26, 27, 28, 29, 10},\n\t\t\t{21, 36, 35, 34, 33, 32, 31, 30, 11},\n\t\t\t{20, 19, 18, 17, 16, 15, 14, 13, 12},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,\n\t\t\t22, 23, 24,\n\t\t\t25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[,] input = {\n\t\t\t{1, 2, 3, 4},\n\t\t\t{22, 23, 24, 5},\n\t\t\t{21, 36, 25, 6},\n\t\t\t{20, 35, 26, 7},\n\t\t\t{19, 34, 27, 8},\n\t\t\t{18, 33, 28, 9},\n\t\t\t{17, 32, 29, 10},\n\t\t\t{16, 31, 30, 11},\n\t\t\t{15, 14, 13, 12},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,\n\t\t\t22, 23, 24,\n\t\t\t25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[,] input = {\n\t\t\t{1, 2, 3, 4},\n\t\t\t{10, 11, 12, 5},\n\t\t\t{9, 8, 7, 6},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[,] input = {\n\t\t\t{1, 2, 3},\n\t\t\t{12, 13, 4},\n\t\t\t{11, 14, 5},\n\t\t\t{10, 15, 6},\n\t\t\t{9, 8, 7},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[,] input = {\n\t\t\t{1, 2, 3, 4},\n\t\t\t{12, 13, 14, 5},\n\t\t\t{11, 16, 15, 6},\n\t\t\t{10, 9, 8, 7},\n\t\t};\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16\n\t\t};\n\t\tvar actual = Program.SpiralTraverse(input);\n\t\tUtils.AssertTrue(expected.SequenceEqual(actual));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space - where n is the total number of elements in the array\n\tpublic static List<int> SpiralTraverse(int[,] array) {\n\t\tif (array.GetLength(0) == 0) return new List<int>();\n\n\t\tvar result = new List<int>();\n\t\tvar startRow = 0;\n\t\tvar endRow = array.GetLength(0) - 1;\n\t\tvar startCol = 0;\n\t\tvar endCol = array.GetLength(1) - 1;\n\n\t\twhile (startRow <= endRow && startCol <= endCol) {\n\t\t\tfor (int col = startCol; col <= endCol; col++) {\n\t\t\t\tresult.Add(array[startRow,col]);\n\t\t\t}\n\n\t\t\tfor (int row = startRow + 1; row <= endRow; row++) {\n\t\t\t\tresult.Add(array[row,endCol]);\n\t\t\t}\n\n\t\t\tfor (int col = endCol - 1; col >= startCol; col--) {\n\t\t\t\t// Handle the edge case when there's a single row\n\t\t\t\t// in the middle of the matrix. In this case, we don't\n\t\t\t\t// want to double-count the values in this row, which\n\t\t\t\t// we've already counted in the first for loop above.\n\t\t\t\t// See Test Case 8 for an example of this edge case.\n\t\t\t\tif (startRow == endRow) break;\n\t\t\t\tresult.Add(array[endRow,col]);\n\t\t\t}\n\n\t\t\tfor (int row = endRow - 1; row > startRow; row--) {\n\t\t\t\t// Handle the edge case when there's a single column\n\t\t\t\t// in the middle of the matrix. In this case, we don't\n\t\t\t\t// want to double-count the values in this column, which\n\t\t\t\t// we've already counted in the second for loop above.\n\t\t\t\t// See Test Case 9 for an example of this edge case.\n\t\t\t\tif (startCol == endCol) break;\n\t\t\t\tresult.Add(array[row,startCol]);\n\t\t\t}\n\n\t\t\tstartRow++;\n\t\t\tendRow--;\n\t\t\tstartCol++;\n\t\t\tendCol--;\n\t\t}\n\t\treturn result;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space - where n is the total number of elements in the array\n\tpublic static List<int> SpiralTraverse(int[,] array) {\n\t\tif (array.Length == 0) return new List<int>();\n\n\t\tvar result = new List<int>();\n\t\tspiralFill(array, 0, array.GetLength(0) - 1, 0, array.GetLength(1) - 1, result);\n\t\treturn result;\n\t}\n\n\tpublic static void spiralFill(\n\t\tint[,] array,\n\t\tint startRow,\n\t\tint endRow,\n\t\tint startCol,\n\t\tint endCol,\n\t\tList<int> result) {\n\t\tif (startRow > endRow || startCol > endCol) {\n\t\t\treturn;\n\t\t}\n\n\t\tfor (int col = startCol; col <= endCol; col++) {\n\t\t\tresult.Add(array[startRow,col]);\n\t\t}\n\n\t\tfor (int row = startRow + 1; row <= endRow; row++) {\n\t\t\tresult.Add(array[row,endCol]);\n\t\t}\n\n\t\tfor (int col = endCol - 1; col >= startCol; col--) {\n\t\t\t// Handle the edge case when there's a single row\n\t\t\t// in the middle of the matrix. In this case, we don't\n\t\t\t// want to double-count the values in this row, which\n\t\t\t// we've already counted in the first for loop above.\n\t\t\t// See Test Case 8 for an example of this edge case.\n\t\t\tif (startRow == endRow) break;\n\t\t\tresult.Add(array[endRow,col]);\n\t\t}\n\n\t\tfor (int row = endRow - 1; row >= startRow + 1; row--) {\n\t\t\t// Handle the edge case when there's a single column\n\t\t\t// in the middle of the matrix. In this case, we don't\n\t\t\t// want to double-count the values in this column, which\n\t\t\t// we've already counted in the second for loop above.\n\t\t\t// See Test Case 9 for an example of this edge case.\n\t\t\tif (startCol == endCol) break;\n\t\t\tresult.Add(array[row,startCol]);\n\t\t}\n\t\tspiralFill(array, startRow + 1, endRow - 1, startCol + 1, endCol - 1, result);\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc SpiralTraverse(array [][]int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tmatrix := [][]int{{1}}\n\texpected := []int{1}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2},\n\t\t{4, 3},\n\t}\n\texpected := []int{1, 2, 3, 4}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2, 3},\n\t\t{8, 9, 4},\n\t\t{7, 6, 5},\n\t}\n\texpected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2, 3, 4},\n\t\t{12, 13, 14, 5},\n\t\t{11, 16, 15, 6},\n\t\t{10, 9, 8, 7},\n\t}\n\texpected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2, 3, 4, 5, 6},\n\t\t{20, 21, 22, 23, 24, 7},\n\t\t{19, 32, 33, 34, 25, 8},\n\t\t{18, 31, 36, 35, 26, 9},\n\t\t{17, 30, 29, 28, 27, 10},\n\t\t{16, 15, 14, 13, 12, 11},\n\t}\n\texpected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,\n\t\t15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,\n\t\t31, 32, 33, 34, 35, 36}\n\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2, 3, 4, 5, 6, 7, 8, 9},\n\t\t{22, 23, 24, 25, 26, 27, 28, 29, 10},\n\t\t{21, 36, 35, 34, 33, 32, 31, 30, 11},\n\t\t{20, 19, 18, 17, 16, 15, 14, 13, 12},\n\t}\n\texpected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,\n\t\t15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,\n\t\t29, 30, 31, 32, 33, 34, 35, 36}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2, 3, 4},\n\t\t{22, 23, 24, 5},\n\t\t{21, 36, 25, 6},\n\t\t{20, 35, 26, 7},\n\t\t{19, 34, 27, 8},\n\t\t{18, 33, 28, 9},\n\t\t{17, 32, 29, 10},\n\t\t{16, 31, 30, 11},\n\t\t{15, 14, 13, 12},\n\t}\n\texpected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,\n\t\t15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,\n\t\t30, 31, 32, 33, 34, 35, 36}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2, 3, 4},\n\t\t{10, 11, 12, 5},\n\t\t{9, 8, 7, 6},\n\t}\n\texpected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2, 3},\n\t\t{12, 13, 4},\n\t\t{11, 14, 5},\n\t\t{10, 15, 6},\n\t\t{9, 8, 7},\n\t}\n\texpected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tmatrix := [][]int{\n\t\t{1, 2, 3, 4},\n\t\t{12, 13, 14, 5},\n\t\t{11, 16, 15, 6},\n\t\t{10, 9, 8, 7},\n\t}\n\texpected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}\n\tactual := SpiralTraverse(matrix)\n\trequire.Equal(t, expected, actual)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space - where n is the total number of elements in the array\nfunc SpiralTraverse(array [][]int) []int {\n\tif len(array) == 0 {\n\t\treturn []int{}\n\t}\n\n\tresult := []int{}\n\tstartRow, endRow := 0, len(array)-1\n\tstartCol, endCol := 0, len(array[0])-1\n\n\tfor startRow <= endRow && startCol <= endCol {\n\t\tfor col := startCol; col <= endCol; col++ {\n\t\t\tresult = append(result, array[startRow][col])\n\t\t}\n\n\t\tfor row := startRow + 1; row <= endRow; row++ {\n\t\t\tresult = append(result, array[row][endCol])\n\t\t}\n\n\t\tfor col := endCol - 1; col >= startCol; col-- {\n\t\t\t// Handle the edge case when there's a single row\n\t\t\t// in the middle of the matrix. In this case, we don't\n\t\t\t// want to double-count the values in this row, which\n\t\t\t// we've already counted in the first for loop above.\n\t\t\t// See Test Case 8 for an example of this edge case.\n\t\t\tif startRow == endRow {\n\t\t\t\tbreak\n\t\t\t}\n\t\t\tresult = append(result, array[endRow][col])\n\t\t}\n\n\t\tfor row := endRow - 1; row > startRow; row-- {\n\t\t\t// Handle the edge case when there's a single column\n\t\t\t// in the middle of the matrix. In this case, we don't\n\t\t\t// want to double-count the values in this column, which\n\t\t\t// we've already counted in the second for loop above.\n\t\t\t// See Test Case 9 for an example of this edge case.\n\t\t\tif startCol == endCol {\n\t\t\t\tbreak\n\t\t\t}\n\t\t\tresult = append(result, array[row][startCol])\n\t\t}\n\n\t\tstartRow++\n\t\tendRow--\n\t\tstartCol++\n\t\tendCol--\n\t}\n\treturn result\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space - where n is the total number of elements in the array\nfunc SpiralTraverse(array [][]int) []int {\n\tif len(array) == 0 {\n\t\treturn []int{}\n\t}\n\tresult := []int{}\n\tspiralFill(array, 0, len(array)-1, 0,\n\t\tlen(array[0])-1, &result)\n\treturn result\n}\n\nfunc spiralFill(array [][]int, startRow, endRow, startCol, endCol int, result *[]int) {\n\tif startRow > endRow || startCol > endCol {\n\t\treturn\n\t}\n\n\tfor col := startCol; col <= endCol; col++ {\n\t\t*result = append(*result, array[startRow][col])\n\t}\n\n\tfor row := startRow + 1; row <= endRow; row++ {\n\t\t*result = append(*result, array[row][endCol])\n\t}\n\n\tfor col := endCol - 1; col >= startCol; col-- {\n\t\t// Handle the edge case when there's a single row\n\t\t// in the middle of the matrix. In this case, we don't\n\t\t// want to double-count the values in this row, which\n\t\t// we've already counted in the first for loop above.\n\t\t// See Test Case 8 for an example of this edge case.\n\t\tif startRow == endRow {\n\t\t\tbreak\n\t\t}\n\t\t*result = append(*result, array[endRow][col])\n\t}\n\n\tfor row := endRow - 1; row >= startRow+1; row-- {\n\t\t// Handle the edge case when there's a single column\n\t\t// in the middle of the matrix. In this case, we don't\n\t\t// want to double-count the values in this column, which\n\t\t// we've already counted in the second for loop above.\n\t\t// See Test Case 9 for an example of this edge case.\n\t\tif startCol == endCol {\n\t\t\tbreak\n\t\t}\n\t\t*result = append(*result, array[row][startCol])\n\t}\n\n\tspiralFill(array, startRow+1, endRow-1,\n\t\tstartCol+1, endCol-1, result)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<Integer> spiralTraverse(int[][] array) {\n    // Write your code here.\n    return new ArrayList<Integer>();\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input =\n        new int[][] {\n          {1},\n        };\n    var expected = Arrays.asList(1);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase2() {\n    var input =\n        new int[][] {\n          {1, 2},\n          {4, 3},\n        };\n    var expected = Arrays.asList(1, 2, 3, 4);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase3() {\n    var input =\n        new int[][] {\n          {1, 2, 3},\n          {8, 9, 4},\n          {7, 6, 5},\n        };\n    var expected = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase4() {\n    var input =\n        new int[][] {\n          {1, 2, 3, 4},\n          {12, 13, 14, 5},\n          {11, 16, 15, 6},\n          {10, 9, 8, 7},\n        };\n    var expected = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase5() {\n    var input =\n        new int[][] {\n          {1, 2, 3, 4, 5, 6},\n          {20, 21, 22, 23, 24, 7},\n          {19, 32, 33, 34, 25, 8},\n          {18, 31, 36, 35, 26, 9},\n          {17, 30, 29, 28, 27, 10},\n          {16, 15, 14, 13, 12, 11},\n        };\n    var expected =\n        Arrays.asList(\n            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,\n            25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase6() {\n    var input =\n        new int[][] {\n          {1, 2, 3, 4, 5, 6, 7, 8, 9},\n          {22, 23, 24, 25, 26, 27, 28, 29, 10},\n          {21, 36, 35, 34, 33, 32, 31, 30, 11},\n          {20, 19, 18, 17, 16, 15, 14, 13, 12},\n        };\n    var expected =\n        Arrays.asList(\n            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,\n            25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase7() {\n    var input =\n        new int[][] {\n          {1, 2, 3, 4},\n          {22, 23, 24, 5},\n          {21, 36, 25, 6},\n          {20, 35, 26, 7},\n          {19, 34, 27, 8},\n          {18, 33, 28, 9},\n          {17, 32, 29, 10},\n          {16, 31, 30, 11},\n          {15, 14, 13, 12},\n        };\n    var expected =\n        Arrays.asList(\n            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,\n            25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase8() {\n    var input =\n        new int[][] {\n          {1, 2, 3, 4},\n          {10, 11, 12, 5},\n          {9, 8, 7, 6},\n        };\n    var expected = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n\n  @Test\n  public void TestCase9() {\n    var input =\n        new int[][] {\n          {1, 2, 3},\n          {12, 13, 4},\n          {11, 14, 5},\n          {10, 15, 6},\n          {9, 8, 7},\n        };\n    var expected = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input =\n        new int[][] {\n          {1, 2, 3, 4},\n          {12, 13, 14, 5},\n          {11, 16, 15, 6},\n          {10, 9, 8, 7},\n        };\n    var expected = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);\n    var actual = Program.spiralTraverse(input);\n    Utils.assertTrue(expected.equals(actual));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space - where n is the total number of elements in the array\n  public static List<Integer> spiralTraverse(int[][] array) {\n    if (array.length == 0) return new ArrayList<Integer>();\n\n    var result = new ArrayList<Integer>();\n    var startRow = 0;\n    var endRow = array.length - 1;\n    var startCol = 0;\n    var endCol = array[0].length - 1;\n\n    while (startRow <= endRow && startCol <= endCol) {\n      for (int col = startCol; col <= endCol; col++) {\n        result.add(array[startRow][col]);\n      }\n\n      for (int row = startRow + 1; row <= endRow; row++) {\n        result.add(array[row][endCol]);\n      }\n\n      for (int col = endCol - 1; col >= startCol; col--) {\n        // Handle the edge case when there's a single row\n        // in the middle of the matrix. In this case, we don't\n        // want to double-count the values in this row, which\n        // we've already counted in the first for loop above.\n        // See Test Case 8 for an example of this edge case.\n        if (startRow == endRow) break;\n        result.add(array[endRow][col]);\n      }\n\n      for (int row = endRow - 1; row > startRow; row--) {\n        // Handle the edge case when there's a single column\n        // in the middle of the matrix. In this case, we don't\n        // want to double-count the values in this column, which\n        // we've already counted in the second for loop above.\n        // See Test Case 9 for an example of this edge case.\n        if (startCol == endCol) break;\n        result.add(array[row][startCol]);\n      }\n\n      startRow++;\n      endRow--;\n      startCol++;\n      endCol--;\n    }\n    return result;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space - where n is the total number of elements in the array\n  public static List<Integer> spiralTraverse(int[][] array) {\n    if (array.length == 0) return new ArrayList<Integer>();\n\n    var result = new ArrayList<Integer>();\n    spiralFill(array, 0, array.length - 1, 0, array[0].length - 1, result);\n    return result;\n  }\n\n  public static void spiralFill(\n      int[][] array,\n      int startRow,\n      int endRow,\n      int startCol,\n      int endCol,\n      ArrayList<Integer> result) {\n    if (startRow > endRow || startCol > endCol) {\n      return;\n    }\n\n    for (int col = startCol; col <= endCol; col++) {\n      result.add(array[startRow][col]);\n    }\n\n    for (int row = startRow + 1; row <= endRow; row++) {\n      result.add(array[row][endCol]);\n    }\n\n    for (int col = endCol - 1; col >= startCol; col--) {\n      // Handle the edge case when there's a single row\n\t\t\t// in the middle of the matrix. In this case, we don't\n\t\t\t// want to double-count the values in this row, which\n\t\t\t// we've already counted in the first for loop above.\n\t\t\t// See Test Case 8 for an example of this edge case.\n      if (startRow == endRow) break;\n      result.add(array[endRow][col]);\n    }\n\n    for (int row = endRow - 1; row >= startRow + 1; row--) {\n      // Handle the edge case when there's a single column\n\t\t\t// in the middle of the matrix. In this case, we don't\n\t\t\t// want to double-count the values in this column, which\n\t\t\t// we've already counted in the second for loop above.\n\t\t\t// See Test Case 9 for an example of this edge case.\n      if (startCol == endCol) break;\n      result.add(array[row][startCol]);\n    }\n    spiralFill(array, startRow + 1, endRow - 1, startCol + 1, endCol - 1, result);\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function spiralTraverse(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.spiralTraverse = spiralTraverse;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const matrix = [[1]];\n  const expected = [1];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n\nit('Test Case #2', function () {\n  const matrix = [\n    [1, 2],\n    [4, 3],\n  ];\n  const expected = [1, 2, 3, 4];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n\nit('Test Case #3', function () {\n  const matrix = [\n    [1, 2, 3],\n    [8, 9, 4],\n    [7, 6, 5],\n  ];\n  const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n\nit('Test Case #4', function () {\n  const matrix = [\n    [1, 2, 3, 4],\n    [12, 13, 14, 5],\n    [11, 16, 15, 6],\n    [10, 9, 8, 7],\n  ];\n  const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n\nit('Test Case #5', function () {\n  const matrix = [\n    [1, 2, 3, 4, 5, 6],\n    [20, 21, 22, 23, 24, 7],\n    [19, 32, 33, 34, 25, 8],\n    [18, 31, 36, 35, 26, 9],\n    [17, 30, 29, 28, 27, 10],\n    [16, 15, 14, 13, 12, 11],\n  ];\n  const expected = [\n    1,\n    2,\n    3,\n    4,\n    5,\n    6,\n    7,\n    8,\n    9,\n    10,\n    11,\n    12,\n    13,\n    14,\n    15,\n    16,\n    17,\n    18,\n    19,\n    20,\n    21,\n    22,\n    23,\n    24,\n    25,\n    26,\n    27,\n    28,\n    29,\n    30,\n    31,\n    32,\n    33,\n    34,\n    35,\n    36,\n  ];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n\nit('Test Case #6', function () {\n  const matrix = [\n    [1, 2, 3, 4, 5, 6, 7, 8, 9],\n    [22, 23, 24, 25, 26, 27, 28, 29, 10],\n    [21, 36, 35, 34, 33, 32, 31, 30, 11],\n    [20, 19, 18, 17, 16, 15, 14, 13, 12],\n  ];\n  const expected = [\n    1,\n    2,\n    3,\n    4,\n    5,\n    6,\n    7,\n    8,\n    9,\n    10,\n    11,\n    12,\n    13,\n    14,\n    15,\n    16,\n    17,\n    18,\n    19,\n    20,\n    21,\n    22,\n    23,\n    24,\n    25,\n    26,\n    27,\n    28,\n    29,\n    30,\n    31,\n    32,\n    33,\n    34,\n    35,\n    36,\n  ];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n\nit('Test Case #7', function () {\n  const matrix = [\n    [1, 2, 3, 4],\n    [22, 23, 24, 5],\n    [21, 36, 25, 6],\n    [20, 35, 26, 7],\n    [19, 34, 27, 8],\n    [18, 33, 28, 9],\n    [17, 32, 29, 10],\n    [16, 31, 30, 11],\n    [15, 14, 13, 12],\n  ];\n  const expected = [\n    1,\n    2,\n    3,\n    4,\n    5,\n    6,\n    7,\n    8,\n    9,\n    10,\n    11,\n    12,\n    13,\n    14,\n    15,\n    16,\n    17,\n    18,\n    19,\n    20,\n    21,\n    22,\n    23,\n    24,\n    25,\n    26,\n    27,\n    28,\n    29,\n    30,\n    31,\n    32,\n    33,\n    34,\n    35,\n    36,\n  ];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n\nit('Test Case #8', function () {\n  const matrix = [\n    [1, 2, 3, 4],\n    [10, 11, 12, 5],\n    [9, 8, 7, 6],\n  ];\n  const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n\nit('Test Case #9', function () {\n  const matrix = [\n    [1, 2, 3],\n    [12, 13, 4],\n    [11, 14, 5],\n    [10, 15, 6],\n    [9, 8, 7],\n  ];\n  const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const matrix = [\n    [1, 2, 3, 4],\n    [12, 13, 14, 5],\n    [11, 16, 15, 6],\n    [10, 9, 8, 7],\n  ];\n  const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the total number of elements in the array\nfunction spiralTraverse(array) {\n  const result = [];\n  let startRow = 0,\n    endRow = array.length - 1;\n  let startCol = 0,\n    endCol = array[0].length - 1;\n\n  while (startRow <= endRow && startCol <= endCol) {\n    for (let col = startCol; col <= endCol; col++) {\n      result.push(array[startRow][col]);\n    }\n\n    for (let row = startRow + 1; row <= endRow; row++) {\n      result.push(array[row][endCol]);\n    }\n\n    for (let col = endCol - 1; col >= startCol; col--) {\n      // Handle the edge case when there's a single row\n      // in the middle of the matrix. In this case, we don't\n      // want to double-count the values in this row, which\n      // we've already counted in the first for loop above.\n      // See Test Case 8 for an example of this edge case.\n      if (startRow === endRow) break;\n      result.push(array[endRow][col]);\n    }\n\n    for (let row = endRow - 1; row > startRow; row--) {\n      // Handle the edge case when there's a single column\n      // in the middle of the matrix. In this case, we don't\n      // want to double-count the values in this column, which\n      // we've already counted in the second for loop above.\n      // See Test Case 9 for an example of this edge case.\n      if (startCol === endCol) break;\n      result.push(array[row][startCol]);\n    }\n\n    startRow++;\n    endRow--;\n    startCol++;\n    endCol--;\n  }\n\n  return result;\n}\n\nexports.spiralTraverse = spiralTraverse;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the total number of elements in the array\nfunction spiralTraverse(array) {\n  const result = [];\n  spiralFill(array, 0, array.length - 1, 0, array[0].length - 1, result);\n  return result;\n}\n\nfunction spiralFill(array, startRow, endRow, startCol, endCol, result) {\n  if (startRow > endRow || startCol > endCol) return;\n\n  for (let col = startCol; col <= endCol; col++) {\n    result.push(array[startRow][col]);\n  }\n\n  for (let row = startRow + 1; row <= endRow; row++) {\n    result.push(array[row][endCol]);\n  }\n\n  for (let col = endCol - 1; col >= startCol; col--) {\n    // Handle the edge case when there's a single row\n    // in the middle of the matrix. In this case, we don't\n    // want to double-count the values in this row, which\n    // we've already counted in the first for loop above.\n    // See Test Case 8 for an example of this edge case.\n    if (startRow === endRow) break;\n    result.push(array[endRow][col]);\n  }\n\n  for (let row = endRow - 1; row >= startRow + 1; row--) {\n    // Handle the edge case when there's a single column\n    // in the middle of the matrix. In this case, we don't\n    // want to double-count the values in this column, which\n    // we've already counted in the second for loop above.\n    // See Test Case 9 for an example of this edge case.\n    if (startCol === endCol) break;\n    result.push(array[row][startCol]);\n  }\n\n  spiralFill(array, startRow + 1, endRow - 1, startCol + 1, endCol - 1, result);\n}\n\nexports.spiralTraverse = spiralTraverse;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def spiralTraverse(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        matrix = [[1]]\n        expected = [1]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n\n    def test_case_2(self):\n        matrix = [[1, 2], [4, 3]]\n        expected = [1, 2, 3, 4]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n\n    def test_case_3(self):\n        matrix = [[1, 2, 3], [8, 9, 4], [7, 6, 5]]\n        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n\n    def test_case_4(self):\n        matrix = [[1, 2, 3, 4], [12, 13, 14, 5], [11, 16, 15, 6], [10, 9, 8, 7]]\n        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n\n    def test_case_5(self):\n        matrix = [\n            [1, 2, 3, 4, 5, 6],\n            [20, 21, 22, 23, 24, 7],\n            [19, 32, 33, 34, 25, 8],\n            [18, 31, 36, 35, 26, 9],\n            [17, 30, 29, 28, 27, 10],\n            [16, 15, 14, 13, 12, 11],\n        ]\n        expected = [\n            1,\n            2,\n            3,\n            4,\n            5,\n            6,\n            7,\n            8,\n            9,\n            10,\n            11,\n            12,\n            13,\n            14,\n            15,\n            16,\n            17,\n            18,\n            19,\n            20,\n            21,\n            22,\n            23,\n            24,\n            25,\n            26,\n            27,\n            28,\n            29,\n            30,\n            31,\n            32,\n            33,\n            34,\n            35,\n            36,\n        ]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n\n    def test_case_6(self):\n        matrix = [\n            [1, 2, 3, 4, 5, 6, 7, 8, 9],\n            [22, 23, 24, 25, 26, 27, 28, 29, 10],\n            [21, 36, 35, 34, 33, 32, 31, 30, 11],\n            [20, 19, 18, 17, 16, 15, 14, 13, 12],\n        ]\n        expected = [\n            1,\n            2,\n            3,\n            4,\n            5,\n            6,\n            7,\n            8,\n            9,\n            10,\n            11,\n            12,\n            13,\n            14,\n            15,\n            16,\n            17,\n            18,\n            19,\n            20,\n            21,\n            22,\n            23,\n            24,\n            25,\n            26,\n            27,\n            28,\n            29,\n            30,\n            31,\n            32,\n            33,\n            34,\n            35,\n            36,\n        ]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n\n    def test_case_7(self):\n        matrix = [\n            [1, 2, 3, 4],\n            [22, 23, 24, 5],\n            [21, 36, 25, 6],\n            [20, 35, 26, 7],\n            [19, 34, 27, 8],\n            [18, 33, 28, 9],\n            [17, 32, 29, 10],\n            [16, 31, 30, 11],\n            [15, 14, 13, 12],\n        ]\n        expected = [\n            1,\n            2,\n            3,\n            4,\n            5,\n            6,\n            7,\n            8,\n            9,\n            10,\n            11,\n            12,\n            13,\n            14,\n            15,\n            16,\n            17,\n            18,\n            19,\n            20,\n            21,\n            22,\n            23,\n            24,\n            25,\n            26,\n            27,\n            28,\n            29,\n            30,\n            31,\n            32,\n            33,\n            34,\n            35,\n            36,\n        ]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n\n    def test_case_8(self):\n        matrix = [\n            [1, 2, 3, 4],\n            [10, 11, 12, 5],\n            [9, 8, 7, 6],\n        ]\n        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n\n    def test_case_9(self):\n        matrix = [\n            [1, 2, 3],\n            [12, 13, 4],\n            [11, 14, 5],\n            [10, 15, 6],\n            [9, 8, 7],\n        ]\n        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        matrix = [[1, 2, 3, 4], [12, 13, 14, 5], [11, 16, 15, 6], [10, 9, 8, 7]]\n        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]\n        self.assertEqual(program.spiralTraverse(matrix), expected)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space - where n is the total number of elements in the array\ndef spiralTraverse(array):\n    result = []\n    startRow, endRow = 0, len(array) - 1\n    startCol, endCol = 0, len(array[0]) - 1\n\n    while startRow <= endRow and startCol <= endCol:\n        for col in range(startCol, endCol + 1):\n            result.append(array[startRow][col])\n\n        for row in range(startRow + 1, endRow + 1):\n            result.append(array[row][endCol])\n\n        for col in reversed(range(startCol, endCol)):\n            # Handle the edge case when there's a single row\n            # in the middle of the matrix. In this case, we don't\n            # want to double-count the values in this row, which\n            # we've already counted in the first for loop above.\n            # See Test Case 8 for an example of this edge case.\n            if startRow == endRow:\n                break\n            result.append(array[endRow][col])\n\n        for row in reversed(range(startRow + 1, endRow)):\n            # Handle the edge case when there's a single column\n            # in the middle of the matrix. In this case, we don't\n            # want to double-count the values in this column, which\n            # we've already counted in the second for loop above.\n            # See Test Case 9 for an example of this edge case.\n            if startCol == endCol:\n                break\n            result.append(array[row][startCol])\n\n        startRow += 1\n        endRow -= 1\n        startCol += 1\n        endCol -= 1\n\n    return result\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space - where n is the total number of elements in the array\ndef spiralTraverse(array):\n    result = []\n    spiralFill(array, 0, len(array) - 1, 0, len(array[0]) - 1, result)\n    return result\n\n\ndef spiralFill(array, startRow, endRow, startCol, endCol, result):\n    if startRow > endRow or startCol > endCol:\n        return\n\n    for col in range(startCol, endCol + 1):\n        result.append(array[startRow][col])\n\n    for row in range(startRow + 1, endRow + 1):\n        result.append(array[row][endCol])\n\n    for col in reversed(range(startCol, endCol)):\n        # Handle the edge case when there's a single row\n        # in the middle of the matrix. In this case, we don't\n        # want to double-count the values in this row, which\n        # we've already counted in the first for loop above.\n        # See Test Case 8 for an example of this edge case.\n        if startRow == endRow:\n            break\n        result.append(array[endRow][col])\n\n    for row in reversed(range(startRow + 1, endRow)):\n        # Handle the edge case when there's a single column\n        # in the middle of the matrix. In this case, we don't\n        # want to double-count the values in this column, which\n        # we've already counted in the second for loop above.\n        # See Test Case 9 for an example of this edge case.\n        if startCol == endCol:\n            break\n        result.append(array[row][startCol])\n\n    spiralFill(array, startRow + 1, endRow - 1, startCol + 1, endCol - 1, result)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func spiralTraverse(array: [[Int]]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let input = [\n        [1],\n      ]\n      let expected = [1]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let input = [[1, 2], [4, 3]]\n      let expected = [1, 2, 3, 4]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let input = [[1, 2, 3], [8, 9, 4], [7, 6, 5]]\n      let expected = [1, 2, 3, 4, 5, 6, 7, 8, 9]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let input = [[1, 2, 3, 4], [12, 13, 14, 5], [11, 16, 15, 6], [10, 9, 8, 7]]\n      let expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let input = [\n        [1, 2, 3, 4, 5, 6],\n        [20, 21, 22, 23, 24, 7],\n        [19, 32, 33, 34, 25, 8],\n        [18, 31, 36, 35, 26, 9],\n        [17, 30, 29, 28, 27, 10],\n        [16, 15, 14, 13, 12, 11],\n      ]\n      let expected = [1, 2, 3, 4, 5, 6, 7, 8,\n                      9, 10, 11, 12, 13, 14, 15, 16, 17,\n                      18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,\n                      29, 30, 31, 32, 33, 34, 35, 36]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let input = [\n        [1, 2, 3, 4, 5, 6, 7, 8, 9],\n        [22, 23, 24, 25, 26, 27, 28, 29, 10],\n        [21, 36, 35, 34, 33, 32, 31, 30, 11],\n        [20, 19, 18, 17, 16, 15, 14, 13, 12],\n      ]\n      let expected = [1, 2, 3, 4, 5, 6, 7, 8,\n                      9, 10, 11, 12, 13, 14, 15, 16, 17,\n                      18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,\n                      29, 30, 31, 32, 33, 34, 35, 36]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let input = [\n        [1, 2, 3, 4],\n        [22, 23, 24, 5],\n        [21, 36, 25, 6],\n        [20, 35, 26, 7],\n        [19, 34, 27, 8],\n        [18, 33, 28, 9],\n        [17, 32, 29, 10],\n        [16, 31, 30, 11],\n        [15, 14, 13, 12],\n      ]\n      let expected = [1, 2, 3, 4, 5, 6, 7, 8,\n                      9, 10, 11, 12, 13, 14, 15, 16, 17,\n                      18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,\n                      29, 30, 31, 32, 33, 34, 35, 36]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let input = [\n        [1, 2, 3, 4],\n        [10, 11, 12, 5],\n        [9, 8, 7, 6],\n      ]\n      let expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let input = [\n        [1, 2, 3],\n        [12, 13, 4],\n        [11, 14, 5],\n        [10, 15, 6],\n        [9, 8, 7],\n      ]\n      let expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let input = [[1, 2, 3, 4], [12, 13, 14, 5], [11, 16, 15, 6], [10, 9, 8, 7]]\n      let expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]\n      let actual = program.spiralTraverse(array: input)\n      try assertEqual(expected, actual)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space - where n is the total number of elements in the array\n  func spiralTraverse(array: [[Int]]) -> [Int] {\n    if array.count == 0 {\n      return []\n    }\n\n    var result = [Int]()\n    var startRow = 0\n    var endRow = array.count - 1\n    var startCol = 0\n    var endCol = array[0].count - 1\n\n    while startRow <= endRow, startCol <= endCol {\n      for col in stride(from: startCol, through: endCol, by: 1) {\n        result.append(array[startRow][col])\n      }\n\n      for row in stride(from: startRow + 1, through: endRow, by: 1) {\n        result.append(array[row][endCol])\n      }\n\n      for col in stride(from: endCol - 1, through: startCol, by: -1) {\n        // Handle the edge case when there's a single row\n        // in the middle of the matrix. In this case, we don't\n        // want to double-count the values in this row, which\n        // we've already counted in the first for loop above.\n        // See Test Case 8 for an example of this edge case.\n        if startRow == endRow {\n          break\n        }\n        result.append(array[endRow][col])\n      }\n\n      for row in stride(from: endRow - 1, through: startRow + 1, by: -1) {\n        // Handle the edge case when there's a single column\n        // in the middle of the matrix. In this case, we don't\n        // want to double-count the values in this column, which\n        // we've already counted in the second for loop above.\n        // See Test Case 9 for an example of this edge case.\n        if startCol == endCol {\n          break\n        }\n        result.append(array[row][startCol])\n      }\n\n      startRow += 1\n      endRow -= 1\n      startCol += 1\n      endCol -= 1\n    }\n    return result\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space - where n is the total number of elements in the array\n  func spiralTraverse(array: [[Int]]) -> [Int] {\n    var result = [Int]()\n    spiralFill(array, 0, array.count - 1, 0, array[0].count - 1, &result)\n    return result\n  }\n\n  func spiralFill(_ array: [[Int]], _ startRow: Int, _ endRow: Int, _ startCol: Int, _ endCol: Int, _ result: inout [Int]) {\n    if startRow > endRow || startCol > endCol {\n      return\n    }\n\n    for col in stride(from: startCol, through: endCol, by: 1) {\n      result.append(array[startRow][col])\n    }\n\n    for row in stride(from: startRow + 1, through: endRow, by: 1) {\n      result.append(array[row][endCol])\n    }\n\n    for col in stride(from: endCol - 1, through: startCol, by: -1) {\n      // Handle the edge case when there's a single row\n      // in the middle of the matrix. In this case, we don't\n      // want to double-count the values in this row, which\n      // we've already counted in the first for loop above.\n      // See Test Case 8 for an example of this edge case.\n      if startRow == endRow {\n        break\n      }\n      result.append(array[endRow][col])\n    }\n\n    for row in stride(from: endRow - 1, through: startRow + 1, by: -1) {\n      // Handle the edge case when there's a single column\n      // in the middle of the matrix. In this case, we don't\n      // want to double-count the values in this column, which\n      // we've already counted in the second for loop above.\n      // See Test Case 9 for an example of this edge case.\n      if startCol == endCol {\n        break\n      }\n      result.append(array[row][startCol])\n    }\n\n    spiralFill(array, startRow + 1, endRow - 1,\n               startCol + 1, endCol - 1, &result)\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function spiralTraverse(array: number[][]) {\n  // Write your code here.\n  return [-1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const matrix = [\n    [1, 2, 3, 4],\n    [12, 13, 14, 5],\n    [11, 16, 15, 6],\n    [10, 9, 8, 7],\n  ];\n  const expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];\n  chai.expect(program.spiralTraverse(matrix)).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the total number of elements in the array\nexport function spiralTraverse(array: number[][]) {\n  const result: number[] = [];\n  let startRow = 0,\n    endRow = array.length - 1;\n  let startCol = 0,\n    endCol = array[0].length - 1;\n\n  while (startRow <= endRow && startCol <= endCol) {\n    for (let col = startCol; col <= endCol; col++) {\n      result.push(array[startRow][col]);\n    }\n\n    for (let row = startRow + 1; row <= endRow; row++) {\n      result.push(array[row][endCol]);\n    }\n\n    for (let col = endCol - 1; col >= startCol; col--) {\n      // Handle the edge case when there's a single row\n      // in the middle of the matrix. In this case, we don't\n      // want to double-count the values in this row, which\n      // we've already counted in the first for loop above.\n      // See Test Case 8 for an example of this edge case.\n      if (startRow === endRow) break;\n      result.push(array[endRow][col]);\n    }\n\n    for (let row = endRow - 1; row > startRow; row--) {\n      // Handle the edge case when there's a single column\n      // in the middle of the matrix. In this case, we don't\n      // want to double-count the values in this column, which\n      // we've already counted in the second for loop above.\n      // See Test Case 9 for an example of this edge case.\n      if (startCol === endCol) break;\n      result.push(array[row][startCol]);\n    }\n\n    startRow++;\n    endRow--;\n    startCol++;\n    endCol--;\n  }\n\n  return result;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the total number of elements in the array\nexport function spiralTraverse(array: number[][]) {\n  const result: number[] = [];\n  spiralFill(array, 0, array.length - 1, 0, array[0].length - 1, result);\n  return result;\n}\n\nexport function spiralFill(\n  array: number[][],\n  startRow: number,\n  endRow: number,\n  startCol: number,\n  endCol: number,\n  result: number[],\n) {\n  if (startRow > endRow || startCol > endCol) return;\n\n  for (let col = startCol; col <= endCol; col++) {\n    result.push(array[startRow][col]);\n  }\n\n  for (let row = startRow + 1; row <= endRow; row++) {\n    result.push(array[row][endCol]);\n  }\n\n  for (let col = endCol - 1; col >= startCol; col--) {\n    // Handle the edge case when there's a single row\n    // in the middle of the matrix. In this case, we don't\n    // want to double-count the values in this row, which\n    // we've already counted in the first for loop above.\n    // See Test Case 8 for an example of this edge case.\n    if (startRow === endRow) break;\n    result.push(array[endRow][col]);\n  }\n\n  for (let row = endRow - 1; row >= startRow + 1; row--) {\n    // Handle the edge case when there's a single column\n    // in the middle of the matrix. In this case, we don't\n    // want to double-count the values in this column, which\n    // we've already counted in the second for loop above.\n    // See Test Case 9 for an example of this edge case.\n    if (startCol === endCol) break;\n    result.push(array[row][startCol]);\n  }\n\n  spiralFill(array, startRow + 1, endRow - 1, startCol + 1, endCol - 1, result);\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          12,
+          13,
+          14,
+          5
+        ],
+        [
+          11,
+          16,
+          15,
+          6
+        ],
+        [
+          10,
+          9,
+          8,
+          7
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          8,
+          9,
+          4
+        ],
+        [
+          7,
+          6,
+          5
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          19,
+          32,
+          33,
+          34,
+          25,
+          8
+        ],
+        [
+          16,
+          15,
+          14,
+          13,
+          12,
+          11
+        ],
+        [
+          18,
+          31,
+          36,
+          35,
+          26,
+          9
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        [
+          20,
+          21,
+          22,
+          23,
+          24,
+          7
+        ],
+        [
+          17,
+          30,
+          29,
+          28,
+          27,
+          10
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          4,
+          2,
+          3,
+          6,
+          7,
+          8,
+          1,
+          9,
+          5,
+          10
+        ],
+        [
+          12,
+          19,
+          15,
+          16,
+          20,
+          18,
+          13,
+          17,
+          11,
+          14
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          27,
+          12,
+          35,
+          26
+        ],
+        [
+          25,
+          21,
+          94,
+          11
+        ],
+        [
+          19,
+          96,
+          43,
+          56
+        ],
+        [
+          55,
+          36,
+          10,
+          18
+        ],
+        [
+          96,
+          83,
+          31,
+          94
+        ],
+        [
+          93,
+          11,
+          90,
+          16
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          10,
+          11,
+          12,
+          5
+        ],
+        [
+          9,
+          8,
+          7,
+          6
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          12,
+          13,
+          4
+        ],
+        [
+          11,
+          14,
+          5
+        ],
+        [
+          10,
+          15,
+          6
+        ],
+        [
+          9,
+          8,
+          7
+        ]
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      [
+        1
+      ],
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      [
+        19,
+        32,
+        33,
+        34,
+        25,
+        8,
+        11,
+        9,
+        6,
+        7,
+        10,
+        27,
+        28,
+        29,
+        30,
+        17,
+        20,
+        1,
+        18,
+        16,
+        15,
+        14,
+        13,
+        12,
+        26,
+        5,
+        24,
+        23,
+        22,
+        21,
+        2,
+        31,
+        36,
+        35,
+        4,
+        3
+      ],
+      [
+        4,
+        2,
+        3,
+        6,
+        7,
+        8,
+        1,
+        9,
+        5,
+        10,
+        14,
+        11,
+        17,
+        13,
+        18,
+        20,
+        16,
+        15,
+        19,
+        12
+      ],
+      [
+        27,
+        12,
+        35,
+        26,
+        11,
+        56,
+        18,
+        94,
+        16,
+        90,
+        11,
+        93,
+        96,
+        55,
+        19,
+        25,
+        21,
+        94,
+        43,
+        10,
+        31,
+        83,
+        36,
+        96
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    ]
+  ]
+}

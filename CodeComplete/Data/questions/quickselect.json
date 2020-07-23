@@ -1,0 +1,402 @@
+{
+  "Summary": {
+    "Name": "Quickselect",
+    "Category": "Searching",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 756,
+      "timeOne": 0,
+      "timeTwo": 1638,
+      "url": "https://player.vimeo.com/video/249381541"
+    }
+  },
+  "Prompt": "",
+  "Hints": "The Quick Sort sorting algorithm works by picking a \"pivot\" number from an array, positioning every other number in the array in sorted order with respect to the pivot (all smaller numbers to the pivot's left; all bigger numbers to the pivot's right), and then repeating the same two steps on both sides of the pivot until the entire array is sorted. Apply the technique used in Quick Sort until the pivot element gets positioned in the kth place in the array, at which point you'll have found the answer to the problem.\nPick a random number from the input array (the first number, for instance) and let that number be the pivot. Iterate through the rest of the array using two pointers, one starting at the left extremity of the array and progressively moving to the right, and the other one starting at the right extremity of the array and progressively moving to the left. As you iterate through the array, compare the left and right pointer numbers to the pivot. If the left number is greater than the pivot and the right number is less than the pivot, swap them; this will effectively sort these numbers with respect to the pivot at the end of the iteration. If the left number is ever less than or equal to the pivot, increment the left pointer; similarly, if the right number is ever greater than or equal to the pivot, decrement the right pointer. Do this until the pointers pass each other, at which point swapping the pivot with the right number should position the pivot in its final, sorted position, where every number to its left is smaller and every number to its right is greater. If the pivot is in the kth position, you're done; if it isn't, figure out if the kth smallest number is located to the left or to the right of the pivot.\nRepeat the process mentioned in Hint #2 on the side of the kth smallest number, and keep on repeating the process thereafter until you find the answer. What is the time complexity of this algorithm?\n",
+  "SpaceTime": "Best: O(n) time | O(1) space - where n is the length of the input array\nAverage: O(n) time | O(1) space - where n is the length of the input array\nWorst: O(n^2) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in an array of distinct integers as well as an\n  integer <span>k</span> and that returns the kth smallest integer in that array.\n</p>\n<p>The function should do this in linear time, on average.</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [8, 5, 2, 9, 7, 6, 3]\n<span class=\"CodeEditor-promptParameter\">k</span> = 3\n</pre>\n<h3>Sample Output</h3>\n<pre>\n5\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        8,
+        5,
+        2,
+        9,
+        7,
+        6,
+        3
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array",
+        "uniqueItems": true
+      }
+    },
+    {
+      "Name": "k",
+      "Example": 3,
+      "Schema": {
+        "minimum": 1,
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint quickselect(vector<int> array, int k) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() { assert(quickselect({1}, 1) == 1); });\n\n    RunTest(\"Test Case 2\", []() {\n      assert(quickselect({43, 24, 37}, 1) == 24);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      assert(quickselect({43, 24, 37}, 2) == 37);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      assert(quickselect({43, 24, 37}, 3) == 43);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      assert(quickselect({8, 5, 2, 9, 7, 6, 3}, 3) == 5);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      assert(quickselect({8, 3, 2, 5, 1, 7, 4, 6}, 1) == 1);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(quickselect({8, 3, 2, 5, 1, 7, 4, 6}, 2) == 2);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(quickselect({8, 3, 2, 5, 1, 7, 4, 6}, 3) == 3);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      assert(quickselect({8, 3, 2, 5, 1, 7, 4, 6}, 4) == 4);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      assert(quickselect({8, 3, 2, 5, 1, 7, 4, 6}, 5) == 5);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      assert(quickselect({8, 3, 2, 5, 1, 7, 4, 6}, 6) == 6);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      assert(quickselect({8, 3, 2, 5, 1, 7, 4, 6}, 7) == 7);\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      assert(quickselect({8, 3, 2, 5, 1, 7, 4, 6}, 8) == 8);\n    });\n\n    RunTest(\"Test Case 14\", []() {\n      assert(quickselect(\n                 {102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15},\n                 5) == 25);\n    });\n\n    RunTest(\"Test Case 15\", []() {\n      assert(quickselect(\n                 {102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15},\n                 4) == 15);\n    });\n\n    RunTest(\"Test Case 16\", []() {\n      assert(quickselect(\n                 {102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15},\n                 9) == 102);\n    });\n\n    RunTest(\"Test Case 17\", []() {\n      assert(quickselect({1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000,\n                          985181, 55516151},\n                         12) == 55516151);\n    });\n\n    RunTest(\"Test Case 18\", []() {\n      assert(quickselect({1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000,\n                          985181, 55516151},\n                         4) == 123);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(quickselect({8, 5, 2, 9, 7, 6, 3}, 3) == 5);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nint quickselectHelper(vector<int> array, int startIdx, int endIdx,\n                      int position);\n\n// Best: O(n) time | O(1) space\n// Average: O(n) time | O(1) space\n// Worst: O(n^2) time | O(1) space\nint quickselect(vector<int> array, int k) {\n  int position = k - 1;\n  return quickselectHelper(array, 0, array.size() - 1, position);\n}\n\nint quickselectHelper(vector<int> array, int startIdx, int endIdx,\n                      int position) {\n  while (true) {\n    if (startIdx > endIdx) {\n      perror(\"Your Algorithm should never arrive here!\");\n      exit(1);\n    }\n    int pivotIdx = startIdx;\n    int leftIdx = startIdx + 1;\n    int rightIdx = endIdx;\n    while (leftIdx <= rightIdx) {\n      if (array[leftIdx] > array[pivotIdx] &&\n          array[rightIdx] < array[pivotIdx]) {\n        swap(array[leftIdx], array[rightIdx]);\n      }\n      if (array[leftIdx] <= array[pivotIdx]) {\n        leftIdx++;\n      }\n      if (array[rightIdx] >= array[pivotIdx]) {\n        rightIdx--;\n      }\n    }\n    swap(array[pivotIdx], array[rightIdx]);\n    if (rightIdx == position) {\n      return array[rightIdx];\n    } else if (rightIdx < position) {\n      startIdx = rightIdx + 1;\n    } else {\n      endIdx = rightIdx - 1;\n    }\n  }\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int Quickselect(int[] array, int k) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {1}, 1) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {43, 24, 37}, 1) == 24);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {43, 24, 37}, 2) == 37);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {43, 24, 37}, 3) == 43);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 5, 2, 9, 7, 6, 3}, 3) == 5);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 1) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 2) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 3) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 4) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 5) == 5);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 6) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 7) == 7);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 8) == 8);\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tUtils.AssertTrue(\n\t\t\tProgram.Quickselect(new int[] {102, 41, 58, 81, 2, -5, 1000, 10021, 181,\n\t\t\t                               -14515, 25, 15}, 5)\n\t\t\t== 25);\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tUtils.AssertTrue(\n\t\t\tProgram.Quickselect(new int[] {102, 41, 58, 81, 2, -5, 1000, 10021, 181,\n\t\t\t                               -14515, 25, 15}, 4)\n\t\t\t== 15);\n\t}\n\n\t[Test]\n\tpublic void TestCase16() {\n\t\tUtils.AssertTrue(\n\t\t\tProgram.Quickselect(new int[] {102, 41, 58, 81, 2, -5, 1000, 10021, 181,\n\t\t\t                               -14515, 25, 15}, 9)\n\t\t\t== 102);\n\t}\n\n\t[Test]\n\tpublic void TestCase17() {\n\t\tUtils.AssertTrue(\n\t\t\tProgram.Quickselect(\n\t\t\t\tnew int[] {1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000,\n\t\t\t\t           985181, 55516151}, 12)\n\t\t\t== 55516151);\n\t}\n\n\t[Test]\n\tpublic void TestCase18() {\n\t\tUtils.AssertTrue(\n\t\t\tProgram.Quickselect(\n\t\t\t\tnew int[] {1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000,\n\t\t\t\t           985181, 55516151}, 4)\n\t\t\t== 123);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.Quickselect(new int[] {8, 5, 2, 9, 7, 6, 3}, 3) == 5);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\t// Best: O(n) time | O(1) space\n\t// Average: O(n) time | O(1) space\n\t// Worst: O(n^2) time | O(1) space\n\tpublic static int Quickselect(int[] array, int k) {\n\t\tint position = k - 1;\n\t\treturn Quickselect(array, 0, array.Length - 1, position);\n\t}\n\n\tpublic static int Quickselect(int[] array, int startIdx, int endIdx, int position) {\n\t\twhile (true) {\n\t\t\tif (startIdx > endIdx) {\n\t\t\t\tthrow new Exception(\"Your Algorithm should never arrive here!\");\n\t\t\t}\n\t\t\tint pivotIdx = startIdx;\n\t\t\tint leftIdx = startIdx + 1;\n\t\t\tint rightIdx = endIdx;\n\t\t\twhile (leftIdx <= rightIdx) {\n\t\t\t\tif (array[leftIdx] > array[pivotIdx] &&\n\t\t\t\t  array[rightIdx] < array[pivotIdx]) {\n\t\t\t\t\tswap(leftIdx, rightIdx, array);\n\t\t\t\t}\n\t\t\t\tif (array[leftIdx] <= array[pivotIdx]) {\n\t\t\t\t\tleftIdx++;\n\t\t\t\t}\n\t\t\t\tif (array[rightIdx] >= array[pivotIdx]) {\n\t\t\t\t\trightIdx--;\n\t\t\t\t}\n\t\t\t}\n\t\t\tswap(pivotIdx, rightIdx, array);\n\t\t\tif (rightIdx == position) {\n\t\t\t\treturn array[rightIdx];\n\t\t\t} else if (rightIdx < position) {\n\t\t\t\tstartIdx = rightIdx + 1;\n\t\t\t} else {\n\t\t\t\tendIdx = rightIdx - 1;\n\t\t\t}\n\t\t}\n\t}\n\n\tpublic static void swap(int i, int j, int[] array) {\n\t\tint temp = array[j];\n\t\tarray[j] = array[i];\n\t\tarray[i] = temp;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc Quickselect(array []int, k int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 1\n\toutput := Quickselect([]int{1}, 1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 24\n\toutput := Quickselect([]int{43, 24, 37}, 1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 37\n\toutput := Quickselect([]int{43, 24, 37}, 2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := 43\n\toutput := Quickselect([]int{43, 24, 37}, 3)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := 5\n\toutput := Quickselect([]int{8, 5, 2, 9, 7, 6, 3}, 3)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := 1\n\toutput := Quickselect([]int{8, 3, 2, 5, 1, 7, 4, 6}, 1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := 2\n\toutput := Quickselect([]int{8, 3, 2, 5, 1, 7, 4, 6}, 2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := 3\n\toutput := Quickselect([]int{8, 3, 2, 5, 1, 7, 4, 6}, 3)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := 4\n\toutput := Quickselect([]int{8, 3, 2, 5, 1, 7, 4, 6}, 4)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := 5\n\toutput := Quickselect([]int{8, 3, 2, 5, 1, 7, 4, 6}, 5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := 6\n\toutput := Quickselect([]int{8, 3, 2, 5, 1, 7, 4, 6}, 6)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\texpected := 7\n\toutput := Quickselect([]int{8, 3, 2, 5, 1, 7, 4, 6}, 7)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\texpected := 8\n\toutput := Quickselect([]int{8, 3, 2, 5, 1, 7, 4, 6}, 8)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\texpected := 25\n\toutput := Quickselect([]int{102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15}, 5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\texpected := 15\n\toutput := Quickselect([]int{102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15}, 4)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase16(t *TestCase) {\n\texpected := 102\n\toutput := Quickselect([]int{102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15}, 9)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase17(t *TestCase) {\n\texpected := 55516151125\n\toutput := Quickselect([]int{1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000, 985181, 55516151125}, 12)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase18(t *TestCase) {\n\texpected := 123\n\toutput := Quickselect([]int{1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000, 985181, 55516151125}, 4)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 5\n\toutput := Quickselect([]int{8, 5, 2, 9, 7, 6, 3}, 3)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// Best: O(n) time | O(1) space\n// Average: O(n) time | O(1) space\n// Worst: O(n^2) time | O(1) space\nfunc Quickselect(array []int, k int) int {\n\treturn helper(array, 0, len(array)-1, k-1)\n}\n\nfunc helper(array []int, start, end int, position int) int {\n\tfor {\n\t\tif start > end {\n\t\t\tpanic(\"This should never happen!\")\n\t\t}\n\t\tpivot, left, right := start, start+1, end\n\t\tfor left <= right {\n\t\t\tif array[left] > array[right] && array[right] < array[pivot] {\n\t\t\t\tswap(left, right, array)\n\t\t\t}\n\t\t\tif array[left] <= array[pivot] {\n\t\t\t\tleft += 1\n\t\t\t}\n\t\t\tif array[right] >= array[pivot] {\n\t\t\t\tright -= 1\n\t\t\t}\n\t\t}\n\t\tswap(pivot, right, array)\n\t\tif right == position {\n\t\t\treturn array[right]\n\t\t} else if right < position {\n\t\t\tstart = right + 1\n\t\t} else {\n\t\t\tend = right - 1\n\t\t}\n\t}\n}\n\nfunc swap(one, two int, array []int) {\n\tarray[one], array[two] = array[two], array[one]\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int quickselect(int[] array, int k) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.quickselect(new int[] {1}, 1) == 1);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.quickselect(new int[] {43, 24, 37}, 1) == 24);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.quickselect(new int[] {43, 24, 37}, 2) == 37);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.quickselect(new int[] {43, 24, 37}, 3) == 43);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 5, 2, 9, 7, 6, 3}, 3) == 5);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 1) == 1);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 2) == 2);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 3) == 3);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 4) == 4);\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 5) == 5);\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 6) == 6);\n  }\n\n  @Test\n  public void TestCase12() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 7) == 7);\n  }\n\n  @Test\n  public void TestCase13() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 3, 2, 5, 1, 7, 4, 6}, 8) == 8);\n  }\n\n  @Test\n  public void TestCase14() {\n    Utils.assertTrue(\n        Program.quickselect(new int[] {102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15}, 5)\n            == 25);\n  }\n\n  @Test\n  public void TestCase15() {\n    Utils.assertTrue(\n        Program.quickselect(new int[] {102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15}, 4)\n            == 15);\n  }\n\n  @Test\n  public void TestCase16() {\n    Utils.assertTrue(\n        Program.quickselect(new int[] {102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15}, 9)\n            == 102);\n  }\n\n  @Test\n  public void TestCase17() {\n    Utils.assertTrue(\n        Program.quickselect(\n                new int[] {1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000, 985181, 55516151}, 12)\n            == 55516151);\n  }\n\n  @Test\n  public void TestCase18() {\n    Utils.assertTrue(\n        Program.quickselect(\n                new int[] {1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000, 985181, 55516151}, 4)\n            == 123);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.quickselect(new int[] {8, 5, 2, 9, 7, 6, 3}, 3) == 5);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // Best: O(n) time | O(1) space\n  // Average: O(n) time | O(1) space\n  // Worst: O(n^2) time | O(1) space\n  public static int quickselect(int[] array, int k) {\n    int position = k - 1;\n    return quickselect(array, 0, array.length - 1, position);\n  }\n\n  public static int quickselect(int[] array, int startIdx, int endIdx, int position) {\n    while (true) {\n      if (startIdx > endIdx) {\n        throw new RuntimeException(\"Your Algorithm should never arrive here!\");\n      }\n      int pivotIdx = startIdx;\n      int leftIdx = startIdx + 1;\n      int rightIdx = endIdx;\n      while (leftIdx <= rightIdx) {\n        if (array[leftIdx] > array[pivotIdx] && array[rightIdx] < array[pivotIdx]) {\n          swap(leftIdx, rightIdx, array);\n        }\n        if (array[leftIdx] <= array[pivotIdx]) {\n          leftIdx++;\n        }\n        if (array[rightIdx] >= array[pivotIdx]) {\n          rightIdx--;\n        }\n      }\n      swap(pivotIdx, rightIdx, array);\n      if (rightIdx == position) {\n        return array[rightIdx];\n      } else if (rightIdx < position) {\n        startIdx = rightIdx + 1;\n      } else {\n        endIdx = rightIdx - 1;\n      }\n    }\n  }\n\n  public static void swap(int i, int j, int[] array) {\n    int temp = array[j];\n    array[j] = array[i];\n    array[i] = temp;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function quickselect(array, k) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.quickselect = quickselect;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.quickselect([1], 1)).to.deep.equal(1);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.quickselect([43, 24, 37], 1)).to.deep.equal(24);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.quickselect([43, 24, 37], 2)).to.deep.equal(37);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.quickselect([43, 24, 37], 3)).to.deep.equal(43);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.quickselect([8, 5, 2, 9, 7, 6, 3], 3)).to.deep.equal(5);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 1)).to.deep.equal(1);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 2)).to.deep.equal(2);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 3)).to.deep.equal(3);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 4)).to.deep.equal(4);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 5)).to.deep.equal(5);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 6)).to.deep.equal(6);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 7)).to.deep.equal(7);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 8)).to.deep.equal(8);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.quickselect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 5)).to.deep.equal(25);\n});\n\nit('Test Case #15', function () {\n  chai.expect(program.quickselect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 4)).to.deep.equal(15);\n});\n\nit('Test Case #16', function () {\n  chai.expect(program.quickselect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 9)).to.deep.equal(102);\n});\n\nit('Test Case #17', function () {\n  chai\n    .expect(program.quickselect([1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000, 985181, 55516151125], 12))\n    .to.deep.equal(55516151125);\n});\n\nit('Test Case #18', function () {\n  chai\n    .expect(program.quickselect([1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000, 985181, 55516151125], 4))\n    .to.deep.equal(123);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.quickselect([8, 5, 2, 9, 7, 6, 3], 3)).to.deep.equal(5);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Best: O(n) time | O(1) space\n// Average: O(n) time | O(1) space\n// Worst: O(n^2) time | O(1) space\nfunction quickselect(array, k) {\n  const position = k - 1;\n  return quickselectHelper(array, 0, array.length - 1, position);\n}\n\nfunction quickselectHelper(array, startIdx, endIdx, position) {\n  while (true) {\n    if (startIdx > endIdx) {\n      throw new Error('Your algorithm should never arrive here!');\n    }\n    const pivotIdx = startIdx;\n    let leftIdx = startIdx + 1;\n    let rightIdx = endIdx;\n    while (leftIdx <= rightIdx) {\n      if (array[leftIdx] > array[pivotIdx] && array[rightIdx] < array[pivotIdx]) {\n        swap(leftIdx, rightIdx, array);\n      }\n      if (array[leftIdx] <= array[pivotIdx]) {\n        leftIdx++;\n      }\n      if (array[rightIdx] >= array[pivotIdx]) {\n        rightIdx--;\n      }\n    }\n    swap(pivotIdx, rightIdx, array);\n    if (rightIdx === position) {\n      return array[rightIdx];\n    } else if (rightIdx < position) {\n      startIdx = rightIdx + 1;\n    } else {\n      endIdx = rightIdx - 1;\n    }\n  }\n}\n\nfunction swap(i, j, array) {\n  const temp = array[j];\n  array[j] = array[i];\n  array[i] = temp;\n}\n\nexports.quickselect = quickselect;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def quickselect(array, k):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.quickselect([1], 1), 1)\n\n    def test_case_2(self):\n        self.assertEqual(program.quickselect([43, 24, 37], 1), 24)\n\n    def test_case_3(self):\n        self.assertEqual(program.quickselect([43, 24, 37], 2), 37)\n\n    def test_case_4(self):\n        self.assertEqual(program.quickselect([43, 24, 37], 3), 43)\n\n    def test_case_5(self):\n        self.assertEqual(program.quickselect([8, 5, 2, 9, 7, 6, 3], 3), 5)\n\n    def test_case_6(self):\n        self.assertEqual(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 1), 1)\n\n    def test_case_7(self):\n        self.assertEqual(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 2), 2)\n\n    def test_case_8(self):\n        self.assertEqual(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 3), 3)\n\n    def test_case_9(self):\n        self.assertEqual(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 4), 4)\n\n    def test_case_10(self):\n        self.assertEqual(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 5), 5)\n\n    def test_case_11(self):\n        self.assertEqual(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 6), 6)\n\n    def test_case_12(self):\n        self.assertEqual(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 7), 7)\n\n    def test_case_13(self):\n        self.assertEqual(program.quickselect([8, 3, 2, 5, 1, 7, 4, 6], 8), 8)\n\n    def test_case_14(self):\n        self.assertEqual(program.quickselect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 5), 25)\n\n    def test_case_15(self):\n        self.assertEqual(program.quickselect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 4), 15)\n\n    def test_case_16(self):\n        self.assertEqual(program.quickselect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 9), 102)\n\n    def test_case_17(self):\n        self.assertEqual(\n            program.quickselect([1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000, 985181, 55516151125], 12),\n            55516151125,\n        )\n\n    def test_case_18(self):\n        self.assertEqual(\n            program.quickselect([1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110000, 985181, 55516151125], 4), 123\n        )\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.quickselect([8, 5, 2, 9, 7, 6, 3], 3), 5)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Best: O(n) time | O(1) space\n# Average: O(n) time | O(1) space\n# Worst: O(n^2) time | O(1) space\ndef quickselect(array, k):\n    position = k - 1\n    return quickselectHelper(array, 0, len(array) - 1, position)\n\n\ndef quickselectHelper(array, startIdx, endIdx, position):\n    while True:\n        if startIdx > endIdx:\n            raise Exception(\"Your algorithm should never arrive here!\")\n        pivotIdx = startIdx\n        leftIdx = startIdx + 1\n        rightIdx = endIdx\n        while leftIdx <= rightIdx:\n            if array[leftIdx] > array[pivotIdx] and array[rightIdx] < array[pivotIdx]:\n                swap(leftIdx, rightIdx, array)\n            if array[leftIdx] <= array[pivotIdx]:\n                leftIdx += 1\n            if array[rightIdx] >= array[pivotIdx]:\n                rightIdx -= 1\n        swap(pivotIdx, rightIdx, array)\n        if rightIdx == position:\n            return array[rightIdx]\n        elif rightIdx < position:\n            startIdx = rightIdx + 1\n        else:\n            endIdx = rightIdx - 1\n\n\ndef swap(one, two, array):\n    array[one], array[two] = array[two], array[one]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func quickSelect(_ array: [Int], _ k: Int) -> Int? {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(1, program.quickSelect([1], 1))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(24, program.quickSelect([43, 24, 37], 1))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(37, program.quickSelect([43, 24, 37], 2))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(43, program.quickSelect([43, 24, 37], 3))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(5, program.quickSelect([8, 5, 2, 9, 7, 6, 3], 3))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(1, program.quickSelect([8, 3, 2, 5, 1, 7, 4, 6], 1))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(2, program.quickSelect([8, 3, 2, 5, 1, 7, 4, 6], 2))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(3, program.quickSelect([8, 3, 2, 5, 1, 7, 4, 6], 3))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(4, program.quickSelect([8, 3, 2, 5, 1, 7, 4, 6], 4))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(5, program.quickSelect([8, 3, 2, 5, 1, 7, 4, 6], 5))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(6, program.quickSelect([8, 3, 2, 5, 1, 7, 4, 6], 6))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(7, program.quickSelect([8, 3, 2, 5, 1, 7, 4, 6], 7))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(8, program.quickSelect([8, 3, 2, 5, 1, 7, 4, 6], 8))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual(25, program.quickSelect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 5))\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      try assertEqual(15, program.quickSelect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 4))\n    }\n    runTest(\"Test Case 16\") { () throws -> Void in\n      try assertEqual(102, program.quickSelect([102, 41, 58, 81, 2, -5, 1000, 10021, 181, -14515, 25, 15], 9))\n    }\n    runTest(\"Test Case 17\") { () throws -> Void in\n      try assertEqual(55_516_151_125, program.quickSelect([1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110_000, 985_181, 55_516_151_125], 12))\n    }\n    runTest(\"Test Case 18\") { () throws -> Void in\n      try assertEqual(123, program.quickSelect([1, 3, 71, 123, 124, 156, 814, 1294, 10024, 110_000, 985_181, 55_516_151_125], 4))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(5, program.quickSelect([8, 5, 2, 9, 7, 6, 3], 3))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // Best: O(n) time | O(1) space\n  // Average: O(n) time | O(1) space\n  // Worst: O(n^2) time | O(1) space\n  func quickSelect(_ array: [Int], _ k: Int) -> Int? {\n    let position = k - 1\n    var startIndex = 0\n    var endIndex = array.count - 1\n    var variableArray = array\n\n    return quickSelectHelper(&variableArray, &startIndex, &endIndex, position)\n  }\n\n  func quickSelectHelper(_ array: inout [Int], _ startIndex: inout Int, _ endIndex: inout Int, _ position: Int) -> Int {\n    while true {\n      let pivotIndex = startIndex\n      var leftPointer = startIndex + 1\n      var rightPointer = endIndex\n\n      while leftPointer <= rightPointer {\n        if array[leftPointer] > array[pivotIndex], array[rightPointer] < array[pivotIndex] {\n          swap(&array, leftPointer, rightPointer)\n        }\n\n        if array[leftPointer] <= array[pivotIndex] {\n          leftPointer += 1\n        }\n\n        if array[rightPointer] >= array[pivotIndex] {\n          rightPointer -= 1\n        }\n      }\n\n      swap(&array, pivotIndex, rightPointer)\n\n      if rightPointer == position {\n        return array[rightPointer]\n      } else if rightPointer < position {\n        startIndex = rightPointer + 1\n      } else {\n        endIndex = rightPointer - 1\n      }\n    }\n  }\n\n  func swap(_ array: inout [Int], _ leftPointer: Int, _ rightPointer: Int) {\n    let temp = array[leftPointer]\n\n    array[leftPointer] = array[rightPointer]\n    array[rightPointer] = temp\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function quickselect(array: number[], k: number) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.quickselect([8, 5, 2, 9, 7, 6, 3], 3)).to.deep.equal(5);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Best: O(n) time | O(1) space\n// Average: O(n) time | O(1) space\n// Worst: O(n^2) time | O(1) space\nexport function quickselect(array: number[], k: number) {\n  const position = k - 1;\n  return quickselectHelper(array, 0, array.length - 1, position);\n}\n\nfunction quickselectHelper(array: number[], startIdx: number, endIdx: number, position: number) {\n  while (true) {\n    if (startIdx > endIdx) {\n      throw new Error('Your algorithm should never arrive here!');\n    }\n    const pivotIdx = startIdx;\n    let leftIdx = startIdx + 1;\n    let rightIdx = endIdx;\n    while (leftIdx <= rightIdx) {\n      if (array[leftIdx] > array[pivotIdx] && array[rightIdx] < array[pivotIdx]) {\n        swap(leftIdx, rightIdx, array);\n      }\n      if (array[leftIdx] <= array[pivotIdx]) {\n        leftIdx++;\n      }\n      if (array[rightIdx] >= array[pivotIdx]) {\n        rightIdx--;\n      }\n    }\n    swap(pivotIdx, rightIdx, array);\n    if (rightIdx === position) {\n      return array[rightIdx];\n    } else if (rightIdx < position) {\n      startIdx = rightIdx + 1;\n    } else {\n      endIdx = rightIdx - 1;\n    }\n  }\n}\n\nfunction swap(i: number, j: number, array: number[]) {\n  const temp = array[j];\n  array[j] = array[i];\n  array[i] = temp;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        8,
+        5,
+        2,
+        9,
+        7,
+        6,
+        3
+      ],
+      "k": 3
+    },
+    {
+      "array": [
+        1
+      ],
+      "k": 1
+    },
+    {
+      "array": [
+        43,
+        24,
+        37
+      ],
+      "k": 1
+    },
+    {
+      "array": [
+        43,
+        24,
+        37
+      ],
+      "k": 2
+    },
+    {
+      "array": [
+        43,
+        24,
+        37
+      ],
+      "k": 3
+    },
+    {
+      "array": [
+        8,
+        3,
+        2,
+        5,
+        1,
+        7,
+        4,
+        6
+      ],
+      "k": 1
+    },
+    {
+      "array": [
+        8,
+        3,
+        2,
+        5,
+        1,
+        7,
+        4,
+        6
+      ],
+      "k": 2
+    },
+    {
+      "array": [
+        8,
+        3,
+        2,
+        5,
+        1,
+        7,
+        4,
+        6
+      ],
+      "k": 3
+    },
+    {
+      "array": [
+        8,
+        3,
+        2,
+        5,
+        1,
+        7,
+        4,
+        6
+      ],
+      "k": 4
+    },
+    {
+      "array": [
+        8,
+        3,
+        2,
+        5,
+        1,
+        7,
+        4,
+        6
+      ],
+      "k": 5
+    },
+    {
+      "array": [
+        8,
+        3,
+        2,
+        5,
+        1,
+        7,
+        4,
+        6
+      ],
+      "k": 6
+    },
+    {
+      "array": [
+        8,
+        3,
+        2,
+        5,
+        1,
+        7,
+        4,
+        6
+      ],
+      "k": 7
+    },
+    {
+      "array": [
+        8,
+        3,
+        2,
+        5,
+        1,
+        7,
+        4,
+        6
+      ],
+      "k": 8
+    },
+    {
+      "array": [
+        102,
+        41,
+        58,
+        81,
+        2,
+        -5,
+        1000,
+        10021,
+        181,
+        -14515,
+        25,
+        15
+      ],
+      "k": 5
+    },
+    {
+      "array": [
+        102,
+        41,
+        58,
+        81,
+        2,
+        -5,
+        1000,
+        10021,
+        181,
+        -14515,
+        25,
+        15
+      ],
+      "k": 4
+    },
+    {
+      "array": [
+        102,
+        41,
+        58,
+        81,
+        2,
+        -5,
+        1000,
+        10021,
+        181,
+        -14515,
+        25,
+        15
+      ],
+      "k": 9
+    },
+    {
+      "array": [
+        1,
+        3,
+        71,
+        123,
+        124,
+        156,
+        814,
+        1294,
+        10024,
+        110000,
+        985181,
+        55516151
+      ],
+      "k": 12
+    },
+    {
+      "array": [
+        1,
+        3,
+        71,
+        123,
+        124,
+        156,
+        814,
+        1294,
+        10024,
+        110000,
+        985181,
+        55516151
+      ],
+      "k": 4
+    }
+  ],
+  "JSONAnswers": [
+    [
+      5,
+      1,
+      24,
+      37,
+      43,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      25,
+      15,
+      102,
+      55516151,
+      123
+    ]
+  ]
+}

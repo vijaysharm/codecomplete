@@ -1,0 +1,285 @@
+{
+  "Summary": {
+    "Name": "Find Three Largest Numbers",
+    "Category": "Searching",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "number": 752,
+      "timeOne": 0,
+      "timeTwo": 435,
+      "url": "https://player.vimeo.com/video/229698816"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Can you keep track of the three largest numbers in an array as you traverse the input array?\nFollowing the suggestion in Hint #1, try traversing the input array and updating the three largest numbers if necessary by shifting them accordingly.\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in an array of integers and, without sorting the\n  input array, returns a sorted array of the three largest integers in the input\n  array.\n</p>\n<p>\n  The function should return duplicate integers if necessary; for example, it\n  should return\n  <span>[10, 10, 12]</span> for an input array of\n  <span>[10, 5, 9, 10, 12]</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[18, 141, 541]\n</pre>\n",
+  "Notes": "<p class=\"CodeEditor-notesQuestion\">\n  Can we just sort the input array and return the last three elements in the\n  sorted array?\n</p>\n<p class=\"CodeEditor-notesAnswer\">\n  The best sorting algorithms run, on average, in <i>O(nlog(n))</i> time; we can\n  implement a more optimal, linear-time algorithm (an <i>O(n)</i>-time\n  algorithm) by not sorting the input array.\n</p>\n",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        141,
+        1,
+        17,
+        -7,
+        -17,
+        -27,
+        18,
+        541,
+        8,
+        7,
+        7
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> findThreeLargestNumbers(vector<int> array) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{7, 8, 55};\n      assert(findThreeLargestNumbers({55, 7, 8}) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> expected{11, 43, 55};\n      assert(findThreeLargestNumbers({55, 43, 11, 3, -3, 10}) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> expected{11, 43, 55};\n      assert(findThreeLargestNumbers({7, 8, 3, 11, 43, 55}) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> expected{11, 43, 55};\n      assert(findThreeLargestNumbers({55, 7, 8, 3, 43, 11}) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> expected{7, 7, 7};\n      assert(findThreeLargestNumbers({7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> expected{7, 7, 8};\n      assert(findThreeLargestNumbers({7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> expected{18, 141, 541};\n      assert(findThreeLargestNumbers(\n                 {141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7}) == expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> expected{-2, -1, 7};\n      assert(findThreeLargestNumbers(\n                 {-1, -2, -3, -7, -17, -27, -18, -541, -8, -7, 7}) == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{18, 141, 541};\n      assert(findThreeLargestNumbers(\n                 {141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7}) == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <climits>\nusing namespace std;\n\nvector<int> findThreeLargestNumbers(vector<int> array);\nvoid updateLargest(vector<int> *threeLargest, int num);\nvoid shiftAndUpdate(vector<int> *largest, int num, int idx);\n\n// O(n) time | O(1) space\nvector<int> findThreeLargestNumbers(vector<int> array) {\n  vector<int> threeLargest{INT_MIN, INT_MIN, INT_MIN};\n  for (int num : array) {\n    updateLargest(&threeLargest, num);\n  }\n  return threeLargest;\n}\n\nvoid updateLargest(vector<int> *threeLargest, int num) {\n  if (num > threeLargest->at(2)) {\n    shiftAndUpdate(threeLargest, num, 2);\n  } else if (num > threeLargest->at(1)) {\n    shiftAndUpdate(threeLargest, num, 1);\n  } else if (num > threeLargest->at(0)) {\n    shiftAndUpdate(threeLargest, num, 0);\n  }\n}\n\nvoid shiftAndUpdate(vector<int> *array, int num, int idx) {\n  for (int i = 0; i <= idx; i++) {\n    if (i == idx) {\n      array->at(i) = num;\n    } else {\n      array->at(i) = array->at(i + 1);\n    }\n  }\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int[] FindThreeLargestNumbers(int[] array) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {7, 8, 55};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {55, 7, 8}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] expected = {11, 43, 55};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {55, 43, 11, 3,\n\t\t                                                                    -3, 10}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] expected = {11, 43, 55};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {7, 8, 3, 11, 43,\n\t\t                                                                    55}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] expected = {11, 43, 55};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {55, 7, 8, 3, 43,\n\t\t                                                                    11}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] expected = {7, 7, 7};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {7, 7, 7, 7, 7,\n\t\t                                                                    7, 7, 7, 7, 7,\n\t\t                                                                    7}), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] expected = {7, 7, 8};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {7, 7, 7, 7, 7,\n\t\t                                                                    7, 8, 7, 7, 7,\n\t\t                                                                    7}), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] expected = {18, 141, 541};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {141, 1, 17, -7,\n\t\t                                                                    -17, -27, 18,\n\t\t                                                                    541, 8, 7, 7}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] expected = {-2, -1, 7};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {-1, -2, -3, -7,\n\t\t                                                                    -17, -27, -18,\n\t\t                                                                    -541, -8, -7,\n\t\t                                                                    7}), expected));\n\t}\n\n\tpublic bool compare(int[] arr1, int[] arr2) {\n\t\tif (arr1.Length != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Length; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {18, 141, 541};\n\t\tUtils.AssertTrue(compare(Program.FindThreeLargestNumbers(new int[] {141, 1, 17, -7,\n\t\t                                                                    -17, -27, 18,\n\t\t                                                                    541, 8, 7, 7}),\n\t\t  expected));\n\t}\n\n\tpublic bool compare(int[] arr1, int[] arr2) {\n\t\tif (arr1.Length != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Length; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static int[] FindThreeLargestNumbers(int[] array) {\n\t\tint[] threeLargest = {Int32.MinValue, Int32.MinValue, Int32.MinValue};\n\t\tforeach (int num in array) {\n\t\t\tupdateLargest(threeLargest, num);\n\t\t}\n\t\treturn threeLargest;\n\t}\n\n\tpublic static void updateLargest(int[] threeLargest, int num) {\n\t\tif (num > threeLargest[2]) {\n\t\t\tshiftAndUpdate(threeLargest, num, 2);\n\t\t} else if (num > threeLargest[1]) {\n\t\t\tshiftAndUpdate(threeLargest, num, 1);\n\t\t} else if (num > threeLargest[0]) {\n\t\t\tshiftAndUpdate(threeLargest, num, 0);\n\t\t}\n\t}\n\n\tpublic static void shiftAndUpdate(int[] array, int num, int idx) {\n\t\tfor (int i = 0; i <= idx; i++) {\n\t\t\tif (i == idx) {\n\t\t\t\tarray[i] = num;\n\t\t\t} else {\n\t\t\t\tarray[i] = array[i + 1];\n\t\t\t}\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc FindThreeLargestNumbers(array []int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{7, 8, 55}\n\toutput := FindThreeLargestNumbers([]int{55, 7, 8})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := []int{11, 43, 55}\n\toutput := FindThreeLargestNumbers([]int{55, 43, 11, 3, -3, 10})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := []int{11, 43, 55}\n\toutput := FindThreeLargestNumbers([]int{7, 8, 3, 11, 43, 55})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := []int{11, 43, 55}\n\toutput := FindThreeLargestNumbers([]int{55, 7, 8, 3, 43, 11})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := []int{7, 7, 7}\n\toutput := FindThreeLargestNumbers([]int{7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := []int{7, 7, 8}\n\toutput := FindThreeLargestNumbers([]int{7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := []int{18, 141, 541}\n\toutput := FindThreeLargestNumbers([]int{141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := []int{-2, -1, 7}\n\toutput := FindThreeLargestNumbers([]int{-1, -2, -3, -7, -17, -27, -18, -541, -8, -7, 7})\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{18, 141, 541}\n\toutput := FindThreeLargestNumbers([]int{141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7})\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// O(n) time | O(1) space\nfunc FindThreeLargestNumbers(array []int) []int {\n\tthree := []int{math.MinInt32, math.MinInt32, math.MinInt32}\n\tfor _, num := range array {\n\t\tupdateLargest(three, num)\n\t}\n\treturn three\n}\n\nfunc updateLargest(three []int, num int) {\n\tif num > three[2] {\n\t\tshiftAndUpdate(three, num, 2)\n\t} else if num > three[1] {\n\t\tshiftAndUpdate(three, num, 1)\n\t} else if num > three[0] {\n\t\tshiftAndUpdate(three, num, 0)\n\t}\n}\n\nfunc shiftAndUpdate(array []int, num int, idx int) {\n\tfor i := 0; i < idx+1; i++ {\n\t\tif i == idx {\n\t\t\tarray[i] = num\n\t\t} else {\n\t\t\tarray[i] = array[i+1]\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int[] findThreeLargestNumbers(int[] array) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] expected = {7, 8, 55};\n    Utils.assertTrue(compare(Program.findThreeLargestNumbers(new int[] {55, 7, 8}), expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] expected = {11, 43, 55};\n    Utils.assertTrue(\n        compare(Program.findThreeLargestNumbers(new int[] {55, 43, 11, 3, -3, 10}), expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] expected = {11, 43, 55};\n    Utils.assertTrue(\n        compare(Program.findThreeLargestNumbers(new int[] {7, 8, 3, 11, 43, 55}), expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] expected = {11, 43, 55};\n    Utils.assertTrue(\n        compare(Program.findThreeLargestNumbers(new int[] {55, 7, 8, 3, 43, 11}), expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] expected = {7, 7, 7};\n    Utils.assertTrue(\n        compare(\n            Program.findThreeLargestNumbers(new int[] {7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7}),\n            expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] expected = {7, 7, 8};\n    Utils.assertTrue(\n        compare(\n            Program.findThreeLargestNumbers(new int[] {7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7}),\n            expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] expected = {18, 141, 541};\n    Utils.assertTrue(\n        compare(\n            Program.findThreeLargestNumbers(new int[] {141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7}),\n            expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] expected = {-2, -1, 7};\n    Utils.assertTrue(\n        compare(\n            Program.findThreeLargestNumbers(\n                new int[] {-1, -2, -3, -7, -17, -27, -18, -541, -8, -7, 7}),\n            expected));\n  }\n\n  public boolean compare(int[] arr1, int[] arr2) {\n    if (arr1.length != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.length; i++) {\n      if (arr1[i] != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] expected = {18, 141, 541};\n    Utils.assertTrue(\n        compare(\n            Program.findThreeLargestNumbers(new int[] {141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7}),\n            expected));\n  }\n\n  public boolean compare(int[] arr1, int[] arr2) {\n    if (arr1.length != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.length; i++) {\n      if (arr1[i] != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static int[] findThreeLargestNumbers(int[] array) {\n    int[] threeLargest = {Integer.MIN_VALUE, Integer.MIN_VALUE, Integer.MIN_VALUE};\n    for (int num : array) {\n      updateLargest(threeLargest, num);\n    }\n    return threeLargest;\n  }\n\n  public static void updateLargest(int[] threeLargest, int num) {\n    if (num > threeLargest[2]) {\n      shiftAndUpdate(threeLargest, num, 2);\n    } else if (num > threeLargest[1]) {\n      shiftAndUpdate(threeLargest, num, 1);\n    } else if (num > threeLargest[0]) {\n      shiftAndUpdate(threeLargest, num, 0);\n    }\n  }\n\n  public static void shiftAndUpdate(int[] array, int num, int idx) {\n    for (int i = 0; i <= idx; i++) {\n      if (i == idx) {\n        array[i] = num;\n      } else {\n        array[i] = array[i + 1];\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function findThreeLargestNumbers(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.findThreeLargestNumbers = findThreeLargestNumbers;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.findThreeLargestNumbers([55, 7, 8])).to.deep.equal([7, 8, 55]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.findThreeLargestNumbers([55, 43, 11, 3, -3, 10])).to.deep.equal([11, 43, 55]);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.findThreeLargestNumbers([7, 8, 3, 11, 43, 55])).to.deep.equal([11, 43, 55]);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.findThreeLargestNumbers([55, 7, 8, 3, 43, 11])).to.deep.equal([11, 43, 55]);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.findThreeLargestNumbers([7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7])).to.deep.equal([7, 7, 7]);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.findThreeLargestNumbers([7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7])).to.deep.equal([7, 7, 8]);\n});\n\nit('Test Case #7', function () {\n  chai\n    .expect(program.findThreeLargestNumbers([141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7]))\n    .to.deep.equal([18, 141, 541]);\n});\n\nit('Test Case #8', function () {\n  chai\n    .expect(program.findThreeLargestNumbers([-1, -2, -3, -7, -17, -27, -18, -541, -8, -7, 7]))\n    .to.deep.equal([-2, -1, 7]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai\n    .expect(program.findThreeLargestNumbers([141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7]))\n    .to.deep.equal([18, 141, 541]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nfunction findThreeLargestNumbers(array) {\n  const threeLargest = [null, null, null];\n  for (const num of array) {\n    updateLargest(threeLargest, num);\n  }\n  return threeLargest;\n}\n\nfunction updateLargest(threeLargest, num) {\n  if (threeLargest[2] === null || num > threeLargest[2]) {\n    shiftAndUpdate(threeLargest, num, 2);\n  } else if (threeLargest[1] === null || num > threeLargest[1]) {\n    shiftAndUpdate(threeLargest, num, 1);\n  } else if (threeLargest[0] === null || num > threeLargest[0]) {\n    shiftAndUpdate(threeLargest, num, 0);\n  }\n}\n\nfunction shiftAndUpdate(array, num, idx) {\n  for (let i = 0; i <= idx; i++) {\n    if (i === idx) {\n      array[i] = num;\n    } else {\n      array[i] = array[i + 1];\n    }\n  }\n}\n\nexports.findThreeLargestNumbers = findThreeLargestNumbers;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def findThreeLargestNumbers(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.findThreeLargestNumbers([55, 7, 8]), [7, 8, 55])\n\n    def test_case_2(self):\n        self.assertEqual(program.findThreeLargestNumbers([55, 43, 11, 3, -3, 10]), [11, 43, 55])\n\n    def test_case_3(self):\n        self.assertEqual(program.findThreeLargestNumbers([7, 8, 3, 11, 43, 55]), [11, 43, 55])\n\n    def test_case_4(self):\n        self.assertEqual(program.findThreeLargestNumbers([55, 7, 8, 3, 43, 11]), [11, 43, 55])\n\n    def test_case_5(self):\n        self.assertEqual(program.findThreeLargestNumbers([7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7]), [7, 7, 7])\n\n    def test_case_6(self):\n        self.assertEqual(program.findThreeLargestNumbers([7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7]), [7, 7, 8])\n\n    def test_case_7(self):\n        self.assertEqual(program.findThreeLargestNumbers([141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7]), [18, 141, 541])\n\n    def test_case_8(self):\n        self.assertEqual(program.findThreeLargestNumbers([-1, -2, -3, -7, -17, -27, -18, -541, -8, -7, 7]), [-2, -1, 7])\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.findThreeLargestNumbers([141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7]), [18, 141, 541])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space\ndef findThreeLargestNumbers(array):\n    threeLargest = [None, None, None]\n    for num in array:\n        updateLargest(threeLargest, num)\n    return threeLargest\n\n\ndef updateLargest(threeLargest, num):\n    if threeLargest[2] is None or num > threeLargest[2]:\n        shiftAndUpdate(threeLargest, num, 2)\n    elif threeLargest[1] is None or num > threeLargest[1]:\n        shiftAndUpdate(threeLargest, num, 1)\n    elif threeLargest[0] is None or num > threeLargest[0]:\n        shiftAndUpdate(threeLargest, num, 0)\n\n\ndef shiftAndUpdate(array, num, idx):\n    for i in range(idx + 1):\n        if i == idx:\n            array[i] = num\n        else:\n            array[i] = array[i + 1]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func findThreeLargestNumbers(array: [Int]) -> [Int] {\n    // Write ypour code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual([7, 8, 55], program.findThreeLargestNumbers(array: [55, 7, 8]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual([11, 43, 55], program.findThreeLargestNumbers(array: [55, 43, 11, 3, -3, 10]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual([11, 43, 55], program.findThreeLargestNumbers(array: [7, 8, 3, 11, 43, 55]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual([11, 43, 55], program.findThreeLargestNumbers(array: [55, 7, 8, 3, 43, 11]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual([7, 7, 7], program.findThreeLargestNumbers(array: [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual([7, 7, 8], program.findThreeLargestNumbers(array: [7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual([18, 141, 541], program.findThreeLargestNumbers(array: [141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual([-2, -1, 7], program.findThreeLargestNumbers(array: [-1, -2, -3, -7, -17, -27, -18, -541, -8, -7, 7]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual([18, 141, 541], program.findThreeLargestNumbers(array: [141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  func findThreeLargestNumbers(array: [Int]) -> [Int] {\n    var threeLargest: [Int?] = [nil, nil, nil]\n\n    for number in array {\n      updateLargest(&threeLargest, number)\n    }\n\n    let threeLargestWithoutOptionals = threeLargest.compactMap { $0 }\n    return threeLargestWithoutOptionals\n  }\n\n  func updateLargest(_ threeLargest: inout [Int?], _ number: Int) {\n    if threeLargest[2] == nil {\n      shiftAndupdate(&threeLargest, number, 2)\n    } else if threeLargest[1] == nil {\n      shiftAndupdate(&threeLargest, number, 1)\n    } else if threeLargest[0] == nil {\n      shiftAndupdate(&threeLargest, number, 0)\n    }\n\n    if let thirdNumber = threeLargest[2], number > thirdNumber {\n      shiftAndupdate(&threeLargest, number, 2)\n    } else if let secondNumber = threeLargest[1], number > secondNumber {\n      shiftAndupdate(&threeLargest, number, 1)\n    } else if let firstNumber = threeLargest[0], number > firstNumber {\n      shiftAndupdate(&threeLargest, number, 0)\n    }\n  }\n\n  func shiftAndupdate(_ threeLargest: inout [Int?], _ number: Int, _ index: Int) {\n    for i in 0 ... index {\n      if i == index {\n        threeLargest[i] = number\n      } else {\n        threeLargest[i] = threeLargest[i + 1]\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function findThreeLargestNumbers(array: number[]) {\n  // Write your code here.\n  return [];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai\n    .expect(program.findThreeLargestNumbers([141, 1, 17, -7, -17, -27, 18, 541, 8, 7, 7]))\n    .to.deep.equal([18, 141, 541]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nexport function findThreeLargestNumbers(array: number[]) {\n  const threeLargest: Array<number | null> = [null, null, null];\n  for (const num of array) {\n    updateLargest(threeLargest, num);\n  }\n  return threeLargest;\n}\n\nfunction updateLargest(threeLargest: Array<number | null>, num: number) {\n  if (threeLargest[2] === null || num > threeLargest[2]) {\n    shiftAndUpdate(threeLargest, num, 2);\n  } else if (threeLargest[1] === null || num > threeLargest[1]) {\n    shiftAndUpdate(threeLargest, num, 1);\n  } else if (threeLargest[0] === null || num > threeLargest[0]) {\n    shiftAndUpdate(threeLargest, num, 0);\n  }\n}\n\nfunction shiftAndUpdate(array: Array<number | null>, num: number, idx: number) {\n  for (let i = 0; i <= idx; i++) {\n    if (i === idx) {\n      array[i] = num;\n    } else {\n      array[i] = array[i + 1];\n    }\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        141,
+        1,
+        17,
+        -7,
+        -17,
+        -27,
+        18,
+        541,
+        8,
+        7,
+        7
+      ]
+    },
+    {
+      "array": [
+        55,
+        7,
+        8
+      ]
+    },
+    {
+      "array": [
+        55,
+        43,
+        11,
+        3,
+        -3,
+        10
+      ]
+    },
+    {
+      "array": [
+        7,
+        8,
+        3,
+        11,
+        43,
+        55
+      ]
+    },
+    {
+      "array": [
+        55,
+        7,
+        8,
+        3,
+        43,
+        11
+      ]
+    },
+    {
+      "array": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "array": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        8,
+        7,
+        7,
+        7,
+        7
+      ]
+    },
+    {
+      "array": [
+        -1,
+        -2,
+        -3,
+        -7,
+        -17,
+        -27,
+        -18,
+        -541,
+        -8,
+        -7,
+        7
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        18,
+        141,
+        541
+      ],
+      [
+        7,
+        8,
+        55
+      ],
+      [
+        11,
+        43,
+        55
+      ],
+      [
+        11,
+        43,
+        55
+      ],
+      [
+        11,
+        43,
+        55
+      ],
+      [
+        7,
+        7,
+        7
+      ],
+      [
+        7,
+        7,
+        8
+      ],
+      [
+        -2,
+        -1,
+        7
+      ]
+    ]
+  ]
+}

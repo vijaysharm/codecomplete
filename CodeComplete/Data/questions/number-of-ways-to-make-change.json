@@ -1,0 +1,241 @@
+{
+  "Summary": {
+    "Name": "Number Of Ways To Make Change",
+    "Category": "Dynamic Programming",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 652,
+      "timeOne": 0,
+      "timeTwo": 851,
+      "url": "https://player.vimeo.com/video/225713346"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try building an array of the number of ways to make change for all amounts between 0 and n inclusive. Note that there is only one way to make change for 0: that is to not use any coins.\nBuild up the array mentioned in Hint #1 one coin denomination at a time. In other words, find the number of ways to make change for all amounts between 0 and n with only one denomination, then with two, etc., until you use all denominations.\n",
+  "SpaceTime": "O(nd) time | O(n) space - where n is the target amount and d is the number of coin denominations\n",
+  "PromptHTML": "<p>\n  Given an array of positive integers representing coin denominations and a\n  single non-negative integer <span>n</span> representing a target amount of\n  money, write a function that returns the number of ways to make change for\n  that target amount using the given coin denominations.\n</p>\n<p>Note that an unlimited amount of coins is at your disposal.</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">n</span> = 6\n<span class=\"CodeEditor-promptParameter\">denoms</span> = [1, 5]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n2 <span class=\"CodeEditor-promptComment\">// 1x1 + 1x5 and 6x1</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "n",
+      "Example": 6,
+      "Schema": {
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    {
+      "Name": "denoms",
+      "Example": [
+        1,
+        5
+      ],
+      "Schema": {
+        "items": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "type": "array",
+        "uniqueItems": true
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint numberOfWaysToMakeChange(int n, vector<int> denoms) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "vector<int> vector1{2, 3, 4, 7};\nvector<int> vector2{5};\nvector<int> vector3{2, 4};\nvector<int> vector4{1, 5};\nvector<int> vector5{1, 5, 10, 25};\nvector<int> vector6{1, 5, 10, 25};\nvector<int> vector7{1, 5, 10, 25};\nvector<int> vector8{1, 5, 10, 25};\nvector<int> vector9{2, 3, 7};\nvector<int> vector10{2, 3, 4, 7};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(numberOfWaysToMakeChange(0, vector1) == 1); });\n\n    RunTest(\"Test Case 2\",\n            []() { assert(numberOfWaysToMakeChange(9, vector2) == 0); });\n\n    RunTest(\"Test Case 3\",\n            []() { assert(numberOfWaysToMakeChange(7, vector3) == 0); });\n\n    RunTest(\"Test Case 4\",\n            []() { assert(numberOfWaysToMakeChange(6, vector4) == 2); });\n\n    RunTest(\"Test Case 5\",\n            []() { assert(numberOfWaysToMakeChange(4, vector5) == 1); });\n\n    RunTest(\"Test Case 6\",\n            []() { assert(numberOfWaysToMakeChange(5, vector6) == 2); });\n\n    RunTest(\"Test Case 7\",\n            []() { assert(numberOfWaysToMakeChange(10, vector7) == 4); });\n\n    RunTest(\"Test Case 8\",\n            []() { assert(numberOfWaysToMakeChange(25, vector8) == 13); });\n\n    RunTest(\"Test Case 9\",\n            []() { assert(numberOfWaysToMakeChange(12, vector9) == 4); });\n\n    RunTest(\"Test Case 10\",\n            []() { assert(numberOfWaysToMakeChange(7, vector10) == 3); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n        assert(numberOfWaysToMakeChange(6, {1, 5}) == 2);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(nd) time | O(n) space\nint numberOfWaysToMakeChange(int n, vector<int> denoms) {\n  vector<int> ways(n + 1, 0);\n  ways[0] = 1;\n  for (int denom : denoms) {\n    for (int amount = 1; amount < n + 1; amount++) {\n      if (denom <= amount) {\n        ways[amount] += ways[amount - denom];\n      }\n    }\n  }\n  return ways[n];\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int NumberOfWaysToMakeChange(int n, int[] denoms) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {2, 3, 4, 7};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(0, input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] input = {5};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(9, input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] input = {2, 4};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(7, input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] input = {1, 5};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(6, input) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] input = {1, 5, 10, 25};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(4, input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] input = {1, 5, 10, 25};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(5, input) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] input = {1, 5, 10, 25};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(10, input) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] input = {1, 5, 10, 25};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(25, input) == 13);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] input = {2, 3, 7};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(12, input) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] input = {2, 3, 4, 7};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(7, input) == 3);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {1, 5};\n\t\tUtils.AssertTrue(Program.NumberOfWaysToMakeChange(6, input) == 2);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(nd) time | O(n) space\n\tpublic static int NumberOfWaysToMakeChange(int n, int[] denoms) {\n\t\tint[] ways = new int[n + 1];\n\t\tways[0] = 1;\n\t\tforeach (int denom in denoms) {\n\t\t\tfor (int amount = 1; amount < n + 1; amount++) {\n\t\t\t\tif (denom <= amount) {\n\t\t\t\t\tways[amount] += ways[amount - denom];\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn ways[n];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc NumberOfWaysToMakeChange(n int, denoms []int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"reflect\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(0, []int{2, 3, 4, 7}), 1) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(9, []int{5}), 0) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(7, []int{2, 4}), 0) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(6, []int{1, 5}), 2) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(4, []int{1, 5, 10, 25}), 1) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(5, []int{1, 5, 10, 25}), 2) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(10, []int{1, 5, 10, 25}), 4) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(25, []int{1, 5, 10, 25}), 13) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(12, []int{2, 3, 7}), 4) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tif !reflect.DeepEqual(NumberOfWaysToMakeChange(7, []int{2, 3, 4, 7}), 3) {\n\t\tt.Fail()\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport \"github.com/stretchr/testify/require\"\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := NumberOfWaysToMakeChange(6, []int{1, 5})\n\trequire.Equal(t, 2, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(nd) time | O(n) space\nfunc NumberOfWaysToMakeChange(n int, denoms []int) int {\n\tways := make([]int, n+1)\n\tways[0] = 1\n\tfor _, denom := range denoms {\n\t\tfor amount := 1; amount < n+1; amount++ {\n\t\t\tif denom <= amount {\n\t\t\t\tways[amount] += ways[amount-denom]\n\t\t\t}\n\t\t}\n\t}\n\treturn ways[n]\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int numberOfWaysToMakeChange(int n, int[] denoms) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {2, 3, 4, 7};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(0, input) == 1);\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] input = {5};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(9, input) == 0);\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] input = {2, 4};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(7, input) == 0);\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] input = {1, 5};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(6, input) == 2);\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] input = {1, 5, 10, 25};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(4, input) == 1);\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] input = {1, 5, 10, 25};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(5, input) == 2);\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] input = {1, 5, 10, 25};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(10, input) == 4);\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] input = {1, 5, 10, 25};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(25, input) == 13);\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] input = {2, 3, 7};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(12, input) == 4);\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] input = {2, 3, 4, 7};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(7, input) == 3);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {1, 5};\n    Utils.assertTrue(Program.numberOfWaysToMakeChange(6, input) == 2);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nd) time | O(n) space\n  public static int numberOfWaysToMakeChange(int n, int[] denoms) {\n    int[] ways = new int[n + 1];\n    ways[0] = 1;\n    for (int denom : denoms) {\n      for (int amount = 1; amount < n + 1; amount++) {\n        if (denom <= amount) {\n          ways[amount] += ways[amount - denom];\n        }\n      }\n    }\n    return ways[n];\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function numberOfWaysToMakeChange(n, denoms) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.numberOfWaysToMakeChange = numberOfWaysToMakeChange;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.numberOfWaysToMakeChange(0, [2, 3, 4, 7])).to.deep.equal(1);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.numberOfWaysToMakeChange(9, [5])).to.deep.equal(0);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.numberOfWaysToMakeChange(7, [2, 4])).to.deep.equal(0);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.numberOfWaysToMakeChange(6, [1, 5])).to.deep.equal(2);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.numberOfWaysToMakeChange(4, [1, 5, 10, 25])).to.deep.equal(1);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.numberOfWaysToMakeChange(5, [1, 5, 10, 25])).to.deep.equal(2);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.numberOfWaysToMakeChange(10, [1, 5, 10, 25])).to.deep.equal(4);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.numberOfWaysToMakeChange(25, [1, 5, 10, 25])).to.deep.equal(13);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.numberOfWaysToMakeChange(12, [2, 3, 7])).to.deep.equal(4);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.numberOfWaysToMakeChange(7, [2, 3, 4, 7])).to.deep.equal(3);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.numberOfWaysToMakeChange(6, [1, 5])).to.deep.equal(2);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nd) time | O(n) space\nfunction numberOfWaysToMakeChange(n, denoms) {\n  const ways = new Array(n + 1).fill(0);\n  ways[0] = 1;\n  for (let denom of denoms) {\n    for (let amount = 1; amount < n + 1; amount++) {\n      if (denom <= amount) {\n        ways[amount] += ways[amount - denom];\n      }\n    }\n  }\n  return ways[n];\n}\n\nexports.numberOfWaysToMakeChange = numberOfWaysToMakeChange;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def numberOfWaysToMakeChange(n, denoms):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(0, [2, 3, 4, 7]), 1)\n\n    def test_case_2(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(9, [5]), 0)\n\n    def test_case_3(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(7, [2, 4]), 0)\n\n    def test_case_4(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(6, [1, 5]), 2)\n\n    def test_case_5(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(4, [1, 5, 10, 25]), 1)\n\n    def test_case_6(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(5, [1, 5, 10, 25]), 2)\n\n    def test_case_7(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(10, [1, 5, 10, 25]), 4)\n\n    def test_case_8(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(25, [1, 5, 10, 25]), 13)\n\n    def test_case_9(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(12, [2, 3, 7]), 4)\n\n    def test_case_10(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(7, [2, 3, 4, 7]), 3)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.numberOfWaysToMakeChange(6, [1, 5]), 2)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nd) time | O(n) space\ndef numberOfWaysToMakeChange(n, denoms):\n    ways = [0 for amount in range(n + 1)]\n    ways[0] = 1\n    for denom in denoms:\n        for amount in range(1, n + 1):\n            if denom <= amount:\n                ways[amount] += ways[amount - denom]\n    return ways[n]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func numberOfWaysToMakeChange(target: Int, denominations: [Int]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(1, program.numberOfWaysToMakeChange(target: 0, denominations: [2, 3, 4, 7]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(0, program.numberOfWaysToMakeChange(target: 9, denominations: [5]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(0, program.numberOfWaysToMakeChange(target: 7, denominations: [2, 4]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(2, program.numberOfWaysToMakeChange(target: 6, denominations: [1, 5]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(1, program.numberOfWaysToMakeChange(target: 4, denominations: [1, 5, 10, 25]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(2, program.numberOfWaysToMakeChange(target: 5, denominations: [1, 5, 10, 25]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(4, program.numberOfWaysToMakeChange(target: 10, denominations: [1, 5, 10, 25]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(13, program.numberOfWaysToMakeChange(target: 25, denominations: [1, 5, 10, 25]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(4, program.numberOfWaysToMakeChange(target: 12, denominations: [2, 3, 7]))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(3, program.numberOfWaysToMakeChange(target: 7, denominations: [2, 3, 4, 7]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let output = program.numberOfWaysToMakeChange(target: 6, denominations: [1, 5])\n      try assertEqual(2, output)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nd) time | O(n) space\n  func numberOfWaysToMakeChange(target: Int, denominations: [Int]) -> Int {\n    var ways = Array(repeating: 0, count: target + 1)\n    ways[0] = 1\n\n    for denomination in denominations {\n      for amount in 1 ..< target + 1 {\n        if denomination <= amount {\n          ways[amount] = ways[amount] + ways[amount - denomination]\n        }\n      }\n    }\n\n    return ways[target]\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function numberOfWaysToMakeChange(n: number, denoms: number[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.numberOfWaysToMakeChange(6, [1, 5])).to.deep.equal(2);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nd) time | O(n) space\nexport function numberOfWaysToMakeChange(n: number, denoms: number[]) {\n  const ways: number[] = new Array(n + 1).fill(0);\n  ways[0] = 1;\n  for (let denom of denoms) {\n    for (let amount = 1; amount < n + 1; amount++) {\n      if (denom <= amount) {\n        ways[amount] += ways[amount - denom];\n      }\n    }\n  }\n  return ways[n];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "denoms": [
+        1,
+        5
+      ],
+      "n": 6
+    },
+    {
+      "denoms": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "n": 0
+    },
+    {
+      "denoms": [
+        5
+      ],
+      "n": 9
+    },
+    {
+      "denoms": [
+        2,
+        4
+      ],
+      "n": 7
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10,
+        25
+      ],
+      "n": 4
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10,
+        25
+      ],
+      "n": 5
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10,
+        25
+      ],
+      "n": 10
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10,
+        25
+      ],
+      "n": 25
+    },
+    {
+      "denoms": [
+        2,
+        3,
+        7
+      ],
+      "n": 12
+    },
+    {
+      "denoms": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "n": 7
+    }
+  ],
+  "JSONAnswers": [
+    [
+      2,
+      1,
+      0,
+      0,
+      1,
+      2,
+      4,
+      13,
+      4,
+      3
+    ]
+  ]
+}

@@ -1,0 +1,309 @@
+{
+  "Summary": {
+    "Name": "Binary Search",
+    "Category": "Searching",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "number": 751,
+      "timeOne": 0,
+      "timeTwo": 1209,
+      "url": "https://player.vimeo.com/video/226676043"
+    }
+  },
+  "Prompt": "",
+  "Hints": "The Binary Search algorithm works by finding the number in the middle of the input array and comparing it to the target number. Given that the array is sorted, if this middle number is smaller than the target number, then the entire left part of the array is no longer worth exploring since the target number can no longer be in it; similarly, if the middle number is greater than the target number, then the entire right part of the array is no longer worth exploring. Applying this logic recursively eliminates half of the array until the number is found or until the array runs out of numbers.\nWrite a helper function that takes in two additional arguments: a left pointer and a right pointer representing the indices at the extremities of the array (or subarray) that you are applying Binary Search on. The first time this helper function is called, the left pointer should be zero and the right pointer should be the final index of the input array. To find the index of the middle number mentioned in Hint #1, simply round down the number obtained from: (left + right) / 2. Apply this logic recursively until you find the target number or until the left pointer becomes greater than the right pointer.\nCan you implement this algorithm iteratively? Are there any advantages to doing so?\n",
+  "SpaceTime": "O(log(n)) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a sorted array of integers as well as a target\n  integer. The function should use the Binary Search algorithm to determine if\n  the target integer is contained in the array and should return its index if it\n  is, otherwise <span>-1</span>.\n</p>\n<p>\n  If you're unfamiliar with Binary Search, we recommend watching the Conceptual\n  Overview section of this question's video explanation before starting to code.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [0, 1, 21, 33, 45, 45, 61, 71, 72, 73]\n<span class=\"CodeEditor-promptParameter\">target</span> = 33\n</pre>\n<h3>Sample Output</h3>\n<pre>\n3\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "target",
+      "Example": 33,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint binarySearch(vector<int> array, int target) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      assert(binarySearch({1, 5, 23, 111}, 111) == 3);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      assert(binarySearch({1, 5, 23, 111}, 5) == 1);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      assert(binarySearch({1, 5, 23, 111}, 35) == -1);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      assert(binarySearch({0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 33) == 3);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      assert(binarySearch({0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 72) == 8);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      assert(binarySearch({0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 73) == 9);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(binarySearch({0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 70) == -1);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(binarySearch({0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355}, 355) ==\n             10);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      assert(binarySearch({0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355}, 354) ==\n             -1);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(binarySearch({0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 33) == 3);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nint binarySearch(vector<int> array, int target);\nint binarySearchHelper(vector<int> array, int target, int left, int right);\n\n// O(log(n)) time | O(log(n)) space\nint binarySearch(vector<int> array, int target) {\n  return binarySearchHelper(array, target, 0, array.size() - 1);\n}\n\nint binarySearchHelper(vector<int> array, int target, int left, int right) {\n  if (left > right) {\n    return -1;\n  }\n  int middle = (left + right) / 2;\n  int potentialMatch = array[middle];\n  if (target == potentialMatch) {\n    return middle;\n  } else if (target < potentialMatch) {\n    return binarySearchHelper(array, target, left, middle - 1);\n  } else {\n    return binarySearchHelper(array, target, middle + 1, right);\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nint binarySearch(vector<int> array, int target);\nint binarySearchHelper(vector<int> array, int target, int left, int right);\n\n// O(log(n)) time | O(1) space\nint binarySearch(vector<int> array, int target) {\n  return binarySearchHelper(array, target, 0, array.size() - 1);\n}\n\nint binarySearchHelper(vector<int> array, int target, int left, int right) {\n  while (left <= right) {\n    int middle = (left + right) / 2;\n    int potentialMatch = array[middle];\n    if (target == potentialMatch) {\n      return middle;\n    } else if (target < potentialMatch) {\n      right = middle - 1;\n    } else {\n      left = middle + 1;\n    }\n  }\n  return -1;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int BinarySearch(int[] array, int target) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {1, 5, 23, 111}, 111) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {1, 5, 23, 111}, 5) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {1, 5, 23, 111}, 35) == -1);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72,\n\t\t                                                 73}, 33) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72,\n\t\t                                                 73}, 72) == 8);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72,\n\t\t                                                 73}, 73) == 9);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72,\n\t\t                                                 73}, 70) == -1);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72,\n\t\t                                                 73, 355}, 355) == 10);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72,\n\t\t                                                 73, 355}, 354) == -1);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.BinarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72,\n\t\t                                                 73}, 33) == 3);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(log(n)) time | O(log(n)) space\n\tpublic static int BinarySearch(int[] array, int target) {\n\t\treturn BinarySearch(array, target, 0, array.Length - 1);\n\t}\n\n\tpublic static int BinarySearch(int[] array, int target, int left, int right) {\n\t\tif (left > right) {\n\t\t\treturn -1;\n\t\t}\n\t\tint middle = (left + right) / 2;\n\t\tint potentialMatch = array[middle];\n\t\tif (target == potentialMatch) {\n\t\t\treturn middle;\n\t\t} else if (target < potentialMatch) {\n\t\t\treturn BinarySearch(array, target, left, middle - 1);\n\t\t} else {\n\t\t\treturn BinarySearch(array, target, middle + 1, right);\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(log(n)) time | O(1) space\n\tpublic static int BinarySearch(int[] array, int target) {\n\t\treturn BinarySearch(array, target, 0, array.Length - 1);\n\t}\n\n\tpublic static int BinarySearch(int[] array, int target, int left, int right) {\n\t\twhile (left <= right) {\n\t\t\tint middle = (left + right) / 2;\n\t\t\tint potentialMatch = array[middle];\n\t\t\tif (target == potentialMatch) {\n\t\t\t\treturn middle;\n\t\t\t} else if (target < potentialMatch) {\n\t\t\t\tright = middle - 1;\n\t\t\t} else {\n\t\t\t\tleft = middle + 1;\n\t\t\t}\n\t\t}\n\t\treturn -1;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc BinarySearch(array []int, target int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 3\n\toutput := BinarySearch([]int{1, 5, 23, 111}, 111)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := BinarySearch([]int{1, 5, 23, 111}, 5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := -1\n\toutput := BinarySearch([]int{1, 5, 23, 111}, 35)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := 3\n\toutput := BinarySearch([]int{0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 33)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := 8\n\toutput := BinarySearch([]int{0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 72)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := 9\n\toutput := BinarySearch([]int{0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 73)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := -1\n\toutput := BinarySearch([]int{0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 70)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := 10\n\toutput := BinarySearch([]int{0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355}, 355)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := -1\n\toutput := BinarySearch([]int{0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355}, 354)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 3\n\toutput := BinarySearch([]int{0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 33)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(log(n)) time | O(log(n)) space\nfunc BinarySearch(array []int, target int) int {\n\treturn helper(array, target, 0, len(array)-1)\n}\n\nfunc helper(array []int, target, left, right int) int {\n\tif left > right {\n\t\treturn -1\n\t}\n\tmiddle := (left + right) / 2\n\tpotentialMatch := array[middle]\n\tif target == potentialMatch {\n\t\treturn middle\n\t} else if target < potentialMatch {\n\t\treturn helper(array, target, left, middle-1)\n\t}\n\treturn helper(array, target, middle+1, right)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(log(n)) time | O(1) space\nfunc BinarySearch(array []int, target int) int {\n\treturn helper(array, target, 0, len(array)-1)\n}\n\nfunc helper(array []int, target, left, right int) int {\n\tfor left <= right {\n\t\tmiddle := (left + right) / 2\n\t\tpotentialMatch := array[middle]\n\t\tif target == potentialMatch {\n\t\t\treturn middle\n\t\t} else if target < potentialMatch {\n\t\t\tright = middle - 1\n\t\t} else {\n\t\t\tleft = middle + 1\n\t\t}\n\t}\n\treturn -1\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int binarySearch(int[] array, int target) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.binarySearch(new int[] {1, 5, 23, 111}, 111) == 3);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.binarySearch(new int[] {1, 5, 23, 111}, 5) == 1);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.binarySearch(new int[] {1, 5, 23, 111}, 35) == -1);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(\n        Program.binarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 33) == 3);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(\n        Program.binarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 72) == 8);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(\n        Program.binarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 73) == 9);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(\n        Program.binarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 70) == -1);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(\n        Program.binarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355}, 355) == 10);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(\n        Program.binarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355}, 354) == -1);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(\n        Program.binarySearch(new int[] {0, 1, 21, 33, 45, 45, 61, 71, 72, 73}, 33) == 3);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(log(n)) space\n  public static int binarySearch(int[] array, int target) {\n    return binarySearch(array, target, 0, array.length - 1);\n  }\n\n  public static int binarySearch(int[] array, int target, int left, int right) {\n    if (left > right) {\n      return -1;\n    }\n    int middle = (left + right) / 2;\n    int potentialMatch = array[middle];\n    if (target == potentialMatch) {\n      return middle;\n    } else if (target < potentialMatch) {\n      return binarySearch(array, target, left, middle - 1);\n    } else {\n      return binarySearch(array, target, middle + 1, right);\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(1) space\n  public static int binarySearch(int[] array, int target) {\n    return binarySearch(array, target, 0, array.length - 1);\n  }\n\n  public static int binarySearch(int[] array, int target, int left, int right) {\n    while (left <= right) {\n      int middle = (left + right) / 2;\n      int potentialMatch = array[middle];\n      if (target == potentialMatch) {\n        return middle;\n      } else if (target < potentialMatch) {\n        right = middle - 1;\n      } else {\n        left = middle + 1;\n      }\n    }\n    return -1;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function binarySearch(array, target) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.binarySearch = binarySearch;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.binarySearch([1, 5, 23, 111], 111)).to.deep.equal(3);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.binarySearch([1, 5, 23, 111], 5)).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.binarySearch([1, 5, 23, 111], 35)).to.deep.equal(-1);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33)).to.deep.equal(3);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 72)).to.deep.equal(8);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 73)).to.deep.equal(9);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 70)).to.deep.equal(-1);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355], 355)).to.deep.equal(10);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355], 354)).to.deep.equal(-1);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33)).to.deep.equal(3);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(log(n)) space\nfunction binarySearch(array, target) {\n  return binarySearchHelper(array, target, 0, array.length - 1);\n}\n\nfunction binarySearchHelper(array, target, left, right) {\n  if (left > right) return -1;\n  const middle = Math.floor((left + right) / 2);\n  const potentialMatch = array[middle];\n  if (target === potentialMatch) {\n    return middle;\n  } else if (target < potentialMatch) {\n    return binarySearchHelper(array, target, left, middle - 1);\n  } else {\n    return binarySearchHelper(array, target, middle + 1, right);\n  }\n}\n\nexports.binarySearch = binarySearch;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(1) space\nfunction binarySearch(array, target) {\n  return binarySearchHelper(array, target, 0, array.length - 1);\n}\n\nfunction binarySearchHelper(array, target, left, right) {\n  while (left <= right) {\n    const middle = Math.floor((left + right) / 2);\n    const potentialMatch = array[middle];\n    if (target === potentialMatch) {\n      return middle;\n    } else if (target < potentialMatch) {\n      right = middle - 1;\n    } else {\n      left = middle + 1;\n    }\n  }\n  return -1;\n}\n\nexports.binarySearch = binarySearch;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def binarySearch(array, target):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.binarySearch([1, 5, 23, 111], 111), 3)\n\n    def test_case_2(self):\n        self.assertEqual(program.binarySearch([1, 5, 23, 111], 5), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.binarySearch([1, 5, 23, 111], 35), -1)\n\n    def test_case_4(self):\n        self.assertEqual(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33), 3)\n\n    def test_case_5(self):\n        self.assertEqual(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 72), 8)\n\n    def test_case_6(self):\n        self.assertEqual(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 73), 9)\n\n    def test_case_7(self):\n        self.assertEqual(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 70), -1)\n\n    def test_case_8(self):\n        self.assertEqual(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355], 355), 10)\n\n    def test_case_9(self):\n        self.assertEqual(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355], 354), -1)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33), 3)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(log(n)) time | O(log(n)) space\ndef binarySearch(array, target):\n    return binarySearchHelper(array, target, 0, len(array) - 1)\n\n\ndef binarySearchHelper(array, target, left, right):\n    if left > right:\n        return -1\n    middle = (left + right) // 2\n    potentialMatch = array[middle]\n    if target == potentialMatch:\n        return middle\n    elif target < potentialMatch:\n        return binarySearchHelper(array, target, left, middle - 1)\n    else:\n        return binarySearchHelper(array, target, middle + 1, right)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(log(n)) time | O(1) space\ndef binarySearch(array, target):\n    return binarySearchHelper(array, target, 0, len(array) - 1)\n\n\ndef binarySearchHelper(array, target, left, right):\n    while left <= right:\n        middle = (left + right) // 2\n        potentialMatch = array[middle]\n        if target == potentialMatch:\n            return middle\n        elif target < potentialMatch:\n            right = middle - 1\n        else:\n            left = middle + 1\n    return -1\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func binarySearch(array: [Int], target: Int) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(3, program.binarySearch(array: [1, 5, 23, 111], target: 111))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(1, program.binarySearch(array: [1, 5, 23, 111], target: 5))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(-1, program.binarySearch(array: [1, 5, 23, 111], target: 35))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(3, program.binarySearch(array: [0, 1, 21, 33, 45, 45, 61, 71, 72, 73], target: 33))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(8, program.binarySearch(array: [0, 1, 21, 33, 45, 45, 61, 71, 72, 73], target: 72))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(9, program.binarySearch(array: [0, 1, 21, 33, 45, 45, 61, 71, 72, 73], target: 73))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(-1, program.binarySearch(array: [0, 1, 21, 33, 45, 45, 61, 71, 72, 73], target: 70))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(10, program.binarySearch(array: [0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355], target: 355))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(-1, program.binarySearch(array: [0, 1, 21, 33, 45, 45, 61, 71, 72, 73, 355], target: 354))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(3, program.binarySearch(array: [0, 1, 21, 33, 45, 45, 61, 71, 72, 73], target: 33))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(Log(n)) time | O(Log(n)) space\n  func binarySearch(array: [Int], target: Int) -> Int {\n    return binarySearchHelper(array: array, target: target, leftPointer: 0, rightPointer: array.count - 1)\n  }\n\n  func binarySearchHelper(array: [Int], target: Int, leftPointer: Int, rightPointer: Int) -> Int {\n    if leftPointer > rightPointer {\n      return -1\n    }\n    let middle = (leftPointer + rightPointer) / 2\n    let potentialMatch = array[middle]\n    if target == potentialMatch {\n      return middle\n    } else if target < potentialMatch {\n      return binarySearchHelper(array: array, target: target, leftPointer: leftPointer, rightPointer: middle - 1)\n    } else {\n      return binarySearchHelper(array: array, target: target, leftPointer: middle + 1, rightPointer: rightPointer)\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(Log(n)) time | O(1) space\n  func binarySearch(array: [Int], target: Int) -> Int {\n    var leftPointer = 0\n    var rightPointer = array.count - 1\n    return binarySearchHelper(array: array, target: target, leftPointer: &leftPointer, rightPointer: &rightPointer)\n  }\n\n  func binarySearchHelper(array: [Int], target: Int, leftPointer: inout Int, rightPointer: inout Int) -> Int {\n    while leftPointer <= rightPointer {\n      let middle = (leftPointer + rightPointer) / 2\n      let potentialMatch = array[middle]\n      if target == potentialMatch {\n        return middle\n      } else if target < potentialMatch {\n        rightPointer = middle - 1\n      } else {\n        leftPointer = middle + 1\n      }\n    }\n\n    return -1\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function binarySearch(array: number[], target: number): number {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.binarySearch([0, 1, 21, 33, 45, 45, 61, 71, 72, 73], 33)).to.deep.equal(3);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(log(n)) space\nexport function binarySearch(array: number[], target: number) {\n  return binarySearchHelper(array, target, 0, array.length - 1);\n}\n\nfunction binarySearchHelper(array: number[], target: number, left: number, right: number): number {\n  if (left > right) return -1;\n  const middle = Math.floor((left + right) / 2);\n  const potentialMatch = array[middle];\n  if (target === potentialMatch) {\n    return middle;\n  } else if (target < potentialMatch) {\n    return binarySearchHelper(array, target, left, middle - 1);\n  } else {\n    return binarySearchHelper(array, target, middle + 1, right);\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(1) space\nexport function binarySearch(array: number[], target: number) {\n  return binarySearchHelper(array, target, 0, array.length - 1);\n}\n\nfunction binarySearchHelper(array: number[], target: number, left: number, right: number) {\n  while (left <= right) {\n    const middle = Math.floor((left + right) / 2);\n    const potentialMatch = array[middle];\n    if (target === potentialMatch) {\n      return middle;\n    } else if (target < potentialMatch) {\n      right = middle - 1;\n    } else {\n      left = middle + 1;\n    }\n  }\n  return -1;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73
+      ],
+      "target": 33
+    },
+    {
+      "array": [
+        1,
+        5,
+        23,
+        111
+      ],
+      "target": 111
+    },
+    {
+      "array": [
+        1,
+        5,
+        23,
+        111
+      ],
+      "target": 5
+    },
+    {
+      "array": [
+        1,
+        5,
+        23,
+        111
+      ],
+      "target": 35
+    },
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73
+      ],
+      "target": 72
+    },
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73
+      ],
+      "target": 73
+    },
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73
+      ],
+      "target": 70
+    },
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73,
+        355
+      ],
+      "target": 355
+    },
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73,
+        355
+      ],
+      "target": 354
+    },
+    {
+      "array": [
+        1,
+        5,
+        23,
+        111
+      ],
+      "target": 120
+    },
+    {
+      "array": [
+        5,
+        23,
+        111
+      ],
+      "target": 3
+    }
+  ],
+  "JSONAnswers": [
+    [
+      3,
+      3,
+      1,
+      -1,
+      8,
+      9,
+      -1,
+      10,
+      -1,
+      -1,
+      -1
+    ]
+  ]
+}

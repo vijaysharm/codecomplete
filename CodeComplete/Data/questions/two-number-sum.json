@@ -1,0 +1,363 @@
+{
+  "Summary": {
+    "Name": "Two Number Sum",
+    "Category": "Arrays",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "number": 451,
+      "timeOne": 0,
+      "timeTwo": 1159,
+      "url": "https://player.vimeo.com/video/229483089"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try using two for loops to sum all possible pairs of numbers in the input array. What are the time and space implications of this approach?\nRealize that for every number X in the input array, you are essentially trying to find a corresponding number Y such that X + Y = targetSum. With two variables in this equation known to you, it shouldn't be hard to solve for Y.\nTry storing every number in a hash table, solving the equation mentioned in Hint #2 for every number, and checking if the Y that you find is stored in the hash table. What are the time and space implications of this approach?\n",
+  "SpaceTime": "O(n) time | O(n) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a non-empty array of distinct integers and an\n  integer representing a target sum. If any two numbers in the input array sum\n  up to the target sum, the function should return them in an array, in any\n  order. If no two numbers sum up to the target sum, the function should return\n  an empty array.\n</p>\n<p>\n  Note that the target sum has to be obtained by summing two different integers\n  in the array; you can't add a single integer to itself in order to obtain the\n  target sum.\n</p>\n<p>\n  You can assume that there will be at most one pair of numbers summing up to\n  the target sum.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [3, 5, -4, 8, 11, 1, -1, 6]\n<span class=\"CodeEditor-promptParameter\">targetSum</span> = 10\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[-1, 11] <span class=\"CodeEditor-promptComment\">// the numbers could be in reverse order</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        3,
+        5,
+        -4,
+        8,
+        11,
+        1,
+        -1,
+        6
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      }
+    },
+    {
+      "Name": "targetSum",
+      "Example": 10,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> twoNumberSum(vector<int> array, int targetSum) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "using namespace std;\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{4, 6};\n      vector<int> output = twoNumberSum({4, 6}, 10);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> expected{1, 4};\n      vector<int> output = twoNumberSum({4, 6, 1}, 5);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> expected{-3, 6};\n      vector<int> output = twoNumberSum({4, 6, 1, -3}, 3);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> expected{-1, 11};\n      vector<int> output = twoNumberSum({3, 5, -4, 8, 11, 1, -1, 6}, 10);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> expected{8, 9};\n      vector<int> output = twoNumberSum({1, 2, 3, 4, 5, 6, 7, 8, 9}, 17);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> expected{3, 15};\n      vector<int> output = twoNumberSum({1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 18);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> expected{-5, 0};\n      vector<int> output = twoNumberSum({-7, -5, -3, -1, 0, 1, 3, 5, 7}, -5);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> expected{-47, 210};\n      vector<int> output =\n          twoNumberSum({-21, 301, 12, 4, 65, 56, 210, 356, 9, -47}, 163);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> expected{};\n      vector<int> output =\n          twoNumberSum({-21, 301, 12, 4, 65, 56, 210, 356, 9, -47}, 164);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<int> expected{};\n      vector<int> output = twoNumberSum({3, 5, -4, 8, 11, 1, -1, 6}, 15);\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing namespace std;\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> output = twoNumberSum({3, 5, -4, 8, 11, 1, -1, 6}, 10);\n      assert(output.size() == 2);\n      assert(count(output.begin(), output.end(), -1));\n      assert(count(output.begin(), output.end(), 11));\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(n^2) time | O(1) space\nvector<int> twoNumberSum(vector<int> array, int targetSum) {\n  for (int i = 0; i < array.size() - 1; i++) {\n    int firstNum = array[i];\n    for (int j = i + 1; j < array.size(); j++) {\n      int secondNum = array[j];\n      if (firstNum + secondNum == targetSum) {\n        return vector<int>{firstNum, secondNum};\n      }\n    }\n  }\n  return {};\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_set>\nusing namespace std;\n\n// O(n) time | O(n) space\nvector<int> twoNumberSum(vector<int> array, int targetSum) {\n  unordered_set<int> nums;\n  for (int num : array) {\n    int potentialMatch = targetSum - num;\n    if (nums.find(potentialMatch) != nums.end()) {\n      return vector<int>{potentialMatch, num};\n    } else {\n      nums.insert(num);\n    }\n  }\n  return {};\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <algorithm>\nusing namespace std;\n\n// O(nlog(n)) | O(1) space\nvector<int> twoNumberSum(vector<int> array, int targetSum) {\n  sort(array.begin(), array.end());\n  int left = 0;\n  int right = array.size() - 1;\n  while (left < right) {\n    int currentSum = array[left] + array[right];\n    if (currentSum == targetSum) {\n      return {array[left], array[right]};\n    } else if (currentSum < targetSum) {\n      left++;\n    } else if (currentSum > targetSum) {\n      right--;\n    }\n  }\n  return {};\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int[] TwoNumberSum(int[] array, int targetSum) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System;\nusing System.Linq;\n\npublic class ProgramTest {\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {4, 6};\n\t\tint[] output = Program.TwoNumberSum(new int[] {4, 6}, 10);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] expected = {1, 4};\n\t\tint[] output = Program.TwoNumberSum(new int[] {4, 6, 1}, 5);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] expected = {-3, 6};\n\t\tint[] output = Program.TwoNumberSum(new int[] {4, 6, 1, -3}, 3);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] expected = {-1, 11};\n\t\tint[] output = Program.TwoNumberSum(new int[] {3, 5, -4, 8, 11, 1, -1, 6}, 10);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] expected = {8, 9};\n\t\tint[] output = Program.TwoNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, 17);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] expected = {3, 15};\n\t\tint[] output = Program.TwoNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 18);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] expected = {-5, 0};\n\t\tint[] output = Program.TwoNumberSum(new int[] {-7, -5, -3, -1, 0, 1, 3, 5, 7}, -5);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] expected = {-47, 210};\n\t\tint[] output = Program.TwoNumberSum(new int[] {-21, 301, 12, 4, 65, 56, 210, 356, 9,\n\t\t                                               -47}, 163);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] expected = {};\n\t\tint[] output = Program.TwoNumberSum(new int[] {-21, 301, 12, 4, 65, 56, 210, 356, 9,\n\t\t                                               -47}, 164);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] expected = {};\n\t\tint[] output = Program.TwoNumberSum(new int[] {3, 5, -4, 8, 11, 1, -1, 6}, 15);\n\t\tArray.Sort(output);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(output, expected));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System;\nusing System.Linq;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] output = Program.TwoNumberSum(new int[] {3, 5, -4, 8, 11, 1, -1, 6}, 10);\n\t\tUtils.AssertTrue(output.Length == 2);\n\t\tUtils.AssertTrue(Array.Exists(output, e => e == -1));\n\t\tUtils.AssertTrue(Array.Exists(output, e => e == 11));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\tpublic static int[] TwoNumberSum(int[] array, int targetSum) {\n\t\tfor (int i = 0; i < array.Length - 1; i++) {\n\t\t\tint firstNum = array[i];\n\t\t\tfor (int j = i + 1; j < array.Length; j++) {\n\t\t\t\tint secondNum = array[j];\n\t\t\t\tif (firstNum + secondNum == targetSum) {\n\t\t\t\t\treturn new int[] {firstNum, secondNum};\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn new int[0];\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\tpublic static int[] TwoNumberSum(int[] array, int targetSum) {\n\t\tHashSet<int> nums = new HashSet<int>();\n\t\tforeach (int num in array) {\n\t\t\tint potentialMatch = targetSum - num;\n\t\t\tif (nums.Contains(potentialMatch)) {\n\t\t\t\treturn new int[] {potentialMatch, num};\n\t\t\t} else {\n\t\t\t\tnums.Add(num);\n\t\t\t}\n\t\t}\n\t\treturn new int[0];\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\tpublic static int[] TwoNumberSum(int[] array, int targetSum) {\n\t\tArray.Sort(array);\n\t\tint left = 0;\n\t\tint right = array.Length - 1;\n\t\twhile (left < right) {\n\t\t\tint currentSum = array[left] + array[right];\n\t\t\tif (currentSum == targetSum) {\n\t\t\t\treturn new int[] {array[left], array[right]};\n\t\t\t} else if (currentSum < targetSum) {\n\t\t\t\tleft++;\n\t\t\t} else if (currentSum > targetSum) {\n\t\t\t\tright--;\n\t\t\t}\n\t\t}\n\t\treturn new int[0];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc TwoNumberSum(array []int, target int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{4, 6}\n\toutput := TwoNumberSum([]int{4, 6}, 10)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := []int{1, 4}\n\toutput := TwoNumberSum([]int{4, 6, 1}, 5)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := []int{-3, 6}\n\toutput := TwoNumberSum([]int{4, 6, 1, -3}, 3)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := []int{-1, 11}\n\toutput := TwoNumberSum([]int{3, 5, -4, 8, 11, 1, -1, 6}, 10)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := []int{8, 9}\n\toutput := TwoNumberSum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9}, 17)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := []int{3, 15}\n\toutput := TwoNumberSum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 18)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := []int{-5, 0}\n\toutput := TwoNumberSum([]int{-7, -5, -3, -1, 0, 1, 3, 5, 7}, -5)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := []int{-47, 210}\n\toutput := TwoNumberSum([]int{-21, 301, 12, 4, 65, 56, 210, 356, 9, -47}, 163)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := []int{}\n\toutput := TwoNumberSum([]int{-21, 301, 12, 4, 65, 56, 210, 356, 9, -47}, 164)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := []int{}\n\toutput := TwoNumberSum([]int{3, 5, -4, 8, 11, 1, -1, 6}, 15)\n\trequire.ElementsMatch(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{-1, 11}\n\toutput := TwoNumberSum([]int{3, 5, -4, 8, 11, 1, -1, 6}, 10)\n\trequire.ElementsMatch(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n^2) time | O(1) space\nfunc TwoNumberSum(array []int, target int) []int {\n\tfor i := 0; i < len(array)-1; i++ {\n\t\tfirstNum := array[i]\n\t\tfor j := i + 1; j < len(array); j++ {\n\t\t\tsecondNum := array[j]\n\t\t\tif firstNum+secondNum == target {\n\t\t\t\treturn []int{firstNum, secondNum}\n\t\t\t}\n\t\t}\n\t}\n\treturn []int{}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space\nfunc TwoNumberSum(array []int, target int) []int {\n\tnums := map[int]bool{}\n\tfor _, num := range array {\n\t\tpotentialMatch := target - num\n\t\tif _, found := nums[potentialMatch]; found {\n\t\t\treturn []int{potentialMatch, num}\n\t\t}\n\t\tnums[num] = true\n\t}\n\treturn []int{}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"sort\"\n\n// O(nlog(n)) time | O(1) space\nfunc TwoNumberSum(array []int, target int) []int {\n\tsort.Ints(array)\n\tleft, right := 0, len(array)-1\n\tfor left < right {\n\t\tcurrentSum := array[left] + array[right]\n\t\tif currentSum == target {\n\t\t\treturn []int{array[left], array[right]}\n\t\t} else if currentSum < target {\n\t\t\tleft += 1\n\t\t} else {\n\t\t\tright -= 1\n\t\t}\n\t}\n\treturn []int{}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int[] twoNumberSum(int[] array, int targetSum) {\n    // Write your code here.\n    return new int[0];\n  }\n}\n",
+      "StartingTest": "import java.util.Arrays;\n\nclass ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    int[] expected = {4, 6};\n    int[] output = Program.twoNumberSum(new int[] {4, 6}, 10);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] expected = {1, 4};\n    int[] output = Program.twoNumberSum(new int[] {4, 6, 1}, 5);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] expected = {-3, 6};\n    int[] output = Program.twoNumberSum(new int[] {4, 6, 1, -3}, 3);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] expected = {-1, 11};\n    int[] output = Program.twoNumberSum(new int[] {3, 5, -4, 8, 11, 1, -1, 6}, 10);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] expected = {8, 9};\n    int[] output = Program.twoNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9}, 17);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] expected = {3, 15};\n    int[] output = Program.twoNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 18);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] expected = {-5, 0};\n    int[] output = Program.twoNumberSum(new int[] {-7, -5, -3, -1, 0, 1, 3, 5, 7}, -5);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] expected = {-47, 210};\n    int[] output = Program.twoNumberSum(new int[] {-21, 301, 12, 4, 65, 56, 210, 356, 9, -47}, 163);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] expected = {};\n    int[] output = Program.twoNumberSum(new int[] {-21, 301, 12, 4, 65, 56, 210, 356, 9, -47}, 164);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] expected = {};\n    int[] output = Program.twoNumberSum(new int[] {3, 5, -4, 8, 11, 1, -1, 6}, 15);\n    Arrays.sort(output);\n    Utils.assertTrue(Arrays.equals(output, expected));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] output = Program.twoNumberSum(new int[] {3, 5, -4, 8, 11, 1, -1, 6}, 10);\n    Utils.assertTrue(output.length == 2);\n    Utils.assertTrue(contains(output, -1));\n    Utils.assertTrue(contains(output, 11));\n  }\n\n  public boolean contains(int[] output, int val) {\n    for (var el : output) {\n      if (el == val) return true;\n    }\n    return false;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(1) space\n  public static int[] twoNumberSum(int[] array, int targetSum) {\n    for (int i = 0; i < array.length - 1; i++) {\n      int firstNum = array[i];\n      for (int j = i + 1; j < array.length; j++) {\n        int secondNum = array[j];\n        if (firstNum + secondNum == targetSum) {\n          return new int[] {firstNum, secondNum};\n        }\n      }\n    }\n    return new int[0];\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space\n  public static int[] twoNumberSum(int[] array, int targetSum) {\n    Map<Integer, Boolean> nums = new HashMap<>();\n    for (int num : array) {\n      int potentialMatch = targetSum - num;\n      if (nums.containsKey(potentialMatch)) {\n        return new int[] {potentialMatch, num};\n      } else {\n        nums.put(num, true);\n      }\n    }\n    return new int[0];\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.Arrays;\n\nclass Program {\n  // O(nlog(n)) | O(1) space\n  public static int[] twoNumberSum(int[] array, int targetSum) {\n    Arrays.sort(array);\n    int left = 0;\n    int right = array.length - 1;\n    while (left < right) {\n      int currentSum = array[left] + array[right];\n      if (currentSum == targetSum) {\n        return new int[] {array[left], array[right]};\n      } else if (currentSum < targetSum) {\n        left++;\n      } else if (currentSum > targetSum) {\n        right--;\n      }\n    }\n    return new int[0];\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function twoNumberSum(array, targetSum) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.twoNumberSum = twoNumberSum;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const output = program.twoNumberSum([4, 6], 10).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([4, 6]);\n});\n\nit('Test Case #2', function () {\n  const output = program.twoNumberSum([4, 6, 1], 5).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([1, 4]);\n});\n\nit('Test Case #3', function () {\n  const output = program.twoNumberSum([4, 6, 1, -3], 3).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([-3, 6]);\n});\n\nit('Test Case #4', function () {\n  const output = program.twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 10).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([-1, 11]);\n});\n\nit('Test Case #5', function () {\n  const output = program.twoNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9], 17).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([8, 9]);\n});\n\nit('Test Case #6', function () {\n  const output = program.twoNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 18).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([3, 15]);\n});\n\nit('Test Case #7', function () {\n  const output = program.twoNumberSum([-7, -5, -3, -1, 0, 1, 3, 5, 7], -5).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([-5, 0]);\n});\n\nit('Test Case #8', function () {\n  const output = program.twoNumberSum([-21, 301, 12, 4, 65, 56, 210, 356, 9, -47], 163).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([-47, 210]);\n});\n\nit('Test Case #9', function () {\n  const output = program.twoNumberSum([-21, 301, 12, 4, 65, 56, 210, 356, 9, -47], 164).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([]);\n});\n\nit('Test Case #10', function () {\n  const output = program.twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 15).sort((a, b) => a - b);\n  chai.expect(output).to.deep.equal([]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const output = program.twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 10);\n  chai.expect(output.length === 2).to.deep.equal(true);\n  chai.expect(output.includes(11)).to.deep.equal(true);\n  chai.expect(output.includes(-1)).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(1) space\nfunction twoNumberSum(array, targetSum) {\n  for (let i = 0; i < array.length - 1; i++) {\n    const firstNum = array[i];\n    for (let j = i + 1; j < array.length; j++) {\n      const secondNum = array[j];\n      if (firstNum + secondNum === targetSum) {\n        return [firstNum, secondNum];\n      }\n    }\n  }\n  return [];\n}\n\nexports.twoNumberSum = twoNumberSum;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction twoNumberSum(array, targetSum) {\n  const nums = {};\n  for (const num of array) {\n    const potentialMatch = targetSum - num;\n    if (potentialMatch in nums) {\n      return [potentialMatch, num];\n    } else {\n      nums[num] = true;\n    }\n  }\n  return [];\n}\n\nexports.twoNumberSum = twoNumberSum;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nlog(n)) | O(1) space\nfunction twoNumberSum(array, targetSum) {\n  array.sort((a, b) => a - b);\n  let left = 0;\n  let right = array.length - 1;\n  while (left < right) {\n    const currentSum = array[left] + array[right];\n    if (currentSum === targetSum) {\n      return [array[left], array[right]];\n    } else if (currentSum < targetSum) {\n      left++;\n    } else if (currentSum > targetSum) {\n      right--;\n    }\n  }\n  return [];\n}\n\nexports.twoNumberSum = twoNumberSum;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def twoNumberSum(array, targetSum):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        output = sorted(program.twoNumberSum([4, 6], 10))\n        self.assertEqual(output, [4, 6])\n\n    def test_case_2(self):\n        output = sorted(program.twoNumberSum([4, 6, 1], 5))\n        self.assertEqual(output, [1, 4])\n\n    def test_case_3(self):\n        output = sorted(program.twoNumberSum([4, 6, 1, -3], 3))\n        self.assertEqual(output, [-3, 6])\n\n    def test_case_4(self):\n        output = sorted(program.twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 10))\n        self.assertEqual(output, [-1, 11])\n\n    def test_case_5(self):\n        output = sorted(program.twoNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9], 17))\n        self.assertEqual(output, [8, 9])\n\n    def test_case_6(self):\n        output = sorted(program.twoNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 18))\n        self.assertEqual(output, [3, 15])\n\n    def test_case_7(self):\n        output = sorted(program.twoNumberSum([-7, -5, -3, -1, 0, 1, 3, 5, 7], -5))\n        self.assertEqual(output, [-5, 0])\n\n    def test_case_8(self):\n        output = sorted(program.twoNumberSum([-21, 301, 12, 4, 65, 56, 210, 356, 9, -47], 163))\n        self.assertEqual(output, [-47, 210])\n\n    def test_case_9(self):\n        output = sorted(program.twoNumberSum([-21, 301, 12, 4, 65, 56, 210, 356, 9, -47], 164))\n        self.assertEqual(output, [])\n\n    def test_case_10(self):\n        output = sorted(program.twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 15))\n        self.assertEqual(output, [])\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        output = program.twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 10)\n        self.assertTrue(len(output) == 2)\n        self.assertTrue(11 in output)\n        self.assertTrue(-1 in output)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(1) space\ndef twoNumberSum(array, targetSum):\n    for i in range(len(array) - 1):\n        firstNum = array[i]\n        for j in range(i + 1, len(array)):\n            secondNum = array[j]\n            if firstNum + secondNum == targetSum:\n                return [firstNum, secondNum]\n    return []\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef twoNumberSum(array, targetSum):\n    nums = {}\n    for num in array:\n        potentialMatch = targetSum - num\n        if potentialMatch in nums:\n            return [potentialMatch, num]\n        else:\n            nums[num] = True\n    return []\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nlog(n)) | O(1) space\ndef twoNumberSum(array, targetSum):\n    array.sort()\n    left = 0\n    right = len(array) - 1\n    while left < right:\n        currentSum = array[left] + array[right]\n        if currentSum == targetSum:\n            return [array[left], array[right]]\n        elif currentSum < targetSum:\n            left += 1\n        elif currentSum > targetSum:\n            right -= 1\n    return []\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func twoNumberSum(array: [Int], targetSum: Int) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let expected = [4, 6]\n      var actual = program.twoNumberSum(array: [4, 6], targetSum: 10)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let expected = [1, 4]\n      var actual = program.twoNumberSum(array: [4, 6, 1], targetSum: 5)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let expected = [-3, 6]\n      var actual = program.twoNumberSum(array: [4, 6, 1, -3], targetSum: 3)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let expected = [-1, 11]\n      var actual = program.twoNumberSum(array: [3, 5, -4, 8, 11, 1, -1, 6], targetSum: 10)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let expected = [8, 9]\n      var actual = program.twoNumberSum(array: [1, 2, 3, 4, 5, 6, 7, 8, 9], targetSum: 17)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let expected = [3, 15]\n      var actual = program.twoNumberSum(array: [1, 2, 3, 4, 5, 6, 7, 8, 9, 15], targetSum: 18)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let expected = [-5, 0]\n      var actual = program.twoNumberSum(array: [-7, -5, -3, -1, 0, 1, 3, 5, 7], targetSum: -5)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let expected = [-47, 210]\n      var actual = program.twoNumberSum(array: [-21, 301, 12, 4, 65, 56, 210, 356, 9, -47], targetSum: 163)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let expected = [Int]()\n      var actual = program.twoNumberSum(array: [-21, 301, 12, 4, 65, 56, 210, 356, 9, -47], targetSum: 164)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let expected = [Int]()\n      var actual = program.twoNumberSum(array: [3, 5, -4, 8, 11, 1, -1, 6], targetSum: 15)\n      actual.sort()\n      try assertEqual(expected, actual)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var actual = program.twoNumberSum(array: [3, 5, -4, 8, 11, 1, -1, 6], targetSum: 10)\n      try assert(actual.count == 2)\n      try assert(actual.contains(-1))\n      try assert(actual.contains(11))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(1) space\n  func twoNumberSum(array: [Int], targetSum: Int) -> [Int] {\n    for i in 0 ..< array.count - 1 {\n      let firstNumber = array[i]\n\n      for j in i + 1 ..< array.count {\n        let secondNumber = array[j]\n\n        if firstNumber + secondNumber == targetSum {\n          return [firstNumber, secondNumber]\n        }\n      }\n    }\n\n    return []\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func twoNumberSum(array: [Int], targetSum: Int) -> [Int] {\n    var numbersHashMap = [Int: Bool]()\n\n    for number in array {\n      let potentialMatch = targetSum - number\n\n      if let exists = numbersHashMap[potentialMatch], exists {\n        return [potentialMatch, number]\n      } else {\n        numbersHashMap[number] = true\n      }\n    }\n\n    return []\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nlog(n)) time | O(1) space\n  func twoNumberSum(array: [Int], targetSum: Int) -> [Int] {\n    let array = array.sorted()\n\n    var leftPointer = 0\n    var rightPointer = array.count - 1\n\n    while leftPointer < rightPointer {\n      let leftMost = array[leftPointer]\n      let rightMost = array[rightPointer]\n\n      let currentSum = leftMost + rightMost\n\n      if currentSum == targetSum {\n        return [leftMost, rightMost]\n      } else if currentSum < targetSum {\n        leftPointer = leftPointer + 1\n      } else if currentSum > targetSum {\n        rightPointer = rightPointer - 1\n      }\n    }\n\n    return []\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function twoNumberSum(array: number[], targetSum: number) {\n  // Write your code here.\n  return [-1, -1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const output = program.twoNumberSum([3, 5, -4, 8, 11, 1, -1, 6], 10);\n  chai.expect(output.length === 2).to.deep.equal(true);\n  chai.expect(output.includes(11)).to.deep.equal(true);\n  chai.expect(output.includes(-1)).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(1) space\nexport function twoNumberSum(array: number[], targetSum: number) {\n  for (let i = 0; i < array.length - 1; i++) {\n    const firstNum = array[i];\n    for (let j = i + 1; j < array.length; j++) {\n      const secondNum = array[j];\n      if (firstNum + secondNum === targetSum) {\n        return [firstNum, secondNum];\n      }\n    }\n  }\n  return [];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nexport function twoNumberSum(array: number[], targetSum: number) {\n  const nums: {[key: number]: boolean} = {};\n  for (const num of array) {\n    const potentialMatch = targetSum - num;\n    if (potentialMatch in nums) {\n      return [potentialMatch, num];\n    } else {\n      nums[num] = true;\n    }\n  }\n  return [];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nlog(n)) | O(1) space\nexport function twoNumberSum(array: number[], targetSum: number) {\n  array.sort((a, b) => a - b);\n  let left = 0;\n  let right = array.length - 1;\n  while (left < right) {\n    const currentSum = array[left] + array[right];\n    if (currentSum === targetSum) {\n      return [array[left], array[right]];\n    } else if (currentSum < targetSum) {\n      left++;\n    } else if (currentSum > targetSum) {\n      right--;\n    }\n  }\n  return [];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        3,
+        5,
+        -4,
+        8,
+        11,
+        1,
+        -1,
+        6
+      ],
+      "targetSum": 10
+    },
+    {
+      "array": [
+        4,
+        6
+      ],
+      "targetSum": 10
+    },
+    {
+      "array": [
+        4,
+        6,
+        1
+      ],
+      "targetSum": 5
+    },
+    {
+      "array": [
+        4,
+        6,
+        1,
+        -3
+      ],
+      "targetSum": 3
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "targetSum": 17
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        15
+      ],
+      "targetSum": 18
+    },
+    {
+      "array": [
+        -7,
+        -5,
+        -3,
+        -1,
+        0,
+        1,
+        3,
+        5,
+        7
+      ],
+      "targetSum": -5
+    },
+    {
+      "array": [
+        -21,
+        301,
+        12,
+        4,
+        65,
+        56,
+        210,
+        356,
+        9,
+        -47
+      ],
+      "targetSum": 163
+    },
+    {
+      "array": [
+        -21,
+        301,
+        12,
+        4,
+        65,
+        56,
+        210,
+        356,
+        9,
+        -47
+      ],
+      "targetSum": 164
+    },
+    {
+      "array": [
+        3,
+        5,
+        -4,
+        8,
+        11,
+        1,
+        -1,
+        6
+      ],
+      "targetSum": 15
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        11,
+        -1
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        6,
+        -3
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        3,
+        15
+      ],
+      [
+        -5,
+        0
+      ],
+      [
+        210,
+        -47
+      ],
+      [],
+      []
+    ],
+    [
+      [
+        -1,
+        11
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        -3,
+        6
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        3,
+        15
+      ],
+      [
+        -5,
+        0
+      ],
+      [
+        -47,
+        210
+      ],
+      [],
+      []
+    ]
+  ]
+}

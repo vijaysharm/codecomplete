@@ -1,0 +1,640 @@
+{
+  "Summary": {
+    "Name": "Branch Sums",
+    "Category": "Binary Trees",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-11-21T00:00:00Z",
+      "number": 360,
+      "timeOne": 0,
+      "timeTwo": 1045,
+      "url": "https://player.vimeo.com/video/373949304"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try traversing the Binary Tree in a depth-first-search-like fashion.\nRecursively traverse the Binary Tree in a depth-first-search-like fashion, and pass a running sum of the values of every previously-visited node to each node that you're traversing.\nAs you recursively traverse the tree, if you reach a leaf node (a node with no \"left\" or \"right\" Binary Tree nodes), add the relevant running sum that you've calculated to a list of sums (which you'll also have to pass to the recursive function). If you reach a node that isn't a leaf node, keep recursively traversing its children nodes, passing the correctly updated running sum to them.\n",
+  "SpaceTime": "O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a Binary Tree and returns a list of its branch\n  sums ordered from leftmost branch sum to rightmost branch sum.\n</p>\n<p>\n  A branch sum is the sum of all values in a Binary Tree branch. A Binary Tree\n  branch is a path of nodes in a tree that starts at the root node and ends at\n  any leaf node.\n</p>\n<p>\n  Each <span>BinaryTree</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. Children\n  nodes can either be <span>BinaryTree</span> nodes themselves or\n  <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> =     1\n        /     \\\n       2       3\n     /   \\    /  \\\n    4     5  6    7\n  /   \\  /\n 8    9 10\n</pre>\n<h3>Sample Output</h3>\n<pre>[15, 16, 18, 10, 11]</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          }
+        ],
+        "root": "1"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>left</span> and <span>right</span>\npointers and by the <span>root</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\n// This is the class of the input root. Do not edit it.\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n};\n\nvector<int> branchSums(BinaryTree *root) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "class TestBinaryTree : public BinaryTree {\npublic:\n  TestBinaryTree(int value) : BinaryTree(value){};\n\n  BinaryTree *insert(vector<int> values, int i = 0) {\n    if (i >= values.size())\n      return NULL;\n    vector<BinaryTree *> queue = {this};\n    while (queue.size() > 0) {\n      BinaryTree *current = queue[0];\n      queue.erase(queue.begin());\n      if (current->left == NULL) {\n        current->left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push_back(current->left);\n      if (current->right == NULL) {\n        current->right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push_back(current->right);\n    }\n    insert(values, i + 1);\n    return this;\n  }\n};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(1);\n      vector<int> expected = {1};\n      assert(branchSums(tree) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(1);\n      tree->insert({2});\n      vector<int> expected = {3};\n      assert(branchSums(tree) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(1);\n      tree->insert({2, 3});\n      vector<int> expected = {3, 4};\n      assert(branchSums(tree) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(1);\n      tree->insert({2, 3, 4, 5});\n      vector<int> expected = {7, 8, 4};\n      assert(branchSums(tree) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(1);\n      tree->insert({2, 3, 4, 5, 6, 7, 8, 9, 10});\n      vector<int> expected = {15, 16, 18, 10, 11};\n      assert(branchSums(tree) == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(0);\n      tree->left = new BinaryTree(1);\n      tree->left->left = new BinaryTree(10);\n      tree->left->left->left = new BinaryTree(100);\n      vector<int> expected = {111};\n      assert(branchSums(tree) == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(0);\n      tree->left = new BinaryTree(1);\n      tree->left->left = new BinaryTree(10);\n      tree->left->left->left = new BinaryTree(100);\n      vector<int> expected = {111};\n      assert(branchSums(tree) == expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(0);\n      tree->right = new BinaryTree(1);\n      tree->right->right = new BinaryTree(10);\n      tree->right->right->right = new BinaryTree(100);\n      vector<int> expected = {111};\n      assert(branchSums(tree) == expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(0);\n      tree->left = new BinaryTree(9);\n      tree->right = new BinaryTree(1);\n      tree->right->left = new BinaryTree(15);\n      tree->right->right = new BinaryTree(10);\n      tree->right->right->left = new BinaryTree(100);\n      tree->right->right->right = new BinaryTree(200);\n      vector<int> expected = {9, 16, 111, 211};\n      assert(branchSums(tree) == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass TestBinaryTree : public BinaryTree {\npublic:\n  TestBinaryTree(int value) : BinaryTree(value){};\n\n  BinaryTree *insert(vector<int> values, int i = 0) {\n    if (i >= values.size())\n      return NULL;\n    vector<BinaryTree *> queue = {this};\n    while (queue.size() > 0) {\n      BinaryTree *current = queue[0];\n      queue.erase(queue.begin());\n      if (current->left == NULL) {\n        current->left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push_back(current->left);\n      if (current->right == NULL) {\n        current->right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push_back(current->right);\n    }\n    insert(values, i + 1);\n    return this;\n  }\n};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      TestBinaryTree *tree = new TestBinaryTree(1);\n      tree->insert({2, 3, 4, 5, 6, 7, 8, 9, 10});\n      vector<int> expected = {15, 16, 18, 10, 11};\n      assert(branchSums(tree) == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n};\n\nvoid calculateBranchSums(BinaryTree *node, int runningSum, vector<int> &sums);\n\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nvector<int> branchSums(BinaryTree *root) {\n  vector<int> sums;\n  calculateBranchSums(root, 0, sums);\n  return sums;\n}\n\nvoid calculateBranchSums(BinaryTree *node, int runningSum, vector<int> &sums) {\n  if (node == NULL)\n    return;\n\n  int newRunningSum = runningSum + node->value;\n  if (node->left == NULL && node->right == NULL) {\n    sums.push_back(newRunningSum);\n    return;\n  }\n\n  calculateBranchSums(node->left, newRunningSum, sums);\n  calculateBranchSums(node->right, newRunningSum, sums);\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\t// This is the class of the input root. Do not edit it.\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t\tthis.left = null;\n\t\t\tthis.right = null;\n\t\t}\n\t}\n\n\tpublic static List<int> BranchSums(BinaryTree root) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\n\tpublic class TestBinaryTree : Program.BinaryTree {\n\t\tpublic TestBinaryTree(int value) : base(value) {\n\t\t}\n\n\t\tpublic TestBinaryTree Insert(List<int> values) {\n\t\t\treturn Insert(values, 0);\n\t\t}\n\n\t\tpublic TestBinaryTree Insert(List<int> values, int i) {\n\t\t\tif (i >= values.Count) return null;\n\n\t\t\tList<TestBinaryTree> queue = new List<TestBinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\twhile (queue.Count > 0) {\n\t\t\t\tTestBinaryTree current = queue[0];\n\t\t\t\tqueue.RemoveAt(0);\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new TestBinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add((TestBinaryTree) current.left);\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new TestBinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add((TestBinaryTree) current.right);\n\t\t\t}\n\t\t\tInsert(values, i + 1);\n\t\t\treturn this;\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestBinaryTree tree = new TestBinaryTree(1);\n\t\tList<int> expected = new List<int>(){\n\t\t\t1\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tTestBinaryTree tree = new TestBinaryTree(1).Insert(new List<int>(){\n\t\t\t2\n\t\t});\n\t\tList<int> expected = new List<int>(){\n\t\t\t3\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tTestBinaryTree tree = new TestBinaryTree(1).Insert(new List<int>(){\n\t\t\t2, 3\n\t\t});\n\t\tList<int> expected = new List<int>(){\n\t\t\t3, 4\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tTestBinaryTree tree = new TestBinaryTree(1).Insert(new List<int>(){\n\t\t\t2, 3, 4, 5\n\t\t});\n\t\tList<int> expected = new List<int>(){\n\t\t\t7, 8, 4\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tTestBinaryTree tree = new TestBinaryTree(1).Insert(new List<int>(){\n\t\t\t2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t});\n\t\tList<int> expected = new List<int>(){\n\t\t\t15, 16, 18, 10, 11\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tTestBinaryTree tree = new TestBinaryTree(0);\n\t\ttree.left = new TestBinaryTree(1);\n\t\ttree.left.left = new TestBinaryTree(10);\n\t\ttree.left.left.left = new TestBinaryTree(100);\n\t\tList<int> expected = new List<int>(){\n\t\t\t111\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tTestBinaryTree tree = new TestBinaryTree(0);\n\t\ttree.left = new TestBinaryTree(1);\n\t\ttree.left.left = new TestBinaryTree(10);\n\t\ttree.left.left.left = new TestBinaryTree(100);\n\t\tList<int> expected = new List<int>(){\n\t\t\t111\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tTestBinaryTree tree = new TestBinaryTree(0);\n\t\ttree.right = new TestBinaryTree(1);\n\t\ttree.right.right = new TestBinaryTree(10);\n\t\ttree.right.right.right = new TestBinaryTree(100);\n\t\tList<int> expected = new List<int>(){\n\t\t\t111\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tTestBinaryTree tree = new TestBinaryTree(0);\n\t\ttree.left = new TestBinaryTree(9);\n\t\ttree.right = new TestBinaryTree(1);\n\t\ttree.right.left = new TestBinaryTree(15);\n\t\ttree.right.right = new TestBinaryTree(10);\n\t\ttree.right.right.left = new TestBinaryTree(100);\n\t\ttree.right.right.right = new TestBinaryTree(200);\n\t\tList<int> expected = new List<int>(){\n\t\t\t9, 16, 111, 211\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\n\tpublic class TestBinaryTree : Program.BinaryTree {\n\t\tpublic TestBinaryTree(int value) : base(value) {\n\t\t}\n\n\t\tpublic TestBinaryTree Insert(List<int> values) {\n\t\t\treturn Insert(values, 0);\n\t\t}\n\n\t\tpublic TestBinaryTree Insert(List<int> values, int i) {\n\t\t\tif (i >= values.Count) return null;\n\n\t\t\tList<TestBinaryTree> queue = new List<TestBinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\twhile (queue.Count > 0) {\n\t\t\t\tTestBinaryTree current = queue[0];\n\t\t\t\tqueue.RemoveAt(0);\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new TestBinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add((TestBinaryTree) current.left);\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new TestBinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add((TestBinaryTree) current.right);\n\t\t\t}\n\t\t\tInsert(values, i + 1);\n\t\t\treturn this;\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestBinaryTree tree = new TestBinaryTree(1).Insert(new List<int>(){\n\t\t\t2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t});\n\t\tList<int> expected = new List<int>(){\n\t\t\t15, 16, 18, 10, 11\n\t\t};\n\t\tUtils.AssertTrue(Program.BranchSums(tree).SequenceEqual(expected));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t\tthis.left = null;\n\t\t\tthis.right = null;\n\t\t}\n\t}\n\n\t// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n\tpublic static List<int> BranchSums(BinaryTree root) {\n\t\tList<int> sums = new List<int>();\n\t\tcalculateBranchSums(root, 0, sums);\n\t\treturn sums;\n\t}\n\n\tpublic static void calculateBranchSums(BinaryTree node, int runningSum, List<int> sums) {\n\t\tif (node == null) return;\n\n\t\tint newRunningSum = runningSum + node.value;\n\t\tif (node.left == null && node.right == null) {\n\t\t\tsums.Add(newRunningSum);\n\t\t\treturn;\n\t\t}\n\n\t\tcalculateBranchSums(node.left, newRunningSum, sums);\n\t\tcalculateBranchSums(node.right, newRunningSum, sums);\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\n// This is the struct of the input root. Do not edit it.\ntype BinaryTree struct {\n\tValue int\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\nfunc BranchSums(root *BinaryTree) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\ttree := NewBinaryTree(1)\n\texpected := []int{1}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\ttree := NewBinaryTree(1, 2)\n\texpected := []int{3}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\ttree := NewBinaryTree(1, 2, 3)\n\texpected := []int{3, 4}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\ttree := NewBinaryTree(1, 2, 3, 4, 5)\n\texpected := []int{7, 8, 4}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\ttree := NewBinaryTree(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)\n\texpected := []int{15, 16, 18, 10, 11}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\ttree := NewBinaryTree(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 1, 1)\n\texpected := []int{15, 16, 18, 9, 11, 11, 11}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\ttree := NewBinaryTree(0)\n\ttree.Left = NewBinaryTree(1)\n\ttree.Left.Left = NewBinaryTree(10)\n\ttree.Left.Left.Left = NewBinaryTree(100)\n\texpected := []int{111}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\ttree := NewBinaryTree(0)\n\ttree.Right = NewBinaryTree(1)\n\ttree.Right.Right = NewBinaryTree(10)\n\ttree.Right.Right.Right = NewBinaryTree(100)\n\texpected := []int{111}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\ttree := NewBinaryTree(0)\n\ttree.Left = NewBinaryTree(9)\n\ttree.Right = NewBinaryTree(1)\n\ttree.Right.Left = NewBinaryTree(15)\n\ttree.Right.Right = NewBinaryTree(10)\n\ttree.Right.Right.Left = NewBinaryTree(100)\n\ttree.Right.Right.Right = NewBinaryTree(200)\n\texpected := []int{9, 16, 111, 211}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc NewBinaryTree(root int, values ...int) *BinaryTree {\n\ttree := &BinaryTree{Value: root}\n\ttree.Insert(values, 0)\n\treturn tree\n}\n\nfunc (tree *BinaryTree) Insert(values []int, i int) *BinaryTree {\n\tif i >= len(values) {\n\t\treturn tree\n\t}\n\tval := values[i]\n\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tvar current *BinaryTree\n\t\tcurrent, queue = queue[0], queue[1:]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = &BinaryTree{Value: val}\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Left)\n\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = &BinaryTree{Value: val}\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Right)\n\t}\n\n\ttree.Insert(values, i+1)\n\treturn tree\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\ttree := NewBinaryTree(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)\n\texpected := []int{15, 16, 18, 10, 11}\n\toutput := BranchSums(tree)\n\trequire.Equal(t, expected, output)\n}\n\nfunc NewBinaryTree(root int, values ...int) *BinaryTree {\n\ttree := &BinaryTree{Value: root}\n\ttree.Insert(values, 0)\n\treturn tree\n}\n\nfunc (tree *BinaryTree) Insert(values []int, i int) *BinaryTree {\n\tif i >= len(values) {\n\t\treturn tree\n\t}\n\tval := values[i]\n\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tvar current *BinaryTree\n\t\tcurrent, queue = queue[0], queue[1:]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = &BinaryTree{Value: val}\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Left)\n\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = &BinaryTree{Value: val}\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Right)\n\t}\n\n\ttree.Insert(values, i+1)\n\treturn tree\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue int\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nfunc BranchSums(root *BinaryTree) []int {\n\tsums := []int{}\n\tcalculateBranchSums(root, 0, &sums)\n\treturn sums\n}\n\nfunc calculateBranchSums(node *BinaryTree,\n\trunningSum int, sums *[]int) {\n\tif node == nil {\n\t\treturn\n\t}\n\n\trunningSum += node.Value\n\tif node.Left == nil && node.Right == nil {\n\t\t*sums = append(*sums, runningSum)\n\t\treturn\n\t}\n\n\tcalculateBranchSums(node.Left, runningSum, sums)\n\tcalculateBranchSums(node.Right, runningSum, sums)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  // This is the class of the input root. Do not edit it.\n  public static class BinaryTree {\n    int value;\n    BinaryTree left;\n    BinaryTree right;\n\n    BinaryTree(int value) {\n      this.value = value;\n      this.left = null;\n      this.right = null;\n    }\n  }\n\n  public static List<Integer> branchSums(BinaryTree root) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n\n  public class TestBinaryTree extends Program.BinaryTree {\n    TestBinaryTree(int value) {\n      super(value);\n    }\n\n    TestBinaryTree insert(List<Integer> values) {\n      return insert(values, 0);\n    }\n\n    TestBinaryTree insert(List<Integer> values, int i) {\n      if (i >= values.size()) return null;\n\n      List<TestBinaryTree> queue = new ArrayList<TestBinaryTree>();\n      queue.add(this);\n      while (queue.size() > 0) {\n        TestBinaryTree current = queue.get(0);\n        queue.remove(0);\n        if (current.left == null) {\n          current.left = new TestBinaryTree(values.get(i));\n          break;\n        }\n        queue.add((TestBinaryTree) current.left);\n        if (current.right == null) {\n          current.right = new TestBinaryTree(values.get(i));\n          break;\n        }\n        queue.add((TestBinaryTree) current.right);\n      }\n      insert(values, i + 1);\n      return this;\n    }\n  }\n\n  @Test\n  public void TestCase1() {\n    TestBinaryTree tree = new TestBinaryTree(1);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(1));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    TestBinaryTree tree = new TestBinaryTree(1).insert(Arrays.asList(2));\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(3));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    TestBinaryTree tree = new TestBinaryTree(1).insert(Arrays.asList(2, 3));\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(3, 4));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    TestBinaryTree tree = new TestBinaryTree(1).insert(Arrays.asList(2, 3, 4, 5));\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(7, 8, 4));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    TestBinaryTree tree = new TestBinaryTree(1).insert(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10));\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(15, 16, 18, 10, 11));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    TestBinaryTree tree = new TestBinaryTree(0);\n    tree.left = new TestBinaryTree(1);\n    tree.left.left = new TestBinaryTree(10);\n    tree.left.left.left = new TestBinaryTree(100);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(111));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    TestBinaryTree tree = new TestBinaryTree(0);\n    tree.left = new TestBinaryTree(1);\n    tree.left.left = new TestBinaryTree(10);\n    tree.left.left.left = new TestBinaryTree(100);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(111));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    TestBinaryTree tree = new TestBinaryTree(0);\n    tree.right = new TestBinaryTree(1);\n    tree.right.right = new TestBinaryTree(10);\n    tree.right.right.right = new TestBinaryTree(100);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(111));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    TestBinaryTree tree = new TestBinaryTree(0);\n    tree.left = new TestBinaryTree(9);\n    tree.right = new TestBinaryTree(1);\n    tree.right.left = new TestBinaryTree(15);\n    tree.right.right = new TestBinaryTree(10);\n    tree.right.right.left = new TestBinaryTree(100);\n    tree.right.right.right = new TestBinaryTree(200);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(9, 16, 111, 211));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n\n  public class TestBinaryTree extends Program.BinaryTree {\n    TestBinaryTree(int value) {\n      super(value);\n    }\n\n    TestBinaryTree insert(List<Integer> values) {\n      return insert(values, 0);\n    }\n\n    TestBinaryTree insert(List<Integer> values, int i) {\n      if (i >= values.size()) return null;\n\n      List<TestBinaryTree> queue = new ArrayList<TestBinaryTree>();\n      queue.add(this);\n      while (queue.size() > 0) {\n        TestBinaryTree current = queue.get(0);\n        queue.remove(0);\n        if (current.left == null) {\n          current.left = new TestBinaryTree(values.get(i));\n          break;\n        }\n        queue.add((TestBinaryTree) current.left);\n        if (current.right == null) {\n          current.right = new TestBinaryTree(values.get(i));\n          break;\n        }\n        queue.add((TestBinaryTree) current.right);\n      }\n      insert(values, i + 1);\n      return this;\n    }\n  }\n\n  @Test\n  public void TestCase1() {\n    TestBinaryTree tree = new TestBinaryTree(1).insert(Arrays.asList(2, 3, 4, 5, 6, 7, 8, 9, 10));\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(15, 16, 18, 10, 11));\n    Utils.assertTrue(Program.branchSums(tree).equals(expected));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  public static class BinaryTree {\n    int value;\n    BinaryTree left;\n    BinaryTree right;\n\n    BinaryTree(int value) {\n      this.value = value;\n      this.left = null;\n      this.right = null;\n    }\n  }\n\n  // O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n  public static List<Integer> branchSums(BinaryTree root) {\n    List<Integer> sums = new ArrayList<Integer>();\n    calculateBranchSums(root, 0, sums);\n    return sums;\n  }\n\n  public static void calculateBranchSums(BinaryTree node, int runningSum, List<Integer> sums) {\n    if (node == null) return;\n\n    int newRunningSum = runningSum + node.value;\n    if (node.left == null && node.right == null) {\n      sums.add(newRunningSum);\n      return;\n    }\n\n    calculateBranchSums(node.left, newRunningSum, sums);\n    calculateBranchSums(node.right, newRunningSum, sums);\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// This is the class of the input root.\n// Do not edit it.\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nfunction branchSums(root) {\n  // Write your code here.\n}\n\n// Do not edit the lines below.\nexports.BinaryTree = BinaryTree;\nexports.branchSums = branchSums;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const tree = new BinaryTree(1);\n  chai.expect(program.branchSums(tree)).to.deep.equal([1]);\n});\n\nit('Test Case #2', function () {\n  const tree = new BinaryTree(1).insert([2]);\n  chai.expect(program.branchSums(tree)).to.deep.equal([3]);\n});\n\nit('Test Case #3', function () {\n  const tree = new BinaryTree(1).insert([2, 3]);\n  chai.expect(program.branchSums(tree)).to.deep.equal([3, 4]);\n});\n\nit('Test Case #4', function () {\n  const tree = new BinaryTree(1).insert([2, 3, 4, 5]);\n  chai.expect(program.branchSums(tree)).to.deep.equal([7, 8, 4]);\n});\n\nit('Test Case #5', function () {\n  const tree = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10]);\n  chai.expect(program.branchSums(tree)).to.deep.equal([15, 16, 18, 10, 11]);\n});\n\nit('Test Case #6', function () {\n  const tree = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 1, 1]);\n  chai.expect(program.branchSums(tree)).to.deep.equal([15, 16, 18, 9, 11, 11, 11]);\n});\n\nit('Test Case #7', function () {\n  const tree = new BinaryTree(0);\n  tree.left = new BinaryTree(1);\n  tree.left.left = new BinaryTree(10);\n  tree.left.left.left = new BinaryTree(100);\n  chai.expect(program.branchSums(tree)).to.deep.equal([111]);\n});\n\nit('Test Case #8', function () {\n  const tree = new BinaryTree(0);\n  tree.right = new BinaryTree(1);\n  tree.right.right = new BinaryTree(10);\n  tree.right.right.right = new BinaryTree(100);\n  chai.expect(program.branchSums(tree)).to.deep.equal([111]);\n});\n\nit('Test Case #9', function () {\n  const tree = new BinaryTree(0);\n  tree.left = new BinaryTree(9);\n  tree.right = new BinaryTree(1);\n  tree.right.left = new BinaryTree(15);\n  tree.right.right = new BinaryTree(10);\n  tree.right.right.left = new BinaryTree(100);\n  tree.right.right.right = new BinaryTree(200);\n  chai.expect(program.branchSums(tree)).to.deep.equal([9, 16, 111, 211]);\n});\n\nclass BinaryTree extends program.BinaryTree {\n  constructor(value) {\n    super(value);\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const tree = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10]);\n  chai.expect(program.branchSums(tree)).to.deep.equal([15, 16, 18, 10, 11]);\n});\n\nclass BinaryTree extends program.BinaryTree {\n  constructor(value) {\n    super(value);\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nfunction branchSums(root) {\n  const sums = [];\n  calculateBranchSums(root, 0, sums);\n  return sums;\n}\n\nfunction calculateBranchSums(node, runningSum, sums) {\n  if (!node) return;\n\n  const newRunningSum = runningSum + node.value;\n  if (!node.left && !node.right) {\n    sums.push(newRunningSum);\n    return;\n  }\n\n  calculateBranchSums(node.left, newRunningSum, sums);\n  calculateBranchSums(node.right, newRunningSum, sums);\n}\n\nexports.BinaryTree = BinaryTree;\nexports.branchSums = branchSums;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# This is the class of the input root. Do not edit it.\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n\ndef branchSums(root):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        tree = BinaryTree(1)\n        self.assertEqual(program.branchSums(tree), [1])\n\n    def test_case_2(self):\n        tree = BinaryTree(1).insert([2])\n        self.assertEqual(program.branchSums(tree), [3])\n\n    def test_case_3(self):\n        tree = BinaryTree(1).insert([2, 3])\n        self.assertEqual(program.branchSums(tree), [3, 4])\n\n    def test_case_4(self):\n        tree = BinaryTree(1).insert([2, 3, 4, 5])\n        self.assertEqual(program.branchSums(tree), [7, 8, 4])\n\n    def test_case_5(self):\n        tree = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10])\n        self.assertEqual(program.branchSums(tree), [15, 16, 18, 10, 11])\n\n    def test_case_6(self):\n        tree = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 1, 1])\n        self.assertEqual(program.branchSums(tree), [15, 16, 18, 9, 11, 11, 11])\n\n    def test_case_7(self):\n        tree = BinaryTree(0)\n        tree.left = BinaryTree(1)\n        tree.left.left = BinaryTree(10)\n        tree.left.left.left = BinaryTree(100)\n        self.assertEqual(program.branchSums(tree), [111])\n\n    def test_case_8(self):\n        tree = BinaryTree(0)\n        tree.right = BinaryTree(1)\n        tree.right.right = BinaryTree(10)\n        tree.right.right.right = BinaryTree(100)\n        self.assertEqual(program.branchSums(tree), [111])\n\n    def test_case_9(self):\n        tree = BinaryTree(0)\n        tree.left = BinaryTree(9)\n        tree.right = BinaryTree(1)\n        tree.right.left = BinaryTree(15)\n        tree.right.right = BinaryTree(10)\n        tree.right.right.left = BinaryTree(100)\n        tree.right.right.right = BinaryTree(200)\n        self.assertEqual(program.branchSums(tree), [9, 16, 111, 211])\n\n\nclass BinaryTree(program.BinaryTree):\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        tree = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10])\n        self.assertEqual(program.branchSums(tree), [15, 16, 18, 10, 11])\n\n\nclass BinaryTree(program.BinaryTree):\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n\n# O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\ndef branchSums(root):\n    sums = []\n    calculateBranchSums(root, 0, sums)\n    return sums\n\n\ndef calculateBranchSums(node, runningSum, sums):\n    if node is None:\n        return\n\n    newRunningSum = runningSum + node.value\n    if node.left is None and node.right is None:\n        sums.append(newRunningSum)\n        return\n\n    calculateBranchSums(node.left, newRunningSum, sums)\n    calculateBranchSums(node.right, newRunningSum, sums)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  func branchSums(root: BST) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 1)\n      var expected: [Int] = [1]\n      try assertEqual(expected, program.branchSums(root: tree))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 1)\n      tree.left = Program.BST(value: 2)\n      var expected: [Int] = [3]\n      try assertEqual(expected, program.branchSums(root: tree))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 1)\n      tree.left = Program.BST(value: 2)\n      tree.right = Program.BST(value: 3)\n      var expected: [Int] = [3, 4]\n      var output = program.branchSums(root: tree)\n      try assertEqual(expected, output)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 1)\n      tree.left = Program.BST(value: 2)\n      tree.right = Program.BST(value: 3)\n      tree.left!.left = Program.BST(value: 4)\n      tree.left!.right = Program.BST(value: 5)\n      var expected: [Int] = [7, 8, 4]\n      var output = program.branchSums(root: tree)\n      try assertEqual(expected, output)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 1)\n      tree.left = Program.BST(value: 2)\n      tree.right = Program.BST(value: 3)\n      tree.left!.left = Program.BST(value: 4)\n      tree.left!.right = Program.BST(value: 5)\n      tree.right!.left = Program.BST(value: 6)\n      tree.right!.right = Program.BST(value: 7)\n      tree.left!.left!.left = Program.BST(value: 8)\n      tree.left!.left!.right = Program.BST(value: 9)\n      tree.left!.right!.left = Program.BST(value: 10)\n      var expected: [Int] = [15, 16, 18, 10, 11]\n      var output = program.branchSums(root: tree)\n      try assertEqual(expected, output)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 1)\n      tree.left = Program.BST(value: 2)\n      tree.right = Program.BST(value: 3)\n      tree.left!.left = Program.BST(value: 4)\n      tree.left!.right = Program.BST(value: 5)\n      tree.right!.left = Program.BST(value: 6)\n      tree.right!.right = Program.BST(value: 7)\n      tree.left!.left!.left = Program.BST(value: 8)\n      tree.left!.left!.right = Program.BST(value: 9)\n      tree.left!.right!.left = Program.BST(value: 10)\n      tree.left!.right!.right = Program.BST(value: 1)\n      tree.right!.left!.left = Program.BST(value: 1)\n      tree.right!.left!.right = Program.BST(value: 1)\n      var expected: [Int] = [15, 16, 18, 9, 11, 11, 11]\n      var output = program.branchSums(root: tree)\n      try assertEqual(expected, output)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 0)\n      tree.left = Program.BST(value: 1)\n      tree.left!.left = Program.BST(value: 10)\n      tree.left!.left!.left = Program.BST(value: 100)\n      var expected: [Int] = [111]\n      var output = program.branchSums(root: tree)\n      try assertEqual(expected, output)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 0)\n      tree.right = Program.BST(value: 1)\n      tree.right!.right = Program.BST(value: 10)\n      tree.right!.right!.right = Program.BST(value: 100)\n      var expected: [Int] = [111]\n      var output = program.branchSums(root: tree)\n      try assertEqual(expected, output)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 0)\n      tree.left = Program.BST(value: 9)\n      tree.right = Program.BST(value: 1)\n      tree.right!.left = Program.BST(value: 15)\n      tree.right!.right = Program.BST(value: 10)\n      tree.right!.right!.left = Program.BST(value: 100)\n      tree.right!.right!.right = Program.BST(value: 200)\n      var expected: [Int] = [9, 16, 111, 211]\n      var output = program.branchSums(root: tree)\n      try assertEqual(expected, output)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var tree: Program.BST = Program.BST(value: 1)\n      tree.left = Program.BST(value: 2)\n      tree.right = Program.BST(value: 3)\n      tree.left!.left = Program.BST(value: 4)\n      tree.left!.right = Program.BST(value: 5)\n      tree.right!.left = Program.BST(value: 6)\n      tree.right!.right = Program.BST(value: 7)\n      tree.left!.left!.left = Program.BST(value: 8)\n      tree.left!.left!.right = Program.BST(value: 9)\n      tree.left!.right!.left = Program.BST(value: 10)\n      var expected: [Int] = [15, 16, 18, 10, 11]\n      var output = program.branchSums(root: tree)\n      try assertEqual(expected, output)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  // O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n  func branchSums(root: BST) -> [Int] {\n    var sums = [Int]()\n    calculateBranchSums(node: root, runningSum: 0, sums: &sums)\n    return sums\n  }\n\n  func calculateBranchSums(node: BST?, runningSum: Int, sums: inout [Int]) {\n    if let n = node {\n      let newRunningSum = runningSum + n.value\n      if n.left == nil, n.right == nil {\n        sums.append(newRunningSum)\n        return\n      }\n      calculateBranchSums(node: n.left, runningSum: newRunningSum, sums: &sums)\n      calculateBranchSums(node: n.right, runningSum: newRunningSum, sums: &sums)\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// This is the class of the input root.\n// Do not edit it.\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexport function branchSums(root: BinaryTree): number[] {\n  // Write your code here.\n  return [-1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const tree = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10]);\n  chai.expect(program.branchSums(tree!)).to.deep.equal([15, 16, 18, 10, 11]);\n});\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(values: number[], i = 0) {\n    if (i >= values.length) return;\n    const queue: BinaryTree[] = [this];\n    while (queue.length > 0) {\n      let current = queue.shift()!;\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nexport function branchSums(root: BinaryTree) {\n  const sums: number[] = [];\n  calculateBranchSums(root, 0, sums);\n  return sums;\n}\n\nfunction calculateBranchSums(node: BinaryTree | null, runningSum: number, sums: number[]) {\n  if (!node) return;\n\n  const newRunningSum = runningSum + node.value;\n  if (!node.left && !node.right) {\n    sums.push(newRunningSum);\n    return;\n  }\n\n  calculateBranchSums(node.left, newRunningSum, sums);\n  calculateBranchSums(node.right, newRunningSum, sums);\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": "1-2",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": "1-3",
+            "right": "1-4",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "0",
+            "left": "1",
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "1",
+            "left": "10",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "10",
+            "left": "100",
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "100",
+            "left": null,
+            "right": null,
+            "value": 100
+          }
+        ],
+        "root": "0"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "0",
+            "left": null,
+            "right": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": "10",
+            "value": 1
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": "100",
+            "value": 10
+          },
+          {
+            "id": "100",
+            "left": null,
+            "right": null,
+            "value": 100
+          }
+        ],
+        "root": "0"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "0",
+            "left": "9",
+            "right": "1",
+            "value": 0
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "1",
+            "left": "15",
+            "right": "10",
+            "value": 1
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "10",
+            "left": "100",
+            "right": "200",
+            "value": 10
+          },
+          {
+            "id": "100",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "200",
+            "left": null,
+            "right": null,
+            "value": 200
+          }
+        ],
+        "root": "0"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        15,
+        16,
+        18,
+        10,
+        11
+      ],
+      [
+        1
+      ],
+      [
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        7,
+        8,
+        4
+      ],
+      [
+        15,
+        16,
+        18,
+        9,
+        11,
+        11,
+        11
+      ],
+      [
+        111
+      ],
+      [
+        111
+      ],
+      [
+        9,
+        16,
+        111,
+        211
+      ]
+    ]
+  ]
+}

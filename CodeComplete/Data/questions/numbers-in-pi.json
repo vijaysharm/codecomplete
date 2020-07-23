@@ -1,0 +1,330 @@
+{
+  "Summary": {
+    "Name": "Numbers In Pi",
+    "Category": "Dynamic Programming",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-09-01T00:00:00Z",
+      "number": 664,
+      "timeOne": 0,
+      "timeTwo": 1562,
+      "url": "https://player.vimeo.com/video/355629406"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You'll need to look numbers up quickly; is the input array the best data structure for this?\nDump every favorite number in a hash table for fast look-up. Iterate through the digits of Pi, checking if every prefix of the n digits is a favorite number. What should you do if you find that a prefix of the n digits of Pi is a favorite number?\nGoing off of Hint #2, if you find a prefix of the n digits of Pi that is a favorite number, try adding 1 space after it and then recursively calculating the smallest number of spaces in the suffix that comes after it. Do this for every prefix, and you'll find the answer. Can this method be optimized with a cache?",
+  "SpaceTime": "O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\n",
+  "PromptHTML": "<p>\n  Given a string representation of the first n digits of Pi and a list of\n  positive integers (all in string format), write a function that returns the\n  smallest number of spaces that can be added to the n digits of Pi such that\n  all resulting numbers are found in the list integers.\n</p>\n<p>\n  If no number of spaces to be added exists such that all resulting numbers are\n  found in the list of integers, the function should return\n  <span>-1</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">pi</span> = \"3141592653589793238462643383279\",\n<span class=\"CodeEditor-promptParameter\">numbers</span> = [\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n2 <span class=\"CodeEditor-promptComment\">// \"314159265 | 35897932384626433832 | 79\"</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "pi",
+      "Example": "3141592653589793238462643383279",
+      "Schema": {
+        "type": "string"
+      }
+    },
+    {
+      "Name": "numbers",
+      "Example": [
+        "314159265358979323846",
+        "26433",
+        "8",
+        "3279",
+        "314159265",
+        "35897932384626433832",
+        "79"
+      ],
+      "Schema": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint numbersInPi(string pi, vector<string> numbers) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "string PI = \"3141592653589793238462643383279\";\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<string> numbers = {\"314159265358979323846264338327\", \"9\"};\n      assert(numbersInPi(PI, numbers) == 1);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<string> numbers = {\"3\",           \"314\", \"49\",   \"9001\",\n                                \"15926535897\", \"14\",  \"9323\", \"8462643383279\",\n                                \"4\",           \"793\"};\n      assert(numbersInPi(PI, numbers) == 3);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<string> numbers = {\"3141592653589793238462643383279\"};\n      assert(numbersInPi(PI, numbers) == 0);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<string> numbers = {\"3141\", \"1512\",     \"159\",\n                                \"793\",  \"12412451\", \"8462643383279\"};\n      assert(numbersInPi(PI, numbers) == -1);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<string> numbers = {\n          \"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\",\n          \"35897932384626433832\",  \"79\"};\n      assert(numbersInPi(PI, numbers) == 2);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<string> numbers = {\"314159265358979323846\",\n                                \"327\",\n                                \"26433\",\n                                \"8\",\n                                \"3279\",\n                                \"9\",\n                                \"314159265\",\n                                \"35897932384626433832\",\n                                \"79\"};\n      assert(numbersInPi(PI, numbers) == 2);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<string> numbers = {\"141592653589793238462643383279\",\n                                \"314159265358979323846\",\n                                \"327\",\n                                \"26433\",\n                                \"8\",\n                                \"3279\",\n                                \"9\",\n                                \"314159265\",\n                                \"35897932384626433832\",\n                                \"79\",\n                                \"3\"};\n      assert(numbersInPi(PI, numbers) == 1);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<string> numbers = {\"3\",  \"1\", \"4\",    \"592\",     \"65\",   \"55\",\n                                \"35\", \"8\", \"9793\", \"2384626\", \"83279\"};\n      assert(numbersInPi(PI, numbers) == 13);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<string> numbers = {\"3\",  \"1\", \"4\",    \"592\",     \"65\",    \"55\",\n                                \"35\", \"8\", \"9793\", \"2384626\", \"383279\"};\n      assert(numbersInPi(PI, numbers) == 12);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<string> numbers = {\"3\",  \"141\", \"592\",  \"65\",      \"55\",\n                                \"35\", \"8\",   \"9793\", \"2384626\", \"383279\"};\n      assert(numbersInPi(PI, numbers) == -1);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<string> numbers = {\"3\",  \"141\", \"592\",  \"65\",       \"55\",\n                                \"35\", \"8\",   \"9793\", \"23846264\", \"383279\"};\n      assert(numbersInPi(PI, numbers) == 9);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      vector<string> numbers = {\"3\",  \"141\", \"592\",  \"65\",       \"55\",\n                                \"35\", \"8\",   \"9793\", \"23846264\", \"3832798\"};\n      assert(numbersInPi(PI, numbers) == -1);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nstring PI = \"3141592653589793238462643383279\";\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<string> numbers = {\n          \"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\",\n          \"35897932384626433832\",  \"79\"};\n      assert(numbersInPi(PI, numbers) == 2);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <set>\n#include <unordered_map>\n#include <algorithm>\n#include <climits>\n#include <vector>\nusing namespace std;\n\nint getMinSpaces(string pi, set<string> numbersTable,\n                 unordered_map<int, int> *cache, int idx);\n\n// O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and\n// m is the number of favorite numbers\nint numbersInPi(string pi, vector<string> numbers) {\n  set<string> numbersTable;\n  for (string number : numbers) {\n    numbersTable.insert(number);\n  }\n  unordered_map<int, int> cache;\n  int minSpaces = getMinSpaces(pi, numbersTable, &cache, 0);\n  return minSpaces == INT_MAX ? -1 : minSpaces;\n}\n\nint getMinSpaces(string pi, set<string> numbersTable,\n                 unordered_map<int, int> *cache, int idx) {\n  if (idx == pi.length())\n    return -1;\n  if (cache->find(idx) != cache->end())\n    return cache->at(idx);\n  int minSpaces = INT_MAX;\n  for (int i = idx; i < pi.length(); i++) {\n    string prefix = pi.substr(idx, i + 1 - idx);\n    if (numbersTable.find(prefix) != numbersTable.end()) {\n      int minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1);\n      // Handle int overflow.\n      if (minSpacesInSuffix == INT_MAX) {\n        minSpaces = min(minSpaces, minSpacesInSuffix);\n      } else {\n        minSpaces = min(minSpaces, minSpacesInSuffix + 1);\n      }\n    }\n  }\n  cache->insert({idx, minSpaces});\n  return cache->at(idx);\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <set>\n#include <unordered_map>\n#include <algorithm>\n#include <climits>\n#include <vector>\nusing namespace std;\n\nint getMinSpaces(string pi, set<string> numbersTable,\n                 unordered_map<int, int> *cache, int idx);\n\n// O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and\n// m is the number of favorite numbers\nint numbersInPi(string pi, vector<string> numbers) {\n  set<string> numbersTable;\n  for (string number : numbers) {\n    numbersTable.insert(number);\n  }\n  unordered_map<int, int> cache;\n  for (int i = pi.length() - 1; i >= 0; i--) {\n    getMinSpaces(pi, numbersTable, &cache, i);\n  }\n  return cache.at(0) == INT_MAX ? -1 : cache.at(0);\n}\n\nint getMinSpaces(string pi, set<string> numbersTable,\n                 unordered_map<int, int> *cache, int idx) {\n  if (idx == pi.length())\n    return -1;\n  if (cache->find(idx) != cache->end())\n    return cache->at(idx);\n  int minSpaces = INT_MAX;\n  for (int i = idx; i < pi.length(); i++) {\n    string prefix = pi.substr(idx, i + 1 - idx);\n    if (numbersTable.find(prefix) != numbersTable.end()) {\n      int minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1);\n      // Handle int overflow.\n      if (minSpacesInSuffix == INT_MAX) {\n        minSpaces = min(minSpaces, minSpacesInSuffix);\n      } else {\n        minSpaces = min(minSpaces, minSpacesInSuffix + 1);\n      }\n    }\n  }\n  cache->insert({idx, minSpaces});\n  return cache->at(idx);\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int NumbersInPi(string pi, string[] numbers) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\tstring PI = \"3141592653589793238462643383279\";\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tstring[] numbers = new string[] {\"314159265358979323846264338327\", \"9\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"3\", \"314\", \"49\", \"9001\", \"15926535897\", \"14\", \"9323\",\n\t\t\t        \"8462643383279\", \"4\", \"793\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tstring[] numbers = new string[] {\"3141592653589793238462643383279\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"3141\", \"1512\", \"159\", \"793\", \"12412451\", \"8462643383279\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == -1);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\",\n\t\t\t        \"35897932384626433832\", \"79\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"314159265358979323846\", \"327\", \"26433\", \"8\", \"3279\", \"9\",\n\t\t\t        \"314159265\", \"35897932384626433832\", \"79\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"141592653589793238462643383279\", \"314159265358979323846\",\n\t\t\t        \"327\",\n\t\t\t        \"26433\", \"8\", \"3279\", \"9\", \"314159265\",\n\t\t\t        \"35897932384626433832\", \"79\", \"3\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\",\n\t\t\t        \"2384626\",\n\t\t\t        \"83279\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 13);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\",\n\t\t\t        \"2384626\",\n\t\t\t        \"383279\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 12);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\",\n\t\t\t        \"383279\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == -1);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\",\n\t\t\t        \"383279\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 9);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\",\n\t\t\t        \"3832798\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == -1);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\tstring PI = \"3141592653589793238462643383279\";\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tstring[] numbers =\n\t\t  new string[] {\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\",\n\t\t\t        \"35897932384626433832\", \"79\"};\n\t\tUtils.AssertTrue(Program.NumbersInPi(PI, numbers) == 2);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\n\tpublic static int NumbersInPi(string pi, string[] numbers) {\n\t\tHashSet<string> numbersTable = new HashSet<string>();\n\t\tforeach (string number in numbers) {\n\t\t\tnumbersTable.Add(number);\n\t\t}\n\t\tDictionary<int, int> cache = new Dictionary<int, int>();\n\t\tint minSpaces = getMinSpaces(pi, numbersTable, cache, 0);\n\t\treturn minSpaces == Int32.MaxValue ? -1 : minSpaces;\n\t}\n\n\tpublic static int getMinSpaces(\n\t\tstring pi,\n\t\tHashSet<string> numbersTable,\n\t\tDictionary<int, int> cache,\n\t\tint idx\n\t\t) {\n\t\tif (idx == pi.Length) return -1;\n\t\tif (cache.ContainsKey(idx)) return cache[idx];\n\t\tint minSpaces = Int32.MaxValue;\n\t\tfor (int i = idx; i < pi.Length; i++) {\n\t\t\tstring prefix = pi.Substring(idx, i + 1 - idx);\n\t\t\tif (numbersTable.Contains(prefix)) {\n\t\t\t\tint minSpacesInSuffix =\n\t\t\t\t  getMinSpaces(pi, numbersTable, cache, i + 1);\n\t\t\t\t// Handle int overflow.\n\t\t\t\tif (minSpacesInSuffix == Int32.MaxValue) {\n\t\t\t\t\tminSpaces = Math.Min(minSpaces, minSpacesInSuffix);\n\t\t\t\t} else {\n\t\t\t\t\tminSpaces = Math.Min(minSpaces, minSpacesInSuffix + 1);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tcache[idx] = minSpaces;\n\t\treturn cache[idx];\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\n\tpublic static int NumbersInPi(string pi, string[] numbers) {\n\t\tHashSet<string> numbersTable = new HashSet<string>();\n\t\tforeach (string number in numbers) {\n\t\t\tnumbersTable.Add(number);\n\t\t}\n\t\tDictionary<int, int> cache = new Dictionary<int, int>();\n\t\tfor (int i = pi.Length - 1; i >= 0; i--) {\n\t\t\tgetMinSpaces(pi, numbersTable, cache, i);\n\t\t}\n\t\treturn cache[0] == Int32.MaxValue ? -1 : cache[0];\n\t}\n\n\tpublic static int getMinSpaces(\n\t\tstring pi,\n\t\tHashSet<string> numbersTable,\n\t\tDictionary<int, int> cache,\n\t\tint idx\n\t\t) {\n\t\tif (idx == pi.Length) return -1;\n\t\tif (cache.ContainsKey(idx)) return cache[idx];\n\t\tint minSpaces = Int32.MaxValue;\n\t\tfor (int i = idx; i < pi.Length; i++) {\n\t\t\tstring prefix = pi.Substring(idx, i + 1 - idx);\n\t\t\tif (numbersTable.Contains(prefix)) {\n\t\t\t\tint minSpacesInSuffix =\n\t\t\t\t  getMinSpaces(pi, numbersTable, cache, i + 1);\n\t\t\t\t// Handle int overflow.\n\t\t\t\tif (minSpacesInSuffix == Int32.MaxValue) {\n\t\t\t\t\tminSpaces = Math.Min(minSpaces, minSpacesInSuffix);\n\t\t\t\t} else {\n\t\t\t\t\tminSpaces = Math.Min(minSpaces, minSpacesInSuffix + 1);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tcache.Add(idx, minSpaces);\n\t\treturn cache[idx];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc NumbersInPi(pi string, numbers []string) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nconst PI = \"3141592653589793238462643383279\"\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tnumbers := []string{\"314159265358979323846264338327\", \"9\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 1)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tnumbers := []string{\"3\", \"314\", \"49\", \"9001\", \"15926535897\", \"14\", \"9323\", \"8462643383279\", \"4\", \"793\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 3)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tnumbers := []string{\"3141592653589793238462643383279\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 0)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tnumbers := []string{\"3141\", \"1512\", \"159\", \"793\", \"12412451\", \"8462643383279\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), -1)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tnumbers := []string{\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 2)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tnumbers := []string{\"314159265358979323846\", \"327\", \"26433\", \"8\", \"3279\",\n\t\t\"9\", \"314159265\", \"35897932384626433832\", \"79\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 2)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tnumbers := []string{\"141592653589793238462643383279\", \"314159265358979323846\", \"327\", \"26433\",\n\t\t\"8\", \"3279\", \"9\", \"314159265\", \"35897932384626433832\", \"79\", \"3\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 1)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tnumbers := []string{\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"83279\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 13)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tnumbers := []string{\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"383279\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 12)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tnumbers := []string{\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"383279\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), -1)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tnumbers := []string{\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\", \"383279\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 9)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\tnumbers := []string{\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\", \"3832798\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), -1)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nconst PI = \"3141592653589793238462643383279\"\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tnumbers := []string{\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"}\n\trequire.Equal(t, NumbersInPi(PI, numbers), 2)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// O(n^3 + m) time | O(n + m) space - where n is the number of digits\n// in Pi and m is the number of favorite numbers.\nfunc NumbersInPi(pi string, numbers []string) int {\n\tnumbersTable := map[string]bool{}\n\tfor _, number := range numbers {\n\t\tnumbersTable[number] = true\n\t}\n\tminSpaces := getMinSpaces(pi, numbersTable, map[int]int{}, 0)\n\tif minSpaces == math.MaxInt32 {\n\t\treturn -1\n\t}\n\treturn minSpaces\n}\n\nfunc getMinSpaces(pi string, numbersTable map[string]bool,\n\tcache map[int]int, idx int) int {\n\tif idx == len(pi) {\n\t\treturn -1\n\t} else if val, found := cache[idx]; found {\n\t\treturn val\n\t}\n\tminSpaces := math.MaxInt32\n\tfor i := idx; i < len(pi); i++ {\n\t\tprefix := pi[idx : i+1]\n\t\tif _, found := numbersTable[prefix]; found {\n\t\t\tminSpacesInSuffix := getMinSpaces(pi, numbersTable, cache, i+1)\n\t\t\tminSpaces = min(minSpaces, minSpacesInSuffix+1)\n\t\t}\n\t}\n\tcache[idx] = minSpaces\n\treturn cache[idx]\n}\n\nfunc min(a, b int) int {\n\tif a < b {\n\t\treturn a\n\t}\n\treturn b\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// O(n^3 + m) time | O(n + m) space - where n is the number of digits\n// in Pi and m is the number of favorite numbers.\nfunc NumbersInPi(pi string, numbers []string) int {\n\tnumbersTable := map[string]bool{}\n\tfor _, number := range numbers {\n\t\tnumbersTable[number] = true\n\t}\n\n\tcache := map[int]int{}\n\tfor i := len(pi) - 1; i >= 0; i-- {\n\t\tgetMinSpaces(pi, numbersTable, cache, i)\n\t}\n\n\tif cache[0] == math.MaxInt32 {\n\t\treturn -1\n\t}\n\treturn cache[0]\n}\n\nfunc getMinSpaces(pi string, numbersTable map[string]bool,\n\tcache map[int]int, idx int) int {\n\tif idx == len(pi) {\n\t\treturn -1\n\t} else if val, found := cache[idx]; found {\n\t\treturn val\n\t}\n\tminSpaces := math.MaxInt32\n\tfor i := idx; i < len(pi); i++ {\n\t\tprefix := pi[idx : i+1]\n\t\tif _, found := numbersTable[prefix]; found {\n\t\t\tminSpacesInSuffix := getMinSpaces(pi, numbersTable, cache, i+1)\n\t\t\tminSpaces = min(minSpaces, minSpacesInSuffix+1)\n\t\t}\n\t}\n\tcache[idx] = minSpaces\n\treturn cache[idx]\n}\n\nfunc min(a, b int) int {\n\tif a < b {\n\t\treturn a\n\t}\n\treturn b\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int numbersInPi(String pi, String[] numbers) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  String PI = \"3141592653589793238462643383279\";\n\n  @Test\n  public void TestCase1() {\n    String[] numbers = new String[] {\"314159265358979323846264338327\", \"9\"};\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 1);\n  }\n\n  @Test\n  public void TestCase2() {\n    String[] numbers =\n        new String[] {\n          \"3\", \"314\", \"49\", \"9001\", \"15926535897\", \"14\", \"9323\", \"8462643383279\", \"4\", \"793\"\n        };\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 3);\n  }\n\n  @Test\n  public void TestCase3() {\n    String[] numbers = new String[] {\"3141592653589793238462643383279\"};\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 0);\n  }\n\n  @Test\n  public void TestCase4() {\n    String[] numbers = new String[] {\"3141\", \"1512\", \"159\", \"793\", \"12412451\", \"8462643383279\"};\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == -1);\n  }\n\n  @Test\n  public void TestCase5() {\n    String[] numbers =\n        new String[] {\n          \"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"\n        };\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 2);\n  }\n\n  @Test\n  public void TestCase6() {\n    String[] numbers =\n        new String[] {\n          \"314159265358979323846\",\n          \"327\",\n          \"26433\",\n          \"8\",\n          \"3279\",\n          \"9\",\n          \"314159265\",\n          \"35897932384626433832\",\n          \"79\"\n        };\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 2);\n  }\n\n  @Test\n  public void TestCase7() {\n    String[] numbers =\n        new String[] {\n          \"141592653589793238462643383279\",\n          \"314159265358979323846\",\n          \"327\",\n          \"26433\",\n          \"8\",\n          \"3279\",\n          \"9\",\n          \"314159265\",\n          \"35897932384626433832\",\n          \"79\",\n          \"3\"\n        };\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 1);\n  }\n\n  @Test\n  public void TestCase8() {\n    String[] numbers =\n        new String[] {\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"83279\"};\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 13);\n  }\n\n  @Test\n  public void TestCase9() {\n    String[] numbers =\n        new String[] {\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"383279\"};\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 12);\n  }\n\n  @Test\n  public void TestCase10() {\n    String[] numbers =\n        new String[] {\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"383279\"};\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == -1);\n  }\n\n  @Test\n  public void TestCase11() {\n    String[] numbers =\n        new String[] {\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\", \"383279\"};\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 9);\n  }\n\n  @Test\n  public void TestCase12() {\n    String[] numbers =\n        new String[] {\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\", \"3832798\"};\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == -1);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  String PI = \"3141592653589793238462643383279\";\n\n  @Test\n  public void TestCase1() {\n    String[] numbers =\n        new String[] {\n          \"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"\n        };\n    Utils.assertTrue(Program.numbersInPi(PI, numbers) == 2);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of\n  // favorite numbers\n  public static int numbersInPi(String pi, String[] numbers) {\n    Set<String> numbersTable = new HashSet<String>();\n    for (String number : numbers) {\n      numbersTable.add(number);\n    }\n    Map<Integer, Integer> cache = new HashMap<Integer, Integer>();\n    int minSpaces = getMinSpaces(pi, numbersTable, cache, 0);\n    return minSpaces == Integer.MAX_VALUE ? -1 : minSpaces;\n  }\n\n  public static int getMinSpaces(\n      String pi, Set<String> numbersTable, Map<Integer, Integer> cache, int idx) {\n    if (idx == pi.length()) return -1;\n    if (cache.containsKey(idx)) return cache.get(idx);\n    int minSpaces = Integer.MAX_VALUE;\n    for (int i = idx; i < pi.length(); i++) {\n      String prefix = pi.substring(idx, i + 1);\n      if (numbersTable.contains(prefix)) {\n        int minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1);\n        // Handle int overflow.\n        if (minSpacesInSuffix == Integer.MAX_VALUE) {\n          minSpaces = Math.min(minSpaces, minSpacesInSuffix);\n        } else {\n          minSpaces = Math.min(minSpaces, minSpacesInSuffix + 1);\n        }\n      }\n    }\n    cache.put(idx, minSpaces);\n    return cache.get(idx);\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of\n  // favorite numbers\n  public static int numbersInPi(String pi, String[] numbers) {\n    Set<String> numbersTable = new HashSet<String>();\n    for (String number : numbers) {\n      numbersTable.add(number);\n    }\n    Map<Integer, Integer> cache = new HashMap<Integer, Integer>();\n    for (int i = pi.length() - 1; i >= 0; i--) {\n      getMinSpaces(pi, numbersTable, cache, i);\n    }\n    return cache.get(0) == Integer.MAX_VALUE ? -1 : cache.get(0);\n  }\n\n  public static int getMinSpaces(\n      String pi, Set<String> numbersTable, Map<Integer, Integer> cache, int idx) {\n    if (idx == pi.length()) return -1;\n    if (cache.containsKey(idx)) return cache.get(idx);\n    int minSpaces = Integer.MAX_VALUE;\n    for (int i = idx; i < pi.length(); i++) {\n      String prefix = pi.substring(idx, i + 1);\n      if (numbersTable.contains(prefix)) {\n        int minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1);\n        // Handle int overflow.\n        if (minSpacesInSuffix == Integer.MAX_VALUE) {\n          minSpaces = Math.min(minSpaces, minSpacesInSuffix);\n        } else {\n          minSpaces = Math.min(minSpaces, minSpacesInSuffix + 1);\n        }\n      }\n    }\n    cache.put(idx, minSpaces);\n    return cache.get(idx);\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function numbersInPi(pi, numbers) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.numbersInPi = numbersInPi;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nconst PI = '3141592653589793238462643383279';\n\nit('Test Case #1', function () {\n  const numbers = ['314159265358979323846264338327', '9'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(1);\n});\n\nit('Test Case #2', function () {\n  const numbers = ['3', '314', '49', '9001', '15926535897', '14', '9323', '8462643383279', '4', '793'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(3);\n});\n\nit('Test Case #3', function () {\n  const numbers = ['3141592653589793238462643383279'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(0);\n});\n\nit('Test Case #4', function () {\n  const numbers = ['3141', '1512', '159', '793', '12412451', '8462643383279'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(-1);\n});\n\nit('Test Case #5', function () {\n  const numbers = ['314159265358979323846', '26433', '8', '3279', '314159265', '35897932384626433832', '79'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(2);\n});\n\nit('Test Case #6', function () {\n  const numbers = [\n    '314159265358979323846',\n    '327',\n    '26433',\n    '8',\n    '3279',\n    '9',\n    '314159265',\n    '35897932384626433832',\n    '79',\n  ];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(2);\n});\n\nit('Test Case #7', function () {\n  const numbers = [\n    '141592653589793238462643383279',\n    '314159265358979323846',\n    '327',\n    '26433',\n    '8',\n    '3279',\n    '9',\n    '314159265',\n    '35897932384626433832',\n    '79',\n    '3',\n  ];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(1);\n});\n\nit('Test Case #8', function () {\n  const numbers = ['3', '1', '4', '592', '65', '55', '35', '8', '9793', '2384626', '83279'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(13);\n});\n\nit('Test Case #9', function () {\n  const numbers = ['3', '1', '4', '592', '65', '55', '35', '8', '9793', '2384626', '383279'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(12);\n});\n\nit('Test Case #10', function () {\n  const numbers = ['3', '141', '592', '65', '55', '35', '8', '9793', '2384626', '383279'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(-1);\n});\n\nit('Test Case #11', function () {\n  const numbers = ['3', '141', '592', '65', '55', '35', '8', '9793', '23846264', '383279'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(9);\n});\n\nit('Test Case #12', function () {\n  const numbers = ['3', '141', '592', '65', '55', '35', '8', '9793', '23846264', '3832798'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(-1);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nconst PI = '3141592653589793238462643383279';\n\nit('Test Case #1', function () {\n  const numbers = ['314159265358979323846', '26433', '8', '3279', '314159265', '35897932384626433832', '79'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(2);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\nfunction numbersInPi(pi, numbers) {\n  const numbersTable = {};\n  for (const number of numbers) {\n    numbersTable[number] = true;\n  }\n  const minSpaces = getMinSpaces(pi, numbersTable, {}, 0);\n  return minSpaces === Infinity ? -1 : minSpaces;\n}\n\nfunction getMinSpaces(pi, numbersTable, cache, idx) {\n  if (idx === pi.length) return -1;\n  if (idx in cache) return cache[idx];\n  let minSpaces = Infinity;\n  for (let i = idx; i < pi.length; i++) {\n    const prefix = pi.slice(idx, i + 1);\n    if (prefix in numbersTable) {\n      const minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1);\n      minSpaces = Math.min(minSpaces, minSpacesInSuffix + 1);\n    }\n  }\n  cache[idx] = minSpaces;\n  return cache[idx];\n}\n\nexports.numbersInPi = numbersInPi;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\nfunction numbersInPi(pi, numbers) {\n  const numbersTable = {};\n  for (const number of numbers) {\n    numbersTable[number] = true;\n  }\n  const cache = {};\n  for (let i = pi.length - 1; i >= 0; i--) {\n    getMinSpaces(pi, numbersTable, cache, i);\n  }\n  return cache[0] === Infinity ? -1 : cache[0];\n}\n\nfunction getMinSpaces(pi, numbersTable, cache, idx) {\n  if (idx === pi.length) return -1;\n  if (idx in cache) return cache[idx];\n  let minSpaces = Infinity;\n  for (let i = idx; i < pi.length; i++) {\n    const prefix = pi.slice(idx, i + 1);\n    if (prefix in numbersTable) {\n      const minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1);\n      minSpaces = Math.min(minSpaces, minSpacesInSuffix + 1);\n    }\n  }\n  cache[idx] = minSpaces;\n  return cache[idx];\n}\n\nexports.numbersInPi = numbersInPi;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def numbersInPi(pi, numbers):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nPI = \"3141592653589793238462643383279\"\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        numbers = [\"314159265358979323846264338327\", \"9\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 1)\n\n    def test_case_2(self):\n        numbers = [\"3\", \"314\", \"49\", \"9001\", \"15926535897\", \"14\", \"9323\", \"8462643383279\", \"4\", \"793\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 3)\n\n    def test_case_3(self):\n        numbers = [\"3141592653589793238462643383279\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 0)\n\n    def test_case_4(self):\n        numbers = [\"3141\", \"1512\", \"159\", \"793\", \"12412451\", \"8462643383279\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), -1)\n\n    def test_case_5(self):\n        numbers = [\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 2)\n\n    def test_case_6(self):\n        numbers = [\"314159265358979323846\", \"327\", \"26433\", \"8\", \"3279\", \"9\", \"314159265\", \"35897932384626433832\", \"79\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 2)\n\n    def test_case_7(self):\n        numbers = [\n            \"141592653589793238462643383279\",\n            \"314159265358979323846\",\n            \"327\",\n            \"26433\",\n            \"8\",\n            \"3279\",\n            \"9\",\n            \"314159265\",\n            \"35897932384626433832\",\n            \"79\",\n            \"3\",\n        ]\n        self.assertEqual(program.numbersInPi(PI, numbers), 1)\n\n    def test_case_8(self):\n        numbers = [\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"83279\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 13)\n\n    def test_case_9(self):\n        numbers = [\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"383279\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 12)\n\n    def test_case_10(self):\n        numbers = [\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"383279\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), -1)\n\n    def test_case_11(self):\n        numbers = [\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\", \"383279\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 9)\n\n    def test_case_12(self):\n        numbers = [\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\", \"3832798\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), -1)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nPI = \"3141592653589793238462643383279\"\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        numbers = [\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"]\n        self.assertEqual(program.numbersInPi(PI, numbers), 2)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\ndef numbersInPi(pi, numbers):\n    numbersTable = {number: True for number in numbers}\n    minSpaces = getMinSpaces(pi, numbersTable, {}, 0)\n    return -1 if minSpaces == float(\"inf\") else minSpaces\n\n\ndef getMinSpaces(pi, numbersTable, cache, idx):\n    if idx == len(pi):\n        return -1\n    if idx in cache:\n        return cache[idx]\n    minSpaces = float(\"inf\")\n    for i in range(idx, len(pi)):\n        prefix = pi[idx : i + 1]\n        if prefix in numbersTable:\n            minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1)\n            minSpaces = min(minSpaces, minSpacesInSuffix + 1)\n    cache[idx] = minSpaces\n    return cache[idx]\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\ndef numbersInPi(pi, numbers):\n    numbersTable = {number: True for number in numbers}\n    cache = {}\n    for i in reversed(range(len(pi))):\n        getMinSpaces(pi, numbersTable, cache, i)\n    return -1 if cache[0] == float(\"inf\") else cache[0]\n\n\ndef getMinSpaces(pi, numbersTable, cache, idx):\n    if idx == len(pi):\n        return -1\n    if idx in cache:\n        return cache[idx]\n    minSpaces = float(\"inf\")\n    for i in range(idx, len(pi)):\n        prefix = pi[idx : i + 1]\n        if prefix in numbersTable:\n            minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1)\n            minSpaces = min(minSpaces, minSpacesInSuffix + 1)\n    cache[idx] = minSpaces\n    return cache[idx]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func numbersInPi(_ pi: String, _ favoriteNumbers: [String]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  let pi = \"3141592653589793238462643383279\"\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let firstTest = [\"314159265358979323846264338327\", \"9\"]\n      try assertEqual(1, program.numbersInPi(pi, firstTest))\n      try assertEqual(1, program.numbersInPi(pi, firstTest))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let secondTest = [\"3\", \"314\", \"49\", \"9001\", \"15926535897\", \"14\", \"9323\", \"8462643383279\", \"4\", \"793\"]\n      try assertEqual(3, program.numbersInPi(pi, secondTest))\n      try assertEqual(3, program.numbersInPi(pi, secondTest))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let thirdTest = [\"3141592653589793238462643383279\"]\n      try assertEqual(0, program.numbersInPi(pi, thirdTest))\n      try assertEqual(0, program.numbersInPi(pi, thirdTest))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let fourthTest = [\"3141\", \"1512\", \"159\", \"793\", \"12412451\", \"8462643383279\"]\n      try assertEqual(-1, program.numbersInPi(pi, fourthTest))\n      try assertEqual(-1, program.numbersInPi(pi, fourthTest))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let fifthTest = [\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"]\n      try assertEqual(2, program.numbersInPi(pi, fifthTest))\n      try assertEqual(2, program.numbersInPi(pi, fifthTest))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let sixthTest = [\"314159265358979323846\", \"327\", \"26433\", \"8\", \"3279\", \"9\", \"314159265\", \"35897932384626433832\", \"79\"]\n      try assertEqual(2, program.numbersInPi(pi, sixthTest))\n      try assertEqual(2, program.numbersInPi(pi, sixthTest))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let seventhTest = [\"141592653589793238462643383279\", \"314159265358979323846\", \"327\", \"26433\", \"8\", \"3279\", \"9\", \"314159265\", \"35897932384626433832\", \"79\", \"3\"]\n      try assertEqual(1, program.numbersInPi(pi, seventhTest))\n      try assertEqual(1, program.numbersInPi(pi, seventhTest))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let eighthTest = [\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"83279\"]\n      try assertEqual(13, program.numbersInPi(pi, eighthTest))\n      try assertEqual(13, program.numbersInPi(pi, eighthTest))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let ninthTest = [\"3\", \"1\", \"4\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"383279\"]\n      try assertEqual(12, program.numbersInPi(pi, ninthTest))\n      try assertEqual(12, program.numbersInPi(pi, ninthTest))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let tenthTest = [\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"383279\"]\n      try assertEqual(-1, program.numbersInPi(pi, tenthTest))\n      try assertEqual(-1, program.numbersInPi(pi, tenthTest))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let eleventhTest = [\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"23846264\", \"383279\"]\n      try assertEqual(9, program.numbersInPi(pi, eleventhTest))\n      try assertEqual(9, program.numbersInPi(pi, eleventhTest))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      let twelfthTest = [\"3\", \"141\", \"592\", \"65\", \"55\", \"35\", \"8\", \"9793\", \"2384626\", \"3832798\"]\n      try assertEqual(-1, program.numbersInPi(pi, twelfthTest))\n      try assertEqual(-1, program.numbersInPi(pi, twelfthTest))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  let pi = \"3141592653589793238462643383279\"\n\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let input = [\"314159265358979323846\", \"26433\", \"8\", \"3279\", \"314159265\", \"35897932384626433832\", \"79\"]\n      try assertEqual(2, program.numbersInPi(pi, input))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^3 + m) time | O(n + m) space\n  func numbersInPi(_ pi: String, _ favoriteNumbers: [String]) -> Int {\n    var numbersDictionary = [String: Bool]()\n\n    for number in favoriteNumbers {\n      numbersDictionary[number] = true\n    }\n\n    var cache = [Int: Int]()\n\n    let minimumNumberOfSpaces = getMinimumNumberOfSpaces(pi, numbersDictionary, &cache, 0)\n\n    if minimumNumberOfSpaces == Int(Int32.max) {\n      return -1\n    } else {\n      return minimumNumberOfSpaces\n    }\n  }\n\n  func getMinimumNumberOfSpaces(_ pi: String, _ numbersDictionary: [String: Bool], _ cache: inout [Int: Int], _ index: Int) -> Int {\n    if index == pi.count {\n      return -1\n    }\n\n    if let minimumNumberOfSpaces = cache[index] {\n      return minimumNumberOfSpaces\n    }\n\n    var minimumNumberOfSpaces = Int(Int32.max)\n\n    for i in index ..< pi.count {\n      let startingIndex = pi.index(pi.startIndex, offsetBy: index)\n\n      let endingIndex = pi.index(pi.startIndex, offsetBy: i + 1)\n\n      let prefix = String(pi[startingIndex ..< endingIndex])\n\n      if numbersDictionary.keys.contains(prefix) {\n        let minimumNumberOfSpacesInSuffix = getMinimumNumberOfSpaces(pi, numbersDictionary, &cache, i + 1)\n\n        minimumNumberOfSpaces = min(minimumNumberOfSpaces, minimumNumberOfSpacesInSuffix + 1)\n      }\n    }\n\n    cache[index] = minimumNumberOfSpaces\n\n    return minimumNumberOfSpaces\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^3 + m) time | O(n + m) space\n  func numbersInPi(_ pi: String, _ favoriteNumbers: [String]) -> Int {\n    var numbersDictionary = [String: Bool]()\n\n    for number in favoriteNumbers {\n      numbersDictionary[number] = true\n    }\n\n    var cache = [Int: Int]()\n\n    for i in stride(from: pi.count - 1, through: 0, by: -1) {\n      getMinimumNumberOfSpaces(pi, numbersDictionary, &cache, i)\n    }\n\n    if cache[0] == Int(Int32.max) {\n      return -1\n    } else {\n      return cache[0]!\n    }\n  }\n\n  func getMinimumNumberOfSpaces(_ pi: String, _ numbersDictionary: [String: Bool], _ cache: inout [Int: Int], _ index: Int) -> Int {\n    if index == pi.count {\n      return -1\n    }\n\n    if let minimumNumberOfSpaces = cache[index] {\n      return minimumNumberOfSpaces\n    }\n\n    var minimumNumberOfSpaces = Int(Int32.max)\n\n    for i in index ..< pi.count {\n      let startingIndex = pi.index(pi.startIndex, offsetBy: index)\n\n      let endingIndex = pi.index(pi.startIndex, offsetBy: i + 1)\n\n      let prefix = String(pi[startingIndex ..< endingIndex])\n\n      if numbersDictionary.keys.contains(prefix) {\n        let minimumNumberOfSpacesInSuffix = getMinimumNumberOfSpaces(pi, numbersDictionary, &cache, i + 1)\n\n        minimumNumberOfSpaces = min(minimumNumberOfSpaces, minimumNumberOfSpacesInSuffix + 1)\n      }\n    }\n\n    cache[index] = minimumNumberOfSpaces\n\n    return minimumNumberOfSpaces\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function numbersInPi(pi: string, numbers: string[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nconst PI = '3141592653589793238462643383279';\n\nit('Test Case #1', function () {\n  const numbers = ['314159265358979323846', '26433', '8', '3279', '314159265', '35897932384626433832', '79'];\n  chai.expect(program.numbersInPi(PI, numbers)).to.deep.equal(2);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface NumbersTable {\n  [key: string]: boolean;\n}\n\ninterface Cache {\n  [key: number]: number;\n}\n\n// O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\nexport function numbersInPi(pi: string, numbers: string[]) {\n  const numbersTable: NumbersTable = {};\n  for (const number of numbers) {\n    numbersTable[number] = true;\n  }\n  const minSpaces = getMinSpaces(pi, numbersTable, {}, 0);\n  return minSpaces === Infinity ? -1 : minSpaces;\n}\n\nfunction getMinSpaces(pi: string, numbersTable: NumbersTable, cache: Cache, idx: number) {\n  if (idx === pi.length) return -1;\n  if (idx in cache) return cache[idx];\n  let minSpaces = Infinity;\n  for (let i = idx; i < pi.length; i++) {\n    const prefix = pi.slice(idx, i + 1);\n    if (prefix in numbersTable) {\n      const minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1);\n      minSpaces = Math.min(minSpaces, minSpacesInSuffix + 1);\n    }\n  }\n  cache[idx] = minSpaces;\n  return cache[idx];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface NumbersTable {\n  [key: string]: boolean;\n}\n\ninterface Cache {\n  [key: number]: number;\n}\n\n// O(n^3 + m) time | O(n + m) space - where n is the number of digits in Pi and m is the number of favorite numbers\nexport function numbersInPi(pi: string, numbers: string[]) {\n  const numbersTable: NumbersTable = {};\n  for (const number of numbers) {\n    numbersTable[number] = true;\n  }\n  const cache: Cache = {};\n  for (let i = pi.length - 1; i >= 0; i--) {\n    getMinSpaces(pi, numbersTable, cache, i);\n  }\n  return cache[0] === Infinity ? -1 : cache[0];\n}\n\nfunction getMinSpaces(pi: string, numbersTable: NumbersTable, cache: Cache, idx: number) {\n  if (idx === pi.length) return -1;\n  if (idx in cache) return cache[idx];\n  let minSpaces = Infinity;\n  for (let i = idx; i < pi.length; i++) {\n    const prefix = pi.slice(idx, i + 1);\n    if (prefix in numbersTable) {\n      const minSpacesInSuffix = getMinSpaces(pi, numbersTable, cache, i + 1);\n      minSpaces = Math.min(minSpaces, minSpacesInSuffix + 1);\n    }\n  }\n  cache[idx] = minSpaces;\n  return cache[idx];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "numbers": [
+        "314159265358979323846",
+        "26433",
+        "8",
+        "3279",
+        "314159265",
+        "35897932384626433832",
+        "79"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "314159265358979323846264338327",
+        "9"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "3",
+        "314",
+        "49",
+        "9001",
+        "15926535897",
+        "14",
+        "9323",
+        "8462643383279",
+        "4",
+        "793"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "3141592653589793238462643383279"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "3141",
+        "1512",
+        "159",
+        "793",
+        "12412451",
+        "8462643383279"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "314159265358979323846",
+        "327",
+        "26433",
+        "8",
+        "3279",
+        "9",
+        "314159265",
+        "35897932384626433832",
+        "79"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "141592653589793238462643383279",
+        "314159265358979323846",
+        "327",
+        "26433",
+        "8",
+        "3279",
+        "9",
+        "314159265",
+        "35897932384626433832",
+        "79",
+        "3"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "3",
+        "1",
+        "4",
+        "592",
+        "65",
+        "55",
+        "35",
+        "8",
+        "9793",
+        "2384626",
+        "83279"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "3",
+        "1",
+        "4",
+        "592",
+        "65",
+        "55",
+        "35",
+        "8",
+        "9793",
+        "2384626",
+        "383279"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "3",
+        "141",
+        "592",
+        "65",
+        "55",
+        "35",
+        "8",
+        "9793",
+        "2384626",
+        "383279"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "3",
+        "141",
+        "592",
+        "65",
+        "55",
+        "35",
+        "8",
+        "9793",
+        "23846264",
+        "383279"
+      ],
+      "pi": "3141592653589793238462643383279"
+    },
+    {
+      "numbers": [
+        "3",
+        "141",
+        "592",
+        "65",
+        "55",
+        "35",
+        "8",
+        "9793",
+        "23846264",
+        "3832798"
+      ],
+      "pi": "3141592653589793238462643383279"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      2,
+      1,
+      3,
+      0,
+      -1,
+      2,
+      1,
+      13,
+      12,
+      -1,
+      9,
+      -1
+    ]
+  ]
+}

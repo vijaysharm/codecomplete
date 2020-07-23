@@ -1,0 +1,824 @@
+{
+  "Summary": {
+    "Name": "Flatten Binary Tree",
+    "Category": "Binary Trees",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "date": "2020-03-29T00:00:00Z",
+      "number": 361,
+      "timeOne": 0,
+      "timeTwo": 1299,
+      "url": "https://player.vimeo.com/video/401598306"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can solve this problem pretty easily by traversing the tree using the in-order tree-traversal technique, gathering all of the nodes in an array, and then iterating through them from left to right and connecting them accordingly. Can you solve this problem without storing an entire array of the tree's nodes?\nTry to figure out what the relation between two adjacent nodes in the in-order-traversal order is, as far as positioning in the tree is concerned.\nAt any given node in the in-order-traversal order, the node immediately to its left is the rightmost node of its left subtree, and the node immediately the its right is the leftmost node of its right subtree.\nWrite a function that recursively gets the leftmost and rightmost nodes of a given node's left subtree and right subtree and that connects the left subtree's rightmost node to the given node and the right subtree's leftmost node to the given node.",
+  "SpaceTime": "O(n) time | O(d) space - where n is the number of nodes in the Binary Tree and d is the depth (height) of the Binary Tree",
+  "PromptHTML": "<p>\n  Write a function that takes in a Binary Tree, flattens it, and returns its\n  leftmost node.\n</p>\n<p>\n  A flattened Binary Tree is a structure that's nearly identical to a Doubly\n  Linked List (except that nodes have <span>left</span> and\n  <span>right</span> pointers instead of <span>prev</span> and\n  <span>next</span> pointers), where nodes follow the original tree's\n  left-to-right order.\n</p>\n<p>\n  Note that if the input Binary Tree happens to be a valid Binary Search Tree,\n  the nodes in the flattened tree will be sorted.\n</p>\n<p>\n  The flattening should be done in place, meaning that the original data\n  structure should be mutated (no new structure should be created).\n</p>\n<p>\n  Each <span>BinaryTree</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. Children\n  nodes can either be <span>BinaryTree</span> nodes themselves or\n  <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> =      1\n         /     \\\n        2       3\n      /   \\   /\n     4     5 6\n          / \\\n         7   8\n</pre>\n<h3>Sample Output</h3>\n<pre>\n4 <-> 2 <-> 7 <-> 5 <-> 8 <-> 1 <-> 6 <-> 3 <span class=\"CodeEditor-promptComment\">// the leftmost node with value 4</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "7",
+            "right": "8",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          }
+        ],
+        "root": "1"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>left</span> and <span>right</span>\npointers and by the <span>root</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\n// This is the class of the input root. Do not edit it.\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left = NULL;\n  BinaryTree *right = NULL;\n\n  BinaryTree(int value);\n};\n\nBinaryTree *flattenBinaryTree(BinaryTree *root) {\n  // Write your code here.\n  return root;\n}\n",
+      "StartingTest": "#include <queue>\n\nBinaryTree::BinaryTree(int value) { this->value = value; }\n\nBinaryTree *insertBinaryTree(BinaryTree *tree, vector<int> values);\nvector<int> leftToRightToLeft(BinaryTree *tree);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {1, 1};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2});\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {2, 1, 1, 2};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3});\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {2, 1, 3, 3, 1, 2};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4});\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {4, 2, 1, 3, 3, 1, 2, 4};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5});\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {4, 2, 5, 1, 3, 3, 1, 5, 2, 4};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6});\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {4, 2, 5, 1, 6, 3, 3, 6, 1, 5, 2, 4};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6});\n      root->left->right->left = new BinaryTree(7);\n      root->left->right->right = new BinaryTree(8);\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4};\n      assert(expected == actual);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {8, 4, 9, 2,  10, 5,  11, 1,  12, 6, 3, 7,\n                              7, 3, 6, 12, 1,  11, 5,  10, 2,  9, 4, 8};\n      assert(expected == actual);\n    });\n  }\n};\n\nBinaryTree *insertBinaryTree(BinaryTree *tree, vector<int> values) {\n  if (values.size() == 0)\n    return tree;\n\n  queue<BinaryTree *> nodesQueue({tree});\n  while (nodesQueue.size() > 0) {\n    BinaryTree *current = nodesQueue.front();\n    nodesQueue.pop();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[0]);\n      break;\n    }\n    nodesQueue.push(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[0]);\n      break;\n    }\n    nodesQueue.push(current->right);\n  }\n\n  values.erase(values.begin());\n  return insertBinaryTree(tree, values);\n}\n\nvector<int> leftToRightToLeft(BinaryTree *tree) {\n  vector<int> nodes = {};\n  BinaryTree *current = tree;\n  while (current->right != NULL) {\n    nodes.push_back(current->value);\n    current = current->right;\n  }\n  nodes.push_back(current->value);\n  while (current != NULL) {\n    nodes.push_back(current->value);\n    current = current->left;\n  }\n  return nodes;\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <queue>\n\nBinaryTree::BinaryTree(int value) { this->value = value; }\n\nBinaryTree *insertBinaryTree(BinaryTree *tree, vector<int> values);\nvector<int> leftToRightToLeft(BinaryTree *tree);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree *root = new BinaryTree(1);\n      insertBinaryTree(root, {2, 3, 4, 5, 6});\n      root->left->right->left = new BinaryTree(7);\n      root->left->right->right = new BinaryTree(8);\n      BinaryTree *leftMostNode = flattenBinaryTree(root);\n      vector<int> actual = leftToRightToLeft(leftMostNode);\n      vector<int> expected = {4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4};\n      assert(expected == actual);\n    });\n  }\n};\n\nBinaryTree *insertBinaryTree(BinaryTree *tree, vector<int> values) {\n  if (values.size() == 0)\n    return tree;\n\n  queue<BinaryTree *> nodesQueue({tree});\n  while (nodesQueue.size() > 0) {\n    BinaryTree *current = nodesQueue.front();\n    nodesQueue.pop();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[0]);\n      break;\n    }\n    nodesQueue.push(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[0]);\n      break;\n    }\n    nodesQueue.push(current->right);\n  }\n\n  values.erase(values.begin());\n  return insertBinaryTree(tree, values);\n}\n\nvector<int> leftToRightToLeft(BinaryTree *tree) {\n  vector<int> nodes = {};\n  BinaryTree *current = tree;\n  while (current->right != NULL) {\n    nodes.push_back(current->value);\n    current = current->right;\n  }\n  nodes.push_back(current->value);\n  while (current != NULL) {\n    nodes.push_back(current->value);\n    current = current->left;\n  }\n  return nodes;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left = NULL;\n  BinaryTree *right = NULL;\n\n  BinaryTree(int value);\n};\n\nvector<BinaryTree *> getNodesInOrder(BinaryTree *tree,\n                                     vector<BinaryTree *> *array);\n\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nBinaryTree *flattenBinaryTree(BinaryTree *root) {\n  vector<BinaryTree *> inOrderNodes =\n      getNodesInOrder(root, new vector<BinaryTree *>{});\n  for (int i = 0; i < inOrderNodes.size() - 1; i++) {\n    BinaryTree *leftNode = inOrderNodes[i];\n    BinaryTree *rightNode = inOrderNodes[i + 1];\n    leftNode->right = rightNode;\n    rightNode->left = leftNode;\n  }\n  return inOrderNodes[0];\n}\n\nvector<BinaryTree *> getNodesInOrder(BinaryTree *tree,\n                                     vector<BinaryTree *> *array) {\n  if (tree != NULL) {\n    getNodesInOrder(tree->left, array);\n    array->push_back(tree);\n    getNodesInOrder(tree->right, array);\n  }\n  return *array;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left = NULL;\n  BinaryTree *right = NULL;\n\n  BinaryTree(int value);\n};\n\nvector<BinaryTree *> flattenTree(BinaryTree *node);\nvoid connectNodes(BinaryTree *one, BinaryTree *two);\nBinaryTree *getLeftMost(BinaryTree *node);\n\n// O(n) time | O(d) space - where n is the number of nodes in the Binary Tree\n// and d is the depth (height) of the Binary Tree\nBinaryTree *flattenBinaryTree(BinaryTree *root) {\n  flattenTree(root);\n  return getLeftMost(root);\n}\n\nvector<BinaryTree *> flattenTree(BinaryTree *node) {\n  BinaryTree *leftMost;\n  BinaryTree *rightMost;\n\n  if (node->left == NULL) {\n    leftMost = node;\n  } else {\n    vector<BinaryTree *> leftAndRightMostNodes = flattenTree(node->left);\n    connectNodes(leftAndRightMostNodes[1], node);\n    leftMost = leftAndRightMostNodes[0];\n  }\n\n  if (node->right == NULL) {\n    rightMost = node;\n  } else {\n    vector<BinaryTree *> leftAndRightMostNodes = flattenTree(node->right);\n    connectNodes(node, leftAndRightMostNodes[0]);\n    rightMost = leftAndRightMostNodes[1];\n  }\n\n  return {leftMost, rightMost};\n}\n\nvoid connectNodes(BinaryTree *left, BinaryTree *right) {\n  left->right = right;\n  right->left = left;\n}\n\nBinaryTree *getLeftMost(BinaryTree *node) {\n  while (node->left != NULL) {\n    node = node->left;\n  }\n  return node;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static BinaryTree FlattenBinaryTree(BinaryTree root) {\n\t\t// Write your code here.\n\t\treturn root;\n\t}\n\n\t// This is the class of the input root. Do not edit it.\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left = null;\n\t\tpublic BinaryTree right = null;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\nusing System.Collections;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar root = new Program.BinaryTree(1);\n\t\tvar leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t1, 1\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2});\n\t\tProgram.BinaryTree leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t2, 1, 1, 2\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3});\n\t\tProgram.BinaryTree leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t2, 1, 3, 3, 1, 2\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4});\n\t\tProgram.BinaryTree leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t4, 2, 1, 3, 3, 1, 2, 4\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5});\n\t\tProgram.BinaryTree leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t4, 2, 5, 1, 3, 3, 1, 5, 2, 4\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6});\n\t\tProgram.BinaryTree leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t4, 2, 5, 1, 6, 3, 3, 6, 1, 5, 2, 4\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6});\n\t\troot.left.right.left = new Program.BinaryTree(7);\n\t\troot.left.right.right = new Program.BinaryTree(8);\n\t\tProgram.BinaryTree leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});\n\t\tProgram.BinaryTree leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 3, 7, 7, 3, 6, 12, 1, 11, 5, 10, 2, 9, 4, 8\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\tpublic void insert(Program.BinaryTree root, int[] values) {\n\t\tinsert(root, values, 0);\n\t}\n\n\tpublic void insert(Program.BinaryTree root, int[] values, int i) {\n\t\tif (i >= values.Length) {\n\t\t\treturn;\n\t\t}\n\t\tQueue<Program.BinaryTree> queue = new Queue<Program.BinaryTree>();\n\t\tqueue.Enqueue(root);\n\t\twhile (queue.Count > 0) {\n\t\t\tProgram.BinaryTree current = queue.Dequeue();\n\t\t\tif (current.left == null) {\n\t\t\t\tcurrent.left = new Program.BinaryTree(values[i]);\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tqueue.Enqueue(current.left);\n\t\t\tif (current.right == null) {\n\t\t\t\tcurrent.right = new Program.BinaryTree(values[i]);\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tqueue.Enqueue(current.right);\n\t\t}\n\t\tinsert(root, values, i + 1);\n\t}\n\n\tpublic List<int> leftToRightToLeft(Program.BinaryTree leftMost) {\n\t\tList<int> nodes = new List<int>();\n\t\tProgram.BinaryTree current = leftMost;\n\t\twhile (current.right != null) {\n\t\t\tnodes.Add(current.value);\n\t\t\tcurrent = current.right;\n\t\t}\n\t\tnodes.Add(current.value);\n\t\twhile (current != null) {\n\t\t\tnodes.Add(current.value);\n\t\t\tcurrent = current.left;\n\t\t}\n\t\treturn nodes;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.BinaryTree root = new Program.BinaryTree(1);\n\t\tinsert(root, new int[] {2, 3, 4, 5, 6});\n\t\troot.left.right.left = new Program.BinaryTree(7);\n\t\troot.left.right.right = new Program.BinaryTree(8);\n\t\tProgram.BinaryTree leftMostNode = Program.FlattenBinaryTree(root);\n\t\tList<int> leftToRightToLeft = this.leftToRightToLeft(leftMostNode);\n\t\tList<int> expected = new List<int>(){\n\t\t\t4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4\n\t\t};\n\t\tUtils.AssertTrue(expected.SequenceEqual(leftToRightToLeft));\n\t}\n\n\tpublic void insert(Program.BinaryTree root, int[] values) {\n\t\tinsert(root, values, 0);\n\t}\n\n\tpublic void insert(Program.BinaryTree root, int[] values, int i) {\n\t\tif (i >= values.Length) {\n\t\t\treturn;\n\t\t}\n\t\tQueue<Program.BinaryTree> queue = new Queue<Program.BinaryTree>();\n\t\tqueue.Enqueue(root);\n\t\twhile (queue.Count > 0) {\n\t\t\tProgram.BinaryTree current = queue.Dequeue();\n\t\t\tif (current.left == null) {\n\t\t\t\tcurrent.left = new Program.BinaryTree(values[i]);\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tqueue.Enqueue(current.left);\n\t\t\tif (current.right == null) {\n\t\t\t\tcurrent.right = new Program.BinaryTree(values[i]);\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tqueue.Enqueue(current.right);\n\t\t}\n\t\tinsert(root, values, i + 1);\n\t}\n\n\tpublic List<int> leftToRightToLeft(Program.BinaryTree leftMost) {\n\t\tList<int> nodes = new List<int>();\n\t\tProgram.BinaryTree current = leftMost;\n\t\twhile (current.right != null) {\n\t\t\tnodes.Add(current.value);\n\t\t\tcurrent = current.right;\n\t\t}\n\t\tnodes.Add(current.value);\n\t\twhile (current != null) {\n\t\t\tnodes.Add(current.value);\n\t\t\tcurrent = current.left;\n\t\t}\n\t\treturn nodes;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n\tpublic static BinaryTree FlattenBinaryTree(BinaryTree root) {\n\t\tList<BinaryTree> inOrderNodes = getNodesInOrder(root, new List<BinaryTree>());\n\t\tfor (int i = 0; i < inOrderNodes.Count - 1; i++) {\n\t\t\tBinaryTree leftNode = inOrderNodes[i];\n\t\t\tBinaryTree rightNode = inOrderNodes[i + 1];\n\t\t\tleftNode.right = rightNode;\n\t\t\trightNode.left = leftNode;\n\t\t}\n\t\treturn inOrderNodes[0];\n\t}\n\n\tpublic static List<BinaryTree> getNodesInOrder(BinaryTree tree, List<BinaryTree> array) {\n\t\tif (tree != null) {\n\t\t\tgetNodesInOrder(tree.left, array);\n\t\t\tarray.Add(tree);\n\t\t\tgetNodesInOrder(tree.right, array);\n\t\t}\n\t\treturn array;\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left = null;\n\t\tpublic BinaryTree right = null;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(d) space - where n is the number of nodes in the Binary\n\t// Tree and d is the depth (height) of the Binary Tree\n\tpublic static BinaryTree FlattenBinaryTree(BinaryTree root) {\n\t\tflattenTree(root);\n\t\treturn getLeftMost(root);\n\t}\n\n\tpublic static BinaryTree[] flattenTree(BinaryTree node) {\n\t\tBinaryTree leftMost;\n\t\tBinaryTree rightMost;\n\n\t\tif (node.left == null) {\n\t\t\tleftMost = node;\n\t\t} else {\n\t\t\tBinaryTree[] leftAndRightMostNodes = flattenTree(node.left);\n\t\t\tconnectNodes(leftAndRightMostNodes[1], node);\n\t\t\tleftMost = leftAndRightMostNodes[0];\n\t\t}\n\n\t\tif (node.right == null) {\n\t\t\trightMost = node;\n\t\t} else {\n\t\t\tBinaryTree[] leftAndRightMostNodes = flattenTree(node.right);\n\t\t\tconnectNodes(node, leftAndRightMostNodes[0]);\n\t\t\trightMost = leftAndRightMostNodes[1];\n\t\t}\n\n\t\treturn new BinaryTree[] {leftMost, rightMost};\n\t}\n\n\tpublic static void connectNodes(BinaryTree left, BinaryTree right) {\n\t\tleft.right = right;\n\t\tright.left = left;\n\t}\n\n\tpublic static BinaryTree getLeftMost(BinaryTree node) {\n\t\twhile (node.left != null) {\n\t\t\tnode = node.left;\n\t\t}\n\t\treturn node;\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left = null;\n\t\tpublic BinaryTree right = null;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\n// This is the class of the input root. Do not edit it.\ntype BinaryTree struct {\n\tValue int\n\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\nfunc FlattenBinaryTree(root *BinaryTree) *BinaryTree {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBinaryTree(value int) *BinaryTree {\n\treturn &BinaryTree{Value: value}\n}\n\nfunc (tree *BinaryTree) insert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tvar current *BinaryTree\n\t\tqueue, current = queue[1:], queue[0]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\treturn tree\n\t\t}\n\t\tqueue = append(queue, current.Left)\n\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\treturn tree\n\t\t}\n\t\tqueue = append(queue, current.Right)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) insertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) leftToRightToLeft() []int {\n\tif tree == nil {\n\t\treturn nil\n\t}\n\n\tsubResult := append(tree.Right.leftToRightToLeft(), tree.Value)\n\treturn append([]int{tree.Value}, subResult...)\n}\n\nfunc TestCase1(t *TestCase) {\n\troot := NewBinaryTree(1)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{1, 1}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase2(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{2, 1, 1, 2}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase3(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{2, 1, 3, 3, 1, 2}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase4(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{4, 2, 1, 3, 3, 1, 2, 4}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase5(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{4, 2, 5, 1, 3, 3, 1, 5, 2, 4}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase6(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{4, 2, 5, 1, 6, 3, 3, 6, 1, 5, 2, 4}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase7(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6)\n\troot.Left.Right.Left = NewBinaryTree(7)\n\troot.Left.Right.Right = NewBinaryTree(8)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4}\n\trequire.Equal(t, expected, actual)\n}\n\nfunc TestCase8(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 3, 7, 7, 3, 6, 12, 1, 11, 5, 10, 2, 9, 4, 8}\n\trequire.Equal(t, expected, actual)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBinaryTree(value int) *BinaryTree {\n\treturn &BinaryTree{Value: value}\n}\n\nfunc (tree *BinaryTree) insert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tvar current *BinaryTree\n\t\tqueue, current = queue[1:], queue[0]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\treturn tree\n\t\t}\n\t\tqueue = append(queue, current.Left)\n\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\treturn tree\n\t\t}\n\t\tqueue = append(queue, current.Right)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) insertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) leftToRightToLeft() []int {\n\tif tree == nil {\n\t\treturn nil\n\t}\n\n\tsubResult := append(tree.Right.leftToRightToLeft(), tree.Value)\n\treturn append([]int{tree.Value}, subResult...)\n}\n\nfunc TestCase1(t *TestCase) {\n\troot := NewBinaryTree(1).insertAll(2, 3, 4, 5, 6)\n\troot.Left.Right.Left = NewBinaryTree(7)\n\troot.Left.Right.Right = NewBinaryTree(8)\n\tleftMostNode := FlattenBinaryTree(root)\n\tactual := leftMostNode.leftToRightToLeft()\n\texpected := []int{4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4}\n\trequire.Equal(t, expected, actual)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue int\n\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\n// O(n) time | O(n) space - where n is the number of nodes\n// in the Binary Tree\nfunc FlattenBinaryTree(root *BinaryTree) *BinaryTree {\n\tinOrderNodes := []*BinaryTree{}\n\tgetNodesInOrder(root, &inOrderNodes)\n\tfor i := 0; i < len(inOrderNodes)-1; i++ {\n\t\tleftNode := inOrderNodes[i]\n\t\trightNode := inOrderNodes[i+1]\n\t\tleftNode.Right = rightNode\n\t\trightNode.Left = leftNode\n\t}\n\treturn inOrderNodes[0]\n}\n\nfunc getNodesInOrder(tree *BinaryTree, array *[]*BinaryTree) {\n\tif tree != nil {\n\t\tgetNodesInOrder(tree.Left, array)\n\t\t*array = append(*array, tree)\n\t\tgetNodesInOrder(tree.Right, array)\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue int\n\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\n// O(n) time | O(d) space - where n is the number of nodes in the Binary Tree\n// and d is the depth (height) of the Binary Tree\nfunc FlattenBinaryTree(root *BinaryTree) *BinaryTree {\n\tleftMost, _ := flattenTree(root)\n\treturn leftMost\n}\n\nfunc flattenTree(node *BinaryTree) (leftMost, rightMost *BinaryTree) {\n\tleftMost = node\n\tif node.Left != nil {\n\t\tleftSubtreeLeftMost, leftSubtreeRightMost := flattenTree(node.Left)\n\t\tconnectNodes(leftSubtreeRightMost, node)\n\t\tleftMost = leftSubtreeLeftMost\n\t}\n\n\trightMost = node\n\tif node.Right != nil {\n\t\trightSubtreeLeftMost, rightSubtreeRightMost := flattenTree(node.Right)\n\t\tconnectNodes(node, rightSubtreeLeftMost)\n\t\trightMost = rightSubtreeRightMost\n\t}\n\treturn leftMost, rightMost\n}\n\nfunc connectNodes(left, right *BinaryTree) {\n\tleft.Right = right\n\tright.Left = left\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static BinaryTree flattenBinaryTree(BinaryTree root) {\n    // Write your code here.\n    return root;\n  }\n\n  // This is the class of the input root. Do not edit it.\n  static class BinaryTree {\n    int value;\n    BinaryTree left = null;\n    BinaryTree right = null;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(1, 1));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  @Test\n  public void TestCase2() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2});\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(2, 1, 1, 2));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  @Test\n  public void TestCase3() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3});\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(2, 1, 3, 3, 1, 2));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  @Test\n  public void TestCase4() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4});\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(4, 2, 1, 3, 3, 1, 2, 4));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  @Test\n  public void TestCase5() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5});\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(4, 2, 5, 1, 3, 3, 1, 5, 2, 4));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  @Test\n  public void TestCase6() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6});\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected =\n        new ArrayList<Integer>(Arrays.asList(4, 2, 5, 1, 6, 3, 3, 6, 1, 5, 2, 4));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  @Test\n  public void TestCase7() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6});\n    root.left.right.left = new Program.BinaryTree(7);\n    root.left.right.right = new Program.BinaryTree(8);\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected =\n        new ArrayList<Integer>(Arrays.asList(4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  @Test\n  public void TestCase8() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected =\n        new ArrayList<Integer>(\n            Arrays.asList(\n                8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 3, 7, 7, 3, 6, 12, 1, 11, 5, 10, 2, 9, 4, 8));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  public void insert(Program.BinaryTree root, int[] values) {\n    insert(root, values, 0);\n  }\n\n  public void insert(Program.BinaryTree root, int[] values, int i) {\n    if (i >= values.length) {\n      return;\n    }\n    Deque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n    queue.addLast(root);\n    while (queue.size() > 0) {\n      Program.BinaryTree current = queue.pollFirst();\n      if (current.left == null) {\n        current.left = new Program.BinaryTree(values[i]);\n        break;\n      }\n      queue.addLast(current.left);\n      if (current.right == null) {\n        current.right = new Program.BinaryTree(values[i]);\n        break;\n      }\n      queue.addLast(current.right);\n    }\n    insert(root, values, i + 1);\n  }\n\n  public List<Integer> leftToRightToLeft(Program.BinaryTree leftMost) {\n    List<Integer> nodes = new ArrayList<Integer>();\n    Program.BinaryTree current = leftMost;\n    while (current.right != null) {\n      nodes.add(current.value);\n      current = current.right;\n    }\n    nodes.add(current.value);\n    while (current != null) {\n      nodes.add(current.value);\n      current = current.left;\n    }\n    return nodes;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.BinaryTree root = new Program.BinaryTree(1);\n    insert(root, new int[] {2, 3, 4, 5, 6});\n    root.left.right.left = new Program.BinaryTree(7);\n    root.left.right.right = new Program.BinaryTree(8);\n    Program.BinaryTree leftMostNode = Program.flattenBinaryTree(root);\n    List<Integer> leftToRightToLeft = leftToRightToLeft(leftMostNode);\n    List<Integer> expected =\n        new ArrayList<Integer>(Arrays.asList(4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4));\n    Utils.assertTrue(expected.equals(leftToRightToLeft));\n  }\n\n  public void insert(Program.BinaryTree root, int[] values) {\n    insert(root, values, 0);\n  }\n\n  public void insert(Program.BinaryTree root, int[] values, int i) {\n    if (i >= values.length) {\n      return;\n    }\n    Deque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n    queue.addLast(root);\n    while (queue.size() > 0) {\n      Program.BinaryTree current = queue.pollFirst();\n      if (current.left == null) {\n        current.left = new Program.BinaryTree(values[i]);\n        break;\n      }\n      queue.addLast(current.left);\n      if (current.right == null) {\n        current.right = new Program.BinaryTree(values[i]);\n        break;\n      }\n      queue.addLast(current.right);\n    }\n    insert(root, values, i + 1);\n  }\n\n  public List<Integer> leftToRightToLeft(Program.BinaryTree leftMost) {\n    List<Integer> nodes = new ArrayList<Integer>();\n    Program.BinaryTree current = leftMost;\n    while (current.right != null) {\n      nodes.add(current.value);\n      current = current.right;\n    }\n    nodes.add(current.value);\n    while (current != null) {\n      nodes.add(current.value);\n      current = current.left;\n    }\n    return nodes;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n  public static BinaryTree flattenBinaryTree(BinaryTree root) {\n    List<BinaryTree> inOrderNodes = getNodesInOrder(root, new ArrayList<BinaryTree>());\n    for (int i = 0; i < inOrderNodes.size() - 1; i++) {\n      BinaryTree leftNode = inOrderNodes.get(i);\n      BinaryTree rightNode = inOrderNodes.get(i + 1);\n      leftNode.right = rightNode;\n      rightNode.left = leftNode;\n    }\n    return inOrderNodes.get(0);\n  }\n\n  public static List<BinaryTree> getNodesInOrder(BinaryTree tree, List<BinaryTree> array) {\n    if (tree != null) {\n      getNodesInOrder(tree.left, array);\n      array.add(tree);\n      getNodesInOrder(tree.right, array);\n    }\n    return array;\n  }\n\n  static class BinaryTree {\n    int value;\n    BinaryTree left = null;\n    BinaryTree right = null;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(d) space - where n is the number of nodes in the Binary Tree\n  // and d is the depth (height) of the Binary Tree\n  public static BinaryTree flattenBinaryTree(BinaryTree root) {\n    flattenTree(root);\n    return getLeftMost(root);\n  }\n\n  public static BinaryTree[] flattenTree(BinaryTree node) {\n    BinaryTree leftMost;\n    BinaryTree rightMost;\n\n    if (node.left == null) {\n      leftMost = node;\n    } else {\n      BinaryTree[] leftAndRightMostNodes = flattenTree(node.left);\n      connectNodes(leftAndRightMostNodes[1], node);\n      leftMost = leftAndRightMostNodes[0];\n    }\n\n    if (node.right == null) {\n      rightMost = node;\n    } else {\n      BinaryTree[] leftAndRightMostNodes = flattenTree(node.right);\n      connectNodes(node, leftAndRightMostNodes[0]);\n      rightMost = leftAndRightMostNodes[1];\n    }\n\n    return new BinaryTree[] {leftMost, rightMost};\n  }\n\n  public static void connectNodes(BinaryTree left, BinaryTree right) {\n    left.right = right;\n    right.left = left;\n  }\n\n  public static BinaryTree getLeftMost(BinaryTree node) {\n    while (node.left != null) {\n      node = node.left;\n    }\n    return node;\n  }\n\n  static class BinaryTree {\n    int value;\n    BinaryTree left = null;\n    BinaryTree right = null;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// This is the class of the input root. Do not edit it.\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nfunction flattenBinaryTree(root) {\n  // Write your code here.\n}\n\n// Do not edit the lines below.\nexports.BinaryTree = BinaryTree;\nexports.flattenBinaryTree = flattenBinaryTree;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [1, 1];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nit('Test Case #2', function () {\n  const root = new BinaryTree(1).insert([2]);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [2, 1, 1, 2];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nit('Test Case #3', function () {\n  const root = new BinaryTree(1).insert([2, 3]);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [2, 1, 3, 3, 1, 2];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nit('Test Case #4', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4]);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [4, 2, 1, 3, 3, 1, 2, 4];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nit('Test Case #5', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5]);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [4, 2, 5, 1, 3, 3, 1, 5, 2, 4];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nit('Test Case #6', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6]);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [4, 2, 5, 1, 6, 3, 3, 6, 1, 5, 2, 4];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nit('Test Case #7', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6]);\n  root.left.right.left = new BinaryTree(7);\n  root.left.right.right = new BinaryTree(8);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nit('Test Case #8', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 3, 7, 7, 3, 6, 12, 1, 11, 5, 10, 2, 9, 4, 8];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nclass BinaryTree extends program.BinaryTree {\n  constructor(value) {\n    super(value);\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n\n  leftToRightToLeft() {\n    const nodes = [];\n    let current = this;\n    while (current.right !== null) {\n      nodes.push(current.value);\n      current = current.right;\n    }\n    nodes.push(current.value);\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.left;\n    }\n    return nodes;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1).insert([2, 3, 4, 5, 6]);\n  root.left.right.left = new BinaryTree(7);\n  root.left.right.right = new BinaryTree(8);\n  const leftMostNode = program.flattenBinaryTree(root);\n  const leftToRightToLeft = leftMostNode.leftToRightToLeft();\n  const expected = [4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nclass BinaryTree extends program.BinaryTree {\n  constructor(value) {\n    super(value);\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n\n  leftToRightToLeft() {\n    const nodes = [];\n    let current = this;\n    while (current.right !== null) {\n      nodes.push(current.value);\n      current = current.right;\n    }\n    nodes.push(current.value);\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.left;\n    }\n    return nodes;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nfunction flattenBinaryTree(root) {\n  const inOrderNodes = getNodesInOrder(root, []);\n  for (let i = 0; i < inOrderNodes.length - 1; i++) {\n    const leftNode = inOrderNodes[i];\n    const rightNode = inOrderNodes[i + 1];\n    leftNode.right = rightNode;\n    rightNode.left = leftNode;\n  }\n  return inOrderNodes[0];\n}\n\nfunction getNodesInOrder(tree, array) {\n  if (tree !== null) {\n    getNodesInOrder(tree.left, array);\n    array.push(tree);\n    getNodesInOrder(tree.right, array);\n  }\n  return array;\n}\n\nexports.BinaryTree = BinaryTree;\nexports.flattenBinaryTree = flattenBinaryTree;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(d) space - where n is the number of nodes in the Binary Tree and d is the depth (height) of the Binary Tree\nfunction flattenBinaryTree(root) {\n  const [leftMost, _] = flattenTree(root);\n  return leftMost;\n}\n\nfunction flattenTree(node) {\n  let leftMost, rightMost;\n\n  if (node.left === null) {\n    leftMost = node;\n  } else {\n    const [leftSubtreeLeftMost, leftSubtreeRightMost] = flattenTree(node.left);\n    connectNodes(leftSubtreeRightMost, node);\n    leftMost = leftSubtreeLeftMost;\n  }\n\n  if (node.right === null) {\n    rightMost = node;\n  } else {\n    const [rightSubtreeLeftMost, rightSubtreeRightMost] = flattenTree(node.right);\n    connectNodes(node, rightSubtreeLeftMost);\n    rightMost = rightSubtreeRightMost;\n  }\n\n  return [leftMost, rightMost];\n}\n\nfunction connectNodes(left, right) {\n  left.right = right;\n  right.left = left;\n}\n\nexports.BinaryTree = BinaryTree;\nexports.flattenBinaryTree = flattenBinaryTree;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# This is the class of the input root. Do not edit it.\nclass BinaryTree:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\n\ndef flattenBinaryTree(root):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        root = BinaryTree(1)\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [1, 1]\n        self.assertEqual(leftToRightToLeft, expected)\n\n    def test_case_2(self):\n        root = BinaryTree(1).insert([2])\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [2, 1, 1, 2]\n        self.assertEqual(leftToRightToLeft, expected)\n\n    def test_case_3(self):\n        root = BinaryTree(1).insert([2, 3])\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [2, 1, 3, 3, 1, 2]\n        self.assertEqual(leftToRightToLeft, expected)\n\n    def test_case_4(self):\n        root = BinaryTree(1).insert([2, 3, 4])\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [4, 2, 1, 3, 3, 1, 2, 4]\n        self.assertEqual(leftToRightToLeft, expected)\n\n    def test_case_5(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5])\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [4, 2, 5, 1, 3, 3, 1, 5, 2, 4]\n        self.assertEqual(leftToRightToLeft, expected)\n\n    def test_case_6(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6])\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [4, 2, 5, 1, 6, 3, 3, 6, 1, 5, 2, 4]\n        self.assertEqual(leftToRightToLeft, expected)\n\n    def test_case_7(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6])\n        root.left.right.left = BinaryTree(7)\n        root.left.right.right = BinaryTree(8)\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4]\n        self.assertEqual(leftToRightToLeft, expected)\n\n    def test_case_8(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 3, 7, 7, 3, 6, 12, 1, 11, 5, 10, 2, 9, 4, 8]\n        self.assertEqual(leftToRightToLeft, expected)\n\n\nclass BinaryTree(program.BinaryTree):\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n\n    def leftToRightToLeft(self):\n        nodes = []\n        current = self\n        while current.right is not None:\n            nodes.append(current.value)\n            current = current.right\n        nodes.append(current.value)\n        while current is not None:\n            nodes.append(current.value)\n            current = current.left\n        return nodes\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        root = BinaryTree(1).insert([2, 3, 4, 5, 6])\n        root.left.right.left = BinaryTree(7)\n        root.left.right.right = BinaryTree(8)\n        leftMostNode = program.flattenBinaryTree(root)\n        leftToRightToLeft = leftMostNode.leftToRightToLeft()\n        expected = [4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4]\n        self.assertEqual(leftToRightToLeft, expected)\n\n\nclass BinaryTree(program.BinaryTree):\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n\n    def leftToRightToLeft(self):\n        nodes = []\n        current = self\n        while current.right is not None:\n            nodes.append(current.value)\n            current = current.right\n        nodes.append(current.value)\n        while current is not None:\n            nodes.append(current.value)\n            current = current.left\n        return nodes\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\n\n# O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\ndef flattenBinaryTree(root):\n    inOrderNodes = getNodesInOrder(root, [])\n    for i in range(0, len(inOrderNodes) - 1):\n        leftNode = inOrderNodes[i]\n        rightNode = inOrderNodes[i + 1]\n        leftNode.right = rightNode\n        rightNode.left = leftNode\n    return inOrderNodes[0]\n\n\ndef getNodesInOrder(tree, array):\n    if tree is not None:\n        getNodesInOrder(tree.left, array)\n        array.append(tree)\n        getNodesInOrder(tree.right, array)\n    return array\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree:\n    def __init__(self, value, left=None, right=None):\n        self.value = value\n        self.left = left\n        self.right = right\n\n\n# O(n) time | O(d) space - where n is the number of nodes in the Binary Tree\n# and d is the depth (height) of the Binary Tree\ndef flattenBinaryTree(root):\n    leftMost, _ = flattenTree(root)\n    return leftMost\n\n\ndef flattenTree(node):\n    if node.left is None:\n        leftMost = node\n    else:\n        leftSubtreeLeftMost, leftSubtreeRightMost = flattenTree(node.left)\n        connectNodes(leftSubtreeRightMost, node)\n        leftMost = leftSubtreeLeftMost\n\n    if node.right is None:\n        rightMost = node\n    else:\n        rightSubtreeLeftMost, rightSubtreeRightMost = flattenTree(node.right)\n        connectNodes(node, rightSubtreeLeftMost)\n        rightMost = rightSubtreeRightMost\n\n    return [leftMost, rightMost]\n\n\ndef connectNodes(left, right):\n    left.right = right\n    right.left = left\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is the class of the input root. Do not edit it.\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  func flattenBinaryTree(root: BinaryTree) -> BinaryTree {\n    // Write your code here.\n    return root\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1)\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [1, 1]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2])\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [2, 1, 1, 2]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3])\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [2, 1, 3, 3, 1, 2]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4])\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [4, 2, 1, 3, 3, 1, 2, 4]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5])\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [4, 2, 5, 1, 3, 3, 1, 5, 2, 4]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6])\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [4, 2, 5, 1, 6, 3, 3, 6, 1, 5, 2, 4]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6])\n      root.left?.right?.left = TestBinaryTree(value: 7)\n      root.left?.right?.right = TestBinaryTree(value: 8)\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4]\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 3, 7, 7, 3, 6, 12, 1, 11, 5, 10, 2, 9, 4, 8]\n      try assertEqual(expected, actual)\n    }\n  }\n}\n\nclass TestBinaryTree: Program.BinaryTree {\n  func insert(value: Int) -> TestBinaryTree {\n    var queue = [self as Program.BinaryTree]\n    while queue.count > 0 {\n      var current = queue[0]\n      queue.removeFirst()\n      if let left = current.left {\n        queue.append(left)\n      } else {\n        current.left = TestBinaryTree(value: value)\n        return self\n      }\n\n      if let right = current.right {\n        queue.append(right)\n      } else {\n        current.right = TestBinaryTree(value: value)\n        return self\n      }\n    }\n    return self\n  }\n\n  func insertAll(values: [Int]) -> TestBinaryTree {\n    for v in values {\n      insert(value: v)\n    }\n    return self\n  }\n}\n\nfunc leftToRightToLeft(tree: Program.BinaryTree) -> [Int] {\n  var result = [tree.value]\n  if let right = tree.right {\n    result = result + leftToRightToLeft(tree: right)\n  }\n  return result + [tree.value]\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var root = TestBinaryTree(value: 1).insertAll(values: [2, 3, 4, 5, 6])\n      root.left?.right?.left = TestBinaryTree(value: 7)\n      root.left?.right?.right = TestBinaryTree(value: 8)\n      var leftMostNode = program.flattenBinaryTree(root: root)\n      var actual = leftToRightToLeft(tree: leftMostNode)\n      var expected = [4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4]\n      try assertEqual(expected, actual)\n    }\n  }\n}\n\nclass TestBinaryTree: Program.BinaryTree {\n  func insert(value: Int) -> TestBinaryTree {\n    var queue = [self as Program.BinaryTree]\n    while queue.count > 0 {\n      var current = queue[0]\n      queue.removeFirst()\n      if let left = current.left {\n        queue.append(left)\n      } else {\n        current.left = TestBinaryTree(value: value)\n        return self\n      }\n\n      if let right = current.right {\n        queue.append(right)\n      } else {\n        current.right = TestBinaryTree(value: value)\n        return self\n      }\n    }\n    return self\n  }\n\n  func insertAll(values: [Int]) -> TestBinaryTree {\n    for v in values {\n      insert(value: v)\n    }\n    return self\n  }\n}\n\nfunc leftToRightToLeft(tree: Program.BinaryTree) -> [Int] {\n  var result = [tree.value]\n  if let right = tree.right {\n    result = result + leftToRightToLeft(tree: right)\n  }\n  return result + [tree.value]\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  // O(n) time | O(n) space - where n is the number of nodes\n  // in the Binary Tree\n  func flattenBinaryTree(root: BinaryTree) -> BinaryTree {\n    var inOrderNodes = [BinaryTree]()\n    getNodesInOrder(root: root, array: &inOrderNodes)\n    for i in 0 ..< inOrderNodes.count - 1 {\n      var leftNode = inOrderNodes[i]\n      var rightNode = inOrderNodes[i + 1]\n      leftNode.right = rightNode\n      rightNode.left = leftNode\n    }\n    return inOrderNodes[0]\n  }\n\n  func getNodesInOrder(root: BinaryTree?, array: inout [BinaryTree]) {\n    if let tree = root {\n      getNodesInOrder(root: tree.left, array: &array)\n      array.append(tree)\n      getNodesInOrder(root: tree.right, array: &array)\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  // O(n) time | O(d) space - where n is the number of nodes in the Binary Tree\n  // and d is the depth (height) of the Binary Tree\n  func flattenBinaryTree(root: BinaryTree) -> BinaryTree {\n    var result = flattenTree(node: root)\n    return result.leftMost\n  }\n\n  func flattenTree(node: BinaryTree) -> (leftMost: BinaryTree, rightMost: BinaryTree) {\n    var leftMost = node\n    if let left = node.left {\n      var result = flattenTree(node: left)\n      connectNodes(left: result.rightMost, right: node)\n      leftMost = result.leftMost\n    }\n\n    var rightMost = node\n    if let right = node.right {\n      var result = flattenTree(node: right)\n      connectNodes(left: node, right: result.leftMost)\n      rightMost = result.rightMost\n    }\n    return (leftMost, rightMost)\n  }\n\n  func connectNodes(left: BinaryTree, right: BinaryTree) {\n    left.right = right\n    right.left = left\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// This is the class of the input root. Do not edit it.\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexport function flattenBinaryTree(root: BinaryTree) {\n  // Write your code here.\n  return root;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nexport class BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1);\n  root.left = new BinaryTree(2);\n  root.right = new BinaryTree(3);\n  root.left.left = new BinaryTree(4);\n  root.left.right = new BinaryTree(5);\n  root.right.left = new BinaryTree(6);\n  root.left.right.left = new BinaryTree(7);\n  root.left.right.right = new BinaryTree(8);\n\n  const leftMostNode = program.flattenBinaryTree(root) as BinaryTree;\n  const leftToRightToLeft = getLeftToRightToLeft(leftMostNode);\n  const expected = [4, 2, 7, 5, 8, 1, 6, 3, 3, 6, 1, 8, 5, 7, 2, 4];\n  chai.expect(leftToRightToLeft).to.deep.equal(expected);\n});\n\nfunction getLeftToRightToLeft(tree: BinaryTree) {\n  const nodes: number[] = [];\n  let current: BinaryTree = tree;\n  while (current.right !== null) {\n    nodes.push(current.value);\n    current = current.right!;\n  }\n  nodes.push(current.value);\n  while (current !== null) {\n    nodes.push(current.value);\n    current = current.left!;\n  }\n  return nodes;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nexport function flattenBinaryTree(root: BinaryTree) {\n  const inOrderNodes = getNodesInOrder(root, []);\n  for (let i = 0; i < inOrderNodes.length - 1; i++) {\n    const leftNode = inOrderNodes[i];\n    const rightNode = inOrderNodes[i + 1];\n    leftNode.right = rightNode;\n    rightNode.left = leftNode;\n  }\n  return inOrderNodes[0];\n}\n\nfunction getNodesInOrder(tree: BinaryTree | null, array: BinaryTree[]) {\n  if (tree !== null) {\n    getNodesInOrder(tree.left, array);\n    array.push(tree);\n    getNodesInOrder(tree.right, array);\n  }\n  return array;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(d) space - where n is the number of nodes in the Binary Tree and d is the depth (height) of the Binary Tree\nexport function flattenBinaryTree(root: BinaryTree) {\n  const [leftMost, _] = flattenTree(root);\n  return leftMost;\n}\n\nfunction flattenTree(node: BinaryTree): [BinaryTree, BinaryTree] {\n  let leftMost, rightMost;\n\n  if (node.left === null) {\n    leftMost = node;\n  } else {\n    const [leftSubtreeLeftMost, leftSubtreeRightMost] = flattenTree(node.left);\n    connectNodes(leftSubtreeRightMost, node);\n    leftMost = leftSubtreeLeftMost;\n  }\n\n  if (node.right === null) {\n    rightMost = node;\n  } else {\n    const [rightSubtreeLeftMost, rightSubtreeRightMost] = flattenTree(node.right);\n    connectNodes(node, rightSubtreeLeftMost);\n    rightMost = rightSubtreeRightMost;\n  }\n\n  return [leftMost, rightMost];\n}\n\nfunction connectNodes(left: BinaryTree, right: BinaryTree) {\n  left.right = right;\n  right.left = left;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "7",
+            "right": "8",
+            "value": 5
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "6",
+            "left": "12",
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": "11",
+            "value": 5
+          },
+          {
+            "id": "11",
+            "left": null,
+            "right": null,
+            "value": 11
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          }
+        ],
+        "root": "1"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "nodes": [
+          {
+            "id": "4",
+            "left": null,
+            "right": "2",
+            "value": 4
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "7",
+            "value": 2
+          },
+          {
+            "id": "7",
+            "left": "2",
+            "right": "5",
+            "value": 7
+          },
+          {
+            "id": "5",
+            "left": "7",
+            "right": "8",
+            "value": 5
+          },
+          {
+            "id": "8",
+            "left": "5",
+            "right": "1",
+            "value": 8
+          },
+          {
+            "id": "1",
+            "left": "8",
+            "right": "6",
+            "value": 1
+          },
+          {
+            "id": "6",
+            "left": "1",
+            "right": "3",
+            "value": 6
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "4"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "2",
+            "left": null,
+            "right": "1",
+            "value": 2
+          },
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "2"
+      },
+      {
+        "nodes": [
+          {
+            "id": "2",
+            "left": null,
+            "right": "1",
+            "value": 2
+          },
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "1",
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "2"
+      },
+      {
+        "nodes": [
+          {
+            "id": "4",
+            "left": null,
+            "right": "2",
+            "value": 4
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "1",
+            "value": 2
+          },
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "1",
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "4"
+      },
+      {
+        "nodes": [
+          {
+            "id": "4",
+            "left": null,
+            "right": "2",
+            "value": 4
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "1",
+            "value": 5
+          },
+          {
+            "id": "1",
+            "left": "5",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "1",
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "4"
+      },
+      {
+        "nodes": [
+          {
+            "id": "4",
+            "left": null,
+            "right": "2",
+            "value": 4
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "1",
+            "value": 5
+          },
+          {
+            "id": "1",
+            "left": "5",
+            "right": "6",
+            "value": 1
+          },
+          {
+            "id": "6",
+            "left": "1",
+            "right": "3",
+            "value": 6
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "4"
+      },
+      {
+        "nodes": [
+          {
+            "id": "8",
+            "left": null,
+            "right": "4",
+            "value": 8
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "9",
+            "left": "4",
+            "right": "2",
+            "value": 9
+          },
+          {
+            "id": "2",
+            "left": "9",
+            "right": "10",
+            "value": 2
+          },
+          {
+            "id": "10",
+            "left": "2",
+            "right": "5",
+            "value": 10
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": "11",
+            "value": 5
+          },
+          {
+            "id": "11",
+            "left": "5",
+            "right": "1",
+            "value": 11
+          },
+          {
+            "id": "1",
+            "left": "11",
+            "right": "12",
+            "value": 1
+          },
+          {
+            "id": "12",
+            "left": "1",
+            "right": "6",
+            "value": 12
+          },
+          {
+            "id": "6",
+            "left": "12",
+            "right": "3",
+            "value": 6
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": "3",
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "8"
+      }
+    ]
+  ]
+}

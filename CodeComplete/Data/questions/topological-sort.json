@@ -1,0 +1,1129 @@
+{
+  "Summary": {
+    "Name": "Topological Sort",
+    "Category": "Famous Algorithms",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "date": "2018-10-20T00:00:00Z",
+      "number": 507,
+      "timeOne": 0,
+      "timeTwo": 2157,
+      "url": "https://player.vimeo.com/video/295907837"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try representing the jobs and dependencies as a graph, where each vertex is a job and each edge is a dependency. How can you traverse this graph to topologically sort the list of jobs?\nOne approach to solving this problem is to traverse the graph mentioned in Hint #1 using Depth-first Search. Starting at a random job, traverse its prerequisite jobs in Depth-first Search fashion until you reach a job with no prerequisites; such a job can safely be appended to the final order. Once you've traversed and added all prerequisites of a job to the final order, you can append the job in question to the order. This approach will have to track whether nodes have been traversed already, whether they're in the process of being traversed (which would indicate a cycle in the graph and therefore no valid topological order), or whether they're ready to be traversed.\nAnother approach to solving this problem is to traverse the graph mentioned in Hint #1 starting specifically with jobs that have no prerequisites. Keep track of all the jobs that have no prerequisites, traverse them one by one, and append them to the final order. For all of these jobs, remove their dependencies from the graph and update the number of prerequisites for each of these dependencies accordingly (these dependencies should now have one prerequisite less since one of their prerequisite job has just been added to the final order). As you update the number of prerequisites for these other jobs, keep track of the ones that no longer have prerequisites and that are ready to be traversed. You'll eventually go through all of the jobs if there are no cycles in the graph. If there is a cycle in the graph, there will still be jobs with prerequisites and you'll know that there is no valid topological order. This approach will involve keeping track of the number of prerequisites per job as well as all the actual dependencies of each job.\n",
+  "SpaceTime": "O(j + d) time | O(j + d) space - where j is the number of jobs and d is the number of dependencies\n",
+  "PromptHTML": "<p>\n  You're given a list of arbitrary jobs that need to be completed; these jobs\n  are represented by distinct integers. You're also given a list of dependencies. A\n  dependency is represented as a pair of jobs where the first job is a\n  prerequisite of the second one. In other words, the second job depends on the\n  first one; it can only be completed once the first job is completed.\n</p>\n<p>\n  Write a function that takes in a list of jobs and a list of dependencies and\n  returns a list containing a valid order in which the given jobs can be\n  completed. If no such order exists, the function should return an empty array.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">jobs</span> = [1, 2, 3, 4]\n<span class=\"CodeEditor-promptParameter\">deps</span> = [[1, 2], [1, 3], [3, 2], [4, 2], [4, 3]]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[1, 4, 3, 2] or [4, 1, 3, 2]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "jobs",
+      "Example": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array",
+        "uniqueItems": true
+      }
+    },
+    {
+      "Name": "deps",
+      "Example": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> topologicalSort(vector<int> jobs, vector<vector<int>> deps) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "#include <unordered_map>\n\nbool isValidTopologicalOrder(vector<int> order, vector<int> jobs,\n                             vector<vector<int>> deps);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5, 6, 7, 8};\n      vector<vector<int>> deps = {{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2},\n                                  {1, 4}, {1, 6}, {1, 2}, {7, 6}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5, 6, 7, 8};\n      vector<vector<int>> deps = {{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2},\n                                  {1, 4}, {6, 7}, {1, 2}, {7, 6}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(order == vector<int>{});\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5, 6, 7, 8};\n      vector<vector<int>> deps = {{3, 1}, {8, 1}, {8, 7}, {5, 7},\n                                  {5, 2}, {1, 4}, {1, 6}, {1, 2},\n                                  {7, 6}, {4, 6}, {6, 2}, {2, 3}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(order == vector<int>{});\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5, 6, 7, 8};\n      vector<vector<int>> deps = {{1, 2}, {2, 3}, {3, 4}, {4, 5},\n                                  {5, 6}, {6, 7}, {7, 8}, {8, 1}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(order == vector<int>{});\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5, 6, 7, 8, 9};\n      vector<vector<int>> deps = {{1, 2}, {2, 3}, {3, 4}, {4, 5},\n                                  {5, 6}, {7, 6}, {7, 8}, {8, 1}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5, 6, 7, 8};\n      vector<vector<int>> deps = {{1, 2}, {3, 5}, {4, 6}, {3, 6},\n                                  {1, 7}, {7, 8}, {1, 8}, {2, 8}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5, 6, 7, 8};\n      vector<vector<int>> deps = {\n          {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7},\n          {2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8}, {7, 8},\n      };\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> jobs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};\n      vector<vector<int>> deps = {\n          {1, 2}, {1, 3}, {1, 4}, {1, 5},  {1, 6},   {1, 7},   {2, 8},  {3, 8},\n          {4, 8}, {5, 8}, {6, 8}, {7, 8},  {2, 3},   {2, 4},   {5, 4},  {7, 6},\n          {6, 2}, {6, 3}, {6, 5}, {5, 9},  {9, 8},   {8, 0},   {4, 0},  {5, 0},\n          {9, 0}, {2, 0}, {3, 9}, {3, 10}, {10, 11}, {11, 12}, {2, 12},\n      };\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> jobs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};\n      vector<vector<int>> deps = {\n          {1, 2}, {1, 3}, {1, 4}, {1, 5},  {1, 6},   {1, 7},   {2, 8},  {3, 8},\n          {4, 8}, {5, 8}, {6, 8}, {7, 8},  {2, 3},   {2, 4},   {5, 4},  {7, 6},\n          {6, 2}, {6, 3}, {6, 5}, {5, 9},  {9, 8},   {8, 0},   {4, 0},  {5, 0},\n          {9, 0}, {2, 0}, {3, 9}, {3, 10}, {10, 11}, {11, 12}, {12, 2},\n      };\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(order == vector<int>{});\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<int> jobs = {1, 2, 3, 4};\n      vector<vector<int>> deps = {{1, 2}, {1, 3}, {3, 2}, {4, 2}, {4, 3}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5};\n      vector<vector<int>> deps = {};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      vector<int> jobs = {1, 2, 3, 4, 5};\n      vector<vector<int>> deps = {{1, 4}, {5, 2}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n  }\n};\n\nbool isValidTopologicalOrder(vector<int> order, vector<int> jobs,\n                             vector<vector<int>> deps) {\n  unordered_map<int, bool> visited;\n  for (int candidate : order) {\n    for (vector<int> dep : deps) {\n      if (candidate == dep[0] && visited.find(dep[1]) != visited.end())\n        return false;\n    }\n    visited[candidate] = true;\n  }\n  for (int job : jobs) {\n    if (visited.find(job) == visited.end())\n      return false;\n  }\n  return order.size() == jobs.size();\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <unordered_map>\n\nbool isValidTopologicalOrder(vector<int> order, vector<int> jobs,\n                             vector<vector<int>> deps);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> jobs = {1, 2, 3, 4};\n      vector<vector<int>> deps = {{1, 2}, {1, 3}, {3, 2}, {4, 2}, {4, 3}};\n      vector<int> order = topologicalSort(jobs, deps);\n      assert(isValidTopologicalOrder(order, jobs, deps) == true);\n    });\n  }\n};\n\nbool isValidTopologicalOrder(vector<int> order, vector<int> jobs,\n                             vector<vector<int>> deps) {\n  unordered_map<int, bool> visited;\n  for (int candidate : order) {\n    for (vector<int> dep : deps) {\n      if (candidate == dep[0] && visited.find(dep[1]) != visited.end())\n        return false;\n    }\n    visited[candidate] = true;\n  }\n  for (int job : jobs) {\n    if (visited.find(job) == visited.end())\n      return false;\n  }\n  return order.size() == jobs.size();\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nclass JobNode {\npublic:\n  int job;\n  vector<JobNode *> prereqs;\n  bool visited;\n  bool visiting;\n\n  JobNode(int job);\n};\n\nclass JobGraph {\npublic:\n  vector<JobNode *> nodes;\n  unordered_map<int, JobNode *> graph;\n\n  JobGraph(vector<int> jobs);\n  void addPrereq(int job, int prereq);\n  void addNode(int job);\n  JobNode *getNode(int job);\n};\n\nJobGraph *createJobGraph(vector<int> jobs, vector<vector<int>> deps);\nvector<int> getOrderedJobs(JobGraph *graph);\nbool depthFirstTraverse(JobNode *node, vector<int> *orderedJobs);\n\n// O(j + d) time | O(j + d) space\nvector<int> topologicalSort(vector<int> jobs, vector<vector<int>> deps) {\n  JobGraph *jobGraph = createJobGraph(jobs, deps);\n  return getOrderedJobs(jobGraph);\n}\n\nJobGraph *createJobGraph(vector<int> jobs, vector<vector<int>> deps) {\n  JobGraph *graph = new JobGraph(jobs);\n  for (vector<int> dep : deps) {\n    graph->addPrereq(dep[1], dep[0]);\n  }\n  return graph;\n}\n\nvector<int> getOrderedJobs(JobGraph *graph) {\n  vector<int> orderedJobs = {};\n  vector<JobNode *> nodes = graph->nodes;\n  while (nodes.size()) {\n    JobNode *node = nodes.back();\n    nodes.pop_back();\n    bool containsCycle = depthFirstTraverse(node, &orderedJobs);\n    if (containsCycle)\n      return {};\n  }\n  return orderedJobs;\n}\n\nbool depthFirstTraverse(JobNode *node, vector<int> *orderedJobs) {\n  if (node->visited)\n    return false;\n  if (node->visiting)\n    return true;\n  node->visiting = true;\n  for (JobNode *prereqNode : node->prereqs) {\n    bool containsCycle = depthFirstTraverse(prereqNode, orderedJobs);\n    if (containsCycle)\n      return true;\n  }\n  node->visited = true;\n  node->visiting = false;\n  orderedJobs->push_back(node->job);\n  return false;\n}\n\nJobGraph::JobGraph(vector<int> jobs) {\n  nodes = {};\n  for (int job : jobs) {\n    addNode(job);\n  }\n}\n\nvoid JobGraph::addPrereq(int job, int prereq) {\n  JobNode *jobNode = getNode(job);\n  JobNode *prereqNode = getNode(prereq);\n  jobNode->prereqs.push_back(prereqNode);\n}\n\nvoid JobGraph::addNode(int job) {\n  graph[job] = new JobNode(job);\n  nodes.push_back(graph[job]);\n}\n\nJobNode *JobGraph::getNode(int job) {\n  if (graph.find(job) == graph.end())\n    addNode(job);\n  return graph[job];\n}\n\nJobNode::JobNode(int job) {\n  this->job = job;\n  prereqs = {};\n  visited = false;\n  visiting = false;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\n#include <algorithm>\nusing namespace std;\n\nclass JobNode {\npublic:\n  int job;\n  vector<JobNode *> deps;\n  int numOfPrereqs;\n\n  JobNode(int job);\n};\n\nclass JobGraph {\npublic:\n  vector<JobNode *> nodes;\n  unordered_map<int, JobNode *> graph;\n\n  JobGraph(vector<int> jobs);\n  void addDep(int job, int dep);\n  void addNode(int job);\n  JobNode *getNode(int job);\n};\n\nJobGraph *createJobGraph(vector<int> jobs, vector<vector<int>> deps);\nvector<int> getOrderedJobs(JobGraph *graph);\nvoid removeDeps(JobNode *node, vector<JobNode *> *nodesWithNoPrereqs);\n\n// O(j + d) time | O(j + d) space\nvector<int> topologicalSort(vector<int> jobs, vector<vector<int>> deps) {\n  JobGraph *jobGraph = createJobGraph(jobs, deps);\n  return getOrderedJobs(jobGraph);\n}\n\nJobGraph *createJobGraph(vector<int> jobs, vector<vector<int>> deps) {\n  JobGraph *graph = new JobGraph(jobs);\n  for (vector<int> dep : deps) {\n    graph->addDep(dep[0], dep[1]);\n  }\n  return graph;\n}\n\nvector<int> getOrderedJobs(JobGraph *graph) {\n  vector<int> orderedJobs = {};\n  vector<JobNode *> nodesWithNoPrereqs(graph->nodes.size());\n  auto it = copy_if(graph->nodes.begin(), graph->nodes.end(),\n                    nodesWithNoPrereqs.begin(),\n                    [](JobNode *node) { return node->numOfPrereqs == 0; });\n  nodesWithNoPrereqs.resize(distance(nodesWithNoPrereqs.begin(), it));\n  while (nodesWithNoPrereqs.size()) {\n    JobNode *node = nodesWithNoPrereqs.back();\n    nodesWithNoPrereqs.pop_back();\n    orderedJobs.push_back(node->job);\n    removeDeps(node, &nodesWithNoPrereqs);\n  }\n  bool graphHasEdges = false;\n  for (JobNode *node : graph->nodes) {\n    if (node->numOfPrereqs) {\n      graphHasEdges = true;\n    }\n  }\n  return graphHasEdges ? vector<int>{} : orderedJobs;\n}\n\nvoid removeDeps(JobNode *node, vector<JobNode *> *nodesWithNoPrereqs) {\n  while (node->deps.size()) {\n    JobNode *dep = node->deps.back();\n    node->deps.pop_back();\n    dep->numOfPrereqs--;\n    if (!dep->numOfPrereqs)\n      nodesWithNoPrereqs->push_back(dep);\n  }\n}\n\nJobGraph::JobGraph(vector<int> jobs) {\n  nodes = {};\n  for (int job : jobs) {\n    addNode(job);\n  }\n}\n\nvoid JobGraph::addDep(int job, int dep) {\n  JobNode *jobNode = getNode(job);\n  JobNode *depNode = getNode(dep);\n  jobNode->deps.push_back(depNode);\n  depNode->numOfPrereqs++;\n}\n\nvoid JobGraph::addNode(int job) {\n  graph[job] = new JobNode(job);\n  nodes.push_back(graph[job]);\n}\n\nJobNode *JobGraph::getNode(int job) {\n  if (graph.find(job) == graph.end())\n    addNode(job);\n  return graph[job];\n}\n\nJobNode::JobNode(int job) {\n  this->job = job;\n  deps = {};\n  numOfPrereqs = 0;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<int> TopologicalSort(List<int> jobs, List<int[]> deps) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {1, 6}, {1, 2}, {7, 6}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {6, 7}, {1, 2}, {7, 6}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(order.Count == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {1, 6}, {1, 2}, {7, 6},\n\t\t\t{4, 6}, {6, 2}, {2, 3}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(order.Count == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 7}, {7, 8}, {8, 1}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(order.Count == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {7, 6}, {7, 8}, {8, 1}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 2}, {3, 5}, {4, 6}, {3, 6}, {1, 7}, {7, 8}, {1, 8}, {2, 8}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7},\n\t\t\t{2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8}, {7, 8},\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7},\n\t\t\t{2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8}, {7, 8},\n\t\t\t{2, 3}, {2, 4}, {5, 4}, {7, 6}, {6, 2}, {6, 3},\n\t\t\t{6, 5}, {5, 9}, {9, 8}, {8, 0}, {4, 0}, {5, 0},\n\t\t\t{9, 0}, {2, 0}, {3, 9}, {3, 10}, {10, 11}, {11, 12}, {2, 12},\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7},\n\t\t\t{2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8}, {7, 8},\n\t\t\t{2, 3}, {2, 4}, {5, 4}, {7, 6}, {6, 2}, {6, 3},\n\t\t\t{6, 5}, {5, 9}, {9, 8}, {8, 0}, {4, 0}, {5, 0},\n\t\t\t{9, 0}, {2, 0}, {3, 9}, {3, 10}, {10, 11}, {11, 12}, {12, 2},\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(order.Count == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 2}, {1, 3}, {3, 2}, {4, 2}, {4, 3}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4, 5\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 4}, {5, 2}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\tvoid fillDeps(int[,] depsArray, List<int[]> deps) {\n\t\tfor (int x = 0; x < depsArray.GetLength(0); x++) {\n\t\t\tvar arr = new int[depsArray.GetLength(1)];\n\t\t\tfor (int y = 0; y < depsArray.GetLength(1); y++) {\n\t\t\t\tarr[y] = depsArray[x,y];\n\t\t\t}\n\t\t\tdeps.Add(arr);\n\t\t}\n\t}\n\n\tbool isValidTopologicalOrder(List<int> order, List<int> jobs, List<int[]> deps) {\n\t\tDictionary<int, bool> visited = new Dictionary<int, bool>();\n\t\tforeach (int candidate in order) {\n\t\t\tforeach (int[] dep in deps) {\n\t\t\t\tif (candidate == dep[0] &&\n\t\t\t\t  visited.ContainsKey(dep[1])) return false;\n\t\t\t}\n\t\t\tvisited.Add(candidate, true);\n\t\t}\n\t\tforeach (int job in jobs) {\n\t\t\tif (!visited.ContainsKey(job)) return false;\n\t\t}\n\t\treturn order.Count == jobs.Count;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int> jobs = new List<int>(){\n\t\t\t1, 2, 3, 4\n\t\t};\n\t\tint[,] depsArray = new int[,] {\n\t\t\t{1, 2}, {1, 3}, {3, 2}, {4, 2}, {4, 3}\n\t\t};\n\t\tList<int[]> deps = new List<int[]>();\n\t\tfillDeps(depsArray, deps);\n\t\tList<int> order = Program.TopologicalSort(jobs, deps);\n\t\tUtils.AssertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n\t}\n\n\tvoid fillDeps(int[,] depsArray, List<int[]> deps) {\n\t\tfor (int x = 0; x < depsArray.GetLength(0); x++) {\n\t\t\tvar arr = new int[depsArray.GetLength(1)];\n\t\t\tfor (int y = 0; y < depsArray.GetLength(1); y++) {\n\t\t\t\tarr[y] = depsArray[x,y];\n\t\t\t}\n\t\t\tdeps.Add(arr);\n\t\t}\n\t}\n\n\tbool isValidTopologicalOrder(List<int> order, List<int> jobs, List<int[]> deps) {\n\t\tDictionary<int, bool> visited = new Dictionary<int, bool>();\n\t\tforeach (int candidate in order) {\n\t\t\tforeach (int[] dep in deps) {\n\t\t\t\tif (candidate == dep[0] &&\n\t\t\t\t  visited.ContainsKey(dep[1])) return false;\n\t\t\t}\n\t\t\tvisited.Add(candidate, true);\n\t\t}\n\t\tforeach (int job in jobs) {\n\t\t\tif (!visited.ContainsKey(job)) return false;\n\t\t}\n\t\treturn order.Count == jobs.Count;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(j + d) time | O(j + d) space\n\tpublic static List<int> TopologicalSort(List<int> jobs, List<int[]> deps) {\n\t\tJobGraph jobGraph = createJobGraph(jobs, deps);\n\t\treturn getOrderedJobs(jobGraph);\n\t}\n\n\tpublic static JobGraph createJobGraph(List<int> jobs, List<int[]> deps) {\n\t\tJobGraph graph = new JobGraph(jobs);\n\t\tforeach (int[] dep in deps) {\n\t\t\tgraph.addPrereq(dep[1], dep[0]);\n\t\t}\n\t\treturn graph;\n\t}\n\n\tpublic static List<int> getOrderedJobs(JobGraph graph) {\n\t\tList<int> orderedJobs = new List<int>();\n\t\tList<JobNode> nodes = new List<JobNode>(graph.nodes);\n\t\twhile (nodes.Count > 0) {\n\t\t\tJobNode node = nodes[nodes.Count - 1];\n\t\t\tnodes.RemoveAt(nodes.Count - 1);\n\t\t\tbool ContainsCycle = depthFirstTraverse(node, orderedJobs);\n\t\t\tif (ContainsCycle) return new List<int>();\n\t\t}\n\t\treturn orderedJobs;\n\t}\n\n\tpublic static bool depthFirstTraverse(JobNode node, List<int> orderedJobs) {\n\t\tif (node.visited) return false;\n\t\tif (node.visiting) return true;\n\t\tnode.visiting = true;\n\t\tforeach (JobNode prereqNode in node.prereqs) {\n\t\t\tbool ContainsCycle = depthFirstTraverse(prereqNode, orderedJobs);\n\t\t\tif (ContainsCycle) return true;\n\t\t}\n\t\tnode.visited = true;\n\t\tnode.visiting = false;\n\t\torderedJobs.Add(node.job);\n\t\treturn false;\n\t}\n\n\tpublic class JobGraph {\n\t\tpublic List<JobNode> nodes;\n\t\tpublic Dictionary<int, JobNode> graph;\n\n\t\tpublic JobGraph(List<int> jobs) {\n\t\t\tnodes = new List<JobNode>();\n\t\t\tgraph = new Dictionary<int, JobNode>();\n\t\t\tforeach (int job in jobs) {\n\t\t\t\taddNode(job);\n\t\t\t}\n\t\t}\n\n\t\tpublic void addPrereq(int job, int prereq) {\n\t\t\tJobNode jobNode = getNode(job);\n\t\t\tJobNode prereqNode = getNode(prereq);\n\t\t\tjobNode.prereqs.Add(prereqNode);\n\t\t}\n\n\t\tpublic void addNode(int job) {\n\t\t\tgraph.Add(job, new JobNode(job));\n\t\t\tnodes.Add(graph[job]);\n\t\t}\n\n\t\tpublic JobNode getNode(int job) {\n\t\t\tif (!graph.ContainsKey(job)) addNode(job);\n\t\t\treturn graph[job];\n\t\t}\n\t}\n\n\tpublic class JobNode {\n\t\tpublic int job;\n\t\tpublic List<JobNode> prereqs;\n\t\tpublic bool visited;\n\t\tpublic bool visiting;\n\n\t\tpublic JobNode(int job) {\n\t\t\tthis.job = job;\n\t\t\tprereqs = new List<JobNode>();\n\t\t\tvisited = false;\n\t\t\tvisiting = false;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(j + d) time | O(j + d) space\n\tpublic static List<int> TopologicalSort(List<int> jobs, List<int[]> deps) {\n\t\tJobGraph jobGraph = createJobGraph(jobs, deps);\n\t\treturn getOrderedJobs(jobGraph);\n\t}\n\n\tpublic static JobGraph createJobGraph(List<int> jobs, List<int[]> deps) {\n\t\tJobGraph graph = new JobGraph(jobs);\n\t\tforeach (int[] dep in deps) {\n\t\t\tgraph.addDep(dep[0], dep[1]);\n\t\t}\n\t\treturn graph;\n\t}\n\n\tpublic static List<int> getOrderedJobs(JobGraph graph) {\n\t\tList<int> orderedJobs = new List<int>();\n\t\tList<JobNode> nodesWithNoPrereqs = new List<JobNode>();\n\t\tforeach (JobNode node in graph.nodes) {\n\t\t\tif (node.numOfPrereqs == 0) {\n\t\t\t\tnodesWithNoPrereqs.Add(node);\n\t\t\t}\n\t\t}\n\t\twhile (nodesWithNoPrereqs.Count > 0) {\n\t\t\tJobNode node = nodesWithNoPrereqs[nodesWithNoPrereqs.Count - 1];\n\t\t\tnodesWithNoPrereqs.RemoveAt(nodesWithNoPrereqs.Count - 1);\n\t\t\torderedJobs.Add(node.job);\n\t\t\tremoveDeps(node, nodesWithNoPrereqs);\n\t\t}\n\t\tbool graphHasEdges = false;\n\t\tforeach (JobNode node in graph.nodes) {\n\t\t\tif (node.numOfPrereqs > 0) {\n\t\t\t\tgraphHasEdges = true;\n\t\t\t}\n\t\t}\n\t\treturn graphHasEdges ? new List<int>() : orderedJobs;\n\t}\n\n\tpublic static void removeDeps(JobNode node, List<JobNode> nodesWithNoPrereqs) {\n\t\twhile (node.deps.Count > 0) {\n\t\t\tJobNode dep = node.deps[node.deps.Count - 1];\n\t\t\tnode.deps.RemoveAt(node.deps.Count - 1);\n\t\t\tdep.numOfPrereqs--;\n\t\t\tif (dep.numOfPrereqs == 0) nodesWithNoPrereqs.Add(dep);\n\t\t}\n\t}\n\n\tpublic class JobGraph {\n\t\tpublic List<JobNode> nodes;\n\t\tpublic Dictionary<int, JobNode> graph;\n\n\t\tpublic JobGraph(List<int> jobs) {\n\t\t\tnodes = new List<JobNode>();\n\t\t\tgraph = new Dictionary<int, JobNode>();\n\t\t\tforeach (int job in jobs) {\n\t\t\t\taddNode(job);\n\t\t\t}\n\t\t}\n\n\t\tpublic void addDep(int job, int dep) {\n\t\t\tJobNode jobNode = getNode(job);\n\t\t\tJobNode depNode = getNode(dep);\n\t\t\tjobNode.deps.Add(depNode);\n\t\t\tdepNode.numOfPrereqs++;\n\t\t}\n\n\t\tpublic void addNode(int job) {\n\t\t\tgraph.Add(job, new JobNode(job));\n\t\t\tnodes.Add(graph[job]);\n\t\t}\n\n\t\tpublic JobNode getNode(int job) {\n\t\t\tif (!graph.ContainsKey(job)) addNode(job);\n\t\t\treturn graph[job];\n\t\t}\n\t}\n\n\tpublic class JobNode {\n\t\tpublic int job;\n\t\tpublic List<JobNode> deps;\n\t\tpublic int numOfPrereqs;\n\n\t\tpublic JobNode(int job) {\n\t\t\tthis.job = job;\n\t\t\tdeps = new List<JobNode>();\n\t\t\tnumOfPrereqs = 0;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype Dep struct {\n\tPrereq int\n\tJob    int\n}\n\nfunc TopologicalSort(jobs []int, deps []Dep) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tjobs := jobs(8)\n\tdeps := []Dep{{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {1, 6}, {1, 2}, {7, 6}}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tjobs := jobs(8)\n\tdeps := []Dep{{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {6, 7}, {1, 2}, {7, 6}}\n\torder := TopologicalSort(jobs, deps)\n\tif len(order) != 0 {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tjobs := jobs(8)\n\tdeps := []Dep{{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {1, 6}, {1, 2}, {7, 6}, {4, 6}, {6, 2}, {2, 3}}\n\torder := TopologicalSort(jobs, deps)\n\tif len(order) != 0 {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tjobs := jobs(8)\n\tdeps := []Dep{{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 7}, {7, 8}, {8, 1}}\n\torder := TopologicalSort(jobs, deps)\n\tif len(order) != 0 {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tjobs := jobs(9)\n\tdeps := []Dep{{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {7, 6}, {7, 8}, {8, 1}}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tjobs := jobs(8)\n\tdeps := []Dep{{1, 2}, {3, 5}, {4, 6}, {3, 6}, {1, 7}, {7, 8}, {1, 8}, {2, 8}}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tjobs := jobs(8)\n\tdeps := []Dep{\n\t\t{1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7},\n\t\t{2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8}, {7, 8},\n\t}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tjobs := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}\n\tdeps := []Dep{\n\t\t{1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7},\n\t\t{2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8}, {7, 8},\n\t\t{2, 3}, {2, 4}, {5, 4}, {7, 6}, {6, 2}, {6, 3},\n\t\t{6, 5}, {5, 9}, {9, 8}, {8, 0}, {4, 0}, {5, 0},\n\t\t{9, 0}, {2, 0}, {3, 9}, {3, 10}, {10, 11}, {11, 12}, {2, 12},\n\t}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tjobs := jobs(12)\n\tdeps := []Dep{\n\t\t{1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7},\n\t\t{2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8}, {7, 8},\n\t\t{2, 3}, {2, 4}, {5, 4}, {7, 6}, {6, 2}, {6, 3},\n\t\t{6, 5}, {5, 9}, {9, 8}, {8, 0}, {4, 0}, {5, 0},\n\t\t{9, 0}, {2, 0}, {3, 9}, {3, 10}, {10, 11}, {11, 12}, {12, 2},\n\t}\n\torder := TopologicalSort(jobs, deps)\n\tif len(order) != 0 {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tjobs := jobs(4)\n\tdeps := []Dep{{1, 2}, {1, 3}, {3, 2}, {4, 2}, {4, 3}}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tjobs := jobs(5)\n\tdeps := []Dep{}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\tjobs := jobs(5)\n\tdeps := []Dep{{1, 4}, {5, 2}}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc jobs(n int) []int {\n\tout := []int{}\n\tfor i := 1; i <= n; i++ {\n\t\tout = append(out, i)\n\t}\n\treturn out\n}\n\nfunc isValidTopologicalOrder(order []int, jobs []int, deps []Dep) bool {\n\tvisited := map[int]bool{}\n\tfor _, candidate := range order {\n\t\tfor _, dep := range deps {\n\t\t\tif _, found := visited[dep.Job]; found && candidate == dep.Prereq {\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t\tvisited[candidate] = true\n\t}\n\tfor _, job := range jobs {\n\t\tif _, found := visited[job]; !found {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn len(order) == len(jobs)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tjobs := jobs(4)\n\tdeps := []Dep{{1, 2}, {1, 3}, {3, 2}, {4, 2}, {4, 3}}\n\torder := TopologicalSort(jobs, deps)\n\tif !isValidTopologicalOrder(order, jobs, deps) {\n\t\tt.Fail()\n\t}\n}\n\nfunc jobs(n int) []int {\n\tout := []int{}\n\tfor i := 1; i <= n; i++ {\n\t\tout = append(out, i)\n\t}\n\treturn out\n}\n\nfunc isValidTopologicalOrder(order []int, jobs []int, deps []Dep) bool {\n\tvisited := map[int]bool{}\n\tfor _, candidate := range order {\n\t\tfor _, dep := range deps {\n\t\t\tif _, found := visited[dep.Job]; found && candidate == dep.Prereq {\n\t\t\t\treturn false\n\t\t\t}\n\t\t}\n\t\tvisited[candidate] = true\n\t}\n\tfor _, job := range jobs {\n\t\tif _, found := visited[job]; !found {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn len(order) == len(jobs)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype Dep struct {\n\tPrereq int\n\tJob    int\n}\n\n// O(j + d) time | O(j + d) space\nfunc TopologicalSort(jobs []int, deps []Dep) []int {\n\tjobGraph := createJobGraph(jobs, deps)\n\treturn getOrderedJobs(jobGraph)\n}\n\nfunc createJobGraph(jobs []int, deps []Dep) *JobGraph {\n\tgraph := NewJobGraph(jobs)\n\tfor _, dep := range deps {\n\t\tgraph.AddPrereq(dep.Job, dep.Prereq)\n\t}\n\treturn graph\n}\n\nfunc getOrderedJobs(graph *JobGraph) []int {\n\torderedJobs := []int{}\n\tnodes := graph.Nodes\n\tfor len(nodes) != 0 {\n\t\tnode := nodes[len(nodes)-1]\n\t\tnodes = nodes[:len(nodes)-1]\n\t\tcontainsCycle := depthFirstTraverse(node, &orderedJobs)\n\t\tif containsCycle {\n\t\t\treturn []int{}\n\t\t}\n\t}\n\treturn orderedJobs\n}\n\nfunc depthFirstTraverse(node *JobNode, orderedJobs *[]int) bool {\n\tif node.Visited {\n\t\treturn false\n\t} else if node.Visiting {\n\t\treturn true\n\t}\n\tnode.Visiting = true\n\tfor _, prereqNode := range node.Prereqs {\n\t\tcontainsCycle := depthFirstTraverse(prereqNode, orderedJobs)\n\t\tif containsCycle {\n\t\t\treturn true\n\t\t}\n\t}\n\tnode.Visited = true\n\tnode.Visiting = false\n\t*orderedJobs = append(*orderedJobs, node.Job)\n\treturn false\n}\n\ntype JobGraph struct {\n\tNodes []*JobNode\n\tGraph map[int]*JobNode\n}\n\nfunc NewJobGraph(jobs []int) *JobGraph {\n\tg := &JobGraph{\n\t\tGraph: map[int]*JobNode{},\n\t}\n\tfor _, job := range jobs {\n\t\tg.AddNode(job)\n\t}\n\treturn g\n}\n\nfunc (g *JobGraph) AddPrereq(job, prereq int) {\n\tjobNode := g.GetNode(job)\n\tprereqNode := g.GetNode(prereq)\n\tjobNode.Prereqs = append(jobNode.Prereqs, prereqNode)\n}\n\nfunc (g *JobGraph) AddNode(job int) {\n\tg.Graph[job] = &JobNode{Job: job}\n\tg.Nodes = append(g.Nodes, g.Graph[job])\n}\n\nfunc (g *JobGraph) GetNode(job int) *JobNode {\n\tif _, found := g.Graph[job]; !found {\n\t\tg.AddNode(job)\n\t}\n\treturn g.Graph[job]\n}\n\ntype JobNode struct {\n\tJob      int\n\tPrereqs  []*JobNode\n\tVisited  bool\n\tVisiting bool\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype Dep struct {\n\tPrereq int\n\tJob    int\n}\n\n// O(j + d) time | O(j + d) space\nfunc TopologicalSort(jobs []int, deps []Dep) []int {\n\tjobGraph := createJobGraph(jobs, deps)\n\treturn getOrderedJobs(jobGraph)\n}\n\nfunc createJobGraph(jobs []int, deps []Dep) *JobGraph {\n\tgraph := NewJobGraph(jobs)\n\tfor _, dep := range deps {\n\t\tgraph.AddDep(dep.Prereq, dep.Job)\n\t}\n\treturn graph\n}\n\nfunc getOrderedJobs(graph *JobGraph) []int {\n\torderedJobs := []int{}\n\tnodesWithNoPrereqs := []*JobNode{}\n\tfor _, node := range graph.Nodes {\n\t\tif node.NumOfPrereqs == 0 {\n\t\t\tnodesWithNoPrereqs = append(nodesWithNoPrereqs, node)\n\t\t}\n\t}\n\tfor len(nodesWithNoPrereqs) > 0 {\n\t\tnode := nodesWithNoPrereqs[len(nodesWithNoPrereqs)-1]\n\t\tnodesWithNoPrereqs = nodesWithNoPrereqs[:len(nodesWithNoPrereqs)-1]\n\t\torderedJobs = append(orderedJobs, node.Job)\n\t\tremoveDeps(node, &nodesWithNoPrereqs)\n\t}\n\tfor _, node := range graph.Nodes {\n\t\tif node.NumOfPrereqs > 0 {\n\t\t\treturn []int{}\n\t\t}\n\t}\n\treturn orderedJobs\n}\n\nfunc removeDeps(node *JobNode, nodesWithNoPrereqs *[]*JobNode) {\n\tfor len(node.Deps) > 0 {\n\t\tdep := node.Deps[len(node.Deps)-1]\n\t\tnode.Deps = node.Deps[:len(node.Deps)-1]\n\t\tdep.NumOfPrereqs--\n\t\tif dep.NumOfPrereqs == 0 {\n\t\t\t*nodesWithNoPrereqs = append(*nodesWithNoPrereqs, dep)\n\t\t}\n\t}\n}\n\ntype JobGraph struct {\n\tNodes []*JobNode\n\tGraph map[int]*JobNode\n}\n\nfunc NewJobGraph(jobs []int) *JobGraph {\n\tg := &JobGraph{\n\t\tGraph: map[int]*JobNode{},\n\t}\n\tfor _, job := range jobs {\n\t\tg.AddNode(job)\n\t}\n\treturn g\n}\n\nfunc (g *JobGraph) AddDep(job, dep int) {\n\tjobNode, depNode := g.GetNode(job), g.GetNode(dep)\n\tjobNode.Deps = append(jobNode.Deps, depNode)\n\tdepNode.NumOfPrereqs++\n}\n\nfunc (g *JobGraph) AddNode(job int) {\n\tg.Graph[job] = &JobNode{Job: job}\n\tg.Nodes = append(g.Nodes, g.Graph[job])\n}\n\nfunc (g *JobGraph) GetNode(job int) *JobNode {\n\tif _, found := g.Graph[job]; !found {\n\t\tg.AddNode(job)\n\t}\n\treturn g.Graph[job]\n}\n\ntype JobNode struct {\n\tJob          int\n\tDeps         []*JobNode\n\tNumOfPrereqs int\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<Integer> topologicalSort(List<Integer> jobs, List<Integer[]> deps) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));\n    Integer[][] depsArray =\n        new Integer[][] {{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {1, 6}, {1, 2}, {7, 6}};\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  @Test\n  public void TestCase2() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));\n    Integer[][] depsArray =\n        new Integer[][] {{3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {6, 7}, {1, 2}, {7, 6}};\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(order.isEmpty());\n  }\n\n  @Test\n  public void TestCase3() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));\n    Integer[][] depsArray =\n        new Integer[][] {\n          {3, 1}, {8, 1}, {8, 7}, {5, 7}, {5, 2}, {1, 4}, {1, 6}, {1, 2}, {7, 6}, {4, 6}, {6, 2},\n          {2, 3}\n        };\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(order.isEmpty());\n  }\n\n  @Test\n  public void TestCase4() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));\n    Integer[][] depsArray =\n        new Integer[][] {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 7}, {7, 8}, {8, 1}};\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(order.isEmpty());\n  }\n\n  @Test\n  public void TestCase5() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));\n    Integer[][] depsArray =\n        new Integer[][] {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {7, 6}, {7, 8}, {8, 1}};\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  @Test\n  public void TestCase6() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));\n    Integer[][] depsArray =\n        new Integer[][] {{1, 2}, {3, 5}, {4, 6}, {3, 6}, {1, 7}, {7, 8}, {1, 8}, {2, 8}};\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  @Test\n  public void TestCase7() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));\n    Integer[][] depsArray =\n        new Integer[][] {\n          {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7},\n          {2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8}, {7, 8},\n        };\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  @Test\n  public void TestCase8() {\n    List<Integer> jobs =\n        new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));\n    Integer[][] depsArray =\n        new Integer[][] {\n          {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8},\n          {7, 8}, {2, 3}, {2, 4}, {5, 4}, {7, 6}, {6, 2}, {6, 3}, {6, 5}, {5, 9}, {9, 8}, {8, 0},\n          {4, 0}, {5, 0}, {9, 0}, {2, 0}, {3, 9}, {3, 10}, {10, 11}, {11, 12}, {2, 12},\n        };\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  @Test\n  public void TestCase9() {\n    List<Integer> jobs =\n        new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));\n    Integer[][] depsArray =\n        new Integer[][] {\n          {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {2, 8}, {3, 8}, {4, 8}, {5, 8}, {6, 8},\n          {7, 8}, {2, 3}, {2, 4}, {5, 4}, {7, 6}, {6, 2}, {6, 3}, {6, 5}, {5, 9}, {9, 8}, {8, 0},\n          {4, 0}, {5, 0}, {9, 0}, {2, 0}, {3, 9}, {3, 10}, {10, 11}, {11, 12}, {12, 2},\n        };\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(order.isEmpty());\n  }\n\n  @Test\n  public void TestCase10() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));\n    Integer[][] depsArray = new Integer[][] {{1, 2}, {1, 3}, {3, 2}, {4, 2}, {4, 3}};\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  @Test\n  public void TestCase11() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  @Test\n  public void TestCase12() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));\n    Integer[][] depsArray = new Integer[][] {{1, 4}, {5, 2}};\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  void fillDeps(Integer[][] depsArray, List<Integer[]> deps) {\n    for (Integer[] depArray : depsArray) {\n      deps.add(depArray);\n    }\n  }\n\n  boolean isValidTopologicalOrder(List<Integer> order, List<Integer> jobs, List<Integer[]> deps) {\n    Map<Integer, Boolean> visited = new HashMap<Integer, Boolean>();\n    for (Integer candidate : order) {\n      for (Integer[] dep : deps) {\n        if (candidate == dep[0] && visited.containsKey(dep[1])) return false;\n      }\n      visited.put(candidate, true);\n    }\n    for (Integer job : jobs) {\n      if (!visited.containsKey(job)) return false;\n    }\n    return order.size() == jobs.size();\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Integer> jobs = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));\n    Integer[][] depsArray = new Integer[][] {{1, 2}, {1, 3}, {3, 2}, {4, 2}, {4, 3}};\n    List<Integer[]> deps = new ArrayList<Integer[]>();\n    fillDeps(depsArray, deps);\n    List<Integer> order = Program.topologicalSort(jobs, deps);\n    Utils.assertTrue(isValidTopologicalOrder(order, jobs, deps) == true);\n  }\n\n  void fillDeps(Integer[][] depsArray, List<Integer[]> deps) {\n    for (Integer[] depArray : depsArray) {\n      deps.add(depArray);\n    }\n  }\n\n  boolean isValidTopologicalOrder(List<Integer> order, List<Integer> jobs, List<Integer[]> deps) {\n    Map<Integer, Boolean> visited = new HashMap<Integer, Boolean>();\n    for (Integer candidate : order) {\n      for (Integer[] dep : deps) {\n        if (candidate == dep[0] && visited.containsKey(dep[1])) return false;\n      }\n      visited.put(candidate, true);\n    }\n    for (Integer job : jobs) {\n      if (!visited.containsKey(job)) return false;\n    }\n    return order.size() == jobs.size();\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(j + d) time | O(j + d) space\n  public static List<Integer> topologicalSort(List<Integer> jobs, List<Integer[]> deps) {\n    JobGraph jobGraph = createJobGraph(jobs, deps);\n    return getOrderedJobs(jobGraph);\n  }\n\n  public static JobGraph createJobGraph(List<Integer> jobs, List<Integer[]> deps) {\n    JobGraph graph = new JobGraph(jobs);\n    for (Integer[] dep : deps) {\n      graph.addPrereq(dep[1], dep[0]);\n    }\n    return graph;\n  }\n\n  public static List<Integer> getOrderedJobs(JobGraph graph) {\n    List<Integer> orderedJobs = new ArrayList<Integer>();\n    List<JobNode> nodes = new ArrayList<JobNode>(graph.nodes);\n    while (nodes.size() > 0) {\n      JobNode node = nodes.get(nodes.size() - 1);\n      nodes.remove(nodes.size() - 1);\n      boolean containsCycle = depthFirstTraverse(node, orderedJobs);\n      if (containsCycle) return new ArrayList<Integer>();\n    }\n    return orderedJobs;\n  }\n\n  public static boolean depthFirstTraverse(JobNode node, List<Integer> orderedJobs) {\n    if (node.visited) return false;\n    if (node.visiting) return true;\n    node.visiting = true;\n    for (JobNode prereqNode : node.prereqs) {\n      boolean containsCycle = depthFirstTraverse(prereqNode, orderedJobs);\n      if (containsCycle) return true;\n    }\n    node.visited = true;\n    node.visiting = false;\n    orderedJobs.add(node.job);\n    return false;\n  }\n\n  static class JobGraph {\n    public List<JobNode> nodes;\n    public Map<Integer, JobNode> graph;\n\n    public JobGraph(List<Integer> jobs) {\n      nodes = new ArrayList<JobNode>();\n      graph = new HashMap<Integer, JobNode>();\n      for (Integer job : jobs) {\n        addNode(job);\n      }\n    }\n\n    public void addPrereq(Integer job, Integer prereq) {\n      JobNode jobNode = getNode(job);\n      JobNode prereqNode = getNode(prereq);\n      jobNode.prereqs.add(prereqNode);\n    }\n\n    public void addNode(Integer job) {\n      graph.put(job, new JobNode(job));\n      nodes.add(graph.get(job));\n    }\n\n    public JobNode getNode(Integer job) {\n      if (!graph.containsKey(job)) addNode(job);\n      return graph.get(job);\n    }\n  }\n\n  static class JobNode {\n    public Integer job;\n    public List<JobNode> prereqs;\n    public boolean visited;\n    public boolean visiting;\n\n    public JobNode(Integer job) {\n      this.job = job;\n      prereqs = new ArrayList<JobNode>();\n      visited = false;\n      visiting = false;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(j + d) time | O(j + d) space\n  public static List<Integer> topologicalSort(List<Integer> jobs, List<Integer[]> deps) {\n    JobGraph jobGraph = createJobGraph(jobs, deps);\n    return getOrderedJobs(jobGraph);\n  }\n\n  public static JobGraph createJobGraph(List<Integer> jobs, List<Integer[]> deps) {\n    JobGraph graph = new JobGraph(jobs);\n    for (Integer[] dep : deps) {\n      graph.addDep(dep[0], dep[1]);\n    }\n    return graph;\n  }\n\n  public static List<Integer> getOrderedJobs(JobGraph graph) {\n    List<Integer> orderedJobs = new ArrayList<Integer>();\n    List<JobNode> nodesWithNoPrereqs = new ArrayList<JobNode>();\n    for (JobNode node : graph.nodes) {\n      if (node.numOfPrereqs == 0) {\n        nodesWithNoPrereqs.add(node);\n      }\n    }\n    while (nodesWithNoPrereqs.size() > 0) {\n      JobNode node = nodesWithNoPrereqs.get(nodesWithNoPrereqs.size() - 1);\n      nodesWithNoPrereqs.remove(nodesWithNoPrereqs.size() - 1);\n      orderedJobs.add(node.job);\n      removeDeps(node, nodesWithNoPrereqs);\n    }\n    boolean graphHasEdges = false;\n    for (JobNode node : graph.nodes) {\n      if (node.numOfPrereqs > 0) {\n        graphHasEdges = true;\n      }\n    }\n    return graphHasEdges ? new ArrayList<Integer>() : orderedJobs;\n  }\n\n  public static void removeDeps(JobNode node, List<JobNode> nodesWithNoPrereqs) {\n    while (node.deps.size() > 0) {\n      JobNode dep = node.deps.get(node.deps.size() - 1);\n      node.deps.remove(node.deps.size() - 1);\n      dep.numOfPrereqs--;\n      if (dep.numOfPrereqs == 0) nodesWithNoPrereqs.add(dep);\n    }\n  }\n\n  static class JobGraph {\n    public List<JobNode> nodes;\n    public Map<Integer, JobNode> graph;\n\n    public JobGraph(List<Integer> jobs) {\n      nodes = new ArrayList<JobNode>();\n      graph = new HashMap<Integer, JobNode>();\n      for (Integer job : jobs) {\n        addNode(job);\n      }\n    }\n\n    public void addDep(Integer job, Integer dep) {\n      JobNode jobNode = getNode(job);\n      JobNode depNode = getNode(dep);\n      jobNode.deps.add(depNode);\n      depNode.numOfPrereqs++;\n    }\n\n    public void addNode(Integer job) {\n      graph.put(job, new JobNode(job));\n      nodes.add(graph.get(job));\n    }\n\n    public JobNode getNode(Integer job) {\n      if (!graph.containsKey(job)) addNode(job);\n      return graph.get(job);\n    }\n  }\n\n  static class JobNode {\n    public Integer job;\n    public List<JobNode> deps;\n    public Integer numOfPrereqs;\n\n    public JobNode(Integer job) {\n      this.job = job;\n      deps = new ArrayList<JobNode>();\n      numOfPrereqs = 0;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function topologicalSort(jobs, deps) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.topologicalSort = topologicalSort;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const jobs = [1, 2, 3, 4, 5, 6, 7, 8];\n  const deps = [\n    [3, 1],\n    [8, 1],\n    [8, 7],\n    [5, 7],\n    [5, 2],\n    [1, 4],\n    [1, 6],\n    [1, 2],\n    [7, 6],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nit('Test Case #2', function () {\n  const jobs = [1, 2, 3, 4, 5, 6, 7, 8];\n  const deps = [\n    [3, 1],\n    [8, 1],\n    [8, 7],\n    [5, 7],\n    [5, 2],\n    [1, 4],\n    [6, 7],\n    [1, 2],\n    [7, 6],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(order).to.deep.equal([]);\n});\n\nit('Test Case #3', function () {\n  const jobs = [1, 2, 3, 4, 5, 6, 7, 8];\n  const deps = [\n    [3, 1],\n    [8, 1],\n    [8, 7],\n    [5, 7],\n    [5, 2],\n    [1, 4],\n    [1, 6],\n    [1, 2],\n    [7, 6],\n    [4, 6],\n    [6, 2],\n    [2, 3],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(order).to.deep.equal([]);\n});\n\nit('Test Case #4', function () {\n  const jobs = [1, 2, 3, 4, 5, 6, 7, 8];\n  const deps = [\n    [1, 2],\n    [2, 3],\n    [3, 4],\n    [4, 5],\n    [5, 6],\n    [6, 7],\n    [7, 8],\n    [8, 1],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(order).to.deep.equal([]);\n});\n\nit('Test Case #5', function () {\n  const jobs = [1, 2, 3, 4, 5, 6, 7, 8, 9];\n  const deps = [\n    [1, 2],\n    [2, 3],\n    [3, 4],\n    [4, 5],\n    [5, 6],\n    [7, 6],\n    [7, 8],\n    [8, 1],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nit('Test Case #6', function () {\n  const jobs = [1, 2, 3, 4, 5, 6, 7, 8];\n  const deps = [\n    [1, 2],\n    [3, 5],\n    [4, 6],\n    [3, 6],\n    [1, 7],\n    [7, 8],\n    [1, 8],\n    [2, 8],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nit('Test Case #7', function () {\n  const jobs = [1, 2, 3, 4, 5, 6, 7, 8];\n  const deps = [\n    [1, 2],\n    [1, 3],\n    [1, 4],\n    [1, 5],\n    [1, 6],\n    [1, 7],\n    [2, 8],\n    [3, 8],\n    [4, 8],\n    [5, 8],\n    [6, 8],\n    [7, 8],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nit('Test Case #8', function () {\n  const jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];\n  const deps = [\n    [1, 2],\n    [1, 3],\n    [1, 4],\n    [1, 5],\n    [1, 6],\n    [1, 7],\n    [2, 8],\n    [3, 8],\n    [4, 8],\n    [5, 8],\n    [6, 8],\n    [7, 8],\n    [2, 3],\n    [2, 4],\n    [5, 4],\n    [7, 6],\n    [6, 2],\n    [6, 3],\n    [6, 5],\n    [5, 9],\n    [9, 8],\n    [8, 0],\n    [4, 0],\n    [5, 0],\n    [9, 0],\n    [2, 0],\n    [3, 9],\n    [3, 10],\n    [10, 11],\n    [11, 12],\n    [2, 12],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nit('Test Case #9', function () {\n  const jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];\n  const deps = [\n    [1, 2],\n    [1, 3],\n    [1, 4],\n    [1, 5],\n    [1, 6],\n    [1, 7],\n    [2, 8],\n    [3, 8],\n    [4, 8],\n    [5, 8],\n    [6, 8],\n    [7, 8],\n    [2, 3],\n    [2, 4],\n    [5, 4],\n    [7, 6],\n    [6, 2],\n    [6, 3],\n    [6, 5],\n    [5, 9],\n    [9, 8],\n    [8, 0],\n    [4, 0],\n    [5, 0],\n    [9, 0],\n    [2, 0],\n    [3, 9],\n    [3, 10],\n    [10, 11],\n    [11, 12],\n    [12, 2],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(order).to.deep.equal([]);\n});\n\nit('Test Case #10', function () {\n  const jobs = [1, 2, 3, 4];\n  const deps = [\n    [1, 2],\n    [1, 3],\n    [3, 2],\n    [4, 2],\n    [4, 3],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nit('Test Case #11', function () {\n  const jobs = [1, 2, 3, 4, 5];\n  const deps = [];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nit('Test Case #12', function () {\n  const jobs = [1, 2, 3, 4, 5];\n  const deps = [\n    [1, 4],\n    [5, 2],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nfunction isValidTopologicalOrder(order, jobs, deps) {\n  const visited = {};\n  for (const candidate of order) {\n    for (const [prereq, job] of deps) {\n      if (candidate === prereq && job in visited) return false;\n    }\n    visited[candidate] = true;\n  }\n  for (const job of jobs) {\n    if (!(job in visited)) return false;\n  }\n  return order.length === jobs.length;\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const jobs = [1, 2, 3, 4];\n  const deps = [\n    [1, 2],\n    [1, 3],\n    [3, 2],\n    [4, 2],\n    [4, 3],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nfunction isValidTopologicalOrder(order, jobs, deps) {\n  const visited = {};\n  for (const candidate of order) {\n    for (const [prereq, job] of deps) {\n      if (candidate === prereq && job in visited) return false;\n    }\n    visited[candidate] = true;\n  }\n  for (const job of jobs) {\n    if (!(job in visited)) return false;\n  }\n  return order.length === jobs.length;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(j + d) time | O(j + d) space\nfunction topologicalSort(jobs, deps) {\n  const jobGraph = createJobGraph(jobs, deps);\n  return getOrderedJobs(jobGraph);\n}\n\nfunction createJobGraph(jobs, deps) {\n  const graph = new JobGraph(jobs);\n  for (const [prereq, job] of deps) {\n    graph.addPrereq(job, prereq);\n  }\n  return graph;\n}\n\nfunction getOrderedJobs(graph) {\n  const orderedJobs = [];\n  const {nodes} = graph;\n  while (nodes.length) {\n    const node = nodes.pop();\n    const containsCycle = depthFirstTraverse(node, orderedJobs);\n    if (containsCycle) return [];\n  }\n  return orderedJobs;\n}\n\nfunction depthFirstTraverse(node, orderedJobs) {\n  if (node.visited) return false;\n  if (node.visiting) return true;\n  node.visiting = true;\n  for (const prereqNode of node.prereqs) {\n    const containsCycle = depthFirstTraverse(prereqNode, orderedJobs);\n    if (containsCycle) return true;\n  }\n  node.visited = true;\n  node.visiting = false;\n  orderedJobs.push(node.job);\n  return false;\n}\n\nclass JobGraph {\n  constructor(jobs) {\n    this.nodes = [];\n    this.graph = {};\n    for (const job of jobs) {\n      this.addNode(job);\n    }\n  }\n\n  addPrereq(job, prereq) {\n    const jobNode = this.getNode(job);\n    const prereqNode = this.getNode(prereq);\n    jobNode.prereqs.push(prereqNode);\n  }\n\n  addNode(job) {\n    this.graph[job] = new JobNode(job);\n    this.nodes.push(this.graph[job]);\n  }\n\n  getNode(job) {\n    if (!(job in this.graph)) this.addNode(job);\n    return this.graph[job];\n  }\n}\n\nclass JobNode {\n  constructor(job) {\n    this.job = job;\n    this.prereqs = [];\n    this.visited = false;\n    this.visiting = false;\n  }\n}\n\nexports.topologicalSort = topologicalSort;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(j + d) time | O(j + d) space\nfunction topologicalSort(jobs, deps) {\n  const jobGraph = createJobGraph(jobs, deps);\n  return getOrderedJobs(jobGraph);\n}\n\nfunction createJobGraph(jobs, deps) {\n  const graph = new JobGraph(jobs);\n  for (const [job, dep] of deps) {\n    graph.addDep(job, dep);\n  }\n  return graph;\n}\n\nfunction getOrderedJobs(graph) {\n  const orderedJobs = [];\n  const nodesWithNoPrereqs = graph.nodes.filter(node => !node.numOfPrereqs);\n  while (nodesWithNoPrereqs.length) {\n    const node = nodesWithNoPrereqs.pop();\n    orderedJobs.push(node.job);\n    removeDeps(node, nodesWithNoPrereqs);\n  }\n  const graphHasEdges = graph.nodes.some(node => node.numOfPrereqs);\n  return graphHasEdges ? [] : orderedJobs;\n}\n\nfunction removeDeps(node, nodesWithNoPrereqs) {\n  while (node.deps.length) {\n    const dep = node.deps.pop();\n    dep.numOfPrereqs--;\n    if (!dep.numOfPrereqs) nodesWithNoPrereqs.push(dep);\n  }\n}\n\nclass JobGraph {\n  constructor(jobs) {\n    this.nodes = [];\n    this.graph = {};\n    for (const job of jobs) {\n      this.addNode(job);\n    }\n  }\n\n  addDep(job, dep) {\n    const jobNode = this.getNode(job);\n    const depNode = this.getNode(dep);\n    jobNode.deps.push(depNode);\n    depNode.numOfPrereqs++;\n  }\n\n  addNode(job) {\n    this.graph[job] = new JobNode(job);\n    this.nodes.push(this.graph[job]);\n  }\n\n  getNode(job) {\n    if (!(job in this.graph)) this.addNode(job);\n    return this.graph[job];\n  }\n}\n\nclass JobNode {\n  constructor(job) {\n    this.job = job;\n    this.deps = [];\n    this.numOfPrereqs = 0;\n  }\n}\n\nexports.topologicalSort = topologicalSort;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def topologicalSort(jobs, deps):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n        deps = [[3, 1], [8, 1], [8, 7], [5, 7], [5, 2], [1, 4], [1, 6], [1, 2], [7, 6]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n    def test_case_2(self):\n        jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n        deps = [[3, 1], [8, 1], [8, 7], [5, 7], [5, 2], [1, 4], [6, 7], [1, 2], [7, 6]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(order, [])\n\n    def test_case_3(self):\n        jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n        deps = [[3, 1], [8, 1], [8, 7], [5, 7], [5, 2], [1, 4], [1, 6], [1, 2], [7, 6], [4, 6], [6, 2], [2, 3]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(order, [])\n\n    def test_case_4(self):\n        jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n        deps = [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 1]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(order, [])\n\n    def test_case_5(self):\n        jobs = [1, 2, 3, 4, 5, 6, 7, 8, 9]\n        deps = [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [7, 6], [7, 8], [8, 1]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n    def test_case_6(self):\n        jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n        deps = [[1, 2], [3, 5], [4, 6], [3, 6], [1, 7], [7, 8], [1, 8], [2, 8]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n    def test_case_7(self):\n        jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n        deps = [[1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [2, 8], [3, 8], [4, 8], [5, 8], [6, 8], [7, 8]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n    def test_case_8(self):\n        jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]\n        deps = [\n            [1, 2],\n            [1, 3],\n            [1, 4],\n            [1, 5],\n            [1, 6],\n            [1, 7],\n            [2, 8],\n            [3, 8],\n            [4, 8],\n            [5, 8],\n            [6, 8],\n            [7, 8],\n            [2, 3],\n            [2, 4],\n            [5, 4],\n            [7, 6],\n            [6, 2],\n            [6, 3],\n            [6, 5],\n            [5, 9],\n            [9, 8],\n            [8, 0],\n            [4, 0],\n            [5, 0],\n            [9, 0],\n            [2, 0],\n            [3, 9],\n            [3, 10],\n            [10, 11],\n            [11, 12],\n            [2, 12],\n        ]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n    def test_case_9(self):\n        jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]\n        deps = [\n            [1, 2],\n            [1, 3],\n            [1, 4],\n            [1, 5],\n            [1, 6],\n            [1, 7],\n            [2, 8],\n            [3, 8],\n            [4, 8],\n            [5, 8],\n            [6, 8],\n            [7, 8],\n            [2, 3],\n            [2, 4],\n            [5, 4],\n            [7, 6],\n            [6, 2],\n            [6, 3],\n            [6, 5],\n            [5, 9],\n            [9, 8],\n            [8, 0],\n            [4, 0],\n            [5, 0],\n            [9, 0],\n            [2, 0],\n            [3, 9],\n            [3, 10],\n            [10, 11],\n            [11, 12],\n            [12, 2],\n        ]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(order, [])\n\n    def test_case_10(self):\n        jobs = [1, 2, 3, 4]\n        deps = [[1, 2], [1, 3], [3, 2], [4, 2], [4, 3]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n    def test_case_11(self):\n        jobs = [1, 2, 3, 4, 5]\n        deps = []\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n    def test_case_12(self):\n        jobs = [1, 2, 3, 4, 5]\n        deps = [[1, 4], [5, 2]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n\ndef isValidTopologicalOrder(order, jobs, deps):\n    visited = {}\n    for candidate in order:\n        for prereq, job in deps:\n            if candidate == prereq and job in visited:\n                return False\n        visited[candidate] = True\n    for job in jobs:\n        if job not in visited:\n            return False\n    return len(order) == len(jobs)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        jobs = [1, 2, 3, 4]\n        deps = [[1, 2], [1, 3], [3, 2], [4, 2], [4, 3]]\n        order = program.topologicalSort(jobs, deps)\n        self.assertEqual(isValidTopologicalOrder(order, jobs, deps), True)\n\n\ndef isValidTopologicalOrder(order, jobs, deps):\n    visited = {}\n    for candidate in order:\n        for prereq, job in deps:\n            if candidate == prereq and job in visited:\n                return False\n        visited[candidate] = True\n    for job in jobs:\n        if job not in visited:\n            return False\n    return len(order) == len(jobs)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(j + d) time | O(j + d) space\ndef topologicalSort(jobs, deps):\n    jobGraph = createJobGraph(jobs, deps)\n    return getOrderedJobs(jobGraph)\n\n\ndef createJobGraph(jobs, deps):\n    graph = JobGraph(jobs)\n    for prereq, job in deps:\n        graph.addPrereq(job, prereq)\n    return graph\n\n\ndef getOrderedJobs(graph):\n    orderedJobs = []\n    nodes = graph.nodes\n    while len(nodes):\n        node = nodes.pop()\n        containsCycle = depthFirstTraverse(node, orderedJobs)\n        if containsCycle:\n            return []\n    return orderedJobs\n\n\ndef depthFirstTraverse(node, orderedJobs):\n    if node.visited:\n        return False\n    if node.visiting:\n        return True\n    node.visiting = True\n    for prereqNode in node.prereqs:\n        containsCycle = depthFirstTraverse(prereqNode, orderedJobs)\n        if containsCycle:\n            return True\n    node.visited = True\n    node.visiting = False\n    orderedJobs.append(node.job)\n    return False\n\n\nclass JobGraph:\n    def __init__(self, jobs):\n        self.nodes = []\n        self.graph = {}\n        for job in jobs:\n            self.addNode(job)\n\n    def addPrereq(self, job, prereq):\n        jobNode = self.getNode(job)\n        prereqNode = self.getNode(prereq)\n        jobNode.prereqs.append(prereqNode)\n\n    def addNode(self, job):\n        self.graph[job] = JobNode(job)\n        self.nodes.append(self.graph[job])\n\n    def getNode(self, job):\n        if job not in self.graph:\n            self.addNode(job)\n        return self.graph[job]\n\n\nclass JobNode:\n    def __init__(self, job):\n        self.job = job\n        self.prereqs = []\n        self.visited = False\n        self.visiting = False\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(j + d) time | O(j + d) space\ndef topologicalSort(jobs, deps):\n    jobGraph = createJobGraph(jobs, deps)\n    return getOrderedJobs(jobGraph)\n\n\ndef createJobGraph(jobs, deps):\n    graph = JobGraph(jobs)\n    for job, dep in deps:\n        graph.addDep(job, dep)\n    return graph\n\n\ndef getOrderedJobs(graph):\n    orderedJobs = []\n    nodesWithNoPrereqs = list(filter(lambda node: node.numOfPrereqs == 0, graph.nodes))\n    while len(nodesWithNoPrereqs):\n        node = nodesWithNoPrereqs.pop()\n        orderedJobs.append(node.job)\n        removeDeps(node, nodesWithNoPrereqs)\n    graphHasEdges = any(node.numOfPrereqs for node in graph.nodes)\n    return [] if graphHasEdges else orderedJobs\n\n\ndef removeDeps(node, nodesWithNoPrereqs):\n    while len(node.deps):\n        dep = node.deps.pop()\n        dep.numOfPrereqs -= 1\n        if dep.numOfPrereqs == 0:\n            nodesWithNoPrereqs.append(dep)\n\n\nclass JobGraph:\n    def __init__(self, jobs):\n        self.nodes = []\n        self.graph = {}\n        for job in jobs:\n            self.addNode(job)\n\n    def addDep(self, job, dep):\n        jobNode = self.getNode(job)\n        depNode = self.getNode(dep)\n        jobNode.deps.append(depNode)\n        depNode.numOfPrereqs += 1\n\n    def addNode(self, job):\n        self.graph[job] = JobNode(job)\n        self.nodes.append(self.graph[job])\n\n    def getNode(self, job):\n        if job not in self.graph:\n            self.addNode(job)\n        return self.graph[job]\n\n\nclass JobNode:\n    def __init__(self, job):\n        self.job = job\n        self.deps = []\n        self.numOfPrereqs = 0\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func topologicalSort(jobs: [Int], dependencies: [[Int]]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n      var dependencies = [[3, 1], [8, 1], [8, 7], [5, 7], [5, 2], [1, 4], [1, 6], [1, 2], [7, 6]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n      var dependencies = [[3, 1], [8, 1], [8, 7], [5, 7], [5, 2], [1, 4], [6, 7], [1, 2], [7, 6]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      try assertEqual([], order)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n      var dependencies = [[3, 1], [8, 1], [8, 7], [5, 7], [5, 2], [1, 4], [1, 6], [1, 2], [7, 6], [4, 6], [6, 2], [2, 3]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      try assertEqual([], order)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n      var dependencies = [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 1]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      try assertEqual([], order)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5, 6, 7, 8, 9]\n      var dependencies = [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [7, 6], [7, 8], [8, 1]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n      var dependencies = [[1, 2], [3, 5], [4, 6], [3, 6], [1, 7], [7, 8], [1, 8], [2, 8]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5, 6, 7, 8]\n      var dependencies = [\n        [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7],\n        [2, 8], [3, 8], [4, 8], [5, 8], [6, 8], [7, 8],\n      ]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]\n      var dependencies = [\n        [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7],\n        [2, 8], [3, 8], [4, 8], [5, 8], [6, 8], [7, 8],\n        [2, 3], [2, 4], [5, 4], [7, 6], [6, 2], [6, 3],\n        [6, 5], [5, 9], [9, 8], [8, 0], [4, 0], [5, 0],\n        [9, 0], [2, 0], [3, 9], [3, 10], [10, 11], [11, 12], [2, 12],\n      ]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      var jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]\n      var dependencies = [\n        [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7],\n        [2, 8], [3, 8], [4, 8], [5, 8], [6, 8], [7, 8],\n        [2, 3], [2, 4], [5, 4], [7, 6], [6, 2], [6, 3],\n        [6, 5], [5, 9], [9, 8], [8, 0], [4, 0], [5, 0],\n        [9, 0], [2, 0], [3, 9], [3, 10], [10, 11], [11, 12], [12, 2],\n      ]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      try assertEqual([], order)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4]\n      var dependencies = [[1, 2], [1, 3], [3, 2], [4, 2], [4, 3]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5]\n      var dependencies = [[Int]]()\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4, 5]\n      var dependencies = [[1, 4], [5, 2]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n  }\n\n  func isValidTopologicalOrder(order: [Int], jobs: [Int], dependencies: [[Int]]) -> Bool {\n    var visited = [Int: Bool]()\n\n    for candidate in order {\n      for dependency in dependencies {\n        let job = dependency[1]\n        let prerequisite = dependency[0]\n\n        if candidate == prerequisite, visited.keys.contains(job) {\n          return false\n        }\n      }\n\n      visited[candidate] = true\n    }\n\n    for job in jobs {\n      if !visited.keys.contains(job) {\n        return false\n      }\n    }\n\n    return order.count == jobs.count\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var jobs = [1, 2, 3, 4]\n      var dependencies = [[1, 2], [1, 3], [3, 2], [4, 2], [4, 3]]\n      var order = program.topologicalSort(jobs: jobs, dependencies: dependencies)\n      var isValid = isValidTopologicalOrder(order: order, jobs: jobs, dependencies: dependencies)\n      try assert(isValid)\n    }\n  }\n\n  func isValidTopologicalOrder(order: [Int], jobs: [Int], dependencies: [[Int]]) -> Bool {\n    var visited = [Int: Bool]()\n\n    for candidate in order {\n      for dependency in dependencies {\n        let job = dependency[1]\n        let prerequisite = dependency[0]\n\n        if candidate == prerequisite, visited.keys.contains(job) {\n          return false\n        }\n      }\n\n      visited[candidate] = true\n    }\n\n    for job in jobs {\n      if !visited.keys.contains(job) {\n        return false\n      }\n    }\n\n    return order.count == jobs.count\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class JobNode {\n    let job: Int\n    var prerequisites: [JobNode]\n    var visited: Bool\n    var visiting: Bool\n\n    init(job: Int) {\n      self.job = job\n      prerequisites = [JobNode]()\n      visited = false\n      visiting = false\n    }\n  }\n\n  class JobGraph {\n    var nodes: [JobNode]\n    var graph: [Int: JobNode]\n\n    init(jobs: [Int]) {\n      nodes = [JobNode]()\n      graph = [Int: JobNode]()\n      for job in jobs {\n        addNode(job: job)\n      }\n    }\n\n    func addNode(job: Int) {\n      let jobNode = JobNode(job: job)\n\n      nodes.append(jobNode)\n      graph[job] = jobNode\n    }\n\n    func addPrerequisiteToJob(job: Int, prerequisite: Int) {\n      let jobNode = getNode(job: job)\n      let prerequisiteNode = getNode(job: prerequisite)\n      jobNode.prerequisites.append(prerequisiteNode)\n    }\n\n    func getNode(job: Int) -> JobNode {\n      if let node = graph[job] {\n        return node\n      } else {\n        graph[job] = JobNode(job: job)\n        return graph[job]!\n      }\n    }\n  }\n\n  // O(j + d) time | O(j + d) space\n  func topologicalSort(jobs: [Int], dependencies: [[Int]]) -> [Int] {\n    let jobGraph = createJobGraph(jobs: jobs, dependencies: dependencies)\n    return getOrderedJobs(jobGraph: jobGraph)\n  }\n\n  func createJobGraph(jobs: [Int], dependencies: [[Int]]) -> JobGraph {\n    let jobGraph = JobGraph(jobs: jobs)\n\n    for dependency in dependencies {\n      let job = dependency[1]\n      let prerequisite = dependency[0]\n      jobGraph.addPrerequisiteToJob(job: job, prerequisite: prerequisite)\n    }\n\n    return jobGraph\n  }\n\n  func getOrderedJobs(jobGraph: JobGraph) -> [Int] {\n    var orderedJobs = [Int]()\n    var jobNodes = jobGraph.nodes\n\n    while jobNodes.count > 0 {\n      if let jobNode = jobNodes.popLast() {\n        let containsCycle = depthFirstTraverse(jobNode: jobNode, orderedJobs: &orderedJobs)\n        if containsCycle {\n          return []\n        }\n      }\n    }\n\n    return orderedJobs\n  }\n\n  func depthFirstTraverse(jobNode: JobNode, orderedJobs: inout [Int]) -> Bool {\n    if jobNode.visited {\n      return false\n    }\n\n    if jobNode.visiting {\n      return true\n    }\n\n    jobNode.visiting = true\n\n    for prerequisite in jobNode.prerequisites {\n      let containsCycle = depthFirstTraverse(jobNode: prerequisite, orderedJobs: &orderedJobs)\n\n      if containsCycle {\n        return true\n      }\n    }\n\n    jobNode.visited = true\n    jobNode.visiting = false\n\n    orderedJobs.append(jobNode.job)\n\n    return false\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class JobNode {\n    let job: Int\n    var dependencies: [JobNode]\n    var numberOfPrerequisites: Int\n\n    init(job: Int) {\n      self.job = job\n      dependencies = [JobNode]()\n      numberOfPrerequisites = 0\n    }\n  }\n\n  class JobGraph {\n    var nodes: [JobNode]\n    var graph: [Int: JobNode]\n\n    init(jobs: [Int]) {\n      nodes = [JobNode]()\n      graph = [Int: JobNode]()\n      for job in jobs {\n        addNode(job: job)\n      }\n    }\n\n    func addNode(job: Int) {\n      let jobNode = JobNode(job: job)\n\n      nodes.append(jobNode)\n      graph[job] = jobNode\n    }\n\n    func addDependencyToJob(job: Int, dependency: Int) {\n      let jobNode = getNode(job: job)\n      let dependencyNode = getNode(job: dependency)\n      jobNode.dependencies.append(dependencyNode)\n      dependencyNode.numberOfPrerequisites += 1\n    }\n\n    func getNode(job: Int) -> JobNode {\n      if let node = graph[job] {\n        return node\n      } else {\n        graph[job] = JobNode(job: job)\n        return graph[job]!\n      }\n    }\n  }\n\n  // O(j + d) time | O(j + d) space\n  func topologicalSort(jobs: [Int], dependencies: [[Int]]) -> [Int] {\n    let jobGraph = createJobGraph(jobs: jobs, dependencies: dependencies)\n    return getOrderedJobs(jobGraph: jobGraph)\n  }\n\n  func createJobGraph(jobs: [Int], dependencies: [[Int]]) -> JobGraph {\n    let jobGraph = JobGraph(jobs: jobs)\n\n    for dependency in dependencies {\n      let job = dependency[0]\n      let dep = dependency[1]\n      jobGraph.addDependencyToJob(job: job, dependency: dep)\n    }\n\n    return jobGraph\n  }\n\n  func getOrderedJobs(jobGraph: JobGraph) -> [Int] {\n    var orderedJobs = [Int]()\n    var nodesWithNoPrerequisites = jobGraph.nodes.filter { $0.numberOfPrerequisites == 0 }\n\n    while nodesWithNoPrerequisites.count > 0 {\n      if let jobNode = nodesWithNoPrerequisites.popLast() {\n        orderedJobs.append(jobNode.job)\n        removeDependencies(jobNode: jobNode, nodesWithNoPrerequisites: &nodesWithNoPrerequisites)\n      }\n    }\n\n    let graphHasEdges = jobGraph.nodes.filter { $0.numberOfPrerequisites > 0 }.count > 0\n\n    return graphHasEdges ? [] : orderedJobs\n  }\n\n  func removeDependencies(jobNode: JobNode, nodesWithNoPrerequisites: inout [JobNode]) {\n    while jobNode.dependencies.count > 0 {\n      if let dependency = jobNode.dependencies.popLast() {\n        dependency.numberOfPrerequisites -= 1\n\n        if dependency.numberOfPrerequisites == 0 {\n          nodesWithNoPrerequisites.append(dependency)\n        }\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "type Dependency = [number, number];\n\nexport function topologicalSort(jobs: number[], deps: Dependency[]) {\n  // Write your code here.\n  return [-1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\ntype Dependency = [number, number];\n\nit('Test Case #1', function () {\n  const jobs = [1, 2, 3, 4];\n  const deps: Dependency[] = [\n    [1, 2],\n    [1, 3],\n    [3, 2],\n    [4, 2],\n    [4, 3],\n  ];\n  const order = program.topologicalSort(jobs, deps);\n  chai.expect(isValidTopologicalOrder(order, jobs, deps)).to.deep.equal(true);\n});\n\nfunction isValidTopologicalOrder(order: number[], jobs: number[], deps: Dependency[]) {\n  const visited: {[key: string]: boolean} = {};\n  for (const candidate of order) {\n    for (const [prereq, job] of deps) {\n      if (candidate === prereq && job in visited) return false;\n    }\n    visited[candidate] = true;\n  }\n  for (const job of jobs) {\n    if (!(job in visited)) return false;\n  }\n  return order.length === jobs.length;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Dependency = [number, number];\n\n// O(j + d) time | O(j + d) space\nexport function topologicalSort(jobs: number[], deps: Dependency[]) {\n  const jobGraph = createJobGraph(jobs, deps);\n  return getOrderedJobs(jobGraph);\n}\n\nfunction createJobGraph(jobs: number[], deps: Dependency[]) {\n  const graph = new JobGraph(jobs);\n  for (const [prereq, job] of deps) {\n    graph.addPrereq(job, prereq);\n  }\n  return graph;\n}\n\nfunction getOrderedJobs(graph: JobGraph) {\n  const orderedJobs: number[] = [];\n  const {nodes} = graph;\n  while (nodes.length) {\n    const node = nodes.pop()!;\n    const containsCycle = depthFirstTraverse(node, orderedJobs);\n    if (containsCycle) return [];\n  }\n  return orderedJobs;\n}\n\nfunction depthFirstTraverse(node: JobNode, orderedJobs: number[]) {\n  if (node.visited) return false;\n  if (node.visiting) return true;\n  node.visiting = true;\n  for (const prereqNode of node.prereqs) {\n    const containsCycle = depthFirstTraverse(prereqNode, orderedJobs);\n    if (containsCycle) return true;\n  }\n  node.visited = true;\n  node.visiting = false;\n  orderedJobs.push(node.job);\n  return false;\n}\n\nclass JobGraph {\n  nodes: JobNode[];\n  graph: {[key: number]: JobNode};\n\n  constructor(jobs: number[]) {\n    this.nodes = [];\n    this.graph = {};\n    for (const job of jobs) {\n      this.addNode(job);\n    }\n  }\n\n  addPrereq(job: number, prereq: number) {\n    const jobNode = this.getNode(job);\n    const prereqNode = this.getNode(prereq);\n    jobNode.prereqs.push(prereqNode);\n  }\n\n  addNode(job: number) {\n    this.graph[job] = new JobNode(job);\n    this.nodes.push(this.graph[job]);\n  }\n\n  getNode(job: number) {\n    if (!(job in this.graph)) this.addNode(job);\n    return this.graph[job];\n  }\n}\n\nclass JobNode {\n  job: number;\n  prereqs: JobNode[];\n  visited: boolean;\n  visiting: boolean;\n\n  constructor(job: number) {\n    this.job = job;\n    this.prereqs = [];\n    this.visited = false;\n    this.visiting = false;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Dependency = [number, number];\n\n// O(j + d) time | O(j + d) space\nexport function topologicalSort(jobs: number[], deps: Dependency[]) {\n  const jobGraph = createJobGraph(jobs, deps);\n  return getOrderedJobs(jobGraph);\n}\n\nfunction createJobGraph(jobs: number[], deps: Dependency[]) {\n  const graph = new JobGraph(jobs);\n  for (const [job, dep] of deps) {\n    graph.addDep(job, dep);\n  }\n  return graph;\n}\n\nfunction getOrderedJobs(graph: JobGraph) {\n  const orderedJobs: number[] = [];\n  const nodesWithNoPrereqs = graph.nodes.filter(node => !node.numOfPrereqs);\n  while (nodesWithNoPrereqs.length) {\n    const node = nodesWithNoPrereqs.pop()!;\n    orderedJobs.push(node.job);\n    removeDeps(node, nodesWithNoPrereqs);\n  }\n  const graphHasEdges = graph.nodes.some(node => node.numOfPrereqs);\n  return graphHasEdges ? [] : orderedJobs;\n}\n\nfunction removeDeps(node: JobNode, nodesWithNoPrereqs: JobNode[]) {\n  while (node.deps.length) {\n    const dep = node.deps.pop()!;\n    dep.numOfPrereqs--;\n    if (!dep.numOfPrereqs) nodesWithNoPrereqs.push(dep);\n  }\n}\n\nclass JobGraph {\n  nodes: JobNode[];\n  graph: {[key: number]: JobNode};\n\n  constructor(jobs: number[]) {\n    this.nodes = [];\n    this.graph = {};\n    for (const job of jobs) {\n      this.addNode(job);\n    }\n  }\n\n  addDep(job: number, dep: number) {\n    const jobNode = this.getNode(job);\n    const depNode = this.getNode(dep);\n    jobNode.deps.push(depNode);\n    depNode.numOfPrereqs++;\n  }\n\n  addNode(job: number) {\n    this.graph[job] = new JobNode(job);\n    this.nodes.push(this.graph[job]);\n  }\n\n  getNode(job: number) {\n    if (!(job in this.graph)) this.addNode(job);\n    return this.graph[job];\n  }\n}\n\nclass JobNode {\n  job: number;\n  deps: JobNode[];\n  numOfPrereqs: number;\n\n  constructor(job: number) {\n    this.job = job;\n    this.deps = [];\n    this.numOfPrereqs = 0;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "deps": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "deps": [
+        [
+          3,
+          1
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "deps": [
+        [
+          3,
+          1
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "deps": [
+        [
+          3,
+          1
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "deps": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          1
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "deps": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          1
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "deps": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          2,
+          8
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "deps": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          7,
+          8
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "deps": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          2,
+          12
+        ]
+      ],
+      "jobs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "deps": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          1,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          12,
+          2
+        ]
+      ],
+      "jobs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "deps": [],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "deps": [
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "jobs": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          4,
+          1,
+          3,
+          2
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          8,
+          5,
+          7,
+          3,
+          1,
+          6,
+          4,
+          2
+        ]
+      },
+      {
+        "isValidTopologicalOrder": false,
+        "order": []
+      },
+      {
+        "isValidTopologicalOrder": false,
+        "order": []
+      },
+      {
+        "isValidTopologicalOrder": false,
+        "order": []
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          9,
+          7,
+          8,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          1,
+          7,
+          2,
+          8,
+          4,
+          3,
+          6,
+          5
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          1,
+          7,
+          6,
+          2,
+          3,
+          10,
+          11,
+          12,
+          5,
+          9,
+          4,
+          8,
+          0
+        ]
+      },
+      {
+        "isValidTopologicalOrder": false,
+        "order": []
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          5,
+          1,
+          4,
+          3,
+          2
+        ]
+      }
+    ],
+    [
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          4,
+          1,
+          3,
+          2
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          8,
+          5,
+          7,
+          3,
+          1,
+          4,
+          6,
+          2
+        ]
+      },
+      {
+        "isValidTopologicalOrder": false,
+        "order": []
+      },
+      {
+        "isValidTopologicalOrder": false,
+        "order": []
+      },
+      {
+        "isValidTopologicalOrder": false,
+        "order": []
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          9,
+          7,
+          8,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          4,
+          3,
+          5,
+          6,
+          1,
+          2,
+          7,
+          8
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          1,
+          7,
+          6,
+          2,
+          3,
+          10,
+          11,
+          12,
+          5,
+          4,
+          9,
+          8,
+          0
+        ]
+      },
+      {
+        "isValidTopologicalOrder": false,
+        "order": []
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      {
+        "isValidTopologicalOrder": true,
+        "order": [
+          5,
+          2,
+          3,
+          1,
+          4
+        ]
+      }
+    ]
+  ]
+}

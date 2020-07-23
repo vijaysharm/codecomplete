@@ -1,0 +1,387 @@
+{
+  "Summary": {
+    "Name": "Group Anagrams",
+    "Category": "Strings",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-11-21T00:00:00Z",
+      "number": 7,
+      "timeOne": 0,
+      "timeTwo": 1227,
+      "url": "https://player.vimeo.com/video/373243741"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try rearranging every input string such that each string's letters are ordered in alphabetical order. What can you do with the resulting strings?\nFor any two of the resulting strings mentioned in Hint #1 that are equal to each other, their original strings (with their letters in normal order) must be anagrams. Realizing this, you could bucket all of these resulting strings together, all the while keeping track of their original strings, to find the groups of anagrams.\nCan you simply store the resulting strings mentioned in Hint #1 in a hash table and find the groups of anagrams using this hash table?\n",
+  "SpaceTime": "O(w * n * log(n)) time | O(wn) space - where w is the number of words and n is the length of the longest word",
+  "PromptHTML": "<p>\n  Write a function that takes in an array of strings and groups anagrams together.\n</p>\n<p>\n  Anagrams are strings made up of exactly the same letters, where order doesn't\n  matter. For example, <span>\"cinema\"</span> and <span>\"iceman\"</span> are\n  anagrams; similarly, <span>\"foo\"</span> and <span>\"ofo\"</span> are anagrams.\n</p>\n<p>\n  Your function should return a list of anagram groups in no particular order.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">words</span> = [\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[[\"yo\", \"oy\"], [\"flop\", \"olfp\"], [\"act\", \"tac\", \"cat\"]]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "words",
+      "Example": [
+        "yo",
+        "act",
+        "flop",
+        "tac",
+        "cat",
+        "oy",
+        "olfp"
+      ],
+      "Schema": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\n\nusing namespace std;\n\nvector<vector<string>> groupAnagrams(vector<string> words) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "bool compare(vector<vector<string>> expected, vector<vector<string>> output);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<string> words = {};\n      vector<vector<string>> expected = {};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<string> words = {\"test\"};\n      vector<vector<string>> expected = {{\"test\"}};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<string> words = {\"abc\", \"dabd\", \"bca\", \"cab\", \"ddba\"};\n      vector<vector<string>> expected = {{\"abc\", \"bca\", \"cab\"},\n                                         {\"dabd\", \"ddba\"}};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<string> words = {\"abc\", \"cba\", \"bca\"};\n      vector<vector<string>> expected = {{\"abc\", \"cba\", \"bca\"}};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<string> words = {\"zxc\", \"asd\", \"weq\", \"sda\", \"qwe\", \"xcz\"};\n      vector<vector<string>> expected = {\n          {\"zxc\", \"xcz\"}, {\"asd\", \"sda\"}, {\"qwe\", \"weq\"}};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<string> words = {\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"};\n      vector<vector<string>> expected = {\n          {\"yo\", \"oy\"}, {\"flop\", \"olfp\"}, {\"act\", \"tac\", \"cat\"}};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<string> words = {\"cinema\",  \"a\",    \"flop\", \"iceman\",\n                              \"meacyne\", \"lofp\", \"olfp\"};\n      vector<vector<string>> expected = {\n          {\"cinema\", \"iceman\"}, {\"flop\", \"lofp\", \"olfp\"}, {\"a\"}, {\"meacyne\"}};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<string> words = {\"abc\", \"abe\", \"abf\", \"abg\"};\n      vector<vector<string>> expected = {{\"abc\"}, {\"abe\"}, {\"abf\"}, {\"abg\"}};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n  }\n};\n\nbool compare(vector<vector<string>> expected, vector<vector<string>> output) {\n  if (expected.size() != output.size()) {\n    return false;\n  }\n\n  for (auto group : expected) {\n    sort(group.begin(), group.end());\n    if (find(output.begin(), output.end(), group) == output.end()) {\n      return false;\n    }\n  }\n\n  return true;\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nbool compare(vector<vector<string>> expected, vector<vector<string>> output);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<string> words = {\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"};\n      vector<vector<string>> expected = {\n          {\"yo\", \"oy\"}, {\"flop\", \"olfp\"}, {\"act\", \"tac\", \"cat\"}};\n      vector<vector<string>> output = groupAnagrams(words);\n      for (auto &el : output) {\n        sort(el.begin(), el.end());\n      }\n      assert(compare(expected, output));\n    });\n  }\n};\n\nbool compare(vector<vector<string>> expected, vector<vector<string>> output) {\n  if (expected.size() != output.size()) {\n    return false;\n  }\n\n  for (auto group : expected) {\n    sort(group.begin(), group.end());\n    if (find(output.begin(), output.end(), group) == output.end()) {\n      return false;\n    }\n  }\n  return true;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <numeric>\n#include <algorithm>\n\nusing namespace std;\n\n// O(w * n * log(n) + n * w * log(w)) time | O(wn) space - where w is the number\n// of words and n is the length of the longest word\nvector<vector<string>> groupAnagrams(vector<string> words) {\n  if (words.size() == 0)\n    return {};\n\n  vector<string> sortedWords = {};\n  for (auto word : words) {\n    sort(word.begin(), word.end());\n    sortedWords.push_back(word);\n  }\n\n  vector<int> indices(words.size());\n  iota(indices.begin(), indices.end(), 0);\n  sort(indices.begin(), indices.end(), [sortedWords](int a, int b) -> bool {\n    return sortedWords[a] < sortedWords[b];\n  });\n\n  vector<vector<string>> result = {};\n  vector<string> currentAnagramGroup = {};\n  string currentAnagram = sortedWords[indices[0]];\n  for (auto index : indices) {\n    string word = words[index];\n    string sortedWord = sortedWords[index];\n\n    if (sortedWord == currentAnagram) {\n      currentAnagramGroup.push_back(word);\n      continue;\n    }\n\n    result.push_back(currentAnagramGroup);\n    currentAnagramGroup = vector<string>{word};\n    currentAnagram = sortedWord;\n  }\n\n  result.push_back(currentAnagramGroup);\n\n  return result;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <algorithm>\n#include <unordered_map>\nusing namespace std;\n\n// O(w * n * log(n)) time | O(wn) space - where w is the number of words and n\n// is the length of the longest word\nvector<vector<string>> groupAnagrams(vector<string> words) {\n  unordered_map<string, vector<string>> anagrams;\n\n  for (auto word : words) {\n    string sortedWord = word;\n    sort(sortedWord.begin(), sortedWord.end());\n\n    if (anagrams.find(sortedWord) != anagrams.end()) {\n      anagrams[sortedWord].push_back(word);\n    } else {\n      anagrams[sortedWord] = vector<string>{word};\n    }\n  }\n\n  vector<vector<string>> output = {};\n  for (auto it : anagrams) {\n    output.push_back(it.second);\n  }\n  return output;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\nclass Program {\n\tpublic static List<List<string> > groupAnagrams(List<string> words) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System;\nusing System.Linq;\nusing System.Collections;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<string> words = new List<string>();\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<string> words = new List<string>(){\n\t\t\t\"test\"\n\t\t};\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\texpected.Add(new List<string>(){\n\t\t\t\"test\"\n\t\t});\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<string> words = new List<string>(){\n\t\t\t\"abc\", \"dabd\", \"bca\", \"cab\", \"ddba\"\n\t\t};\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\texpected.Add(new List<string>(){\n\t\t\t\"abc\", \"bca\", \"cab\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"dabd\", \"ddba\"\n\t\t});\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<string> words = new List<string>(){\n\t\t\t\"abc\", \"cba\", \"bca\"\n\t\t};\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\texpected.Add(new List<string>(){\n\t\t\t\"abc\", \"cba\", \"bca\"\n\t\t});\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<string> words = new List<string>(){\n\t\t\t\"zxc\", \"asd\", \"weq\", \"sda\", \"qwe\", \"xcz\"\n\t\t};\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\texpected.Add(new List<string>(){\n\t\t\t\"zxc\", \"xcz\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"asd\", \"sda\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"qwe\", \"weq\"\n\t\t});\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<string> words = new List<string>(){\n\t\t\t\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"\n\t\t};\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\texpected.Add(new List<string>(){\n\t\t\t\"yo\", \"oy\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"flop\", \"olfp\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"act\", \"tac\", \"cat\"\n\t\t});\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<string> words = new List<string>(){\n\t\t\t\"cinema\", \"a\", \"flop\", \"iceman\", \"meacyne\", \"lofp\", \"olfp\"\n\t\t};\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\texpected.Add(new List<string>(){\n\t\t\t\"cinema\", \"iceman\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"flop\", \"lofp\", \"olfp\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"a\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"meacyne\"\n\t\t});\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tList<string> words = new List<string>(){\n\t\t\t\"abc\", \"abe\", \"abf\", \"abg\"\n\t\t};\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\texpected.Add(new List<string>(){\n\t\t\t\"abc\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"abe\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"abf\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"abg\"\n\t\t});\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\tpublic bool compare(List<List<string> > expected, List<List<string> > output) {\n\t\tif (expected.Count != output.Count) return false;\n\t\tforeach (List<string> e in expected) {\n\t\t\te.Sort();\n\t\t\tvar found = false;\n\t\t\tforeach (List<string> o in output) {\n\t\t\t\tif (e.SequenceEqual(o)) {\n\t\t\t\t\tfound = true;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tif (!found) return false;\n\t\t}\n\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System;\nusing System.Linq;\nusing System.Collections;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<string> words = new List<string>(){\n\t\t\t\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"\n\t\t};\n\t\tList<List<string> > expected = new List<List<string> >();\n\t\texpected.Add(new List<string>(){\n\t\t\t\"yo\", \"oy\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"flop\", \"olfp\"\n\t\t});\n\t\texpected.Add(new List<string>(){\n\t\t\t\"act\", \"tac\", \"cat\"\n\t\t});\n\t\tList<List<string> > output = Program.groupAnagrams(words);\n\t\tforeach (List<string> innerList in output) {\n\t\t\tinnerList.Sort();\n\t\t}\n\t\tUtils.AssertTrue(compare(expected, output));\n\t}\n\n\tpublic bool compare(List<List<string> > expected, List<List<string> > output) {\n\t\tif (expected.Count != output.Count) return false;\n\t\tforeach (List<string> e in expected) {\n\t\t\te.Sort();\n\t\t\tvar found = false;\n\t\t\tforeach (List<string> o in output) {\n\t\t\t\tif (e.SequenceEqual(o)) {\n\t\t\t\t\tfound = true;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tif (!found) return false;\n\t\t}\n\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(w * n * log(n) + n * w * log(w)) time | O(wn) space - where w is the number of words and\n\t// n is the length of the longest word\n\tpublic static List<List<string> > groupAnagrams(List<string> words) {\n\t\tif (words.Count == 0) return new List<List<string> >();\n\n\t\tList<string> sortedWords = new List<string>();\n\t\tforeach (string word in words) {\n\t\t\tchar[] charArray = word.ToCharArray();\n\t\t\tArray.Sort(charArray);\n\t\t\tstring sortedWord = new String(charArray);\n\t\t\tsortedWords.Add(sortedWord);\n\t\t}\n\n\t\tList<int> indices = Enumerable.Range(0, words.Count).ToList();\n\t\tindices.Sort((a, b) => sortedWords[a].CompareTo(sortedWords[b]));\n\n\t\tList<List<string> > result = new List<List<string> >();\n\t\tList<string> currentAnagramGroup = new List<string>();\n\t\tstring currentAnagram = sortedWords[indices[0]];\n\t\tforeach (int index in indices) {\n\t\t\tstring word = words[index];\n\t\t\tstring sortedWord = sortedWords[index];\n\n\t\t\tif (sortedWord.Equals(currentAnagram)) {\n\t\t\t\tcurrentAnagramGroup.Add(word);\n\t\t\t\tcontinue;\n\t\t\t}\n\n\t\t\tresult.Add(currentAnagramGroup);\n\t\t\tcurrentAnagramGroup = new List<string>(){\n\t\t\t\tword\n\t\t\t};\n\t\t\tcurrentAnagram = sortedWord;\n\t\t}\n\n\t\tresult.Add(currentAnagramGroup);\n\n\t\treturn result;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(w * n * log(n)) time | O(wn) space - where w is the number of words and n is the length of the longest word\n\tpublic static List<List<string> > groupAnagrams(List<string> words) {\n\t\tDictionary<string,\n\t\t  List<string> > anagrams = new Dictionary<string, List<string> >();\n\n\t\tforeach (string word in words) {\n\t\t\tchar[] charArray = word.ToCharArray();\n\t\t\tArray.Sort(charArray);\n\t\t\tstring sortedWord = new String(charArray);\n\n\t\t\tif (anagrams.ContainsKey(sortedWord)) {\n\t\t\t\tanagrams[sortedWord].Add(word);\n\t\t\t} else {\n\t\t\t\tanagrams[sortedWord] = new List<string>(){\n\t\t\t\t\tword\n\t\t\t\t};\n\t\t\t}\n\t\t}\n        return anagrams.Values.ToList();\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc GroupAnagrams(words []string) [][]string {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"sort\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\twords := []string{}\n\texpected := [][]string{}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\twords := []string{\"test\"}\n\texpected := [][]string{{\"test\"}}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\twords := []string{\"abc\", \"dabd\", \"bca\", \"cab\", \"ddba\"}\n\texpected := [][]string{{\"abc\", \"bca\", \"cab\"}, {\"dabd\", \"ddba\"}}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\twords := []string{\"abc\", \"cba\", \"bca\"}\n\texpected := [][]string{{\"abc\", \"cba\", \"bca\"}}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\twords := []string{\"zxc\", \"asd\", \"weq\", \"sda\", \"qwe\", \"xcz\"}\n\texpected := [][]string{{\"zxc\", \"xcz\"}, {\"asd\", \"sda\"}, {\"qwe\", \"weq\"}}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\twords := []string{\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"}\n\texpected := [][]string{{\"yo\", \"oy\"}, {\"flop\", \"olfp\"}, {\"act\", \"tac\", \"cat\"}}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\twords := []string{\"cinema\", \"a\", \"flop\", \"iceman\", \"meacyne\", \"lofp\", \"olfp\"}\n\texpected := [][]string{{\"cinema\", \"iceman\"}, {\"flop\", \"lofp\", \"olfp\"}, {\"a\"}, {\"meacyne\"}}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\twords := []string{\"abc\", \"abe\", \"abf\", \"abg\"}\n\texpected := [][]string{{\"abc\"}, {\"abe\"}, {\"abf\"}, {\"abg\"}}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc compare(t *TestCase, expected, output [][]string) {\n\tt.Helper()\n\tfor _, group := range output {\n\t\tsort.Strings(group)\n\t}\n\n\tfor _, group := range expected {\n\t\tsort.Strings(group)\n\t}\n\trequire.ElementsMatch(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"sort\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\twords := []string{\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"}\n\texpected := [][]string{{\"yo\", \"oy\"}, {\"flop\", \"olfp\"}, {\"act\", \"tac\", \"cat\"}}\n\toutput := GroupAnagrams(words)\n\tcompare(t, expected, output)\n}\n\nfunc compare(t *TestCase, expected, output [][]string) {\n\tt.Helper()\n\tfor _, group := range output {\n\t\tsort.Strings(group)\n\t}\n\n\tfor _, group := range expected {\n\t\tsort.Strings(group)\n\t}\n\trequire.ElementsMatch(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport (\n\t\"sort\"\n)\n\n// O(w * n * log(n) + n * w * log(w)) time | O(wn) space - where w is the number of words and\n// n is the length of the longest word\nfunc GroupAnagrams(words []string) [][]string {\n\tif len(words) == 0 {\n\t\treturn [][]string{}\n\t}\n\n\tsortedWords := []string{}\n\tindices := []int{}\n\tfor i, word := range words {\n\t\tsortedWords = append(sortedWords, sortWord(word))\n\t\tindices = append(indices, i)\n\t}\n\tsort.Slice(indices, func(i, j int) bool {\n\t\treturn sortedWords[indices[i]] < sortedWords[indices[j]]\n\t})\n\n\tresult := [][]string{}\n\tcurrentAnagramGroup := []string{}\n\tcurrentAnagram := sortedWords[indices[0]]\n\tfor _, index := range indices {\n\t\tword := words[index]\n\t\tsortedWord := sortedWords[index]\n\t\tif len(currentAnagramGroup) == 0 {\n\t\t\tcurrentAnagramGroup = append(currentAnagramGroup, word)\n\t\t\tcurrentAnagram = sortedWord\n\t\t\tcontinue\n\t\t}\n\n\t\tif sortedWord == currentAnagram {\n\t\t\tcurrentAnagramGroup = append(currentAnagramGroup, word)\n\t\t\tcontinue\n\t\t}\n\n\t\tresult = append(result, currentAnagramGroup)\n\t\tcurrentAnagramGroup = []string{word}\n\t\tcurrentAnagram = sortedWord\n\t}\n\n\tresult = append(result, currentAnagramGroup)\n\n\treturn result\n}\n\nfunc sortWord(word string) string {\n\twordBytes := []byte(word)\n\tsort.Slice(wordBytes, func(i, j int) bool {\n\t\treturn wordBytes[i] < wordBytes[j]\n\t})\n\treturn string(wordBytes)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"sort\"\n\n// O(w * n * log(n)) time | O(wn) space - where w is the number of words and\n// n is the length of the longest word\nfunc GroupAnagrams(words []string) [][]string {\n\tanagrams := map[string][]string{}\n\n\tfor _, word := range words {\n\t\tsortedWord := sortWord(word)\n\t\tanagrams[sortedWord] = append(anagrams[sortedWord], word)\n\t}\n\n\tresult := [][]string{}\n\tfor _, group := range anagrams {\n\t\tresult = append(result, group)\n\t}\n\treturn result\n}\n\nfunc sortWord(word string) string {\n\twordBytes := []byte(word)\n\tsort.Slice(wordBytes, func(i, j int) bool {\n\t\treturn wordBytes[i] < wordBytes[j]\n\t})\n\treturn string(wordBytes)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<List<String>> groupAnagrams(List<String> words) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<String> words = new ArrayList<String>();\n    List<List<String>> expected = new ArrayList<List<String>>();\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  @Test\n  public void TestCase2() {\n    List<String> words = new ArrayList<String>(Arrays.asList(\"test\"));\n    List<List<String>> expected = new ArrayList<List<String>>();\n    expected.add(new ArrayList<String>(Arrays.asList(\"test\")));\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  @Test\n  public void TestCase3() {\n    List<String> words = new ArrayList<String>(Arrays.asList(\"abc\", \"dabd\", \"bca\", \"cab\", \"ddba\"));\n    List<List<String>> expected = new ArrayList<List<String>>();\n    expected.add(new ArrayList<String>(Arrays.asList(\"abc\", \"bca\", \"cab\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"dabd\", \"ddba\")));\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  @Test\n  public void TestCase4() {\n    List<String> words = new ArrayList<String>(Arrays.asList(\"abc\", \"cba\", \"bca\"));\n    List<List<String>> expected = new ArrayList<List<String>>();\n    expected.add(new ArrayList<String>(Arrays.asList(\"abc\", \"cba\", \"bca\")));\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  @Test\n  public void TestCase5() {\n    List<String> words =\n        new ArrayList<String>(Arrays.asList(\"zxc\", \"asd\", \"weq\", \"sda\", \"qwe\", \"xcz\"));\n    List<List<String>> expected = new ArrayList<List<String>>();\n    expected.add(new ArrayList<String>(Arrays.asList(\"zxc\", \"xcz\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"asd\", \"sda\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"qwe\", \"weq\")));\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  @Test\n  public void TestCase6() {\n    List<String> words =\n        new ArrayList<String>(Arrays.asList(\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"));\n    List<List<String>> expected = new ArrayList<List<String>>();\n    expected.add(new ArrayList<String>(Arrays.asList(\"yo\", \"oy\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"flop\", \"olfp\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"act\", \"tac\", \"cat\")));\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  @Test\n  public void TestCase7() {\n    List<String> words =\n        new ArrayList<String>(\n            Arrays.asList(\"cinema\", \"a\", \"flop\", \"iceman\", \"meacyne\", \"lofp\", \"olfp\"));\n    List<List<String>> expected = new ArrayList<List<String>>();\n    expected.add(new ArrayList<String>(Arrays.asList(\"cinema\", \"iceman\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"flop\", \"lofp\", \"olfp\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"a\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"meacyne\")));\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  @Test\n  public void TestCase8() {\n    List<String> words = new ArrayList<String>(Arrays.asList(\"abc\", \"abe\", \"abf\", \"abg\"));\n    List<List<String>> expected = new ArrayList<List<String>>();\n    expected.add(new ArrayList<String>(Arrays.asList(\"abc\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"abe\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"abf\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"abg\")));\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  public boolean compare(List<List<String>> expected, List<List<String>> output) {\n    if (expected.size() != output.size()) return false;\n\n    for (List<String> group : expected) {\n      Collections.sort(group);\n      if (!output.contains(group)) return false;\n    }\n\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<String> words =\n        new ArrayList<String>(Arrays.asList(\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"));\n    List<List<String>> expected = new ArrayList<List<String>>();\n    expected.add(new ArrayList<String>(Arrays.asList(\"yo\", \"oy\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"flop\", \"olfp\")));\n    expected.add(new ArrayList<String>(Arrays.asList(\"act\", \"tac\", \"cat\")));\n    List<List<String>> output = Program.groupAnagrams(words);\n    for (List<String> innerList : output) {\n      Collections.sort(innerList);\n    }\n    Utils.assertTrue(compare(expected, output));\n  }\n\n  public boolean compare(List<List<String>> expected, List<List<String>> output) {\n    if (expected.size() != output.size()) return false;\n\n    for (List<String> group : expected) {\n      Collections.sort(group);\n      if (!output.contains(group)) return false;\n    }\n\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\nimport java.util.stream.*;\n\nclass Program {\n  // O(w * n * log(n) + n * w * log(w)) time | O(wn) space - where w is the number of words and\n  // n is the length of the longest word\n  public static List<List<String>> groupAnagrams(List<String> words) {\n    if (words.size() == 0) return new ArrayList<List<String>>();\n\n    List<String> sortedWords = new ArrayList<String>();\n    for (String word : words) {\n      char[] charArray = word.toCharArray();\n      Arrays.sort(charArray);\n      String sortedWord = new String(charArray);\n      sortedWords.add(sortedWord);\n    }\n\n    List<Integer> indices = IntStream.range(0, words.size()).boxed().collect(Collectors.toList());\n    indices.sort((a, b) -> sortedWords.get(a).compareTo(sortedWords.get(b)));\n\n    List<List<String>> result = new ArrayList<List<String>>();\n    List<String> currentAnagramGroup = new ArrayList<String>();\n    String currentAnagram = sortedWords.get(indices.get(0));\n    for (Integer index : indices) {\n      String word = words.get(index);\n      String sortedWord = sortedWords.get(index);\n\n      if (sortedWord.equals(currentAnagram)) {\n        currentAnagramGroup.add(word);\n        continue;\n      }\n\n      result.add(currentAnagramGroup);\n      currentAnagramGroup = new ArrayList<String>(Arrays.asList(word));\n      currentAnagram = sortedWord;\n    }\n\n    result.add(currentAnagramGroup);\n\n    return result;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\nimport java.util.stream.*;\n\nclass Program {\n  // O(w * n * log(n)) time | O(wn) space - where w is the number of words and n is the length of\n  // the longest word\n  public static List<List<String>> groupAnagrams(List<String> words) {\n    Map<String, List<String>> anagrams = new HashMap<String, List<String>>();\n\n    for (String word : words) {\n      char[] charArray = word.toCharArray();\n      Arrays.sort(charArray);\n      String sortedWord = new String(charArray);\n\n      if (anagrams.containsKey(sortedWord)) {\n        anagrams.get(sortedWord).add(word);\n      } else {\n        anagrams.put(sortedWord, new ArrayList<String>(Arrays.asList(word)));\n      }\n    }\n    return new ArrayList<>(anagrams.values());\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function groupAnagrams(words) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.groupAnagrams = groupAnagrams;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const words = [];\n  const expected = [];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nit('Test Case #2', function () {\n  const words = ['test'];\n  const expected = [['test']];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nit('Test Case #3', function () {\n  const words = ['abc', 'dabd', 'bca', 'cab', 'ddba'];\n  const expected = [\n    ['abc', 'bca', 'cab'],\n    ['dabd', 'ddba'],\n  ];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nit('Test Case #4', function () {\n  const words = ['abc', 'cba', 'bca'];\n  const expected = [['abc', 'cba', 'bca']];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nit('Test Case #5', function () {\n  const words = ['zxc', 'asd', 'weq', 'sda', 'qwe', 'xcz'];\n  const expected = [\n    ['zxc', 'xcz'],\n    ['asd', 'sda'],\n    ['qwe', 'weq'],\n  ];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nit('Test Case #6', function () {\n  const words = ['yo', 'act', 'flop', 'tac', 'cat', 'oy', 'olfp'];\n  const expected = [\n    ['yo', 'oy'],\n    ['flop', 'olfp'],\n    ['act', 'tac', 'cat'],\n  ];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nit('Test Case #7', function () {\n  const words = ['cinema', 'a', 'flop', 'iceman', 'meacyne', 'lofp', 'olfp'];\n  const expected = [['cinema', 'iceman'], ['flop', 'lofp', 'olfp'], ['a'], ['meacyne']];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nit('Test Case #8', function () {\n  const words = ['abc', 'abe', 'abf', 'abg'];\n  const expected = [['abc'], ['abe'], ['abf'], ['abg']];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nfunction compare(expected, output) {\n  if (expected.length === 0) {\n    chai.expect(output).to.deep.equal(expected);\n    return;\n  }\n  chai.expect(output.length).to.deep.equal(expected.length);\n  for (const group of expected) {\n    chai.expect(output).to.deep.include(group.sort());\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const words = ['yo', 'act', 'flop', 'tac', 'cat', 'oy', 'olfp'];\n  const expected = [\n    ['yo', 'oy'],\n    ['flop', 'olfp'],\n    ['act', 'tac', 'cat'],\n  ];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nfunction compare(expected, output) {\n  if (expected.length === 0) {\n    chai.expect(output).to.deep.equal(expected);\n    return;\n  }\n  chai.expect(output.length).to.deep.equal(expected.length);\n  for (const group of expected) {\n    chai.expect(output).to.deep.include(group.sort());\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(w * n * log(n) + n * w * log(w)) time | O(wn) space - where w is the number of words and\n// n is the length of the longest word\nfunction groupAnagrams(words) {\n  if (words.length === 0) return [];\n\n  const sortedWords = words.map(word => word.split('').sort().join(''));\n  const indices = [...Array(words.length).keys()];\n  indices.sort((a, b) => {\n    if (sortedWords[a] < sortedWords[b]) return -1;\n    if (sortedWords[a] > sortedWords[b]) return 1;\n    return 0;\n  });\n\n  const result = [];\n  let currentAnagramGroup = [];\n  let currentAnagram = sortedWords[indices[0]];\n  for (const index of indices) {\n    const word = words[index];\n    const sortedWord = sortedWords[index];\n\n    if (sortedWord === currentAnagram) {\n      currentAnagramGroup.push(word);\n      continue;\n    }\n\n    result.push(currentAnagramGroup);\n    currentAnagramGroup = [word];\n    currentAnagram = sortedWord;\n  }\n\n  result.push(currentAnagramGroup);\n\n  return result;\n}\n\nexports.groupAnagrams = groupAnagrams;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(w * n * log(n)) time | O(wn) space - where w is the number of words and n is the length of the longest word\nfunction groupAnagrams(words) {\n  const anagrams = {};\n  for (const word of words) {\n    const sortedWord = word.split('').sort().join('');\n    if (sortedWord in anagrams) {\n      anagrams[sortedWord].push(word);\n    } else {\n      anagrams[sortedWord] = [word];\n    }\n  }\n  return Object.values(anagrams);\n}\n\nexports.groupAnagrams = groupAnagrams;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def groupAnagrams(words):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        words = []\n        expected = []\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        compare(self, expected, output)\n\n    def test_case_2(self):\n        words = [\"test\"]\n        expected = [[\"test\"]]\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        compare(self, expected, output)\n\n    def test_case_3(self):\n        words = [\"abc\", \"dabd\", \"bca\", \"cab\", \"ddba\"]\n        expected = [[\"abc\", \"bca\", \"cab\"], [\"dabd\", \"ddba\"]]\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        compare(self, expected, output)\n\n    def test_case_4(self):\n        words = [\"abc\", \"cba\", \"bca\"]\n        expected = [[\"abc\", \"cba\", \"bca\"]]\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        compare(self, expected, output)\n\n    def test_case_5(self):\n        words = [\"zxc\", \"asd\", \"weq\", \"sda\", \"qwe\", \"xcz\"]\n        expected = [[\"zxc\", \"xcz\"], [\"asd\", \"sda\"], [\"qwe\", \"weq\"]]\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        compare(self, expected, output)\n\n    def test_case_6(self):\n        words = [\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"]\n        expected = [[\"yo\", \"oy\"], [\"flop\", \"olfp\"], [\"act\", \"tac\", \"cat\"]]\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        compare(self, expected, output)\n\n    def test_case_7(self):\n        words = [\"cinema\", \"a\", \"flop\", \"iceman\", \"meacyne\", \"lofp\", \"olfp\"]\n        expected = [[\"cinema\", \"iceman\"], [\"flop\", \"lofp\", \"olfp\"], [\"a\"], [\"meacyne\"]]\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        compare(self, expected, output)\n\n    def test_case_8(self):\n        words = [\"abc\", \"abe\", \"abf\", \"abg\"]\n        expected = [[\"abc\"], [\"abe\"], [\"abf\"], [\"abg\"]]\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        compare(self, expected, output)\n\n\ndef compare(testFramework, expected, output):\n    if len(expected) == 0:\n        testFramework.assertEqual(output, expected)\n        return\n    testFramework.assertEqual(len(expected), len(output))\n    for group in expected:\n        testFramework.assertTrue(sorted(group) in output)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        words = [\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"]\n        expected = [[\"yo\", \"oy\"], [\"flop\", \"olfp\"], [\"act\", \"tac\", \"cat\"]]\n        output = list(map(lambda x: sorted(x), program.groupAnagrams(words)))\n\n        self.compare(expected, output)\n\n    def compare(self, expected, output):\n        if len(expected) == 0:\n            self.assertEqual(output, expected)\n            return\n        self.assertEqual(len(expected), len(output))\n        for group in expected:\n            self.assertTrue(sorted(group) in output)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(w * n * log(n) + n * w * log(w)) time | O(wn) space - where w is the number of words and\n# n is the length of the longest word\ndef groupAnagrams(words):\n    if len(words) == 0:\n        return []\n\n    sortedWords = [\"\".join(sorted(w)) for w in words]\n    indices = [i for i in range(len(words))]\n    indices.sort(key=lambda x: sortedWords[x])\n\n    result = []\n    currentAnagramGroup = []\n    currentAnagram = sortedWords[indices[0]]\n    for index in indices:\n        word = words[index]\n        sortedWord = sortedWords[index]\n\n        if sortedWord == currentAnagram:\n            currentAnagramGroup.append(word)\n            continue\n\n        result.append(currentAnagramGroup)\n        currentAnagramGroup = [word]\n        currentAnagram = sortedWord\n\n    result.append(currentAnagramGroup)\n\n    return result\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(w * n * log(n)) time | O(wn) space - where w is the number of words and\n# n is the length of the longest word\ndef groupAnagrams(words):\n    anagrams = {}\n    for word in words:\n        sortedWord = \"\".join(sorted(word))\n        if sortedWord in anagrams:\n            anagrams[sortedWord].append(word)\n        else:\n            anagrams[sortedWord] = [word]\n    return list(anagrams.values())\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func groupAnagrams(_ words: [String]) -> [[String]] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let words = [String]()\n      let expected = [[String]]()\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let words = [\"test\"]\n      let expected = [[\"test\"]]\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let words = [\"abc\", \"dabd\", \"bca\", \"cab\", \"ddba\"]\n      let expected = [[\"abc\", \"bca\", \"cab\"], [\"dabd\", \"ddba\"]]\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let words = [\"abc\", \"cba\", \"bca\"]\n      let expected = [[\"abc\", \"cba\", \"bca\"]]\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let words = [\"zxc\", \"asd\", \"weq\", \"sda\", \"qwe\", \"xcz\"]\n      let expected = [[\"zxc\", \"xcz\"], [\"asd\", \"sda\"], [\"qwe\", \"weq\"]]\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let words = [\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"]\n      let expected = [[\"yo\", \"oy\"], [\"flop\", \"olfp\"], [\"act\", \"tac\", \"cat\"]]\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let words = [\"cinema\", \"a\", \"flop\", \"iceman\", \"meacyne\", \"lofp\", \"olfp\"]\n      let expected = [[\"cinema\", \"iceman\"], [\"flop\", \"lofp\", \"olfp\"], [\"a\"], [\"meacyne\"]]\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let words = [\"abc\", \"abe\", \"abf\", \"abg\"]\n      let expected = [[\"abc\"], [\"abe\"], [\"abf\"], [\"abg\"]]\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n  }\n\n  func compare(_ expected: [[String]], _ output: [[String]]) throws {\n    try assertEqual(output.count, expected.count)\n\n    var outputs = [String: Bool]()\n    for group in output {\n      outputs[group.sorted().joined(separator: \",\")] = true\n    }\n\n    for group in expected {\n      try assert(outputs[group.sorted().joined(separator: \",\")] != nil)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let words = [\"yo\", \"act\", \"flop\", \"tac\", \"cat\", \"oy\", \"olfp\"]\n      let expected = [[\"yo\", \"oy\"], [\"flop\", \"olfp\"], [\"act\", \"tac\", \"cat\"]]\n      var output = program.groupAnagrams(words)\n      try compare(expected, output)\n    }\n  }\n\n  func compare(_ expected: [[String]], _ output: [[String]]) throws {\n    try assertEqual(output.count, expected.count)\n\n    var outputs = [String: Bool]()\n    for group in output {\n      outputs[group.sorted().joined(separator: \",\")] = true\n    }\n\n    for group in expected {\n      try assert(outputs[group.sorted().joined(separator: \",\")] != nil)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(w * n * log(n) + n * w * log(w)) time | O(wn) space - where w is the number of words and\n  // n is the length of the longest word\n  func groupAnagrams(_ words: [String]) -> [[String]] {\n    if words.count == 0 {\n      return [[String]]()\n    }\n\n    var sortedWords = [String]()\n    var indices = [Int]()\n    for i in 0 ..< words.count {\n      sortedWords.append(sortWord(words[i]))\n      indices.append(i)\n    }\n    indices = indices.sorted {\n      return sortedWords[$0] < sortedWords[$1]\n    }\n\n    var result = [[String]]()\n    var currentAnagramGroup = [String]()\n    var currentAnagram = sortedWords[indices[0]]\n    for index in indices {\n      let word = words[index]\n      let sortedWord = sortedWords[index]\n      if currentAnagramGroup.count == 0 {\n        currentAnagramGroup.append(word)\n        currentAnagram = sortedWord\n        continue\n      }\n\n      if sortedWord == currentAnagram {\n        currentAnagramGroup.append(word)\n        continue\n      }\n\n      result.append(currentAnagramGroup)\n      currentAnagramGroup = [word]\n      currentAnagram = sortedWord\n    }\n\n    result.append(currentAnagramGroup)\n    return result\n  }\n\n  func sortWord(_ word: String) -> String {\n    return String(word.sorted())\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(w * n * log(n)) time | O(wn) space - where w is the number of words and\n  // n is the length of the longest word\n  func groupAnagrams(_ words: [String]) -> [[String]] {\n    var anagrams = [String: [String]]()\n\n    for word in words {\n      let sortedWord = String(word.sorted())\n      if var arr = anagrams[sortedWord] {\n        arr.append(word)\n        anagrams[sortedWord] = arr\n        continue\n      }\n      anagrams[sortedWord] = [word]\n    }\n\n    var result = [[String]]()\n    for group in anagrams {\n      result.append(group.value)\n    }\n    return result\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function groupAnagrams(words: string[]) {\n  // Write your code here.\n  return [['', '']];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const words = ['yo', 'act', 'flop', 'tac', 'cat', 'oy', 'olfp'];\n  const expected = [\n    ['yo', 'oy'],\n    ['flop', 'olfp'],\n    ['act', 'tac', 'cat'],\n  ];\n  const output = program.groupAnagrams(words).map(anagramGroup => anagramGroup.sort());\n\n  compare(expected, output);\n});\n\nfunction compare(expected: string[][], output: string[][]) {\n  if (expected.length === 0) {\n    chai.expect(output).to.deep.equal(expected);\n    return;\n  }\n  chai.expect(output.length).to.deep.equal(expected.length);\n  for (const group of expected) {\n    chai.expect(output).to.deep.include(group.sort());\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(w * n * log(n) + n * w * log(w)) time | O(wn) space - where w is the number of words and\n// n is the length of the longest word\nexport function groupAnagrams(words: string[]) {\n  if (words.length === 0) return [];\n\n  const sortedWords = words.map(word => word.split('').sort().join(''));\n  const indices = [...Array(words.length).keys()];\n  indices.sort((a, b) => {\n    if (sortedWords[a] < sortedWords[b]) return -1;\n    if (sortedWords[a] > sortedWords[b]) return 1;\n    return 0;\n  });\n\n  const result: string[][] = [];\n  let currentAnagramGroup: string[] = [];\n  let currentAnagram = sortedWords[indices[0]];\n  for (const index of indices) {\n    const word = words[index];\n    const sortedWord = sortedWords[index];\n\n    if (sortedWord === currentAnagram) {\n      currentAnagramGroup.push(word);\n      continue;\n    }\n\n    result.push(currentAnagramGroup);\n    currentAnagramGroup = [word];\n    currentAnagram = sortedWord;\n  }\n\n  result.push(currentAnagramGroup);\n\n  return result;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(w * n * log(n)) time | O(wn) space - where w is the number of words and n is the length of the longest word\nexport function groupAnagrams(words: string[]) {\n  const anagrams: {[key: string]: string[]} = {};\n  for (const word of words) {\n    const sortedWord = word.split('').sort().join('');\n    if (sortedWord in anagrams) {\n      anagrams[sortedWord].push(word);\n    } else {\n      anagrams[sortedWord] = [word];\n    }\n  }\n  return Object.values(anagrams);\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "words": [
+        "yo",
+        "act",
+        "flop",
+        "tac",
+        "cat",
+        "oy",
+        "olfp"
+      ]
+    },
+    {
+      "words": []
+    },
+    {
+      "words": [
+        "test"
+      ]
+    },
+    {
+      "words": [
+        "abc",
+        "dabd",
+        "bca",
+        "cab",
+        "ddba"
+      ]
+    },
+    {
+      "words": [
+        "abc",
+        "cba",
+        "bca"
+      ]
+    },
+    {
+      "words": [
+        "zxc",
+        "asd",
+        "weq",
+        "sda",
+        "qwe",
+        "xcz"
+      ]
+    },
+    {
+      "words": [
+        "cinema",
+        "a",
+        "flop",
+        "iceman",
+        "meacyne",
+        "lofp",
+        "olfp"
+      ]
+    },
+    {
+      "words": [
+        "abc",
+        "abe",
+        "abf",
+        "abg"
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        [
+          "flop",
+          "olfp"
+        ],
+        [
+          "oy",
+          "yo"
+        ],
+        [
+          "act",
+          "cat",
+          "tac"
+        ]
+      ],
+      [],
+      [
+        [
+          "test"
+        ]
+      ],
+      [
+        [
+          "dabd",
+          "ddba"
+        ],
+        [
+          "abc",
+          "bca",
+          "cab"
+        ]
+      ],
+      [
+        [
+          "abc",
+          "bca",
+          "cba"
+        ]
+      ],
+      [
+        [
+          "asd",
+          "sda"
+        ],
+        [
+          "qwe",
+          "weq"
+        ],
+        [
+          "xcz",
+          "zxc"
+        ]
+      ],
+      [
+        [
+          "a"
+        ],
+        [
+          "meacyne"
+        ],
+        [
+          "cinema",
+          "iceman"
+        ],
+        [
+          "flop",
+          "lofp",
+          "olfp"
+        ]
+      ],
+      [
+        [
+          "abc"
+        ],
+        [
+          "abe"
+        ],
+        [
+          "abf"
+        ],
+        [
+          "abg"
+        ]
+      ]
+    ],
+    [
+      [
+        [
+          "yo",
+          "oy"
+        ],
+        [
+          "act",
+          "tac",
+          "cat"
+        ],
+        [
+          "flop",
+          "olfp"
+        ]
+      ],
+      [],
+      [
+        [
+          "test"
+        ]
+      ],
+      [
+        [
+          "abc",
+          "bca",
+          "cab"
+        ],
+        [
+          "dabd",
+          "ddba"
+        ]
+      ],
+      [
+        [
+          "abc",
+          "cba",
+          "bca"
+        ]
+      ],
+      [
+        [
+          "zxc",
+          "xcz"
+        ],
+        [
+          "asd",
+          "sda"
+        ],
+        [
+          "weq",
+          "qwe"
+        ]
+      ],
+      [
+        [
+          "cinema",
+          "iceman"
+        ],
+        [
+          "a"
+        ],
+        [
+          "flop",
+          "lofp",
+          "olfp"
+        ],
+        [
+          "meacyne"
+        ]
+      ],
+      [
+        [
+          "abc"
+        ],
+        [
+          "abe"
+        ],
+        [
+          "abf"
+        ],
+        [
+          "abg"
+        ]
+      ]
+    ]
+  ]
+}

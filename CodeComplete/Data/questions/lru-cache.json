@@ -1,0 +1,1204 @@
+{
+  "Summary": {
+    "Name": "LRU Cache",
+    "Category": "Linked Lists",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "number": 256,
+      "timeOne": 0,
+      "timeTwo": 1721,
+      "url": "https://player.vimeo.com/video/251202282"
+    }
+  },
+  "Prompt": "",
+  "Hints": "What data structure could allow you to insert, retrieve, and evict resources as fast as possible, all the while keeping track of the least recently accessed resource - essentially keeping track of the order of the resources? A hash table would allow you to insert and retrieve resources fast, but it wouldn't allow you to keep track of their order. An array would let you keep track of their order, but it wouldn't let you access elements fast; it also wouldn't allow you to move an element from one position to another in constant time, which you would need to do to make a newly-accessed key / value pair the most recent one upon retrieval of a key's value. A linked list would allow you to keep track of elements' order and to move them seamlessly (if you knew their position), but it wouldn't allow you to access them easily without knowing their position beforehand. Could a heap help? What about a BST or a trie? Would any other data structures work?\nCould you use multiple data structures to make your LRU Cache's functionality fast and efficient? Could you store keys in one data structure, for instance, and values in an auxiliary data structure? What should these data structures be in order for all of the LRU Cache's methods to run in constant time?\nTry storing keys in a hash table and mapping them to nodes in a doubly linked list containing the keys' corresponding values (perhaps the nodes would also have to store the keys themselves). With these two data structures, you could access any key / value pair very easily via the hash table, and you could also effortlessly move nodes in the linked list so as to keep track of the most recent and least recent key / value pairs. The linked list would also allow you to keep track of the entire order of the key / value pairs, thus allowing you to perpetually update the least recent key / value pairs after evictions.\n",
+  "SpaceTime": "(all 3 methods) O(1) time | O(1) space\n",
+  "PromptHTML": "<p>\n  Implement an <span>LRUCache</span> class for a Least Recently Used (LRU)\n  cache. The class should support:\n</p>\n<ul>\n  <li>\n    - Inserting key-value pairs with the <span>insertKeyValuePair</span> method.\n  </li>\n  <li>\n    - Retrieving a key's value with the <span>getValueFromKey</span> method.\n  </li>\n  <li>\n    - Retrieving the most recently used (the most recently inserted or\n    retrieved) key with the\n    <span>getMostRecentKey</span> method.\n  </li>\n</ul>\n<p>\n  Each of these methods should run in constant time.\n</p>\n<p>\n  Additionally, the <span>LRUCache</span> class should store a\n  <span>maxSize</span> property set to the size of the cache, which is passed in\n  as an argument during instantiation. This size represents the maximum number\n  of key-value pairs that the cache can store at once. If a key-value pair is\n  inserted in the cache when it has reached maximum capacity, the least recently\n  used key-value pair should be evicted from the cache and no longer\n  retrievable; the newly added key-value pair should effectively replace it.\n</p>\n<p>\n  Note that inserting a key-value pair with an already existing key should\n  simply replace the key's value in the cache with the new value and shouldn't\n  evict a key-value pair if the cache is full. Lastly, attempting to retrieve a\n  value from a key that isn't in the cache should return <span>None</span> /\n  <span>null</span>.\n</p>\n<h3>Sample Usage</h3>\n<pre>\n<span class=\"CodeEditor-promptComment\">// All operations below are performed sequentially.</span>\n<span class=\"CodeEditor-promptParameter\">LRUCache</span>(3): - <span class=\"CodeEditor-promptComment\">// instantiate an LRUCache of size 3</span>\n<span class=\"CodeEditor-promptParameter\">insertKeyValuePair</span>(\"b\", 2): -\n<span class=\"CodeEditor-promptParameter\">insertKeyValuePair</span>(\"a\", 1): -\n<span class=\"CodeEditor-promptParameter\">insertKeyValuePair</span>(\"c\", 3): -\n<span class=\"CodeEditor-promptParameter\">getMostRecentKey</span>(): \"c\" <span class=\"CodeEditor-promptComment\">// \"c\" was the most recently inserted key</span>\n<span class=\"CodeEditor-promptParameter\">getValueFromKey</span>(\"a\"): 1\n<span class=\"CodeEditor-promptParameter\">getMostRecentKey</span>(): \"a\" <span class=\"CodeEditor-promptComment\">// \"a\" was the most recently retrieved key</span>\n<span class=\"CodeEditor-promptParameter\">insertKeyValuePair</span>(\"d\", 4): - <span class=\"CodeEditor-promptComment\">// the cache had 3 entries; the least recently used one is evicted</span>\n<span class=\"CodeEditor-promptParameter\">getValueFromKey</span>(\"b\"): None <span class=\"CodeEditor-promptComment\">// \"b\" was evicted in the previous operation</span>\n<span class=\"CodeEditor-promptParameter\">insertKeyValuePair</span>(\"a\", 5): - <span class=\"CodeEditor-promptComment\">// \"a\" already exists in the cache so its value just gets replaced</span>\n<span class=\"CodeEditor-promptParameter\">getValueFromKey</span>(\"a\"): 5\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "maxSize",
+      "Example": 3,
+      "Schema": {
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    {
+      "Name": "classMethodsToCall",
+      "Example": [
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "a",
+            5
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        }
+      ],
+      "Schema": {
+        "description": "These methods will be called in the order that they appear in below\non an <span>LRUCache</span> of size <span>maxSize</span> and with their respective arguments.\n",
+        "items": {
+          "properties": {
+            "arguments": {
+              "maxItems": 2,
+              "type": "array"
+            },
+            "method": {
+              "enum": [
+                "getMostRecentKey",
+                "getValueFromKey",
+                "insertKeyValuePair"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "arguments"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\n// Do not edit the class below except for the insertKeyValuePair,\n// getValueFromKey, and getMostRecentKey methods. Feel free\n// to add new properties and methods to the class.\nclass LRUCache {\npublic:\n  int maxSize;\n\n  LRUCache(int maxSize) { this->maxSize = maxSize > 1 ? maxSize : 1; }\n\n  void insertKeyValuePair(string key, int value) {\n    // Write your code here.\n  }\n\n  int *getValueFromKey(string key) {\n    // Write your code here.\n    return NULL;\n  }\n\n  string getMostRecentKey() {\n    // Write your code here.\n    return \"\";\n  }\n};\n",
+      "StartingTest": "#include <unordered_map>\n\nunordered_map<string, int> letterMaps{{\"a\", 0}, {\"b\", 1}, {\"c\", 2}, {\"d\", 3},\n                                      {\"e\", 4}, {\"f\", 5}, {\"g\", 6}, {\"h\", 7},\n                                      {\"i\", 8}, {\"j\", 9}};\nvector<string> letters{\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\"};\n\n#define testLruOfSize(lruSize)                                                 \\\n  {                                                                            \\\n    /* Instantiate cache and insert first key. */                              \\\n    LRUCache lru(lruSize);                                                     \\\n    assert(lru.getValueFromKey(\"a\") == 0);                                     \\\n    lru.insertKeyValuePair(\"a\", 99);                                           \\\n    assert(lru.getMostRecentKey() == \"a\");                                     \\\n    assert(*lru.getValueFromKey(\"a\") == 99);                                   \\\n    /* Add existing key when cache isn't full. */                              \\\n    lru.insertKeyValuePair(\"a\", 0);                                            \\\n    assert(lru.getMostRecentKey() == \"a\");                                     \\\n    assert(*lru.getValueFromKey(\"a\") == 0);                                    \\\n    /* Add keys until cache reaches maximum capacity. */                       \\\n    for (int i = 1; i < lruSize; i++) {                                        \\\n      string mostRecentLetter = letters[i - 1];                                \\\n      assert(lru.getMostRecentKey() == mostRecentLetter);                      \\\n      /* Test key retrieval when cache isn't full. */                          \\\n      for (int j = 0; j < i; j++) {                                            \\\n        string letter = letters[j];                                            \\\n        assert(*lru.getValueFromKey(letter) == letterMaps[letter]);            \\\n        assert(lru.getMostRecentKey() == letter);                              \\\n      }                                                                        \\\n      string currentLetter = letters[i];                                       \\\n      assert(lru.getValueFromKey(currentLetter) == 0);                         \\\n      lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter]);        \\\n      assert(lru.getMostRecentKey() == currentLetter);                         \\\n      assert(*lru.getValueFromKey(currentLetter) ==                            \\\n             letterMaps[currentLetter]);                                       \\\n    }                                                                          \\\n    /* Add keys now that cache is at maximum capacity. */                      \\\n    for (int i = lruSize; i < letters.size(); i++) {                           \\\n      string mostRecentLetter = letters[i - 1];                                \\\n      assert(lru.getMostRecentKey() == mostRecentLetter);                      \\\n      /* Test key retrieval when cache is full. */                             \\\n      for (int j = i - lruSize; j < i; j++) {                                  \\\n        string letter = letters[j];                                            \\\n        assert(*lru.getValueFromKey(letter) == letterMaps[letter]);            \\\n        assert(lru.getMostRecentKey() == letter);                              \\\n      }                                                                        \\\n      string leastRecentLetter = letters[i - lruSize];                         \\\n      string currentLetter = letters[i];                                       \\\n      assert(lru.getValueFromKey(currentLetter) == 0);                         \\\n      lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter]);        \\\n      assert(lru.getMostRecentKey() == currentLetter);                         \\\n      assert(*lru.getValueFromKey(currentLetter) ==                            \\\n             letterMaps[currentLetter]);                                       \\\n      assert(lru.getValueFromKey(leastRecentLetter) == 0);                     \\\n    }                                                                          \\\n    /* Add existing keys. */                                                   \\\n    for (int i = letters.size() - lruSize; i < letters.size(); i++) {          \\\n      string currentLetter = letters[i];                                       \\\n      assert(*lru.getValueFromKey(currentLetter) ==                            \\\n             letterMaps[currentLetter]);                                       \\\n      lru.insertKeyValuePair(currentLetter,                                    \\\n                             (letterMaps[currentLetter] + 1) * 100);           \\\n      assert(*lru.getValueFromKey(currentLetter) ==                            \\\n             (letterMaps[currentLetter] + 1) * 100);                           \\\n    }                                                                          \\\n  }\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() { testLruOfSize(1); });\n\n    RunTest(\"Test Case 2\", []() { testLruOfSize(2); });\n\n    RunTest(\"Test Case 3\", []() { testLruOfSize(3); });\n\n    RunTest(\"Test Case 4\", []() { testLruOfSize(4); });\n\n    RunTest(\"Test Case 5\", []() { testLruOfSize(5); });\n\n    RunTest(\"Test Case 6\", []() { testLruOfSize(6); });\n\n    RunTest(\"Test Case 7\", []() { testLruOfSize(7); });\n\n    RunTest(\"Test Case 8\", []() { testLruOfSize(8); });\n\n    RunTest(\"Test Case 9\", []() { testLruOfSize(9); });\n\n    RunTest(\"Test Case 10\", []() { testLruOfSize(10); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <unordered_map>\n\nunordered_map<string, int> letterMaps{{\"a\", 0}, {\"b\", 1}, {\"c\", 2}, {\"d\", 3},\n                                      {\"e\", 4}, {\"f\", 5}, {\"g\", 6}, {\"h\", 7},\n                                      {\"i\", 8}, {\"j\", 9}};\nvector<string> letters{\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\"};\n\n#define testLruOfSize(lruSize)                                                 \\\n  {                                                                            \\\n    /* Instantiate cache and insert first key. */                              \\\n    LRUCache lru(lruSize);                                                     \\\n    assert(lru.getValueFromKey(\"a\") == 0);                                     \\\n    lru.insertKeyValuePair(\"a\", 99);                                           \\\n    assert(lru.getMostRecentKey() == \"a\");                                     \\\n    assert(*lru.getValueFromKey(\"a\") == 99);                                   \\\n    /* Add existing key when cache isn't full. */                              \\\n    lru.insertKeyValuePair(\"a\", 0);                                            \\\n    assert(lru.getMostRecentKey() == \"a\");                                     \\\n    assert(*lru.getValueFromKey(\"a\") == 0);                                    \\\n    /* Add keys until cache reaches maximum capacity. */                       \\\n    for (int i = 1; i < lruSize; i++) {                                        \\\n      string mostRecentLetter = letters[i - 1];                                \\\n      assert(lru.getMostRecentKey() == mostRecentLetter);                      \\\n      /* Test key retrieval when cache isn't full. */                          \\\n      for (int j = 0; j < i; j++) {                                            \\\n        string letter = letters[j];                                            \\\n        assert(*lru.getValueFromKey(letter) == letterMaps[letter]);            \\\n        assert(lru.getMostRecentKey() == letter);                              \\\n      }                                                                        \\\n      string currentLetter = letters[i];                                       \\\n      assert(lru.getValueFromKey(currentLetter) == 0);                         \\\n      lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter]);        \\\n      assert(lru.getMostRecentKey() == currentLetter);                         \\\n      assert(*lru.getValueFromKey(currentLetter) ==                            \\\n             letterMaps[currentLetter]);                                       \\\n    }                                                                          \\\n    /* Add keys now that cache is at maximum capacity. */                      \\\n    for (int i = lruSize; i < letters.size(); i++) {                           \\\n      string mostRecentLetter = letters[i - 1];                                \\\n      assert(lru.getMostRecentKey() == mostRecentLetter);                      \\\n      /* Test key retrieval when cache is full. */                             \\\n      for (int j = i - lruSize; j < i; j++) {                                  \\\n        string letter = letters[j];                                            \\\n        assert(*lru.getValueFromKey(letter) == letterMaps[letter]);            \\\n        assert(lru.getMostRecentKey() == letter);                              \\\n      }                                                                        \\\n      string leastRecentLetter = letters[i - lruSize];                         \\\n      string currentLetter = letters[i];                                       \\\n      assert(lru.getValueFromKey(currentLetter) == 0);                         \\\n      lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter]);        \\\n      assert(lru.getMostRecentKey() == currentLetter);                         \\\n      assert(*lru.getValueFromKey(currentLetter) ==                            \\\n             letterMaps[currentLetter]);                                       \\\n      assert(lru.getValueFromKey(leastRecentLetter) == 0);                     \\\n    }                                                                          \\\n    /* Add existing keys. */                                                   \\\n    for (int i = letters.size() - lruSize; i < letters.size(); i++) {          \\\n      string currentLetter = letters[i];                                       \\\n      assert(*lru.getValueFromKey(currentLetter) ==                            \\\n             letterMaps[currentLetter]);                                       \\\n      lru.insertKeyValuePair(currentLetter,                                    \\\n                             (letterMaps[currentLetter] + 1) * 100);           \\\n      assert(*lru.getValueFromKey(currentLetter) ==                            \\\n             (letterMaps[currentLetter] + 1) * 100);                           \\\n    }                                                                          \\\n  }\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() { \n      LRUCache lruCache(3);\n      lruCache.insertKeyValuePair(\"b\", 2);\n      lruCache.insertKeyValuePair(\"a\", 1);\n      lruCache.insertKeyValuePair(\"c\", 3);\n      assert(lruCache.getMostRecentKey() == \"c\");\n      assert(*lruCache.getValueFromKey(\"a\") == 1);\n      assert(lruCache.getMostRecentKey() == \"a\");\n      lruCache.insertKeyValuePair(\"d\", 4);\n      assert(lruCache.getValueFromKey(\"b\") == 0);\n      lruCache.insertKeyValuePair(\"a\", 5);\n      assert(*lruCache.getValueFromKey(\"a\") == 5);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nclass DoublyLinkedListNode {\npublic:\n  string key;\n  int value;\n  DoublyLinkedListNode *prev;\n  DoublyLinkedListNode *next;\n\n  DoublyLinkedListNode(string key, int value) {\n    this->key = key;\n    this->value = value;\n    this->prev = NULL;\n    this->next = NULL;\n  }\n\n  void removeBindings() {\n    if (this->prev != NULL) {\n      this->prev->next = this->next;\n    }\n    if (this->next != NULL) {\n      this->next->prev = this->prev;\n    }\n    this->prev = NULL;\n    this->next = NULL;\n  }\n};\n\nclass DoublyLinkedList {\npublic:\n  DoublyLinkedListNode *head;\n  DoublyLinkedListNode *tail;\n\n  DoublyLinkedList() {\n    this->head = NULL;\n    this->tail = NULL;\n  }\n\n  void setHeadTo(DoublyLinkedListNode *node) {\n    if (this->head == node) {\n      return;\n    } else if (this->head == NULL) {\n      this->head = node;\n      this->tail = node;\n    } else if (this->head == this->tail) {\n      this->tail->prev = node;\n      this->head = node;\n      this->head->next = this->tail;\n    } else {\n      if (this->tail == node) {\n        this->removeTail();\n      }\n      node->removeBindings();\n      this->head->prev = node;\n      node->next = this->head;\n      this->head = node;\n    }\n  }\n\n  void removeTail() {\n    if (this->tail == NULL) {\n      return;\n    }\n    if (this->tail == this->head) {\n      this->head = NULL;\n      this->tail = NULL;\n      return;\n    }\n    this->tail = this->tail->prev;\n    this->tail->next = NULL;\n  }\n};\n\nclass LRUCache {\npublic:\n  unordered_map<string, DoublyLinkedListNode *> cache;\n  int maxSize;\n  int currentSize;\n  DoublyLinkedList listOfMostRecent;\n\n  LRUCache(int maxSize) {\n    this->maxSize = maxSize > 1 ? maxSize : 1;\n    this->currentSize = 0;\n    this->listOfMostRecent = DoublyLinkedList();\n  }\n\n  // O(1) time | O(1) space\n  void insertKeyValuePair(string key, int value) {\n    if (this->cache.find(key) == this->cache.end()) {\n      if (this->currentSize == this->maxSize) {\n        this->evictLeastRecent();\n      } else {\n        this->currentSize++;\n      }\n      this->cache[key] = new DoublyLinkedListNode(key, value);\n    } else {\n      this->replaceKey(key, value);\n    }\n    this->updateMostRecent(this->cache[key]);\n  }\n\n  // O(1) time | O(1) space\n  int *getValueFromKey(string key) {\n    if (this->cache.find(key) == this->cache.end()) {\n      return NULL;\n    }\n    this->updateMostRecent(this->cache[key]);\n    return &this->cache[key]->value;\n  }\n\n  // O(1) time | O(1) space\n  string getMostRecentKey() {\n    if (this->listOfMostRecent.head == NULL) {\n      return \"\";\n    }\n    return this->listOfMostRecent.head->key;\n  }\n\n  void evictLeastRecent() {\n    string keyToRemove = this->listOfMostRecent.tail->key;\n    this->listOfMostRecent.removeTail();\n    this->cache.erase(keyToRemove);\n  }\n\n  void updateMostRecent(DoublyLinkedListNode *node) {\n    this->listOfMostRecent.setHeadTo(node);\n  }\n\n  void replaceKey(string key, int value) {\n    if (this->cache.find(key) == this->cache.end()) {\n      return;\n    }\n    this->cache[key]->value = value;\n  }\n};\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "// Do not edit the class below except for the InsertKeyValuePair,\n// GetValueFromKey, and GetMostRecentKey methods. Feel free\n// to add new properties and methods to the class.\npublic class Program {\n\tpublic class LRUCache {\n\t\tpublic int maxSize;\n\n\t\tpublic LRUCache(int maxSize) {\n\t\t\tthis.maxSize = maxSize > 1 ? maxSize : 1;\n\t\t}\n\n\t\tpublic void InsertKeyValuePair(string key, int value) {\n\t\t\t// Write your code here.\n\t\t}\n\n\t\tpublic LRUResult GetValueFromKey(string key) {\n\t\t\t// Write your code here.\n\t\t\treturn null;\n\t\t}\n\n\t\tpublic string GetMostRecentKey() {\n\t\t\t// Write your code here.\n\t\t\treturn null;\n\t\t}\n\t}\n\n\tpublic class LRUResult {\n\t\tpublic bool found;\n\t\tpublic int value;\n\n\t\tpublic LRUResult(bool found, int value) {\n\t\t\tthis.found = found;\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\tDictionary<string, int> letterMaps = new Dictionary<string, int>();\n\tstring[] letters = {\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\"};\n\n\tpublic ProgramTest() {\n\t\tletterMaps.Add(\"a\", 0);\n\t\tletterMaps.Add(\"b\", 1);\n\t\tletterMaps.Add(\"c\", 2);\n\t\tletterMaps.Add(\"d\", 3);\n\t\tletterMaps.Add(\"e\", 4);\n\t\tletterMaps.Add(\"f\", 5);\n\t\tletterMaps.Add(\"g\", 6);\n\t\tletterMaps.Add(\"h\", 7);\n\t\tletterMaps.Add(\"i\", 8);\n\t\tletterMaps.Add(\"j\", 9);\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\ttestLruOfSize(1);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\ttestLruOfSize(2);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\ttestLruOfSize(3);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\ttestLruOfSize(4);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\ttestLruOfSize(5);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\ttestLruOfSize(6);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\ttestLruOfSize(7);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\ttestLruOfSize(8);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\ttestLruOfSize(9);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\ttestLruOfSize(10);\n\t}\n\n\tpublic void testLruOfSize(int lruSize) {\n\t\t/* Instantiate cache and insert first key. */\n\t\tProgram.LRUCache lru = new Program.LRUCache(lruSize);\n\t\tvar val = lru.GetValueFromKey(\"a\");\n\t\tUtils.AssertTrue(val == null || val.found == false);\n\t\tlru.InsertKeyValuePair(\"a\", 99);\n\t\tUtils.AssertTrue(lru.GetMostRecentKey() == \"a\");\n\t\tUtils.AssertTrue(lru.GetValueFromKey(\"a\").value == 99);\n\t\t/* Add existing key when cache isn't full. */\n\t\tlru.InsertKeyValuePair(\"a\", 0);\n\t\tUtils.AssertTrue(lru.GetMostRecentKey() == \"a\");\n\t\tUtils.AssertTrue(lru.GetValueFromKey(\"a\").value == 0);\n\t\t/* Add keys until cache reaches maximum capacity. */\n\t\tfor (int i = 1; i < lruSize; i++) {\n\t\t\tstring mostRecentLetter = letters[i - 1];\n\t\t\tUtils.AssertTrue(lru.GetMostRecentKey() == mostRecentLetter);\n\t\t\t/* Test key retrieval when cache isn't full. */\n\t\t\tfor (int j = 0; j < i; j++) {\n\t\t\t\tstring letter = letters[j];\n\t\t\t\tUtils.AssertTrue(lru.GetValueFromKey(letter).value ==\n\t\t\t\t  letterMaps[letter]);\n\t\t\t\tUtils.AssertTrue(lru.GetMostRecentKey() == letter);\n\t\t\t}\n\t\t\tstring currentLetter = letters[i];\n\t\t\tval = lru.GetValueFromKey(currentLetter);\n\t\t\tUtils.AssertTrue(val == null || val.found == false);\n\t\t\tlru.InsertKeyValuePair(currentLetter, letterMaps[currentLetter]);\n\t\t\tUtils.AssertTrue(lru.GetMostRecentKey() == currentLetter);\n\t\t\tUtils.AssertTrue(lru.GetValueFromKey(currentLetter).value ==\n\t\t\t  letterMaps[currentLetter]);\n\t\t}\n\t\t/* Add keys now that cache is at maximum capacity. */\n\t\tfor (int i = lruSize; i < letters.Length; i++) {\n\t\t\tstring mostRecentLetter = letters[i - 1];\n\t\t\tUtils.AssertTrue(lru.GetMostRecentKey() == mostRecentLetter);\n\t\t\t/* Test key retrieval when cache is full. */\n\t\t\tfor (int j = i - lruSize; j < i; j++) {\n\t\t\t\tstring letter = letters[j];\n\t\t\t\tUtils.AssertTrue(lru.GetValueFromKey(letter).value ==\n\t\t\t\t  letterMaps[letter]);\n\t\t\t\tUtils.AssertTrue(lru.GetMostRecentKey() == letter);\n\t\t\t}\n\t\t\tstring leastRecentLetter = letters[i - lruSize];\n\t\t\tstring currentLetter = letters[i];\n\t\t\tval = lru.GetValueFromKey(currentLetter);\n\t\t\tUtils.AssertTrue(val == null || val.found == false);\n\t\t\tlru.InsertKeyValuePair(currentLetter, letterMaps[currentLetter]);\n\t\t\tUtils.AssertTrue(lru.GetMostRecentKey() == currentLetter);\n\t\t\tUtils.AssertTrue(lru.GetValueFromKey(currentLetter).value ==\n\t\t\t  letterMaps[currentLetter]);\n\t\t\tval = lru.GetValueFromKey(leastRecentLetter);\n\t\t\tUtils.AssertTrue(val == null || val.found == false);\n\t\t}\n\t\t/* Add existing keys. */\n\t\tfor (int i = letters.Length - lruSize; i < letters.Length; i++) {\n\t\t\tstring currentLetter = letters[i];\n\t\t\tUtils.AssertTrue(lru.GetValueFromKey(currentLetter).value ==\n\t\t\t  letterMaps[currentLetter]);\n\t\t\tlru.InsertKeyValuePair(currentLetter,\n\t\t\t  (letterMaps[currentLetter] + 1) * 100);\n\t\t\tUtils.AssertTrue(lru.GetValueFromKey(currentLetter).value ==\n\t\t\t  (letterMaps[currentLetter] + 1) * 100);\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.LRUCache lruCache = new Program.LRUCache(3);\n\t\tlruCache.InsertKeyValuePair(\"b\", 2);\n\t\tlruCache.InsertKeyValuePair(\"a\", 1);\n\t\tlruCache.InsertKeyValuePair(\"c\", 3);\n\t\tUtils.AssertTrue(lruCache.GetMostRecentKey() == \"c\");\n\t\tUtils.AssertTrue(lruCache.GetValueFromKey(\"a\").value == 1);\n\t\tUtils.AssertTrue(lruCache.GetMostRecentKey() == \"a\");\n\t\tlruCache.InsertKeyValuePair(\"d\", 4);\n\t\tvar evictedValue = lruCache.GetValueFromKey(\"b\");\n\t\tUtils.AssertTrue(evictedValue == null || evictedValue.found == false);\n\t\tlruCache.InsertKeyValuePair(\"a\", 5);\n\t\tUtils.AssertTrue(lruCache.GetValueFromKey(\"a\").value == 5);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\tpublic class LRUCache {\n\t\tpublic Dictionary<string, DoublyLinkedListNode> cache = new Dictionary<string,\n\t\t    DoublyLinkedListNode>();\n\t\tpublic int maxSize;\n\t\tpublic int currentSize = 0;\n\t\tpublic DoublyLinkedList listOfMostRecent = new DoublyLinkedList();\n\n\t\tpublic LRUCache(int maxSize) {\n\t\t\tthis.maxSize = maxSize > 1 ? maxSize : 1;\n\t\t}\n\n\t\t// O(1) time | O(1) space\n\t\tpublic void InsertKeyValuePair(string key, int value) {\n\t\t\tif (!cache.ContainsKey(key)) {\n\t\t\t\tif (currentSize == maxSize) {\n\t\t\t\t\tevictLeastRecent();\n\t\t\t\t} else {\n\t\t\t\t\tcurrentSize++;\n\t\t\t\t}\n\t\t\t\tcache.Add(key, new DoublyLinkedListNode(key, value));\n\t\t\t} else {\n\t\t\t\treplaceKey(key, value);\n\t\t\t}\n\t\t\tupdateMostRecent(cache[key]);\n\t\t}\n\n\t\t// O(1) time | O(1) space\n\t\tpublic LRUResult GetValueFromKey(string key) {\n\t\t\tif (!cache.ContainsKey(key)) {\n\t\t\t\treturn new LRUResult(false, -1);\n\t\t\t}\n\t\t\tupdateMostRecent(cache[key]);\n\t\t\treturn new LRUResult(true, cache[key].value);\n\t\t}\n\n\t\t// O(1) time | O(1) space\n\t\tpublic string GetMostRecentKey() {\n\t\t\tif (listOfMostRecent.head == null) {\n\t\t\t\treturn \"\";\n\t\t\t}\n\t\t\treturn listOfMostRecent.head.key;\n\t\t}\n\n\t\tpublic void evictLeastRecent() {\n\t\t\tstring keyToRemove = listOfMostRecent.tail.key;\n\t\t\tlistOfMostRecent.removeTail();\n\t\t\tcache.Remove(keyToRemove);\n\t\t}\n\n\t\tpublic void updateMostRecent(DoublyLinkedListNode node) {\n\t\t\tlistOfMostRecent.setHeadTo(node);\n\t\t}\n\n\t\tpublic void replaceKey(string key, int value) {\n\t\t\tif (!this.cache.ContainsKey(key)) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tcache[key].value = value;\n\t\t}\n\t}\n\n\tpublic class DoublyLinkedList {\n\t\tpublic DoublyLinkedListNode head = null;\n\t\tpublic DoublyLinkedListNode tail = null;\n\n\t\tpublic void setHeadTo(DoublyLinkedListNode node) {\n\t\t\tif (head == node) {\n\t\t\t\treturn;\n\t\t\t} else if (head == null) {\n\t\t\t\thead = node;\n\t\t\t\ttail = node;\n\t\t\t} else if (head == tail) {\n\t\t\t\ttail.prev = node;\n\t\t\t\thead = node;\n\t\t\t\thead.next = tail;\n\t\t\t} else {\n\t\t\t\tif (tail == node) {\n\t\t\t\t\tremoveTail();\n\t\t\t\t}\n\t\t\t\tnode.removeBindings();\n\t\t\t\thead.prev = node;\n\t\t\t\tnode.next = head;\n\t\t\t\thead = node;\n\t\t\t}\n\t\t}\n\n\t\tpublic void removeTail() {\n\t\t\tif (tail == null) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tif (tail == head) {\n\t\t\t\thead = null;\n\t\t\t\ttail = null;\n\t\t\t\treturn;\n\t\t\t}\n\t\t\ttail = tail.prev;\n\t\t\ttail.next = null;\n\t\t}\n\t}\n\n\tpublic class DoublyLinkedListNode {\n\t\tpublic string key;\n\t\tpublic int value;\n\t\tpublic DoublyLinkedListNode prev = null;\n\t\tpublic DoublyLinkedListNode next = null;\n\n\t\tpublic DoublyLinkedListNode(string key, int value) {\n\t\t\tthis.key = key;\n\t\t\tthis.value = value;\n\t\t}\n\n\t\tpublic void removeBindings() {\n\t\t\tif (prev != null) {\n\t\t\t\tprev.next = next;\n\t\t\t}\n\t\t\tif (next != null) {\n\t\t\t\tnext.prev = prev;\n\t\t\t}\n\t\t\tprev = null;\n\t\t\tnext = null;\n\t\t}\n\t}\n\n\tpublic class LRUResult {\n\t\tpublic bool found;\n\t\tpublic int value;\n\n\t\tpublic LRUResult(bool found, int value) {\n\t\t\tthis.found = found;\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\n// Do not edit the class below except for the insertKeyValuePair,\n// getValueFromKey, and getMostRecentKey methods. Feel free\n// to add new properties and methods to the class.\ntype LRUCache struct {\n\tmaxSize int\n\t// Add fields here.\n}\n\nfunc NewLRUCache(size int) *LRUCache {\n\t// Write your code here.\n\treturn nil\n}\n\nfunc (cache *LRUCache) InsertKeyValuePair(key string, value int) {\n\t// Write your code here.\n}\n\n// The second return value indicates whether or not the key was found\n// in the cache.\nfunc (cache *LRUCache) GetValueFromKey(key string) (int, bool) {\n\t// Write your code here.\n\treturn -1, false\n}\n\n// The second return value is false if the cache is empty.\nfunc (cache *LRUCache) GetMostRecentKey() (string, bool) {\n\t// Write your code here.\n\treturn \"\", false\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nvar letterMap = map[string]int{\n\t\"a\": 0,\n\t\"b\": 1,\n\t\"c\": 2,\n\t\"d\": 3,\n\t\"e\": 4,\n\t\"f\": 5,\n\t\"g\": 6,\n\t\"h\": 7,\n\t\"i\": 8,\n\t\"j\": 9,\n}\n\nvar letters = []string{\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\"}\n\nfunc testLRUOfSize(t *TestCase, size int) {\n\tlru := NewLRUCache(size)\n\t_, found := lru.GetValueFromKey(\"a\")\n\trequire.True(t, !found)\n\n\t// Add existing key when cache isn't full\n\tlru.InsertKeyValuePair(\"a\", 99)\n\tkey, _ := lru.GetMostRecentKey()\n\trequire.True(t, key == \"a\")\n\tval, _ := lru.GetValueFromKey(\"a\")\n\trequire.True(t, val == 99)\n\n\t// Add existing key when cache isn't full\n\tlru.InsertKeyValuePair(\"a\", 1)\n\tkey, _ = lru.GetMostRecentKey()\n\trequire.True(t, key == \"a\")\n\tval, _ = lru.GetValueFromKey(\"a\")\n\trequire.True(t, val == 1)\n\tlru.InsertKeyValuePair(\"a\", 0)\n\n\t// Add keys until cache reaches maximum capacity\n\tfor i := 1; i < size; i++ {\n\t\tmostRecentLetter := letters[i-1]\n\t\tkey, _ = lru.GetMostRecentKey()\n\t\trequire.True(t, key == mostRecentLetter)\n\n\t\t// Test Key retrieval when cache isn't full\n\t\tfor j := 0; j < i; j++ {\n\t\t\tletter := letters[j]\n\t\t\tval, _ = lru.GetValueFromKey(letter)\n\t\t\trequire.True(t, val == letterMap[letter])\n\t\t\tkey, _ = lru.GetMostRecentKey()\n\t\t\trequire.True(t, key == letter)\n\t\t}\n\t\tcurrentLetter := letters[i]\n\t\t_, found := lru.GetValueFromKey(currentLetter)\n\t\trequire.True(t, !found)\n\t\tlru.InsertKeyValuePair(currentLetter, letterMap[currentLetter])\n\t\tkey, _ = lru.GetMostRecentKey()\n\t\trequire.True(t, key == currentLetter)\n\t\tval, _ = lru.GetValueFromKey(currentLetter)\n\t\trequire.True(t, val == letterMap[currentLetter])\n\t}\n\n\t// Add new keys now that the cache is at maximum capacity\n\tfor i := size; i < len(letters); i++ {\n\t\tmostRecentLetter := letters[i-1]\n\t\tkey, _ = lru.GetMostRecentKey()\n\t\trequire.True(t, key == mostRecentLetter)\n\n\t\t// Test Key retrieval when cache isn't full\n\t\tfor j := i - size; j < i; j++ {\n\t\t\tletter := letters[j]\n\t\t\tval, _ = lru.GetValueFromKey(letter)\n\t\t\trequire.True(t, val == letterMap[letter])\n\t\t\tkey, _ = lru.GetMostRecentKey()\n\t\t\trequire.True(t, key == letter)\n\t\t}\n\t\tleastRecentLetter := letters[i-size]\n\t\tcurrentLetter := letters[i]\n\t\t_, found := lru.GetValueFromKey(currentLetter)\n\t\trequire.True(t, !found)\n\t\tlru.InsertKeyValuePair(currentLetter, letterMap[currentLetter])\n\t\tkey, _ = lru.GetMostRecentKey()\n\t\trequire.True(t, key == currentLetter)\n\t\tval, _ = lru.GetValueFromKey(currentLetter)\n\t\trequire.True(t, val == letterMap[currentLetter])\n\t\t_, found = lru.GetValueFromKey(leastRecentLetter)\n\t\trequire.True(t, !found)\n\t}\n\n\t// Add existing keys with a full cache\n\tfor i := len(letters) - size; i < len(letters); i++ {\n\t\tcurrentLetter := letters[i]\n\t\tval, _ = lru.GetValueFromKey(currentLetter)\n\t\trequire.True(t, val == letterMap[currentLetter])\n\t\tnewValue := (letterMap[currentLetter] + 1) * 100\n\t\tlru.InsertKeyValuePair(currentLetter, newValue)\n\t\tval, _ := lru.GetValueFromKey(currentLetter)\n\t\trequire.True(t, val == newValue)\n\t}\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\ttestLRUOfSize(t, 1)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\ttestLRUOfSize(t, 2)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\ttestLRUOfSize(t, 3)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\ttestLRUOfSize(t, 4)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\ttestLRUOfSize(t, 5)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\ttestLRUOfSize(t, 6)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\ttestLRUOfSize(t, 7)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\ttestLRUOfSize(t, 8)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\ttestLRUOfSize(t, 9)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\ttestLRUOfSize(t, 10)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tlruCache := NewLRUCache(3)\n\tlruCache.InsertKeyValuePair(\"b\", 2)\n\tlruCache.InsertKeyValuePair(\"a\", 1)\n\tlruCache.InsertKeyValuePair(\"c\", 3)\n\tkey, _ := lruCache.GetMostRecentKey()\n\trequire.True(t, key == \"c\")\n\tvalue, _ := lruCache.GetValueFromKey(\"a\")\n\trequire.True(t, value == 1)\n\tkey, _ = lruCache.GetMostRecentKey()\n\trequire.True(t, key == \"a\")\n\tlruCache.InsertKeyValuePair(\"d\", 4)\n\t_, found := lruCache.GetValueFromKey(\"b\")\n\trequire.True(t, !found)\n\tlruCache.InsertKeyValuePair(\"a\", 5)\n\tvalue, _ = lruCache.GetValueFromKey(\"a\")\n\trequire.True(t, value == 5)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype LRUCache struct {\n\tindex            map[string]*DoublyLinkedListNode\n\tmaxSize          int\n\tcurrentSize      int\n\tlistOfMostRecent *DoublyLinkedList\n}\n\nfunc NewLRUCache(size int) *LRUCache {\n\tlru := &LRUCache{\n\t\tindex:            map[string]*DoublyLinkedListNode{},\n\t\tmaxSize:          size,\n\t\tcurrentSize:      0,\n\t\tlistOfMostRecent: &DoublyLinkedList{},\n\t}\n\tif lru.maxSize < 1 {\n\t\tlru.maxSize = 1\n\t}\n\treturn lru\n}\n\n// O(1) time | O(1) space\nfunc (cache *LRUCache) InsertKeyValuePair(key string, value int) {\n\tif _, found := cache.index[key]; !found {\n\t\tif cache.currentSize == cache.maxSize {\n\t\t\tcache.evictLeastRecent()\n\t\t} else {\n\t\t\tcache.currentSize += 1\n\t\t}\n\t\tcache.index[key] = &DoublyLinkedListNode{\n\t\t\tkey:   key,\n\t\t\tvalue: value,\n\t\t}\n\t} else {\n\t\tcache.replaceKey(key, value)\n\t}\n\tcache.updateMostRecent(cache.index[key])\n}\n\n// O(1) time | O(1) space\nfunc (cache *LRUCache) GetValueFromKey(key string) (int, bool) {\n\tif node, found := cache.index[key]; !found {\n\t\treturn 0, false\n\t} else {\n\t\tcache.updateMostRecent(node)\n\t\treturn node.value, true\n\t}\n}\n\n// O(1) time | O(1) space\nfunc (cache *LRUCache) GetMostRecentKey() (string, bool) {\n\tif cache.listOfMostRecent.head == nil {\n\t\treturn \"\", false\n\t}\n\treturn cache.listOfMostRecent.head.key, true\n}\n\nfunc (cache *LRUCache) evictLeastRecent() {\n\tkey := cache.listOfMostRecent.tail.key\n\tcache.listOfMostRecent.removeTail()\n\tdelete(cache.index, key)\n}\n\nfunc (cache *LRUCache) updateMostRecent(node *DoublyLinkedListNode) {\n\tcache.listOfMostRecent.setHeadTo(node)\n}\n\nfunc (cache *LRUCache) replaceKey(key string, value int) {\n\tif node, found := cache.index[key]; !found {\n\t\tpanic(\"The provided key isn't in the cache!\")\n\t} else {\n\t\tnode.value = value\n\t}\n}\n\ntype DoublyLinkedList struct {\n\thead *DoublyLinkedListNode\n\ttail *DoublyLinkedListNode\n}\n\nfunc (list *DoublyLinkedList) setHeadTo(node *DoublyLinkedListNode) {\n\tif list.head == node {\n\t\treturn\n\t}\n\tif list.head == nil {\n\t\tlist.head, list.tail = node, node\n\t\treturn\n\t}\n\tif list.head == list.tail {\n\t\tlist.tail.prev = node\n\t\tlist.head = node\n\t\tlist.head.next = list.tail\n\t\treturn\n\t}\n\tif list.tail == node {\n\t\tlist.removeTail()\n\t}\n\tnode.removeBindings()\n\tlist.head.prev = node\n\tnode.next = list.head\n\tlist.head = node\n}\n\nfunc (list *DoublyLinkedList) removeTail() {\n\tif list.tail == nil {\n\t\treturn\n\t}\n\tif list.tail == list.head {\n\t\tlist.head, list.tail = nil, nil\n\t\treturn\n\t}\n\tlist.tail = list.tail.prev\n\tlist.tail.next = nil\n}\n\ntype DoublyLinkedListNode struct {\n\tkey   string\n\tvalue int\n\tprev  *DoublyLinkedListNode\n\tnext  *DoublyLinkedListNode\n}\n\nfunc (node *DoublyLinkedListNode) removeBindings() {\n\tif node.prev != nil {\n\t\tnode.prev.next = node.next\n\t}\n\tif node.next != nil {\n\t\tnode.next.prev = node.prev\n\t}\n\tnode.prev, node.next = nil, nil\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\n// Do not edit the class below except for the insertKeyValuePair,\n// getValueFromKey, and getMostRecentKey methods. Feel free\n// to add new properties and methods to the class.\nclass Program {\n  static class LRUCache {\n    int maxSize;\n\n    public LRUCache(int maxSize) {\n      this.maxSize = maxSize > 1 ? maxSize : 1;\n    }\n\n    public void insertKeyValuePair(String key, int value) {\n      // Write your code here.\n    }\n\n    public LRUResult getValueFromKey(String key) {\n      // Write your code here.\n      return null;\n    }\n\n    public String getMostRecentKey() {\n      // Write your code here.\n      return null;\n    }\n  }\n\n  static class LRUResult {\n    boolean found;\n    int value;\n\n    public LRUResult(boolean found, int value) {\n      this.found = found;\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  Map<String, Integer> letterMaps = new HashMap<String, Integer>();\n  String[] letters = {\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\"};\n\n  public ProgramTest() {\n    letterMaps.put(\"a\", 0);\n    letterMaps.put(\"b\", 1);\n    letterMaps.put(\"c\", 2);\n    letterMaps.put(\"d\", 3);\n    letterMaps.put(\"e\", 4);\n    letterMaps.put(\"f\", 5);\n    letterMaps.put(\"g\", 6);\n    letterMaps.put(\"h\", 7);\n    letterMaps.put(\"i\", 8);\n    letterMaps.put(\"j\", 9);\n  }\n\n  @Test\n  public void TestCase1() {\n    testLruOfSize(1);\n  }\n\n  @Test\n  public void TestCase2() {\n    testLruOfSize(2);\n  }\n\n  @Test\n  public void TestCase3() {\n    testLruOfSize(3);\n  }\n\n  @Test\n  public void TestCase4() {\n    testLruOfSize(4);\n  }\n\n  @Test\n  public void TestCase5() {\n    testLruOfSize(5);\n  }\n\n  @Test\n  public void TestCase6() {\n    testLruOfSize(6);\n  }\n\n  @Test\n  public void TestCase7() {\n    testLruOfSize(7);\n  }\n\n  @Test\n  public void TestCase8() {\n    testLruOfSize(8);\n  }\n\n  @Test\n  public void TestCase9() {\n    testLruOfSize(9);\n  }\n\n  @Test\n  public void TestCase10() {\n    testLruOfSize(10);\n  }\n\n  public void testLruOfSize(int lruSize) {\n    /* Instantiate cache and insert first key. */\n    Program.LRUCache lru = new Program.LRUCache(lruSize);\n    var val = lru.getValueFromKey(\"a\");\n    Utils.assertTrue(val == null || val.found == false);\n    lru.insertKeyValuePair(\"a\", 99);\n    Utils.assertTrue(lru.getMostRecentKey() == \"a\");\n    Utils.assertTrue(lru.getValueFromKey(\"a\").value == 99);\n    /* Add existing key when cache isn't full. */\n    lru.insertKeyValuePair(\"a\", 0);\n    Utils.assertTrue(lru.getMostRecentKey() == \"a\");\n    Utils.assertTrue(lru.getValueFromKey(\"a\").value == 0);\n    /* Add keys until cache reaches maximum capacity. */\n    for (int i = 1; i < lruSize; i++) {\n      String mostRecentLetter = letters[i - 1];\n      Utils.assertTrue(lru.getMostRecentKey() == mostRecentLetter);\n      /* Test key retrieval when cache isn't full. */\n      for (int j = 0; j < i; j++) {\n        String letter = letters[j];\n        Utils.assertTrue(lru.getValueFromKey(letter).value == letterMaps.get(letter));\n        Utils.assertTrue(lru.getMostRecentKey() == letter);\n      }\n      String currentLetter = letters[i];\n      val = lru.getValueFromKey(currentLetter);\n      Utils.assertTrue(val == null || val.found == false);\n      lru.insertKeyValuePair(currentLetter, letterMaps.get(currentLetter));\n      Utils.assertTrue(lru.getMostRecentKey() == currentLetter);\n      Utils.assertTrue(lru.getValueFromKey(currentLetter).value == letterMaps.get(currentLetter));\n    }\n    /* Add keys now that cache is at maximum capacity. */\n    for (int i = lruSize; i < letters.length; i++) {\n      String mostRecentLetter = letters[i - 1];\n      Utils.assertTrue(lru.getMostRecentKey() == mostRecentLetter);\n      /* Test key retrieval when cache is full. */\n      for (int j = i - lruSize; j < i; j++) {\n        String letter = letters[j];\n        Utils.assertTrue(lru.getValueFromKey(letter).value == letterMaps.get(letter));\n        Utils.assertTrue(lru.getMostRecentKey() == letter);\n      }\n      String leastRecentLetter = letters[i - lruSize];\n      String currentLetter = letters[i];\n      val = lru.getValueFromKey(currentLetter);\n      Utils.assertTrue(val == null || val.found == false);\n      lru.insertKeyValuePair(currentLetter, letterMaps.get(currentLetter));\n      Utils.assertTrue(lru.getMostRecentKey() == currentLetter);\n      Utils.assertTrue(lru.getValueFromKey(currentLetter).value == letterMaps.get(currentLetter));\n      val = lru.getValueFromKey(leastRecentLetter);\n      Utils.assertTrue(val == null || val.found == false);\n    }\n    /* Add existing keys. */\n    for (int i = letters.length - lruSize; i < letters.length; i++) {\n      String currentLetter = letters[i];\n      Utils.assertTrue(lru.getValueFromKey(currentLetter).value == letterMaps.get(currentLetter));\n      lru.insertKeyValuePair(currentLetter, (letterMaps.get(currentLetter) + 1) * 100);\n      Utils.assertTrue(\n          lru.getValueFromKey(currentLetter).value == (letterMaps.get(currentLetter) + 1) * 100);\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.LRUCache lruCache = new Program.LRUCache(3);\n    lruCache.insertKeyValuePair(\"b\", 2);\n    lruCache.insertKeyValuePair(\"a\", 1);\n    lruCache.insertKeyValuePair(\"c\", 3);\n    Utils.assertTrue(lruCache.getMostRecentKey() == \"c\");\n    Utils.assertTrue(lruCache.getValueFromKey(\"a\").value == 1);\n    Utils.assertTrue(lruCache.getMostRecentKey() == \"a\");\n    lruCache.insertKeyValuePair(\"d\", 4);\n    var evictedValue = lruCache.getValueFromKey(\"b\");\n    Utils.assertTrue(evictedValue == null || evictedValue.found == false);\n    lruCache.insertKeyValuePair(\"a\", 5);\n    Utils.assertTrue(lruCache.getValueFromKey(\"a\").value == 5);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  static class LRUCache {\n    Map<String, DoublyLinkedListNode> cache = new HashMap<String, DoublyLinkedListNode>();\n    int maxSize;\n    int currentSize = 0;\n    DoublyLinkedList listOfMostRecent = new DoublyLinkedList();\n\n    public LRUCache(int maxSize) {\n      this.maxSize = maxSize > 1 ? maxSize : 1;\n    }\n\n    // O(1) time | O(1) space\n    public void insertKeyValuePair(String key, int value) {\n      if (!cache.containsKey(key)) {\n        if (currentSize == maxSize) {\n          evictLeastRecent();\n        } else {\n          currentSize++;\n        }\n        cache.put(key, new DoublyLinkedListNode(key, value));\n      } else {\n        replaceKey(key, value);\n      }\n      updateMostRecent(cache.get(key));\n    }\n\n    // O(1) time | O(1) space\n    public LRUResult getValueFromKey(String key) {\n      if (!cache.containsKey(key)) {\n        return new LRUResult(false, -1);\n      }\n      updateMostRecent(cache.get(key));\n      return new LRUResult(true, cache.get(key).value);\n    }\n\n    // O(1) time | O(1) space\n    public String getMostRecentKey() {\n      if (listOfMostRecent.head == null) {\n        return \"\";\n      }\n      return listOfMostRecent.head.key;\n    }\n\n    public void evictLeastRecent() {\n      String keyToRemove = listOfMostRecent.tail.key;\n      listOfMostRecent.removeTail();\n      cache.remove(keyToRemove);\n    }\n\n    public void updateMostRecent(DoublyLinkedListNode node) {\n      listOfMostRecent.setHeadTo(node);\n    }\n\n    public void replaceKey(String key, int value) {\n      if (!this.cache.containsKey(key)) {\n        return;\n      }\n      cache.get(key).value = value;\n    }\n  }\n\n  static class DoublyLinkedList {\n    DoublyLinkedListNode head = null;\n    DoublyLinkedListNode tail = null;\n\n    public void setHeadTo(DoublyLinkedListNode node) {\n      if (head == node) {\n        return;\n      } else if (head == null) {\n        head = node;\n        tail = node;\n      } else if (head == tail) {\n        tail.prev = node;\n        head = node;\n        head.next = tail;\n      } else {\n        if (tail == node) {\n          removeTail();\n        }\n        node.removeBindings();\n        head.prev = node;\n        node.next = head;\n        head = node;\n      }\n    }\n\n    public void removeTail() {\n      if (tail == null) {\n        return;\n      }\n      if (tail == head) {\n        head = null;\n        tail = null;\n        return;\n      }\n      tail = tail.prev;\n      tail.next = null;\n    }\n  }\n\n  static class DoublyLinkedListNode {\n    String key;\n    int value;\n    DoublyLinkedListNode prev = null;\n    DoublyLinkedListNode next = null;\n\n    public DoublyLinkedListNode(String key, int value) {\n      this.key = key;\n      this.value = value;\n    }\n\n    public void removeBindings() {\n      if (prev != null) {\n        prev.next = next;\n      }\n      if (next != null) {\n        next.prev = prev;\n      }\n      prev = null;\n      next = null;\n    }\n  }\n\n  static class LRUResult {\n    boolean found;\n    int value;\n\n    public LRUResult(boolean found, int value) {\n      this.found = found;\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// Do not edit the class below except for the insertKeyValuePair,\n// getValueFromKey, and getMostRecentKey methods. Feel free\n// to add new properties and methods to the class.\nclass LRUCache {\n  constructor(maxSize) {\n    this.maxSize = maxSize || 1;\n  }\n\n  insertKeyValuePair(key, value) {\n    // Write your code here.\n  }\n\n  getValueFromKey(key) {\n    // Write your code here.\n  }\n\n  getMostRecentKey() {\n    // Write your code here.\n  }\n}\n\n// Do not edit the line below.\nexports.LRUCache = LRUCache;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nconst letterMaps = {\n  a: 0,\n  b: 1,\n  c: 2,\n  d: 3,\n  e: 4,\n  f: 5,\n  g: 6,\n  h: 7,\n  i: 8,\n  j: 9,\n};\n\nconst letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];\n\nfunction testLruOfSize(size) {\n  // Instantiate cache and insert first key.\n  const lru = new program.LRUCache(size);\n  chai.expect(lru.getValueFromKey('a')).to.deep.equal(null);\n  lru.insertKeyValuePair('a', 99);\n  chai.expect(lru.getMostRecentKey()).to.deep.equal('a');\n  chai.expect(lru.getValueFromKey('a')).to.deep.equal(99);\n  // Add existing key when cache isn't full.\n  lru.insertKeyValuePair('a', 0);\n  chai.expect(lru.getMostRecentKey()).to.deep.equal('a');\n  chai.expect(lru.getValueFromKey('a')).to.deep.equal(0);\n  // Add keys until cache reaches maximum capacity.\n  for (let i = 1; i < size; i++) {\n    const mostRecentLetter = letters[i - 1];\n    chai.expect(lru.getMostRecentKey()).to.deep.equal(mostRecentLetter);\n    // Test key retrieval when cache isn't full.\n    for (let j = 0; j < i; j++) {\n      const letter = letters[j];\n      chai.expect(lru.getValueFromKey(letter)).to.deep.equal(letterMaps[letter]);\n      chai.expect(lru.getMostRecentKey()).to.deep.equal(letter);\n    }\n    const currentLetter = letters[i];\n    chai.expect(lru.getValueFromKey(currentLetter)).to.deep.equal(null);\n    lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter]);\n    chai.expect(lru.getMostRecentKey()).to.deep.equal(currentLetter);\n    chai.expect(lru.getValueFromKey(currentLetter)).to.deep.equal(letterMaps[currentLetter]);\n  }\n  // Add keys now that cache is at maximum capacity.\n  for (let i = size; i < letters.length; i++) {\n    const mostRecentLetter = letters[i - 1];\n    chai.expect(lru.getMostRecentKey()).to.deep.equal(mostRecentLetter);\n    // Test key retrieval when cache is full.\n    for (let j = i - size; j < i; j++) {\n      const letter = letters[j];\n      chai.expect(lru.getValueFromKey(letter)).to.deep.equal(letterMaps[letter]);\n      chai.expect(lru.getMostRecentKey()).to.deep.equal(letter);\n    }\n    const leastRecentLetter = letters[i - size];\n    const currentLetter = letters[i];\n    chai.expect(lru.getValueFromKey(currentLetter)).to.deep.equal(null);\n    lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter]);\n    chai.expect(lru.getMostRecentKey()).to.deep.equal(currentLetter);\n    chai.expect(lru.getValueFromKey(currentLetter)).to.deep.equal(letterMaps[currentLetter]);\n    chai.expect(lru.getValueFromKey(leastRecentLetter)).to.deep.equal(null);\n  }\n  // Add existing keys.\n  for (let i = letters.length - size; i < letters.length; i++) {\n    const currentLetter = letters[i];\n    chai.expect(lru.getValueFromKey(currentLetter)).to.deep.equal(letterMaps[currentLetter]);\n    lru.insertKeyValuePair(currentLetter, (letterMaps[currentLetter] + 1) * 100);\n    chai.expect(lru.getValueFromKey(currentLetter)).to.deep.equal((letterMaps[currentLetter] + 1) * 100);\n  }\n}\n\nit('Test Case #1', function () {\n  testLruOfSize(1);\n});\n\nit('Test Case #2', function () {\n  testLruOfSize(2);\n});\n\nit('Test Case #3', function () {\n  testLruOfSize(3);\n});\n\nit('Test Case #4', function () {\n  testLruOfSize(4);\n});\n\nit('Test Case #5', function () {\n  testLruOfSize(5);\n});\n\nit('Test Case #6', function () {\n  testLruOfSize(6);\n});\n\nit('Test Case #7', function () {\n  testLruOfSize(7);\n});\n\nit('Test Case #8', function () {\n  testLruOfSize(8);\n});\n\nit('Test Case #9', function () {\n  testLruOfSize(9);\n});\n\nit('Test Case #10', function () {\n  testLruOfSize(10);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const lruCache = new program.LRUCache(3);\n  lruCache.insertKeyValuePair('b', 2);\n  lruCache.insertKeyValuePair('a', 1);\n  lruCache.insertKeyValuePair('c', 3);\n  chai.expect(lruCache.getMostRecentKey()).to.deep.equal('c');\n  chai.expect(lruCache.getValueFromKey('a')).to.deep.equal(1);\n  chai.expect(lruCache.getMostRecentKey()).to.deep.equal('a');\n  lruCache.insertKeyValuePair('d', 4);\n  chai.expect(lruCache.getValueFromKey('b')).to.deep.equal(null);\n  lruCache.insertKeyValuePair('a', 5);\n  chai.expect(lruCache.getValueFromKey('a')).to.deep.equal(5);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LRUCache {\n  constructor(maxSize) {\n    this.cache = {};\n    this.maxSize = maxSize || 1;\n    this.currentSize = 0;\n    this.listOfMostRecent = new DoublyLinkedList();\n  }\n\n  // O(1) time | O(1) space\n  insertKeyValuePair(key, value) {\n    if (!(key in this.cache)) {\n      if (this.currentSize === this.maxSize) {\n        this.evictLeastRecent();\n      } else {\n        this.currentSize++;\n      }\n      this.cache[key] = new DoublyLinkedListNode(key, value);\n    } else {\n      this.replaceKey(key, value);\n    }\n    this.updateMostRecent(this.cache[key]);\n  }\n\n  // O(1) time | O(1) space\n  getValueFromKey(key) {\n    if (!(key in this.cache)) return null;\n    this.updateMostRecent(this.cache[key]);\n    return this.cache[key].value;\n  }\n\n  // O(1) time | O(1) space\n  getMostRecentKey() {\n    if (!this.listOfMostRecent.head) return;\n    return this.listOfMostRecent.head.key;\n  }\n\n  evictLeastRecent() {\n    const keyToRemove = this.listOfMostRecent.tail.key;\n    this.listOfMostRecent.removeTail();\n    delete this.cache[keyToRemove];\n  }\n\n  updateMostRecent(node) {\n    this.listOfMostRecent.setHeadTo(node);\n  }\n\n  replaceKey(key, value) {\n    if (!(key in this.cache)) {\n      throw new Error(\"The provided key isn't in the cache!\");\n    }\n    this.cache[key].value = value;\n  }\n}\n\nclass DoublyLinkedList {\n  constructor() {\n    this.head = null;\n    this.tail = null;\n  }\n\n  setHeadTo(node) {\n    if (this.head === node) {\n      return;\n    } else if (this.head === null) {\n      this.head = node;\n      this.tail = node;\n    } else if (this.head === this.tail) {\n      this.tail.prev = node;\n      this.head = node;\n      this.head.next = this.tail;\n    } else {\n      if (this.tail === node) this.removeTail();\n      node.removeBindings();\n      this.head.prev = node;\n      node.next = this.head;\n      this.head = node;\n    }\n  }\n\n  removeTail() {\n    if (this.tail === null) return;\n    if (this.tail === this.head) {\n      this.head = null;\n      this.tail = null;\n      return;\n    }\n    this.tail = this.tail.prev;\n    this.tail.next = null;\n  }\n}\n\nclass DoublyLinkedListNode {\n  constructor(key, value) {\n    this.key = key;\n    this.value = value;\n    this.prev = null;\n    this.next = null;\n  }\n\n  removeBindings() {\n    if (this.prev !== null) {\n      this.prev.next = this.next;\n    }\n    if (this.next !== null) {\n      this.next.prev = this.prev;\n    }\n    this.prev = null;\n    this.next = null;\n  }\n}\n\nexports.LRUCache = LRUCache;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# Do not edit the class below except for the insertKeyValuePair,\n# getValueFromKey, and getMostRecentKey methods. Feel free\n# to add new properties and methods to the class.\nclass LRUCache:\n    def __init__(self, maxSize):\n        self.maxSize = maxSize or 1\n\n    def insertKeyValuePair(self, key, value):\n        # Write your code here.\n        pass\n\n    def getValueFromKey(self, key):\n        # Write your code here.\n        pass\n\n    def getMostRecentKey(self):\n        # Write your code here.\n        pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nletterMaps = {\"a\": 0, \"b\": 1, \"c\": 2, \"d\": 3, \"e\": 4, \"f\": 5, \"g\": 6, \"h\": 7, \"i\": 8, \"j\": 9}\n\nletters = [\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\"]\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.checkLruOfSize(1)\n\n    def test_case_2(self):\n        self.checkLruOfSize(2)\n\n    def test_case_3(self):\n        self.checkLruOfSize(3)\n\n    def test_case_4(self):\n        self.checkLruOfSize(4)\n\n    def test_case_5(self):\n        self.checkLruOfSize(5)\n\n    def test_case_6(self):\n        self.checkLruOfSize(6)\n\n    def test_case_7(self):\n        self.checkLruOfSize(7)\n\n    def test_case_8(self):\n        self.checkLruOfSize(8)\n\n    def test_case_9(self):\n        self.checkLruOfSize(9)\n\n    def test_case_10(self):\n        self.checkLruOfSize(10)\n\n    def checkLruOfSize(self, size):\n        # Instantiate cache and insert first key.\n        lru = program.LRUCache(size)\n        self.assertEqual(lru.getValueFromKey(\"a\"), None)\n        lru.insertKeyValuePair(\"a\", 99)\n        self.assertEqual(lru.getMostRecentKey(), \"a\")\n        self.assertEqual(lru.getValueFromKey(\"a\"), 99)\n        # Add existing key when cache isn't full.\n        lru.insertKeyValuePair(\"a\", 0)\n        self.assertEqual(lru.getMostRecentKey(), \"a\")\n        self.assertEqual(lru.getValueFromKey(\"a\"), 0)\n        # Add keys until cache reaches maximum capacity.\n        for i in range(1, size):\n            mostRecentLetter = letters[i - 1]\n            self.assertEqual(lru.getMostRecentKey(), mostRecentLetter)\n            # Test key retrieval when cache isn't full.\n            for j in range(0, i):\n                letter = letters[j]\n                self.assertEqual(lru.getValueFromKey(letter), letterMaps[letter])\n                self.assertEqual(lru.getMostRecentKey(), letter)\n            currentLetter = letters[i]\n            self.assertEqual(lru.getValueFromKey(currentLetter), None)\n            lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter])\n            self.assertEqual(lru.getMostRecentKey(), currentLetter)\n            self.assertEqual(lru.getValueFromKey(currentLetter), letterMaps[currentLetter])\n        # Add keys now that cache is at maximum capacity.\n        for i in range(size, len(letters)):\n            mostRecentLetter = letters[i - 1]\n            self.assertEqual(lru.getMostRecentKey(), mostRecentLetter)\n            # Test key retrieval when cache is full.\n            for j in range(i - size, i):\n                letter = letters[j]\n                self.assertEqual(lru.getValueFromKey(letter), letterMaps[letter])\n                self.assertEqual(lru.getMostRecentKey(), letter)\n            leastRecentLetter = letters[i - size]\n            currentLetter = letters[i]\n            self.assertEqual(lru.getValueFromKey(currentLetter), None)\n            lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter])\n            self.assertEqual(lru.getMostRecentKey(), currentLetter)\n            self.assertEqual(lru.getValueFromKey(currentLetter), letterMaps[currentLetter])\n            self.assertEqual(lru.getValueFromKey(leastRecentLetter), None)\n        # Add existing keys when cache is full.\n        for i in range(len(letters) - size, len(letters)):\n            currentLetter = letters[i]\n            self.assertEqual(lru.getValueFromKey(currentLetter), letterMaps[currentLetter])\n            lru.insertKeyValuePair(currentLetter, (letterMaps[currentLetter] + 1) * 100)\n            self.assertEqual(lru.getValueFromKey(currentLetter), (letterMaps[currentLetter] + 1) * 100)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        lruCache = program.LRUCache(3)\n        lruCache.insertKeyValuePair(\"b\", 2)\n        lruCache.insertKeyValuePair(\"a\", 1)\n        lruCache.insertKeyValuePair(\"c\", 3)\n        self.assertEqual(lruCache.getMostRecentKey(), \"c\")\n        self.assertEqual(lruCache.getValueFromKey(\"a\"), 1)\n        self.assertEqual(lruCache.getMostRecentKey(), \"a\")\n        lruCache.insertKeyValuePair(\"d\", 4)\n        self.assertEqual(lruCache.getValueFromKey(\"b\"), None)\n        lruCache.insertKeyValuePair(\"a\", 5)\n        self.assertEqual(lruCache.getValueFromKey(\"a\"), 5)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass LRUCache:\n    def __init__(self, maxSize):\n        self.cache = {}\n        self.maxSize = maxSize or 1\n        self.currentSize = 0\n        self.listOfMostRecent = DoublyLinkedList()\n\n    # O(1) time | O(1) space\n    def insertKeyValuePair(self, key, value):\n        if key not in self.cache:\n            if self.currentSize == self.maxSize:\n                self.evictLeastRecent()\n            else:\n                self.currentSize += 1\n            self.cache[key] = DoublyLinkedListNode(key, value)\n        else:\n            self.replaceKey(key, value)\n        self.updateMostRecent(self.cache[key])\n\n    # O(1) time | O(1) space\n    def getValueFromKey(self, key):\n        if key not in self.cache:\n            return None\n        self.updateMostRecent(self.cache[key])\n        return self.cache[key].value\n\n    # O(1) time | O(1) space\n    def getMostRecentKey(self):\n        if self.listOfMostRecent.head is None:\n            return None\n        return self.listOfMostRecent.head.key\n\n    def evictLeastRecent(self):\n        keyToRemove = self.listOfMostRecent.tail.key\n        self.listOfMostRecent.removeTail()\n        del self.cache[keyToRemove]\n\n    def updateMostRecent(self, node):\n        self.listOfMostRecent.setHeadTo(node)\n\n    def replaceKey(self, key, value):\n        if key not in self.cache:\n            raise Exception(\"The provided key isn't in the cache!\")\n        self.cache[key].value = value\n\n\nclass DoublyLinkedList:\n    def __init__(self):\n        self.head = None\n        self.tail = None\n\n    def setHeadTo(self, node):\n        if self.head == node:\n            return\n        elif self.head is None:\n            self.head = node\n            self.tail = node\n        elif self.head == self.tail:\n            self.tail.prev = node\n            self.head = node\n            self.head.next = self.tail\n        else:\n            if self.tail == node:\n                self.removeTail()\n            node.removeBindings()\n            self.head.prev = node\n            node.next = self.head\n            self.head = node\n\n    def removeTail(self):\n        if self.tail is None:\n            return\n        if self.tail == self.head:\n            self.head = None\n            self.tail = None\n            return\n        self.tail = self.tail.prev\n        self.tail.next = None\n\n\nclass DoublyLinkedListNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.prev = None\n        self.next = None\n\n    def removeBindings(self):\n        if self.prev is not None:\n            self.prev.next = self.next\n        if self.next is not None:\n            self.next.prev = self.prev\n        self.prev = None\n        self.next = None\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  class LRUCache {\n    var maxSize: Int\n\n    init(maxSize: Int) {\n      self.maxSize = maxSize\n      // Write your code here.\n    }\n\n    func insertKeyValuePair(_ key: String, _ value: Int) {\n      // Write your code here.\n    }\n\n    func getValueFromKey(_ key: String) -> Int? {\n      // Write your code here.\n      return nil\n    }\n\n    func getMostRecentKey() -> String? {\n      // Write your code here.\n      return nil\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  let program = Program()\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try testLruOfSize(1)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try testLruOfSize(2)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try testLruOfSize(3)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try testLruOfSize(4)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try testLruOfSize(5)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try testLruOfSize(6)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try testLruOfSize(7)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try testLruOfSize(8)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try testLruOfSize(9)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try testLruOfSize(10)\n    }\n  }\n\n  let letters = [\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\"]\n  let letterMaps = [\"a\": 0, \"b\": 1, \"c\": 2, \"d\": 3, \"e\": 4, \"f\": 5, \"g\": 6, \"h\": 7, \"i\": 8, \"j\": 9]\n\n  func testLruOfSize(_ size: Int) throws {\n    // Instantiate cache and insert first key\n    let lru = Program.LRUCache(maxSize: size)\n    try assertEqual(nil, lru.getValueFromKey(\"a\"))\n    lru.insertKeyValuePair(\"a\", 99)\n    try assertEqual(\"a\", lru.getMostRecentKey())\n    try assertEqual(99, lru.getValueFromKey(\"a\"))\n\n    // Add existing key when cache isn't full\n    lru.insertKeyValuePair(\"a\", 0)\n    try assertEqual(\"a\", lru.getMostRecentKey())\n    try assertEqual(0, lru.getValueFromKey(\"a\"))\n\n    // Add keys until cache reaches maximum capacity\n    for i in stride(from: 1, to: size, by: 1) {\n      let mostRecentLetter = letters[i - 1]\n      try assertEqual(mostRecentLetter, lru.getMostRecentKey())\n\n      // Test key retrieval when cache isn't full\n      for j in stride(from: 0, to: 1, by: 1) {\n        let letter = letters[j]\n        try assertEqual(letterMaps[letter], lru.getValueFromKey(letter))\n        try assertEqual(letter, lru.getMostRecentKey())\n      }\n\n      let currentLetter = letters[i]\n      try assertEqual(nil, lru.getValueFromKey(currentLetter))\n      lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter]!)\n      try assertEqual(currentLetter, lru.getMostRecentKey())\n      try assertEqual(letterMaps[currentLetter], lru.getValueFromKey(currentLetter))\n    }\n\n    // Add keys now that cache is at maximum capacity\n    for i in stride(from: size, to: letters.count, by: 1) {\n      let mostRecentLetter = letters[i - 1]\n      try assertEqual(mostRecentLetter, lru.getMostRecentKey())\n\n      // Test key retrieval when cache is full\n      for j in stride(from: i - size, to: i, by: 1) {\n        let letter = letters[j]\n        try assertEqual(letterMaps[letter], lru.getValueFromKey(letter))\n        try assertEqual(letter, lru.getMostRecentKey())\n      }\n\n      let leastRecentLetter = letters[i - size]\n      let currentLetter = letters[i]\n      try assertEqual(nil, lru.getValueFromKey(currentLetter))\n      lru.insertKeyValuePair(currentLetter, letterMaps[currentLetter]!)\n      try assertEqual(currentLetter, lru.getMostRecentKey())\n      try assertEqual(letterMaps[currentLetter], lru.getValueFromKey(currentLetter))\n      try assertEqual(nil, lru.getValueFromKey(leastRecentLetter))\n    }\n\n    // Add existing keys\n    for i in letters.count - size ..< letters.count {\n      let currentLetter = letters[i]\n      try assertEqual(letterMaps[currentLetter], lru.getValueFromKey(currentLetter))\n      lru.insertKeyValuePair(currentLetter, (letterMaps[currentLetter]! + 1) * 100)\n      try assertEqual((letterMaps[currentLetter]! + 1) * 100, lru.getValueFromKey(currentLetter))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  let program = Program()\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let lruCache = Program.LRUCache(maxSize: 3)\n      lruCache.insertKeyValuePair(\"b\", 2)\n      lruCache.insertKeyValuePair(\"a\", 1)\n      lruCache.insertKeyValuePair(\"c\", 3)\n      try assertEqual(\"c\", lruCache.getMostRecentKey())\n      try assertEqual(1, lruCache.getValueFromKey(\"a\"))\n      try assertEqual(\"a\", lruCache.getMostRecentKey())\n      lruCache.insertKeyValuePair(\"d\", 4)\n      try assertEqual(nil, lruCache.getValueFromKey(\"b\"))\n      lruCache.insertKeyValuePair(\"a\", 5)\n      try assertEqual(5, lruCache.getValueFromKey(\"a\"))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class LRUCache {\n    var maxSize: Int\n    var currentSize = 0\n    var cache = [String: DoublyLinkedListNode]()\n    var listOfMostRecent = DoublyLinkedList()\n\n    init(maxSize: Int) {\n      self.maxSize = maxSize\n    }\n\n    // O(1) time | O(1) space\n    func insertKeyValuePair(_ key: String, _ value: Int) {\n      if !cache.keys.contains(key) {\n        if currentSize == maxSize {\n          evictLeastRecent()\n        } else {\n          currentSize += 1\n        }\n\n        cache[key] = DoublyLinkedListNode(key, value)\n      } else if let existingNode = cache[key] {\n        existingNode.value = value\n      }\n\n      if let node = cache[key] {\n        updateMostRecent(node)\n      }\n    }\n\n    func evictLeastRecent() {\n      if let key = listOfMostRecent.tail?.key {\n        listOfMostRecent.removeTail()\n        cache[key] = nil\n      }\n    }\n\n    func updateMostRecent(_ node: DoublyLinkedListNode) {\n      listOfMostRecent.setHeadTo(node)\n    }\n\n    // O(1) time | O(1) space\n    func getValueFromKey(_ key: String) -> Int? {\n      if let existingNode = cache[key] {\n        updateMostRecent(existingNode)\n        return existingNode.value\n      } else {\n        return nil\n      }\n    }\n\n    // O(1) time | O(1) space\n    func getMostRecentKey() -> String? {\n      if listOfMostRecent.head === nil {\n        return nil;\n      }\n      return listOfMostRecent.head?.key\n    }\n  }\n\n  class DoublyLinkedListNode {\n    let key: String\n    var value: Int\n    var previous: DoublyLinkedListNode?\n    var next: DoublyLinkedListNode?\n\n    init(_ key: String, _ value: Int) {\n      self.key = key\n      self.value = value\n      previous = nil\n      next = nil\n    }\n\n    func removeBindings() {\n      if let previous = previous {\n        previous.next = next\n      }\n\n      if let next = next {\n        next.previous = previous\n      }\n\n      previous = nil\n      next = nil\n    }\n  }\n\n  class DoublyLinkedList {\n    var head: DoublyLinkedListNode?\n    var tail: DoublyLinkedListNode?\n\n    init() {\n      head = nil\n      tail = nil\n    }\n\n    func setHeadTo(_ node: DoublyLinkedListNode) {\n      if head === node {\n        return\n      } else if head === nil {\n        head = node\n        tail = node\n      } else if head === tail {\n        tail?.previous = node\n        head = node\n        head?.next = tail\n      } else {\n        if tail === node {\n          removeTail()\n        }\n\n        node.removeBindings()\n        head?.previous = node\n        node.next = head\n        head = node\n      }\n    }\n\n    func removeTail() {\n      if tail === nil {\n        return\n      }\n\n      if head === tail {\n        head = nil\n        tail = nil\n        return\n      }\n\n      tail = tail?.previous\n      tail?.next = nil\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// Do not edit the class below except for the insertKeyValuePair,\n// getValueFromKey, and getMostRecentKey methods. Feel free\n// to add new properties and methods to the class.\nexport class LRUCache {\n  maxSize: number;\n\n  constructor(maxSize: number) {\n    this.maxSize = maxSize || 1;\n  }\n\n  insertKeyValuePair(key: string, value: number) {\n    // Write your code here.\n  }\n\n  getValueFromKey(key: string) {\n    // Write your code here.\n  }\n\n  getMostRecentKey() {\n    // Write your code here.\n  }\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const lruCache = new program.LRUCache(3);\n  lruCache.insertKeyValuePair('b', 2);\n  lruCache.insertKeyValuePair('a', 1);\n  lruCache.insertKeyValuePair('c', 3);\n  chai.expect(lruCache.getMostRecentKey()).to.deep.equal('c');\n  chai.expect(lruCache.getValueFromKey('a')).to.deep.equal(1);\n  chai.expect(lruCache.getMostRecentKey()).to.deep.equal('a');\n  lruCache.insertKeyValuePair('d', 4);\n  chai.expect(lruCache.getValueFromKey('b')).to.deep.equal(null);\n  lruCache.insertKeyValuePair('a', 5);\n  chai.expect(lruCache.getValueFromKey('a')).to.deep.equal(5);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nexport class LRUCache {\n  cache: {[key: string]: DoublyLinkedListNode};\n  maxSize: number;\n  currentSize: number;\n  listOfMostRecent: DoublyLinkedList;\n\n  constructor(maxSize: number) {\n    this.cache = {};\n    this.maxSize = maxSize || 1;\n    this.currentSize = 0;\n    this.listOfMostRecent = new DoublyLinkedList();\n  }\n\n  // O(1) time | O(1) space\n  insertKeyValuePair(key: string, value: number) {\n    if (!(key in this.cache)) {\n      if (this.currentSize === this.maxSize) {\n        this.evictLeastRecent();\n      } else {\n        this.currentSize++;\n      }\n      this.cache[key] = new DoublyLinkedListNode(key, value);\n    } else {\n      this.replaceKey(key, value);\n    }\n    this.updateMostRecent(this.cache[key]);\n  }\n\n  // O(1) time | O(1) space\n  getValueFromKey(key: string) {\n    if (!(key in this.cache)) return null;\n    this.updateMostRecent(this.cache[key]);\n    return this.cache[key].value;\n  }\n\n  // O(1) time | O(1) space\n  getMostRecentKey() {\n    if (!this.listOfMostRecent.head) return null;\n    return this.listOfMostRecent.head.key;\n  }\n\n  evictLeastRecent() {\n    const keyToRemove = this.listOfMostRecent.tail!.key;\n    this.listOfMostRecent.removeTail();\n    delete this.cache[keyToRemove];\n  }\n\n  updateMostRecent(node: DoublyLinkedListNode) {\n    this.listOfMostRecent.setHeadTo(node);\n  }\n\n  replaceKey(key: string, value: number) {\n    if (!(key in this.cache)) {\n      throw new Error(\"The provided key isn't in the cache!\");\n    }\n    this.cache[key].value = value;\n  }\n}\n\nclass DoublyLinkedList {\n  head: DoublyLinkedListNode | null;\n  tail: DoublyLinkedListNode | null;\n\n  constructor() {\n    this.head = null;\n    this.tail = null;\n  }\n\n  setHeadTo(node: DoublyLinkedListNode) {\n    if (this.head === node) {\n      return;\n    } else if (this.head === null) {\n      this.head = node;\n      this.tail = node;\n    } else if (this.head === this.tail) {\n      this.tail.prev = node;\n      this.head = node;\n      this.head.next = this.tail;\n    } else {\n      if (this.tail === node) this.removeTail();\n      node.removeBindings();\n      this.head.prev = node;\n      node.next = this.head;\n      this.head = node;\n    }\n  }\n\n  removeTail() {\n    if (this.tail === null) return;\n    if (this.tail === this.head) {\n      this.head = null;\n      this.tail = null;\n      return;\n    }\n    this.tail = this.tail.prev!;\n    this.tail.next = null;\n  }\n}\n\nclass DoublyLinkedListNode {\n  key: string;\n  value: number;\n  prev: DoublyLinkedListNode | null;\n  next: DoublyLinkedListNode | null;\n\n  constructor(key: string, value: number) {\n    this.key = key;\n    this.value = value;\n    this.prev = null;\n    this.next = null;\n  }\n\n  removeBindings() {\n    if (this.prev !== null) {\n      this.prev.next = this.next;\n    }\n    if (this.next !== null) {\n      this.next.prev = this.prev;\n    }\n    this.prev = null;\n    this.next = null;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "a",
+            5
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        }
+      ],
+      "maxSize": 3
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "a",
+            9001
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey"
+        }
+      ],
+      "maxSize": 1
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "d"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "e",
+            5
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "d"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "e"
+          ],
+          "method": "getValueFromKey"
+        }
+      ],
+      "maxSize": 4
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "d"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        },
+        {
+          "arguments": [
+            "e",
+            5
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey"
+        }
+      ],
+      "maxSize": 4
+    },
+    {
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "e",
+            5
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "f",
+            5
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "d"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "g",
+            5
+          ],
+          "method": "insertKeyValuePair"
+        },
+        {
+          "arguments": [
+            "e"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "f"
+          ],
+          "method": "getValueFromKey"
+        },
+        {
+          "arguments": [
+            "g"
+          ],
+          "method": "getValueFromKey"
+        }
+      ],
+      "maxSize": 4
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "c"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 1
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "a"
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a",
+            5
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 5
+        }
+      ],
+      [
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 1
+        },
+        {
+          "arguments": [
+            "a",
+            9001
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 9001
+        },
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey",
+          "output": 2
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey",
+          "output": 3
+        }
+      ],
+      [
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 1
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey",
+          "output": 2
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey",
+          "output": 3
+        },
+        {
+          "arguments": [
+            "d"
+          ],
+          "method": "getValueFromKey",
+          "output": 4
+        },
+        {
+          "arguments": [
+            "e",
+            5
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey",
+          "output": 2
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey",
+          "output": 3
+        },
+        {
+          "arguments": [
+            "d"
+          ],
+          "method": "getValueFromKey",
+          "output": 4
+        },
+        {
+          "arguments": [
+            "e"
+          ],
+          "method": "getValueFromKey",
+          "output": 5
+        }
+      ],
+      [
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "a"
+        },
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "b"
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "c"
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "d"
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 1
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "a"
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey",
+          "output": 2
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "b"
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey",
+          "output": 3
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "c"
+        },
+        {
+          "arguments": [
+            "d"
+          ],
+          "method": "getValueFromKey",
+          "output": 4
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "d"
+        },
+        {
+          "arguments": [
+            "e",
+            5
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "getMostRecentKey",
+          "output": "e"
+        }
+      ],
+      [
+        {
+          "arguments": [
+            "a",
+            1
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "b",
+            2
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "c",
+            3
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "d",
+            4
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 1
+        },
+        {
+          "arguments": [
+            "e",
+            5
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 1
+        },
+        {
+          "arguments": [
+            "b"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey",
+          "output": 3
+        },
+        {
+          "arguments": [
+            "f",
+            5
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey",
+          "output": 3
+        },
+        {
+          "arguments": [
+            "d"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "g",
+            5
+          ],
+          "method": "insertKeyValuePair",
+          "output": null
+        },
+        {
+          "arguments": [
+            "e"
+          ],
+          "method": "getValueFromKey",
+          "output": null
+        },
+        {
+          "arguments": [
+            "a"
+          ],
+          "method": "getValueFromKey",
+          "output": 1
+        },
+        {
+          "arguments": [
+            "c"
+          ],
+          "method": "getValueFromKey",
+          "output": 3
+        },
+        {
+          "arguments": [
+            "f"
+          ],
+          "method": "getValueFromKey",
+          "output": 5
+        },
+        {
+          "arguments": [
+            "g"
+          ],
+          "method": "getValueFromKey",
+          "output": 5
+        }
+      ]
+    ]
+  ]
+}

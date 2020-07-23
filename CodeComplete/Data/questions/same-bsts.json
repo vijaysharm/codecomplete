@@ -1,0 +1,550 @@
+{
+  "Summary": {
+    "Name": "Same BSTs",
+    "Category": "Binary Search Trees",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-11-21T00:00:00Z",
+      "number": 405,
+      "timeOne": 0,
+      "timeTwo": 1527,
+      "url": "https://player.vimeo.com/video/374820856"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can immediately conclude that the input arrays don't represent the same BST if their first values aren't equal to each other, since their first values represent the root of the BST. Similarly, you can conclude this if their lengths are different. If their first values are equal to each other and their lengths are the same, what should your next step be?\nGiven an array of integers, all of the values in the array that are smaller than the first value in the array are located in the left subtree of the BST that the array represents, and all of the values in the array that are greater than or equal to the first value in the array are located in the right subtree of the BST that the array represents. Use this fact and Hint #1 to recursively determine whether all subtrees in the BSTs represented by the arrays are equal to each other.\nWrite a recursive function that takes in two arrays of integers. If the first values of the arrays aren't equal to each other or if the arrays don't have the same length, the arrays don't represent the same BST. If the first values and lengths are equal to each other, respectively, perform the following actions on both arrays: gather all integers that are smaller than the first integer; these form a new array that represents the left subtree of the relevant BST; gather all integers that are greater than or equal to the first integer; these form a new array that represents the right subtree of the relevant BST. Call the recursive function twice: once with the two left-subtree arrays and once with the two right-subtree arrays.\nDo you actually need to create all of the auxiliary arrays mentioned in Hint #3?",
+  "SpaceTime": "O(n^2) time | O(d) space - where n is the number of nodes in each array, respectively, and d is the depth of the BST that they represent\n",
+  "PromptHTML": "<p>\n  An array of integers is said to represent the Binary Search Tree (BST)\n  obtained by inserting each integer in the array, from left to right, into the\n  BST.\n</p>\n<p>\n  Write a function that takes in two arrays of integers and determines whether\n  these arrays represent the same BST. Note that you're <i>not</i> allowed to\n  construct any BSTs in your code.\n</p>\n<p>\n  A BST is a Binary Tree that consists only of <span>BST</span> nodes. A node is said to be a\n  valid <span>BST</span> node if and only if it satisfies the BST property: its value is\n  strictly greater than the values of every node to its left; its value is less\n  than or equal to the values of every node to its right; and its children nodes\n  are either valid <span>BST</span> nodes themselves or <span>None</span> /\n  <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">arrayOne</span> = [10, 15, 8, 12, 94, 81, 5, 2, 11]\n<span class=\"CodeEditor-promptParameter\">arrayTwo</span> = [10, 8, 5, 15, 2, 12, 11, 94, 81]\n</pre>\n<h3>Sample Output</h3>\n<pre>\ntrue <span class=\"CodeEditor-promptComment\">// both arrays represent the BST below</span>\n<span class=\"CodeEditor-promptComment\">         10\n       /     \\\n      8      15\n    /       /   \\\n   5      12    94\n /       /     /\n2       11    81\n</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "arrayOne",
+      "Example": [
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        5,
+        2,
+        11
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "arrayTwo",
+      "Example": [
+        10,
+        8,
+        5,
+        15,
+        2,
+        12,
+        11,
+        94,
+        81
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\n\nusing namespace std;\n\nbool sameBsts(vector<int> arrayOne, vector<int> arrayTwo) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> arrayOne = {1, 2, 3, 4, 5, 6, 7};\n      vector<int> arrayTwo = {1, 2, 3, 4, 5, 6, 7};\n      assert(sameBsts(arrayOne, arrayTwo) == true);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> arrayOne = {7, 6, 5, 4, 3, 2, 1};\n      vector<int> arrayTwo = {7, 6, 5, 4, 3, 2, 1};\n      assert(sameBsts(arrayOne, arrayTwo) == true);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> arrayOne = {10, 15, 8, 12, 94, 81, 5, 2};\n      vector<int> arrayTwo = {10, 8, 5, 15, 2, 12, 94, 81};\n      assert(sameBsts(arrayOne, arrayTwo) == true);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> arrayOne = {10, 15, 8, 12, 94, 81, 5, 2};\n      vector<int> arrayTwo = {11, 8, 5, 15, 2, 12, 94, 81};\n      assert(sameBsts(arrayOne, arrayTwo) == false);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> arrayOne = {10,  15, 8,  12, 94, 81, 5, 2,  -1,\n                              100, 45, 12, 8,  -1, 8,  2, -34};\n      vector<int> arrayTwo = {10, 8,   5, 15, 2, 12, 94, 81, -1,\n                              -1, -34, 8, 2,  8, 12, 45, 100};\n      assert(sameBsts(arrayOne, arrayTwo) == true);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> arrayOne = {10,  15, 8,  12, 94, 81, 5, 2,  -1,\n                              101, 45, 12, 8,  -1, 8,  2, -34};\n      vector<int> arrayTwo = {10, 8,   5, 15, 2, 12, 94, 81, -1,\n                              -1, -34, 8, 2,  8, 12, 45, 100};\n      assert(sameBsts(arrayOne, arrayTwo) == false);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> arrayOne = {5,  2,  -1, 100, 45, 12, 8, -1, 8,\n                              10, 15, 8,  12,  94, 81, 2, -34};\n      vector<int> arrayTwo = {5, 8,  10, 15, 2,  8,  12,  45, 100,\n                              2, 12, 94, 81, -1, -1, -34, 8};\n      assert(sameBsts(arrayOne, arrayTwo) == false);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> arrayOne = {10,  15, 8,  12, 94, 81, 5, 2,  -1,\n                              100, 45, 12, 9,  -1, 8,  2, -34};\n      vector<int> arrayTwo = {10, 8,   5, 15, 2, 12, 94, 81, -1,\n                              -1, -34, 8, 2,  9, 12, 45, 100};\n      assert(sameBsts(arrayOne, arrayTwo) == false);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> arrayOne = {1, 2, 3, 4, 5, 6, 7, 8};\n      vector<int> arrayTwo = {1, 2, 3, 4, 5, 6, 7};\n      assert(sameBsts(arrayOne, arrayTwo) == false);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<int> arrayOne = {7, 6, 5, 4, 3, 2, 1};\n      vector<int> arrayTwo = {7, 6, 5, 4, 3, 2, 1, 0};\n      assert(sameBsts(arrayOne, arrayTwo) == false);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<int> arrayOne = {10, 15, 8, 12, 94, 81, 5, 2, 10};\n      vector<int> arrayTwo = {10, 8, 5, 15, 2, 10, 12, 94, 81};\n      assert(sameBsts(arrayOne, arrayTwo) == false);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      vector<int> arrayOne = {50, 76, 81, 23, 23, 23, 657, 56, 12, -1, 3};\n      vector<int> arrayTwo = {50, 23, 76, 23, 23, 12, 56, 81, -1, 3, 657};\n      assert(sameBsts(arrayOne, arrayTwo) == true);\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      vector<int> arrayOne = {10, 15, 8, 12, 94, 81, 5, 2, 11};\n      vector<int> arrayTwo = {10, 8, 5, 15, 2, 12, 11, 94, 81};\n      assert(sameBsts(arrayOne, arrayTwo) == true);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> arrayOne = {10, 15, 8, 12, 94, 81, 5, 2, 11};\n      vector<int> arrayTwo = {10, 8, 5, 15, 2, 12, 11, 94, 81};\n      assert(sameBsts(arrayOne, arrayTwo) == true);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n\nusing namespace std;\n\nvector<int> getSmaller(vector<int>);\nvector<int> getBiggerOrEqual(vector<int> array);\n\n// O(n^2) time | O(n^2) space - where n is the number of\n// nodes in each array, respectively\nbool sameBsts(vector<int> arrayOne, vector<int> arrayTwo) {\n  if (arrayOne.size() != arrayTwo.size())\n    return false;\n\n  if (arrayOne.size() == 0 && arrayTwo.size() == 0)\n    return true;\n\n  if (arrayOne[0] != arrayTwo[0])\n    return false;\n\n  vector<int> leftOne = getSmaller(arrayOne);\n  vector<int> leftTwo = getSmaller(arrayTwo);\n  vector<int> rightOne = getBiggerOrEqual(arrayOne);\n  vector<int> rightTwo = getBiggerOrEqual(arrayTwo);\n\n  return sameBsts(leftOne, leftTwo) && sameBsts(rightOne, rightTwo);\n}\n\nvector<int> getSmaller(vector<int> array) {\n  vector<int> smaller = {};\n  for (int i = 1; i < array.size(); i++) {\n    if (array[i] < array[0])\n      smaller.push_back(array[i]);\n  }\n  return smaller;\n}\n\nvector<int> getBiggerOrEqual(vector<int> array) {\n  vector<int> biggerOrEqual = {};\n  for (int i = 1; i < array.size(); i++) {\n    if (array[i] >= array[0])\n      biggerOrEqual.push_back(array[i]);\n  }\n  return biggerOrEqual;\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n\nusing namespace std;\n\nbool areSameBsts(vector<int> arrayOne, vector<int> arrayTwo, int rootIdxOne,\n                 int rootIdxTwo, int minVal, int maxVal);\nint getIdxOfFirstSmaller(vector<int> array, int startingIdx, int minVal);\nint getIdxOfFirstBiggerOrEqual(vector<int> array, int startingIdx, int maxVal);\n\n// O(n^2) time | O(d) space - where n is the number of\n// nodes in each array, respectively, and d is the depth\n// of the BST that they represent\nbool sameBsts(vector<int> arrayOne, vector<int> arrayTwo) {\n  return areSameBsts(arrayOne, arrayTwo, 0, 0, INT_MIN, INT_MAX);\n}\n\nbool areSameBsts(vector<int> arrayOne, vector<int> arrayTwo, int rootIdxOne,\n                 int rootIdxTwo, int minVal, int maxVal) {\n  if (rootIdxOne == -1 || rootIdxTwo == -1)\n    return rootIdxOne == rootIdxTwo;\n\n  if (arrayOne[rootIdxOne] != arrayTwo[rootIdxTwo])\n    return false;\n\n  int leftRootIdxOne = getIdxOfFirstSmaller(arrayOne, rootIdxOne, minVal);\n  int leftRootIdxTwo = getIdxOfFirstSmaller(arrayTwo, rootIdxTwo, minVal);\n  int rightRootIdxOne =\n      getIdxOfFirstBiggerOrEqual(arrayOne, rootIdxOne, maxVal);\n  int rightRootIdxTwo =\n      getIdxOfFirstBiggerOrEqual(arrayTwo, rootIdxTwo, maxVal);\n\n  int currentValue = arrayOne[rootIdxOne];\n  bool leftAreSame = areSameBsts(arrayOne, arrayTwo, leftRootIdxOne,\n                                 leftRootIdxTwo, minVal, currentValue);\n  bool rightAreSame = areSameBsts(arrayOne, arrayTwo, rightRootIdxOne,\n                                  rightRootIdxTwo, currentValue, maxVal);\n\n  return leftAreSame && rightAreSame;\n}\n\nint getIdxOfFirstSmaller(vector<int> array, int startingIdx, int minVal) {\n  // Find the index of the first smaller value after the startingIdx.\n  // Make sure that this value is greater than or equal to the minVal,\n  // which is the value of the previous parent node in the BST. If it\n  // isn't, then that value is located in the left subtree of the\n  // previous parent node.\n  for (int i = startingIdx + 1; i < array.size(); i++) {\n    if (array[i] < array[startingIdx] && array[i] >= minVal)\n      return i;\n  }\n  return -1;\n}\n\nint getIdxOfFirstBiggerOrEqual(vector<int> array, int startingIdx, int maxVal) {\n  // Find the index of the first bigger/equal value after the startingIdx.\n  // Make sure that this value is smaller than maxVal, which is the value\n  // of the previous parent node in the BST. If it isn't, then that value\n  // is located in the right subtree of the previous parent node.\n  for (int i = startingIdx + 1; i < array.size(); i++) {\n    if (array[i] >= array[startingIdx] && array[i] < maxVal)\n      return i;\n  }\n  return -1;\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static bool SameBsts(List<int> arrayOne, List<int> arrayTwo) {\n\t\t// Write your code here.\n\t\treturn false;\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t7, 6, 5, 4, 3, 2, 1\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t7, 6, 5, 4, 3, 2, 1\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t10, 15, 8, 12, 94, 81, 5, 2\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t10, 8, 5, 15, 2, 12, 94, 81\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t10, 15, 8, 12, 94, 81, 5, 2\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t11, 8, 5, 15, 2, 12, 94, 81\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 8, -1, 8, 2, -34\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t10, 15, 8, 12, 94, 81, 5, 2, -1, 101, 45, 12, 8, -1, 8, 2, -34\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t5, 2, -1, 100, 45, 12, 8, -1, 8, 10, 15, 8, 12, 94, 81, 2, -34\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t5, 8, 10, 15, 2, 8, 12, 45, 100, 2, 12, 94, 81, -1, -1, -34, 8\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 9, -1, 8, 2, -34\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 9, 12, 45, 100\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t7, 6, 5, 4, 3, 2, 1\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t7, 6, 5, 4, 3, 2, 1, 0\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t10, 15, 8, 12, 94, 81, 5, 2, 10\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t10, 8, 5, 15, 2, 10, 12, 94, 81\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t50, 76, 81, 23, 23, 23, 657, 56, 12, -1, 3\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t50, 23, 76, 23, 23, 12, 56, 81, -1, 3, 657\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t10, 15, 8, 12, 94, 81, 5, 2, 11\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t10, 8, 5, 15, 2, 12, 11, 94, 81\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == true);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int> arrayOne = new List<int>(){\n\t\t\t10, 15, 8, 12, 94, 81, 5, 2, 11\n\t\t};\n\t\tList<int> arrayTwo = new List<int>(){\n\t\t\t10, 8, 5, 15, 2, 12, 11, 94, 81\n\t\t};\n\t\tUtils.AssertTrue(Program.SameBsts(arrayOne, arrayTwo) == true);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^2) time | O(n^2) space - where n is the number of\n\t// nodes in each array, respectively\n\tpublic static bool SameBsts(List<int> arrayOne, List<int> arrayTwo) {\n\t\tif (arrayOne.Count != arrayTwo.Count) return false;\n\n\t\tif (arrayOne.Count == 0 && arrayTwo.Count == 0) return true;\n\n\t\tif (arrayOne[0] != arrayTwo[0]) return false;\n\n\t\tList<int> leftOne = getSmaller(arrayOne);\n\t\tList<int> leftTwo = getSmaller(arrayTwo);\n\t\tList<int> rightOne = getBiggerOrEqual(arrayOne);\n\t\tList<int> rightTwo = getBiggerOrEqual(arrayTwo);\n\n\t\treturn SameBsts(leftOne, leftTwo) && SameBsts(rightOne, rightTwo);\n\t}\n\n\tpublic static List<int> getSmaller(List<int> array) {\n\t\tList<int> smaller = new List<int>();\n\t\tfor (int i = 1; i < array.Count; i++) {\n\t\t\tif (array[i] < array[0]) smaller.Add(array[i]);\n\t\t}\n\t\treturn smaller;\n\t}\n\n\tpublic static List<int> getBiggerOrEqual(List<int> array) {\n\t\tList<int> biggerOrEqual = new List<int>();\n\t\tfor (int i = 1; i < array.Count; i++) {\n\t\t\tif (array[i] >= array[0]) biggerOrEqual.Add(array[i]);\n\t\t}\n\t\treturn biggerOrEqual;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^2) time | O(d) space - where n is the number of\n\t// nodes in each array, respectively, and d is the depth\n\t// of the BST that they represent\n\tpublic static bool SameBsts(List<int> arrayOne, List<int> arrayTwo) {\n\t\treturn areSameBsts(arrayOne, arrayTwo, 0, 0, Int32.MinValue, Int32.MaxValue);\n\t}\n\n\tpublic static bool areSameBsts(List<int> arrayOne, List<int> arrayTwo, int rootIdxOne,\n\t  int rootIdxTwo, int minVal, int maxVal) {\n\t\tif (rootIdxOne == -1 || rootIdxTwo == -1) return rootIdxOne == rootIdxTwo;\n\n\t\tif (arrayOne[rootIdxOne] != arrayTwo[rootIdxTwo]) return false;\n\n\t\tint leftRootIdxOne = getIdxOfFirstSmaller(arrayOne, rootIdxOne, minVal);\n\t\tint leftRootIdxTwo = getIdxOfFirstSmaller(arrayTwo, rootIdxTwo, minVal);\n\t\tint rightRootIdxOne = getIdxOfFirstBiggerOrEqual(arrayOne, rootIdxOne, maxVal);\n\t\tint rightRootIdxTwo = getIdxOfFirstBiggerOrEqual(arrayTwo, rootIdxTwo, maxVal);\n\n\t\tint currentValue = arrayOne[rootIdxOne];\n\t\tbool leftAreSame = areSameBsts(arrayOne, arrayTwo, leftRootIdxOne, leftRootIdxTwo,\n\t\t    minVal, currentValue);\n\t\tbool rightAreSame = areSameBsts(arrayOne, arrayTwo, rightRootIdxOne,\n\t\t    rightRootIdxTwo, currentValue, maxVal);\n\n\t\treturn leftAreSame && rightAreSame;\n\t}\n\n\tpublic static int getIdxOfFirstSmaller(List<int> array, int startingIdx, int minVal) {\n\t\t// Find the index of the first smaller value after the startingIdx.\n\t\t// Make sure that this value is greater than or equal to the minVal,\n\t\t// which is the value of the previous parent node in the BST. If it\n\t\t// isn't, then that value is located in the left subtree of the\n\t\t// previous parent node.\n\t\tfor (int i = startingIdx + 1; i < array.Count; i++) {\n\t\t\tif (array[i] < array[startingIdx] && array[i] >= minVal) return i;\n\t\t}\n\t\treturn -1;\n\t}\n\n\tpublic static int getIdxOfFirstBiggerOrEqual(List<int> array, int startingIdx, int maxVal) {\n\t\t// Find the index of the first bigger/equal value after the startingIdx.\n\t\t// Make sure that this value is smaller than maxVal, which is the value\n\t\t// of the previous parent node in the BST. If it isn't, then that value\n\t\t// is located in the right subtree of the previous parent node.\n\t\tfor (int i = startingIdx + 1; i < array.Count; i++) {\n\t\t\tif (array[i] >= array[startingIdx] && array[i] < maxVal) return i;\n\t\t}\n\t\treturn -1;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc SameBSTs(arrayOne, arrayTwo []int) bool {\n\t// Write your code here.\n\treturn false\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tarrayOne := []int{1, 2, 3, 4, 5, 6, 7}\n\tarrayTwo := []int{1, 2, 3, 4, 5, 6, 7}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), true)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tarrayOne := []int{7, 6, 5, 4, 3, 2, 1}\n\tarrayTwo := []int{7, 6, 5, 4, 3, 2, 1}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), true)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tarrayOne := []int{10, 15, 8, 12, 94, 81, 5, 2}\n\tarrayTwo := []int{10, 8, 5, 15, 2, 12, 94, 81}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), true)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tarrayOne := []int{10, 15, 8, 12, 94, 81, 5, 2}\n\tarrayTwo := []int{11, 8, 5, 15, 2, 12, 94, 81}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), false)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tarrayOne := []int{10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 8, -1, 8, 2, -34}\n\tarrayTwo := []int{10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), true)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tarrayOne := []int{10, 15, 8, 12, 94, 81, 5, 2, -1, 101, 45, 12, 8, -1, 8, 2, -34}\n\tarrayTwo := []int{10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), false)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tarrayOne := []int{5, 2, -1, 100, 45, 12, 8, -1, 8, 10, 15, 8, 12, 94, 81, 2, -34}\n\tarrayTwo := []int{5, 8, 10, 15, 2, 8, 12, 45, 100, 2, 12, 94, 81, -1, -1, -34, 8}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), false)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tarrayOne := []int{10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 9, -1, 8, 2, -34}\n\tarrayTwo := []int{10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 9, 12, 45, 100}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), false)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tarrayOne := []int{1, 2, 3, 4, 5, 6, 7, 8}\n\tarrayTwo := []int{1, 2, 3, 4, 5, 6, 7}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), false)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tarrayOne := []int{7, 6, 5, 4, 3, 2, 1}\n\tarrayTwo := []int{7, 6, 5, 4, 3, 2, 1, 0}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), false)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tarrayOne := []int{10, 15, 8, 12, 94, 81, 5, 2, 10}\n\tarrayTwo := []int{10, 8, 5, 15, 2, 10, 12, 94, 81}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), false)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\tarrayOne := []int{50, 76, 81, 23, 23, 23, 657, 56, 12, -1, 3}\n\tarrayTwo := []int{50, 23, 76, 23, 23, 12, 56, 81, -1, 3, 657}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), true)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\tarrayOne := []int{10, 15, 8, 12, 94, 81, 5, 2, 11}\n\tarrayTwo := []int{10, 8, 5, 15, 2, 12, 11, 94, 81}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), true)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tarrayOne := []int{10, 15, 8, 12, 94, 81, 5, 2, 11}\n\tarrayTwo := []int{10, 8, 5, 15, 2, 12, 11, 94, 81}\n\trequire.Equal(t, SameBSTs(arrayOne, arrayTwo), true)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n^2) time | O(n^2) space - where n is the number of\n// nodes in each array, respectively\nfunc SameBSTs(arrayOne, arrayTwo []int) bool {\n\tif len(arrayOne) != len(arrayTwo) {\n\t\treturn false\n\t}\n\tif len(arrayOne) == 0 && len(arrayTwo) == 0 {\n\t\treturn true\n\t}\n\n\tif arrayOne[0] != arrayTwo[0] {\n\t\treturn false\n\t}\n\n\tleftOne := getSmaller(arrayOne)\n\tleftTwo := getSmaller(arrayTwo)\n\trightOne := getBiggerOrEqual(arrayOne)\n\trightTwo := getBiggerOrEqual(arrayTwo)\n\treturn SameBSTs(leftOne, leftTwo) && SameBSTs(rightOne, rightTwo)\n}\n\nfunc getSmaller(array []int) []int {\n\tsmaller := []int{}\n\tfor i := 1; i < len(array); i++ {\n\t\tif array[i] < array[0] {\n\t\t\tsmaller = append(smaller, array[i])\n\t\t}\n\t}\n\treturn smaller\n}\n\nfunc getBiggerOrEqual(array []int) []int {\n\tbiggerOrEqual := []int{}\n\tfor i := 1; i < len(array); i++ {\n\t\tif array[i] >= array[0] {\n\t\t\tbiggerOrEqual = append(biggerOrEqual, array[i])\n\t\t}\n\t}\n\treturn biggerOrEqual\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// O(n^2) time | O(d) space - where n is the number of\n// nodes in each array, respectively, and d is the depth\n// of the BST that they represent\nfunc SameBSTs(arrayOne, arrayTwo []int) bool {\n\treturn areSameBSTs(arrayOne, arrayTwo, 0, 0, math.MinInt32, math.MaxInt32)\n}\n\nfunc areSameBSTs(arrayOne, arrayTwo []int, rootIdxOne, rootIdxTwo int, minVal, maxVal int) bool {\n\tif rootIdxOne == -1 || rootIdxTwo == -1 {\n\t\treturn rootIdxOne == rootIdxTwo\n\t}\n\n\tif arrayOne[rootIdxOne] != arrayTwo[rootIdxTwo] {\n\t\treturn false\n\t}\n\n\tleftRootIdxOne := getIdxOfFirstSmaller(arrayOne, rootIdxOne, minVal)\n\tleftRootIdxTwo := getIdxOfFirstSmaller(arrayTwo, rootIdxTwo, minVal)\n\trightRootIdxOne := getIdxOfFirstBiggerOrEqual(arrayOne, rootIdxOne, maxVal)\n\trightRootIdxTwo := getIdxOfFirstBiggerOrEqual(arrayTwo, rootIdxTwo, maxVal)\n\n\tcurrentValue := arrayOne[rootIdxOne]\n\tleftAreSame := areSameBSTs(arrayOne, arrayTwo, leftRootIdxOne, leftRootIdxTwo, minVal, currentValue)\n\trightAreSame := areSameBSTs(arrayOne, arrayTwo, rightRootIdxOne, rightRootIdxTwo, currentValue, maxVal)\n\n\treturn leftAreSame && rightAreSame\n}\n\nfunc getIdxOfFirstSmaller(array []int, startingIdx, minVal int) int {\n\t// Find the index of the first smaller value after the startingIdx.\n\t// Make sure that this value is greater than or equal to the minVal,\n\t// which is the value of the previous parent node in the BST. If it\n\t// isn't, then that value is located in the left subtree of the\n\t// previous parent node.\n\tfor i := startingIdx + 1; i < len(array); i++ {\n\t\tif array[i] < array[startingIdx] && array[i] >= minVal {\n\t\t\treturn i\n\t\t}\n\t}\n\treturn -1\n}\n\nfunc getIdxOfFirstBiggerOrEqual(array []int, startingIdx, maxVal int) int {\n\t// Find the index of the first bigger/equal value after the startingIdx.\n\t// Make sure that this value is smaller than maxVal, which is the value\n\t// of the previous parent node in the BST. If it isn't, then that value\n\t// is located in the right subtree of the previous parent node.\n\tfor i := startingIdx + 1; i < len(array); i++ {\n\t\tif array[i] >= array[startingIdx] && array[i] < maxVal {\n\t\t\treturn i\n\t\t}\n\t}\n\treturn -1\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static boolean sameBsts(List<Integer> arrayOne, List<Integer> arrayTwo) {\n    // Write your code here.\n    return false;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == true);\n  }\n\n  @Test\n  public void TestCase2() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(7, 6, 5, 4, 3, 2, 1));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(7, 6, 5, 4, 3, 2, 1));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == true);\n  }\n\n  @Test\n  public void TestCase3() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(10, 15, 8, 12, 94, 81, 5, 2));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(10, 8, 5, 15, 2, 12, 94, 81));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == true);\n  }\n\n  @Test\n  public void TestCase4() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(10, 15, 8, 12, 94, 81, 5, 2));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(11, 8, 5, 15, 2, 12, 94, 81));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == false);\n  }\n\n  @Test\n  public void TestCase5() {\n    List<Integer> arrayOne =\n        new ArrayList<Integer>(\n            Arrays.asList(10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 8, -1, 8, 2, -34));\n    List<Integer> arrayTwo =\n        new ArrayList<Integer>(\n            Arrays.asList(10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == true);\n  }\n\n  @Test\n  public void TestCase6() {\n    List<Integer> arrayOne =\n        new ArrayList<Integer>(\n            Arrays.asList(10, 15, 8, 12, 94, 81, 5, 2, -1, 101, 45, 12, 8, -1, 8, 2, -34));\n    List<Integer> arrayTwo =\n        new ArrayList<Integer>(\n            Arrays.asList(10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == false);\n  }\n\n  @Test\n  public void TestCase7() {\n    List<Integer> arrayOne =\n        new ArrayList<Integer>(\n            Arrays.asList(5, 2, -1, 100, 45, 12, 8, -1, 8, 10, 15, 8, 12, 94, 81, 2, -34));\n    List<Integer> arrayTwo =\n        new ArrayList<Integer>(\n            Arrays.asList(5, 8, 10, 15, 2, 8, 12, 45, 100, 2, 12, 94, 81, -1, -1, -34, 8));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == false);\n  }\n\n  @Test\n  public void TestCase8() {\n    List<Integer> arrayOne =\n        new ArrayList<Integer>(\n            Arrays.asList(10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 9, -1, 8, 2, -34));\n    List<Integer> arrayTwo =\n        new ArrayList<Integer>(\n            Arrays.asList(10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 9, 12, 45, 100));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == false);\n  }\n\n  @Test\n  public void TestCase9() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == false);\n  }\n\n  @Test\n  public void TestCase10() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(7, 6, 5, 4, 3, 2, 1));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(7, 6, 5, 4, 3, 2, 1, 0));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == false);\n  }\n\n  @Test\n  public void TestCase11() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(10, 15, 8, 12, 94, 81, 5, 2, 10));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(10, 8, 5, 15, 2, 10, 12, 94, 81));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == false);\n  }\n\n  @Test\n  public void TestCase12() {\n    List<Integer> arrayOne =\n        new ArrayList<Integer>(Arrays.asList(50, 76, 81, 23, 23, 23, 657, 56, 12, -1, 3));\n    List<Integer> arrayTwo =\n        new ArrayList<Integer>(Arrays.asList(50, 23, 76, 23, 23, 12, 56, 81, -1, 3, 657));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == true);\n  }\n\n  @Test\n  public void TestCase13() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(10, 15, 8, 12, 94, 81, 5, 2, 11));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(10, 8, 5, 15, 2, 12, 11, 94, 81));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == true);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Integer> arrayOne = new ArrayList<Integer>(Arrays.asList(10, 15, 8, 12, 94, 81, 5, 2, 11));\n    List<Integer> arrayTwo = new ArrayList<Integer>(Arrays.asList(10, 8, 5, 15, 2, 12, 11, 94, 81));\n    Utils.assertTrue(Program.sameBsts(arrayOne, arrayTwo) == true);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^2) time | O(n^2) space - where n is the number of\n  // nodes in each array, respectively\n  public static boolean sameBsts(List<Integer> arrayOne, List<Integer> arrayTwo) {\n    if (arrayOne.size() != arrayTwo.size()) return false;\n\n    if (arrayOne.size() == 0 && arrayTwo.size() == 0) return true;\n\n    if (arrayOne.get(0).intValue() != arrayTwo.get(0).intValue()) return false;\n\n    List<Integer> leftOne = getSmaller(arrayOne);\n    List<Integer> leftTwo = getSmaller(arrayTwo);\n    List<Integer> rightOne = getBiggerOrEqual(arrayOne);\n    List<Integer> rightTwo = getBiggerOrEqual(arrayTwo);\n\n    return sameBsts(leftOne, leftTwo) && sameBsts(rightOne, rightTwo);\n  }\n\n  public static List<Integer> getSmaller(List<Integer> array) {\n    List<Integer> smaller = new ArrayList<Integer>();\n    for (int i = 1; i < array.size(); i++) {\n      if (array.get(i).intValue() < array.get(0).intValue()) smaller.add(array.get(i));\n    }\n    return smaller;\n  }\n\n  public static List<Integer> getBiggerOrEqual(List<Integer> array) {\n    List<Integer> biggerOrEqual = new ArrayList<Integer>();\n    for (int i = 1; i < array.size(); i++) {\n      if (array.get(i).intValue() >= array.get(0).intValue()) biggerOrEqual.add(array.get(i));\n    }\n    return biggerOrEqual;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^2) time | O(d) space - where n is the number of\n  // nodes in each array, respectively, and d is the depth\n  // of the BST that they represent\n  public static boolean sameBsts(List<Integer> arrayOne, List<Integer> arrayTwo) {\n    return areSameBsts(arrayOne, arrayTwo, 0, 0, Integer.MIN_VALUE, Integer.MAX_VALUE);\n  }\n\n  public static boolean areSameBsts(\n      List<Integer> arrayOne,\n      List<Integer> arrayTwo,\n      int rootIdxOne,\n      int rootIdxTwo,\n      int minVal,\n      int maxVal) {\n    if (rootIdxOne == -1 || rootIdxTwo == -1) return rootIdxOne == rootIdxTwo;\n\n    if (arrayOne.get(rootIdxOne).intValue() != arrayTwo.get(rootIdxTwo).intValue()) return false;\n\n    int leftRootIdxOne = getIdxOfFirstSmaller(arrayOne, rootIdxOne, minVal);\n    int leftRootIdxTwo = getIdxOfFirstSmaller(arrayTwo, rootIdxTwo, minVal);\n    int rightRootIdxOne = getIdxOfFirstBiggerOrEqual(arrayOne, rootIdxOne, maxVal);\n    int rightRootIdxTwo = getIdxOfFirstBiggerOrEqual(arrayTwo, rootIdxTwo, maxVal);\n\n    int currentValue = arrayOne.get(rootIdxOne);\n    boolean leftAreSame =\n        areSameBsts(arrayOne, arrayTwo, leftRootIdxOne, leftRootIdxTwo, minVal, currentValue);\n    boolean rightAreSame =\n        areSameBsts(arrayOne, arrayTwo, rightRootIdxOne, rightRootIdxTwo, currentValue, maxVal);\n\n    return leftAreSame && rightAreSame;\n  }\n\n  public static int getIdxOfFirstSmaller(List<Integer> array, int startingIdx, int minVal) {\n    // Find the index of the first smaller value after the startingIdx.\n    // Make sure that this value is greater than or equal to the minVal,\n    // which is the value of the previous parent node in the BST. If it\n    // isn't, then that value is located in the left subtree of the\n    // previous parent node.\n    for (int i = startingIdx + 1; i < array.size(); i++) {\n      if (array.get(i).intValue() < array.get(startingIdx).intValue()\n          && array.get(i).intValue() >= minVal) return i;\n    }\n    return -1;\n  }\n\n  public static int getIdxOfFirstBiggerOrEqual(List<Integer> array, int startingIdx, int maxVal) {\n    // Find the index of the first bigger/equal value after the startingIdx.\n    // Make sure that this value is smaller than maxVal, which is the value\n    // of the previous parent node in the BST. If it isn't, then that value\n    // is located in the right subtree of the previous parent node.\n    for (int i = startingIdx + 1; i < array.size(); i++) {\n      if (array.get(i).intValue() >= array.get(startingIdx).intValue()\n          && array.get(i).intValue() < maxVal) return i;\n    }\n    return -1;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function sameBsts(arrayOne, arrayTwo) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.sameBsts = sameBsts;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const arrayOne = [1, 2, 3, 4, 5, 6, 7];\n  const arrayTwo = [1, 2, 3, 4, 5, 6, 7];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(true);\n});\n\nit('Test Case #2', function () {\n  const arrayOne = [7, 6, 5, 4, 3, 2, 1];\n  const arrayTwo = [7, 6, 5, 4, 3, 2, 1];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(true);\n});\n\nit('Test Case #3', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2];\n  const arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(true);\n});\n\nit('Test Case #4', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2];\n  const arrayTwo = [11, 8, 5, 15, 2, 12, 94, 81];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(false);\n});\n\nit('Test Case #5', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 8, -1, 8, 2, -34];\n  const arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(true);\n});\n\nit('Test Case #6', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 101, 45, 12, 8, -1, 8, 2, -34];\n  const arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(false);\n});\n\nit('Test Case #7', function () {\n  const arrayOne = [5, 2, -1, 100, 45, 12, 8, -1, 8, 10, 15, 8, 12, 94, 81, 2, -34];\n  const arrayTwo = [5, 8, 10, 15, 2, 8, 12, 45, 100, 2, 12, 94, 81, -1, -1, -34, 8];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(false);\n});\n\nit('Test Case #8', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 9, -1, 8, 2, -34];\n  const arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 9, 12, 45, 100];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(false);\n});\n\nit('Test Case #9', function () {\n  const arrayOne = [1, 2, 3, 4, 5, 6, 7, 8];\n  const arrayTwo = [1, 2, 3, 4, 5, 6, 7];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(false);\n});\n\nit('Test Case #10', function () {\n  const arrayOne = [7, 6, 5, 4, 3, 2, 1];\n  const arrayTwo = [7, 6, 5, 4, 3, 2, 1, 0];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(false);\n});\n\nit('Test Case #11', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 10];\n  const arrayTwo = [10, 8, 5, 15, 2, 10, 12, 94, 81];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(false);\n});\n\nit('Test Case #12', function () {\n  const arrayOne = [50, 76, 81, 23, 23, 23, 657, 56, 12, -1, 3];\n  const arrayTwo = [50, 23, 76, 23, 23, 12, 56, 81, -1, 3, 657];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(true);\n});\n\nit('Test Case #13', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 11];\n  const arrayTwo = [10, 8, 5, 15, 2, 12, 11, 94, 81];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(true);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 11];\n  const arrayTwo = [10, 8, 5, 15, 2, 12, 11, 94, 81];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n^2) space - where n is the number of\n// nodes in each array, respectively\nfunction sameBsts(arrayOne, arrayTwo) {\n  if (arrayOne.length !== arrayTwo.length) return false;\n\n  if (arrayOne.length === 0 && arrayTwo.length === 0) return true;\n\n  if (arrayOne[0] !== arrayTwo[0]) return false;\n\n  const leftOne = getSmaller(arrayOne);\n  const leftTwo = getSmaller(arrayTwo);\n  const rightOne = getBiggerOrEqual(arrayOne);\n  const rightTwo = getBiggerOrEqual(arrayTwo);\n\n  return sameBsts(leftOne, leftTwo) && sameBsts(rightOne, rightTwo);\n}\n\nfunction getSmaller(array) {\n  const smaller = [];\n  for (let i = 1; i < array.length; i++) {\n    if (array[i] < array[0]) smaller.push(array[i]);\n  }\n  return smaller;\n}\n\nfunction getBiggerOrEqual(array) {\n  const biggerOrEqual = [];\n  for (let i = 1; i < array.length; i++) {\n    if (array[i] >= array[0]) biggerOrEqual.push(array[i]);\n  }\n  return biggerOrEqual;\n}\n\nexports.sameBsts = sameBsts;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(d) space - where n is the number of\n// nodes in each array, respectively, and d is the depth\n// of the BST that they represent\nfunction sameBsts(arrayOne, arrayTwo) {\n  return areSameBsts(arrayOne, arrayTwo, 0, 0, -Infinity, Infinity);\n}\n\nfunction areSameBsts(arrayOne, arrayTwo, rootIdxOne, rootIdxTwo, minVal, maxVal) {\n  if (rootIdxOne === -1 || rootIdxTwo === -1) return rootIdxOne === rootIdxTwo;\n\n  if (arrayOne[rootIdxOne] !== arrayTwo[rootIdxTwo]) return false;\n\n  const leftRootIdxOne = getIdxOfFirstSmaller(arrayOne, rootIdxOne, minVal);\n  const leftRootIdxTwo = getIdxOfFirstSmaller(arrayTwo, rootIdxTwo, minVal);\n  const rightRootIdxOne = getIdxOfFirstBiggerOrEqual(arrayOne, rootIdxOne, maxVal);\n  const rightRootIdxTwo = getIdxOfFirstBiggerOrEqual(arrayTwo, rootIdxTwo, maxVal);\n\n  const currentValue = arrayOne[rootIdxOne];\n  const leftAreSame = areSameBsts(arrayOne, arrayTwo, leftRootIdxOne, leftRootIdxTwo, minVal, currentValue);\n  const rightAreSame = areSameBsts(arrayOne, arrayTwo, rightRootIdxOne, rightRootIdxTwo, currentValue, maxVal);\n\n  return leftAreSame && rightAreSame;\n}\n\nfunction getIdxOfFirstSmaller(array, startingIdx, minVal) {\n  // Find the index of the first smaller value after the startingIdx.\n  // Make sure that this value is greater than or equal to the minVal,\n  // which is the value of the previous parent node in the BST. If it\n  // isn't, then that value is located in the left subtree of the\n  // previous parent node.\n  for (let i = startingIdx + 1; i < array.length; i++) {\n    if (array[i] < array[startingIdx] && array[i] >= minVal) return i;\n  }\n  return -1;\n}\n\nfunction getIdxOfFirstBiggerOrEqual(array, startingIdx, maxVal) {\n  // Find the index of the first bigger/equal value after the startingIdx.\n  // Make sure that this value is smaller than maxVal, which is the value\n  // of the previous parent node in the BST. If it isn't, then that value\n  // is located in the right subtree of the previous parent node.\n  for (let i = startingIdx + 1; i < array.length; i++) {\n    if (array[i] >= array[startingIdx] && array[i] < maxVal) return i;\n  }\n  return -1;\n}\n\nexports.sameBsts = sameBsts;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def sameBsts(arrayOne, arrayTwo):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        arrayOne = [1, 2, 3, 4, 5, 6, 7]\n        arrayTwo = [1, 2, 3, 4, 5, 6, 7]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), True)\n\n    def test_case_2(self):\n        arrayOne = [7, 6, 5, 4, 3, 2, 1]\n        arrayTwo = [7, 6, 5, 4, 3, 2, 1]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), True)\n\n    def test_case_3(self):\n        arrayOne = [10, 15, 8, 12, 94, 81, 5, 2]\n        arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), True)\n\n    def test_case_4(self):\n        arrayOne = [10, 15, 8, 12, 94, 81, 5, 2]\n        arrayTwo = [11, 8, 5, 15, 2, 12, 94, 81]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), False)\n\n    def test_case_5(self):\n        arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 8, -1, 8, 2, -34]\n        arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), True)\n\n    def test_case_6(self):\n        arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 101, 45, 12, 8, -1, 8, 2, -34]\n        arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), False)\n\n    def test_case_7(self):\n        arrayOne = [5, 2, -1, 100, 45, 12, 8, -1, 8, 10, 15, 8, 12, 94, 81, 2, -34]\n        arrayTwo = [5, 8, 10, 15, 2, 8, 12, 45, 100, 2, 12, 94, 81, -1, -1, -34, 8]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), False)\n\n    def test_case_8(self):\n        arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 9, -1, 8, 2, -34]\n        arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 9, 12, 45, 100]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), False)\n\n    def test_case_9(self):\n        arrayOne = [1, 2, 3, 4, 5, 6, 7, 8]\n        arrayTwo = [1, 2, 3, 4, 5, 6, 7]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), False)\n\n    def test_case_10(self):\n        arrayOne = [7, 6, 5, 4, 3, 2, 1]\n        arrayTwo = [7, 6, 5, 4, 3, 2, 1, 0]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), False)\n\n    def test_case_11(self):\n        arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 10]\n        arrayTwo = [10, 8, 5, 15, 2, 10, 12, 94, 81]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), False)\n\n    def test_case_12(self):\n        arrayOne = [50, 76, 81, 23, 23, 23, 657, 56, 12, -1, 3]\n        arrayTwo = [50, 23, 76, 23, 23, 12, 56, 81, -1, 3, 657]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), True)\n\n    def test_case_13(self):\n        arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 11]\n        arrayTwo = [10, 8, 5, 15, 2, 12, 11, 94, 81]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), True)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 11]\n        arrayTwo = [10, 8, 5, 15, 2, 12, 11, 94, 81]\n        self.assertEqual(program.sameBsts(arrayOne, arrayTwo), True)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n^2) space - where n is the number of\n# nodes in each array, respectively\ndef sameBsts(arrayOne, arrayTwo):\n    if len(arrayOne) != len(arrayTwo):\n        return False\n\n    if len(arrayOne) == 0 and len(arrayTwo) == 0:\n        return True\n\n    if arrayOne[0] != arrayTwo[0]:\n        return False\n\n    leftOne = getSmaller(arrayOne)\n    leftTwo = getSmaller(arrayTwo)\n    rightOne = getBiggerOrEqual(arrayOne)\n    rightTwo = getBiggerOrEqual(arrayTwo)\n\n    return sameBsts(leftOne, leftTwo) and sameBsts(rightOne, rightTwo)\n\n\ndef getSmaller(array):\n    smaller = []\n    for i in range(1, len(array)):\n        if array[i] < array[0]:\n            smaller.append(array[i])\n    return smaller\n\n\ndef getBiggerOrEqual(array):\n    biggerOrEqual = []\n    for i in range(1, len(array)):\n        if array[i] >= array[0]:\n            biggerOrEqual.append(array[i])\n    return biggerOrEqual\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(d) space - where n is the number of\n# nodes in each array, respectively, and d is the depth\n# of the BST that they represent\ndef sameBsts(arrayOne, arrayTwo):\n    return areSameBsts(arrayOne, arrayTwo, 0, 0, float(\"-inf\"), float(\"inf\"))\n\n\ndef areSameBsts(arrayOne, arrayTwo, rootIdxOne, rootIdxTwo, minVal, maxVal):\n    if rootIdxOne == -1 or rootIdxTwo == -1:\n        return rootIdxOne == rootIdxTwo\n\n    if arrayOne[rootIdxOne] != arrayTwo[rootIdxTwo]:\n        return False\n\n    leftRootIdxOne = getIdxOfFirstSmaller(arrayOne, rootIdxOne, minVal)\n    leftRootIdxTwo = getIdxOfFirstSmaller(arrayTwo, rootIdxTwo, minVal)\n    rightRootIdxOne = getIdxOfFirstBiggerOrEqual(arrayOne, rootIdxOne, maxVal)\n    rightRootIdxTwo = getIdxOfFirstBiggerOrEqual(arrayTwo, rootIdxTwo, maxVal)\n\n    currentValue = arrayOne[rootIdxOne]\n    leftAreSame = areSameBsts(arrayOne, arrayTwo, leftRootIdxOne, leftRootIdxTwo, minVal, currentValue)\n    rightAreSame = areSameBsts(arrayOne, arrayTwo, rightRootIdxOne, rightRootIdxTwo, currentValue, maxVal)\n\n    return leftAreSame and rightAreSame\n\n\ndef getIdxOfFirstSmaller(array, startingIdx, minVal):\n    # Find the index of the first smaller value after the startingIdx.\n    # Make sure that this value is greater than or equal to the minVal,\n    # which is the value of the previous parent node in the BST. If it\n    # isn't, then that value is located in the left subtree of the\n    # previous parent node.\n    for i in range(startingIdx + 1, len(array)):\n        if array[i] < array[startingIdx] and array[i] >= minVal:\n            return i\n    return -1\n\n\ndef getIdxOfFirstBiggerOrEqual(array, startingIdx, maxVal):\n    # Find the index of the first bigger/equal value after the startingIdx.\n    # Make sure that this value is smaller than maxVal, which is the value\n    # of the previous parent node in the BST. If it isn't, then that value\n    # is located in the right subtree of the previous parent node.\n    for i in range(startingIdx + 1, len(array)):\n        if array[i] >= array[startingIdx] and array[i] < maxVal:\n            return i\n    return -1\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func sameBSTs(_ arrayOne: [Int], _ arrayTwo: [Int]) -> Bool {\n    // Write your code here.\n    return false\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let arrayOne = [1, 2, 3, 4, 5, 6, 7]\n      let arrayTwo = [1, 2, 3, 4, 5, 6, 7]\n      let expected = true\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let arrayOne = [7, 6, 5, 4, 3, 2, 1]\n      let arrayTwo = [7, 6, 5, 4, 3, 2, 1]\n      let expected = true\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let arrayOne = [10, 15, 8, 12, 94, 81, 5, 2]\n      let arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81]\n      let expected = true\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let arrayOne = [10, 15, 8, 12, 94, 81, 5, 2]\n      let arrayTwo = [11, 8, 5, 15, 2, 12, 94, 81]\n      let expected = false\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 8, -1, 8, 2, -34]\n      let arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100]\n      let expected = true\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 101, 45, 12, 8, -1, 8, 2, -34]\n      let arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 8, 12, 45, 100]\n      let expected = false\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let arrayOne = [5, 2, -1, 100, 45, 12, 8, -1, 8, 10, 15, 8, 12, 94, 81, 2, -34]\n      let arrayTwo = [5, 8, 10, 15, 2, 8, 12, 45, 100, 2, 12, 94, 81, -1, -1, -34, 8]\n      let expected = false\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, -1, 100, 45, 12, 9, -1, 8, 2, -34]\n      let arrayTwo = [10, 8, 5, 15, 2, 12, 94, 81, -1, -1, -34, 8, 2, 9, 12, 45, 100]\n      let expected = false\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let arrayOne = [1, 2, 3, 4, 5, 6, 7, 8]\n      let arrayTwo = [1, 2, 3, 4, 5, 6, 7]\n      let expected = false\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let arrayOne = [7, 6, 5, 4, 3, 2, 1]\n      let arrayTwo = [7, 6, 5, 4, 3, 2, 1, 0]\n      let expected = false\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 10]\n      let arrayTwo = [10, 8, 5, 15, 2, 10, 12, 94, 81]\n      let expected = false\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      let arrayOne = [50, 76, 81, 23, 23, 23, 657, 56, 12, -1, 3]\n      let arrayTwo = [50, 23, 76, 23, 23, 12, 56, 81, -1, 3, 657]\n      let expected = true\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      let arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 11]\n      let arrayTwo = [10, 8, 5, 15, 2, 12, 11, 94, 81]\n      let expected = true\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 11]\n      let arrayTwo = [10, 8, 5, 15, 2, 12, 11, 94, 81]\n      let expected = true\n      try assertEqual(program.sameBSTs(arrayOne, arrayTwo), expected)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(n^2) space - where n is the number of\n  // nodes in each array, respectively\n  func sameBSTs(_ arrayOne: [Int], _ arrayTwo: [Int]) -> Bool {\n    if arrayOne.count != arrayTwo.count {\n      return false\n    } else if arrayOne.count == 0, arrayTwo.count == 0 {\n      return true\n    }\n\n    if arrayOne[0] != arrayTwo[0] {\n      return false\n    }\n\n    let leftOne = getSmaller(arrayOne)\n    let leftTwo = getSmaller(arrayTwo)\n    let rightOne = getBiggerOrEqual(arrayOne)\n    let rightTwo = getBiggerOrEqual(arrayTwo)\n    return sameBSTs(leftOne, leftTwo) && sameBSTs(rightOne, rightTwo)\n  }\n\n  func getSmaller(_ array: [Int]) -> [Int] {\n    var smaller = [Int]()\n    for i in 1 ..< array.count {\n      if array[i] < array[0] {\n        smaller.append(array[i])\n      }\n    }\n    return smaller\n  }\n\n  func getBiggerOrEqual(_ array: [Int]) -> [Int] {\n    var biggerOrEqual = [Int]()\n    for i in 1 ..< array.count {\n      if array[i] >= array[0] {\n        biggerOrEqual.append(array[i])\n      }\n    }\n    return biggerOrEqual\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(d) space - where n is the number of\n  // nodes in each array, respectively, and d is the depth\n  // of the BST that they represent\n  func sameBSTs(_ arrayOne: [Int], _ arrayTwo: [Int]) -> Bool {\n    return areSameBSTs(arrayOne, arrayTwo, 0, 0, Int.min, Int.max)\n  }\n\n  func areSameBSTs(_ arrayOne: [Int], _ arrayTwo: [Int], _ rootIdxOne: Int, _ rootIdxTwo: Int, _ minVal: Int, _ maxVal: Int) -> Bool {\n    if rootIdxOne == -1 || rootIdxTwo == -1 {\n      return rootIdxOne == rootIdxTwo\n    }\n\n    if arrayOne[rootIdxOne] != arrayTwo[rootIdxTwo] {\n      return false\n    }\n\n    let leftRootIdxOne = getIdxOfFirstSmaller(arrayOne, rootIdxOne, minVal)\n    let leftRootIdxTwo = getIdxOfFirstSmaller(arrayTwo, rootIdxTwo, minVal)\n    let rightRootIdxOne = getIdxOfFirstBiggerOrEqual(arrayOne, rootIdxOne, maxVal)\n    let rightRootIdxTwo = getIdxOfFirstBiggerOrEqual(arrayTwo, rootIdxTwo, maxVal)\n\n    let currentValue = arrayOne[rootIdxOne]\n    let leftAreSame = areSameBSTs(arrayOne, arrayTwo, leftRootIdxOne, leftRootIdxTwo, minVal, currentValue)\n    let rightAreSame = areSameBSTs(arrayOne, arrayTwo, rightRootIdxOne, rightRootIdxTwo, currentValue, maxVal)\n\n    return leftAreSame && rightAreSame\n  }\n\n  func getIdxOfFirstSmaller(_ array: [Int], _ startingIdx: Int, _ minVal: Int) -> Int {\n    // Find the index of the first smaller value after the startingIdx.\n    // Make sure that this value is greater than or equal to the minVal,\n    // which is the value of the previous parent node in the BST. If it\n    // isn't, then that value is located in the left subtree of the\n    // previous parent node.\n    for i in (startingIdx + 1) ..< array.count {\n      if array[i] < array[startingIdx], array[i] >= minVal {\n        return i\n      }\n    }\n    return -1\n  }\n\n  func getIdxOfFirstBiggerOrEqual(_ array: [Int], _ startingIdx: Int, _ maxVal: Int) -> Int {\n    // Find the index of the first bigger/equal value after the startingIdx.\n    // Make sure that this value is smaller than maxVal, which is the value\n    // of the previous parent node in the BST. If it isn't, then that value\n    // is located in the right subtree of the previous parent node.\n    for i in (startingIdx + 1) ..< array.count {\n      if array[i] >= array[startingIdx], array[i] < maxVal {\n        return i\n      }\n    }\n    return -1\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function sameBsts(arrayOne: number[], arrayTwo: number[]) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const arrayOne = [10, 15, 8, 12, 94, 81, 5, 2, 11];\n  const arrayTwo = [10, 8, 5, 15, 2, 12, 11, 94, 81];\n  chai.expect(program.sameBsts(arrayOne, arrayTwo)).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n^2) space - where n is the number of\n// nodes in each array, respectively\nexport function sameBsts(arrayOne: number[], arrayTwo: number[]): boolean {\n  if (arrayOne.length !== arrayTwo.length) return false;\n\n  if (arrayOne.length === 0 && arrayTwo.length === 0) return true;\n\n  if (arrayOne[0] !== arrayTwo[0]) return false;\n\n  const leftOne = getSmaller(arrayOne);\n  const leftTwo = getSmaller(arrayTwo);\n  const rightOne = getBiggerOrEqual(arrayOne);\n  const rightTwo = getBiggerOrEqual(arrayTwo);\n\n  return sameBsts(leftOne, leftTwo) && sameBsts(rightOne, rightTwo);\n}\n\nfunction getSmaller(array: number[]) {\n  const smaller: number[] = [];\n  for (let i = 1; i < array.length; i++) {\n    if (array[i] < array[0]) smaller.push(array[i]);\n  }\n  return smaller;\n}\n\nfunction getBiggerOrEqual(array: number[]) {\n  const biggerOrEqual: number[] = [];\n  for (let i = 1; i < array.length; i++) {\n    if (array[i] >= array[0]) biggerOrEqual.push(array[i]);\n  }\n  return biggerOrEqual;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(d) space - where n is the number of\n// nodes in each array, respectively, and d is the depth\n// of the BST that they represent\nexport function sameBsts(arrayOne: number[], arrayTwo: number[]) {\n  return areSameBsts(arrayOne, arrayTwo, 0, 0, -Infinity, Infinity);\n}\n\nfunction areSameBsts(\n  arrayOne: number[],\n  arrayTwo: number[],\n  rootIdxOne: number,\n  rootIdxTwo: number,\n  minVal: number,\n  maxVal: number,\n): boolean {\n  if (rootIdxOne === -1 || rootIdxTwo === -1) return rootIdxOne === rootIdxTwo;\n\n  if (arrayOne[rootIdxOne] !== arrayTwo[rootIdxTwo]) return false;\n\n  const leftRootIdxOne = getIdxOfFirstSmaller(arrayOne, rootIdxOne, minVal);\n  const leftRootIdxTwo = getIdxOfFirstSmaller(arrayTwo, rootIdxTwo, minVal);\n  const rightRootIdxOne = getIdxOfFirstBiggerOrEqual(arrayOne, rootIdxOne, maxVal);\n  const rightRootIdxTwo = getIdxOfFirstBiggerOrEqual(arrayTwo, rootIdxTwo, maxVal);\n\n  const currentValue = arrayOne[rootIdxOne];\n  const leftAreSame = areSameBsts(arrayOne, arrayTwo, leftRootIdxOne, leftRootIdxTwo, minVal, currentValue);\n  const rightAreSame = areSameBsts(arrayOne, arrayTwo, rightRootIdxOne, rightRootIdxTwo, currentValue, maxVal);\n\n  return leftAreSame && rightAreSame;\n}\n\nfunction getIdxOfFirstSmaller(array: number[], startingIdx: number, minVal: number) {\n  // Find the index of the first smaller value after the startingIdx.\n  // Make sure that this value is greater than or equal to the minVal,\n  // which is the value of the previous parent node in the BST. If it\n  // isn't, then that value is located in the left subtree of the\n  // previous parent node.\n  for (let i = startingIdx + 1; i < array.length; i++) {\n    if (array[i] < array[startingIdx] && array[i] >= minVal) return i;\n  }\n  return -1;\n}\n\nfunction getIdxOfFirstBiggerOrEqual(array: number[], startingIdx: number, maxVal: number) {\n  // Find the index of the first bigger/equal value after the startingIdx.\n  // Make sure that this value is smaller than maxVal, which is the value\n  // of the previous parent node in the BST. If it isn't, then that value\n  // is located in the right subtree of the previous parent node.\n  for (let i = startingIdx + 1; i < array.length; i++) {\n    if (array[i] >= array[startingIdx] && array[i] < maxVal) return i;\n  }\n  return -1;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "arrayOne": [
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        5,
+        2,
+        11
+      ],
+      "arrayTwo": [
+        10,
+        8,
+        5,
+        15,
+        2,
+        12,
+        11,
+        94,
+        81
+      ]
+    },
+    {
+      "arrayOne": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "arrayTwo": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "arrayOne": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+      ],
+      "arrayTwo": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        5,
+        2
+      ],
+      "arrayTwo": [
+        10,
+        8,
+        5,
+        15,
+        2,
+        12,
+        94,
+        81
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        5,
+        2
+      ],
+      "arrayTwo": [
+        11,
+        8,
+        5,
+        15,
+        2,
+        12,
+        94,
+        81
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        5,
+        2,
+        -1,
+        100,
+        45,
+        12,
+        8,
+        -1,
+        8,
+        2,
+        -34
+      ],
+      "arrayTwo": [
+        10,
+        8,
+        5,
+        15,
+        2,
+        12,
+        94,
+        81,
+        -1,
+        -1,
+        -34,
+        8,
+        2,
+        8,
+        12,
+        45,
+        100
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        5,
+        2,
+        -1,
+        101,
+        45,
+        12,
+        8,
+        -1,
+        8,
+        2,
+        -34
+      ],
+      "arrayTwo": [
+        10,
+        8,
+        5,
+        15,
+        2,
+        12,
+        94,
+        81,
+        -1,
+        -1,
+        -34,
+        8,
+        2,
+        8,
+        12,
+        45,
+        100
+      ]
+    },
+    {
+      "arrayOne": [
+        5,
+        2,
+        -1,
+        100,
+        45,
+        12,
+        8,
+        -1,
+        8,
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        2,
+        -34
+      ],
+      "arrayTwo": [
+        5,
+        8,
+        10,
+        15,
+        2,
+        8,
+        12,
+        45,
+        100,
+        2,
+        12,
+        94,
+        81,
+        -1,
+        -1,
+        -34,
+        8
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        5,
+        2,
+        -1,
+        100,
+        45,
+        12,
+        9,
+        -1,
+        8,
+        2,
+        -34
+      ],
+      "arrayTwo": [
+        10,
+        8,
+        5,
+        15,
+        2,
+        12,
+        94,
+        81,
+        -1,
+        -1,
+        -34,
+        8,
+        2,
+        9,
+        12,
+        45,
+        100
+      ]
+    },
+    {
+      "arrayOne": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "arrayTwo": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "arrayOne": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1
+      ],
+      "arrayTwo": [
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        15,
+        8,
+        12,
+        94,
+        81,
+        5,
+        2,
+        10
+      ],
+      "arrayTwo": [
+        10,
+        8,
+        5,
+        15,
+        2,
+        10,
+        12,
+        94,
+        81
+      ]
+    },
+    {
+      "arrayOne": [
+        50,
+        76,
+        81,
+        23,
+        23,
+        23,
+        100,
+        56,
+        12,
+        -1,
+        3
+      ],
+      "arrayTwo": [
+        50,
+        23,
+        76,
+        23,
+        23,
+        12,
+        56,
+        81,
+        -1,
+        3,
+        100
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      true,
+      true,
+      true,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  ]
+}

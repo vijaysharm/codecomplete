@@ -1,0 +1,280 @@
+{
+  "Summary": {
+    "Name": "Min Number Of Coins For Change",
+    "Category": "Dynamic Programming",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 653,
+      "timeOne": 0,
+      "timeTwo": 1007,
+      "url": "https://player.vimeo.com/video/225712463"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try building an array of the minimum number of coins needed to make change for all amounts between 0 and n inclusive. Note that no coins are needed to make change for 0: in order to make change for 0, you do not need to use any coins.\nBuild up the array mentioned in Hint #1 one coin denomination at a time. In other words, find the minimum number of coins needed to make change for all amounts between 0 and n with only one denomination, then with two, etc., until you use all denominations.\n",
+  "SpaceTime": "O(nd) time | O(n) space - where n is the target amount and d is the number of coin denominations\n",
+  "PromptHTML": "<p>\n  Given an array of positive integers representing coin denominations and a\n  single non-negative integer <span>n</span> representing a target amount of\n  money, write a function that returns the smallest number of coins needed to\n  make change for that target amount using the given coin denominations.\n</p>\n<p>\n  If it's impossible to make change for the target amount, return\n  <span>-1</span>.\n</p>\n<p>\n  Note that an unlimited amount of coins is at your disposal.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">n</span> = 7\n<span class=\"CodeEditor-promptParameter\">denoms</span> = [1, 5, 10]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n3 <span class=\"CodeEditor-promptComment\">// 2x1 + 1x5</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "n",
+      "Example": 7,
+      "Schema": {
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    {
+      "Name": "denoms",
+      "Example": [
+        1,
+        5,
+        10
+      ],
+      "Schema": {
+        "items": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "type": "array",
+        "uniqueItems": true
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint minNumberOfCoinsForChange(int n, vector<int> denoms) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "vector<int> vector1{1, 2, 3};\nvector<int> vector2{2, 1};\nvector<int> vector3{1, 5, 10};\nvector<int> vector4{1, 5, 10};\nvector<int> vector5{1, 5, 10};\nvector<int> vector6{1, 5, 10};\nvector<int> vector7{1, 5, 10};\nvector<int> vector8{1, 5, 10};\nvector<int> vector9{2, 4};\nvector<int> vector10{3, 7};\nvector<int> vector11{3, 5};\nvector<int> vector12{3, 4, 5};\nvector<int> vector13{39, 45, 130, 40, 4, 1};\nvector<int> vector14{39, 45, 130, 40, 4, 1, 60, 75};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(minNumberOfCoinsForChange(0, vector1) == 0); });\n\n    RunTest(\"Test Case 2\",\n            []() { assert(minNumberOfCoinsForChange(3, vector2) == 2); });\n\n    RunTest(\"Test Case 3\",\n            []() { assert(minNumberOfCoinsForChange(4, vector3) == 4); });\n\n    RunTest(\"Test Case 4\",\n            []() { assert(minNumberOfCoinsForChange(7, vector4) == 3); });\n\n    RunTest(\"Test Case 5\",\n            []() { assert(minNumberOfCoinsForChange(10, vector5) == 1); });\n\n    RunTest(\"Test Case 6\",\n            []() { assert(minNumberOfCoinsForChange(11, vector6) == 2); });\n\n    RunTest(\"Test Case 7\",\n            []() { assert(minNumberOfCoinsForChange(24, vector7) == 6); });\n\n    RunTest(\"Test Case 8\",\n            []() { assert(minNumberOfCoinsForChange(25, vector8) == 3); });\n\n    RunTest(\"Test Case 9\",\n            []() { assert(minNumberOfCoinsForChange(7, vector9) == -1); });\n\n    RunTest(\"Test Case 10\",\n            []() { assert(minNumberOfCoinsForChange(7, vector10) == 1); });\n\n    RunTest(\"Test Case 11\",\n            []() { assert(minNumberOfCoinsForChange(9, vector11) == 3); });\n\n    RunTest(\"Test Case 12\",\n            []() { assert(minNumberOfCoinsForChange(9, vector12) == 2); });\n\n    RunTest(\"Test Case 13\",\n            []() { assert(minNumberOfCoinsForChange(135, vector13) == 3); });\n\n    RunTest(\"Test Case 14\",\n            []() { assert(minNumberOfCoinsForChange(135, vector14) == 2); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input{1, 5, 10};\n      assert(minNumberOfCoinsForChange(7, input) == 3);\n    });\n\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <climits>\nusing namespace std;\n\n// O(nd) time | O(n) space\nint minNumberOfCoinsForChange(int n, vector<int> denoms) {\n  vector<int> numOfCoins(n + 1, INT_MAX);\n  numOfCoins[0] = 0;\n  int toCompare = 0;\n  for (int denom : denoms) {\n    for (int amount = 0; amount < numOfCoins.size(); amount++) {\n      if (denom <= amount) {\n        if (numOfCoins[amount - denom] == INT_MAX) {\n          toCompare = numOfCoins[amount - denom];\n        } else {\n          toCompare = numOfCoins[amount - denom] + 1;\n        }\n        numOfCoins[amount] = min(numOfCoins[amount], toCompare);\n      }\n    }\n  }\n  return numOfCoins[n] != INT_MAX ? numOfCoins[n] : -1;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int MinNumberOfCoinsForChange(int n, int[] denoms) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {1, 2, 3};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(0, input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] input = {2, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(3, input) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] input = {1, 5, 10};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(4, input) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] input = {1, 5, 10};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(7, input) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] input = {1, 5, 10};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(10, input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] input = {1, 5, 10};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(11, input) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] input = {1, 5, 10};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(24, input) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] input = {1, 5, 10};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(25, input) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] input = {2, 4};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(7, input) == -1);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] input = {3, 7};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(7, input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[] input = {3, 5};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(9, input) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tint[] input = {3, 4, 5};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(9, input) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tint[] input = {39, 45, 130, 40, 4, 1};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(135, input) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tint[] input = {39, 45, 130, 40, 4, 1, 60, 75};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(135, input) == 2);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {1, 5, 10};\n\t\tUtils.AssertTrue(Program.MinNumberOfCoinsForChange(7, input) == 3);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\t// O(nd) time | O(n) space\n\tpublic static int MinNumberOfCoinsForChange(int n, int[] denoms) {\n\t\tint[] numOfCoins = new int[n + 1];\n\t\tArray.Fill(numOfCoins, Int32.MaxValue);\n\t\tnumOfCoins[0] = 0;\n\t\tint toCompare = 0;\n\t\tforeach (int denom in denoms) {\n\t\t\tfor (int amount = 0; amount < numOfCoins.Length; amount++) {\n\t\t\t\tif (denom <= amount) {\n\t\t\t\t\tif (numOfCoins[amount - denom] == Int32.MaxValue) {\n\t\t\t\t\t\ttoCompare = numOfCoins[amount - denom];\n\t\t\t\t\t} else {\n\t\t\t\t\t\ttoCompare = numOfCoins[amount - denom] + 1;\n\t\t\t\t\t}\n\t\t\t\t\tnumOfCoins[amount] =\n\t\t\t\t\t  Math.Min(numOfCoins[amount], toCompare);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn numOfCoins[n] != Int32.MaxValue ? numOfCoins[n] : -1;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc MinNumberOfCoinsForChange(n int, denoms []int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"reflect\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(0, []int{1, 2, 3}), 0) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(3, []int{2, 1}), 2) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(4, []int{1, 5, 10}), 4) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(7, []int{1, 5, 10}), 3) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(10, []int{1, 5, 10}), 1) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(11, []int{1, 5, 10}), 2) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(24, []int{1, 5, 10}), 6) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(25, []int{1, 5, 10}), 3) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(7, []int{2, 4}), -1) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(7, []int{3, 7}), 1) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(9, []int{3, 5}), 3) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(9, []int{3, 4, 5}), 2) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(135, []int{39, 45, 130, 40, 4, 1}), 3) {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\tif !reflect.DeepEqual(MinNumberOfCoinsForChange(135, []int{39, 45, 130, 40, 4, 1, 60, 75}), 2) {\n\t\tt.Fail()\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport \"github.com/stretchr/testify/require\"\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := []int{1, 5, 10}\n\tactual := MinNumberOfCoinsForChange(7, input)\n\trequire.Equal(t, 3, actual)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\nfunc MinNumberOfCoinsForChange(n int, denoms []int) int {\n\tnumOfCoins := make([]int, n+1)\n\tfor i := range numOfCoins {\n\t\tnumOfCoins[i] = math.MaxInt32\n\t}\n\tnumOfCoins[0] = 0\n\tfor _, denom := range denoms {\n\t\tfor amount := range numOfCoins {\n\t\t\tif denom <= amount {\n\t\t\t\tnumOfCoins[amount] = min(numOfCoins[amount], numOfCoins[amount-denom]+1)\n\t\t\t}\n\t\t}\n\t}\n\tif numOfCoins[n] != math.MaxInt32 {\n\t\treturn numOfCoins[n]\n\t}\n\treturn -1\n}\n\nfunc min(arg1 int, rest ...int) int {\n\tcurr := arg1\n\tfor _, num := range rest {\n\t\tif num < curr {\n\t\t\tcurr = num\n\t\t}\n\t}\n\treturn curr\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int minNumberOfCoinsForChange(int n, int[] denoms) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {1, 2, 3};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(0, input) == 0);\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] input = {2, 1};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(3, input) == 2);\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] input = {1, 5, 10};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(4, input) == 4);\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] input = {1, 5, 10};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(7, input) == 3);\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] input = {1, 5, 10};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(10, input) == 1);\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] input = {1, 5, 10};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(11, input) == 2);\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] input = {1, 5, 10};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(24, input) == 6);\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] input = {1, 5, 10};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(25, input) == 3);\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] input = {2, 4};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(7, input) == -1);\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] input = {3, 7};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(7, input) == 1);\n  }\n\n  @Test\n  public void TestCase11() {\n    int[] input = {3, 5};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(9, input) == 3);\n  }\n\n  @Test\n  public void TestCase12() {\n    int[] input = {3, 4, 5};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(9, input) == 2);\n  }\n\n  @Test\n  public void TestCase13() {\n    int[] input = {39, 45, 130, 40, 4, 1};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(135, input) == 3);\n  }\n\n  @Test\n  public void TestCase14() {\n    int[] input = {39, 45, 130, 40, 4, 1, 60, 75};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(135, input) == 2);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    int[] input = {1, 5, 10};\n    Utils.assertTrue(Program.minNumberOfCoinsForChange(7, input) == 3);\n  }\n\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.Arrays;\n\nclass Program {\n  // O(nd) time | O(n) space\n  public static int minNumberOfCoinsForChange(int n, int[] denoms) {\n    int[] numOfCoins = new int[n + 1];\n    Arrays.fill(numOfCoins, Integer.MAX_VALUE);\n    numOfCoins[0] = 0;\n    int toCompare = 0;\n    for (int denom : denoms) {\n      for (int amount = 0; amount < numOfCoins.length; amount++) {\n        if (denom <= amount) {\n          if (numOfCoins[amount - denom] == Integer.MAX_VALUE) {\n            toCompare = numOfCoins[amount - denom];\n          } else {\n            toCompare = numOfCoins[amount - denom] + 1;\n          }\n          numOfCoins[amount] = Math.min(numOfCoins[amount], toCompare);\n        }\n      }\n    }\n    return numOfCoins[n] != Integer.MAX_VALUE ? numOfCoins[n] : -1;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function minNumberOfCoinsForChange(n, denoms) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.minNumberOfCoinsForChange = minNumberOfCoinsForChange;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.minNumberOfCoinsForChange(0, [1, 2, 3])).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.minNumberOfCoinsForChange(3, [2, 1])).to.deep.equal(2);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.minNumberOfCoinsForChange(4, [1, 5, 10])).to.deep.equal(4);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.minNumberOfCoinsForChange(7, [1, 5, 10])).to.deep.equal(3);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.minNumberOfCoinsForChange(10, [1, 5, 10])).to.deep.equal(1);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.minNumberOfCoinsForChange(11, [1, 5, 10])).to.deep.equal(2);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.minNumberOfCoinsForChange(24, [1, 5, 10])).to.deep.equal(6);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.minNumberOfCoinsForChange(25, [1, 5, 10])).to.deep.equal(3);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.minNumberOfCoinsForChange(7, [2, 4])).to.deep.equal(-1);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.minNumberOfCoinsForChange(7, [3, 7])).to.deep.equal(1);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.minNumberOfCoinsForChange(9, [3, 5])).to.deep.equal(3);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.minNumberOfCoinsForChange(9, [3, 4, 5])).to.deep.equal(2);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.minNumberOfCoinsForChange(135, [39, 45, 130, 40, 4, 1])).to.deep.equal(3);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.minNumberOfCoinsForChange(135, [39, 45, 130, 40, 4, 1, 60, 75])).to.deep.equal(2);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.minNumberOfCoinsForChange(7, [1, 5, 10])).to.deep.equal(3);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nd) time | O(n) space\nfunction minNumberOfCoinsForChange(n, denoms) {\n  const numOfCoins = new Array(n + 1).fill(Infinity);\n  numOfCoins[0] = 0;\n  for (const denom of denoms) {\n    for (let amount = 0; amount < numOfCoins.length; amount++) {\n      if (denom <= amount) {\n        numOfCoins[amount] = Math.min(numOfCoins[amount], numOfCoins[amount - denom] + 1);\n      }\n    }\n  }\n  return numOfCoins[n] !== Infinity ? numOfCoins[n] : -1;\n}\n\nexports.minNumberOfCoinsForChange = minNumberOfCoinsForChange;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def minNumberOfCoinsForChange(n, denoms):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(0, [1, 2, 3]), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(3, [2, 1]), 2)\n\n    def test_case_3(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(4, [1, 5, 10]), 4)\n\n    def test_case_4(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(7, [1, 5, 10]), 3)\n\n    def test_case_5(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(10, [1, 5, 10]), 1)\n\n    def test_case_6(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(11, [1, 5, 10]), 2)\n\n    def test_case_7(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(24, [1, 5, 10]), 6)\n\n    def test_case_8(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(25, [1, 5, 10]), 3)\n\n    def test_case_9(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(7, [2, 4]), -1)\n\n    def test_case_10(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(7, [3, 7]), 1)\n\n    def test_case_11(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(9, [3, 5]), 3)\n\n    def test_case_12(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(9, [3, 4, 5]), 2)\n\n    def test_case_13(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(135, [39, 45, 130, 40, 4, 1]), 3)\n\n    def test_case_14(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(135, [39, 45, 130, 40, 4, 1, 60, 75]), 2)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.minNumberOfCoinsForChange(7, [1, 5, 10]), 3)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nd) time | O(n) space\ndef minNumberOfCoinsForChange(n, denoms):\n    numOfCoins = [float(\"inf\") for amount in range(n + 1)]\n    numOfCoins[0] = 0\n    for denom in denoms:\n        for amount in range(len(numOfCoins)):\n            if denom <= amount:\n                numOfCoins[amount] = min(numOfCoins[amount], numOfCoins[amount - denom] + 1)\n    return numOfCoins[n] if numOfCoins[n] != float(\"inf\") else -1\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func minimumNumberOfCoinsForChange(target: Int, denominations: [Int]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(0, program.minimumNumberOfCoinsForChange(target: 0, denominations: [1, 2, 3]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(2, program.minimumNumberOfCoinsForChange(target: 3, denominations: [2, 1]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(4, program.minimumNumberOfCoinsForChange(target: 4, denominations: [1, 5, 10]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(3, program.minimumNumberOfCoinsForChange(target: 7, denominations: [1, 5, 10]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(1, program.minimumNumberOfCoinsForChange(target: 10, denominations: [1, 5, 10]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(2, program.minimumNumberOfCoinsForChange(target: 11, denominations: [1, 5, 10]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(6, program.minimumNumberOfCoinsForChange(target: 24, denominations: [1, 5, 10]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(3, program.minimumNumberOfCoinsForChange(target: 25, denominations: [1, 5, 10]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(-1, program.minimumNumberOfCoinsForChange(target: 7, denominations: [2, 4]))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(1, program.minimumNumberOfCoinsForChange(target: 7, denominations: [3, 7]))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(3, program.minimumNumberOfCoinsForChange(target: 9, denominations: [3, 5]))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(2, program.minimumNumberOfCoinsForChange(target: 9, denominations: [3, 4, 5]))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(3, program.minimumNumberOfCoinsForChange(target: 135, denominations: [39, 45, 130, 40, 4, 1]))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual(2, program.minimumNumberOfCoinsForChange(target: 135, denominations: [39, 45, 130, 40, 4, 1, 60, 75]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(3, program.minimumNumberOfCoinsForChange(target: 7, denominations: [1, 5, 10]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nd) time | O(n) space\n  func minimumNumberOfCoinsForChange(target: Int, denominations: [Int]) -> Int {\n    var numberOfCoins = Array(repeating: Int(Int16.max), count: target + 1)\n    numberOfCoins[0] = 0\n\n    for denomination in denominations {\n      for amount in 0 ..< numberOfCoins.count {\n        if denomination <= amount {\n          numberOfCoins[amount] = min(numberOfCoins[amount], 1 + numberOfCoins[amount - denomination])\n        }\n      }\n    }\n\n    return numberOfCoins[target] != Int(Int16.max) ? numberOfCoins[target] : -1\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function minNumberOfCoinsForChange(n: number, denoms: number[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.minNumberOfCoinsForChange(7, [1, 5, 10])).to.deep.equal(3);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nd) time | O(n) space\nexport function minNumberOfCoinsForChange(n: number, denoms: number[]) {\n  const numOfCoins: number[] = new Array(n + 1).fill(Infinity);\n  numOfCoins[0] = 0;\n  for (const denom of denoms) {\n    for (let amount = 0; amount < numOfCoins.length; amount++) {\n      if (denom <= amount) {\n        numOfCoins[amount] = Math.min(numOfCoins[amount], numOfCoins[amount - denom] + 1);\n      }\n    }\n  }\n  return numOfCoins[n] !== Infinity ? numOfCoins[n] : -1;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "denoms": [
+        1,
+        5,
+        10
+      ],
+      "n": 7
+    },
+    {
+      "denoms": [
+        1,
+        2,
+        3
+      ],
+      "n": 0
+    },
+    {
+      "denoms": [
+        2,
+        1
+      ],
+      "n": 3
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10
+      ],
+      "n": 4
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10
+      ],
+      "n": 10
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10
+      ],
+      "n": 11
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10
+      ],
+      "n": 24
+    },
+    {
+      "denoms": [
+        1,
+        5,
+        10
+      ],
+      "n": 25
+    },
+    {
+      "denoms": [
+        2,
+        4
+      ],
+      "n": 7
+    },
+    {
+      "denoms": [
+        3,
+        7
+      ],
+      "n": 7
+    },
+    {
+      "denoms": [
+        3,
+        5
+      ],
+      "n": 9
+    },
+    {
+      "denoms": [
+        3,
+        4,
+        5
+      ],
+      "n": 9
+    },
+    {
+      "denoms": [
+        39,
+        45,
+        130,
+        40,
+        4,
+        1
+      ],
+      "n": 135
+    },
+    {
+      "denoms": [
+        39,
+        45,
+        130,
+        40,
+        4,
+        1,
+        60,
+        75
+      ],
+      "n": 135
+    }
+  ],
+  "JSONAnswers": [
+    [
+      3,
+      0,
+      2,
+      4,
+      1,
+      2,
+      6,
+      3,
+      -1,
+      1,
+      3,
+      2,
+      3,
+      2
+    ]
+  ]
+}

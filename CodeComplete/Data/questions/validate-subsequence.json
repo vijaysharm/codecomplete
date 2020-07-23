@@ -1,0 +1,637 @@
+{
+  "Summary": {
+    "Name": "Validate Subsequence",
+    "Category": "Arrays",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "completed": false,
+      "date": "2020-05-11T00:00:00Z",
+      "number": 470,
+      "timeOne": 0,
+      "timeTwo": 703,
+      "url": "https://player.vimeo.com/video/414429732"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can solve this question by iterating through the main input array once.\nIterate through the main array, and look for the first integer in the potential subsequence. If you find that integer, keep on iterating through the main array, but now look for the second integer in the potential subsequence. Continue this process until you either find every integer in the potential subsequence or you reach the end of the main array.\nTo actually implement what Hint #2 describes, you'll have to declare a variable holding your position in the potential subsequence. At first, this position will be the 0th index in the sequence; as you find the sequence's integers in the main array, you'll increment the position variable until you reach the end of the sequence.",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the array",
+  "PromptHTML": "<p>\n  Given two non-empty arrays of integers, write a function that determines\n  whether the second array is a subsequence of the first one.\n</p>\n<p>\n  A subsequence of an array is a set of numbers that aren't necessarily adjacent\n  in the array but that are in the same order as they appear in the array. For\n  instance, the numbers <span>[1, 3, 4]</span> form a subsequence of the array\n  <span>[1, 2, 3, 4]</span>, and so do the numbers <span>[2, 4]</span>. Note\n  that a single number in an array and the array itself are both valid\n  subsequences of the array.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [5, 1, 22, 25, 6, -1, 8, 10]\n<span class=\"CodeEditor-promptParameter\">sequence</span> = [1, 6, -1, 10]\n</pre>\n<h3>Sample Output</h3>\n<pre>\ntrue\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    {
+      "Name": "sequence",
+      "Example": [
+        1,
+        6,
+        -1,
+        10
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nbool isValidSubsequence(vector<int> array, vector<int> sequence) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "#include \"program.cpp\"\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input = {};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> array = {5, 1, 22, 25, 6, -1, 8, 10};\n      vector<int> sequence = {1, 6, -1, 10};\n      assert(isValidSubsequence(array, sequence));\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n) time | O(1) space - where n is the length of the array\nbool isValidSubsequence(vector<int> array, vector<int> sequence) {\n  int arrIdx = 0;\n  int seqIdx = 0;\n  while (arrIdx < array.size() && seqIdx < sequence.size()) {\n    if (array[arrIdx] == sequence[seqIdx])\n      seqIdx++;\n    arrIdx++;\n  }\n  return seqIdx == sequence.size();\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n) time | O(1) space - where n is the length of the array\nbool isValidSubsequence(vector<int> array, vector<int> sequence) {\n  int seqIdx = 0;\n  for (auto value : array) {\n    if (seqIdx == sequence.size())\n      break;\n    if (sequence[seqIdx] == value)\n      seqIdx++;\n  }\n  return seqIdx == sequence.size();\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static bool IsValidSubsequence(List<int> array, List<int> sequence) {\n\t\t// Write your code here.\n\t\treturn false;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.GetNthFib(1) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.GetNthFib(2) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.GetNthFib(3) == 1);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int> array = new List<int> {\n\t\t\t5, 1, 22, 25, 6, -1, 8, 10\n\t\t};\n\t\tList<int> sequence = new List<int> {\n\t\t\t1, 6, -1, 10\n\t\t};\n\t\tUtils.AssertTrue(Program.IsValidSubsequence(array, sequence));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(1) space - where n is the length of the array\n\tpublic static bool IsValidSubsequence(List<int> array, List<int> sequence) {\n\t\tint arrIdx = 0;\n\t\tint seqIdx = 0;\n\t\twhile (arrIdx < array.Count && seqIdx < sequence.Count) {\n\t\t\tif (array[arrIdx] == sequence[seqIdx]) {\n\t\t\t\tseqIdx++;\n\t\t\t}\n\t\t\tarrIdx++;\n\t\t}\n\t\treturn seqIdx == sequence.Count;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(1) space - where n is the length of the array\n\tpublic static bool IsValidSubsequence(List<int> array, List<int> sequence) {\n\t\tint seqIdx = 0;\n\t\tforeach (var val in array) {\n\t\t\tif (seqIdx == sequence.Count) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tif (sequence[seqIdx] == val) {\n\t\t\t\tseqIdx++;\n\t\t\t}\n\t\t}\n\t\treturn seqIdx == sequence.Count;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc IsValidSubsequence(array []int, sequence []int) bool {\n\t// Write your code here.\n\treturn false\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 0\n\toutput := GetNthFib(1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(3)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tarray := []int{5, 1, 22, 25, 6, -1, 8, 10}\n\tsequence := []int{1, 6, -1, 10}\n\trequire.True(t, IsValidSubsequence(array, sequence))\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space\nfunc IsValidSubsequence(array []int, sequence []int) bool {\n\tarrIdx := 0\n\tseqIdx := 0\n\tfor arrIdx < len(array) && seqIdx < len(sequence) {\n\t\tif array[arrIdx] == sequence[seqIdx] {\n\t\t\tseqIdx += 1\n\t\t}\n\t\tarrIdx += 1\n\t}\n\treturn seqIdx == len(sequence)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space\nfunc IsValidSubsequence(array []int, sequence []int) bool {\n\tseqIdx := 0\n\tfor _, value := range array {\n\t\tif seqIdx == len(sequence) {\n\t\t\tbreak\n\t\t}\n\t\tif value == sequence[seqIdx] {\n\t\t\tseqIdx += 1\n\t\t}\n\t}\n\treturn seqIdx == len(sequence)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static boolean isValidSubsequence(List<Integer> array, List<Integer> sequence) {\n    // Write your code here.\n    return false;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input = new int[] {};\n    var expected = true;\n    var actual = Program.isMonotonic(input);\n    Utils.assertEquals(expected, actual);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    var array = Arrays.asList(5, 1, 22, 25, 6, -1, 8, 10);\n    var sequence = Arrays.asList(1, 6, -1, 10);\n    Utils.assertEquals(true, Program.isValidSubsequence(array, sequence));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(1) space - where n is the length of the array\n  public static boolean isValidSubsequence(List<Integer> array, List<Integer> sequence) {\n    int arrIdx = 0;\n    int seqIdx = 0;\n    while (arrIdx < array.size() && seqIdx < sequence.size()) {\n      if (array.get(arrIdx).equals(sequence.get(seqIdx))) {\n        seqIdx++;\n      }\n      arrIdx++;\n    }\n    return seqIdx == sequence.size();\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(1) space - where n is the length of the array\n  public static boolean isValidSubsequence(List<Integer> array, List<Integer> sequence) {\n    int seqIdx = 0;\n    for (var value : array) {\n      if (seqIdx == sequence.size()) {\n        break;\n      }\n      if (sequence.get(seqIdx).equals(value)) {\n        seqIdx++;\n      }\n    }\n    return seqIdx == sequence.size();\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function isValidSubsequence(array, sequence) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.isValidSubsequence = isValidSubsequence;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.getNthFib(1)).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.getNthFib(2)).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.getNthFib(3)).to.deep.equal(1);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const array = [5, 1, 22, 25, 6, -1, 8, 10];\n  const sequence = [1, 6, -1, 10];\n  chai.expect(program.isValidSubsequence(array, sequence)).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the array\nfunction isValidSubsequence(array, sequence) {\n  let arrIdx = 0;\n  let seqIdx = 0;\n  while (arrIdx < array.length && seqIdx < sequence.length) {\n    if (array[arrIdx] === sequence[seqIdx]) seqIdx++;\n    arrIdx++;\n  }\n  return seqIdx === sequence.length;\n}\n\nexports.isValidSubsequence = isValidSubsequence;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the array\nfunction isValidSubsequence(array, sequence) {\n  let seqIdx = 0;\n  for (const value of array) {\n    if (seqIdx === sequence.length) break;\n    if (sequence[seqIdx] === value) seqIdx++;\n  }\n  return seqIdx === sequence.length;\n}\n\nexports.isValidSubsequence = isValidSubsequence;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def isValidSubsequence(array, sequence):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.getNthFib(1), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.getNthFib(2), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.getNthFib(3), 1)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        array = [5, 1, 22, 25, 6, -1, 8, 10]\n        sequence = [1, 6, -1, 10]\n        self.assertTrue(program.isValidSubsequence(array, sequence))\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space - where n is the length of the array\ndef isValidSubsequence(array, sequence):\n    arrIdx = 0\n    seqIdx = 0\n    while arrIdx < len(array) and seqIdx < len(sequence):\n        if array[arrIdx] == sequence[seqIdx]:\n            seqIdx += 1\n        arrIdx += 1\n    return seqIdx == len(sequence)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space - where n is the length of the array\ndef isValidSubsequence(array, sequence):\n    seqIdx = 0\n    for value in array:\n        if seqIdx == len(sequence):\n            break\n        if sequence[seqIdx] == value:\n            seqIdx += 1\n    return seqIdx == len(sequence)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  static func isValidSubsequence(_ array: [Int], _ sequence: [Int]) -> Bool {\n    // Write your code here.\n    return false\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assert(program.getNthFib(n: 1) == 0)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assert(program.getNthFib(n: 2) == 1)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assert(program.getNthFib(n: 3) == 1)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let array = [5, 1, 22, 25, 6, -1, 8, 10]\n      let sequence = [1, 6, -1, 10]\n      try assert(Program.isValidSubsequence(array, sequence))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  static func isValidSubsequence(_ array: [Int], _ sequence: [Int]) -> Bool {\n    var arrIdx = 0\n    var seqIdx = 0\n    while arrIdx < array.count, seqIdx < sequence.count {\n      if array[arrIdx] == sequence[seqIdx] {\n        seqIdx += 1\n      }\n      arrIdx += 1\n    }\n    return seqIdx == sequence.count\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  static func isValidSubsequence(_ array: [Int], _ sequence: [Int]) -> Bool {\n    var seqIdx = 0\n    for value in array {\n      if seqIdx == sequence.count {\n        break\n      }\n      if value == sequence[seqIdx] {\n        seqIdx += 1\n      }\n    }\n    return seqIdx == sequence.count\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function isValidSubsequence(array: number[], sequence: number[]) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const array = [5, 1, 22, 25, 6, -1, 8, 10];\n  const sequence = [1, 6, -1, 10];\n  chai.expect(program.isValidSubsequence(array, sequence)).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the array\nexport function isValidSubsequence(array: number[], sequence: number[]) {\n  let arrIdx = 0;\n  let seqIdx = 0;\n  while (arrIdx < array.length && seqIdx < sequence.length) {\n    if (array[arrIdx] === sequence[seqIdx]) seqIdx++;\n    arrIdx++;\n  }\n  return seqIdx === sequence.length;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the array\nexport function isValidSubsequence(array: number[], sequence: number[]) {\n  let seqIdx = 0;\n  for (const value of array) {\n    if (seqIdx === sequence.length) break;\n    if (sequence[seqIdx] === value) seqIdx++;\n  }\n  return seqIdx === sequence.length;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        1,
+        6,
+        -1,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        22,
+        6,
+        -1,
+        8,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        22,
+        25,
+        6
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        1,
+        6,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        22,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        -1,
+        8,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        25
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "sequence": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10,
+        12
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        4,
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        22,
+        23,
+        6,
+        -1,
+        8,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        22,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        22,
+        22,
+        6,
+        -1,
+        8,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        1,
+        6,
+        -1,
+        -1
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        1,
+        6,
+        -1,
+        -1,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        1,
+        6,
+        -1,
+        -2
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        26
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        25,
+        22,
+        6,
+        -1,
+        8,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        26,
+        22,
+        8
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        6,
+        1
+      ],
+      "sequence": [
+        1,
+        1,
+        1,
+        6
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        1,
+        6,
+        -1,
+        10,
+        11,
+        11,
+        11,
+        11
+      ]
+    },
+    {
+      "array": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10
+      ],
+      "sequence": [
+        5,
+        1,
+        22,
+        25,
+        6,
+        -1,
+        8,
+        10,
+        10
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  ]
+}

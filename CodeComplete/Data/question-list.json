@@ -1,0 +1,1154 @@
+{
+	"Problems":[
+	   {
+		  "Name":"Airport Connections",
+		  "Category":"Graphs",
+		  "Difficulty":5,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-05-04T00:00:00Z",
+			 "number":110,
+			 "timeOne":0,
+			 "timeTwo":1600
+		  }
+	   },
+	   {
+		  "Name":"Depth-first Search",
+		  "Category":"Graphs",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":101,
+			 "timeOne":0,
+			 "timeTwo":719
+		  }
+	   },
+	   {
+		  "Name":"Square of Zeroes",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":5,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":666,
+			 "timeOne":0,
+			 "timeTwo":2891
+		  }
+	   },
+	   {
+		  "Name":"Knuth—Morris—Pratt Algorithm",
+		  "Category":"Famous Algorithms",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2018-10-20T00:00:00Z",
+			 "number":502,
+			 "timeOne":0,
+			 "timeTwo":2881
+		  }
+	   },
+	   {
+		  "Name":"Longest Substring Without Duplication",
+		  "Category":"Strings",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":4,
+			 "timeOne":0,
+			 "timeTwo":1309
+		  }
+	   },
+	   {
+		  "Name":"Palindrome Check",
+		  "Category":"Strings",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":1,
+			 "timeOne":0,
+			 "timeTwo":1130
+		  }
+	   },
+	   {
+		  "Name":"Bubble Sort",
+		  "Category":"Sorting",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":51,
+			 "timeOne":0,
+			 "timeTwo":801
+		  }
+	   },
+	   {
+		  "Name":"Min Heap Construction",
+		  "Category":"Heaps",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":301,
+			 "timeOne":0,
+			 "timeTwo":2366
+		  }
+	   },
+	   {
+		  "Name":"Zigzag Traverse",
+		  "Category":"Arrays",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-09-01T00:00:00Z",
+			 "number":463,
+			 "timeOne":0,
+			 "timeTwo":1261
+		  }
+	   },
+	   {
+		  "Name":"Largest Range",
+		  "Category":"Arrays",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":460,
+			 "timeOne":0,
+			 "timeTwo":1107
+		  }
+	   },
+	   {
+		  "Name":"Min Max Stack Construction",
+		  "Category":"Stacks",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2018-10-20T00:00:00Z",
+			 "number":152,
+			 "timeOne":0,
+			 "timeTwo":1060
+		  }
+	   },
+	   {
+		  "Name":"Multi String Search",
+		  "Category":"Tries",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":202,
+			 "timeOne":0,
+			 "timeTwo":2596
+		  }
+	   },
+	   {
+		  "Name":"Node Depths",
+		  "Category":"Binary Trees",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":363,
+			 "timeOne":0,
+			 "timeTwo":1306
+		  }
+	   },
+	   {
+		  "Name":"Product Sum",
+		  "Category":"Recursion",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-09-01T00:00:00Z",
+			 "number":614,
+			 "timeOne":0,
+			 "timeTwo":800
+		  }
+	   },
+	   {
+		  "Name":"Boggle Board",
+		  "Category":"Graphs",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":108,
+			 "timeOne":0,
+			 "timeTwo":2879
+		  }
+	   },
+	   {
+		  "Name":"Insertion Sort",
+		  "Category":"Sorting",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":52,
+			 "timeOne":0,
+			 "timeTwo":466
+		  }
+	   },
+	   {
+		  "Name":"Invert Binary Tree",
+		  "Category":"Binary Trees",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":353,
+			 "timeOne":0,
+			 "timeTwo":1405
+		  }
+	   },
+	   {
+		  "Name":"Selection Sort",
+		  "Category":"Sorting",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":53,
+			 "timeOne":0,
+			 "timeTwo":554
+		  }
+	   },
+	   {
+		  "Name":"Spiral Traverse",
+		  "Category":"Arrays",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2020-03-29T00:00:00Z",
+			 "number":468,
+			 "timeOne":0,
+			 "timeTwo":1063
+		  }
+	   },
+	   {
+		  "Name":"Underscorify Substring",
+		  "Category":"Strings",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":5,
+			 "timeOne":0,
+			 "timeTwo":2434
+		  }
+	   },
+	   {
+		  "Name":"Calendar Matching",
+		  "Category":"Arrays",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-09-13T00:00:00Z",
+			 "number":465,
+			 "timeOne":0,
+			 "timeTwo":1421
+		  }
+	   },
+	   {
+		  "Name":"Kadane's Algorithm",
+		  "Category":"Famous Algorithms",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":501,
+			 "timeOne":0,
+			 "timeTwo":1148
+		  }
+	   },
+	   {
+		  "Name":"Numbers In Pi",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-09-01T00:00:00Z",
+			 "number":664,
+			 "timeOne":0,
+			 "timeTwo":1562
+		  }
+	   },
+	   {
+		  "Name":"River Sizes",
+		  "Category":"Graphs",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":105,
+			 "timeOne":0,
+			 "timeTwo":1390
+		  }
+	   },
+	   {
+		  "Name":"Shift Linked List",
+		  "Category":"Linked Lists",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":259,
+			 "timeOne":0,
+			 "timeTwo":1396
+		  }
+	   },
+	   {
+		  "Name":"Apartment Hunting",
+		  "Category":"Arrays",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-09-01T00:00:00Z",
+			 "number":464,
+			 "timeOne":0,
+			 "timeTwo":1568
+		  }
+	   },
+	   {
+		  "Name":"Balanced Brackets",
+		  "Category":"Stacks",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":153,
+			 "timeOne":0,
+			 "timeTwo":921
+		  }
+	   },
+	   {
+		  "Name":"Binary Search",
+		  "Category":"Searching",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":751,
+			 "timeOne":0,
+			 "timeTwo":1209
+		  }
+	   },
+	   {
+		  "Name":"Subarray Sort",
+		  "Category":"Arrays",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":459,
+			 "timeOne":0,
+			 "timeTwo":958
+		  }
+	   },
+	   {
+		  "Name":"Longest Increasing Subsequence",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":5,
+		  "Available":true,
+		  "Metadata":{
+			 "number":663,
+			 "timeOne":0,
+			 "timeTwo":3247
+		  }
+	   },
+	   {
+		  "Name":"Smallest Difference",
+		  "Category":"Arrays",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":455,
+			 "timeOne":0,
+			 "timeTwo":943
+		  }
+	   },
+	   {
+		  "Name":"Topological Sort",
+		  "Category":"Famous Algorithms",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2018-10-20T00:00:00Z",
+			 "number":507,
+			 "timeOne":0,
+			 "timeTwo":2157
+		  }
+	   },
+	   {
+		  "Name":"Knapsack Problem",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":659,
+			 "timeOne":0,
+			 "timeTwo":1929
+		  }
+	   },
+	   {
+		  "Name":"Min Rewards",
+		  "Category":"Arrays",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-05-04T00:00:00Z",
+			 "number":462,
+			 "timeOne":0,
+			 "timeTwo":2029
+		  }
+	   },
+	   {
+		  "Name":"Rearrange Linked List",
+		  "Category":"Linked Lists",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":260,
+			 "timeOne":0,
+			 "timeTwo":1190
+		  }
+	   },
+	   {
+		  "Name":"Search In Sorted Matrix",
+		  "Category":"Searching",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":753,
+			 "timeOne":0,
+			 "timeTwo":942
+		  }
+	   },
+	   {
+		  "Name":"Shorten Path",
+		  "Category":"Stacks",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":154,
+			 "timeOne":0,
+			 "timeTwo":1986
+		  }
+	   },
+	   {
+		  "Name":"Four Number Sum",
+		  "Category":"Arrays",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":453,
+			 "timeOne":0,
+			 "timeTwo":2327
+		  }
+	   },
+	   {
+		  "Name":"Group Anagrams",
+		  "Category":"Strings",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-11-21T00:00:00Z",
+			 "number":7,
+			 "timeOne":0,
+			 "timeTwo":1227
+		  }
+	   },
+	   {
+		  "Name":"Lowest Common Manager",
+		  "Category":"Recursion",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-05-04T00:00:00Z",
+			 "number":613,
+			 "timeOne":0,
+			 "timeTwo":1032
+		  }
+	   },
+	   {
+		  "Name":"LRU Cache",
+		  "Category":"Linked Lists",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "number":256,
+			 "timeOne":0,
+			 "timeTwo":1721
+		  }
+	   },
+	   {
+		  "Name":"Max Sum Increasing Subsequence",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":654,
+			 "timeOne":0,
+			 "timeTwo":1105
+		  }
+	   },
+	   {
+		  "Name":"Permutations",
+		  "Category":"Recursion",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":602,
+			 "timeOne":0,
+			 "timeTwo":2271
+		  }
+	   },
+	   {
+		  "Name":"Smallest Substring Containing",
+		  "Category":"Strings",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-11-21T00:00:00Z",
+			 "number":8,
+			 "timeOne":0,
+			 "timeTwo":1549
+		  }
+	   },
+	   {
+		  "Name":"Continuous Median",
+		  "Category":"Heaps",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":302,
+			 "timeOne":0,
+			 "timeTwo":1440
+		  }
+	   },
+	   {
+		  "Name":"Longest Palindromic Substring",
+		  "Category":"Strings",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":3,
+			 "timeOne":0,
+			 "timeTwo":996
+		  }
+	   },
+	   {
+		  "Name":"Longest Peak",
+		  "Category":"Arrays",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2020-03-29T00:00:00Z",
+			 "number":469,
+			 "timeOne":0,
+			 "timeTwo":1583
+		  }
+	   },
+	   {
+		  "Name":"Max Path Sum In Binary Tree",
+		  "Category":"Binary Trees",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2018-10-20T00:00:00Z",
+			 "number":359,
+			 "timeOne":0,
+			 "timeTwo":2142
+		  }
+	   },
+	   {
+		  "Name":"Min Height BST",
+		  "Category":"Binary Search Trees",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":406,
+			 "timeOne":0,
+			 "timeTwo":1266
+		  }
+	   },
+	   {
+		  "Name":"Monotonic Array",
+		  "Category":"Arrays",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2020-03-29T00:00:00Z",
+			 "number":467,
+			 "timeOne":0,
+			 "timeTwo":1303
+		  }
+	   },
+	   {
+		  "Name":"Number Of Binary Tree Topologies",
+		  "Category":"Recursion",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "number":612,
+			 "timeOne":0,
+			 "timeTwo":2030
+		  }
+	   },
+	   {
+		  "Name":"Quick Sort",
+		  "Category":"Sorting",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":55,
+			 "timeOne":0,
+			 "timeTwo":2137
+		  }
+	   },
+	   {
+		  "Name":"Disk Stacking",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":660,
+			 "timeOne":0,
+			 "timeTwo":1603
+		  }
+	   },
+	   {
+		  "Name":"Find Closest Value In BST",
+		  "Category":"Binary Search Trees",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":401,
+			 "timeOne":0,
+			 "timeTwo":948
+		  }
+	   },
+	   {
+		  "Name":"Iterative In-order Traversal",
+		  "Category":"Binary Trees",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "number":357,
+			 "timeOne":0,
+			 "timeTwo":1242
+		  }
+	   },
+	   {
+		  "Name":"Remove Kth Node From End",
+		  "Category":"Linked Lists",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":254,
+			 "timeOne":0,
+			 "timeTwo":751
+		  }
+	   },
+	   {
+		  "Name":"Right Sibling Tree",
+		  "Category":"Binary Trees",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2020-03-29T00:00:00Z",
+			 "number":362,
+			 "timeOne":0,
+			 "timeTwo":1658
+		  }
+	   },
+	   {
+		  "Name":"Shifted Binary Search",
+		  "Category":"Searching",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":754,
+			 "timeOne":0,
+			 "timeTwo":1100
+		  }
+	   },
+	   {
+		  "Name":"Palindrome Partitioning Min Cuts",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "number":662,
+			 "timeOne":0,
+			 "timeTwo":2290
+		  }
+	   },
+	   {
+		  "Name":"Pattern Matcher",
+		  "Category":"Strings",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":6,
+			 "timeOne":0,
+			 "timeTwo":1633
+		  }
+	   },
+	   {
+		  "Name":"Powerset",
+		  "Category":"Recursion",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":603,
+			 "timeOne":0,
+			 "timeTwo":756
+		  }
+	   },
+	   {
+		  "Name":"Quickselect",
+		  "Category":"Searching",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":756,
+			 "timeOne":0,
+			 "timeTwo":1638
+		  }
+	   },
+	   {
+		  "Name":"Two Number Sum",
+		  "Category":"Arrays",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":451,
+			 "timeOne":0,
+			 "timeTwo":1159
+		  }
+	   },
+	   {
+		  "Name":"Flatten Binary Tree",
+		  "Category":"Binary Trees",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2020-03-29T00:00:00Z",
+			 "number":361,
+			 "timeOne":0,
+			 "timeTwo":1299
+		  }
+	   },
+	   {
+		  "Name":"Max Subset Sum No Adjacent",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":651,
+			 "timeOne":0,
+			 "timeTwo":924
+		  }
+	   },
+	   {
+		  "Name":"Merge Linked Lists",
+		  "Category":"Linked Lists",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-11-21T00:00:00Z",
+			 "number":258,
+			 "timeOne":0,
+			 "timeTwo":1697
+		  }
+	   },
+	   {
+		  "Name":"Levenshtein Distance",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":655,
+			 "timeOne":0,
+			 "timeTwo":1564
+		  }
+	   },
+	   {
+		  "Name":"Validate Subsequence",
+		  "Category":"Arrays",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":470,
+			 "timeOne":0,
+			 "timeTwo":703
+		  }
+	   },
+	   {
+		  "Name":"Youngest Common Ancestor",
+		  "Category":"Graphs",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-05-04T00:00:00Z",
+			 "number":111,
+			 "timeOne":0,
+			 "timeTwo":704
+		  }
+	   },
+	   {
+		  "Name":"Validate BST",
+		  "Category":"Binary Search Trees",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":403,
+			 "timeOne":0,
+			 "timeTwo":1001
+		  }
+	   },
+	   {
+		  "Name":"Find Three Largest Numbers",
+		  "Category":"Searching",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":752,
+			 "timeOne":0,
+			 "timeTwo":435
+		  }
+	   },
+	   {
+		  "Name":"Interweaving Strings",
+		  "Category":"Recursion",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-11-21T00:00:00Z",
+			 "number":615,
+			 "timeOne":0,
+			 "timeTwo":1401
+		  }
+	   },
+	   {
+		  "Name":"Rectangle Mania",
+		  "Category":"Graphs",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-09-13T00:00:00Z",
+			 "number":112,
+			 "timeOne":0,
+			 "timeTwo":1969
+		  }
+	   },
+	   {
+		  "Name":"BST Traversal",
+		  "Category":"Binary Search Trees",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":404,
+			 "timeOne":0,
+			 "timeTwo":762
+		  }
+	   },
+	   {
+		  "Name":"Find Loop",
+		  "Category":"Linked Lists",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":255,
+			 "timeOne":0,
+			 "timeTwo":1140
+		  }
+	   },
+	   {
+		  "Name":"Linked List Construction",
+		  "Category":"Linked Lists",
+		  "Difficulty":2,
+		  "Available":false,
+		  "Metadata":{
+			 "date":"2018-10-20T00:00:00Z",
+			 "number":251,
+			 "timeOne":0,
+			 "timeTwo":2101
+		  }
+	   },
+	   {
+		  "Name":"Max Profit With K Transactions",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "number":661,
+			 "timeOne":0,
+			 "timeTwo":2014
+		  }
+	   },
+	   {
+		  "Name":"Min Number Of Jumps",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":657,
+			 "timeOne":0,
+			 "timeTwo":1556
+		  }
+	   },
+	   {
+		  "Name":"All Kinds Of Node Depths",
+		  "Category":"Binary Trees",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":364,
+			 "timeOne":0,
+			 "timeTwo":2264
+		  }
+	   },
+	   {
+		  "Name":"Branch Sums",
+		  "Category":"Binary Trees",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-11-21T00:00:00Z",
+			 "number":360,
+			 "timeOne":0,
+			 "timeTwo":1045
+		  }
+	   },
+	   {
+		  "Name":"Breadth-first Search",
+		  "Category":"Graphs",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":103,
+			 "timeOne":0,
+			 "timeTwo":932
+		  }
+	   },
+	   {
+		  "Name":"Nth Fibonacci",
+		  "Category":"Recursion",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":601,
+			 "timeOne":0,
+			 "timeTwo":1475
+		  }
+	   },
+	   {
+		  "Name":"Search For Range",
+		  "Category":"Searching",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":755,
+			 "timeOne":0,
+			 "timeTwo":1009
+		  }
+	   },
+	   {
+		  "Name":"Suffix Trie Construction",
+		  "Category":"Tries",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":201,
+			 "timeOne":0,
+			 "timeTwo":1426
+		  }
+	   },
+	   {
+		  "Name":"Merge Sort",
+		  "Category":"Sorting",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "number":54,
+			 "timeOne":0,
+			 "timeTwo":3271
+		  }
+	   },
+	   {
+		  "Name":"Merge Sorted Arrays",
+		  "Category":"Heaps",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":303,
+			 "timeOne":0,
+			 "timeTwo":1863
+		  }
+	   },
+	   {
+		  "Name":"BST Construction",
+		  "Category":"Binary Search Trees",
+		  "Difficulty":2,
+		  "Available":false,
+		  "Metadata":{
+			 "number":402,
+			 "timeOne":0,
+			 "timeTwo":1707
+		  }
+	   },
+	   {
+		  "Name":"Heap Sort",
+		  "Category":"Sorting",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":56,
+			 "timeOne":0,
+			 "timeTwo":988
+		  }
+	   },
+	   {
+		  "Name":"Longest String Chain",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":4,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-11-21T00:00:00Z",
+			 "number":665,
+			 "timeOne":0,
+			 "timeTwo":1655
+		  }
+	   },
+	   {
+		  "Name":"Move Element To End",
+		  "Category":"Arrays",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-11-21T00:00:00Z",
+			 "number":466,
+			 "timeOne":0,
+			 "timeTwo":797
+		  }
+	   },
+	   {
+		  "Name":"Number Of Ways To Make Change",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":652,
+			 "timeOne":0,
+			 "timeTwo":851
+		  }
+	   },
+	   {
+		  "Name":"Reverse Linked List",
+		  "Category":"Linked Lists",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-09-01T00:00:00Z",
+			 "number":257,
+			 "timeOne":0,
+			 "timeTwo":1251
+		  }
+	   },
+	   {
+		  "Name":"Right Smaller Than",
+		  "Category":"Binary Search Trees",
+		  "Difficulty":5,
+		  "Available":true,
+		  "Metadata":{
+			 "completed":false,
+			 "date":"2020-05-11T00:00:00Z",
+			 "number":407,
+			 "timeOne":0,
+			 "timeTwo":1894
+		  }
+	   },
+	   {
+		  "Name":"Same BSTs",
+		  "Category":"Binary Search Trees",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-11-21T00:00:00Z",
+			 "number":405,
+			 "timeOne":0,
+			 "timeTwo":1527
+		  }
+	   },
+	   {
+		  "Name":"Caesar Cipher Encryptor",
+		  "Category":"Strings",
+		  "Difficulty":1,
+		  "Available":true,
+		  "Metadata":{
+			 "number":2,
+			 "timeOne":0,
+			 "timeTwo":979
+		  }
+	   },
+	   {
+		  "Name":"Longest Common Subsequence",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":656,
+			 "timeOne":0,
+			 "timeTwo":1894
+		  }
+	   },
+	   {
+		  "Name":"Min Number Of Coins For Change",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":653,
+			 "timeOne":0,
+			 "timeTwo":1007
+		  }
+	   },
+	   {
+		  "Name":"Single Cycle Check",
+		  "Category":"Graphs",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "date":"2019-05-04T00:00:00Z",
+			 "number":102,
+			 "timeOne":0,
+			 "timeTwo":727
+		  }
+	   },
+	   {
+		  "Name":"Three Number Sum",
+		  "Category":"Arrays",
+		  "Difficulty":2,
+		  "Available":true,
+		  "Metadata":{
+			 "number":452,
+			 "timeOne":0,
+			 "timeTwo":1295
+		  }
+	   },
+	   {
+		  "Name":"Water Area",
+		  "Category":"Dynamic Programming",
+		  "Difficulty":3,
+		  "Available":true,
+		  "Metadata":{
+			 "number":658,
+			 "timeOne":0,
+			 "timeTwo":1633
+		  }
+	   }
+	]
+ }

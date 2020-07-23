@@ -1,0 +1,1333 @@
+{
+  "Summary": {
+    "Name": "Min Height BST",
+    "Category": "Binary Search Trees",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "completed": false,
+      "date": "2020-05-11T00:00:00Z",
+      "number": 406,
+      "timeOne": 0,
+      "timeTwo": 1266,
+      "url": "https://player.vimeo.com/video/415347880"
+    }
+  },
+  "Prompt": "",
+  "Hints": "In order for the BST to have the smallest height possible, it needs to be balanced; in other words, it needs to have roughly the same number of nodes in its left subtree as in its right subtree.\nHow can you use the sorted nature of the input array to construct a balanced BST?\nGrab the middle element of the array, and make that element be the root node of the BST. Then, grab the middle element between the beginning of the array and the first middle element, and make that element be the root of the BST's left subtree; similarly, make the middle element between the end of the array and the first middle element be the root of the BST's right subtree. Continue this approach until you run out of elements in the array.",
+  "SpaceTime": "O(n) time | O(n) space - where n is the length of the array",
+  "PromptHTML": "<p>\n  Write a function that takes in a non-empty sorted array of distinct integers,\n  constructs a BST from the integers, and returns the root of the BST.\n</p>\n<p>\n  The function should minimize the height of the BST.\n</p>\n<p>\n  You've been provided with a <span>BST</span> class that you'll have to use to\n  construct the BST.\n</p>\n<p>\n  Each <span>BST</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. A node is\n  said to be a valid <span>BST</span> node if and only if it satisfies the BST\n  property: its <span>value</span> is strictly greater than the values of every\n  node to its left; its <span>value</span> is less than or equal to the values\n  of every node to its right; and its children nodes are either valid\n  <span>BST</span> nodes themselves or <span>None</span> / <span>null</span>.\n</p>\n<p>\n  A BST is valid if and only if all of its nodes are valid\n  <span>BST</span> nodes.\n</p>\n<p>\n  Note that the <span>BST</span> class already has an <span>insert</span> method\n  which you can use if you want.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [1, 2, 5, 7, 10, 13, 14, 15, 22]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n         10\n       /     \\\n      2      14\n    /   \\   /   \\\n   1     5 13   15\n          \\       \\\n           7      22\n<span class=\"CodeEditor-promptComment\">// This is one example of a BST with min height</span>\n<span class=\"CodeEditor-promptComment\">// that you could create from the input array.</span>\n<span class=\"CodeEditor-promptComment\">// You could create other BSTs with min height</span>\n<span class=\"CodeEditor-promptComment\">// from the same array; for example:</span>\n         10\n       /     \\\n      5      15\n    /   \\   /   \\\n   2     7 13   22\n /           \\\n1            14\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": "tree"
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nclass BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n\n  void insert(int value) {\n    if (value < this->value) {\n      if (left == NULL) {\n        left = new BST(value);\n      } else {\n        left->insert(value);\n      }\n    } else {\n      if (right == NULL) {\n        right = new BST(value);\n      } else {\n        right->insert(value);\n      }\n    }\n  }\n};\n\nBST *minHeightBst(vector<int> array) {\n  // Write your code here.\n  return NULL;\n}\n",
+      "StartingTest": "#include \"program.cpp\"\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input = {};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nbool validateBstHelper(BST *tree, int minValue, int maxValue) {\n  if (tree->value < minValue || tree->value >= maxValue) {\n    return false;\n  }\n  if (tree->left != NULL &&\n      !validateBstHelper(tree->left, minValue, tree->value)) {\n    return false;\n  }\n  if (tree->right != NULL &&\n      !validateBstHelper(tree->right, tree->value, maxValue)) {\n    return false;\n  }\n  return true;\n}\n\nvector<int> inOrderTraverse(BST *tree, vector<int> array) {\n  if (tree->left != NULL) {\n    array = inOrderTraverse(tree->left, array);\n  }\n  array.push_back(tree->value);\n  if (tree->right != NULL) {\n    array = inOrderTraverse(tree->right, array);\n  }\n  return array;\n}\n\nbool validateBst(BST *tree) {\n  return validateBstHelper(tree, INT_MIN, INT_MAX);\n}\n\ntemplate <class BST> int getTreeHeight(BST *tree, int height) {\n  if (tree == NULL)\n    return height;\n  int leftTreeHeight = getTreeHeight(tree->left, height + 1);\n  int rightTreeHeight = getTreeHeight(tree->right, height + 1);\n  return max(leftTreeHeight, rightTreeHeight);\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> array{1, 2, 5, 7, 10, 13, 14, 15, 22};\n      auto tree = minHeightBst(array);\n\n      assert(validateBst(tree));\n      assert(getTreeHeight(tree, 0) == 4);\n\n      auto inOrder = inOrderTraverse(tree, {});\n      vector<int> expected{1, 2, 5, 7, 10, 13, 14, 15, 22};\n      assert(inOrder == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n\n  void insert(int value) {\n    if (value < this->value) {\n      if (left == NULL) {\n        left = new BST(value);\n      } else {\n        left->insert(value);\n      }\n    } else {\n      if (right == NULL) {\n        right = new BST(value);\n      } else {\n        right->insert(value);\n      }\n    }\n  }\n};\n\nBST *constructMinHeightBst(vector<int> array, BST *bst, int startIdx,\n                           int endIdx);\n\n// O(nlog(n)) time | O(n) space - where n is the length of the array\nBST *minHeightBst(vector<int> array) {\n  return constructMinHeightBst(array, NULL, 0, array.size() - 1);\n}\n\nBST *constructMinHeightBst(vector<int> array, BST *bst, int startIdx,\n                           int endIdx) {\n  if (endIdx < startIdx)\n    return NULL;\n  int midIdx = (startIdx + endIdx) / 2;\n  int valueToAdd = array[midIdx];\n  if (bst == NULL) {\n    bst = new BST(valueToAdd);\n  } else {\n    bst->insert(valueToAdd);\n  }\n  constructMinHeightBst(array, bst, startIdx, midIdx - 1);\n  constructMinHeightBst(array, bst, midIdx + 1, endIdx);\n  return bst;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n\n  // We don't use this method for this solution.\n  void insert(int value) {\n    if (value < this->value) {\n      if (left == NULL) {\n        left = new BST(value);\n      } else {\n        left->insert(value);\n      }\n    } else {\n      if (right == NULL) {\n        right = new BST(value);\n      } else {\n        right->insert(value);\n      }\n    }\n  }\n};\n\nBST *constructMinHeightBst(vector<int> array, BST *bst, int startIdx,\n                           int endIdx);\n\n// O(n) time | O(n) space - where n is the length of the array\nBST *minHeightBst(vector<int> array) {\n  return constructMinHeightBst(array, NULL, 0, array.size() - 1);\n}\n\nBST *constructMinHeightBst(vector<int> array, BST *bst, int startIdx,\n                           int endIdx) {\n  if (endIdx < startIdx)\n    return NULL;\n  int midIdx = (startIdx + endIdx) / 2;\n  BST *newBstNode = new BST(array[midIdx]);\n  if (bst == NULL) {\n    bst = newBstNode;\n  } else {\n    if (array[midIdx] < bst->value) {\n      bst->left = newBstNode;\n      bst = bst->left;\n    } else {\n      bst->right = newBstNode;\n      bst = bst->right;\n    }\n  }\n  constructMinHeightBst(array, bst, startIdx, midIdx - 1);\n  constructMinHeightBst(array, bst, midIdx + 1, endIdx);\n  return bst;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n\n  // We don't use this method for this solution.\n  void insert(int value) {\n    if (value < this->value) {\n      if (left == NULL) {\n        left = new BST(value);\n      } else {\n        left->insert(value);\n      }\n    } else {\n      if (right == NULL) {\n        right = new BST(value);\n      } else {\n        right->insert(value);\n      }\n    }\n  }\n};\n\nBST *constructMinHeightBst(vector<int> array, int startIdx, int endIdx);\n\n// O(n) time | O(n) space - where n is the length of the array\nBST *minHeightBst(vector<int> array) {\n  return constructMinHeightBst(array, 0, array.size() - 1);\n}\n\nBST *constructMinHeightBst(vector<int> array, int startIdx, int endIdx) {\n  if (endIdx < startIdx)\n    return NULL;\n  int midIdx = (startIdx + endIdx) / 2;\n  BST *bst = new BST(array[midIdx]);\n  bst->left = constructMinHeightBst(array, startIdx, midIdx - 1);\n  bst->right = constructMinHeightBst(array, midIdx + 1, endIdx);\n  return bst;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static BST MinHeightBst(List<int> array) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\n\t\tpublic void insert(int value) {\n\t\t\tif (value < this.value) {\n\t\t\t\tif (left == null) {\n\t\t\t\t\tleft = new BST(value);\n\t\t\t\t} else {\n\t\t\t\t\tleft.insert(value);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (right == null) {\n\t\t\t\t\tright = new BST(value);\n\t\t\t\t} else {\n\t\t\t\t\tright.insert(value);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar input = new int[] {};\n\t\tvar expected = true;\n\t\tvar actual = Program.isMonotonic(input);\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar array = new List<int> {\n\t\t\t1, 2, 5, 7, 10, 13, 14, 15, 22\n\t\t};\n\t\tvar tree = Program.MinHeightBst(array);\n\n\t\tUtils.AssertTrue(validateBst(tree));\n\t\tUtils.AssertEquals(4, getTreeHeight(tree));\n\n\t\tvar inOrder = inOrderTraverse(tree, new List<int> {\n\t\t});\n\t\tvar expected = new List<int> {\n\t\t\t1, 2, 5, 7, 10, 13, 14, 15, 22\n\t\t};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(inOrder, expected));\n\t}\n\n\tstatic bool validateBst(Program.BST tree) {\n\t\treturn validateBst(tree, Int32.MinValue, Int32.MaxValue);\n\t}\n\n\tstatic bool validateBst(Program.BST tree, int minValue, int maxValue) {\n\t\tif (tree.value < minValue || tree.value >= maxValue) {\n\t\t\treturn false;\n\t\t}\n\t\tif (tree.left != null && !validateBst(tree.left, minValue, tree.value)) {\n\t\t\treturn false;\n\t\t}\n\t\tif (tree.right != null && !validateBst(tree.right, tree.value, maxValue)) {\n\t\t\treturn false;\n\t\t}\n\t\treturn true;\n\t}\n\n\tstatic List<int> inOrderTraverse(Program.BST tree, List<int> array) {\n\t\tif (tree.left != null) {\n\t\t\tinOrderTraverse(tree.left, array);\n\t\t}\n\t\tarray.Add(tree.value);\n\t\tif (tree.right != null) {\n\t\t\tinOrderTraverse(tree.right, array);\n\t\t}\n\t\treturn array;\n\t}\n\n\tstatic int getTreeHeight(Program.BST tree) {\n\t\treturn getTreeHeight(tree, 0);\n\t}\n\n\tstatic int getTreeHeight(Program.BST tree, int height) {\n\t\tif (tree == null) return height;\n\t\tint leftTreeHeight = getTreeHeight(tree.left, height + 1);\n\t\tint rightTreeHeight = getTreeHeight(tree.right, height + 1);\n\t\treturn Math.Max(leftTreeHeight, rightTreeHeight);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(nlog(n)) time | O(n) space - where n is the length of the array\n\tpublic static BST MinHeightBst(List<int> array) {\n\t\treturn constructMinHeightBst(array, null, 0, array.Count - 1);\n\t}\n\n\tpublic static BST constructMinHeightBst(List<int> array, BST bst, int startIdx,\n\t  int endIdx) {\n\t\tif (endIdx < startIdx) return null;\n\t\tint midIdx = (startIdx + endIdx) / 2;\n\t\tint valueToAdd = array[midIdx];\n\t\tif (bst == null) {\n\t\t\tbst = new BST(valueToAdd);\n\t\t} else {\n\t\t\tbst.insert(valueToAdd);\n\t\t}\n\t\tconstructMinHeightBst(array, bst, startIdx, midIdx - 1);\n\t\tconstructMinHeightBst(array, bst, midIdx + 1, endIdx);\n\t\treturn bst;\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\n\t\tpublic void insert(int value) {\n\t\t\tif (value < this.value) {\n\t\t\t\tif (left == null) {\n\t\t\t\t\tleft = new BST(value);\n\t\t\t\t} else {\n\t\t\t\t\tleft.insert(value);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (right == null) {\n\t\t\t\t\tright = new BST(value);\n\t\t\t\t} else {\n\t\t\t\t\tright.insert(value);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space - where n is the length of the array\n\tpublic static BST MinHeightBst(List<int> array) {\n\t\treturn constructMinHeightBst(array, null, 0, array.Count - 1);\n\t}\n\n\tpublic static BST constructMinHeightBst(List<int> array, BST bst, int startIdx,\n\t  int endIdx) {\n\t\tif (endIdx < startIdx) return null;\n\t\tint midIdx = (startIdx + endIdx) / 2;\n\t\tBST newBstNode = new BST(array[midIdx]);\n\t\tif (bst == null) {\n\t\t\tbst = newBstNode;\n\t\t} else {\n\t\t\tif (array[midIdx] < bst.value) {\n\t\t\t\tbst.left = newBstNode;\n\t\t\t\tbst = bst.left;\n\t\t\t} else {\n\t\t\t\tbst.right = newBstNode;\n\t\t\t\tbst = bst.right;\n\t\t\t}\n\t\t}\n\t\tconstructMinHeightBst(array, bst, startIdx, midIdx - 1);\n\t\tconstructMinHeightBst(array, bst, midIdx + 1, endIdx);\n\t\treturn bst;\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\n\t\t// We don't use this method for this solution.\n\t\tpublic void insert(int value) {\n\t\t\tif (value < this.value) {\n\t\t\t\tif (left == null) {\n\t\t\t\t\tleft = new BST(value);\n\t\t\t\t} else {\n\t\t\t\t\tleft.insert(value);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (right == null) {\n\t\t\t\t\tright = new BST(value);\n\t\t\t\t} else {\n\t\t\t\t\tright.insert(value);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space - where n is the length of the array\n\tpublic static BST MinHeightBst(List<int> array) {\n\t\treturn constructMinHeightBst(array, 0, array.Count - 1);\n\t}\n\n\tpublic static BST constructMinHeightBst(List<int> array, int startIdx, int endIdx) {\n\t\tif (endIdx < startIdx) return null;\n\t\tint midIdx = (startIdx + endIdx) / 2;\n\t\tBST bst = new BST(array[midIdx]);\n\t\tbst.left = constructMinHeightBst(array, startIdx, midIdx - 1);\n\t\tbst.right = constructMinHeightBst(array, midIdx + 1, endIdx);\n\t\treturn bst;\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\n\t\t// We don't use this method for this solution.\n\t\tpublic void insert(int value) {\n\t\t\tif (value < this.value) {\n\t\t\t\tif (left == null) {\n\t\t\t\t\tleft = new BST(value);\n\t\t\t\t} else {\n\t\t\t\t\tleft.insert(value);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (right == null) {\n\t\t\t\t\tright = new BST(value);\n\t\t\t\t} else {\n\t\t\t\t\tright.insert(value);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc MinHeightBST(array []int) *BST {\n\t// Write your code here.\n\treturn nil\n}\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\nfunc (tree *BST) Insert(value int) *BST {\n\tif value < tree.Value {\n\t\tif tree.Left == nil {\n\t\t\ttree.Left = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Left.Insert(value)\n\t\t}\n\t} else {\n\t\tif tree.Right == nil {\n\t\t\ttree.Right = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Right.Insert(value)\n\t\t}\n\t}\n\treturn tree\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 0\n\toutput := GetNthFib(1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(3)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"math\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tarray := []int{1, 2, 5, 7, 10, 13, 14, 15, 22}\n\ttree := MinHeightBST(array)\n\n\trequire.True(t, validateBST(tree, math.MinInt32, math.MaxInt32))\n\trequire.Equal(t, 4, getTreeHeight(tree))\n\n\tinOrder := inOrderTraverse(tree, []int{})\n\trequire.Equal(t, []int{1, 2, 5, 7, 10, 13, 14, 15, 22}, inOrder)\n}\n\nfunc validateBST(tree *BST, min, max int) bool {\n\tif tree.Value < min || tree.Value >= max {\n\t\treturn false\n\t}\n\tif tree.Left != nil && !validateBST(tree.Left, min, tree.Value) {\n\t\treturn false\n\t}\n\tif tree.Right != nil && !validateBST(tree.Right, tree.Value, max) {\n\t\treturn false\n\t}\n\treturn true\n}\n\nfunc inOrderTraverse(tree *BST, array []int) []int {\n\tif tree.Left != nil {\n\t\tarray = inOrderTraverse(tree.Left, array)\n\t}\n\tarray = append(array, tree.Value)\n\tif tree.Right != nil {\n\t\tarray = inOrderTraverse(tree.Right, array)\n\t}\n\treturn array\n}\n\nfunc getTreeHeight(tree *BST) int {\n\tif tree == nil {\n\t\treturn 0\n\t}\n\tleft := getTreeHeight(tree.Left)\n\tright := getTreeHeight(tree.Right)\n\tif left > right {\n\t\treturn left + 1\n\t}\n\treturn right + 1\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(nlog(n)) time | O(n) space - where n is the length of the array\nfunc MinHeightBST(array []int) *BST {\n\treturn constructMinHeightBst(array, nil, 0, len(array)-1)\n}\n\nfunc constructMinHeightBst(array []int, bst *BST, startIdx, endIdx int) *BST {\n\tif endIdx < startIdx {\n\t\treturn nil\n\t}\n\tmidIdx := (startIdx + endIdx) / 2\n\tvalueToAdd := array[midIdx]\n\tif bst == nil {\n\t\tbst = &BST{Value: valueToAdd}\n\t} else {\n\t\tbst.Insert(valueToAdd)\n\t}\n\tconstructMinHeightBst(array, bst, startIdx, midIdx-1)\n\tconstructMinHeightBst(array, bst, midIdx+1, endIdx)\n\treturn bst\n}\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\nfunc (tree *BST) Insert(value int) *BST {\n\tif value < tree.Value {\n\t\tif tree.Left == nil {\n\t\t\ttree.Left = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Left.Insert(value)\n\t\t}\n\t} else {\n\t\tif tree.Right == nil {\n\t\t\ttree.Right = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Right.Insert(value)\n\t\t}\n\t}\n\treturn tree\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space - where n is the length of the array\nfunc MinHeightBST(array []int) *BST {\n\treturn constructMinHeightBst(array, nil, 0, len(array)-1)\n}\n\nfunc constructMinHeightBst(array []int, bst *BST, startIdx, endIdx int) *BST {\n\tif endIdx < startIdx {\n\t\treturn nil\n\t}\n\tmidIdx := (startIdx + endIdx) / 2\n\tnewBstNode := &BST{Value: array[midIdx]}\n\tif bst == nil {\n\t\tbst = newBstNode\n\t} else {\n\t\tif array[midIdx] < bst.Value {\n\t\t\tbst.Left = newBstNode\n\t\t\tbst = bst.Left\n\t\t} else {\n\t\t\tbst.Right = newBstNode\n\t\t\tbst = bst.Right\n\t\t}\n\t}\n\tconstructMinHeightBst(array, bst, startIdx, midIdx-1)\n\tconstructMinHeightBst(array, bst, midIdx+1, endIdx)\n\treturn bst\n}\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\n// We don't use this method for this solution.\nfunc (tree *BST) Insert(value int) *BST {\n\tif value < tree.Value {\n\t\tif tree.Left == nil {\n\t\t\ttree.Left = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Left.Insert(value)\n\t\t}\n\t} else {\n\t\tif tree.Right == nil {\n\t\t\ttree.Right = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Right.Insert(value)\n\t\t}\n\t}\n\treturn tree\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space - where n is the length of the array\nfunc MinHeightBST(array []int) *BST {\n\treturn constructMinHeightBst(array, 0, len(array)-1)\n}\n\nfunc constructMinHeightBst(array []int, startIdx, endIdx int) *BST {\n\tif endIdx < startIdx {\n\t\treturn nil\n\t}\n\tmidIdx := (startIdx + endIdx) / 2\n\tbst := &BST{Value: array[midIdx]}\n\tbst.Left = constructMinHeightBst(array, startIdx, midIdx-1)\n\tbst.Right = constructMinHeightBst(array, midIdx+1, endIdx)\n\treturn bst\n}\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\n// We don't use this method for this solution.\nfunc (tree *BST) Insert(value int) *BST {\n\tif value < tree.Value {\n\t\tif tree.Left == nil {\n\t\t\ttree.Left = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Left.Insert(value)\n\t\t}\n\t} else {\n\t\tif tree.Right == nil {\n\t\t\ttree.Right = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Right.Insert(value)\n\t\t}\n\t}\n\treturn tree\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static BST minHeightBst(List<Integer> array) {\n    // Write your code here.\n    return null;\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n\n    public void insert(int value) {\n      if (value < this.value) {\n        if (left == null) {\n          left = new BST(value);\n        } else {\n          left.insert(value);\n        }\n      } else {\n        if (right == null) {\n          right = new BST(value);\n        } else {\n          right.insert(value);\n        }\n      }\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input = new int[] {};\n    var expected = true;\n    var actual = Program.isMonotonic(input);\n    Utils.assertEquals(expected, actual);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Integer> array = Arrays.asList(1, 2, 5, 7, 10, 13, 14, 15, 22);\n    var tree = Program.minHeightBst(array);\n\n    Utils.assertTrue(validateBst(tree));\n    Utils.assertEquals(4, getTreeHeight(tree));\n\n    var inOrder = inOrderTraverse(tree, new ArrayList<Integer>());\n    List<Integer> expected = Arrays.asList(1, 2, 5, 7, 10, 13, 14, 15, 22);\n    Utils.assertTrue(expected.equals(inOrder));\n  }\n\n  static boolean validateBst(Program.BST tree) {\n    return validateBst(tree, Integer.MIN_VALUE, Integer.MAX_VALUE);\n  }\n\n  static boolean validateBst(Program.BST tree, int minValue, int maxValue) {\n    if (tree.value < minValue || tree.value >= maxValue) {\n      return false;\n    }\n    if (tree.left != null && !validateBst(tree.left, minValue, tree.value)) {\n      return false;\n    }\n    if (tree.right != null && !validateBst(tree.right, tree.value, maxValue)) {\n      return false;\n    }\n    return true;\n  }\n\n  static List<Integer> inOrderTraverse(Program.BST tree, List<Integer> array) {\n    if (tree.left != null) {\n      inOrderTraverse(tree.left, array);\n    }\n    array.add(tree.value);\n    if (tree.right != null) {\n      inOrderTraverse(tree.right, array);\n    }\n    return array;\n  }\n\n  static int getTreeHeight(Program.BST tree) {\n    return getTreeHeight(tree, 0);\n  }\n\n  static int getTreeHeight(Program.BST tree, int height) {\n    if (tree == null) return height;\n    int leftTreeHeight = getTreeHeight(tree.left, height + 1);\n    int rightTreeHeight = getTreeHeight(tree.right, height + 1);\n    return Math.max(leftTreeHeight, rightTreeHeight);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(nlog(n)) time | O(n) space - where n is the length of the array\n  public static BST minHeightBst(List<Integer> array) {\n    return constructMinHeightBst(array, null, 0, array.size() - 1);\n  }\n\n  public static BST constructMinHeightBst(List<Integer> array, BST bst, int startIdx, int endIdx) {\n    if (endIdx < startIdx) return null;\n    int midIdx = (startIdx + endIdx) / 2;\n    int valueToAdd = array.get(midIdx);\n    if (bst == null) {\n      bst = new BST(valueToAdd);\n    } else {\n      bst.insert(valueToAdd);\n    }\n    constructMinHeightBst(array, bst, startIdx, midIdx - 1);\n    constructMinHeightBst(array, bst, midIdx + 1, endIdx);\n    return bst;\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n\n    public void insert(int value) {\n      if (value < this.value) {\n        if (left == null) {\n          left = new BST(value);\n        } else {\n          left.insert(value);\n        }\n      } else {\n        if (right == null) {\n          right = new BST(value);\n        } else {\n          right.insert(value);\n        }\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space - where n is the length of the array\n  public static BST minHeightBst(List<Integer> array) {\n    return constructMinHeightBst(array, null, 0, array.size() - 1);\n  }\n\n  public static BST constructMinHeightBst(List<Integer> array, BST bst, int startIdx, int endIdx) {\n    if (endIdx < startIdx) return null;\n    int midIdx = (startIdx + endIdx) / 2;\n    BST newBstNode = new BST(array.get(midIdx));\n    if (bst == null) {\n      bst = newBstNode;\n    } else {\n      if (array.get(midIdx) < bst.value) {\n        bst.left = newBstNode;\n        bst = bst.left;\n      } else {\n        bst.right = newBstNode;\n        bst = bst.right;\n      }\n    }\n    constructMinHeightBst(array, bst, startIdx, midIdx - 1);\n    constructMinHeightBst(array, bst, midIdx + 1, endIdx);\n    return bst;\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n\n    // We don't use this method for this solution.\n    public void insert(int value) {\n      if (value < this.value) {\n        if (left == null) {\n          left = new BST(value);\n        } else {\n          left.insert(value);\n        }\n      } else {\n        if (right == null) {\n          right = new BST(value);\n        } else {\n          right.insert(value);\n        }\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space - where n is the length of the array\n  public static BST minHeightBst(List<Integer> array) {\n    return constructMinHeightBst(array, 0, array.size() - 1);\n  }\n\n  public static BST constructMinHeightBst(List<Integer> array, int startIdx, int endIdx) {\n    if (endIdx < startIdx) return null;\n    int midIdx = (startIdx + endIdx) / 2;\n    BST bst = new BST(array.get(midIdx));\n    bst.left = constructMinHeightBst(array, startIdx, midIdx - 1);\n    bst.right = constructMinHeightBst(array, midIdx + 1, endIdx);\n    return bst;\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n\n    // We don't use this method for this solution.\n    public void insert(int value) {\n      if (value < this.value) {\n        if (left == null) {\n          left = new BST(value);\n        } else {\n          left.insert(value);\n        }\n      } else {\n        if (right == null) {\n          right = new BST(value);\n        } else {\n          right.insert(value);\n        }\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function minHeightBst(array) {\n  // Write your code here.\n}\n\nclass BST {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(value) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n  }\n}\n\n// Do not edit the line below.\nexports.minHeightBst = minHeightBst;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.getNthFib(1)).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.getNthFib(2)).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.getNthFib(3)).to.deep.equal(1);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const array = [1, 2, 5, 7, 10, 13, 14, 15, 22];\n  const tree = program.minHeightBst(array);\n\n  chai.expect(validateBst(tree)).to.deep.equal(true);\n  chai.expect(getTreeHeight(tree)).to.deep.equal(4);\n\n  const inOrder = inOrderTraverse(tree, []);\n  const expected = [1, 2, 5, 7, 10, 13, 14, 15, 22];\n  chai.expect(inOrder).to.deep.equal(expected);\n});\n\nfunction validateBst(tree) {\n  return validateBstHelper(tree, -Infinity, Infinity);\n}\n\nfunction validateBstHelper(tree, minValue, maxValue) {\n  if (tree === null) return true;\n  if (tree.value < minValue || tree.value >= maxValue) return false;\n  const leftIsValid = validateBstHelper(tree.left, minValue, tree.value);\n  return leftIsValid && validateBstHelper(tree.right, tree.value, maxValue);\n}\n\nfunction inOrderTraverse(tree, array) {\n  if (tree !== null) {\n    inOrderTraverse(tree.left, array);\n    array.push(tree.value);\n    inOrderTraverse(tree.right, array);\n  }\n  return array;\n}\n\nfunction getTreeHeight(tree, height = 0) {\n  if (tree === null) return height;\n  const leftTreeHeight = getTreeHeight(tree.left, height + 1);\n  const rightTreeHeight = getTreeHeight(tree.right, height + 1);\n  return Math.max(leftTreeHeight, rightTreeHeight);\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nlog(n)) time | O(n) space - where n is the length of the array\nfunction minHeightBst(array) {\n  return constructMinHeightBst(array, null, 0, array.length - 1);\n}\n\nfunction constructMinHeightBst(array, bst, startIdx, endIdx) {\n  if (endIdx < startIdx) return;\n  const midIdx = Math.floor((startIdx + endIdx) / 2);\n  const valueToAdd = array[midIdx];\n  if (bst === null) {\n    bst = new BST(valueToAdd);\n  } else {\n    bst.insert(valueToAdd);\n  }\n  constructMinHeightBst(array, bst, startIdx, midIdx - 1);\n  constructMinHeightBst(array, bst, midIdx + 1, endIdx);\n  return bst;\n}\n\nclass BST {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(value) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n  }\n}\n\nexports.minHeightBst = minHeightBst;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the length of the array\nfunction minHeightBst(array) {\n  return constructMinHeightBst(array, null, 0, array.length - 1);\n}\n\nfunction constructMinHeightBst(array, bst, startIdx, endIdx) {\n  if (endIdx < startIdx) return;\n  const midIdx = Math.floor((startIdx + endIdx) / 2);\n  const newBstNode = new BST(array[midIdx]);\n  if (bst === null) {\n    bst = newBstNode;\n  } else {\n    if (array[midIdx] < bst.value) {\n      bst.left = newBstNode;\n      bst = bst.left;\n    } else {\n      bst.right = newBstNode;\n      bst = bst.right;\n    }\n  }\n  constructMinHeightBst(array, bst, startIdx, midIdx - 1);\n  constructMinHeightBst(array, bst, midIdx + 1, endIdx);\n  return bst;\n}\n\nclass BST {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  // We don't use this method for this solution.\n  insert(value) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n  }\n}\n\nexports.minHeightBst = minHeightBst;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the length of the array\nfunction minHeightBst(array) {\n  return constructMinHeightBst(array, 0, array.length - 1);\n}\n\nfunction constructMinHeightBst(array, startIdx, endIdx) {\n  if (endIdx < startIdx) return null;\n  const midIdx = Math.floor((startIdx + endIdx) / 2);\n  const bst = new BST(array[midIdx]);\n  bst.left = constructMinHeightBst(array, startIdx, midIdx - 1);\n  bst.right = constructMinHeightBst(array, midIdx + 1, endIdx);\n  return bst;\n}\n\nclass BST {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  // We don't use this method for this solution.\n  insert(value) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n  }\n}\n\nexports.minHeightBst = minHeightBst;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def minHeightBst(array):\n    pass\n\n\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def insert(self, value):\n        if value < self.value:\n            if self.left is None:\n                self.left = BST(value)\n            else:\n                self.left.insert(value)\n        else:\n            if self.right is None:\n                self.right = BST(value)\n            else:\n                self.right.insert(value)\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.getNthFib(1), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.getNthFib(2), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.getNthFib(3), 1)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\ndef inOrderTraverse(tree, array):\n    if tree is not None:\n        inOrderTraverse(tree.left, array)\n        array.append(tree.value)\n        inOrderTraverse(tree.right, array)\n    return array\n\n\ndef validateBst(tree):\n    return validateBstHelper(tree, float(\"-inf\"), float(\"inf\"))\n\n\ndef validateBstHelper(tree, minValue, maxValue):\n    if tree is None:\n        return True\n    if tree.value < minValue or tree.value >= maxValue:\n        return False\n    leftIsValid = validateBstHelper(tree.left, minValue, tree.value)\n    return leftIsValid and validateBstHelper(tree.right, tree.value, maxValue)\n\n\ndef getTreeHeight(tree, height=0):\n    if tree is None:\n        return height\n    leftTreeHeight = getTreeHeight(tree.left, height + 1)\n    rightTreeHeight = getTreeHeight(tree.right, height + 1)\n    return max(leftTreeHeight, rightTreeHeight)\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        array = [1, 2, 5, 7, 10, 13, 14, 15, 22]\n        tree = program.minHeightBst(array)\n\n        self.assertTrue(validateBst(tree))\n        self.assertEqual(getTreeHeight(tree), 4)\n\n        inOrder = inOrderTraverse(tree, [])\n        self.assertEqual(inOrder, [1, 2, 5, 7, 10, 13, 14, 15, 22])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nlog(n)) time | O(n) space - where n is the length of the array\ndef minHeightBst(array):\n    return constructMinHeightBst(array, None, 0, len(array) - 1)\n\n\ndef constructMinHeightBst(array, bst, startIdx, endIdx):\n    if endIdx < startIdx:\n        return\n    midIdx = (startIdx + endIdx) // 2\n    valueToAdd = array[midIdx]\n    if bst is None:\n        bst = BST(valueToAdd)\n    else:\n        bst.insert(valueToAdd)\n    constructMinHeightBst(array, bst, startIdx, midIdx - 1)\n    constructMinHeightBst(array, bst, midIdx + 1, endIdx)\n    return bst\n\n\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def insert(self, value):\n        if value < self.value:\n            if self.left is None:\n                self.left = BST(value)\n            else:\n                self.left.insert(value)\n        else:\n            if self.right is None:\n                self.right = BST(value)\n            else:\n                self.right.insert(value)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space - where n is the length of the array\ndef minHeightBst(array):\n    return constructMinHeightBst(array, None, 0, len(array) - 1)\n\n\ndef constructMinHeightBst(array, bst, startIdx, endIdx):\n    if endIdx < startIdx:\n        return\n    midIdx = (startIdx + endIdx) // 2\n    newBstNode = BST(array[midIdx])\n    if bst is None:\n        bst = newBstNode\n    else:\n        if array[midIdx] < bst.value:\n            bst.left = newBstNode\n            bst = bst.left\n        else:\n            bst.right = newBstNode\n            bst = bst.right\n    constructMinHeightBst(array, bst, startIdx, midIdx - 1)\n    constructMinHeightBst(array, bst, midIdx + 1, endIdx)\n    return bst\n\n\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    # We don't use this method for this solution.\n    def insert(self, value):\n        if value < self.value:\n            if self.left is None:\n                self.left = BST(value)\n            else:\n                self.left.insert(value)\n        else:\n            if self.right is None:\n                self.right = BST(value)\n            else:\n                self.right.insert(value)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space - where n is the length of the array\ndef minHeightBst(array):\n    return constructMinHeightBst(array, 0, len(array) - 1)\n\n\ndef constructMinHeightBst(array, startIdx, endIdx):\n    if endIdx < startIdx:\n        return None\n    midIdx = (startIdx + endIdx) // 2\n    bst = BST(array[midIdx])\n    bst.left = constructMinHeightBst(array, startIdx, midIdx - 1)\n    bst.right = constructMinHeightBst(array, midIdx + 1, endIdx)\n    return bst\n\n\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    # We don't use this method for this solution.\n    def insert(self, value):\n        if value < self.value:\n            if self.left is None:\n                self.left = BST(value)\n            else:\n                self.left.insert(value)\n        else:\n            if self.right is None:\n                self.right = BST(value)\n            else:\n                self.right.insert(value)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  static func minHeightBST(_ array: [Int]) -> BST? {\n    // Write your code here.\n    return nil\n  }\n\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n    }\n\n    func insert(value: Int) {\n      if value < self.value {\n        if let left = self.left {\n          left.insert(value: value)\n        } else {\n          left = BST(value: value)\n        }\n      } else {\n        if let right = self.right {\n          right.insert(value: value)\n        } else {\n          right = BST(value: value)\n        }\n      }\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assert(getNthFib(n: 1) == 0)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assert(getNthFib(n: 2) == 1)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assert(getNthFib(n: 3) == 1)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let array = [1, 2, 5, 7, 10, 13, 14, 15, 22]\n      let tree = Program.minHeightBST(array)\n\n      try assert(validateBST(tree: tree!))\n      try assertEqual(4, getTreeHeight(tree))\n\n      var inOrder = [Int]()\n      inOrderTraverse(tree!, &inOrder)\n      try assertEqual([1, 2, 5, 7, 10, 13, 14, 15, 22], inOrder)\n    }\n  }\n\n  func validateBST(tree: Program.BST) -> Bool {\n    var minimum = Int(Int32.min)\n    var maximum = Int(Int32.max)\n    return validateBSTHelper(tree: tree, minimum: &minimum, maximum: &maximum)\n  }\n\n  func validateBSTHelper(tree: Program.BST?, minimum: inout Int, maximum: inout Int) -> Bool {\n    if tree === nil {\n      return true\n    }\n\n    if let tree = tree, tree.value < minimum || tree.value >= maximum {\n      return false\n    }\n\n    if var treeValue = tree?.value {\n      let leftIsValid = validateBSTHelper(tree: tree?.left, minimum: &minimum, maximum: &treeValue)\n      let rightIsValid = validateBSTHelper(tree: tree?.right, minimum: &treeValue, maximum: &maximum)\n\n      return leftIsValid && rightIsValid\n    } else {\n      return false\n    }\n  }\n\n  func getTreeHeight(_ tree: Program.BST?) -> Int {\n    if let t = tree {\n      let left = getTreeHeight(t.left)\n      let right = getTreeHeight(t.right)\n      if left > right {\n        return left + 1\n      }\n      return right + 1\n    }\n    return 0\n  }\n\n  func inOrderTraverse(_ tree: Program.BST, _ array: inout [Int]) -> [Int] {\n    if let left = tree.left {\n      inOrderTraverse(left, &array)\n    }\n    array.append(tree.value)\n    if let right = tree.right {\n      inOrderTraverse(right, &array)\n    }\n    return array\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nlog(n)) time | O(n) space - where n is the length of the array\n  static func minHeightBST(_ array: [Int]) -> BST? {\n    return constructMinHeightBst(array, nil, 0, array.count - 1)\n  }\n\n  static func constructMinHeightBst(_ array: [Int], _ bst: BST?, _ startIdx: Int, _ endIdx: Int) -> BST? {\n    if endIdx < startIdx {\n      return nil\n    }\n\n    var tree = bst\n    var midIdx = (startIdx + endIdx) / 2\n    var valueToAdd = array[midIdx]\n    if let t = tree {\n      t.insert(value: valueToAdd)\n    } else {\n      tree = BST(value: valueToAdd)\n    }\n\n    constructMinHeightBst(array, tree, startIdx, midIdx - 1)\n    constructMinHeightBst(array, tree, midIdx + 1, endIdx)\n    return tree\n  }\n\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n    }\n\n    func insert(value: Int) {\n      if value < self.value {\n        if let left = self.left {\n          left.insert(value: value)\n        } else {\n          left = BST(value: value)\n        }\n      } else {\n        if let right = self.right {\n          right.insert(value: value)\n        } else {\n          right = BST(value: value)\n        }\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space - where n is the length of the array\n  static func minHeightBST(_ array: [Int]) -> BST? {\n    return constructMinHeightBst(array, nil, 0, array.count - 1)\n  }\n\n  static func constructMinHeightBst(_ array: [Int], _ bst: BST?, _ startIdx: Int, _ endIdx: Int) -> BST? {\n    if endIdx < startIdx {\n      return nil\n    }\n\n    var tree = bst\n    var midIdx = (startIdx + endIdx) / 2\n    var newBstNode = BST(value: array[midIdx])\n    if let t = tree {\n      if array[midIdx] < t.value {\n        t.left = newBstNode\n      } else {\n        t.right = newBstNode\n      }\n    }\n\n    tree = newBstNode\n    constructMinHeightBst(array, tree, startIdx, midIdx - 1)\n    constructMinHeightBst(array, tree, midIdx + 1, endIdx)\n    return tree\n  }\n\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n    }\n\n    // We don't use this method for this solution.\n    func insert(value: Int) {\n      if value < self.value {\n        if let left = self.left {\n          left.insert(value: value)\n        } else {\n          left = BST(value: value)\n        }\n      } else {\n        if let right = self.right {\n          right.insert(value: value)\n        } else {\n          right = BST(value: value)\n        }\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space - where n is the length of the array\n  static func minHeightBST(_ array: [Int]) -> BST? {\n    return constructMinHeightBst(array, 0, array.count - 1)\n  }\n\n  static func constructMinHeightBst(_ array: [Int], _ startIdx: Int, _ endIdx: Int) -> BST? {\n    if endIdx < startIdx {\n      return nil\n    }\n\n    var midIdx = (startIdx + endIdx) / 2\n    var bst = BST(value: array[midIdx])\n    bst.left = constructMinHeightBst(array, startIdx, midIdx - 1)\n    bst.right = constructMinHeightBst(array, midIdx + 1, endIdx)\n    return bst\n  }\n\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n    }\n\n    // We don't use this method for this solution.\n    func insert(value: Int) {\n      if value < self.value {\n        if let left = self.left {\n          left.insert(value: value)\n        } else {\n          left = BST(value: value)\n        }\n      } else {\n        if let right = self.right {\n          right.insert(value: value)\n        } else {\n          right = BST(value: value)\n        }\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function minHeightBst(array: number[]) {\n  // Write your code here.\n  return new BST(-1);\n}\n\nexport class BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(value: number) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n  }\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const array = [1, 2, 5, 7, 10, 13, 14, 15, 22];\n  const tree = program.minHeightBst(array)!;\n\n  chai.expect(validateBst(tree)).to.deep.equal(true);\n  chai.expect(getTreeHeight(tree)).to.deep.equal(4);\n\n  const inOrder = inOrderTraverse(tree, []);\n  const expected = [1, 2, 5, 7, 10, 13, 14, 15, 22];\n  chai.expect(inOrder).to.deep.equal(expected);\n});\n\nfunction validateBst(tree: program.BST) {\n  return validateBstHelper(tree, -Infinity, Infinity);\n}\n\nfunction validateBstHelper(tree: program.BST | null, minValue: number, maxValue: number): boolean {\n  if (tree === null) return true;\n  if (tree.value < minValue || tree.value >= maxValue) return false;\n  const leftIsValid = validateBstHelper(tree.left, minValue, tree.value);\n  return leftIsValid && validateBstHelper(tree.right, tree.value, maxValue);\n}\n\nfunction inOrderTraverse(tree: program.BST | null, array: number[]) {\n  if (tree !== null) {\n    inOrderTraverse(tree.left, array);\n    array.push(tree.value);\n    inOrderTraverse(tree.right, array);\n  }\n  return array;\n}\n\nfunction getTreeHeight(tree: program.BST | null, height = 0): number {\n  if (tree === null) return height;\n  const leftTreeHeight = getTreeHeight(tree.left, height + 1);\n  const rightTreeHeight = getTreeHeight(tree.right, height + 1);\n  return Math.max(leftTreeHeight, rightTreeHeight);\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nlog(n)) time | O(n) space - where n is the length of the array\nexport function minHeightBst(array: number[]) {\n  return constructMinHeightBst(array, null, 0, array.length - 1);\n}\n\nfunction constructMinHeightBst(array: number[], bst: BST | null, startIdx: number, endIdx: number) {\n  if (endIdx < startIdx) return;\n  const midIdx = Math.floor((startIdx + endIdx) / 2);\n  const valueToAdd = array[midIdx];\n  if (bst === null) {\n    bst = new BST(valueToAdd);\n  } else {\n    bst.insert(valueToAdd);\n  }\n  constructMinHeightBst(array, bst, startIdx, midIdx - 1);\n  constructMinHeightBst(array, bst, midIdx + 1, endIdx);\n  return bst;\n}\n\nexport class BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(value: number) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the length of the array\nexport function minHeightBst(array: number[]) {\n  return constructMinHeightBst(array, null, 0, array.length - 1);\n}\n\nfunction constructMinHeightBst(array: number[], bst: BST | null, startIdx: number, endIdx: number) {\n  if (endIdx < startIdx) return;\n  const midIdx = Math.floor((startIdx + endIdx) / 2);\n  const newBstNode = new BST(array[midIdx]);\n  if (bst === null) {\n    bst = newBstNode;\n  } else {\n    if (array[midIdx] < bst.value) {\n      bst.left = newBstNode;\n      bst = bst.left;\n    } else {\n      bst.right = newBstNode;\n      bst = bst.right;\n    }\n  }\n  constructMinHeightBst(array, bst, startIdx, midIdx - 1);\n  constructMinHeightBst(array, bst, midIdx + 1, endIdx);\n  return bst;\n}\n\nexport class BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  // We don't use this method for this solution.\n  insert(value: number) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the length of the array\nexport function minHeightBst(array: number[]) {\n  return constructMinHeightBst(array, 0, array.length - 1);\n}\n\nfunction constructMinHeightBst(array: number[], startIdx: number, endIdx: number) {\n  if (endIdx < startIdx) return null;\n  const midIdx = Math.floor((startIdx + endIdx) / 2);\n  const bst = new BST(array[midIdx]);\n  bst.left = constructMinHeightBst(array, startIdx, midIdx - 1);\n  bst.right = constructMinHeightBst(array, midIdx + 1, endIdx);\n  return bst;\n}\n\nexport class BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  // We don't use this method for this solution.\n  insert(value: number) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22
+      ]
+    },
+    {
+      "array": [
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        2
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22,
+        28
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22,
+        28,
+        32
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22,
+        28,
+        32,
+        36
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22,
+        28,
+        32,
+        36,
+        89
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22,
+        28,
+        32,
+        36,
+        89,
+        92
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22,
+        28,
+        32,
+        36,
+        89,
+        92,
+        9000
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        5,
+        7,
+        10,
+        13,
+        14,
+        15,
+        22,
+        28,
+        32,
+        36,
+        89,
+        92,
+        9000,
+        9001
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "2",
+            "right": "14",
+            "value": 10
+          },
+          {
+            "id": "14",
+            "left": "13",
+            "right": "15",
+            "value": 14
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "10"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "2"
+      },
+      {
+        "nodes": [
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "2"
+      },
+      {
+        "nodes": [
+          {
+            "id": "5",
+            "left": "1",
+            "right": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": "10",
+            "value": 7
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "5"
+      },
+      {
+        "nodes": [
+          {
+            "id": "5",
+            "left": "1",
+            "right": "10",
+            "value": 5
+          },
+          {
+            "id": "10",
+            "left": "7",
+            "right": "13",
+            "value": 10
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "5"
+      },
+      {
+        "nodes": [
+          {
+            "id": "7",
+            "left": "2",
+            "right": "13",
+            "value": 7
+          },
+          {
+            "id": "13",
+            "left": "10",
+            "right": "14",
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "7"
+      },
+      {
+        "nodes": [
+          {
+            "id": "7",
+            "left": "2",
+            "right": "13",
+            "value": 7
+          },
+          {
+            "id": "13",
+            "left": "10",
+            "right": "14",
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": "15",
+            "value": 14
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "7"
+      },
+      {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "2",
+            "right": "14",
+            "value": 10
+          },
+          {
+            "id": "14",
+            "left": "13",
+            "right": "15",
+            "value": 14
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "10"
+      },
+      {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "2",
+            "right": "15",
+            "value": 10
+          },
+          {
+            "id": "15",
+            "left": "13",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "28",
+            "value": 22
+          },
+          {
+            "id": "28",
+            "left": null,
+            "right": null,
+            "value": 28
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": "14",
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "10"
+      },
+      {
+        "nodes": [
+          {
+            "id": "13",
+            "left": "5",
+            "right": "22",
+            "value": 13
+          },
+          {
+            "id": "22",
+            "left": "14",
+            "right": "28",
+            "value": 22
+          },
+          {
+            "id": "28",
+            "left": null,
+            "right": "32",
+            "value": 28
+          },
+          {
+            "id": "32",
+            "left": null,
+            "right": null,
+            "value": 32
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": "15",
+            "value": 14
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "5",
+            "left": "1",
+            "right": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": "10",
+            "value": 7
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "13"
+      },
+      {
+        "nodes": [
+          {
+            "id": "13",
+            "left": "5",
+            "right": "22",
+            "value": 13
+          },
+          {
+            "id": "22",
+            "left": "14",
+            "right": "32",
+            "value": 22
+          },
+          {
+            "id": "32",
+            "left": "28",
+            "right": "36",
+            "value": 32
+          },
+          {
+            "id": "36",
+            "left": null,
+            "right": null,
+            "value": 36
+          },
+          {
+            "id": "28",
+            "left": null,
+            "right": null,
+            "value": 28
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": "15",
+            "value": 14
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "5",
+            "left": "1",
+            "right": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": "10",
+            "value": 7
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "13"
+      },
+      {
+        "nodes": [
+          {
+            "id": "14",
+            "left": "5",
+            "right": "28",
+            "value": 14
+          },
+          {
+            "id": "28",
+            "left": "15",
+            "right": "36",
+            "value": 28
+          },
+          {
+            "id": "36",
+            "left": "32",
+            "right": "89",
+            "value": 36
+          },
+          {
+            "id": "89",
+            "left": null,
+            "right": null,
+            "value": 89
+          },
+          {
+            "id": "32",
+            "left": null,
+            "right": null,
+            "value": 32
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "5",
+            "left": "1",
+            "right": "10",
+            "value": 5
+          },
+          {
+            "id": "10",
+            "left": "7",
+            "right": "13",
+            "value": 10
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "14"
+      },
+      {
+        "nodes": [
+          {
+            "id": "14",
+            "left": "5",
+            "right": "32",
+            "value": 14
+          },
+          {
+            "id": "32",
+            "left": "22",
+            "right": "89",
+            "value": 32
+          },
+          {
+            "id": "89",
+            "left": "36",
+            "right": "92",
+            "value": 89
+          },
+          {
+            "id": "92",
+            "left": null,
+            "right": null,
+            "value": 92
+          },
+          {
+            "id": "36",
+            "left": null,
+            "right": null,
+            "value": 36
+          },
+          {
+            "id": "22",
+            "left": "15",
+            "right": "28",
+            "value": 22
+          },
+          {
+            "id": "28",
+            "left": null,
+            "right": null,
+            "value": 28
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "5",
+            "left": "1",
+            "right": "10",
+            "value": 5
+          },
+          {
+            "id": "10",
+            "left": "7",
+            "right": "13",
+            "value": 10
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "14"
+      },
+      {
+        "nodes": [
+          {
+            "id": "15",
+            "left": "7",
+            "right": "36",
+            "value": 15
+          },
+          {
+            "id": "36",
+            "left": "28",
+            "right": "92",
+            "value": 36
+          },
+          {
+            "id": "92",
+            "left": "89",
+            "right": "9000",
+            "value": 92
+          },
+          {
+            "id": "9000",
+            "left": null,
+            "right": null,
+            "value": 9000
+          },
+          {
+            "id": "89",
+            "left": null,
+            "right": null,
+            "value": 89
+          },
+          {
+            "id": "28",
+            "left": "22",
+            "right": "32",
+            "value": 28
+          },
+          {
+            "id": "32",
+            "left": null,
+            "right": null,
+            "value": 32
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "7",
+            "left": "2",
+            "right": "13",
+            "value": 7
+          },
+          {
+            "id": "13",
+            "left": "10",
+            "right": "14",
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "15"
+      },
+      {
+        "nodes": [
+          {
+            "id": "15",
+            "left": "7",
+            "right": "36",
+            "value": 15
+          },
+          {
+            "id": "36",
+            "left": "28",
+            "right": "92",
+            "value": 36
+          },
+          {
+            "id": "92",
+            "left": "89",
+            "right": "9000",
+            "value": 92
+          },
+          {
+            "id": "9000",
+            "left": null,
+            "right": "9001",
+            "value": 9000
+          },
+          {
+            "id": "9001",
+            "left": null,
+            "right": null,
+            "value": 9001
+          },
+          {
+            "id": "89",
+            "left": null,
+            "right": null,
+            "value": 89
+          },
+          {
+            "id": "28",
+            "left": "22",
+            "right": "32",
+            "value": 28
+          },
+          {
+            "id": "32",
+            "left": null,
+            "right": null,
+            "value": 32
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "7",
+            "left": "2",
+            "right": "13",
+            "value": 7
+          },
+          {
+            "id": "13",
+            "left": "10",
+            "right": "14",
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "15"
+      }
+    ]
+  ]
+}

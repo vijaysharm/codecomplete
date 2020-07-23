@@ -1,0 +1,200 @@
+{
+  "Summary": {
+    "Name": "Shorten Path",
+    "Category": "Stacks",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "completed": false,
+      "date": "2020-05-11T00:00:00Z",
+      "number": 154,
+      "timeOne": 0,
+      "timeTwo": 1986,
+      "url": "https://player.vimeo.com/video/416168464"
+    }
+  },
+  "Prompt": "",
+  "Hints": "A path effectively consists of meaningful \"tokens\" (like directory names and symbols) that have been put together. Try transforming the string version of the path into a list of meaningful tokens that you can then analyze as you see fit.\nSplit the input path around the directory separator \"/\" using a native \"split\" function and try eliminating meaningless tokens from the resulting list of tokens. Meaningless tokens will include the empty string and the \".\" symbol, since the emptry string will represent sequential \"/\"s, which are effectively useless, and the \".\" symbol is also effectively useless.\nThe \"..\" symbol essentially requires you to remove the previous token in the list of tokens; try using a stack to implement the logic of parsing out \"..\" symbols and the relevant parent directories.\nYou'll need to handle two edge cases: the case where the path is an absolute one (for this, you'll have to identify if the path starts with a \"/\" at the beginning of your algorithm and then tweak other logic accordingly) and the case where the path is a relative one that starts with one or multiple \"..\" symbols (in this case, you'll want to keep these symbols, since they're meaningful to the path).",
+  "SpaceTime": "O(n) time | O(n) space - where n is the length of the pathname",
+  "PromptHTML": "<p>\n  Write a function that takes in a non-empty string representing a valid\n  Unix-shell path and returns a shortened version of that path.\n</p>\n<p>\n  A path is a notation that represents the location of a file or directory in a\n  file system.\n</p>\n<p>\n  A path can be an absolute path, meaning that it starts at the root directory\n  in a file system, or a relative path, meaning that it starts at the current\n  directory in a file system.\n</p>\n<p>In a Unix-like operating system, a path is bound by the following rules:</p>\n<ul>\n  <li>\n    - The root directory is represented by a <span>/</span>. This means that if\n    a path <i>starts</i> with <span>/</span>, it's an absolute path; if it\n    doesn't, it's a relative path.\n  </li>\n  <li>\n    - The symbol <span>/</span> otherwise represents the directory separator.\n    This means that the path <span>/foo/bar</span> is the location of the\n    directory <span>bar</span> inside the directory <span>foo</span>, which is\n    itself located inside the root directory.\n  </li>\n  <li>\n    - The symbol <span>..</span> represents the parent directory. This means\n    that accessing files or directories in <span>/foo/bar/..</span> is\n    equivalent to accessing files or directories in <span>/foo</span>.\n  </li>\n  <li>\n    - The symbol <span>.</span> represents the current directory. This means\n    that accessing files or directories in <span>/foo/bar/.</span> is equivalent\n    to accessing files or directories in <span>/foo/bar</span>.\n  </li>\n  <li>\n    - The symbols <span>/</span> and <span>.</span> can be repeated sequentially\n    without consequence; the symbol <span>..</span> cannot, however, because\n    repeating it sequentially means going further up in parent directories. For\n    example, <span>/foo/bar/baz/././.</span> and <span>/foo/bar/baz</span> are\n    equivalent paths, but <span>/foo/bar/baz/../../../</span> and\n    <span>/foo/bar/baz</span> definitely aren't. The only exception is with the\n    root directory: <span>/../../..</span> and <span>/</span> are equivalent,\n    because the root directory has no parent directory, which means that\n    repeatedly accessing parent directories does nothing.\n  </li>\n</ul>\n<p>\n  Note that the shortened version of the path must be equivalent to the original\n  path. In other words, it must point to the same file or directory as the\n  original path.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">path</span> = \"/foo/../test/../test/../foo//bar/./baz\"\n</pre>\n<h3>Sample Output</h3>\n<pre>\n\"/foo/bar/baz\" <span class=\"CodeEditor-promptComment\">// This path is equivalent to the input path.</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "path",
+      "Example": "/foo/../test/../test/../foo//bar/./baz",
+      "Schema": {
+        "minLength": 1,
+        "type": "string"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nstring shortenPath(string path) {\n  // Write your code here.\n  return \"\"\n}",
+      "StartingTest": "#include \"program.cpp\"\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input = {};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include \"program.cpp\"\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      string expected = \"/foo/bar/baz\";\n      string actual = shortenPath(\"/foo/../test/../test/../foo//bar/./baz\");\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <sstream>\nusing namespace std;\n\nbool isImportantToken(string token);\n\n// O(n) time | O(n) space - where n is the length of the path\nstring shortenPath(string path) {\n  bool startsWithSlash = path[0] == '/';\n  istringstream iss(path);\n  string token;\n\n  vector<string> tokens;\n  vector<string> filteredTokens;\n  while (getline(iss, token, '/')) {\n    tokens.push_back(token);\n  }\n  copy_if (tokens.begin(), tokens.end(), back_inserter(filteredTokens), isImportantToken);\n  \n  vector<string> stack;\n  if (startsWithSlash) stack.push_back(\"\");\n  for (string token : filteredTokens) {\n    if (token == \"..\") {\n      if (stack.size() == 0 || stack[stack.size() - 1] == \"..\") {\n        stack.push_back(token);\n      } else if (stack[stack.size() - 1] != \"\") {\n        stack.pop_back();\n      }\n    } else {\n      stack.push_back(token);\n    }\n  }\n\n  if (stack.size() == 1 && stack[0] == \"\") return \"/\";\n\n  ostringstream oss;\n  for (auto i = 0; i < stack.size(); i++) {\n    if (i != 0)  oss << \"/\";\n    oss << stack[i];\n  }\n\n  return oss.str();\n}\n\nbool isImportantToken(string token) {\n  return token.length() && token != \".\";\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static string ShortenPath(string path) {\n\t\t// Write your code here;\n\t\treturn \"\";\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar input = new int[] {};\n\t\tvar expected = true;\n\t\tvar actual = Program.isMonotonic(input);\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar expected = \"/foo/bar/baz\";\n\t\tvar actual = Program.ShortenPath(\"/foo/../test/../test/../foo//bar/./baz\");\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space - where n is the length of the path\n\tpublic static string ShortenPath(string path) {\n\t\tbool startsWithPath = path[0] == '/';\n\t\tstring[] tokensArr = path.Split(\"/\");\n\t\tList<string> tokensList = new List<string>(tokensArr);\n\t\tList<string> filteredTokens = tokensList.FindAll(token => isImportantToken(token));\n\t\tStack<string> stack = new Stack<string>();\n\t\tif (startsWithPath) stack.Push(\"\");\n\t\tforeach (string token in filteredTokens) {\n\t\t\tif (token.Equals(\"..\")) {\n\t\t\t\tif (stack.Count == 0 || stack.Peek().Equals(\"..\")) {\n\t\t\t\t\tstack.Push(token);\n\t\t\t\t} else if (!stack.Peek().Equals(\"\")) {\n\t\t\t\t\tstack.Pop();\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tstack.Push(token);\n\t\t\t}\n\t\t}\n\n\t\tif (stack.Count == 1 && stack.Peek().Equals(\"\")) return \"/\";\n\t\tvar arr = stack.ToArray();\n\t\tArray.Reverse(arr);\n\t\treturn String.Join(\"/\", arr);\n\t}\n\n\tpublic static bool isImportantToken(string token) {\n\t\treturn token.Length > 0 && !token.Equals(\".\");\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc ShortenPath(path string) string {\n\t// Write your code here.\n\treturn \"\"\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 0\n\toutput := GetNthFib(1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(3)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := \"/foo/bar/baz\"\n\toutput := ShortenPath(\"/foo/../test/../test/../foo//bar/./baz\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"strings\"\n\n// O(n) time | O(n) space - where n is the length of the path\nfunc ShortenPath(path string) string {\n\tstartsWithSlash := path[0] == '/'\n\tsplits := strings.Split(path, \"/\")\n\ttokens := []string{}\n\tfor _, token := range splits {\n\t\tif isImportantToken(token) {\n\t\t\ttokens = append(tokens, token)\n\t\t}\n\t}\n\n\tstack := []string{}\n\tif startsWithSlash {\n\t\tstack = append(stack, \"\")\n\t}\n\tfor _, token := range tokens {\n\t\tif token == \"..\" {\n\t\t\tif len(stack) == 0 || stack[len(stack)-1] == \"..\" {\n\t\t\t\tstack = append(stack, token)\n\t\t\t} else if stack[len(stack)-1] != \"\" {\n\t\t\t\tstack = stack[:len(stack)-1]\n\t\t\t}\n\t\t} else {\n\t\t\tstack = append(stack, token)\n\t\t}\n\t}\n\n\tif len(stack) == 1 && stack[0] == \"\" {\n\t\treturn \"/\"\n\t}\n\treturn strings.Join(stack, \"/\")\n}\n\nfunc isImportantToken(token string) bool {\n\treturn len(token) > 0 && token != \".\"\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static String shortenPath(String path) {\n    // Write your code here;\n    return \"\";\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input = new int[] {};\n    var expected = true;\n    var actual = Program.isMonotonic(input);\n    Utils.assertEquals(expected, actual);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    var expected = \"/foo/bar/baz\";\n    var actual = Program.shortenPath(\"/foo/../test/../test/../foo//bar/./baz\");\n    Utils.assertEquals(expected, actual);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\nimport java.util.stream.Collectors;\n\nclass Program {\n  // O(n) time | O(n) space - where n is the length of the path\n  public static String shortenPath(String path) {\n    boolean startsWithPath = path.charAt(0) == '/';\n    String[] tokensArr = path.split(\"/\");\n    List<String> tokensList =  Arrays.asList(tokensArr);\n    List<String> filteredTokens = tokensList.stream().filter(token -> isImportantToken(token)).collect(Collectors.toList());\n    List<String> stack = new ArrayList<String>();\n    if (startsWithPath) stack.add(\"\");\n    for (String token : filteredTokens) {\n      if (token.equals(\"..\")) {\n        if (stack.size() == 0 || stack.get(stack.size() - 1).equals(\"..\")) {\n          stack.add(token);\n        } else if (!stack.get(stack.size() - 1).equals(\"\")) {\n          stack.remove(stack.size() - 1);\n        }\n      } else {\n        stack.add(token);\n      }\n    }\n\n    if (stack.size() == 1 && stack.get(0).equals(\"\")) return \"/\";\n    return String.join(\"/\", stack);\n  }\n\n  public static boolean isImportantToken(String token) {\n    return token.length() > 0 && !token.equals(\".\");\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function shortenPath(path) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.shortenPath = shortenPath;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.getNthFib(1)).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.getNthFib(2)).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.getNthFib(3)).to.deep.equal(1);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const input = '/foo/../test/../test/../foo//bar/./baz';\n  chai.expect(program.shortenPath(input)).to.deep.equal('/foo/bar/baz');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the length of the path\nfunction shortenPath(path) {\n  const startsWithSlash = path[0] === '/';\n  const tokens = path.split('/').filter(isImportantToken);\n  const stack = [];\n  if (startsWithSlash) stack.push('');\n  for (const token of tokens) {\n    if (token === '..') {\n      if (stack.length === 0 || stack[stack.length - 1] === '..') {\n        stack.push(token);\n      } else if (stack[stack.length - 1] !== '') {\n        stack.pop();\n      }\n    } else {\n      stack.push(token);\n    }\n  }\n\n  if (stack.length === 1 && stack[0] === '') return '/';\n  return stack.join('/');\n}\n\nfunction isImportantToken(token) {\n  return token.length > 0 && token !== '.';\n}\n\nexports.shortenPath = shortenPath;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def shortenPath(path):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.getNthFib(1), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.getNthFib(2), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.getNthFib(3), 1)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        expected = \"/foo/bar/baz\"\n        output = program.shortenPath(\"/foo/../test/../test/../foo//bar/./baz\")\n        self.assertEqual(output, expected)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space - where n is the length of the path\ndef shortenPath(path):\n    startsWithSlash = path[0] == \"/\"\n    tokens = filter(isImportantToken, path.split(\"/\"))\n    stack = []\n    if startsWithSlash:\n        stack.append(\"\")\n    for token in tokens:\n        if token == \"..\":\n            if len(stack) == 0 or stack[-1] == \"..\":\n                stack.append(token)\n            elif stack[-1] != \"\":\n                stack.pop()\n        else:\n            stack.append(token)\n\n    if len(stack) == 1 and stack[0] == \"\":\n        return \"/\"\n    return \"/\".join(stack)\n\n\ndef isImportantToken(token):\n    return len(token) > 0 and token != \".\"\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  static func shortenPath(_ path: String) -> String {\n    // Write your code here.\n    return \"\"\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assert(getNthFib(n: 1) == 0)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assert(getNthFib(n: 2) == 1)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assert(getNthFib(n: 3) == 1)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let expected = \"/foo/bar/baz\"\n      try assert(Program.shortenPath(\"/foo/../test/../test/../foo//bar/./baz\") == expected)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space - where n is the length of the path\n  static func shortenPath(_ path: String) -> String {\n    let startsWithSlash = path.first == \"/\"\n    let splits = path.components(separatedBy: \"/\")\n    var tokens = [String]()\n    for token in splits {\n      if isImportantToken(token) {\n        tokens.append(token)\n      }\n    }\n\n    var stack = [String]()\n    if startsWithSlash {\n      stack.append(\"\")\n    }\n    for token in tokens {\n      if token == \"..\" {\n        if stack.count == 0 || stack[stack.count - 1] == \"..\" {\n          stack.append(token)\n        } else if stack[stack.count - 1] != \"\" {\n          stack.removeLast()\n        }\n      } else {\n        stack.append(token)\n      }\n    }\n\n    if stack.count == 1, stack[0] == \"\" {\n      return \"/\"\n    }\n    return stack.joined(separator: \"/\")\n  }\n\n  static func isImportantToken(_ token: String) -> Bool {\n    return token.length > 0 && token != \".\"\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function shortenPath(path: string) {\n  // Write your code here.\n  return '';\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const input = '/foo/../test/../test/../foo//bar/./baz';\n  chai.expect(program.shortenPath(input)).to.deep.equal('/foo/bar/baz');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where n is the length of the path\nexport function shortenPath(path: string) {\n  const startsWithSlash = path[0] === '/';\n  const tokens = path.split('/').filter(isImportantToken);\n  const stack: string[] = [];\n  if (startsWithSlash) stack.push('');\n  for (const token of tokens) {\n    if (token === '..') {\n      if (stack.length === 0 || stack[stack.length - 1] === '..') {\n        stack.push(token);\n      } else if (stack[stack.length - 1] !== '') {\n        stack.pop();\n      }\n    } else {\n      stack.push(token);\n    }\n  }\n\n  if (stack.length === 1 && stack[0] === '') return '/';\n  return stack.join('/');\n}\n\nfunction isImportantToken(token: string) {\n  return token.length > 0 && token !== '.';\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "path": "/foo/../test/../test/../foo//bar/./baz"
+    },
+    {
+      "path": "/foo/bar/baz"
+    },
+    {
+      "path": "foo/bar/baz"
+    },
+    {
+      "path": "/../../foo/bar/baz"
+    },
+    {
+      "path": "../../foo/bar/baz"
+    },
+    {
+      "path": "/../../foo/../../bar/baz"
+    },
+    {
+      "path": "../../foo/../../bar/baz"
+    },
+    {
+      "path": "/foo/./././bar/./baz///////////test/../../../kappa"
+    },
+    {
+      "path": "../../../this////one/./../../is/../../going/../../to/be/./././../../../just/eight/double/dots/../../../../../.."
+    },
+    {
+      "path": "/../../../this////one/./../../is/../../going/../../to/be/./././../../../just/a/forward/slash/../../../../../.."
+    },
+    {
+      "path": "../../../this////one/./../../is/../../going/../../to/be/./././../../../just/eight/double/dots/../../../../../../foo"
+    },
+    {
+      "path": "/../../../this////one/./../../is/../../going/../../to/be/./././../../../just/a/forward/slash/../../../../../../foo"
+    },
+    {
+      "path": "foo/bar/.."
+    },
+    {
+      "path": "./foo/bar"
+    },
+    {
+      "path": "foo/../.."
+    },
+    {
+      "path": "/"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      "/foo/bar/baz",
+      "/foo/bar/baz",
+      "foo/bar/baz",
+      "/foo/bar/baz",
+      "../../foo/bar/baz",
+      "/bar/baz",
+      "../../../bar/baz",
+      "/foo/kappa",
+      "../../../../../../../..",
+      "/",
+      "../../../../../../../../foo",
+      "/foo",
+      "foo",
+      "foo/bar",
+      "..",
+      "/"
+    ]
+  ]
+}

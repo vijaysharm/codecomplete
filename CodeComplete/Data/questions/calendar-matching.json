@@ -1,0 +1,789 @@
+{
+  "Summary": {
+    "Name": "Calendar Matching",
+    "Category": "Arrays",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-09-13T00:00:00Z",
+      "number": 465,
+      "timeOne": 0,
+      "timeTwo": 1421,
+      "url": "https://player.vimeo.com/video/358923252"
+    }
+  },
+  "Prompt": "",
+  "Hints": "In order to find blocks of time during which you and your coworker can have a meeting, you have to first find all of the unavailabilities between the two of you. An unavailability is any block of time during which at least one of you is busy.\nYou'll have to start by taking into account the daily bounds; the daily bounds can be represented by two additional meetings in each of your calendars.\nOnce you've taken the daily bounds into account, you'll want to merge the two calendars into a single calendar of meetings and then flatten that calendar in order to eliminate overlapping and back-to-back meetings. This will give you a calendar of unavailabilities, from which you can pretty easily find the list of matching availabilities.",
+  "SpaceTime": "O(c1 + c2) time | O(c1 + c2) space - where c1 and c2 are the respective numbers of meetings in calendar1 and calendar2",
+  "PromptHTML": "<p>\n  Imagine that you want to schedule a meeting of a certain duration with a\n  co-worker. You have access to your calendar and your co-worker's calendar\n  (both of which contain your respective meetings for the day, in the form of\n  <span>[startTime, endTime]</span>), as well as both of your daily bounds\n  (i.e., the earliest and latest times at which you're available for meetings\n  every day, in the form of <span>[earliestTime, latestTime]</span>).\n</p>\n<p>\n  Write a function that takes in your calendar, your daily bounds, your\n  co-worker's calendar, your co-worker's daily bounds, and the duration of the\n  meeting that you want to schedule, and that returns a list of all the time\n  blocks (in the form of <span>[startTime, endTime]</span>) during which you\n  could schedule the meeting, ordered from earliest time block to latest.\n</p>\n<p>\n  Note that times will be given and should be returned in military time. For\n  example: <span>8:30</span>, <span>9:01</span>, and <span>23:56</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">calendar1</span> = [['9:00', '10:30'], ['12:00', '13:00'], ['16:00', '18:00']]\n<span class=\"CodeEditor-promptParameter\">dailyBounds1</span> = ['9:00', '20:00']\n<span class=\"CodeEditor-promptParameter\">calendar2</span> = [['10:00', '11:30'], ['12:30', '14:30'], ['14:30', '15:00'], ['16:00', '17:00']]\n<span class=\"CodeEditor-promptParameter\">dailyBounds2</span> = ['10:00', '18:30']\n<span class=\"CodeEditor-promptParameter\">meetingDuration</span> = 30\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[['11:30', '12:00'], ['15:00', '16:00'], ['18:00', '18:30']]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "calendar1",
+      "Example": [
+        [
+          "9:00",
+          "10:30"
+        ],
+        [
+          "12:00",
+          "13:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "dailyBounds1",
+      "Example": [
+        "9:00",
+        "20:00"
+      ],
+      "Schema": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      }
+    },
+    {
+      "Name": "calendar2",
+      "Example": [
+        [
+          "10:00",
+          "11:30"
+        ],
+        [
+          "12:30",
+          "14:30"
+        ],
+        [
+          "14:30",
+          "15:00"
+        ],
+        [
+          "16:00",
+          "17:00"
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "dailyBounds2",
+      "Example": [
+        "10:00",
+        "18:30"
+      ],
+      "Schema": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 2,
+        "minItems": 2,
+        "type": "array"
+      }
+    },
+    {
+      "Name": "meetingDuration",
+      "Example": 30,
+      "Schema": {
+        "minimum": 1,
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\n\nusing namespace std;\n\nstruct StringMeeting {\n  string start;\n  string end;\n};\n\nvector<StringMeeting> calendarMatching(vector<StringMeeting> calendar1,\n                                       StringMeeting dailyBounds1,\n                                       vector<StringMeeting> calendar2,\n                                       StringMeeting dailyBounds2,\n                                       int meetingDuration) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "bool compareCalendars(vector<StringMeeting> calendar1,\n                      vector<StringMeeting> calendar2) {\n  if (calendar1.size() != calendar2.size()) {\n    return false;\n  }\n  for (int i = 0; i < calendar1.size(); i++) {\n    if (calendar1[i].start != calendar2[i].start ||\n        calendar1[i].end != calendar2[i].end)\n      return false;\n  }\n  return true;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<StringMeeting> calendar1 = {\n          {\"9:00\", \"10:30\"}, {\"12:00\", \"13:00\"}, {\"16:00\", \"18:00\"}};\n      StringMeeting dailyBounds1 = {\"9:00\", \"20:00\"};\n      vector<StringMeeting> calendar2 = {{\"10:00\", \"11:30\"},\n                                         {\"12:30\", \"14:30\"},\n                                         {\"14:30\", \"15:00\"},\n                                         {\"16:00\", \"17:00\"}};\n      StringMeeting dailyBounds2 = {\"10:00\", \"18:30\"};\n      int meetingDuration = 30;\n      vector<StringMeeting> expected = {\n          {\"11:30\", \"12:00\"}, {\"15:00\", \"16:00\"}, {\"18:00\", \"18:30\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<StringMeeting> calendar1 = {\n          {\"9:00\", \"10:30\"}, {\"12:00\", \"13:00\"}, {\"16:00\", \"18:00\"}};\n      StringMeeting dailyBounds1 = {\"9:00\", \"20:00\"};\n      vector<StringMeeting> calendar2 = {{\"10:00\", \"11:30\"},\n                                         {\"12:30\", \"14:30\"},\n                                         {\"14:30\", \"15:00\"},\n                                         {\"16:00\", \"17:00\"}};\n      StringMeeting dailyBounds2 = {\"10:00\", \"18:30\"};\n      int meetingDuration = 45;\n      vector<StringMeeting> expected = {{\"15:00\", \"16:00\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<StringMeeting> calendar1 = {\n          {\"9:00\", \"10:30\"}, {\"12:00\", \"13:00\"}, {\"16:00\", \"18:00\"}};\n      StringMeeting dailyBounds1 = {\"8:00\", \"20:00\"};\n      vector<StringMeeting> calendar2 = {{\"10:00\", \"11:30\"},\n                                         {\"12:30\", \"14:30\"},\n                                         {\"14:30\", \"15:00\"},\n                                         {\"16:00\", \"17:00\"}};\n      StringMeeting dailyBounds2 = {\"7:00\", \"18:30\"};\n      int meetingDuration = 45;\n      vector<StringMeeting> expected = {{\"8:00\", \"9:00\"}, {\"15:00\", \"16:00\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<StringMeeting> calendar1 = {{\"8:00\", \"10:30\"},\n                                         {\"11:30\", \"13:00\"},\n                                         {\"14:00\", \"16:00\"},\n                                         {\"16:00\", \"18:00\"}};\n      StringMeeting dailyBounds1 = {\"8:00\", \"18:00\"};\n      vector<StringMeeting> calendar2 = {{\"10:00\", \"11:30\"},\n                                         {\"12:30\", \"14:30\"},\n                                         {\"14:30\", \"15:00\"},\n                                         {\"16:00\", \"17:00\"}};\n      StringMeeting dailyBounds2 = {\"7:00\", \"18:30\"};\n      int meetingDuration = 15;\n      vector<StringMeeting> expected = {};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<StringMeeting> calendar1 = {{\"10:00\", \"10:30\"},\n                                         {\"10:45\", \"11:15\"},\n                                         {\"11:30\", \"13:00\"},\n                                         {\"14:15\", \"16:00\"},\n                                         {\"16:00\", \"18:00\"}};\n      StringMeeting dailyBounds1 = {\"9:30\", \"20:00\"};\n      vector<StringMeeting> calendar2 = {{\"10:00\", \"11:00\"},\n                                         {\"12:30\", \"13:30\"},\n                                         {\"14:30\", \"15:00\"},\n                                         {\"16:00\", \"17:00\"}};\n      StringMeeting dailyBounds2 = {\"9:00\", \"18:30\"};\n      int meetingDuration = 15;\n      vector<StringMeeting> expected = {{\"9:30\", \"10:00\"},\n                                        {\"11:15\", \"11:30\"},\n                                        {\"13:30\", \"14:15\"},\n                                        {\"18:00\", \"18:30\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<StringMeeting> calendar1 = {{\"10:00\", \"10:30\"},\n                                         {\"10:45\", \"11:15\"},\n                                         {\"11:30\", \"13:00\"},\n                                         {\"14:15\", \"16:00\"},\n                                         {\"16:00\", \"18:00\"}};\n      StringMeeting dailyBounds1 = {\"9:30\", \"20:00\"};\n      vector<StringMeeting> calendar2 = {{\"10:00\", \"11:00\"},\n                                         {\"10:30\", \"20:30\"}};\n      StringMeeting dailyBounds2 = {\"9:00\", \"22:30\"};\n      int meetingDuration = 60;\n      vector<StringMeeting> expected = {};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<StringMeeting> calendar1 = {{\"10:00\", \"10:30\"},\n                                         {\"10:45\", \"11:15\"},\n                                         {\"11:30\", \"13:00\"},\n                                         {\"14:15\", \"16:00\"},\n                                         {\"16:00\", \"18:00\"}};\n      StringMeeting dailyBounds1 = {\"9:30\", \"20:00\"};\n      vector<StringMeeting> calendar2 = {{\"10:00\", \"11:00\"},\n                                         {\"10:30\", \"16:30\"}};\n      StringMeeting dailyBounds2 = {\"9:00\", \"22:30\"};\n      int meetingDuration = 60;\n      vector<StringMeeting> expected = {{\"18:00\", \"20:00\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<StringMeeting> calendar1 = {};\n      StringMeeting dailyBounds1 = {\"9:30\", \"20:00\"};\n      vector<StringMeeting> calendar2 = {};\n      StringMeeting dailyBounds2 = {\"9:00\", \"16:30\"};\n      int meetingDuration = 60;\n      vector<StringMeeting> expected = {{\"9:30\", \"16:30\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<StringMeeting> calendar1 = {};\n      StringMeeting dailyBounds1 = {\"9:00\", \"16:30\"};\n      vector<StringMeeting> calendar2 = {};\n      StringMeeting dailyBounds2 = {\"9:30\", \"20:00\"};\n      int meetingDuration = 60;\n      vector<StringMeeting> expected = {{\"9:30\", \"16:30\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<StringMeeting> calendar1 = {};\n      StringMeeting dailyBounds1 = {\"9:30\", \"16:30\"};\n      vector<StringMeeting> calendar2 = {};\n      StringMeeting dailyBounds2 = {\"9:30\", \"16:30\"};\n      int meetingDuration = 60;\n      vector<StringMeeting> expected = {{\"9:30\", \"16:30\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<StringMeeting> calendar1 = {\n          {\"7:00\", \"7:45\"},   {\"8:15\", \"8:30\"},   {\"9:00\", \"10:30\"},\n          {\"12:00\", \"14:00\"}, {\"14:00\", \"15:00\"}, {\"15:15\", \"15:30\"},\n          {\"16:30\", \"18:30\"}, {\"20:00\", \"21:00\"}};\n      StringMeeting dailyBounds1 = {\"6:30\", \"22:00\"};\n      vector<StringMeeting> calendar2 = {{\"9:00\", \"10:00\"},\n                                         {\"11:15\", \"11:30\"},\n                                         {\"11:45\", \"17:00\"},\n                                         {\"17:30\", \"19:00\"},\n                                         {\"20:00\", \"22:15\"}};\n      StringMeeting dailyBounds2 = {\"8:00\", \"22:30\"};\n      int meetingDuration = 30;\n      vector<StringMeeting> expected = {\n          {\"8:30\", \"9:00\"}, {\"10:30\", \"11:15\"}, {\"19:00\", \"20:00\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nbool compareCalendars(vector<StringMeeting> calendar1,\n                      vector<StringMeeting> calendar2) {\n  if (calendar1.size() != calendar2.size()) {\n    return false;\n  }\n  for (int i = 0; i < calendar1.size(); i++) {\n    if (calendar1[i].start != calendar2[i].start ||\n        calendar1[i].end != calendar2[i].end)\n      return false;\n  }\n  return true;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<StringMeeting> calendar1 = {\n          {\"9:00\", \"10:30\"}, {\"12:00\", \"13:00\"}, {\"16:00\", \"18:00\"}};\n      StringMeeting dailyBounds1 = {\"9:00\", \"20:00\"};\n      vector<StringMeeting> calendar2 = {{\"10:00\", \"11:30\"},\n                                         {\"12:30\", \"14:30\"},\n                                         {\"14:30\", \"15:00\"},\n                                         {\"16:00\", \"17:00\"}};\n      StringMeeting dailyBounds2 = {\"10:00\", \"18:30\"};\n      int meetingDuration = 30;\n      vector<StringMeeting> expected = {\n          {\"11:30\", \"12:00\"}, {\"15:00\", \"16:00\"}, {\"18:00\", \"18:30\"}};\n      vector<StringMeeting> actual = calendarMatching(\n          calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n      assert(compareCalendars(expected, actual));\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <cmath>\n#include <vector>\n\nusing namespace std;\n\nstruct StringMeeting {\n  string start;\n  string end;\n};\n\nstruct Meeting {\n  int start;\n  int end;\n};\n\nvector<Meeting> updateCalendar(vector<StringMeeting> calendar,\n                               StringMeeting dailyBounds);\nvector<Meeting> mergeCalendars(vector<Meeting> calendar1,\n                               vector<Meeting> calendar2);\nvector<Meeting> flattenCalendar(vector<Meeting> calendar);\nvector<StringMeeting> getMatchingAvailabilities(vector<Meeting> calendar,\n                                                int meetingDuration);\nint timeToMinutes(string time);\nstring minutesToTime(int minutes);\n\n// O(c1 + c2) time | O(c1 + c2) space - where c1 and c2 are the respective\n// numbers of meetings in calendar1 and calendar2\nvector<StringMeeting> calendarMatching(vector<StringMeeting> calendar1,\n                                       StringMeeting dailyBounds1,\n                                       vector<StringMeeting> calendar2,\n                                       StringMeeting dailyBounds2,\n                                       int meetingDuration) {\n  vector<Meeting> updatedCalendar1 = updateCalendar(calendar1, dailyBounds1);\n  vector<Meeting> updatedCalendar2 = updateCalendar(calendar2, dailyBounds2);\n  vector<Meeting> mergedCalendar =\n      mergeCalendars(updatedCalendar1, updatedCalendar2);\n  vector<Meeting> flattenedCalendar = flattenCalendar(mergedCalendar);\n  return getMatchingAvailabilities(flattenedCalendar, meetingDuration);\n}\n\nvector<Meeting> updateCalendar(vector<StringMeeting> calendar,\n                               StringMeeting dailyBounds) {\n  vector<StringMeeting> updatedCalendar;\n  updatedCalendar.push_back({\"0:00\", dailyBounds.start});\n  updatedCalendar.insert(updatedCalendar.end(), calendar.begin(),\n                         calendar.end());\n  updatedCalendar.push_back({dailyBounds.end, \"23:59\"});\n  vector<Meeting> calendarInMinutes;\n  for (int i = 0; i < updatedCalendar.size(); i++) {\n    calendarInMinutes.push_back({timeToMinutes(updatedCalendar[i].start),\n                                 timeToMinutes(updatedCalendar[i].end)});\n  }\n  return calendarInMinutes;\n}\n\nvector<Meeting> mergeCalendars(vector<Meeting> calendar1,\n                               vector<Meeting> calendar2) {\n  vector<Meeting> merged;\n  int i = 0;\n  int j = 0;\n  while (i < calendar1.size() && j < calendar2.size()) {\n    Meeting meeting1 = calendar1[i];\n    Meeting meeting2 = calendar2[j];\n    if (meeting1.start < meeting2.start) {\n      merged.push_back(meeting1);\n      i++;\n    } else {\n      merged.push_back(meeting2);\n      j++;\n    }\n  }\n  while (i < calendar1.size())\n    merged.push_back(calendar1[i++]);\n  while (j < calendar2.size())\n    merged.push_back(calendar2[j++]);\n  return merged;\n}\n\nvector<Meeting> flattenCalendar(vector<Meeting> calendar) {\n  vector<Meeting> flattened = {calendar[0]};\n  for (int i = 1; i < calendar.size(); i++) {\n    Meeting currentMeeting = calendar[i];\n    Meeting previousMeeting = flattened[flattened.size() - 1];\n    if (previousMeeting.end >= currentMeeting.start) {\n      Meeting newPreviousMeeting = {\n          previousMeeting.start, max(previousMeeting.end, currentMeeting.end)};\n      flattened[flattened.size() - 1] = newPreviousMeeting;\n    } else {\n      flattened.push_back(currentMeeting);\n    }\n  }\n  return flattened;\n}\n\nvector<StringMeeting> getMatchingAvailabilities(vector<Meeting> calendar,\n                                                int meetingDuration) {\n  vector<Meeting> matchingAvailabilities;\n  for (int i = 1; i < calendar.size(); i++) {\n    int start = calendar[i - 1].end;\n    int end = calendar[i].start;\n    int availabilityDuration = end - start;\n    if (availabilityDuration >= meetingDuration) {\n      matchingAvailabilities.push_back({start, end});\n    }\n  }\n\n  vector<StringMeeting> matchingAvailabilitiesInHours;\n  for (int i = 0; i < matchingAvailabilities.size(); i++) {\n    matchingAvailabilitiesInHours.push_back(\n        {minutesToTime(matchingAvailabilities[i].start),\n         minutesToTime(matchingAvailabilities[i].end)});\n  }\n  return matchingAvailabilitiesInHours;\n}\n\nint timeToMinutes(string time) {\n  int delimiterPos = time.find(\":\");\n  int hours = stoi(time.substr(0, delimiterPos));\n  int minutes = stoi(time.substr(delimiterPos + 1, time.length()));\n  return hours * 60 + minutes;\n}\n\nstring minutesToTime(int minutes) {\n  int hours = minutes / 60;\n  int mins = minutes % 60;\n  string hoursString = to_string(hours);\n  string minutesString = mins < 10 ? \"0\" + to_string(mins) : to_string(mins);\n  return hoursString + \":\" + minutesString;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<StringMeeting> CalendarMatching(\n\t\tList<StringMeeting> calendar1,\n\t\tStringMeeting dailyBounds1,\n\t\tList<StringMeeting> calendar2,\n\t\tStringMeeting dailyBounds2,\n\t\tint meetingDuration\n\t\t) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic class StringMeeting {\n\t\tpublic string start;\n\t\tpublic string end;\n\n\t\tpublic StringMeeting(string start, string end) {\n\t\t\tthis.start = start;\n\t\t\tthis.end = end;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\n\tpublic bool arraysEqual(List<Program.StringMeeting> arr1,\n\t  List<Program.StringMeeting> arr2) {\n\t\tif (arr1.Count != arr2.Count) return false;\n\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (\n\t\t\t\t!arr1[i].start.Equals(arr2[i].start) ||\n\t\t\t\t!arr1[i].end.Equals(arr2[i].end)\n\t\t\t\t) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"12:00\", \"13:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:00\", \"20:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"10:00\", \"18:30\");\n\n\t\tint meetingDuration = 30;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"11:30\", \"12:00\"));\n\t\texpected.Add(new Program.StringMeeting(\"15:00\", \"16:00\"));\n\t\texpected.Add(new Program.StringMeeting(\"18:00\", \"18:30\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"12:00\", \"13:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:00\", \"20:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"10:00\", \"18:30\");\n\n\t\tint meetingDuration = 45;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"15:00\", \"16:00\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"12:00\", \"13:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"8:00\", \"20:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"7:00\", \"18:30\");\n\n\t\tint meetingDuration = 45;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"8:00\", \"9:00\"));\n\t\texpected.Add(new Program.StringMeeting(\"15:00\", \"16:00\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"8:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"11:30\", \"13:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"14:00\", \"16:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"8:00\", \"18:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"7:00\", \"18:30\");\n\n\t\tint meetingDuration = 15;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"10:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"10:45\", \"11:15\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"11:30\", \"13:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"14:15\", \"16:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:00\", \"11:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"12:30\", \"13:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:00\", \"18:30\");\n\n\t\tint meetingDuration = 15;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"9:30\", \"10:00\"));\n\t\texpected.Add(new Program.StringMeeting(\"11:15\", \"11:30\"));\n\t\texpected.Add(new Program.StringMeeting(\"13:30\", \"14:15\"));\n\t\texpected.Add(new Program.StringMeeting(\"18:00\", \"18:30\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"10:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"10:45\", \"11:15\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"11:30\", \"13:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"14:15\", \"16:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:00\", \"11:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:30\", \"20:30\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:00\", \"22:30\");\n\n\t\tint meetingDuration = 60;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"10:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"10:45\", \"11:15\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"11:30\", \"13:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"14:15\", \"16:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:00\", \"11:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:30\", \"16:30\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:00\", \"22:30\");\n\n\t\tint meetingDuration = 60;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"18:00\", \"20:00\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:00\", \"16:30\");\n\n\t\tint meetingDuration = 60;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"9:30\", \"16:30\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:00\", \"16:30\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n\t\tint meetingDuration = 60;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"9:30\", \"16:30\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"16:30\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:30\", \"16:30\");\n\n\t\tint meetingDuration = 60;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"9:30\", \"16:30\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"7:00\", \"7:45\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"8:15\", \"8:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"12:00\", \"14:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"14:00\", \"15:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"15:15\", \"15:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:30\", \"18:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"20:00\", \"21:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"6:30\", \"22:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"9:00\", \"10:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"11:15\", \"11:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"11:45\", \"17:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"17:30\", \"19:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"20:00\", \"22:15\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"8:00\", \"22:30\");\n\n\t\tint meetingDuration = 30;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"8:30\", \"9:00\"));\n\t\texpected.Add(new Program.StringMeeting(\"10:30\", \"11:15\"));\n\t\texpected.Add(new Program.StringMeeting(\"19:00\", \"20:00\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\n\tpublic bool arraysEqual(List<Program.StringMeeting> arr1,\n\t  List<Program.StringMeeting> arr2) {\n\t\tif (arr1.Count != arr2.Count) return false;\n\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (\n\t\t\t\t!arr1[i].start.Equals(arr2[i].start) ||\n\t\t\t\t!arr1[i].end.Equals(arr2[i].end)\n\t\t\t\t) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<Program.StringMeeting> calendar1 = new List<Program.StringMeeting>();\n\t\tcalendar1.Add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"12:00\", \"13:00\"));\n\t\tcalendar1.Add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n\t\tProgram.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:00\", \"20:00\");\n\n\t\tList<Program.StringMeeting> calendar2 = new List<Program.StringMeeting>();\n\t\tcalendar2.Add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n\t\tcalendar2.Add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n\t\tProgram.StringMeeting dailyBounds2 = new Program.StringMeeting(\"10:00\", \"18:30\");\n\n\t\tint meetingDuration = 30;\n\n\t\tList<Program.StringMeeting> expected = new List<Program.StringMeeting>();\n\t\texpected.Add(new Program.StringMeeting(\"11:30\", \"12:00\"));\n\t\texpected.Add(new Program.StringMeeting(\"15:00\", \"16:00\"));\n\t\texpected.Add(new Program.StringMeeting(\"18:00\", \"18:30\"));\n\n\t\tList<Program.StringMeeting> actual = Program.CalendarMatching(calendar1,\n\t\t    dailyBounds1,\n\t\t    calendar2,\n\t\t    dailyBounds2,\n\t\t    meetingDuration);\n\t\tUtils.AssertTrue(arraysEqual(expected, actual));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(c1 + c2) time | O(c1 + c2) space - where c1 and c2 are the respective numbers of meetings in calendar1 and calendar2\n\tpublic static List<StringMeeting> CalendarMatching(\n\t\tList<StringMeeting> calendar1,\n\t\tStringMeeting dailyBounds1,\n\t\tList<StringMeeting> calendar2,\n\t\tStringMeeting dailyBounds2,\n\t\tint meetingDuration\n\t\t) {\n\t\tList<Meeting> updatedCalendar1 = updateCalendar(calendar1, dailyBounds1);\n\t\tList<Meeting> updatedCalendar2 = updateCalendar(calendar2, dailyBounds2);\n\t\tList<Meeting> mergedCalendar = mergeCalendars(updatedCalendar1, updatedCalendar2);\n\t\tList<Meeting> flattenedCalendar = flattenCalendar(mergedCalendar);\n\t\treturn getMatchingAvailabilities(flattenedCalendar, meetingDuration);\n\t}\n\n\tpublic static List<Meeting> updateCalendar(\n\t\tList<StringMeeting> calendar,\n\t\tStringMeeting dailyBounds\n\t\t) {\n\t\tList<StringMeeting> updatedCalendar = new List<StringMeeting>();\n\t\tupdatedCalendar.Add(new StringMeeting(\"0:00\", dailyBounds.start));\n\t\tupdatedCalendar.AddRange(calendar);\n\t\tupdatedCalendar.Add(new StringMeeting(dailyBounds.end, \"23:59\"));\n\t\tList<Meeting> calendarInMinutes = new List<Meeting>();\n\t\tfor (int i = 0; i < updatedCalendar.Count; i++) {\n\t\t\tcalendarInMinutes.Add(new Meeting(\n\t\t\t\t  timeToMinutes(updatedCalendar[i].start),\n\t\t\t\t  timeToMinutes(updatedCalendar[i].end)\n\t\t\t\t  ));\n\n\t\t}\n\t\treturn calendarInMinutes;\n\t}\n\n\tpublic static List<Meeting> mergeCalendars(\n\t\tList<Meeting> calendar1,\n\t\tList<Meeting> calendar2\n\t\t) {\n\t\tList<Meeting> merged = new List<Meeting>();\n\t\tint i = 0;\n\t\tint j = 0;\n\t\twhile (i < calendar1.Count && j < calendar2.Count) {\n\t\t\tMeeting meeting1 = calendar1[i];\n\t\t\tMeeting meeting2 = calendar2[j];\n\t\t\tif (meeting1.start < meeting2.start) {\n\t\t\t\tmerged.Add(meeting1);\n\t\t\t\ti++;\n\t\t\t} else {\n\t\t\t\tmerged.Add(meeting2);\n\t\t\t\tj++;\n\t\t\t}\n\t\t}\n\t\twhile (i < calendar1.Count) merged.Add(calendar1[i++]);\n\t\twhile (j < calendar2.Count) merged.Add(calendar2[j++]);\n\t\treturn merged;\n\t}\n\n\tpublic static List<Meeting> flattenCalendar(List<Meeting> calendar) {\n\t\tList<Meeting> flattened = new List<Meeting>();\n\t\tflattened.Add(calendar[0]);\n\t\tfor (int i = 1; i < calendar.Count; i++) {\n\t\t\tMeeting currentMeeting = calendar[i];\n\t\t\tMeeting previousMeeting = flattened[flattened.Count - 1];\n\t\t\tif (previousMeeting.end >= currentMeeting.start) {\n\t\t\t\tMeeting newPreviousMeeting = new Meeting(\n\t\t\t\t\tpreviousMeeting.start,\n\t\t\t\t\tMath.Max(previousMeeting.end, currentMeeting.end)\n\t\t\t\t\t);\n\t\t\t\tflattened[flattened.Count - 1] = newPreviousMeeting;\n\t\t\t} else {\n\t\t\t\tflattened.Add(currentMeeting);\n\t\t\t}\n\t\t}\n\t\treturn flattened;\n\t}\n\n\tpublic static List<StringMeeting> getMatchingAvailabilities(\n\t\tList<Meeting> calendar,\n\t\tint meetingDuration\n\t\t) {\n\t\tList<Meeting> matchingAvailabilities = new List<Meeting>();\n\t\tfor (int i = 1; i < calendar.Count; i++) {\n\t\t\tint start = calendar[i - 1].end;\n\t\t\tint end = calendar[i].start;\n\t\t\tint availabilityDuration = end - start;\n\t\t\tif (availabilityDuration >= meetingDuration) {\n\t\t\t\tmatchingAvailabilities.Add(new Meeting(start, end));\n\t\t\t}\n\t\t}\n\t\tList<StringMeeting> matchingAvailabilitiesInHours = new List<StringMeeting>();\n\t\tfor (int i = 0; i < matchingAvailabilities.Count; i++) {\n\t\t\tmatchingAvailabilitiesInHours.Add(new StringMeeting(\n\t\t\t\t  minutesToTime(\n\t\t\t\t\t  matchingAvailabilities[i].\n\t\t\t\t\t  start),\n\t\t\t\t  minutesToTime(\n\t\t\t\t\t  matchingAvailabilities[i].\n\t\t\t\t\t  end)\n\t\t\t\t  ));\n\t\t}\n\t\treturn matchingAvailabilitiesInHours;\n\t}\n\n\tpublic static int timeToMinutes(string time) {\n\t\tint delimiterPos = time.IndexOf(\":\");\n\t\tint hours = Int32.Parse(time.Substring(0, delimiterPos));\n\t\tint minutes = Int32.Parse(time.Substring(delimiterPos + 1));\n\t\treturn hours * 60 + minutes;\n\t}\n\n\tpublic static string minutesToTime(int minutes) {\n\t\tint hours = minutes / 60;\n\t\tint mins = minutes % 60;\n\t\tstring hoursstring = hours.ToString();\n\t\tstring minutesstring = mins < 10 ? \"0\" + mins.ToString() : mins.ToString();\n\t\treturn hoursstring + \":\" + minutesstring;\n\t}\n\n\tpublic class StringMeeting {\n\t\tpublic string start;\n\t\tpublic string end;\n\n\t\tpublic StringMeeting(string start, string end) {\n\t\t\tthis.start = start;\n\t\t\tthis.end = end;\n\t\t}\n\t}\n\n\tpublic class Meeting {\n\t\tpublic int start;\n\t\tpublic int end;\n\n\t\tpublic Meeting(int start, int end) {\n\t\t\tthis.start = start;\n\t\t\tthis.end = end;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype StringMeeting struct {\n\tStart string\n\tEnd   string\n}\n\nfunc CalendarMatching(\n\tcalendar1 []StringMeeting, dailyBounds1 StringMeeting,\n\tcalendar2 []StringMeeting, dailyBounds2 StringMeeting,\n\tmeetingDuration int,\n) []StringMeeting {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"9:00\", \"10:30\"}, {\"12:00\", \"13:00\"}, {\"16:00\", \"18:00\"}}\n\tdailyBounds1 := StringMeeting{\"9:00\", \"20:00\"}\n\tcalendar2 := []StringMeeting{{\"10:00\", \"11:30\"}, {\"12:30\", \"14:30\"}, {\"14:30\", \"15:00\"}, {\"16:00\", \"17:00\"}}\n\tdailyBounds2 := StringMeeting{\"10:00\", \"18:30\"}\n\tmeetingDuration := 30\n\texpected := []StringMeeting{{\"11:30\", \"12:00\"}, {\"15:00\", \"16:00\"}, {\"18:00\", \"18:30\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"9:00\", \"10:30\"}, {\"12:00\", \"13:00\"}, {\"16:00\", \"18:00\"}}\n\tdailyBounds1 := StringMeeting{\"9:00\", \"20:00\"}\n\tcalendar2 := []StringMeeting{{\"10:00\", \"11:30\"}, {\"12:30\", \"14:30\"}, {\"14:30\", \"15:00\"}, {\"16:00\", \"17:00\"}}\n\tdailyBounds2 := StringMeeting{\"10:00\", \"18:30\"}\n\tmeetingDuration := 45\n\texpected := []StringMeeting{{\"15:00\", \"16:00\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"9:00\", \"10:30\"}, {\"12:00\", \"13:00\"}, {\"16:00\", \"18:00\"}}\n\tdailyBounds1 := StringMeeting{\"8:00\", \"20:00\"}\n\tcalendar2 := []StringMeeting{{\"10:00\", \"11:30\"}, {\"12:30\", \"14:30\"}, {\"14:30\", \"15:00\"}, {\"16:00\", \"17:00\"}}\n\tdailyBounds2 := StringMeeting{\"7:00\", \"18:30\"}\n\tmeetingDuration := 45\n\texpected := []StringMeeting{{\"8:00\", \"9:00\"}, {\"15:00\", \"16:00\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"8:00\", \"10:30\"}, {\"11:30\", \"13:00\"}, {\"14:00\", \"16:00\"}, {\"16:00\", \"18:00\"}}\n\tdailyBounds1 := StringMeeting{\"8:00\", \"18:00\"}\n\tcalendar2 := []StringMeeting{{\"10:00\", \"11:30\"}, {\"12:30\", \"14:30\"}, {\"14:30\", \"15:00\"}, {\"16:00\", \"17:00\"}}\n\tdailyBounds2 := StringMeeting{\"7:00\", \"18:30\"}\n\tmeetingDuration := 15\n\texpected := []StringMeeting{}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"10:00\", \"10:30\"}, {\"10:45\", \"11:15\"},\n\t\t{\"11:30\", \"13:00\"}, {\"14:15\", \"16:00\"}, {\"16:00\", \"18:00\"}}\n\tdailyBounds1 := StringMeeting{\"9:30\", \"20:00\"}\n\tcalendar2 := []StringMeeting{{\"10:00\", \"11:00\"}, {\"12:30\", \"13:30\"}, {\"14:30\", \"15:00\"}, {\"16:00\", \"17:00\"}}\n\tdailyBounds2 := StringMeeting{\"9:00\", \"18:30\"}\n\tmeetingDuration := 15\n\texpected := []StringMeeting{{\"9:30\", \"10:00\"}, {\"11:15\", \"11:30\"}, {\"13:30\", \"14:15\"}, {\"18:00\", \"18:30\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"10:00\", \"10:30\"}, {\"10:45\", \"11:15\"},\n\t\t{\"11:30\", \"13:00\"}, {\"14:15\", \"16:00\"}, {\"16:00\", \"18:00\"}}\n\tdailyBounds1 := StringMeeting{\"9:30\", \"20:00\"}\n\tcalendar2 := []StringMeeting{{\"10:00\", \"11:00\"}, {\"10:30\", \"20:30\"}}\n\tdailyBounds2 := StringMeeting{\"9:00\", \"22:30\"}\n\tmeetingDuration := 60\n\texpected := []StringMeeting{}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"10:00\", \"10:30\"}, {\"10:45\", \"11:15\"},\n\t\t{\"11:30\", \"13:00\"}, {\"14:15\", \"16:00\"}, {\"16:00\", \"18:00\"}}\n\tdailyBounds1 := StringMeeting{\"9:30\", \"20:00\"}\n\tcalendar2 := []StringMeeting{{\"10:00\", \"11:00\"}, {\"10:30\", \"16:30\"}}\n\tdailyBounds2 := StringMeeting{\"9:00\", \"22:30\"}\n\tmeetingDuration := 60\n\texpected := []StringMeeting{{\"18:00\", \"20:00\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tcalendar1 := []StringMeeting{}\n\tdailyBounds1 := StringMeeting{\"9:30\", \"20:00\"}\n\tcalendar2 := []StringMeeting{}\n\tdailyBounds2 := StringMeeting{\"9:00\", \"16:30\"}\n\tmeetingDuration := 60\n\texpected := []StringMeeting{{\"9:30\", \"16:30\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tcalendar1 := []StringMeeting{}\n\tdailyBounds1 := StringMeeting{\"9:00\", \"16:30\"}\n\tcalendar2 := []StringMeeting{}\n\tdailyBounds2 := StringMeeting{\"9:30\", \"20:00\"}\n\tmeetingDuration := 60\n\texpected := []StringMeeting{{\"9:30\", \"16:30\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tcalendar1 := []StringMeeting{}\n\tdailyBounds1 := StringMeeting{\"9:30\", \"16:30\"}\n\tcalendar2 := []StringMeeting{}\n\tdailyBounds2 := StringMeeting{\"9:30\", \"16:30\"}\n\tmeetingDuration := 60\n\texpected := []StringMeeting{{\"9:30\", \"16:30\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"7:00\", \"7:45\"}, {\"8:15\", \"8:30\"},\n\t\t{\"9:00\", \"10:30\"}, {\"12:00\", \"14:00\"}, {\"14:00\", \"15:00\"},\n\t\t{\"15:15\", \"15:30\"}, {\"16:30\", \"18:30\"}, {\"20:00\", \"21:00\"}}\n\tdailyBounds1 := StringMeeting{\"6:30\", \"22:00\"}\n\tcalendar2 := []StringMeeting{{\"9:00\", \"10:00\"}, {\"11:15\", \"11:30\"},\n\t\t{\"11:45\", \"17:00\"}, {\"17:30\", \"19:00\"}, {\"20:00\", \"22:15\"}}\n\tdailyBounds2 := StringMeeting{\"8:00\", \"22:30\"}\n\tmeetingDuration := 30\n\texpected := []StringMeeting{{\"8:30\", \"9:00\"}, {\"10:30\", \"11:15\"}, {\"19:00\", \"20:00\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tcalendar1 := []StringMeeting{{\"9:00\", \"10:30\"}, {\"12:00\", \"13:00\"}, {\"16:00\", \"18:00\"}}\n\tdailyBounds1 := StringMeeting{\"9:00\", \"20:00\"}\n\tcalendar2 := []StringMeeting{{\"10:00\", \"11:30\"}, {\"12:30\", \"14:30\"}, {\"14:30\", \"15:00\"}, {\"16:00\", \"17:00\"}}\n\tdailyBounds2 := StringMeeting{\"10:00\", \"18:30\"}\n\tmeetingDuration := 30\n\texpected := []StringMeeting{{\"11:30\", \"12:00\"}, {\"15:00\", \"16:00\"}, {\"18:00\", \"18:30\"}}\n\tresult := CalendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n\trequire.Equal(t, result, expected)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport (\n\t\"fmt\"\n\t\"strconv\"\n\t\"strings\"\n)\n\ntype StringMeeting struct {\n\tStart string\n\tEnd   string\n}\n\ntype Meeting struct {\n\tStart int\n\tEnd   int\n}\n\n// O(c1 + c2) time | O(c1 + c2) space - where c1 and c2 are the respective\n// numbers of meetings in calendar1 and calendar2.\nfunc CalendarMatching(\n\tcalendar1 []StringMeeting, dailyBounds1 StringMeeting,\n\tcalendar2 []StringMeeting, dailyBounds2 StringMeeting,\n\tmeetingDuration int,\n) []StringMeeting {\n\tupdatedCalendar1 := updateCalendar(calendar1, dailyBounds1)\n\tupdatedCalendar2 := updateCalendar(calendar2, dailyBounds2)\n\tmergedCalendar := mergeCalendars(updatedCalendar1, updatedCalendar2)\n\tflattenedCalendar := flattenCalendar(mergedCalendar)\n\treturn getMatchingAvailabilities(flattenedCalendar, meetingDuration)\n}\n\nfunc updateCalendar(calendar []StringMeeting, dailyBounds StringMeeting) []Meeting {\n\tupdatedCalendar := append([]StringMeeting{\n\t\t{Start: \"0:00\", End: dailyBounds.Start},\n\t}, calendar...)\n\tupdatedCalendar = append(updatedCalendar, StringMeeting{\n\t\tStart: dailyBounds.End, End: \"23:59\",\n\t})\n\n\tmeetings := []Meeting{}\n\tfor _, i := range updatedCalendar {\n\t\tmeetings = append(meetings, Meeting{\n\t\t\tStart: timeToMinutes(i.Start),\n\t\t\tEnd:   timeToMinutes(i.End),\n\t\t})\n\t}\n\treturn meetings\n}\n\nfunc mergeCalendars(calendar1, calendar2 []Meeting) []Meeting {\n\tmerged := []Meeting{}\n\ti, j := 0, 0\n\tfor i < len(calendar1) && j < len(calendar2) {\n\t\tmeeting1, meeting2 := calendar1[i], calendar2[j]\n\t\tif meeting1.Start < meeting2.Start {\n\t\t\tmerged = append(merged, meeting1)\n\t\t\ti++\n\t\t} else {\n\t\t\tmerged = append(merged, meeting2)\n\t\t\tj++\n\t\t}\n\t}\n\n\tfor i < len(calendar1) {\n\t\tmerged = append(merged, calendar1[i])\n\t\ti++\n\t}\n\tfor j < len(calendar2) {\n\t\tmerged = append(merged, calendar2[j])\n\t\tj++\n\t}\n\treturn merged\n}\n\nfunc flattenCalendar(calendar []Meeting) []Meeting {\n\tflattened := []Meeting{calendar[0]}\n\tfor i := 1; i < len(calendar); i++ {\n\t\tcurrentMeeting := calendar[i]\n\t\tpreviousMeeting := flattened[len(flattened)-1]\n\t\tif previousMeeting.End >= currentMeeting.Start {\n\t\t\tnewPreviousMeeting := Meeting{\n\t\t\t\tStart: previousMeeting.Start,\n\t\t\t\tEnd:   max(previousMeeting.End, currentMeeting.End),\n\t\t\t}\n\t\t\tflattened[len(flattened)-1] = newPreviousMeeting\n\t\t} else {\n\t\t\tflattened = append(flattened, currentMeeting)\n\t\t}\n\t}\n\treturn flattened\n}\n\nfunc getMatchingAvailabilities(calendar []Meeting, meetingDuration int) []StringMeeting {\n\tmatchingAvailabilities := []StringMeeting{}\n\tfor i := 1; i < len(calendar); i++ {\n\t\tstart := calendar[i-1].End\n\t\tend := calendar[i].Start\n\t\tavailabilityDuration := end - start\n\t\tif availabilityDuration >= meetingDuration {\n\t\t\tmatchingAvailabilities = append(matchingAvailabilities, StringMeeting{\n\t\t\t\tStart: minutesToTime(start),\n\t\t\t\tEnd:   minutesToTime(end),\n\t\t\t})\n\t\t}\n\t}\n\treturn matchingAvailabilities\n}\n\nfunc max(a, b int) int {\n\tif a > b {\n\t\treturn a\n\t}\n\treturn b\n}\n\nfunc timeToMinutes(time string) int {\n\tsplit := strings.SplitN(time, \":\", 2)\n\thours, _ := strconv.Atoi(split[0])\n\tminutes, _ := strconv.Atoi(split[1])\n\treturn hours*60 + minutes\n}\n\nfunc minutesToTime(minutes int) string {\n\thours, minutes := minutes/60, minutes%60\n\treturn fmt.Sprintf(\"%d:%02d\", hours, minutes)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<StringMeeting> calendarMatching(\n      List<StringMeeting> calendar1,\n      StringMeeting dailyBounds1,\n      List<StringMeeting> calendar2,\n      StringMeeting dailyBounds2,\n      int meetingDuration) {\n    // Write your code here.\n    return null;\n  }\n\n  static class StringMeeting {\n    public String start;\n    public String end;\n\n    public StringMeeting(String start, String end) {\n      this.start = start;\n      this.end = end;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n\n  public boolean arraysEqual(List<Program.StringMeeting> arr1, List<Program.StringMeeting> arr2) {\n    if (arr1.size() != arr2.size()) return false;\n\n    for (int i = 0; i < arr1.size(); i++) {\n      if (!arr1.get(i).start.equals(arr2.get(i).start)\n          || !arr1.get(i).end.equals(arr2.get(i).end)) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  @Test\n  public void TestCase1() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"12:00\", \"13:00\"));\n    calendar1.add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:00\", \"20:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n    calendar2.add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n    calendar2.add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n    calendar2.add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"10:00\", \"18:30\");\n\n    int meetingDuration = 30;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"11:30\", \"12:00\"));\n    expected.add(new Program.StringMeeting(\"15:00\", \"16:00\"));\n    expected.add(new Program.StringMeeting(\"18:00\", \"18:30\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase2() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"12:00\", \"13:00\"));\n    calendar1.add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:00\", \"20:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n    calendar2.add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n    calendar2.add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n    calendar2.add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"10:00\", \"18:30\");\n\n    int meetingDuration = 45;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"15:00\", \"16:00\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase3() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"12:00\", \"13:00\"));\n    calendar1.add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"8:00\", \"20:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n    calendar2.add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n    calendar2.add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n    calendar2.add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"7:00\", \"18:30\");\n\n    int meetingDuration = 45;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"8:00\", \"9:00\"));\n    expected.add(new Program.StringMeeting(\"15:00\", \"16:00\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase4() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"8:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"11:30\", \"13:00\"));\n    calendar1.add(new Program.StringMeeting(\"14:00\", \"16:00\"));\n    calendar1.add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"8:00\", \"18:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n    calendar2.add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n    calendar2.add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n    calendar2.add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"7:00\", \"18:30\");\n\n    int meetingDuration = 15;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase5() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"10:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"10:45\", \"11:15\"));\n    calendar1.add(new Program.StringMeeting(\"11:30\", \"13:00\"));\n    calendar1.add(new Program.StringMeeting(\"14:15\", \"16:00\"));\n    calendar1.add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"10:00\", \"11:00\"));\n    calendar2.add(new Program.StringMeeting(\"12:30\", \"13:30\"));\n    calendar2.add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n    calendar2.add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:00\", \"18:30\");\n\n    int meetingDuration = 15;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"9:30\", \"10:00\"));\n    expected.add(new Program.StringMeeting(\"11:15\", \"11:30\"));\n    expected.add(new Program.StringMeeting(\"13:30\", \"14:15\"));\n    expected.add(new Program.StringMeeting(\"18:00\", \"18:30\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase6() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"10:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"10:45\", \"11:15\"));\n    calendar1.add(new Program.StringMeeting(\"11:30\", \"13:00\"));\n    calendar1.add(new Program.StringMeeting(\"14:15\", \"16:00\"));\n    calendar1.add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"10:00\", \"11:00\"));\n    calendar2.add(new Program.StringMeeting(\"10:30\", \"20:30\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:00\", \"22:30\");\n\n    int meetingDuration = 60;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase7() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"10:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"10:45\", \"11:15\"));\n    calendar1.add(new Program.StringMeeting(\"11:30\", \"13:00\"));\n    calendar1.add(new Program.StringMeeting(\"14:15\", \"16:00\"));\n    calendar1.add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"10:00\", \"11:00\"));\n    calendar2.add(new Program.StringMeeting(\"10:30\", \"16:30\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:00\", \"22:30\");\n\n    int meetingDuration = 60;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"18:00\", \"20:00\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase8() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:00\", \"16:30\");\n\n    int meetingDuration = 60;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"9:30\", \"16:30\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase9() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:00\", \"16:30\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:30\", \"20:00\");\n\n    int meetingDuration = 60;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"9:30\", \"16:30\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase10() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:30\", \"16:30\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"9:30\", \"16:30\");\n\n    int meetingDuration = 60;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"9:30\", \"16:30\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n\n  @Test\n  public void TestCase11() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"7:00\", \"7:45\"));\n    calendar1.add(new Program.StringMeeting(\"8:15\", \"8:30\"));\n    calendar1.add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"12:00\", \"14:00\"));\n    calendar1.add(new Program.StringMeeting(\"14:00\", \"15:00\"));\n    calendar1.add(new Program.StringMeeting(\"15:15\", \"15:30\"));\n    calendar1.add(new Program.StringMeeting(\"16:30\", \"18:30\"));\n    calendar1.add(new Program.StringMeeting(\"20:00\", \"21:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"6:30\", \"22:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"9:00\", \"10:00\"));\n    calendar2.add(new Program.StringMeeting(\"11:15\", \"11:30\"));\n    calendar2.add(new Program.StringMeeting(\"11:45\", \"17:00\"));\n    calendar2.add(new Program.StringMeeting(\"17:30\", \"19:00\"));\n    calendar2.add(new Program.StringMeeting(\"20:00\", \"22:15\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"8:00\", \"22:30\");\n\n    int meetingDuration = 30;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"8:30\", \"9:00\"));\n    expected.add(new Program.StringMeeting(\"10:30\", \"11:15\"));\n    expected.add(new Program.StringMeeting(\"19:00\", \"20:00\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n\n  public boolean arraysEqual(List<Program.StringMeeting> arr1, List<Program.StringMeeting> arr2) {\n    if (arr1.size() != arr2.size()) return false;\n\n    for (int i = 0; i < arr1.size(); i++) {\n      if (!arr1.get(i).start.equals(arr2.get(i).start)\n          || !arr1.get(i).end.equals(arr2.get(i).end)) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  @Test\n  public void TestCase1() {\n    List<Program.StringMeeting> calendar1 = new ArrayList<Program.StringMeeting>();\n    calendar1.add(new Program.StringMeeting(\"9:00\", \"10:30\"));\n    calendar1.add(new Program.StringMeeting(\"12:00\", \"13:00\"));\n    calendar1.add(new Program.StringMeeting(\"16:00\", \"18:00\"));\n\n    Program.StringMeeting dailyBounds1 = new Program.StringMeeting(\"9:00\", \"20:00\");\n\n    List<Program.StringMeeting> calendar2 = new ArrayList<Program.StringMeeting>();\n    calendar2.add(new Program.StringMeeting(\"10:00\", \"11:30\"));\n    calendar2.add(new Program.StringMeeting(\"12:30\", \"14:30\"));\n    calendar2.add(new Program.StringMeeting(\"14:30\", \"15:00\"));\n    calendar2.add(new Program.StringMeeting(\"16:00\", \"17:00\"));\n\n    Program.StringMeeting dailyBounds2 = new Program.StringMeeting(\"10:00\", \"18:30\");\n\n    int meetingDuration = 30;\n\n    List<Program.StringMeeting> expected = new ArrayList<Program.StringMeeting>();\n    expected.add(new Program.StringMeeting(\"11:30\", \"12:00\"));\n    expected.add(new Program.StringMeeting(\"15:00\", \"16:00\"));\n    expected.add(new Program.StringMeeting(\"18:00\", \"18:30\"));\n\n    List<Program.StringMeeting> actual =\n        Program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n    Utils.assertTrue(arraysEqual(expected, actual));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(c1 + c2) time | O(c1 + c2) space - where c1 and c2 are the respective numbers of meetings\n  // in calendar1 and calendar2\n  public static List<StringMeeting> calendarMatching(\n      List<StringMeeting> calendar1,\n      StringMeeting dailyBounds1,\n      List<StringMeeting> calendar2,\n      StringMeeting dailyBounds2,\n      int meetingDuration) {\n    List<Meeting> updatedCalendar1 = updateCalendar(calendar1, dailyBounds1);\n    List<Meeting> updatedCalendar2 = updateCalendar(calendar2, dailyBounds2);\n    List<Meeting> mergedCalendar = mergeCalendars(updatedCalendar1, updatedCalendar2);\n    List<Meeting> flattenedCalendar = flattenCalendar(mergedCalendar);\n    return getMatchingAvailabilities(flattenedCalendar, meetingDuration);\n  }\n\n  public static List<Meeting> updateCalendar(\n      List<StringMeeting> calendar, StringMeeting dailyBounds) {\n    List<StringMeeting> updatedCalendar = new ArrayList<StringMeeting>();\n    updatedCalendar.add(new StringMeeting(\"0:00\", dailyBounds.start));\n    updatedCalendar.addAll(calendar);\n    updatedCalendar.add(new StringMeeting(dailyBounds.end, \"23:59\"));\n    List<Meeting> calendarInMinutes = new ArrayList<Meeting>();\n    for (int i = 0; i < updatedCalendar.size(); i++) {\n      calendarInMinutes.add(\n          new Meeting(\n              timeToMinutes(updatedCalendar.get(i).start),\n              timeToMinutes(updatedCalendar.get(i).end)));\n    }\n    return calendarInMinutes;\n  }\n\n  public static List<Meeting> mergeCalendars(List<Meeting> calendar1, List<Meeting> calendar2) {\n    List<Meeting> merged = new ArrayList<Meeting>();\n    int i = 0;\n    int j = 0;\n    while (i < calendar1.size() && j < calendar2.size()) {\n      Meeting meeting1 = calendar1.get(i);\n      Meeting meeting2 = calendar2.get(j);\n      if (meeting1.start < meeting2.start) {\n        merged.add(meeting1);\n        i++;\n      } else {\n        merged.add(meeting2);\n        j++;\n      }\n    }\n    while (i < calendar1.size()) merged.add(calendar1.get(i++));\n    while (j < calendar2.size()) merged.add(calendar2.get(j++));\n    return merged;\n  }\n\n  public static List<Meeting> flattenCalendar(List<Meeting> calendar) {\n    List<Meeting> flattened = new ArrayList<Meeting>();\n    flattened.add(calendar.get(0));\n    for (int i = 1; i < calendar.size(); i++) {\n      Meeting currentMeeting = calendar.get(i);\n      Meeting previousMeeting = flattened.get(flattened.size() - 1);\n      if (previousMeeting.end >= currentMeeting.start) {\n        Meeting newPreviousMeeting =\n            new Meeting(previousMeeting.start, Math.max(previousMeeting.end, currentMeeting.end));\n        flattened.set(flattened.size() - 1, newPreviousMeeting);\n      } else {\n        flattened.add(currentMeeting);\n      }\n    }\n    return flattened;\n  }\n\n  public static List<StringMeeting> getMatchingAvailabilities(\n      List<Meeting> calendar, int meetingDuration) {\n    List<Meeting> matchingAvailabilities = new ArrayList<Meeting>();\n    for (int i = 1; i < calendar.size(); i++) {\n      int start = calendar.get(i - 1).end;\n      int end = calendar.get(i).start;\n      int availabilityDuration = end - start;\n      if (availabilityDuration >= meetingDuration) {\n        matchingAvailabilities.add(new Meeting(start, end));\n      }\n    }\n    List<StringMeeting> matchingAvailabilitiesInHours = new ArrayList<StringMeeting>();\n    for (int i = 0; i < matchingAvailabilities.size(); i++) {\n      matchingAvailabilitiesInHours.add(\n          new StringMeeting(\n              minutesToTime(matchingAvailabilities.get(i).start),\n              minutesToTime(matchingAvailabilities.get(i).end)));\n    }\n    return matchingAvailabilitiesInHours;\n  }\n\n  public static int timeToMinutes(String time) {\n    int delimiterPos = time.indexOf(\":\");\n    int hours = Integer.parseInt(time.substring(0, delimiterPos));\n    int minutes = Integer.parseInt(time.substring(delimiterPos + 1, time.length()));\n    return hours * 60 + minutes;\n  }\n\n  public static String minutesToTime(int minutes) {\n    int hours = minutes / 60;\n    int mins = minutes % 60;\n    String hoursString = Integer.toString(hours);\n    String minutesString = mins < 10 ? \"0\" + Integer.toString(mins) : Integer.toString(mins);\n    return hoursString + \":\" + minutesString;\n  }\n\n  static class StringMeeting {\n    public String start;\n    public String end;\n\n    public StringMeeting(String start, String end) {\n      this.start = start;\n      this.end = end;\n    }\n  }\n\n  static class Meeting {\n    public int start;\n    public int end;\n\n    public Meeting(int start, int end) {\n      this.start = start;\n      this.end = end;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.calendarMatching = calendarMatching;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const calendar1 = [\n    ['9:00', '10:30'],\n    ['12:00', '13:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1 = ['9:00', '20:00'];\n  const calendar2 = [\n    ['10:00', '11:30'],\n    ['12:30', '14:30'],\n    ['14:30', '15:00'],\n    ['16:00', '17:00'],\n  ];\n  const dailyBounds2 = ['10:00', '18:30'];\n  const meetingDuration = 30;\n  const expected = [\n    ['11:30', '12:00'],\n    ['15:00', '16:00'],\n    ['18:00', '18:30'],\n  ];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #2', function () {\n  const calendar1 = [\n    ['9:00', '10:30'],\n    ['12:00', '13:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1 = ['9:00', '20:00'];\n  const calendar2 = [\n    ['10:00', '11:30'],\n    ['12:30', '14:30'],\n    ['14:30', '15:00'],\n    ['16:00', '17:00'],\n  ];\n  const dailyBounds2 = ['10:00', '18:30'];\n  const meetingDuration = 45;\n  const expected = [['15:00', '16:00']];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #3', function () {\n  const calendar1 = [\n    ['9:00', '10:30'],\n    ['12:00', '13:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1 = ['8:00', '20:00'];\n  const calendar2 = [\n    ['10:00', '11:30'],\n    ['12:30', '14:30'],\n    ['14:30', '15:00'],\n    ['16:00', '17:00'],\n  ];\n  const dailyBounds2 = ['7:00', '18:30'];\n  const meetingDuration = 45;\n  const expected = [\n    ['8:00', '9:00'],\n    ['15:00', '16:00'],\n  ];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #4', function () {\n  const calendar1 = [\n    ['8:00', '10:30'],\n    ['11:30', '13:00'],\n    ['14:00', '16:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1 = ['8:00', '18:00'];\n  const calendar2 = [\n    ['10:00', '11:30'],\n    ['12:30', '14:30'],\n    ['14:30', '15:00'],\n    ['16:00', '17:00'],\n  ];\n  const dailyBounds2 = ['7:00', '18:30'];\n  const meetingDuration = 15;\n  const expected = [];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #5', function () {\n  const calendar1 = [\n    ['10:00', '10:30'],\n    ['10:45', '11:15'],\n    ['11:30', '13:00'],\n    ['14:15', '16:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1 = ['9:30', '20:00'];\n  const calendar2 = [\n    ['10:00', '11:00'],\n    ['12:30', '13:30'],\n    ['14:30', '15:00'],\n    ['16:00', '17:00'],\n  ];\n  const dailyBounds2 = ['9:00', '18:30'];\n  const meetingDuration = 15;\n  const expected = [\n    ['9:30', '10:00'],\n    ['11:15', '11:30'],\n    ['13:30', '14:15'],\n    ['18:00', '18:30'],\n  ];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #6', function () {\n  const calendar1 = [\n    ['10:00', '10:30'],\n    ['10:45', '11:15'],\n    ['11:30', '13:00'],\n    ['14:15', '16:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1 = ['9:30', '20:00'];\n  const calendar2 = [\n    ['10:00', '11:00'],\n    ['10:30', '20:30'],\n  ];\n  const dailyBounds2 = ['9:00', '22:30'];\n  const meetingDuration = 60;\n  const expected = [];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #7', function () {\n  const calendar1 = [\n    ['10:00', '10:30'],\n    ['10:45', '11:15'],\n    ['11:30', '13:00'],\n    ['14:15', '16:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1 = ['9:30', '20:00'];\n  const calendar2 = [\n    ['10:00', '11:00'],\n    ['10:30', '16:30'],\n  ];\n  const dailyBounds2 = ['9:00', '22:30'];\n  const meetingDuration = 60;\n  const expected = [['18:00', '20:00']];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #8', function () {\n  const calendar1 = [];\n  const dailyBounds1 = ['9:30', '20:00'];\n  const calendar2 = [];\n  const dailyBounds2 = ['9:00', '16:30'];\n  const meetingDuration = 60;\n  const expected = [['9:30', '16:30']];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #9', function () {\n  const calendar1 = [];\n  const dailyBounds1 = ['9:00', '16:30'];\n  const calendar2 = [];\n  const dailyBounds2 = ['9:30', '20:00'];\n  const meetingDuration = 60;\n  const expected = [['9:30', '16:30']];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #10', function () {\n  const calendar1 = [];\n  const dailyBounds1 = ['9:30', '16:30'];\n  const calendar2 = [];\n  const dailyBounds2 = ['9:30', '16:30'];\n  const meetingDuration = 60;\n  const expected = [['9:30', '16:30']];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #11', function () {\n  const calendar1 = [\n    ['7:00', '7:45'],\n    ['8:15', '8:30'],\n    ['9:00', '10:30'],\n    ['12:00', '14:00'],\n    ['14:00', '15:00'],\n    ['15:15', '15:30'],\n    ['16:30', '18:30'],\n    ['20:00', '21:00'],\n  ];\n  const dailyBounds1 = ['6:30', '22:00'];\n  const calendar2 = [\n    ['9:00', '10:00'],\n    ['11:15', '11:30'],\n    ['11:45', '17:00'],\n    ['17:30', '19:00'],\n    ['20:00', '22:15'],\n  ];\n  const dailyBounds2 = ['8:00', '22:30'];\n  const meetingDuration = 30;\n  const expected = [\n    ['8:30', '9:00'],\n    ['10:30', '11:15'],\n    ['19:00', '20:00'],\n  ];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const calendar1 = [\n    ['9:00', '10:30'],\n    ['12:00', '13:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1 = ['9:00', '20:00'];\n  const calendar2 = [\n    ['10:00', '11:30'],\n    ['12:30', '14:30'],\n    ['14:30', '15:00'],\n    ['16:00', '17:00'],\n  ];\n  const dailyBounds2 = ['10:00', '18:30'];\n  const meetingDuration = 30;\n  const expected = [\n    ['11:30', '12:00'],\n    ['15:00', '16:00'],\n    ['18:00', '18:30'],\n  ];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(c1 + c2) time | O(c1 + c2) space - where c1 and c2 are the respective numbers of meetings in calendar1 and calendar2\nfunction calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration) {\n  const updatedCalendar1 = updateCalendar(calendar1, dailyBounds1);\n  const updatedCalendar2 = updateCalendar(calendar2, dailyBounds2);\n  const mergedCalendar = mergeCalendars(updatedCalendar1, updatedCalendar2);\n  const flattenedCalendar = flattenCalendar(mergedCalendar);\n  return getMatchingAvailabilities(flattenedCalendar, meetingDuration);\n}\n\nfunction updateCalendar(calendar, dailyBounds) {\n  const updatedCalendar = [['0:00', dailyBounds[0]], ...calendar, [dailyBounds[1], '23:59']];\n  return updatedCalendar.map(meeting => meeting.map(timeToMinutes));\n}\n\nfunction mergeCalendars(calendar1, calendar2) {\n  const merged = [];\n  let i = 0,\n    j = 0;\n  while (i < calendar1.length && j < calendar2.length) {\n    const meeting1 = calendar1[i],\n      meeting2 = calendar2[j];\n    if (meeting1[0] < meeting2[0]) {\n      merged.push(meeting1);\n      i++;\n    } else {\n      merged.push(meeting2);\n      j++;\n    }\n  }\n  while (i < calendar1.length) merged.push(calendar1[i++]);\n  while (j < calendar2.length) merged.push(calendar2[j++]);\n  return merged;\n}\n\nfunction flattenCalendar(calendar) {\n  const flattened = [calendar[0].slice()];\n  for (let i = 1; i < calendar.length; i++) {\n    const currentMeeting = calendar[i];\n    const previousMeeting = flattened[flattened.length - 1];\n    const [currentStart, currentEnd] = currentMeeting;\n    const [previousStart, previousEnd] = previousMeeting;\n    if (previousEnd >= currentStart) {\n      const newPreviousMeeting = [previousStart, Math.max(previousEnd, currentEnd)];\n      flattened[flattened.length - 1] = newPreviousMeeting;\n    } else {\n      flattened.push(currentMeeting.slice());\n    }\n  }\n  return flattened;\n}\n\nfunction getMatchingAvailabilities(calendar, meetingDuration) {\n  const matchingAvailabilities = [];\n  for (let i = 1; i < calendar.length; i++) {\n    const start = calendar[i - 1][1];\n    const end = calendar[i][0];\n    const availabilityDuration = end - start;\n    if (availabilityDuration >= meetingDuration) {\n      matchingAvailabilities.push([start, end]);\n    }\n  }\n  return matchingAvailabilities.map(meeting => meeting.map(minutesToTime));\n}\n\nfunction timeToMinutes(time) {\n  const [hours, minutes] = time.split(':').map(str => parseInt(str));\n  return hours * 60 + minutes;\n}\n\nfunction minutesToTime(minutes) {\n  const hours = Math.floor(minutes / 60);\n  const mins = minutes % 60;\n  const hoursString = hours.toString();\n  const minutesString = mins < 10 ? '0' + mins.toString() : mins.toString();\n  return hoursString + ':' + minutesString;\n}\n\nexports.calendarMatching = calendarMatching;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        calendar1 = [[\"9:00\", \"10:30\"], [\"12:00\", \"13:00\"], [\"16:00\", \"18:00\"]]\n        dailyBounds1 = [\"9:00\", \"20:00\"]\n        calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n        dailyBounds2 = [\"10:00\", \"18:30\"]\n        meetingDuration = 30\n        expected = [[\"11:30\", \"12:00\"], [\"15:00\", \"16:00\"], [\"18:00\", \"18:30\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_2(self):\n        calendar1 = [[\"9:00\", \"10:30\"], [\"12:00\", \"13:00\"], [\"16:00\", \"18:00\"]]\n        dailyBounds1 = [\"9:00\", \"20:00\"]\n        calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n        dailyBounds2 = [\"10:00\", \"18:30\"]\n        meetingDuration = 45\n        expected = [[\"15:00\", \"16:00\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_3(self):\n        calendar1 = [[\"9:00\", \"10:30\"], [\"12:00\", \"13:00\"], [\"16:00\", \"18:00\"]]\n        dailyBounds1 = [\"8:00\", \"20:00\"]\n        calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n        dailyBounds2 = [\"7:00\", \"18:30\"]\n        meetingDuration = 45\n        expected = [[\"8:00\", \"9:00\"], [\"15:00\", \"16:00\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_4(self):\n        calendar1 = [[\"8:00\", \"10:30\"], [\"11:30\", \"13:00\"], [\"14:00\", \"16:00\"], [\"16:00\", \"18:00\"]]\n        dailyBounds1 = [\"8:00\", \"18:00\"]\n        calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n        dailyBounds2 = [\"7:00\", \"18:30\"]\n        meetingDuration = 15\n        expected = []\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_5(self):\n        calendar1 = [[\"10:00\", \"10:30\"], [\"10:45\", \"11:15\"], [\"11:30\", \"13:00\"], [\"14:15\", \"16:00\"], [\"16:00\", \"18:00\"]]\n        dailyBounds1 = [\"9:30\", \"20:00\"]\n        calendar2 = [[\"10:00\", \"11:00\"], [\"12:30\", \"13:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n        dailyBounds2 = [\"9:00\", \"18:30\"]\n        meetingDuration = 15\n        expected = [[\"9:30\", \"10:00\"], [\"11:15\", \"11:30\"], [\"13:30\", \"14:15\"], [\"18:00\", \"18:30\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_6(self):\n        calendar1 = [[\"10:00\", \"10:30\"], [\"10:45\", \"11:15\"], [\"11:30\", \"13:00\"], [\"14:15\", \"16:00\"], [\"16:00\", \"18:00\"]]\n        dailyBounds1 = [\"9:30\", \"20:00\"]\n        calendar2 = [[\"10:00\", \"11:00\"], [\"10:30\", \"20:30\"]]\n        dailyBounds2 = [\"9:00\", \"22:30\"]\n        meetingDuration = 60\n        expected = []\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_7(self):\n        calendar1 = [[\"10:00\", \"10:30\"], [\"10:45\", \"11:15\"], [\"11:30\", \"13:00\"], [\"14:15\", \"16:00\"], [\"16:00\", \"18:00\"]]\n        dailyBounds1 = [\"9:30\", \"20:00\"]\n        calendar2 = [[\"10:00\", \"11:00\"], [\"10:30\", \"16:30\"]]\n        dailyBounds2 = [\"9:00\", \"22:30\"]\n        meetingDuration = 60\n        expected = [[\"18:00\", \"20:00\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_8(self):\n        calendar1 = []\n        dailyBounds1 = [\"9:30\", \"20:00\"]\n        calendar2 = []\n        dailyBounds2 = [\"9:00\", \"16:30\"]\n        meetingDuration = 60\n        expected = [[\"9:30\", \"16:30\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_9(self):\n        calendar1 = []\n        dailyBounds1 = [\"9:00\", \"16:30\"]\n        calendar2 = []\n        dailyBounds2 = [\"9:30\", \"20:00\"]\n        meetingDuration = 60\n        expected = [[\"9:30\", \"16:30\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_10(self):\n        calendar1 = []\n        dailyBounds1 = [\"9:30\", \"16:30\"]\n        calendar2 = []\n        dailyBounds2 = [\"9:30\", \"16:30\"]\n        meetingDuration = 60\n        expected = [[\"9:30\", \"16:30\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n\n    def test_case_11(self):\n        calendar1 = [\n            [\"7:00\", \"7:45\"],\n            [\"8:15\", \"8:30\"],\n            [\"9:00\", \"10:30\"],\n            [\"12:00\", \"14:00\"],\n            [\"14:00\", \"15:00\"],\n            [\"15:15\", \"15:30\"],\n            [\"16:30\", \"18:30\"],\n            [\"20:00\", \"21:00\"],\n        ]\n        dailyBounds1 = [\"6:30\", \"22:00\"]\n        calendar2 = [[\"9:00\", \"10:00\"], [\"11:15\", \"11:30\"], [\"11:45\", \"17:00\"], [\"17:30\", \"19:00\"], [\"20:00\", \"22:15\"]]\n        dailyBounds2 = [\"8:00\", \"22:30\"]\n        meetingDuration = 30\n        expected = [[\"8:30\", \"9:00\"], [\"10:30\", \"11:15\"], [\"19:00\", \"20:00\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        calendar1 = [[\"9:00\", \"10:30\"], [\"12:00\", \"13:00\"], [\"16:00\", \"18:00\"]]\n        dailyBounds1 = [\"9:00\", \"20:00\"]\n        calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n        dailyBounds2 = [\"10:00\", \"18:30\"]\n        meetingDuration = 30\n        expected = [[\"11:30\", \"12:00\"], [\"15:00\", \"16:00\"], [\"18:00\", \"18:30\"]]\n        result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n        self.assertEqual(result, expected)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(c1 + c2) time | O(c1 + c2) space - where c1 and c2 are the respective numbers of meetings in calendar1 and calendar2\ndef calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration):\n    updatedCalendar1 = updateCalendar(calendar1, dailyBounds1)\n    updatedCalendar2 = updateCalendar(calendar2, dailyBounds2)\n    mergedCalendar = mergeCalendars(updatedCalendar1, updatedCalendar2)\n    flattenedCalendar = flattenCalendar(mergedCalendar)\n    return getMatchingAvailabilities(flattenedCalendar, meetingDuration)\n\n\ndef updateCalendar(calendar, dailyBounds):\n    updatedCalendar = calendar[:]\n    updatedCalendar.insert(0, [\"0:00\", dailyBounds[0]])\n    updatedCalendar.append([dailyBounds[1], \"23:59\"])\n    return list(map(lambda m: [timeToMinutes(m[0]), timeToMinutes(m[1])], updatedCalendar))\n\n\ndef mergeCalendars(calendar1, calendar2):\n    merged = []\n    i, j = 0, 0\n    while i < len(calendar1) and j < len(calendar2):\n        meeting1, meeting2 = calendar1[i], calendar2[j]\n        if meeting1[0] < meeting2[0]:\n            merged.append(meeting1)\n            i += 1\n        else:\n            merged.append(meeting2)\n            j += 1\n    while i < len(calendar1):\n        merged.append(calendar1[i])\n        i += 1\n    while j < len(calendar2):\n        merged.append(calendar2[j])\n        j += 1\n    return merged\n\n\ndef flattenCalendar(calendar):\n    flattened = [calendar[0][:]]\n    for i in range(1, len(calendar)):\n        currentMeeting = calendar[i]\n        previousMeeting = flattened[-1]\n        currentStart, currentEnd = currentMeeting\n        previousStart, previousEnd = previousMeeting\n        if previousEnd >= currentStart:\n            newPreviousMeeting = [previousStart, max(previousEnd, currentEnd)]\n            flattened[-1] = newPreviousMeeting\n        else:\n            flattened.append(currentMeeting[:])\n    return flattened\n\n\ndef getMatchingAvailabilities(calendar, meetingDuration):\n    matchingAvailabilities = []\n    for i in range(1, len(calendar)):\n        start = calendar[i - 1][1]\n        end = calendar[i][0]\n        availabilityDuration = end - start\n        if availabilityDuration >= meetingDuration:\n            matchingAvailabilities.append([start, end])\n    return list(map(lambda m: [minutesToTime(m[0]), minutesToTime(m[1])], matchingAvailabilities))\n\n\ndef timeToMinutes(time):\n    hours, minutes = list(map(int, time.split(\":\")))\n    return hours * 60 + minutes\n\n\ndef minutesToTime(minutes):\n    hours = minutes // 60\n    mins = minutes % 60\n    hoursString = str(hours)\n    minutesString = \"0\" + str(mins) if mins < 10 else str(mins)\n    return hoursString + \":\" + minutesString\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func calendarMatching(_ calendar1: [[String]], _ dailyBounds1: [String], _ calendar2: [[String]], _ dailyBounds2: [String], _ meetingDuration: Int) -> [[String]] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  var calendar1 = [[\"9:00\", \"10:30\"], [\"12:00\", \"13:00\"], [\"16:00\", \"18:00\"]]\n  var dailyBounds1 = [\"9:00\", \"20:00\"]\n  var calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n  var dailyBounds2 = [\"10:00\", \"18:30\"]\n  var meetingDuration = 30\n  var expected = [[\"11:30\", \"12:00\"], [\"15:00\", \"16:00\"], [\"18:00\", \"18:30\"]]\n\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      calendar1 = [[\"9:00\", \"10:30\"], [\"12:00\", \"13:00\"], [\"16:00\", \"18:00\"]]\n      dailyBounds1 = [\"9:00\", \"20:00\"]\n      calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n      dailyBounds2 = [\"10:00\", \"18:30\"]\n      meetingDuration = 45\n      expected = [[\"15:00\", \"16:00\"]]\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      calendar1 = [[\"9:00\", \"10:30\"], [\"12:00\", \"13:00\"], [\"16:00\", \"18:00\"]]\n      dailyBounds1 = [\"8:00\", \"20:00\"]\n      calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n      dailyBounds2 = [\"7:00\", \"18:30\"]\n      meetingDuration = 45\n      expected = [[\"8:00\", \"9:00\"], [\"15:00\", \"16:00\"]]\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      calendar1 = [[\"8:00\", \"10:30\"], [\"11:30\", \"13:00\"], [\"14:00\", \"16:00\"], [\"16:00\", \"18:00\"]]\n      dailyBounds1 = [\"8:00\", \"18:00\"]\n      calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n      dailyBounds2 = [\"7:00\", \"18:30\"]\n      meetingDuration = 15\n      expected = []\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      calendar1 = [[\"10:00\", \"10:30\"], [\"10:45\", \"11:15\"], [\"11:30\", \"13:00\"], [\"14:15\", \"16:00\"], [\"16:00\", \"18:00\"]]\n      dailyBounds1 = [\"9:30\", \"20:00\"]\n      calendar2 = [[\"10:00\", \"11:00\"], [\"12:30\", \"13:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n      dailyBounds2 = [\"9:00\", \"18:30\"]\n      meetingDuration = 15\n      expected = [[\"9:30\", \"10:00\"], [\"11:15\", \"11:30\"], [\"13:30\", \"14:15\"], [\"18:00\", \"18:30\"]]\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      calendar1 = [[\"10:00\", \"10:30\"], [\"10:45\", \"11:15\"], [\"11:30\", \"13:00\"], [\"14:15\", \"16:00\"], [\"16:00\", \"18:00\"]]\n      dailyBounds1 = [\"9:30\", \"20:00\"]\n      calendar2 = [[\"10:00\", \"11:00\"], [\"10:30\", \"20:30\"]]\n      dailyBounds2 = [\"9:00\", \"22:30\"]\n      meetingDuration = 60\n      expected = []\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      calendar1 = [[\"10:00\", \"10:30\"], [\"10:45\", \"11:15\"], [\"11:30\", \"13:00\"], [\"14:15\", \"16:00\"], [\"16:00\", \"18:00\"]]\n      dailyBounds1 = [\"9:30\", \"20:00\"]\n      calendar2 = [[\"10:00\", \"11:00\"], [\"10:30\", \"16:30\"]]\n      dailyBounds2 = [\"9:00\", \"22:30\"]\n      meetingDuration = 60\n      expected = [[\"18:00\", \"20:00\"]]\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      calendar1 = []\n      dailyBounds1 = [\"9:30\", \"20:00\"]\n      calendar2 = []\n      dailyBounds2 = [\"9:00\", \"16:30\"]\n      meetingDuration = 60\n      expected = [[\"9:30\", \"16:30\"]]\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      calendar1 = []\n      dailyBounds1 = [\"9:00\", \"16:30\"]\n      calendar2 = []\n      dailyBounds2 = [\"9:30\", \"20:00\"]\n      meetingDuration = 60\n      expected = [[\"9:30\", \"16:30\"]]\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      calendar1 = []\n      dailyBounds1 = [\"9:30\", \"16:30\"]\n      calendar2 = []\n      dailyBounds2 = [\"9:30\", \"16:30\"]\n      meetingDuration = 60\n      expected = [[\"9:30\", \"16:30\"]]\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      calendar1 = [[\"7:00\", \"7:45\"], [\"8:15\", \"8:30\"], [\"9:00\", \"10:30\"], [\"12:00\", \"14:00\"], [\"14:00\", \"15:00\"], [\"15:15\", \"15:30\"], [\"16:30\", \"18:30\"], [\"20:00\", \"21:00\"]]\n      dailyBounds1 = [\"6:30\", \"22:00\"]\n      calendar2 = [[\"9:00\", \"10:00\"], [\"11:15\", \"11:30\"], [\"11:45\", \"17:00\"], [\"17:30\", \"19:00\"], [\"20:00\", \"22:15\"]]\n      dailyBounds2 = [\"8:00\", \"22:30\"]\n      meetingDuration = 30\n      expected = [[\"8:30\", \"9:00\"], [\"10:30\", \"11:15\"], [\"19:00\", \"20:00\"]]\n      var result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let calendar1 = [[\"9:00\", \"10:30\"], [\"12:00\", \"13:00\"], [\"16:00\", \"18:00\"]]\n      let dailyBounds1 = [\"9:00\", \"20:00\"]\n      let calendar2 = [[\"10:00\", \"11:30\"], [\"12:30\", \"14:30\"], [\"14:30\", \"15:00\"], [\"16:00\", \"17:00\"]]\n      let dailyBounds2 = [\"10:00\", \"18:30\"]\n      let meetingDuration = 30\n      let expected = [[\"11:30\", \"12:00\"], [\"15:00\", \"16:00\"], [\"18:00\", \"18:30\"]]\n      let result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration)\n      try assertEqual(expected, result)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(c1 + c2) time | O(c1 + c2) space\n  func calendarMatching(_ calendar1: [[String]], _ dailyBounds1: [String], _ calendar2: [[String]], _ dailyBounds2: [String], _ meetingDuration: Int) -> [[String]] {\n    let updatedCalendar1 = updateCalendar(calendar1, dailyBounds1)\n    let updatedCalendar2 = updateCalendar(calendar2, dailyBounds2)\n\n    let mergedCalendar = mergeCalendars(updatedCalendar1, updatedCalendar2)\n    let flattenedCalendar = flattenCalendar(mergedCalendar)\n\n    return getMatchingAvailabilities(flattenedCalendar, meetingDuration)\n  }\n\n  func updateCalendar(_ calendar: [[String]], _ dailyBounds: [String]) -> [[Int]] {\n    let lowerBound = [\"0:00\", dailyBounds[0]]\n    let upperBound = [dailyBounds[1], \"23:59\"]\n    var updatedCalendar = [[String]]()\n\n    updatedCalendar.append(lowerBound)\n    updatedCalendar.append(contentsOf: calendar)\n    updatedCalendar.append(upperBound)\n\n    return updatedCalendar.map { $0.map { timeToMinutes($0) } }\n  }\n\n  func mergeCalendars(_ calendar1: [[Int]], _ calendar2: [[Int]]) -> [[Int]] {\n    var i = 0\n    var j = 0\n    var merged = [[Int]]()\n\n    while i < calendar1.count, j < calendar2.count {\n      let meeting1 = calendar1[i]\n      let meeting2 = calendar2[j]\n\n      if meeting1[0] < meeting2[0] {\n        merged.append(meeting1)\n        i += 1\n      } else {\n        merged.append(meeting2)\n        j += 1\n      }\n    }\n\n    while i < calendar1.count {\n      merged.append(calendar1[i])\n      i += 1\n    }\n\n    while j < calendar2.count {\n      merged.append(calendar2[j])\n      j += 1\n    }\n\n    return merged\n  }\n\n  func flattenCalendar(_ calendar: [[Int]]) -> [[Int]] {\n    let firstEntry = calendar[0]\n    var flattened = [[Int]]()\n    flattened.append(firstEntry)\n\n    for currentMeeting in calendar {\n      if let previousMeeting = flattened.last, let currentStart = currentMeeting.first, let currentEnd = currentMeeting.last, let previousStart = previousMeeting.first, let previousEnd = previousMeeting.last {\n        if previousEnd >= currentStart {\n          let newPreviousMeeting = [previousStart, max(previousEnd, currentEnd)]\n          flattened[flattened.count - 1] = newPreviousMeeting\n        } else {\n          flattened.append(currentMeeting)\n        }\n      }\n    }\n\n    return flattened\n  }\n\n  func getMatchingAvailabilities(_ calendar: [[Int]], _ meetingDuration: Int) -> [[String]] {\n    var matchingAvailabilities = [[Int]]()\n\n    for i in 1 ..< calendar.count {\n      let start = calendar[i - 1][1]\n      let end = calendar[i][0]\n\n      let availabilityDuration = end - start\n      if availabilityDuration >= meetingDuration {\n        matchingAvailabilities.append([start, end])\n      }\n    }\n\n    return matchingAvailabilities.map { $0.map { minutesToTime($0) } }\n  }\n\n  func timeToMinutes(_ string: String) -> Int {\n    let separatedComponents = string.split(separator: \":\").map { Int($0) }\n\n    if let hours = separatedComponents[0], let minutes = separatedComponents[1] {\n      return (hours * 60) + minutes\n    }\n\n    return 0\n  }\n\n  func minutesToTime(_ minutes: Int) -> String {\n    var hours = (Double(minutes) / 60)\n    hours = hours.rounded(.down)\n\n    let mins = minutes % 60\n\n    let hoursString = \"\\(Int(hours))\"\n    let minsString = mins < 10 ? \"0\" + \"\\(mins)\" : \"\\(mins)\"\n\n    return hoursString + \":\" + minsString\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function calendarMatching(\n  calendar1: string[][],\n  dailyBounds1: string[],\n  calendar2: string[][],\n  dailyBounds2: string[],\n  meetingDuration: number,\n) {\n  // Write your code here.\n  return [['']];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const calendar1 = [\n    ['9:00', '10:30'],\n    ['12:00', '13:00'],\n    ['16:00', '18:00'],\n  ];\n  const dailyBounds1: [string, string] = ['9:00', '20:00'];\n  const calendar2 = [\n    ['10:00', '11:30'],\n    ['12:30', '14:30'],\n    ['14:30', '15:00'],\n    ['16:00', '17:00'],\n  ];\n  const dailyBounds2: [string, string] = ['10:00', '18:30'];\n  const meetingDuration = 30;\n  const expected = [\n    ['11:30', '12:00'],\n    ['15:00', '16:00'],\n    ['18:00', '18:30'],\n  ];\n  const result = program.calendarMatching(calendar1, dailyBounds1, calendar2, dailyBounds2, meetingDuration);\n  chai.expect(result).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(c1 + c2) time | O(c1 + c2) space - where c1 and c2 are the respective numbers of meetings in calendar1 and calendar2\nexport function calendarMatching(\n  calendar1: string[][],\n  dailyBounds1: [string, string],\n  calendar2: string[][],\n  dailyBounds2: [string, string],\n  meetingDuration: number,\n) {\n  const updatedCalendar1 = updateCalendar(calendar1, dailyBounds1);\n  const updatedCalendar2 = updateCalendar(calendar2, dailyBounds2);\n  const mergedCalendar = mergeCalendars(updatedCalendar1, updatedCalendar2);\n  const flattenedCalendar = flattenCalendar(mergedCalendar);\n  return getMatchingAvailabilities(flattenedCalendar, meetingDuration);\n}\n\nfunction updateCalendar(calendar: string[][], dailyBounds: [string, string]) {\n  const updatedCalendar = [['0:00', dailyBounds[0]], ...calendar, [dailyBounds[1], '23:59']];\n  return updatedCalendar.map(meeting => meeting.map(timeToMinutes));\n}\n\nfunction mergeCalendars(calendar1: number[][], calendar2: number[][]) {\n  const merged: number[][] = [];\n  let i = 0,\n    j = 0;\n  while (i < calendar1.length && j < calendar2.length) {\n    const meeting1 = calendar1[i],\n      meeting2 = calendar2[j];\n    if (meeting1[0] < meeting2[0]) {\n      merged.push(meeting1);\n      i++;\n    } else {\n      merged.push(meeting2);\n      j++;\n    }\n  }\n  while (i < calendar1.length) merged.push(calendar1[i++]);\n  while (j < calendar2.length) merged.push(calendar2[j++]);\n  return merged;\n}\n\nfunction flattenCalendar(calendar: number[][]) {\n  const flattened: number[][] = [calendar[0].slice()];\n  for (let i = 1; i < calendar.length; i++) {\n    const currentMeeting = calendar[i];\n    const previousMeeting = flattened[flattened.length - 1];\n    const [currentStart, currentEnd] = currentMeeting;\n    const [previousStart, previousEnd] = previousMeeting;\n    if (previousEnd >= currentStart) {\n      const newPreviousMeeting = [previousStart, Math.max(previousEnd, currentEnd)];\n      flattened[flattened.length - 1] = newPreviousMeeting;\n    } else {\n      flattened.push(currentMeeting.slice());\n    }\n  }\n  return flattened;\n}\n\nfunction getMatchingAvailabilities(calendar: number[][], meetingDuration: number) {\n  const matchingAvailabilities: number[][] = [];\n  for (let i = 1; i < calendar.length; i++) {\n    const start = calendar[i - 1][1];\n    const end = calendar[i][0];\n    const availabilityDuration = end - start;\n    if (availabilityDuration >= meetingDuration) {\n      matchingAvailabilities.push([start, end]);\n    }\n  }\n  return matchingAvailabilities.map(meeting => meeting.map(minutesToTime));\n}\n\nfunction timeToMinutes(time: string) {\n  const [hours, minutes] = time.split(':').map(str => parseInt(str));\n  return hours * 60 + minutes;\n}\n\nfunction minutesToTime(minutes: number) {\n  const hours = Math.floor(minutes / 60);\n  const mins = minutes % 60;\n  const hoursString = hours.toString();\n  const minutesString = mins < 10 ? '0' + mins.toString() : mins.toString();\n  return hoursString + ':' + minutesString;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "calendar1": [
+        [
+          "9:00",
+          "10:30"
+        ],
+        [
+          "12:00",
+          "13:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "10:00",
+          "11:30"
+        ],
+        [
+          "12:30",
+          "14:30"
+        ],
+        [
+          "14:30",
+          "15:00"
+        ],
+        [
+          "16:00",
+          "17:00"
+        ]
+      ],
+      "dailyBounds1": [
+        "9:00",
+        "20:00"
+      ],
+      "dailyBounds2": [
+        "10:00",
+        "18:30"
+      ],
+      "meetingDuration": 30
+    },
+    {
+      "calendar1": [
+        [
+          "9:00",
+          "10:30"
+        ],
+        [
+          "12:00",
+          "13:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "10:00",
+          "11:30"
+        ],
+        [
+          "12:30",
+          "14:30"
+        ],
+        [
+          "14:30",
+          "15:00"
+        ],
+        [
+          "16:00",
+          "17:00"
+        ]
+      ],
+      "dailyBounds1": [
+        "9:00",
+        "20:00"
+      ],
+      "dailyBounds2": [
+        "10:00",
+        "18:30"
+      ],
+      "meetingDuration": 30
+    },
+    {
+      "calendar1": [
+        [
+          "9:00",
+          "10:30"
+        ],
+        [
+          "12:00",
+          "13:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "10:00",
+          "11:30"
+        ],
+        [
+          "12:30",
+          "14:30"
+        ],
+        [
+          "14:30",
+          "15:00"
+        ],
+        [
+          "16:00",
+          "17:00"
+        ]
+      ],
+      "dailyBounds1": [
+        "9:00",
+        "20:00"
+      ],
+      "dailyBounds2": [
+        "10:00",
+        "18:30"
+      ],
+      "meetingDuration": 45
+    },
+    {
+      "calendar1": [
+        [
+          "9:00",
+          "10:30"
+        ],
+        [
+          "12:00",
+          "13:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "10:00",
+          "11:30"
+        ],
+        [
+          "12:30",
+          "14:30"
+        ],
+        [
+          "14:30",
+          "15:00"
+        ],
+        [
+          "16:00",
+          "17:00"
+        ]
+      ],
+      "dailyBounds1": [
+        "8:00",
+        "20:00"
+      ],
+      "dailyBounds2": [
+        "7:00",
+        "18:30"
+      ],
+      "meetingDuration": 45
+    },
+    {
+      "calendar1": [
+        [
+          "8:00",
+          "10:30"
+        ],
+        [
+          "11:30",
+          "13:00"
+        ],
+        [
+          "14:00",
+          "16:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "10:00",
+          "11:30"
+        ],
+        [
+          "12:30",
+          "14:30"
+        ],
+        [
+          "14:30",
+          "15:00"
+        ],
+        [
+          "16:00",
+          "17:00"
+        ]
+      ],
+      "dailyBounds1": [
+        "8:00",
+        "18:00"
+      ],
+      "dailyBounds2": [
+        "7:00",
+        "18:30"
+      ],
+      "meetingDuration": 15
+    },
+    {
+      "calendar1": [
+        [
+          "10:00",
+          "10:30"
+        ],
+        [
+          "10:45",
+          "11:15"
+        ],
+        [
+          "11:30",
+          "13:00"
+        ],
+        [
+          "14:15",
+          "16:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "10:00",
+          "11:00"
+        ],
+        [
+          "12:30",
+          "13:30"
+        ],
+        [
+          "14:30",
+          "15:00"
+        ],
+        [
+          "16:00",
+          "17:00"
+        ]
+      ],
+      "dailyBounds1": [
+        "9:30",
+        "20:00"
+      ],
+      "dailyBounds2": [
+        "9:00",
+        "18:30"
+      ],
+      "meetingDuration": 15
+    },
+    {
+      "calendar1": [
+        [
+          "10:00",
+          "10:30"
+        ],
+        [
+          "10:45",
+          "11:15"
+        ],
+        [
+          "11:30",
+          "13:00"
+        ],
+        [
+          "14:15",
+          "16:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "10:00",
+          "11:00"
+        ],
+        [
+          "10:30",
+          "20:30"
+        ]
+      ],
+      "dailyBounds1": [
+        "9:30",
+        "20:00"
+      ],
+      "dailyBounds2": [
+        "9:00",
+        "22:30"
+      ],
+      "meetingDuration": 60
+    },
+    {
+      "calendar1": [
+        [
+          "10:00",
+          "10:30"
+        ],
+        [
+          "10:45",
+          "11:15"
+        ],
+        [
+          "11:30",
+          "13:00"
+        ],
+        [
+          "14:15",
+          "16:00"
+        ],
+        [
+          "16:00",
+          "18:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "10:00",
+          "11:00"
+        ],
+        [
+          "10:30",
+          "16:30"
+        ]
+      ],
+      "dailyBounds1": [
+        "9:30",
+        "20:00"
+      ],
+      "dailyBounds2": [
+        "9:00",
+        "22:30"
+      ],
+      "meetingDuration": 60
+    },
+    {
+      "calendar1": [],
+      "calendar2": [],
+      "dailyBounds1": [
+        "9:30",
+        "20:00"
+      ],
+      "dailyBounds2": [
+        "9:00",
+        "16:30"
+      ],
+      "meetingDuration": 60
+    },
+    {
+      "calendar1": [],
+      "calendar2": [],
+      "dailyBounds1": [
+        "9:00",
+        "16:30"
+      ],
+      "dailyBounds2": [
+        "9:30",
+        "20:00"
+      ],
+      "meetingDuration": 60
+    },
+    {
+      "calendar1": [],
+      "calendar2": [],
+      "dailyBounds1": [
+        "9:30",
+        "16:30"
+      ],
+      "dailyBounds2": [
+        "9:30",
+        "16:30"
+      ],
+      "meetingDuration": 60
+    },
+    {
+      "calendar1": [
+        [
+          "7:00",
+          "7:45"
+        ],
+        [
+          "8:15",
+          "8:30"
+        ],
+        [
+          "9:00",
+          "10:30"
+        ],
+        [
+          "12:00",
+          "14:00"
+        ],
+        [
+          "14:00",
+          "15:00"
+        ],
+        [
+          "15:15",
+          "15:30"
+        ],
+        [
+          "16:30",
+          "18:30"
+        ],
+        [
+          "20:00",
+          "21:00"
+        ]
+      ],
+      "calendar2": [
+        [
+          "9:00",
+          "10:00"
+        ],
+        [
+          "11:15",
+          "11:30"
+        ],
+        [
+          "11:45",
+          "17:00"
+        ],
+        [
+          "17:30",
+          "19:00"
+        ],
+        [
+          "20:00",
+          "22:15"
+        ]
+      ],
+      "dailyBounds1": [
+        "6:30",
+        "22:00"
+      ],
+      "dailyBounds2": [
+        "8:00",
+        "22:30"
+      ],
+      "meetingDuration": 30
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        [
+          "11:30",
+          "12:00"
+        ],
+        [
+          "15:00",
+          "16:00"
+        ],
+        [
+          "18:00",
+          "18:30"
+        ]
+      ],
+      [
+        [
+          "11:30",
+          "12:00"
+        ],
+        [
+          "15:00",
+          "16:00"
+        ],
+        [
+          "18:00",
+          "18:30"
+        ]
+      ],
+      [
+        [
+          "15:00",
+          "16:00"
+        ]
+      ],
+      [
+        [
+          "8:00",
+          "9:00"
+        ],
+        [
+          "15:00",
+          "16:00"
+        ]
+      ],
+      [],
+      [
+        [
+          "9:30",
+          "10:00"
+        ],
+        [
+          "11:15",
+          "11:30"
+        ],
+        [
+          "13:30",
+          "14:15"
+        ],
+        [
+          "18:00",
+          "18:30"
+        ]
+      ],
+      [],
+      [
+        [
+          "18:00",
+          "20:00"
+        ]
+      ],
+      [
+        [
+          "9:30",
+          "16:30"
+        ]
+      ],
+      [
+        [
+          "9:30",
+          "16:30"
+        ]
+      ],
+      [
+        [
+          "9:30",
+          "16:30"
+        ]
+      ],
+      [
+        [
+          "8:30",
+          "9:00"
+        ],
+        [
+          "10:30",
+          "11:15"
+        ],
+        [
+          "19:00",
+          "20:00"
+        ]
+      ]
+    ]
+  ]
+}

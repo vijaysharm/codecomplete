@@ -1,0 +1,1070 @@
+{
+  "Summary": {
+    "Name": "Search In Sorted Matrix",
+    "Category": "Searching",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 753,
+      "timeOne": 0,
+      "timeTwo": 942,
+      "url": "https://player.vimeo.com/video/241818616"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Pick any number in the matrix and compare it to the target number. If this number is bigger than the target number, what does that tell you about all of the other numbers in this number's row and this number's column? What about if this number is smaller than the target number?\nTry starting at the top right corner of the matrix, comparing the number there to the target number, and using whatever you gathered from Hint #1 to figure out what number to compare next if the top right number isn't equal to the target number. Continue until you find the target number or until you get past the extremities of the matrix.\n",
+  "SpaceTime": "O(n + m) time | O(1) space - where n is the length of the matrix's rows and m is the length of the matrix's columns \n",
+  "PromptHTML": "<p>\n  You're given a two-dimensional array (a matrix) of distinct integers and a\n  target integer. Each row in the matrix is sorted, and each column is also sorted; the\n  matrix doesn't necessarily have the same height and width.\n</p>\n<p>\n  Write a function that returns an array of the row and column indices of the\n  target integer if it's contained in the matrix, otherwise\n  <span>[-1, -1]</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">matrix</span> = [\n  [1, 4, 7, 12, 15, 1000],\n  [2, 5, 19, 31, 32, 1001],\n  [3, 8, 24, 33, 35, 1002],\n  [40, 41, 42, 44, 45, 1003],\n  [99, 100, 103, 106, 128, 1004],\n]\n<span class=\"CodeEditor-promptParameter\">target</span> = 44\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[3, 3]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "matrix",
+      "Example": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "type": "integer",
+            "uniqueItems": true
+          },
+          "type": "array"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "target",
+      "Example": 44,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> searchInSortedMatrix(vector<vector<int>> matrix, int target) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "vector<vector<int>> matrix{\n    {1, 4, 7, 12, 15, 1000},        {2, 5, 19, 31, 32, 1001},\n    {3, 8, 24, 33, 35, 1002},       {40, 41, 42, 44, 45, 1003},\n    {99, 100, 103, 106, 128, 1004},\n};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{0, 0};\n      assert(searchInSortedMatrix(matrix, 1) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> expected{1, 0};\n      assert(searchInSortedMatrix(matrix, 2) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> expected{0, 1};\n      assert(searchInSortedMatrix(matrix, 4) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> expected{0, 4};\n      assert(searchInSortedMatrix(matrix, 15) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> expected{0, 3};\n      assert(searchInSortedMatrix(matrix, 12) == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> expected{1, 4};\n      assert(searchInSortedMatrix(matrix, 32) == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> expected{4, 0};\n      assert(searchInSortedMatrix(matrix, 99) == expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> expected{4, 1};\n      assert(searchInSortedMatrix(matrix, 100) == expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> expected{3, 0};\n      assert(searchInSortedMatrix(matrix, 40) == expected);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<int> expected{4, 4};\n      assert(searchInSortedMatrix(matrix, 128) == expected);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<int> expected{4, 3};\n      assert(searchInSortedMatrix(matrix, 106) == expected);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      vector<int> expected{3, 4};\n      assert(searchInSortedMatrix(matrix, 45) == expected);\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      vector<int> expected{2, 2};\n      assert(searchInSortedMatrix(matrix, 24) == expected);\n    });\n\n    RunTest(\"Test Case 14\", []() {\n      vector<int> expected{3, 3};\n      assert(searchInSortedMatrix(matrix, 44) == expected);\n    });\n\n    RunTest(\"Test Case 15\", []() {\n      vector<int> expected{-1, -1};\n      assert(searchInSortedMatrix(matrix, 43) == expected);\n    });\n\n    RunTest(\"Test Case 16\", []() {\n      vector<int> expected{-1, -1};\n      assert(searchInSortedMatrix(matrix, -1) == expected);\n    });\n\n    RunTest(\"Test Case 17\", []() {\n      vector<int> expected{0, 5};\n      assert(searchInSortedMatrix(matrix, 1000) == expected);\n    });\n\n    RunTest(\"Test Case 18\", []() {\n      vector<int> expected{4, 5};\n      assert(searchInSortedMatrix(matrix, 1004) == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> matrix{\n        {1, 4, 7, 12, 15, 1000},\n        {2, 5, 19, 31, 32, 1001},\n        {3, 8, 24, 33, 35, 1002},\n        {40, 41, 42, 44, 45, 1003},\n        {99, 100, 103, 106, 128, 1004},\n      };\n      vector<int> expected{3, 3};\n      assert(searchInSortedMatrix(matrix, 44) == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(n) time | O(1) space\nvector<int> searchInSortedMatrix(vector<vector<int>> matrix, int target) {\n  int row = 0;\n  int col = matrix[0].size() - 1;\n  while (row < matrix.size() && col >= 0) {\n    if (matrix[row][col] > target) {\n      col--;\n    } else if (matrix[row][col] < target) {\n      row++;\n    } else {\n      return {row, col};\n    }\n  }\n  return {-1, -1};\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int[] SearchInSortedMatrix(int[,] matrix, int target) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\tpublic int[,] matrix = {\n\t\t{1, 4, 7, 12, 15, 1000},\n\t\t{2, 5, 19, 31, 32, 1001},\n\t\t{3, 8, 24, 33, 35, 1002},\n\t\t{40, 41, 42, 44, 45, 1003},\n\t\t{99, 100, 103, 106, 128, 1004},\n\t};\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {0, 0};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 1);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] expected = {1, 0};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 2);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] expected = {0, 1};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 4);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] expected = {0, 4};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 15);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] expected = {0, 3};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 12);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] expected = {1, 4};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 32);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] expected = {4, 0};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 99);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] expected = {4, 1};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 100);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] expected = {3, 0};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 40);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] expected = {4, 4};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 128);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[] expected = {4, 3};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 106);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tint[] expected = {3, 4};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 45);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tint[] expected = {2, 2};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 24);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tint[] expected = {3, 3};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 44);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tint[] expected = {-1, -1};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 43);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase16() {\n\t\tint[] expected = {-1, -1};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, -1);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase17() {\n\t\tint[] expected = {0, 5};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 1000);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase18() {\n\t\tint[] expected = {4, 5};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 1004);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\tpublic bool compare(int[] arr1, int[] arr2) {\n\t\tif (arr1.Length != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Length; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[,] matrix = {\n\t\t\t{1, 4, 7, 12, 15, 1000},\n\t\t\t{2, 5, 19, 31, 32, 1001},\n\t\t\t{3, 8, 24, 33, 35, 1002},\n\t\t\t{40, 41, 42, 44, 45, 1003},\n\t\t\t{99, 100, 103, 106, 128, 1004},\n\t\t};\n\t\tint[] expected = {3, 3};\n\t\tint[] output = Program.SearchInSortedMatrix(matrix, 44);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\tpublic bool compare(int[] arr1, int[] arr2) {\n\t\tif (arr1.Length != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Length; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static int[] SearchInSortedMatrix(int[,] matrix, int target) {\n\t\tint row = 0;\n\t\tint col = matrix.GetLength(1) - 1;\n\t\twhile (row < matrix.GetLength(0) && col >= 0) {\n\t\t\tif (matrix[row,col] > target) {\n\t\t\t\tcol--;\n\t\t\t} else if (matrix[row,col] < target) {\n\t\t\t\trow++;\n\t\t\t} else {\n\t\t\t\treturn new int[] {row, col};\n\t\t\t}\n\t\t}\n\t\treturn new int[] {-1, -1};\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc SearchInSortedMatrix(matrix [][]int, target int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nvar matrix = [][]int{\n\t{1, 4, 7, 12, 15, 1000},\n\t{2, 5, 19, 31, 32, 1001},\n\t{3, 8, 24, 33, 35, 1002},\n\t{40, 41, 42, 44, 45, 1003},\n\t{99, 100, 103, 106, 128, 1004},\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{0, 0}\n\toutput := SearchInSortedMatrix(matrix, 1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := []int{1, 0}\n\toutput := SearchInSortedMatrix(matrix, 2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := []int{0, 1}\n\toutput := SearchInSortedMatrix(matrix, 4)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := []int{0, 4}\n\toutput := SearchInSortedMatrix(matrix, 15)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := []int{0, 3}\n\toutput := SearchInSortedMatrix(matrix, 12)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := []int{1, 4}\n\toutput := SearchInSortedMatrix(matrix, 32)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := []int{4, 0}\n\toutput := SearchInSortedMatrix(matrix, 99)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := []int{4, 1}\n\toutput := SearchInSortedMatrix(matrix, 100)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := []int{3, 0}\n\toutput := SearchInSortedMatrix(matrix, 40)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := []int{4, 4}\n\toutput := SearchInSortedMatrix(matrix, 128)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := []int{4, 3}\n\toutput := SearchInSortedMatrix(matrix, 106)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\texpected := []int{3, 4}\n\toutput := SearchInSortedMatrix(matrix, 45)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\texpected := []int{2, 2}\n\toutput := SearchInSortedMatrix(matrix, 24)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\texpected := []int{3, 3}\n\toutput := SearchInSortedMatrix(matrix, 44)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\texpected := []int{-1, -1}\n\toutput := SearchInSortedMatrix(matrix, 43)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase16(t *TestCase) {\n\texpected := []int{-1, -1}\n\toutput := SearchInSortedMatrix(matrix, -1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase17(t *TestCase) {\n\texpected := []int{0, 5}\n\toutput := SearchInSortedMatrix(matrix, 1000)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase18(t *TestCase) {\n\texpected := []int{4, 5}\n\toutput := SearchInSortedMatrix(matrix, 1004)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tvar matrix = [][]int{\n\t\t{1, 4, 7, 12, 15, 1000},\n\t\t{2, 5, 19, 31, 32, 1001},\n\t\t{3, 8, 24, 33, 35, 1002},\n\t\t{40, 41, 42, 44, 45, 1003},\n\t\t{99, 100, 103, 106, 128, 1004},\n\t}\n\texpected := []int{3, 3}\n\toutput := SearchInSortedMatrix(matrix, 44)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n + m) time | O(1) space\nfunc SearchInSortedMatrix(matrix [][]int, target int) []int {\n\trow, col := 0, len(matrix[0])-1\n\tfor row < len(matrix) && col >= 0 {\n\t\tif matrix[row][col] > target {\n\t\t\tcol -= 1\n\t\t} else if matrix[row][col] < target {\n\t\t\trow += 1\n\t\t} else {\n\t\t\treturn []int{row, col}\n\t\t}\n\t}\n\treturn []int{-1, -1}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int[] searchInSortedMatrix(int[][] matrix, int target) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  public int[][] matrix = {\n    {1, 4, 7, 12, 15, 1000},\n    {2, 5, 19, 31, 32, 1001},\n    {3, 8, 24, 33, 35, 1002},\n    {40, 41, 42, 44, 45, 1003},\n    {99, 100, 103, 106, 128, 1004},\n  };\n\n  @Test\n  public void TestCase1() {\n    int[] expected = {0, 0};\n    int[] output = Program.searchInSortedMatrix(matrix, 1);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] expected = {1, 0};\n    int[] output = Program.searchInSortedMatrix(matrix, 2);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] expected = {0, 1};\n    int[] output = Program.searchInSortedMatrix(matrix, 4);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] expected = {0, 4};\n    int[] output = Program.searchInSortedMatrix(matrix, 15);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] expected = {0, 3};\n    int[] output = Program.searchInSortedMatrix(matrix, 12);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] expected = {1, 4};\n    int[] output = Program.searchInSortedMatrix(matrix, 32);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] expected = {4, 0};\n    int[] output = Program.searchInSortedMatrix(matrix, 99);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] expected = {4, 1};\n    int[] output = Program.searchInSortedMatrix(matrix, 100);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] expected = {3, 0};\n    int[] output = Program.searchInSortedMatrix(matrix, 40);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] expected = {4, 4};\n    int[] output = Program.searchInSortedMatrix(matrix, 128);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase11() {\n    int[] expected = {4, 3};\n    int[] output = Program.searchInSortedMatrix(matrix, 106);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase12() {\n    int[] expected = {3, 4};\n    int[] output = Program.searchInSortedMatrix(matrix, 45);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase13() {\n    int[] expected = {2, 2};\n    int[] output = Program.searchInSortedMatrix(matrix, 24);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase14() {\n    int[] expected = {3, 3};\n    int[] output = Program.searchInSortedMatrix(matrix, 44);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase15() {\n    int[] expected = {-1, -1};\n    int[] output = Program.searchInSortedMatrix(matrix, 43);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase16() {\n    int[] expected = {-1, -1};\n    int[] output = Program.searchInSortedMatrix(matrix, -1);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase17() {\n    int[] expected = {0, 5};\n    int[] output = Program.searchInSortedMatrix(matrix, 1000);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase18() {\n    int[] expected = {4, 5};\n    int[] output = Program.searchInSortedMatrix(matrix, 1004);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  public boolean compare(int[] arr1, int[] arr2) {\n    if (arr1.length != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.length; i++) {\n      if (arr1[i] != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[][] matrix = {\n      {1, 4, 7, 12, 15, 1000},\n      {2, 5, 19, 31, 32, 1001},\n      {3, 8, 24, 33, 35, 1002},\n      {40, 41, 42, 44, 45, 1003},\n      {99, 100, 103, 106, 128, 1004},\n    };\n    int[] expected = {3, 3};\n    int[] output = Program.searchInSortedMatrix(matrix, 44);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  public boolean compare(int[] arr1, int[] arr2) {\n    if (arr1.length != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.length; i++) {\n      if (arr1[i] != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static int[] searchInSortedMatrix(int[][] matrix, int target) {\n    int row = 0;\n    int col = matrix[0].length - 1;\n    while (row < matrix.length && col >= 0) {\n      if (matrix[row][col] > target) {\n        col--;\n      } else if (matrix[row][col] < target) {\n        row++;\n      } else {\n        return new int[] {row, col};\n      }\n    }\n    return new int[] {-1, -1};\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function searchInSortedMatrix(matrix, target) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.searchInSortedMatrix = searchInSortedMatrix;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nconst matrix = [\n  [1, 4, 7, 12, 15, 1000],\n  [2, 5, 19, 31, 32, 1001],\n  [3, 8, 24, 33, 35, 1002],\n  [40, 41, 42, 44, 45, 1003],\n  [99, 100, 103, 106, 128, 1004],\n];\n\nit('Test Case #1', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 1)).to.deep.equal([0, 0]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 2)).to.deep.equal([1, 0]);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 4)).to.deep.equal([0, 1]);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 15)).to.deep.equal([0, 4]);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 12)).to.deep.equal([0, 3]);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 32)).to.deep.equal([1, 4]);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 99)).to.deep.equal([4, 0]);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 100)).to.deep.equal([4, 1]);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 40)).to.deep.equal([3, 0]);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 128)).to.deep.equal([4, 4]);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 106)).to.deep.equal([4, 3]);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 45)).to.deep.equal([3, 4]);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 24)).to.deep.equal([2, 2]);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 44)).to.deep.equal([3, 3]);\n});\n\nit('Test Case #15', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 43)).to.deep.equal([-1, -1]);\n});\n\nit('Test Case #16', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, -1)).to.deep.equal([-1, -1]);\n});\n\nit('Test Case #17', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 1000)).to.deep.equal([0, 5]);\n});\n\nit('Test Case #18', function () {\n  chai.expect(program.searchInSortedMatrix(matrix, 1004)).to.deep.equal([4, 5]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const matrix = [\n    [1, 4, 7, 12, 15, 1000],\n    [2, 5, 19, 31, 32, 1001],\n    [3, 8, 24, 33, 35, 1002],\n    [40, 41, 42, 44, 45, 1003],\n    [99, 100, 103, 106, 128, 1004],\n  ];\n  chai.expect(program.searchInSortedMatrix(matrix, 44)).to.deep.equal([3, 3]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n + m) time | O(1) space\nfunction searchInSortedMatrix(matrix, target) {\n  let row = 0;\n  let col = matrix[0].length - 1;\n  while (row < matrix.length && col >= 0) {\n    if (matrix[row][col] > target) {\n      col--;\n    } else if (matrix[row][col] < target) {\n      row++;\n    } else {\n      return [row, col];\n    }\n  }\n  return [-1, -1];\n}\n\nexports.searchInSortedMatrix = searchInSortedMatrix;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def searchInSortedMatrix(matrix, target):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nmatrix = [\n    [1, 4, 7, 12, 15, 1000],\n    [2, 5, 19, 31, 32, 1001],\n    [3, 8, 24, 33, 35, 1002],\n    [40, 41, 42, 44, 45, 1003],\n    [99, 100, 103, 106, 128, 1004],\n]\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 1), [0, 0])\n\n    def test_case_2(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 2), [1, 0])\n\n    def test_case_3(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 4), [0, 1])\n\n    def test_case_4(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 15), [0, 4])\n\n    def test_case_5(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 12), [0, 3])\n\n    def test_case_6(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 32), [1, 4])\n\n    def test_case_7(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 99), [4, 0])\n\n    def test_case_8(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 100), [4, 1])\n\n    def test_case_9(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 40), [3, 0])\n\n    def test_case_10(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 128), [4, 4])\n\n    def test_case_11(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 106), [4, 3])\n\n    def test_case_12(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 45), [3, 4])\n\n    def test_case_13(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 24), [2, 2])\n\n    def test_case_14(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 44), [3, 3])\n\n    def test_case_15(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 43), [-1, -1])\n\n    def test_case_16(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, -1), [-1, -1])\n\n    def test_case_17(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 1000), [0, 5])\n\n    def test_case_18(self):\n        self.assertEqual(program.searchInSortedMatrix(matrix, 1004), [4, 5])\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        matrix = [\n            [1, 4, 7, 12, 15, 1000],\n            [2, 5, 19, 31, 32, 1001],\n            [3, 8, 24, 33, 35, 1002],\n            [40, 41, 42, 44, 45, 1003],\n            [99, 100, 103, 106, 128, 1004],\n        ]\n        actual = program.searchInSortedMatrix(matrix, 44)\n        self.assertEqual(actual, [3, 3])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n + m) time | O(1) space\ndef searchInSortedMatrix(matrix, target):\n    row = 0\n    col = len(matrix[0]) - 1\n    while row < len(matrix) and col >= 0:\n        if matrix[row][col] > target:\n            col -= 1\n        elif matrix[row][col] < target:\n            row += 1\n        else:\n            return [row, col]\n    return [-1, -1]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func searchInSortedMatrix(matrix: [[Int]], target: Int) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "var matrix =\n  [\n    [1, 4, 7, 12, 15, 1000],\n    [2, 5, 19, 31, 32, 1001],\n    [3, 8, 24, 33, 35, 1002],\n    [40, 41, 42, 44, 45, 1003],\n    [99, 100, 103, 106, 128, 1004],\n  ]\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual([0, 0], program.searchInSortedMatrix(matrix: matrix, target: 1))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual([1, 0], program.searchInSortedMatrix(matrix: matrix, target: 2))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual([0, 1], program.searchInSortedMatrix(matrix: matrix, target: 4))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual([0, 4], program.searchInSortedMatrix(matrix: matrix, target: 15))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual([0, 3], program.searchInSortedMatrix(matrix: matrix, target: 12))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual([1, 4], program.searchInSortedMatrix(matrix: matrix, target: 32))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual([4, 0], program.searchInSortedMatrix(matrix: matrix, target: 99))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual([4, 1], program.searchInSortedMatrix(matrix: matrix, target: 100))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual([3, 0], program.searchInSortedMatrix(matrix: matrix, target: 40))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual([4, 4], program.searchInSortedMatrix(matrix: matrix, target: 128))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual([4, 3], program.searchInSortedMatrix(matrix: matrix, target: 106))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual([3, 4], program.searchInSortedMatrix(matrix: matrix, target: 45))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual([2, 2], program.searchInSortedMatrix(matrix: matrix, target: 24))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual([3, 3], program.searchInSortedMatrix(matrix: matrix, target: 44))\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      try assertEqual([-1, -1], program.searchInSortedMatrix(matrix: matrix, target: 43))\n    }\n    runTest(\"Test Case 16\") { () throws -> Void in\n      try assertEqual([-1, -1], program.searchInSortedMatrix(matrix: matrix, target: -1))\n    }\n    runTest(\"Test Case 17\") { () throws -> Void in\n      try assertEqual([0, 5], program.searchInSortedMatrix(matrix: matrix, target: 1000))\n    }\n    runTest(\"Test Case 18\") { () throws -> Void in\n      try assertEqual([4, 5], program.searchInSortedMatrix(matrix: matrix, target: 1004))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var matrix =\n        [\n          [1, 4, 7, 12, 15, 1000],\n          [2, 5, 19, 31, 32, 1001],\n          [3, 8, 24, 33, 35, 1002],\n          [40, 41, 42, 44, 45, 1003],\n          [99, 100, 103, 106, 128, 1004],\n        ]\n      try assertEqual([3, 3], program.searchInSortedMatrix(matrix: matrix, target: 44))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n + m) time | O(1) space\n  func searchInSortedMatrix(matrix: [[Int]], target: Int) -> [Int] {\n    var row = 0\n    var column = matrix[0].count - 1\n\n    while row < matrix.count, column >= 0 {\n      if matrix[row][column] > target {\n        column = column - 1\n      } else if matrix[row][column] < target {\n        row = row + 1\n      } else {\n        return [row, column]\n      }\n    }\n\n    return [-1, -1]\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "type Range = [number, number];\n\nexport function searchInSortedMatrix(matrix: number[][], target: number): Range {\n  // Write your code here.\n  return [-1, -1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const matrix = [\n    [1, 4, 7, 12, 15, 1000],\n    [2, 5, 19, 31, 32, 1001],\n    [3, 8, 24, 33, 35, 1002],\n    [40, 41, 42, 44, 45, 1003],\n    [99, 100, 103, 106, 128, 1004],\n  ];\n  chai.expect(program.searchInSortedMatrix(matrix, 44)).to.deep.equal([3, 3]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Range = [number, number];\n\n// O(n + m) time | O(1) space\nexport function searchInSortedMatrix(matrix: number[][], target: number): Range {\n  let row = 0;\n  let col = matrix[0].length - 1;\n  while (row < matrix.length && col >= 0) {\n    if (matrix[row][col] > target) {\n      col--;\n    } else if (matrix[row][col] < target) {\n      row++;\n    } else {\n      return [row, col];\n    }\n  }\n  return [-1, -1];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 44
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 1
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 2
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 4
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 15
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 12
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 32
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 99
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 100
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 40
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 128
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 106
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 45
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 24
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 43
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": -1
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 1000
+    },
+    {
+      "matrix": [
+        [
+          1,
+          4,
+          7,
+          12,
+          15,
+          1000
+        ],
+        [
+          2,
+          5,
+          19,
+          31,
+          32,
+          1001
+        ],
+        [
+          3,
+          8,
+          24,
+          33,
+          35,
+          1002
+        ],
+        [
+          40,
+          41,
+          42,
+          44,
+          45,
+          1003
+        ],
+        [
+          99,
+          100,
+          103,
+          106,
+          128,
+          1004
+        ]
+      ],
+      "target": 1004
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        3,
+        3
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        3
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        4,
+        5
+      ]
+    ]
+  ]
+}

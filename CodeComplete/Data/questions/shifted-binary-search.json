@@ -1,0 +1,306 @@
+{
+  "Summary": {
+    "Name": "Shifted Binary Search",
+    "Category": "Searching",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 754,
+      "timeOne": 0,
+      "timeTwo": 1100,
+      "url": "https://player.vimeo.com/video/226676392"
+    }
+  },
+  "Prompt": "",
+  "Hints": "The Binary Search algorithm involves a left pointer and a right pointer and using those pointers to find the middle number in an array. Unlike with a normal sorted array however, you cannot simply find the middle number of the array and compare it to the target here, because the shift could lead you in the wrong direction. Instead, realize that whenever you find the middle number in the array, the following two scenarios are possible (assuming the middle number is not equal to the target number, in which case you're done): either the left-pointer number is smaller than or equal to the middle number, or it is bigger. Figure out a way to eliminate half of the array depending on the scenario.\nIn the scenario where the left-pointer number is smaller than or equal to the middle number, two other scenarios can arise: either the target number is smaller than the middle number and greater than or equal to the left-pointer number, or it's not. In the first scenario, the right half of the array can be eliminated; in the second scenario, the left half can be eliminated. Figure out the scenarios that can arise if the left-pointer number is greater than the middle number and apply whatever logic you come up with recursively until you find the target number or until you run out of numbers in the array.\nCan you implement this algorithm iteratively? Are there any advantages to doing so?\n",
+  "SpaceTime": "O(log(n)) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a sorted array of integers as well as a target\n  integer. The caveat is that the integers in the array have been shifted by\n  some amount; in other words, they've been moved to the left or to the right by\n  one or more positions. For example, <span>[1, 2, 3, 4]</span> might have\n  turned into <span>[3, 4, 1, 2]</span>.\n</p>\n<p>\n  The function should use a variation of the Binary Search algorithm to\n  determine if the target integer is contained in the array and should return\n  its index if it is, otherwise <span>-1</span>.\n</p>\n<p>\n  If you're unfamiliar with Binary Search, we recommend watching the Conceptual\n  Overview section of the Binary Search question's video explanation before\n  starting to code.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [45, 61, 71, 72, 73, 0, 1, 21, 33, 45]\n<span class=\"CodeEditor-promptParameter\">target</span> = 33\n</pre>\n<h3>Sample Output</h3>\n<pre>8</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        45,
+        61,
+        71,
+        72,
+        73,
+        0,
+        1,
+        21,
+        33,
+        45
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "target",
+      "Example": 33,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint shiftedBinarySearch(vector<int> array, int target) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(shiftedBinarySearch({5, 23, 111, 1}, 111) == 2);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      assert(shiftedBinarySearch({111, 1, 5, 23}, 5) == 2);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      assert(shiftedBinarySearch({23, 111, 1, 5}, 35) == -1);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      assert(shiftedBinarySearch({45, 61, 71, 72, 73, 0, 1, 21, 33, 45}, 33) ==\n             8);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      assert(shiftedBinarySearch({61, 71, 72, 73, 0, 1, 21, 33, 45, 45}, 33) ==\n             7);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      assert(shiftedBinarySearch({72, 73, 0, 1, 21, 33, 45, 45, 61, 71}, 72) ==\n             0);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(shiftedBinarySearch({71, 72, 73, 0, 1, 21, 33, 45, 45, 61}, 73) ==\n             2);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(shiftedBinarySearch({73, 0, 1, 21, 33, 45, 45, 61, 71, 72}, 70) ==\n             -1);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      assert(shiftedBinarySearch({33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21},\n                                 355) == 7);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      assert(shiftedBinarySearch({33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21},\n                                 354) == -1);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(shiftedBinarySearch({45, 61, 71, 72, 73, 0, 1, 21, 33, 45}, 33) ==\n             8);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nint shiftedBinarySearch(vector<int> array, int target);\nint shiftedBinarySearchHelper(vector<int> array, int target, int left,\n                              int right);\n\n// O(log(n)) time | O(log(n)) space\nint shiftedBinarySearch(vector<int> array, int target) {\n  return shiftedBinarySearchHelper(array, target, 0, array.size() - 1);\n}\n\nint shiftedBinarySearchHelper(vector<int> array, int target, int left,\n                              int right) {\n  if (left > right) {\n    return -1;\n  }\n  int middle = (left + right) / 2;\n  int potentialMatch = array[middle];\n  int leftNum = array[left];\n  int rightNum = array[right];\n  if (target == potentialMatch) {\n    return middle;\n  } else if (leftNum <= potentialMatch) {\n    if (target < potentialMatch && target >= leftNum) {\n      return shiftedBinarySearchHelper(array, target, left, middle - 1);\n    } else {\n      return shiftedBinarySearchHelper(array, target, middle + 1, right);\n    }\n  } else {\n    if (target > potentialMatch && target <= rightNum) {\n      return shiftedBinarySearchHelper(array, target, middle + 1, right);\n    } else {\n      return shiftedBinarySearchHelper(array, target, left, middle - 1);\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nint shiftedBinarySearch(vector<int> array, int target);\nint shiftedBinarySearchHelper(vector<int> array, int target, int left,\n                              int right);\n\n// O(log(n)) time | O(1) space\nint shiftedBinarySearch(vector<int> array, int target) {\n  return shiftedBinarySearchHelper(array, target, 0, array.size() - 1);\n}\n\nint shiftedBinarySearchHelper(vector<int> array, int target, int left,\n                              int right) {\n  while (left <= right) {\n    int middle = (left + right) / 2;\n    int potentialMatch = array[middle];\n    int leftNum = array[left];\n    int rightNum = array[right];\n    if (target == potentialMatch) {\n      return middle;\n    } else if (leftNum <= potentialMatch) {\n      if (target < potentialMatch && target >= leftNum) {\n        right = middle - 1;\n      } else {\n        left = middle + 1;\n      }\n    } else {\n      if (target > potentialMatch && target <= rightNum) {\n        left = middle + 1;\n      } else {\n        right = middle - 1;\n      }\n    }\n  }\n  return -1;\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int ShiftedBinarySearch(int[] array, int target) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {5, 23, 111, 1}, 111) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {111, 1, 5, 23}, 5) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {23, 111, 1, 5}, 35) == -1);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {45, 61, 71, 72, 73, 0, 1,\n\t\t                                                        21, 33, 45}, 33) == 8);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {61, 71, 72, 73, 0, 1, 21,\n\t\t                                                        33, 45, 45}, 33) == 7);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {72, 73, 0, 1, 21, 33, 45,\n\t\t                                                        45, 61, 71}, 72) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {71, 72, 73, 0, 1, 21, 33,\n\t\t                                                        45, 45, 61}, 73) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {73, 0, 1, 21, 33, 45, 45,\n\t\t                                                        61, 71, 72}, 70) == -1);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {33, 45, 45, 61, 71, 72, 73,\n\t\t                                                        355, 0, 1, 21}, 355) == 7);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {33, 45, 45, 61, 71, 72, 73,\n\t\t                                                        355, 0, 1, 21}, 354) == -1);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.ShiftedBinarySearch(new int[] {45, 61, 71, 72, 73, 0, 1,\n\t\t                                                        21, 33, 45}, 33) == 8);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(log(n)) time | O(log(n)) space\n\tpublic static int ShiftedBinarySearch(int[] array, int target) {\n\t\treturn ShiftedBinarySearch(array, target, 0, array.Length - 1);\n\t}\n\n\tpublic static int ShiftedBinarySearch(int[] array, int target, int left, int right) {\n\t\tif (left > right) {\n\t\t\treturn -1;\n\t\t}\n\t\tint middle = (left + right) / 2;\n\t\tint potentialMatch = array[middle];\n\t\tint leftNum = array[left];\n\t\tint rightNum = array[right];\n\t\tif (target == potentialMatch) {\n\t\t\treturn middle;\n\t\t} else if (leftNum <= potentialMatch) {\n\t\t\tif (target < potentialMatch && target >= leftNum) {\n\t\t\t\treturn ShiftedBinarySearch(array, target, left, middle - 1);\n\t\t\t} else {\n\t\t\t\treturn ShiftedBinarySearch(array, target, middle + 1, right);\n\t\t\t}\n\t\t} else {\n\t\t\tif (target > potentialMatch && target <= rightNum) {\n\t\t\t\treturn ShiftedBinarySearch(array, target, middle + 1, right);\n\t\t\t} else {\n\t\t\t\treturn ShiftedBinarySearch(array, target, left, middle - 1);\n\t\t\t}\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(log(n)) time | O(1) space\n\tpublic static int ShiftedBinarySearch(int[] array, int target) {\n\t\treturn ShiftedBinarySearch(array, target, 0, array.Length - 1);\n\t}\n\n\tpublic static int ShiftedBinarySearch(int[] array, int target, int left, int right) {\n\t\twhile (left <= right) {\n\t\t\tint middle = (left + right) / 2;\n\t\t\tint potentialMatch = array[middle];\n\t\t\tint leftNum = array[left];\n\t\t\tint rightNum = array[right];\n\t\t\tif (target == potentialMatch) {\n\t\t\t\treturn middle;\n\t\t\t} else if (leftNum <= potentialMatch) {\n\t\t\t\tif (target < potentialMatch && target >= leftNum) {\n\t\t\t\t\tright = middle - 1;\n\t\t\t\t} else {\n\t\t\t\t\tleft = middle + 1;\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (target > potentialMatch && target <= rightNum) {\n\t\t\t\t\tleft = middle + 1;\n\t\t\t\t} else {\n\t\t\t\t\tright = middle - 1;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn -1;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc ShiftedBinarySearch(array []int, target int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 2\n\toutput := ShiftedBinarySearch([]int{5, 23, 111, 1}, 111)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 2\n\toutput := ShiftedBinarySearch([]int{111, 1, 5, 23}, 5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := -1\n\toutput := ShiftedBinarySearch([]int{23, 111, 1, 5}, 35)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := 8\n\toutput := ShiftedBinarySearch([]int{45, 61, 71, 72, 73, 0, 1, 21, 33, 45}, 33)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := 7\n\toutput := ShiftedBinarySearch([]int{61, 71, 72, 73, 0, 1, 21, 33, 45, 45}, 33)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := 0\n\toutput := ShiftedBinarySearch([]int{72, 73, 0, 1, 21, 33, 45, 45, 61, 71}, 72)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := 2\n\toutput := ShiftedBinarySearch([]int{71, 72, 73, 0, 1, 21, 33, 45, 45, 61}, 73)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := -1\n\toutput := ShiftedBinarySearch([]int{73, 0, 1, 21, 33, 45, 45, 61, 71, 72}, 70)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := 7\n\toutput := ShiftedBinarySearch([]int{33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21}, 355)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := -1\n\toutput := ShiftedBinarySearch([]int{33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21}, 354)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 8\n\toutput := ShiftedBinarySearch([]int{45, 61, 71, 72, 73, 0, 1, 21, 33, 45}, 33)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(log(n)) time | O(log(n)) space\nfunc ShiftedBinarySearch(array []int, target int) int {\n\treturn helper(array, target, 0, len(array)-1)\n}\n\nfunc helper(array []int, target int, left int, right int) int {\n\tif left > right {\n\t\treturn -1\n\t}\n\tmiddle := (left + right) / 2\n\tpotentialMatch := array[middle]\n\tleftNum, rightNum := array[left], array[right]\n\tnewleft, newright := middle+1, right\n\tif target == potentialMatch {\n\t\treturn middle\n\t} else if leftNum <= potentialMatch {\n\t\tif target < potentialMatch && target >= leftNum {\n\t\t\tnewleft, newright = left, middle-1\n\t\t}\n\t} else {\n\t\tif !(target > potentialMatch && target <= rightNum) {\n\t\t\tnewleft, newright = left, middle-1\n\t\t}\n\t}\n\treturn helper(array, target, newleft, newright)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(log(n)) time | O(1) space\nfunc ShiftedBinarySearch(array []int, target int) int {\n\treturn helper(array, target, 0, len(array)-1)\n}\n\nfunc helper(array []int, target int, left int, right int) int {\n\tfor left <= right {\n\t\tmiddle := (left + right) / 2\n\t\tpotentialMatch := array[middle]\n\t\tleftnum, rightnum := array[left], array[right]\n\t\tif target == potentialMatch {\n\t\t\treturn middle\n\t\t} else if leftnum <= potentialMatch {\n\t\t\tif target < potentialMatch && target >= leftnum {\n\t\t\t\tright = middle - 1\n\t\t\t} else {\n\t\t\t\tleft = middle + 1\n\t\t\t}\n\t\t} else {\n\t\t\tif target > potentialMatch && target <= rightnum {\n\t\t\t\tleft = middle + 1\n\t\t\t} else {\n\t\t\t\tright = middle - 1\n\t\t\t}\n\t\t}\n\t}\n\treturn -1\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int shiftedBinarySearch(int[] array, int target) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.shiftedBinarySearch(new int[] {5, 23, 111, 1}, 111) == 2);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.shiftedBinarySearch(new int[] {111, 1, 5, 23}, 5) == 2);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.shiftedBinarySearch(new int[] {23, 111, 1, 5}, 35) == -1);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(\n        Program.shiftedBinarySearch(new int[] {45, 61, 71, 72, 73, 0, 1, 21, 33, 45}, 33) == 8);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(\n        Program.shiftedBinarySearch(new int[] {61, 71, 72, 73, 0, 1, 21, 33, 45, 45}, 33) == 7);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(\n        Program.shiftedBinarySearch(new int[] {72, 73, 0, 1, 21, 33, 45, 45, 61, 71}, 72) == 0);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(\n        Program.shiftedBinarySearch(new int[] {71, 72, 73, 0, 1, 21, 33, 45, 45, 61}, 73) == 2);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(\n        Program.shiftedBinarySearch(new int[] {73, 0, 1, 21, 33, 45, 45, 61, 71, 72}, 70) == -1);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(\n        Program.shiftedBinarySearch(new int[] {33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21}, 355)\n            == 7);\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(\n        Program.shiftedBinarySearch(new int[] {33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21}, 354)\n            == -1);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(\n        Program.shiftedBinarySearch(new int[] {45, 61, 71, 72, 73, 0, 1, 21, 33, 45}, 33) == 8);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(log(n)) space\n  public static int shiftedBinarySearch(int[] array, int target) {\n    return shiftedBinarySearch(array, target, 0, array.length - 1);\n  }\n\n  public static int shiftedBinarySearch(int[] array, int target, int left, int right) {\n    if (left > right) {\n      return -1;\n    }\n    int middle = (left + right) / 2;\n    int potentialMatch = array[middle];\n    int leftNum = array[left];\n    int rightNum = array[right];\n    if (target == potentialMatch) {\n      return middle;\n    } else if (leftNum <= potentialMatch) {\n      if (target < potentialMatch && target >= leftNum) {\n        return shiftedBinarySearch(array, target, left, middle - 1);\n      } else {\n        return shiftedBinarySearch(array, target, middle + 1, right);\n      }\n    } else {\n      if (target > potentialMatch && target <= rightNum) {\n        return shiftedBinarySearch(array, target, middle + 1, right);\n      } else {\n        return shiftedBinarySearch(array, target, left, middle - 1);\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(1) space\n  public static int shiftedBinarySearch(int[] array, int target) {\n    return shiftedBinarySearch(array, target, 0, array.length - 1);\n  }\n\n  public static int shiftedBinarySearch(int[] array, int target, int left, int right) {\n    while (left <= right) {\n      int middle = (left + right) / 2;\n      int potentialMatch = array[middle];\n      int leftNum = array[left];\n      int rightNum = array[right];\n      if (target == potentialMatch) {\n        return middle;\n      } else if (leftNum <= potentialMatch) {\n        if (target < potentialMatch && target >= leftNum) {\n          right = middle - 1;\n        } else {\n          left = middle + 1;\n        }\n      } else {\n        if (target > potentialMatch && target <= rightNum) {\n          left = middle + 1;\n        } else {\n          right = middle - 1;\n        }\n      }\n    }\n    return -1;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function shiftedBinarySearch(array, target) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.shiftedBinarySearch = shiftedBinarySearch;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.shiftedBinarySearch([5, 23, 111, 1], 111)).to.deep.equal(2);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.shiftedBinarySearch([111, 1, 5, 23], 5)).to.deep.equal(2);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.shiftedBinarySearch([23, 111, 1, 5], 35)).to.deep.equal(-1);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.shiftedBinarySearch([45, 61, 71, 72, 73, 0, 1, 21, 33, 45], 33)).to.deep.equal(8);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.shiftedBinarySearch([61, 71, 72, 73, 0, 1, 21, 33, 45, 45], 33)).to.deep.equal(7);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.shiftedBinarySearch([72, 73, 0, 1, 21, 33, 45, 45, 61, 71], 72)).to.deep.equal(0);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.shiftedBinarySearch([71, 72, 73, 0, 1, 21, 33, 45, 45, 61], 73)).to.deep.equal(2);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.shiftedBinarySearch([73, 0, 1, 21, 33, 45, 45, 61, 71, 72], 70)).to.deep.equal(-1);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.shiftedBinarySearch([33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21], 355)).to.deep.equal(7);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.shiftedBinarySearch([33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21], 354)).to.deep.equal(-1);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.shiftedBinarySearch([45, 61, 71, 72, 73, 0, 1, 21, 33, 45], 33)).to.deep.equal(8);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(log(n)) space\nfunction shiftedBinarySearch(array, target) {\n  return shiftedBinarySearchHelper(array, target, 0, array.length - 1);\n}\n\nfunction shiftedBinarySearchHelper(array, target, left, right) {\n  if (left > right) return -1;\n  const middle = Math.floor((left + right) / 2);\n  const potentialMatch = array[middle];\n  const leftNum = array[left];\n  const rightNum = array[right];\n  if (target === potentialMatch) {\n    return middle;\n  } else if (leftNum <= potentialMatch) {\n    if (target < potentialMatch && target >= leftNum) {\n      return shiftedBinarySearchHelper(array, target, left, middle - 1);\n    } else {\n      return shiftedBinarySearchHelper(array, target, middle + 1, right);\n    }\n  } else {\n    if (target > potentialMatch && target <= rightNum) {\n      return shiftedBinarySearchHelper(array, target, middle + 1, right);\n    } else {\n      return shiftedBinarySearchHelper(array, target, left, middle - 1);\n    }\n  }\n}\n\nexports.shiftedBinarySearch = shiftedBinarySearch;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(1) space\nfunction shiftedBinarySearch(array, target) {\n  return shiftedBinarySearchHelper(array, target, 0, array.length - 1);\n}\n\nfunction shiftedBinarySearchHelper(array, target, left, right) {\n  while (left <= right) {\n    const middle = Math.floor((left + right) / 2);\n    const potentialMatch = array[middle];\n    const leftNum = array[left];\n    const rightNum = array[right];\n    if (target === potentialMatch) {\n      return middle;\n    } else if (leftNum <= potentialMatch) {\n      if (target < potentialMatch && target >= leftNum) {\n        right = middle - 1;\n      } else {\n        left = middle + 1;\n      }\n    } else {\n      if (target > potentialMatch && target <= rightNum) {\n        left = middle + 1;\n      } else {\n        right = middle - 1;\n      }\n    }\n  }\n  return -1;\n}\n\nexports.shiftedBinarySearch = shiftedBinarySearch;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def shiftedBinarySearch(array, target):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.shiftedBinarySearch([5, 23, 111, 1], 111), 2)\n\n    def test_case_2(self):\n        self.assertEqual(program.shiftedBinarySearch([111, 1, 5, 23], 5), 2)\n\n    def test_case_3(self):\n        self.assertEqual(program.shiftedBinarySearch([23, 111, 1, 5], 35), -1)\n\n    def test_case_4(self):\n        self.assertEqual(program.shiftedBinarySearch([45, 61, 71, 72, 73, 0, 1, 21, 33, 45], 33), 8)\n\n    def test_case_5(self):\n        self.assertEqual(program.shiftedBinarySearch([61, 71, 72, 73, 0, 1, 21, 33, 45, 45], 33), 7)\n\n    def test_case_6(self):\n        self.assertEqual(program.shiftedBinarySearch([72, 73, 0, 1, 21, 33, 45, 45, 61, 71], 72), 0)\n\n    def test_case_7(self):\n        self.assertEqual(program.shiftedBinarySearch([71, 72, 73, 0, 1, 21, 33, 45, 45, 61], 73), 2)\n\n    def test_case_8(self):\n        self.assertEqual(program.shiftedBinarySearch([73, 0, 1, 21, 33, 45, 45, 61, 71, 72], 70), -1)\n\n    def test_case_9(self):\n        self.assertEqual(program.shiftedBinarySearch([33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21], 355), 7)\n\n    def test_case_10(self):\n        self.assertEqual(program.shiftedBinarySearch([33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21], 354), -1)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.shiftedBinarySearch([45, 61, 71, 72, 73, 0, 1, 21, 33, 45], 33), 8)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(log(n)) time | O(log(n)) space\ndef shiftedBinarySearch(array, target):\n    return shiftedBinarySearchHelper(array, target, 0, len(array) - 1)\n\n\ndef shiftedBinarySearchHelper(array, target, left, right):\n    if left > right:\n        return -1\n    middle = (left + right) // 2\n    potentialMatch = array[middle]\n    leftNum = array[left]\n    rightNum = array[right]\n    if target == potentialMatch:\n        return middle\n    elif leftNum <= potentialMatch:\n        if target < potentialMatch and target >= leftNum:\n            return shiftedBinarySearchHelper(array, target, left, middle - 1)\n        else:\n            return shiftedBinarySearchHelper(array, target, middle + 1, right)\n    else:\n        if target > potentialMatch and target <= rightNum:\n            return shiftedBinarySearchHelper(array, target, middle + 1, right)\n        else:\n            return shiftedBinarySearchHelper(array, target, left, middle - 1)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(log(n)) time | O(1) space\ndef shiftedBinarySearch(array, target):\n    return shiftedBinarySearchHelper(array, target, 0, len(array) - 1)\n\n\ndef shiftedBinarySearchHelper(array, target, left, right):\n    while left <= right:\n        middle = (left + right) // 2\n        potentialMatch = array[middle]\n        leftNum = array[left]\n        rightNum = array[right]\n        if target == potentialMatch:\n            return middle\n        elif leftNum <= potentialMatch:\n            if target < potentialMatch and target >= leftNum:\n                right = middle - 1\n            else:\n                left = middle + 1\n        else:\n            if target > potentialMatch and target <= rightNum:\n                left = middle + 1\n            else:\n                right = middle - 1\n    return -1\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func shiftedBinarySearch(_ array: [Int], _ target: Int) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(2, program.shiftedBinarySearch([5, 23, 111, 1], 111))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(2, program.shiftedBinarySearch([111, 1, 5, 23], 5))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(-1, program.shiftedBinarySearch([23, 111, 1, 5], 35))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(8, program.shiftedBinarySearch([45, 61, 71, 72, 73, 0, 1, 21, 33, 45], 33))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(7, program.shiftedBinarySearch([61, 71, 72, 73, 0, 1, 21, 33, 45, 45], 33))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(0, program.shiftedBinarySearch([72, 73, 0, 1, 21, 33, 45, 45, 61, 71], 72))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(2, program.shiftedBinarySearch([71, 72, 73, 0, 1, 21, 33, 45, 45, 61], 73))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(-1, program.shiftedBinarySearch([73, 0, 1, 21, 33, 45, 45, 61, 71, 72], 70))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(7, program.shiftedBinarySearch([33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21], 355))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(-1, program.shiftedBinarySearch([33, 45, 45, 61, 71, 72, 73, 355, 0, 1, 21], 354))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(8, program.shiftedBinarySearch([45, 61, 71, 72, 73, 0, 1, 21, 33, 45], 33))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(log(n)) space\n  func shiftedBinarySearch(_ array: [Int], _ target: Int) -> Int {\n    return shiftedBinarySearchHelper(array, target, 0, array.count - 1)\n  }\n\n  func shiftedBinarySearchHelper(_ array: [Int], _ target: Int, _ leftPointer: Int, _ rightPointer: Int) -> Int {\n    if leftPointer > rightPointer {\n      return -1\n    }\n\n    let middle = (leftPointer + rightPointer) / 2\n    let potentialMatch = array[middle]\n    let leftNumber = array[leftPointer]\n    let rightNumber = array[rightPointer]\n\n    if target == potentialMatch {\n      return middle\n    } else if leftNumber < potentialMatch {\n      if target < potentialMatch, target >= leftNumber {\n        return shiftedBinarySearchHelper(array, target, leftPointer, middle - 1)\n      } else {\n        return shiftedBinarySearchHelper(array, target, middle + 1, rightPointer)\n      }\n    } else {\n      if target <= rightNumber, target > potentialMatch {\n        return shiftedBinarySearchHelper(array, target, middle + 1, rightPointer)\n      } else {\n        return shiftedBinarySearchHelper(array, target, leftPointer, middle - 1)\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(1) space\n  func shiftedBinarySearch(_ array: [Int], _ target: Int) -> Int {\n    var leftPointer = 0\n    var rightPointer = array.count - 1\n\n    return shiftedBinarySearchHelper(array, target, &leftPointer, &rightPointer)\n  }\n\n  func shiftedBinarySearchHelper(_ array: [Int], _ target: Int, _ leftPointer: inout Int, _ rightPointer: inout Int) -> Int {\n    while leftPointer <= rightPointer {\n      let middle = (leftPointer + rightPointer) / 2\n      let potentialMatch = array[middle]\n      let leftNumber = array[leftPointer]\n      let rightNumber = array[rightPointer]\n\n      if target == potentialMatch {\n        return middle\n      } else if leftNumber < potentialMatch {\n        if target < potentialMatch, target >= leftNumber {\n          rightPointer = middle - 1\n        } else {\n          leftPointer = middle + 1\n        }\n      } else {\n        if target <= rightNumber, target > potentialMatch {\n          leftPointer = middle + 1\n        } else {\n          rightPointer = middle - 1\n        }\n      }\n    }\n\n    return -1\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function shiftedBinarySearch(array: number[], target: number) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.shiftedBinarySearch([45, 61, 71, 72, 73, 0, 1, 21, 33, 45], 33)).to.deep.equal(8);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(log(n)) space\nexport function shiftedBinarySearch(array: number[], target: number) {\n  return shiftedBinarySearchHelper(array, target, 0, array.length - 1);\n}\n\nfunction shiftedBinarySearchHelper(array: number[], target: number, left: number, right: number): number {\n  if (left > right) return -1;\n  const middle = Math.floor((left + right) / 2);\n  const potentialMatch = array[middle];\n  const leftNum = array[left];\n  const rightNum = array[right];\n  if (target === potentialMatch) {\n    return middle;\n  } else if (leftNum <= potentialMatch) {\n    if (target < potentialMatch && target >= leftNum) {\n      return shiftedBinarySearchHelper(array, target, left, middle - 1);\n    } else {\n      return shiftedBinarySearchHelper(array, target, middle + 1, right);\n    }\n  } else {\n    if (target > potentialMatch && target <= rightNum) {\n      return shiftedBinarySearchHelper(array, target, middle + 1, right);\n    } else {\n      return shiftedBinarySearchHelper(array, target, left, middle - 1);\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(1) space\nexport function shiftedBinarySearch(array: number[], target: number) {\n  return shiftedBinarySearchHelper(array, target, 0, array.length - 1);\n}\n\nfunction shiftedBinarySearchHelper(array: number[], target: number, left: number, right: number) {\n  while (left <= right) {\n    const middle = Math.floor((left + right) / 2);\n    const potentialMatch = array[middle];\n    const leftNum = array[left];\n    const rightNum = array[right];\n    if (target === potentialMatch) {\n      return middle;\n    } else if (leftNum <= potentialMatch) {\n      if (target < potentialMatch && target >= leftNum) {\n        right = middle - 1;\n      } else {\n        left = middle + 1;\n      }\n    } else {\n      if (target > potentialMatch && target <= rightNum) {\n        left = middle + 1;\n      } else {\n        right = middle - 1;\n      }\n    }\n  }\n  return -1;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        45,
+        61,
+        71,
+        72,
+        73,
+        0,
+        1,
+        21,
+        33,
+        45
+      ],
+      "target": 33
+    },
+    {
+      "array": [
+        5,
+        23,
+        111,
+        1
+      ],
+      "target": 111
+    },
+    {
+      "array": [
+        111,
+        1,
+        5,
+        23
+      ],
+      "target": 5
+    },
+    {
+      "array": [
+        23,
+        111,
+        1,
+        5
+      ],
+      "target": 35
+    },
+    {
+      "array": [
+        61,
+        71,
+        72,
+        73,
+        0,
+        1,
+        21,
+        33,
+        45,
+        45
+      ],
+      "target": 33
+    },
+    {
+      "array": [
+        72,
+        73,
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71
+      ],
+      "target": 72
+    },
+    {
+      "array": [
+        71,
+        72,
+        73,
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61
+      ],
+      "target": 73
+    },
+    {
+      "array": [
+        73,
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        61,
+        71,
+        72
+      ],
+      "target": 70
+    },
+    {
+      "array": [
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73,
+        355,
+        0,
+        1,
+        21
+      ],
+      "target": 355
+    },
+    {
+      "array": [
+        33,
+        45,
+        45,
+        61,
+        71,
+        72,
+        73,
+        355,
+        0,
+        1,
+        21
+      ],
+      "target": 354
+    }
+  ],
+  "JSONAnswers": [
+    [
+      8,
+      2,
+      2,
+      -1,
+      7,
+      0,
+      2,
+      -1,
+      7,
+      -1
+    ]
+  ]
+}

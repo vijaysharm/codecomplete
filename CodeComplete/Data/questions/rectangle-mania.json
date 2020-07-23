@@ -1,0 +1,683 @@
+{
+  "Summary": {
+    "Name": "Rectangle Mania",
+    "Category": "Graphs",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-09-13T00:00:00Z",
+      "number": 112,
+      "timeOne": 0,
+      "timeTwo": 1969,
+      "url": "https://player.vimeo.com/video/356153754"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try treating every coordinate as the potential lower left corner of a rectangle. What conditions would need to be met in order to actually have a rectangle with any given coordinate as its lower left corner?\nFollowing Hint #1, if you treat every coordinate as the potential lower left corner of a rectangle, you can move in a clockwise pattern (i.e., directly up, then directly right, then directly down, and finally directly left) to try to find a rectangle. There are a few ways to do this, one of which involves storing, for every coordinate, all other coordinates that are directly above it, directly to the right of it, directly below it, and directly to the left of it. With this information, you can iterate through all of the coordinates and then traverse through potential rectangles in an up-right-down-left pattern.\nFollowing Hint #2, do you actually need to store all of the coordinates above, to the right, below, and to the left of every coordinate?\nAnother, perhaps more clever way of solving this problem is to realize that, for any coordinate to be a valid lower left corner of a rectangle, there must be a corresponding upper right corner of the same rectangle, which is just another coordinate located to the upper right of the first coordinate. If you have two such coordinates, you should be able to easily find whether corresponding upper left and lower right corners exist.",
+  "SpaceTime": "O(n^2) time | O(n) space - where n is the number of coordinates",
+  "PromptHTML": "<p>\n  Write a function that takes in a list of Cartesian coordinates (i.e., (x, y)\n  coordinates) and returns the number of rectangles formed by these coordinates.\n</p>\n<p>\n  A rectangle must have its four corners amongst the coordinates in order to be\n  counted, and we only care about rectangles with sides parallel to the x and y\n  axes (i.e., with rectangles horizontal and vertical sides--no diagonal sides).\n</p>\n<p>\n  You can also assume that no coordinate will be farther than 100 units from the\n  origin.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">coords</span> = [\n  [0, 0], [0, 1], [1, 1], [1, 0],\n  [2, 1], [2, 0], [3, 1], [3, 0],\n]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n6\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "coords",
+      "Example": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "maximum": 100,
+            "minimum": -100,
+            "type": "integer"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\n\nusing namespace std;\n\nstruct Point {\n  int x;\n  int y;\n};\n\nint rectangleMania(vector<Point> coords) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<Point> coords = {Point({0, 0}), Point({0, 1}), Point({1, 1}),\n                              Point({1, 0})};\n      assert(rectangleMania(coords) == 1);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<Point> coords = {Point({0, 0}), Point({0, 1}), Point({1, 1}),\n                              Point({1, 0}), Point({2, 1}), Point({2, 0})};\n      assert(rectangleMania(coords) == 3);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<Point> coords = {Point({0, 0}), Point({0, 1}), Point({1, 1}),\n                              Point({1, 0}), Point({2, 1}), Point({2, 0}),\n                              Point({3, 1}), Point({3, 0})};\n      assert(rectangleMania(coords) == 6);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<Point> coords = {Point({0, 0}), Point({0, 1}), Point({1, 1}),\n                              Point({1, 0}), Point({2, 1}), Point({2, 0}),\n                              Point({3, 1}), Point({3, 0}), Point({1, 3}),\n                              Point({3, 3})};\n      assert(rectangleMania(coords) == 8);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<Point> coords = {Point({0, 0}), Point({0, 1}),  Point({1, 1}),\n                              Point({1, 0}), Point({2, 1}),  Point({2, 0}),\n                              Point({3, 1}), Point({3, 0}),  Point({1, 3}),\n                              Point({3, 3}), Point({0, -4}), Point({3, -4})};\n      assert(rectangleMania(coords) == 10);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<Point> coords = {Point({0, 0}),  Point({0, 1}),  Point({1, 1}),\n                              Point({1, 0}),  Point({2, 1}),  Point({2, 0}),\n                              Point({3, 1}),  Point({3, 0}),  Point({1, 3}),\n                              Point({3, 3}),  Point({0, -4}), Point({3, -4}),\n                              Point({1, -3}), Point({3, -3})};\n      assert(rectangleMania(coords) == 13);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<Point> coords = {Point({0, 0}),   Point({0, 1}),   Point({1, 1}),\n                              Point({1, 0}),   Point({2, 1}),   Point({2, 0}),\n                              Point({3, 1}),   Point({3, 0}),   Point({1, 3}),\n                              Point({3, 3}),   Point({0, -4}),  Point({3, -4}),\n                              Point({1, -3}),  Point({3, -3}),  Point({-1, 0}),\n                              Point({-10, 0}), Point({-1, -1}), Point({2, -2})};\n      assert(rectangleMania(coords) == 13);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<Point> coords = {\n          Point({0, 0}),   Point({0, 1}),  Point({1, 1}),  Point({1, 0}),\n          Point({2, 1}),   Point({2, 0}),  Point({3, 1}),  Point({3, 0}),\n          Point({1, 3}),   Point({3, 3}),  Point({0, -4}), Point({3, -4}),\n          Point({1, -3}),  Point({3, -3}), Point({-1, 0}), Point({-10, 0}),\n          Point({-1, -1}), Point({2, -2}), Point({0, -1}), Point({1, -4}),\n          Point({-10, -4})};\n      assert(rectangleMania(coords) == 23);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<Point> coords = {Point({0, 0}),   Point({0, 1}),  Point({1, 0}),\n                              Point({2, 1}),   Point({1, 3}),  Point({3, 3}),\n                              Point({0, -4}),  Point({3, -5}), Point({1, -3}),\n                              Point({3, -2}),  Point({-1, 0}), Point({-10, 0}),\n                              Point({-1, -1}), Point({2, -2})};\n      assert(rectangleMania(coords) == 0);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<Point> coords = {Point({0, 0}), Point({0, 1}), Point({1, 1})};\n      assert(rectangleMania(coords) == 0);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<Point> coords = {Point({0, 0}), Point({0, 1}), Point({1, 1}),\n                              Point({1, 0}), Point({2, 1}), Point({2, 0}),\n                              Point({3, 1}), Point({3, 0})};\n      assert(rectangleMania(coords) == 6);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\n#include <algorithm>\nusing namespace std;\n\nstruct Point {\n  int x;\n  int y;\n\n  bool operator==(Point point2) { return x == point2.x && y == point2.y; }\n};\n\nstring UP = \"up\";\nstring RIGHT = \"right\";\nstring DOWN = \"down\";\nstring LEFT = \"left\";\n\nunordered_map<string, unordered_map<string, vector<Point>>>\ngetCoordsTable(vector<Point> coords);\nstring getCoordDirection(Point coord1, Point coord2);\nint getRectangleCount(\n    vector<Point> coords,\n    unordered_map<string, unordered_map<string, vector<Point>>> coordsTable);\nint clockwiseCountRectangles(\n    Point coord,\n    unordered_map<string, unordered_map<string, vector<Point>>> coordsTable,\n    string direction, Point origin);\nstring getNextClockwiseDirection(string direction);\nstring coordToString(Point coord);\n\n// O(n^2) time | O(n^2) space - where n is the number of coordinates\nint rectangleMania(vector<Point> coords) {\n  unordered_map<string, unordered_map<string, vector<Point>>> coordsTable =\n      getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nunordered_map<string, unordered_map<string, vector<Point>>>\ngetCoordsTable(vector<Point> coords) {\n  unordered_map<string, unordered_map<string, vector<Point>>> coordsTable;\n  for (Point coord1 : coords) {\n    unordered_map<string, vector<Point>> coord1Directions({\n        {UP, vector<Point>{}},\n        {RIGHT, vector<Point>{}},\n        {DOWN, vector<Point>{}},\n        {LEFT, vector<Point>{}},\n    });\n    for (Point coord2 : coords) {\n      string coord2Direction = getCoordDirection(coord1, coord2);\n      if (coord1Directions.find(coord2Direction) != coord1Directions.end()) {\n        coord1Directions[coord2Direction].push_back(coord2);\n      }\n    }\n    string coord1String = coordToString(coord1);\n    coordsTable.insert({coord1String, coord1Directions});\n  }\n  return coordsTable;\n}\n\nstring getCoordDirection(Point coord1, Point coord2) {\n  if (coord2.y == coord1.y) {\n    if (coord2.x > coord1.x) {\n      return RIGHT;\n    } else if (coord2.x < coord1.x) {\n      return LEFT;\n    }\n  } else if (coord2.x == coord1.x) {\n    if (coord2.y > coord1.y) {\n      return UP;\n    } else if (coord2.y < coord1.y) {\n      return DOWN;\n    }\n  }\n  return \"\";\n}\n\nint getRectangleCount(\n    vector<Point> coords,\n    unordered_map<string, unordered_map<string, vector<Point>>> coordsTable) {\n  int rectangleCount = 0;\n  for (Point coord : coords) {\n    rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, coord);\n  }\n  return rectangleCount;\n}\n\nint clockwiseCountRectangles(\n    Point coord,\n    unordered_map<string, unordered_map<string, vector<Point>>> coordsTable,\n    string direction, Point origin) {\n  string coordString = coordToString(coord);\n  if (direction == LEFT) {\n    bool rectangleFound = find(coordsTable[coordString][LEFT].begin(),\n                               coordsTable[coordString][LEFT].end(),\n                               origin) != coordsTable[coordString][LEFT].end();\n    return rectangleFound ? 1 : 0;\n  } else {\n    int rectangleCount = 0;\n    string nextDirection = getNextClockwiseDirection(direction);\n    for (Point nextCoord : coordsTable[coordString][direction]) {\n      rectangleCount += clockwiseCountRectangles(nextCoord, coordsTable,\n                                                 nextDirection, origin);\n    }\n    return rectangleCount;\n  }\n}\n\nstring getNextClockwiseDirection(string direction) {\n  if (direction == UP)\n    return RIGHT;\n  if (direction == RIGHT)\n    return DOWN;\n  if (direction == DOWN)\n    return LEFT;\n  return \"\";\n}\n\nstring coordToString(Point coord) {\n  return to_string(coord.x) + \"-\" + to_string(coord.y);\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nstruct Point {\n  int x;\n  int y;\n};\n\nstring UP = \"up\";\nstring RIGHT = \"right\";\nstring DOWN = \"down\";\n\nunordered_map<string, unordered_map<int, vector<Point>>>\ngetCoordsTable(vector<Point> coords);\nint getRectangleCount(\n    vector<Point> coords,\n    unordered_map<string, unordered_map<int, vector<Point>>> coordsTable);\nint clockwiseCountRectangles(\n    Point coord1,\n    unordered_map<string, unordered_map<int, vector<Point>>> coordsTable,\n    string direction, int lowerLeftY);\n\n// O(n^2) time | O(n) space - where n is the number of coordinates\nint rectangleMania(vector<Point> coords) {\n  unordered_map<string, unordered_map<int, vector<Point>>> coordsTable =\n      getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nunordered_map<string, unordered_map<int, vector<Point>>>\ngetCoordsTable(vector<Point> coords) {\n  unordered_map<string, unordered_map<int, vector<Point>>> coordsTable;\n  coordsTable.insert({\"x\", unordered_map<int, vector<Point>>{}});\n  coordsTable.insert({\"y\", unordered_map<int, vector<Point>>{}});\n  for (Point coord : coords) {\n    if (coordsTable[\"x\"].find(coord.x) == coordsTable[\"x\"].end()) {\n      coordsTable[\"x\"].insert({coord.x, vector<Point>{}});\n    }\n    if (coordsTable[\"y\"].find(coord.y) == coordsTable[\"y\"].end()) {\n      coordsTable[\"y\"].insert({coord.y, vector<Point>{}});\n    }\n    coordsTable[\"x\"][coord.x].push_back(coord);\n    coordsTable[\"y\"][coord.y].push_back(coord);\n  }\n  return coordsTable;\n}\n\nint getRectangleCount(\n    vector<Point> coords,\n    unordered_map<string, unordered_map<int, vector<Point>>> coordsTable) {\n  int rectangleCount = 0;\n  for (Point coord : coords) {\n    int lowerLeftY = coord.y;\n    rectangleCount +=\n        clockwiseCountRectangles(coord, coordsTable, UP, lowerLeftY);\n  }\n  return rectangleCount;\n}\n\nint clockwiseCountRectangles(\n    Point coord1,\n    unordered_map<string, unordered_map<int, vector<Point>>> coordsTable,\n    string direction, int lowerLeftY) {\n  if (direction == DOWN) {\n    vector<Point> relevantCoords = coordsTable[\"x\"][coord1.x];\n    for (Point coord2 : relevantCoords) {\n      int lowerRightY = coord2.y;\n      if (lowerRightY == lowerLeftY)\n        return 1;\n    }\n    return 0;\n  } else {\n    int rectangleCount = 0;\n    if (direction == UP) {\n      vector<Point> relevantCoords = coordsTable[\"x\"][coord1.x];\n      for (Point coord2 : relevantCoords) {\n        bool isAbove = coord2.y > coord1.y;\n        if (isAbove)\n          rectangleCount +=\n              clockwiseCountRectangles(coord2, coordsTable, RIGHT, lowerLeftY);\n      }\n    } else if (direction == RIGHT) {\n      vector<Point> relevantCoords = coordsTable[\"y\"][coord1.y];\n      for (Point coord2 : relevantCoords) {\n        bool isRight = coord2.x > coord1.x;\n        if (isRight)\n          rectangleCount +=\n              clockwiseCountRectangles(coord2, coordsTable, DOWN, lowerLeftY);\n      }\n    }\n    return rectangleCount;\n  }\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\nstruct Point {\n  int x;\n  int y;\n};\n\nunordered_map<string, bool> getCoordsTable(vector<Point> coords);\nint getRectangleCount(vector<Point> coords,\n                      unordered_map<string, bool> coordsTable);\nbool isInUpperRight(Point coord1, Point coord2);\nstring coordToString(Point coord);\n\n// O(n^2) time | O(n) space - where n is the number of coordinates\nint rectangleMania(vector<Point> coords) {\n  unordered_map<string, bool> coordsTable = getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nunordered_map<string, bool> getCoordsTable(vector<Point> coords) {\n  unordered_map<string, bool> coordsTable;\n  for (Point coord : coords) {\n    string coordString = coordToString(coord);\n    coordsTable.insert({coordString, true});\n  }\n  return coordsTable;\n}\n\nint getRectangleCount(vector<Point> coords,\n                      unordered_map<string, bool> coordsTable) {\n  int rectangleCount = 0;\n  for (Point coord1 : coords) {\n    for (Point coord2 : coords) {\n      if (!isInUpperRight(coord1, coord2))\n        continue;\n      string upperCoordString = coordToString(Point({coord1.x, coord2.y}));\n      string rightCoordString = coordToString(Point({coord2.x, coord1.y}));\n      if (coordsTable.find(upperCoordString) != coordsTable.end() &&\n          coordsTable.find(rightCoordString) != coordsTable.end())\n        rectangleCount++;\n    }\n  }\n  return rectangleCount;\n}\n\nbool isInUpperRight(Point coord1, Point coord2) {\n  return coord2.x > coord1.x && coord2.y > coord1.y;\n}\n\nstring coordToString(Point coord) {\n  return to_string(coord.x) + \"-\" + to_string(coord.y);\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int RectangleMania(Point[] coords) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n\n\tpublic class Point {\n\t\tpublic int x;\n\t\tpublic int y;\n\n\t\tpublic Point(int x, int y) {\n\t\t\tthis.x = x;\n\t\t\tthis.y = y;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(2, 0)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(2, 0),\n\t\t\tnew Program.Point(3, 1),\n\t\t\tnew Program.Point(3, 0)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(2, 0),\n\t\t\tnew Program.Point(3, 1),\n\t\t\tnew Program.Point(3, 0),\n\t\t\tnew Program.Point(1, 3),\n\t\t\tnew Program.Point(3, 3)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 8);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(2, 0),\n\t\t\tnew Program.Point(3, 1),\n\t\t\tnew Program.Point(3, 0),\n\t\t\tnew Program.Point(1, 3),\n\t\t\tnew Program.Point(3, 3),\n\t\t\tnew Program.Point(0, -4),\n\t\t\tnew Program.Point(3, -4)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 10);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(2, 0),\n\t\t\tnew Program.Point(3, 1),\n\t\t\tnew Program.Point(3, 0),\n\t\t\tnew Program.Point(1, 3),\n\t\t\tnew Program.Point(3, 3),\n\t\t\tnew Program.Point(0, -4),\n\t\t\tnew Program.Point(3, -4),\n\t\t\tnew Program.Point(1, -3),\n\t\t\tnew Program.Point(3, -3)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 13);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(2, 0),\n\t\t\tnew Program.Point(3, 1),\n\t\t\tnew Program.Point(3, 0),\n\t\t\tnew Program.Point(1, 3),\n\t\t\tnew Program.Point(3, 3),\n\t\t\tnew Program.Point(0, -4),\n\t\t\tnew Program.Point(3, -4),\n\t\t\tnew Program.Point(1, -3),\n\t\t\tnew Program.Point(3, -3),\n\t\t\tnew Program.Point(-1, 0),\n\t\t\tnew Program.Point(-10, 0),\n\t\t\tnew Program.Point(-1, -1),\n\t\t\tnew Program.Point(2, -2)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 13);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(2, 0),\n\t\t\tnew Program.Point(3, 1),\n\t\t\tnew Program.Point(3, 0),\n\t\t\tnew Program.Point(1, 3),\n\t\t\tnew Program.Point(3, 3),\n\t\t\tnew Program.Point(0, -4),\n\t\t\tnew Program.Point(3, -4),\n\t\t\tnew Program.Point(1, -3),\n\t\t\tnew Program.Point(3, -3),\n\t\t\tnew Program.Point(-1, 0),\n\t\t\tnew Program.Point(-10, 0),\n\t\t\tnew Program.Point(-1, -1),\n\t\t\tnew Program.Point(2, -2),\n\t\t\tnew Program.Point(0, -1),\n\t\t\tnew Program.Point(1, -4),\n\t\t\tnew Program.Point(-10, -4)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 23);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(1, 3),\n\t\t\tnew Program.Point(3, 3),\n\t\t\tnew Program.Point(0, -4),\n\t\t\tnew Program.Point(3, -5),\n\t\t\tnew Program.Point(1, -3),\n\t\t\tnew Program.Point(3, -2),\n\t\t\tnew Program.Point(-1, 0),\n\t\t\tnew Program.Point(-10, 0),\n\t\t\tnew Program.Point(-1, -1),\n\t\t\tnew Program.Point(2, -2)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 0);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase3() {\n\t\tProgram.Point[] coords = new Program.Point[] {\n\t\t\tnew Program.Point(0, 0),\n\t\t\tnew Program.Point(0, 1),\n\t\t\tnew Program.Point(1, 1),\n\t\t\tnew Program.Point(1, 0),\n\t\t\tnew Program.Point(2, 1),\n\t\t\tnew Program.Point(2, 0),\n\t\t\tnew Program.Point(3, 1),\n\t\t\tnew Program.Point(3, 0)\n\t\t};\n\t\tUtils.AssertTrue(Program.RectangleMania(coords) == 6);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\tstatic string UP = \"up\";\n\tstatic string RIGHT = \"right\";\n\tstatic string DOWN = \"down\";\n\tstatic string LEFT = \"left\";\n\n\t// O(n^2) time | O(n^2) space - where n is the number of coordinates\n\tpublic static int RectangleMania(Point[] coords) {\n\t\tDictionary<string, Dictionary<string, List<Point> > > coordsTable = getCoordsTable(\n\t\t\tcoords);\n\t\treturn getRectangleCount(coords, coordsTable);\n\t}\n\n\tpublic static Dictionary<string, Dictionary<string, List<Point> > > getCoordsTable(\n\t\tPoint[] coords) {\n\t\tDictionary<string, Dictionary<string,\n\t\t  List<Point> > > coordsTable = new Dictionary<string,\n\t\t    Dictionary<string,\n\t\t    List<Point> > >();\n\t\tforeach (Point coord1 in coords) {\n\t\t\tDictionary<string, List<Point> > coord1Directions = new Dictionary<string,\n\t\t\t    List<Point> >();\n\t\t\tcoord1Directions.Add(UP, new List<Point>());\n\t\t\tcoord1Directions.Add(RIGHT, new List<Point>());\n\t\t\tcoord1Directions.Add(DOWN, new List<Point>());\n\t\t\tcoord1Directions.Add(LEFT, new List<Point>());\n\t\t\tforeach (Point coord2 in coords) {\n\t\t\t\tstring coord2Direction = getCoordDirection(coord1, coord2);\n\t\t\t\tif (coord1Directions.ContainsKey(coord2Direction)) coord1Directions[\n\t\t\t\t\t\tcoord2Direction].Add(coord2);\n\t\t\t}\n\t\t\tstring coord1string = coordTostring(coord1);\n\t\t\tcoordsTable.Add(coord1string, coord1Directions);\n\t\t}\n\t\treturn coordsTable;\n\t}\n\n\tpublic static string getCoordDirection(Point coord1, Point coord2) {\n\t\tif (coord2.y == coord1.y) {\n\t\t\tif (coord2.x > coord1.x) {\n\t\t\t\treturn RIGHT;\n\t\t\t} else if (coord2.x < coord1.x) {\n\t\t\t\treturn LEFT;\n\t\t\t}\n\t\t} else if (coord2.x == coord1.x) {\n\t\t\tif (coord2.y > coord1.y) {\n\t\t\t\treturn UP;\n\t\t\t} else if (coord2.y < coord1.y) {\n\t\t\t\treturn DOWN;\n\t\t\t}\n\t\t}\n\t\treturn \"\";\n\t}\n\n\tpublic static int getRectangleCount(Point[] coords, Dictionary<string, Dictionary<string,\n\t  List<Point> > > coordsTable)\n\t{\n\t\tint rectangleCount = 0;\n\t\tforeach (Point coord in coords) {\n\t\t\trectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, coord);\n\t\t}\n\t\treturn rectangleCount;\n\t}\n\n\tpublic static int clockwiseCountRectangles(\n\t\tPoint coord,\n\t\tDictionary<string, Dictionary<string, List<Point> > > coordsTable,\n\t\tstring direction,\n\t\tPoint origin\n\t\t) {\n\t\tstring coordstring = coordTostring(coord);\n\t\tif (direction == LEFT) {\n\t\t\tbool rectangleFound = coordsTable[coordstring][LEFT].Contains(origin);\n\t\t\treturn rectangleFound ? 1 : 0;\n\t\t} else {\n\t\t\tint rectangleCount = 0;\n\t\t\tstring nextDirection = getNextClockwiseDirection(direction);\n\t\t\tforeach (Point nextCoord in coordsTable[coordstring][direction]) {\n\t\t\t\trectangleCount += clockwiseCountRectangles(nextCoord, coordsTable,\n\t\t\t\t    nextDirection, origin);\n\t\t\t}\n\t\t\treturn rectangleCount;\n\t\t}\n\t}\n\n\tpublic static string getNextClockwiseDirection(string direction) {\n\t\tif (direction == UP) return RIGHT;\n\t\tif (direction == RIGHT) return DOWN;\n\t\tif (direction == DOWN) return LEFT;\n\t\treturn \"\";\n\t}\n\n\tpublic static string coordTostring(Point coord) {\n\t\treturn coord.x.ToString() + \"-\" + coord.y.ToString();\n\t}\n\n\tpublic class Point {\n\t\tpublic int x;\n\t\tpublic int y;\n\n\t\tpublic Point(int x, int y) {\n\t\t\tthis.x = x;\n\t\t\tthis.y = y;\n\t\t}\n\n\t\tpublic bool equals(object a) {\n\t\t\treturn this.x == ((Point) a).x && this.y == ((Point) a).y;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\tstatic string UP = \"up\";\n\tstatic string RIGHT = \"right\";\n\tstatic string DOWN = \"down\";\n\n\n\t// O(n^2) time | O(n) space - where n is the number of coordinates\n\tpublic static int RectangleMania(Point[] coords) {\n\t\tDictionary<string, Dictionary<int, List<Point> > > coordsTable = getCoordsTable(\n\t\t\tcoords);\n\t\treturn getRectangleCount(coords, coordsTable);\n\t}\n\n\tpublic static Dictionary<string, Dictionary<int, List<Point> > > getCoordsTable(\n\t\tPoint[] coords) {\n\t\tDictionary<string, Dictionary<int,\n\t\t  List<Point> > > coordsTable = new Dictionary<string,\n\t\t    Dictionary<int,\n\t\t    List<Point> > >();\n\t\tcoordsTable.Add(\"x\", new Dictionary<int, List<Point> >());\n\t\tcoordsTable.Add(\"y\", new Dictionary<int, List<Point> >());\n\t\tforeach (Point coord in coords) {\n\t\t\tif (!coordsTable[\"x\"].ContainsKey(coord.x)) {\n\t\t\t\tcoordsTable[\"x\"].Add(coord.x, new List<Point>());\n\t\t\t}\n\t\t\tif (!coordsTable[\"y\"].ContainsKey(coord.y)) {\n\t\t\t\tcoordsTable[\"y\"].Add(coord.y, new List<Point>());\n\t\t\t}\n\t\t\tcoordsTable[\"x\"][coord.x].Add(coord);\n\t\t\tcoordsTable[\"y\"][coord.y].Add(coord);\n\t\t}\n\t\treturn coordsTable;\n\t}\n\n\tpublic static int getRectangleCount(Point[] coords, Dictionary<string, Dictionary<int,\n\t  List<Point> > > coordsTable)\n\t{\n\t\tint rectangleCount = 0;\n\t\tforeach (Point coord in coords) {\n\t\t\tint lowerLeftY = coord.y;\n\t\t\trectangleCount += clockwiseCountRectangles(coord, coordsTable, UP,\n\t\t\t    lowerLeftY);\n\t\t}\n\t\treturn rectangleCount;\n\t}\n\n\tpublic static int clockwiseCountRectangles(\n\t\tPoint coord1,\n\t\tDictionary<string, Dictionary<int, List<Point> > > coordsTable,\n\t\tstring direction,\n\t\tint lowerLeftY\n\t\t) {\n\t\tif (direction == DOWN) {\n\t\t\tList<Point> relevantCoords = coordsTable[\"x\"][coord1.x];\n\t\t\tforeach (Point coord2 in relevantCoords) {\n\t\t\t\tint lowerRightY = coord2.y;\n\t\t\t\tif (lowerRightY == lowerLeftY) return 1;\n\t\t\t}\n\t\t\treturn 0;\n\t\t} else {\n\t\t\tint rectangleCount = 0;\n\t\t\tif (direction == UP) {\n\t\t\t\tList<Point> relevantCoords = coordsTable[\"x\"][coord1.x];\n\t\t\t\tforeach (Point coord2 in relevantCoords) {\n\t\t\t\t\tbool isAbove = coord2.y > coord1.y;\n\t\t\t\t\tif (isAbove) rectangleCount += clockwiseCountRectangles(\n\t\t\t\t\t\t\tcoord2, coordsTable, RIGHT, lowerLeftY);\n\t\t\t\t}\n\t\t\t} else if (direction == RIGHT) {\n\t\t\t\tList<Point> relevantCoords = coordsTable[\"y\"][coord1.y];\n\t\t\t\tforeach (Point coord2 in relevantCoords) {\n\t\t\t\t\tbool isRight = coord2.x > coord1.x;\n\t\t\t\t\tif (isRight) rectangleCount += clockwiseCountRectangles(\n\t\t\t\t\t\t\tcoord2, coordsTable, DOWN, lowerLeftY);\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn rectangleCount;\n\t\t}\n\t}\n\n\tpublic class Point {\n\t\tpublic int x;\n\t\tpublic int y;\n\n\t\tpublic Point(int x, int y) {\n\t\t\tthis.x = x;\n\t\t\tthis.y = y;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^2) time | O(n) space - where n is the number of coordinates\n\tpublic static int RectangleMania(Point[] coords) {\n\t\tHashSet<string> coordsTable = getCoordsTable(coords);\n\t\treturn getRectangleCount(coords, coordsTable);\n\t}\n\n\tpublic static HashSet<string> getCoordsTable(Point[] coords) {\n\t\tHashSet<string> coordsTable = new HashSet<string>();\n\t\tforeach (Point coord in coords) {\n\t\t\tstring coordstring = coordTostring(coord);\n\t\t\tcoordsTable.Add(coordstring);\n\t\t}\n\t\treturn coordsTable;\n\t}\n\n\tpublic static int getRectangleCount(Point[] coords, HashSet<string> coordsTable) {\n\t\tint rectangleCount = 0;\n\t\tforeach (Point coord1 in coords) {\n\t\t\tforeach (Point coord2 in coords) {\n\t\t\t\tif (!isInUpperRight(coord1, coord2)) continue;\n\t\t\t\tstring upperCoordstring = coordTostring(new Point(coord1.x,\n\t\t\t\t    coord2.y));\n\t\t\t\tstring rightCoordstring = coordTostring(new Point(coord2.x,\n\t\t\t\t    coord1.y));\n\t\t\t\tif (\n\t\t\t\t\tcoordsTable.Contains(upperCoordstring) &&\n\t\t\t\t\tcoordsTable.Contains(rightCoordstring)\n\t\t\t\t\t) rectangleCount++;\n\t\t\t}\n\t\t}\n\t\treturn rectangleCount;\n\t}\n\n\tpublic static bool isInUpperRight(Point coord1, Point coord2) {\n\t\treturn coord2.x > coord1.x && coord2.y > coord1.y;\n\t}\n\n\tpublic static string coordTostring(Point coord) {\n\t\treturn coord.x.ToString() + \"-\" + coord.y.ToString();\n\t}\n\n\tpublic class Point {\n\t\tpublic int x;\n\t\tpublic int y;\n\n\t\tpublic Point(int x, int y) {\n\t\t\tthis.x = x;\n\t\t\tthis.y = y;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype Coord struct {\n\tX, Y int\n}\n\nfunc RectangleMania(coords []Coord) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tcoords := []Coord{{0, 0}, {0, 1}, {1, 1}, {1, 0}}\n\trequire.Equal(t, RectangleMania(coords), 1)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tcoords := []Coord{{0, 0}, {0, 1}, {1, 1}, {1, 0}, {2, 1}, {2, 0}}\n\trequire.Equal(t, RectangleMania(coords), 3)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tcoords := []Coord{{0, 0}, {0, 1}, {1, 1}, {1, 0}, {2, 1}, {2, 0}, {3, 1}, {3, 0}}\n\trequire.Equal(t, RectangleMania(coords), 6)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tcoords := []Coord{\n\t\t{0, 0},\n\t\t{0, 1},\n\t\t{1, 1},\n\t\t{1, 0},\n\t\t{2, 1},\n\t\t{2, 0},\n\t\t{3, 1},\n\t\t{3, 0},\n\t\t{1, 3},\n\t\t{3, 3},\n\t}\n\trequire.Equal(t, RectangleMania(coords), 8)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tcoords := []Coord{\n\t\t{0, 0},\n\t\t{0, 1},\n\t\t{1, 1},\n\t\t{1, 0},\n\t\t{2, 1},\n\t\t{2, 0},\n\t\t{3, 1},\n\t\t{3, 0},\n\t\t{1, 3},\n\t\t{3, 3},\n\t\t{0, -4},\n\t\t{3, -4},\n\t}\n\trequire.Equal(t, RectangleMania(coords), 10)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tcoords := []Coord{\n\t\t{0, 0},\n\t\t{0, 1},\n\t\t{1, 1},\n\t\t{1, 0},\n\t\t{2, 1},\n\t\t{2, 0},\n\t\t{3, 1},\n\t\t{3, 0},\n\t\t{1, 3},\n\t\t{3, 3},\n\t\t{0, -4},\n\t\t{3, -4},\n\t\t{1, -3},\n\t\t{3, -3},\n\t}\n\trequire.Equal(t, RectangleMania(coords), 13)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tcoords := []Coord{\n\t\t{0, 0},\n\t\t{0, 1},\n\t\t{1, 1},\n\t\t{1, 0},\n\t\t{2, 1},\n\t\t{2, 0},\n\t\t{3, 1},\n\t\t{3, 0},\n\t\t{1, 3},\n\t\t{3, 3},\n\t\t{0, -4},\n\t\t{3, -4},\n\t\t{1, -3},\n\t\t{3, -3},\n\t\t{-1, 0},\n\t\t{-10, 0},\n\t\t{-1, -1},\n\t\t{2, -2},\n\t}\n\trequire.Equal(t, RectangleMania(coords), 13)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tcoords := []Coord{\n\t\t{0, 0},\n\t\t{0, 1},\n\t\t{1, 1},\n\t\t{1, 0},\n\t\t{2, 1},\n\t\t{2, 0},\n\t\t{3, 1},\n\t\t{3, 0},\n\t\t{1, 3},\n\t\t{3, 3},\n\t\t{0, -4},\n\t\t{3, -4},\n\t\t{1, -3},\n\t\t{3, -3},\n\t\t{-1, 0},\n\t\t{-10, 0},\n\t\t{-1, -1},\n\t\t{2, -2},\n\t\t{0, -1},\n\t\t{1, -4},\n\t\t{-10, -4},\n\t}\n\trequire.Equal(t, RectangleMania(coords), 23)\n\n}\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tcoords := []Coord{\n\t\t{0, 0},\n\t\t{0, 1},\n\t\t{1, 0},\n\t\t{2, 1},\n\t\t{1, 3},\n\t\t{3, 3},\n\t\t{0, -4},\n\t\t{3, -5},\n\t\t{1, -3},\n\t\t{3, -2},\n\t\t{-1, 0},\n\t\t{-10, 0},\n\t\t{-1, -1},\n\t\t{2, -2},\n\t}\n\trequire.Equal(t, RectangleMania(coords), 0)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tcoords := []Coord{{0, 0}, {0, 1}, {1, 1}}\n\trequire.Equal(t, RectangleMania(coords), 0)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tcoords := []Coord{{0, 0}, {0, 1}, {1, 1}, {1, 0}, {2, 1}, {2, 0}, {3, 1}, {3, 0}}\n\trequire.Equal(t, RectangleMania(coords), 6)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype Coord struct {\n\tX, Y int\n}\n\ntype Direction int\n\nconst (\n\tNone Direction = iota - 1\n\tUp\n\tDown\n\tLeft\n\tRight\n)\n\n// O(n^2) time | O(n^2) space - where n is the number of coordinates\nfunc RectangleMania(coords []Coord) int {\n\tcoordsTable := getCoordsTable(coords)\n\treturn getRectangleCount(coords, coordsTable)\n}\n\ntype CoordSet map[Coord]struct{}\ntype CoordsTable map[Coord]map[Direction]CoordSet\n\nfunc getCoordsTable(coords []Coord) CoordsTable {\n\ttable := CoordsTable{}\n\tfor _, coord1 := range coords {\n\t\tdirections := map[Direction]CoordSet{\n\t\t\tUp:    {},\n\t\t\tRight: {},\n\t\t\tDown:  {},\n\t\t\tLeft:  {},\n\t\t}\n\t\tfor _, coord2 := range coords {\n\t\t\tcoord2Direction := getCoordDirection(coord1, coord2)\n\t\t\tif coord2Direction != None {\n\t\t\t\tdirections[coord2Direction][coord2] = struct{}{}\n\t\t\t}\n\t\t}\n\t\ttable[coord1] = directions\n\t}\n\treturn table\n}\n\nfunc getCoordDirection(coord1, coord2 Coord) Direction {\n\tif coord2.Y == coord1.Y {\n\t\tif coord2.X > coord1.X {\n\t\t\treturn Right\n\t\t} else if coord2.X < coord1.X {\n\t\t\treturn Left\n\t\t}\n\t} else if coord2.X == coord1.X {\n\t\tif coord2.Y > coord1.Y {\n\t\t\treturn Up\n\t\t} else if coord2.Y < coord1.Y {\n\t\t\treturn Down\n\t\t}\n\t}\n\treturn None\n}\n\nfunc getRectangleCount(coords []Coord, coordsTable CoordsTable) int {\n\tcount := 0\n\tfor _, coord := range coords {\n\t\tcount += clockwiseCountRectangles(coord, coordsTable, Up, coord)\n\t}\n\treturn count\n}\n\nfunc clockwiseCountRectangles(coord Coord, coordsTable CoordsTable, direction Direction, origin Coord) int {\n\tif direction == Left {\n\t\tif _, found := coordsTable[coord][Left][origin]; found {\n\t\t\treturn 1\n\t\t}\n\t\treturn 0\n\t}\n\trectangleCount := 0\n\tnextDirection := direction.NextClockwise()\n\tfor nextCoord := range coordsTable[coord][direction] {\n\t\trectangleCount += clockwiseCountRectangles(nextCoord, coordsTable, nextDirection, origin)\n\t}\n\treturn rectangleCount\n}\n\nfunc (d Direction) NextClockwise() Direction {\n\tswitch d {\n\tcase Up:\n\t\treturn Right\n\tcase Right:\n\t\treturn Down\n\tcase Down:\n\t\treturn Left\n\tcase Left:\n\t\treturn Up\n\t}\n\treturn None\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype Coord struct {\n\tX, Y int\n}\n\ntype Direction int\n\nconst (\n\tNone Direction = iota - 1\n\tUp\n\tDown\n\tLeft\n\tRight\n)\n\n// O(n^2) time | O(n) space - where n is the number of coordinates\nfunc RectangleMania(coords []Coord) int {\n\tcoordsTable := getCoordsTable(coords)\n\treturn getRectangleCount(coords, coordsTable)\n}\n\ntype CoordSet map[Coord]struct{}\ntype CoordsTable struct {\n\tXs, Ys map[int]CoordSet\n}\n\nfunc getCoordsTable(coords []Coord) CoordsTable {\n\ttable := CoordsTable{\n\t\tXs: map[int]CoordSet{},\n\t\tYs: map[int]CoordSet{},\n\t}\n\tfor _, coord := range coords {\n\t\tx, y := coord.X, coord.Y\n\t\tif _, found := table.Xs[x]; !found {\n\t\t\ttable.Xs[x] = CoordSet{}\n\t\t}\n\t\ttable.Xs[x][coord] = struct{}{}\n\t\tif _, found := table.Ys[y]; !found {\n\t\t\ttable.Ys[y] = CoordSet{}\n\t\t}\n\t\ttable.Ys[y][coord] = struct{}{}\n\t}\n\treturn table\n}\n\nfunc getRectangleCount(coords []Coord, coordsTable CoordsTable) int {\n\tcount := 0\n\tfor _, coord := range coords {\n\t\tlowerLeftY := coord.Y\n\t\tcount += clockwiseCountRectangles(coord, coordsTable, Up, lowerLeftY)\n\t}\n\treturn count\n}\n\nfunc clockwiseCountRectangles(coord Coord, coordsTable CoordsTable, direction Direction, lowerLeftY int) int {\n\tif direction == Down {\n\t\trelevantCoords := coordsTable.Xs[coord.X]\n\t\tfor coord2 := range relevantCoords {\n\t\t\tlowerRightY := coord2.Y\n\t\t\tif lowerRightY == lowerLeftY {\n\t\t\t\treturn 1\n\t\t\t}\n\t\t}\n\t\treturn 0\n\t}\n\n\tif direction == Up {\n\t\trectangleCount := 0\n\t\trelevantCoords := coordsTable.Xs[coord.X]\n\t\tfor coord2 := range relevantCoords {\n\t\t\tif coord2.Y > coord.Y {\n\t\t\t\trectangleCount += clockwiseCountRectangles(coord2, coordsTable, Right, lowerLeftY)\n\t\t\t}\n\t\t}\n\t\treturn rectangleCount\n\t}\n\n\tif direction == Right {\n\t\trectangleCount := 0\n\t\trelevantCoords := coordsTable.Ys[coord.Y]\n\t\tfor coord2 := range relevantCoords {\n\t\t\tif coord2.X > coord.X {\n\t\t\t\trectangleCount += clockwiseCountRectangles(coord2, coordsTable, Down, lowerLeftY)\n\t\t\t}\n\t\t}\n\t\treturn rectangleCount\n\t}\n\treturn 0\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype Coord struct {\n\tX, Y int\n}\n\ntype Direction int\n\nconst (\n\tNone Direction = iota - 1\n\tUp\n\tDown\n\tLeft\n\tRight\n)\n\n// O(n^2) time | O(n) space - where n is the number of coordinates\nfunc RectangleMania(coords []Coord) int {\n\tcoordsTable := getCoordsTable(coords)\n\treturn getRectangleCount(coords, coordsTable)\n}\n\ntype CoordsTable map[Coord]struct{}\n\nfunc getCoordsTable(coords []Coord) CoordsTable {\n\ttable := CoordsTable{}\n\tfor _, coord := range coords {\n\t\ttable[coord] = struct{}{}\n\t}\n\treturn table\n}\n\nfunc getRectangleCount(coords []Coord, coordsTable CoordsTable) int {\n\tcount := 0\n\tfor _, coord1 := range coords {\n\t\tfor _, coord2 := range coords {\n\t\t\tif !isInUpperRight(coord1, coord2) {\n\t\t\t\tcontinue\n\t\t\t}\n\t\t\tupperCoord := Coord{coord1.X, coord2.Y}\n\t\t\trightCoord := Coord{coord2.X, coord1.Y}\n\t\t\t_, found1 := coordsTable[upperCoord]\n\t\t\t_, found2 := coordsTable[rightCoord]\n\t\t\tif found1 && found2 {\n\t\t\t\tcount++\n\t\t\t}\n\t\t}\n\t}\n\treturn count\n}\n\nfunc isInUpperRight(coord1, coord2 Coord) bool {\n\treturn coord2.X > coord1.X && coord2.Y > coord1.Y\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int rectangleMania(Point[] coords) {\n    // Write your code here.\n    return -1;\n  }\n\n  static class Point {\n    public int x;\n    public int y;\n\n    public Point(int x, int y) {\n      this.x = x;\n      this.y = y;\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 1);\n  }\n\n  @Test\n  public void TestCase2() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(2, 0)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 3);\n  }\n\n  @Test\n  public void TestCase3() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(2, 0),\n          new Program.Point(3, 1),\n          new Program.Point(3, 0)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 6);\n  }\n\n  @Test\n  public void TestCase4() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(2, 0),\n          new Program.Point(3, 1),\n          new Program.Point(3, 0),\n          new Program.Point(1, 3),\n          new Program.Point(3, 3)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 8);\n  }\n\n  @Test\n  public void TestCase5() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(2, 0),\n          new Program.Point(3, 1),\n          new Program.Point(3, 0),\n          new Program.Point(1, 3),\n          new Program.Point(3, 3),\n          new Program.Point(0, -4),\n          new Program.Point(3, -4)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 10);\n  }\n\n  @Test\n  public void TestCase6() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(2, 0),\n          new Program.Point(3, 1),\n          new Program.Point(3, 0),\n          new Program.Point(1, 3),\n          new Program.Point(3, 3),\n          new Program.Point(0, -4),\n          new Program.Point(3, -4),\n          new Program.Point(1, -3),\n          new Program.Point(3, -3)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 13);\n  }\n\n  @Test\n  public void TestCase7() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(2, 0),\n          new Program.Point(3, 1),\n          new Program.Point(3, 0),\n          new Program.Point(1, 3),\n          new Program.Point(3, 3),\n          new Program.Point(0, -4),\n          new Program.Point(3, -4),\n          new Program.Point(1, -3),\n          new Program.Point(3, -3),\n          new Program.Point(-1, 0),\n          new Program.Point(-10, 0),\n          new Program.Point(-1, -1),\n          new Program.Point(2, -2)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 13);\n  }\n\n  @Test\n  public void TestCase8() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(2, 0),\n          new Program.Point(3, 1),\n          new Program.Point(3, 0),\n          new Program.Point(1, 3),\n          new Program.Point(3, 3),\n          new Program.Point(0, -4),\n          new Program.Point(3, -4),\n          new Program.Point(1, -3),\n          new Program.Point(3, -3),\n          new Program.Point(-1, 0),\n          new Program.Point(-10, 0),\n          new Program.Point(-1, -1),\n          new Program.Point(2, -2),\n          new Program.Point(0, -1),\n          new Program.Point(1, -4),\n          new Program.Point(-10, -4)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 23);\n  }\n\n  @Test\n  public void TestCase9() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(1, 3),\n          new Program.Point(3, 3),\n          new Program.Point(0, -4),\n          new Program.Point(3, -5),\n          new Program.Point(1, -3),\n          new Program.Point(3, -2),\n          new Program.Point(-1, 0),\n          new Program.Point(-10, 0),\n          new Program.Point(-1, -1),\n          new Program.Point(2, -2)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 0);\n  }\n\n  @Test\n  public void TestCase10() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0), new Program.Point(0, 1), new Program.Point(1, 1)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 0);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.Point[] coords =\n        new Program.Point[] {\n          new Program.Point(0, 0),\n          new Program.Point(0, 1),\n          new Program.Point(1, 1),\n          new Program.Point(1, 0),\n          new Program.Point(2, 1),\n          new Program.Point(2, 0),\n          new Program.Point(3, 1),\n          new Program.Point(3, 0)\n        };\n    Utils.assertTrue(Program.rectangleMania(coords) == 6);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  static String UP = \"up\";\n  static String RIGHT = \"right\";\n  static String DOWN = \"down\";\n  static String LEFT = \"left\";\n\n  // O(n^2) time | O(n^2) space - where n is the number of coordinates\n  public static int rectangleMania(Point[] coords) {\n    Map<String, Map<String, List<Point>>> coordsTable = getCoordsTable(coords);\n    return getRectangleCount(coords, coordsTable);\n  }\n\n  public static Map<String, Map<String, List<Point>>> getCoordsTable(Point[] coords) {\n    Map<String, Map<String, List<Point>>> coordsTable =\n        new HashMap<String, Map<String, List<Point>>>();\n    for (Point coord1 : coords) {\n      Map<String, List<Point>> coord1Directions = new HashMap<String, List<Point>>();\n      coord1Directions.put(UP, new ArrayList<Point>());\n      coord1Directions.put(RIGHT, new ArrayList<Point>());\n      coord1Directions.put(DOWN, new ArrayList<Point>());\n      coord1Directions.put(LEFT, new ArrayList<Point>());\n      for (Point coord2 : coords) {\n        String coord2Direction = getCoordDirection(coord1, coord2);\n        if (coord1Directions.containsKey(coord2Direction))\n          coord1Directions.get(coord2Direction).add(coord2);\n      }\n      String coord1String = coordToString(coord1);\n      coordsTable.put(coord1String, coord1Directions);\n    }\n    return coordsTable;\n  }\n\n  public static String getCoordDirection(Point coord1, Point coord2) {\n    if (coord2.y == coord1.y) {\n      if (coord2.x > coord1.x) {\n        return RIGHT;\n      } else if (coord2.x < coord1.x) {\n        return LEFT;\n      }\n    } else if (coord2.x == coord1.x) {\n      if (coord2.y > coord1.y) {\n        return UP;\n      } else if (coord2.y < coord1.y) {\n        return DOWN;\n      }\n    }\n    return \"\";\n  }\n\n  public static int getRectangleCount(\n      Point[] coords, Map<String, Map<String, List<Point>>> coordsTable) {\n    int rectangleCount = 0;\n    for (Point coord : coords) {\n      rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, coord);\n    }\n    return rectangleCount;\n  }\n\n  public static int clockwiseCountRectangles(\n      Point coord,\n      Map<String, Map<String, List<Point>>> coordsTable,\n      String direction,\n      Point origin) {\n    String coordString = coordToString(coord);\n    if (direction == LEFT) {\n      boolean rectangleFound = coordsTable.get(coordString).get(LEFT).contains(origin);\n      return rectangleFound ? 1 : 0;\n    } else {\n      int rectangleCount = 0;\n      String nextDirection = getNextClockwiseDirection(direction);\n      for (Point nextCoord : coordsTable.get(coordString).get(direction)) {\n        rectangleCount += clockwiseCountRectangles(nextCoord, coordsTable, nextDirection, origin);\n      }\n      return rectangleCount;\n    }\n  }\n\n  public static String getNextClockwiseDirection(String direction) {\n    if (direction == UP) return RIGHT;\n    if (direction == RIGHT) return DOWN;\n    if (direction == DOWN) return LEFT;\n    return \"\";\n  }\n\n  public static String coordToString(Point coord) {\n    return Integer.toString(coord.x) + \"-\" + Integer.toString(coord.y);\n  }\n\n  static class Point {\n    public int x;\n    public int y;\n\n    public Point(int x, int y) {\n      this.x = x;\n      this.y = y;\n    }\n\n    public boolean equals(Object a) {\n      return this.x == ((Point) a).x && this.y == ((Point) a).y;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  static String UP = \"up\";\n  static String RIGHT = \"right\";\n  static String DOWN = \"down\";\n\n  // O(n^2) time | O(n) space - where n is the number of coordinates\n  public static int rectangleMania(Point[] coords) {\n    Map<String, Map<Integer, List<Point>>> coordsTable = getCoordsTable(coords);\n    return getRectangleCount(coords, coordsTable);\n  }\n\n  public static Map<String, Map<Integer, List<Point>>> getCoordsTable(Point[] coords) {\n    Map<String, Map<Integer, List<Point>>> coordsTable =\n        new HashMap<String, Map<Integer, List<Point>>>();\n    coordsTable.put(\"x\", new HashMap<Integer, List<Point>>());\n    coordsTable.put(\"y\", new HashMap<Integer, List<Point>>());\n    for (Point coord : coords) {\n      if (!coordsTable.get(\"x\").containsKey(coord.x)) {\n        coordsTable.get(\"x\").put(coord.x, new ArrayList<Point>());\n      }\n      if (!coordsTable.get(\"y\").containsKey(coord.y)) {\n        coordsTable.get(\"y\").put(coord.y, new ArrayList<Point>());\n      }\n      coordsTable.get(\"x\").get(coord.x).add(coord);\n      coordsTable.get(\"y\").get(coord.y).add(coord);\n    }\n    return coordsTable;\n  }\n\n  public static int getRectangleCount(\n      Point[] coords, Map<String, Map<Integer, List<Point>>> coordsTable) {\n    int rectangleCount = 0;\n    for (Point coord : coords) {\n      int lowerLeftY = coord.y;\n      rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, lowerLeftY);\n    }\n    return rectangleCount;\n  }\n\n  public static int clockwiseCountRectangles(\n      Point coord1,\n      Map<String, Map<Integer, List<Point>>> coordsTable,\n      String direction,\n      int lowerLeftY) {\n    if (direction == DOWN) {\n      List<Point> relevantCoords = coordsTable.get(\"x\").get(coord1.x);\n      for (Point coord2 : relevantCoords) {\n        int lowerRightY = coord2.y;\n        if (lowerRightY == lowerLeftY) return 1;\n      }\n      return 0;\n    } else {\n      int rectangleCount = 0;\n      if (direction == UP) {\n        List<Point> relevantCoords = coordsTable.get(\"x\").get(coord1.x);\n        for (Point coord2 : relevantCoords) {\n          boolean isAbove = coord2.y > coord1.y;\n          if (isAbove)\n            rectangleCount += clockwiseCountRectangles(coord2, coordsTable, RIGHT, lowerLeftY);\n        }\n      } else if (direction == RIGHT) {\n        List<Point> relevantCoords = coordsTable.get(\"y\").get(coord1.y);\n        for (Point coord2 : relevantCoords) {\n          boolean isRight = coord2.x > coord1.x;\n          if (isRight)\n            rectangleCount += clockwiseCountRectangles(coord2, coordsTable, DOWN, lowerLeftY);\n        }\n      }\n      return rectangleCount;\n    }\n  }\n\n  static class Point {\n    public int x;\n    public int y;\n\n    public Point(int x, int y) {\n      this.x = x;\n      this.y = y;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^2) time | O(n) space - where n is the number of coordinates\n  public static int rectangleMania(Point[] coords) {\n    Set<String> coordsTable = getCoordsTable(coords);\n    return getRectangleCount(coords, coordsTable);\n  }\n\n  public static Set<String> getCoordsTable(Point[] coords) {\n    Set<String> coordsTable = new HashSet<String>();\n    for (Point coord : coords) {\n      String coordString = coordToString(coord);\n      coordsTable.add(coordString);\n    }\n    return coordsTable;\n  }\n\n  public static int getRectangleCount(Point[] coords, Set<String> coordsTable) {\n    int rectangleCount = 0;\n    for (Point coord1 : coords) {\n      for (Point coord2 : coords) {\n        if (!isInUpperRight(coord1, coord2)) continue;\n        String upperCoordString = coordToString(new Point(coord1.x, coord2.y));\n        String rightCoordString = coordToString(new Point(coord2.x, coord1.y));\n        if (coordsTable.contains(upperCoordString) && coordsTable.contains(rightCoordString))\n          rectangleCount++;\n      }\n    }\n    return rectangleCount;\n  }\n\n  public static boolean isInUpperRight(Point coord1, Point coord2) {\n    return coord2.x > coord1.x && coord2.y > coord1.y;\n  }\n\n  public static String coordToString(Point coord) {\n    return Integer.toString(coord.x) + \"-\" + Integer.toString(coord.y);\n  }\n\n  static class Point {\n    public int x;\n    public int y;\n\n    public Point(int x, int y) {\n      this.x = x;\n      this.y = y;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function rectangleMania(coords) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.rectangleMania = rectangleMania;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(1);\n});\n\nit('Test Case #2', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(3);\n});\n\nit('Test Case #3', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n    [3, 1],\n    [3, 0],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(6);\n});\n\nit('Test Case #4', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n    [3, 1],\n    [3, 0],\n    [1, 3],\n    [3, 3],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(8);\n});\n\nit('Test Case #5', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n    [3, 1],\n    [3, 0],\n    [1, 3],\n    [3, 3],\n    [0, -4],\n    [3, -4],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(10);\n});\n\nit('Test Case #6', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n    [3, 1],\n    [3, 0],\n    [1, 3],\n    [3, 3],\n    [0, -4],\n    [3, -4],\n    [1, -3],\n    [3, -3],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(13);\n});\n\nit('Test Case #7', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n    [3, 1],\n    [3, 0],\n    [1, 3],\n    [3, 3],\n    [0, -4],\n    [3, -4],\n    [1, -3],\n    [3, -3],\n    [-1, 0],\n    [-10, 0],\n    [-1, -1],\n    [2, -2],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(13);\n});\n\nit('Test Case #8', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n    [3, 1],\n    [3, 0],\n    [1, 3],\n    [3, 3],\n    [0, -4],\n    [3, -4],\n    [1, -3],\n    [3, -3],\n    [-1, 0],\n    [-10, 0],\n    [-1, -1],\n    [2, -2],\n    [0, -1],\n    [1, -4],\n    [-10, -4],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(23);\n});\n\nit('Test Case #9', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 0],\n    [2, 1],\n    [1, 3],\n    [3, 3],\n    [0, -4],\n    [3, -5],\n    [1, -3],\n    [3, -2],\n    [-1, 0],\n    [-10, 0],\n    [-1, -1],\n    [2, -2],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(0);\n});\n\nit('Test Case #10', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(0);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const coords = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n    [3, 1],\n    [3, 0],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(6);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n^2) space - where n is the number of coordinates\nfunction rectangleMania(coords) {\n  const coordsTable = getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nfunction getCoordsTable(coords) {\n  const coordsTable = {};\n  for (const coord1 of coords) {\n    const coord1Directions = {\n      [UP]: [],\n      [RIGHT]: [],\n      [DOWN]: [],\n      [LEFT]: [],\n    };\n    for (const coord2 of coords) {\n      const coord2Direction = getCoordDirection(coord1, coord2);\n      if (coord2Direction in coord1Directions) coord1Directions[coord2Direction].push(coord2);\n    }\n    const coord1String = coordToString(coord1);\n    coordsTable[coord1String] = coord1Directions;\n  }\n  return coordsTable;\n}\n\nfunction getCoordDirection(coord1, coord2) {\n  const [x1, y1] = coord1;\n  const [x2, y2] = coord2;\n  if (y2 === y1) {\n    if (x2 > x1) {\n      return RIGHT;\n    } else if (x2 < x1) {\n      return LEFT;\n    }\n  } else if (x2 === x1) {\n    if (y2 > y1) {\n      return UP;\n    } else if (y2 < y1) {\n      return DOWN;\n    }\n  }\n  return '';\n}\n\nfunction getRectangleCount(coords, coordsTable) {\n  let rectangleCount = 0;\n  for (const coord of coords) {\n    rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, coord);\n  }\n  return rectangleCount;\n}\n\nfunction clockwiseCountRectangles(coord, coordsTable, direction, origin) {\n  const coordString = coordToString(coord);\n  if (direction === LEFT) {\n    const rectangleFound = coordsTable[coordString][LEFT].includes(origin);\n    return rectangleFound ? 1 : 0;\n  } else {\n    let rectangleCount = 0;\n    const nextDirection = getNextClockwiseDirection(direction);\n    for (const nextCoord of coordsTable[coordString][direction]) {\n      rectangleCount += clockwiseCountRectangles(nextCoord, coordsTable, nextDirection, origin);\n    }\n    return rectangleCount;\n  }\n}\n\nfunction getNextClockwiseDirection(direction) {\n  if (direction === UP) return RIGHT;\n  if (direction === RIGHT) return DOWN;\n  if (direction === DOWN) return LEFT;\n  return '';\n}\n\nfunction coordToString(coord) {\n  const [x, y] = coord;\n  return `${x}-${y}`;\n}\n\nconst UP = 'up';\nconst RIGHT = 'right';\nconst DOWN = 'down';\nconst LEFT = 'left';\n\nexports.rectangleMania = rectangleMania;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space - where n is the number of coordinates\nfunction rectangleMania(coords) {\n  const coordsTable = getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nfunction getCoordsTable(coords) {\n  const coordsTable = {x: {}, y: {}};\n  for (const coord of coords) {\n    const [x, y] = coord;\n    coordsTable.x[x] = coordsTable.x[x] || [];\n    coordsTable.x[x].push(coord);\n    coordsTable.y[y] = coordsTable.y[y] || [];\n    coordsTable.y[y].push(coord);\n  }\n  return coordsTable;\n}\n\nfunction getRectangleCount(coords, coordsTable) {\n  let rectangleCount = 0;\n  for (const coord of coords) {\n    const lowerLeftY = coord[1];\n    rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, lowerLeftY);\n  }\n  return rectangleCount;\n}\n\nfunction clockwiseCountRectangles(coord1, coordsTable, direction, lowerLeftY) {\n  const [x1, y1] = coord1;\n  if (direction === DOWN) {\n    const relevantCoords = coordsTable.x[x1];\n    for (const coord2 of relevantCoords) {\n      const lowerRightY = coord2[1];\n      if (lowerRightY === lowerLeftY) return 1;\n    }\n    return 0;\n  } else {\n    let rectangleCount = 0;\n    if (direction === UP) {\n      const relevantCoords = coordsTable.x[x1];\n      for (const coord2 of relevantCoords) {\n        const y2 = coord2[1];\n        const isAbove = y2 > y1;\n        if (isAbove) rectangleCount += clockwiseCountRectangles(coord2, coordsTable, RIGHT, lowerLeftY);\n      }\n    } else if (direction === RIGHT) {\n      const relevantCoords = coordsTable.y[y1];\n      for (const coord2 of relevantCoords) {\n        const x2 = coord2[0];\n        const isRight = x2 > x1;\n        if (isRight) rectangleCount += clockwiseCountRectangles(coord2, coordsTable, DOWN, lowerLeftY);\n      }\n    }\n    return rectangleCount;\n  }\n}\n\nconst UP = 'up';\nconst RIGHT = 'right';\nconst DOWN = 'down';\n\nexports.rectangleMania = rectangleMania;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space - where n is the number of coordinates\nfunction rectangleMania(coords) {\n  const coordsTable = getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nfunction getCoordsTable(coords) {\n  const coordsTable = {};\n  for (const coord of coords) {\n    const coordString = coordToString(coord);\n    coordsTable[coordString] = true;\n  }\n  return coordsTable;\n}\n\nfunction getRectangleCount(coords, coordsTable) {\n  let rectangleCount = 0;\n  for (const [x1, y1] of coords) {\n    for (const [x2, y2] of coords) {\n      if (!isInUpperRight([x1, y1], [x2, y2])) continue;\n      const upperCoordString = coordToString([x1, y2]);\n      const rightCoordString = coordToString([x2, y1]);\n      if (upperCoordString in coordsTable && rightCoordString in coordsTable) rectangleCount++;\n    }\n  }\n  return rectangleCount;\n}\n\nfunction isInUpperRight(coord1, coord2) {\n  const [x1, y1] = coord1;\n  const [x2, y2] = coord2;\n  return x2 > x1 && y2 > y1;\n}\n\nfunction coordToString(coord) {\n  const [x, y] = coord;\n  return `${x}-${y}`;\n}\n\nexports.rectangleMania = rectangleMania;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def rectangleMania(coords):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        coords = [[0, 0], [0, 1], [1, 1], [1, 0]]\n        self.assertEqual(program.rectangleMania(coords), 1)\n\n    def test_case_2(self):\n        coords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0]]\n        self.assertEqual(program.rectangleMania(coords), 3)\n\n    def test_case_3(self):\n        coords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0]]\n        self.assertEqual(program.rectangleMania(coords), 6)\n\n    def test_case_4(self):\n        coords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0], [1, 3], [3, 3]]\n        self.assertEqual(program.rectangleMania(coords), 8)\n\n    def test_case_5(self):\n        coords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0], [1, 3], [3, 3], [0, -4], [3, -4]]\n        self.assertEqual(program.rectangleMania(coords), 10)\n\n    def test_case_6(self):\n        coords = [\n            [0, 0],\n            [0, 1],\n            [1, 1],\n            [1, 0],\n            [2, 1],\n            [2, 0],\n            [3, 1],\n            [3, 0],\n            [1, 3],\n            [3, 3],\n            [0, -4],\n            [3, -4],\n            [1, -3],\n            [3, -3],\n        ]\n        self.assertEqual(program.rectangleMania(coords), 13)\n\n    def test_case_7(self):\n        coords = [\n            [0, 0],\n            [0, 1],\n            [1, 1],\n            [1, 0],\n            [2, 1],\n            [2, 0],\n            [3, 1],\n            [3, 0],\n            [1, 3],\n            [3, 3],\n            [0, -4],\n            [3, -4],\n            [1, -3],\n            [3, -3],\n            [-1, 0],\n            [-10, 0],\n            [-1, -1],\n            [2, -2],\n        ]\n        self.assertEqual(program.rectangleMania(coords), 13)\n\n    def test_case_8(self):\n        coords = [\n            [0, 0],\n            [0, 1],\n            [1, 1],\n            [1, 0],\n            [2, 1],\n            [2, 0],\n            [3, 1],\n            [3, 0],\n            [1, 3],\n            [3, 3],\n            [0, -4],\n            [3, -4],\n            [1, -3],\n            [3, -3],\n            [-1, 0],\n            [-10, 0],\n            [-1, -1],\n            [2, -2],\n            [0, -1],\n            [1, -4],\n            [-10, -4],\n        ]\n        self.assertEqual(program.rectangleMania(coords), 23)\n\n    def test_case_9(self):\n        coords = [\n            [0, 0],\n            [0, 1],\n            [1, 0],\n            [2, 1],\n            [1, 3],\n            [3, 3],\n            [0, -4],\n            [3, -5],\n            [1, -3],\n            [3, -2],\n            [-1, 0],\n            [-10, 0],\n            [-1, -1],\n            [2, -2],\n        ]\n        self.assertEqual(program.rectangleMania(coords), 0)\n\n    def test_case_10(self):\n        coords = [[0, 0], [0, 1], [1, 1]]\n        self.assertEqual(program.rectangleMania(coords), 0)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        coords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0]]\n        self.assertEqual(program.rectangleMania(coords), 6)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n^2) space - where n is the number of coordinates\ndef rectangleMania(coords):\n    coordsTable = getCoordsTable(coords)\n    return getRectangleCount(coords, coordsTable)\n\n\ndef getCoordsTable(coords):\n    coordsTable = {}\n    for coord1 in coords:\n        coord1Directions = {UP: [], RIGHT: [], DOWN: [], LEFT: []}\n        for coord2 in coords:\n            coord2Direction = getCoordDirection(coord1, coord2)\n            if coord2Direction in coord1Directions:\n                coord1Directions[coord2Direction].append(coord2)\n        coord1String = coordToString(coord1)\n        coordsTable[coord1String] = coord1Directions\n    return coordsTable\n\n\ndef getCoordDirection(coord1, coord2):\n    x1, y1 = coord1\n    x2, y2 = coord2\n    if y2 == y1:\n        if x2 > x1:\n            return RIGHT\n        elif x2 < x1:\n            return LEFT\n    elif x2 == x1:\n        if y2 > y1:\n            return UP\n        elif y2 < y1:\n            return DOWN\n    return \"\"\n\n\ndef getRectangleCount(coords, coordsTable):\n    rectangleCount = 0\n    for coord in coords:\n        rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, coord)\n    return rectangleCount\n\n\ndef clockwiseCountRectangles(coord, coordsTable, direction, origin):\n    coordString = coordToString(coord)\n    if direction == LEFT:\n        rectangleFound = origin in coordsTable[coordString][LEFT]\n        return 1 if rectangleFound else 0\n    else:\n        rectangleCount = 0\n        nextDirection = getNextClockwiseDirection(direction)\n        for nextCoord in coordsTable[coordString][direction]:\n            rectangleCount += clockwiseCountRectangles(nextCoord, coordsTable, nextDirection, origin)\n        return rectangleCount\n\n\ndef getNextClockwiseDirection(direction):\n    if direction == UP:\n        return RIGHT\n    if direction == RIGHT:\n        return DOWN\n    if direction == DOWN:\n        return LEFT\n    return \"\"\n\n\ndef coordToString(coord):\n    x, y = coord\n    return str(x) + \"-\" + str(y)\n\n\nUP = \"up\"\nRIGHT = \"right\"\nDOWN = \"down\"\nLEFT = \"left\"\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space - where n is the number of coordinates\ndef rectangleMania(coords):\n    coordsTable = getCoordsTable(coords)\n    return getRectangleCount(coords, coordsTable)\n\n\ndef getCoordsTable(coords):\n    coordsTable = {\"x\": {}, \"y\": {}}\n    for coord in coords:\n        x, y = coord\n        if x not in coordsTable[\"x\"]:\n            coordsTable[\"x\"][x] = []\n        coordsTable[\"x\"][x].append(coord)\n        if y not in coordsTable[\"y\"]:\n            coordsTable[\"y\"][y] = []\n        coordsTable[\"y\"][y].append(coord)\n    return coordsTable\n\n\ndef getRectangleCount(coords, coordsTable):\n    rectangleCount = 0\n    for coord in coords:\n        lowerLeftY = coord[1]\n        rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, lowerLeftY)\n    return rectangleCount\n\n\ndef clockwiseCountRectangles(coord1, coordsTable, direction, lowerLeftY):\n    x1, y1 = coord1\n    if direction == DOWN:\n        relevantCoords = coordsTable[\"x\"][x1]\n        for coord2 in relevantCoords:\n            lowerRightY = coord2[1]\n            if lowerRightY == lowerLeftY:\n                return 1\n        return 0\n    else:\n        rectangleCount = 0\n        if direction == UP:\n            relevantCoords = coordsTable[\"x\"][x1]\n            for coord2 in relevantCoords:\n                y2 = coord2[1]\n                isAbove = y2 > y1\n                if isAbove:\n                    rectangleCount += clockwiseCountRectangles(coord2, coordsTable, RIGHT, lowerLeftY)\n        elif direction == RIGHT:\n            relevantCoords = coordsTable[\"y\"][y1]\n            for coord2 in relevantCoords:\n                x2 = coord2[0]\n                isRight = x2 > x1\n                if isRight:\n                    rectangleCount += clockwiseCountRectangles(coord2, coordsTable, DOWN, lowerLeftY)\n        return rectangleCount\n\n\nUP = \"up\"\nRIGHT = \"right\"\nDOWN = \"down\"\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space - where n is the number of coordinates\ndef rectangleMania(coords):\n    coordsTable = getCoordsTable(coords)\n    return getRectangleCount(coords, coordsTable)\n\n\ndef getCoordsTable(coords):\n    coordsTable = {}\n    for coord in coords:\n        coordString = coordToString(coord)\n        coordsTable[coordString] = True\n    return coordsTable\n\n\ndef getRectangleCount(coords, coordsTable):\n    rectangleCount = 0\n    for x1, y1 in coords:\n        for x2, y2 in coords:\n            if not isInUpperRight([x1, y1], [x2, y2]):\n                continue\n            upperCoordString = coordToString([x1, y2])\n            rightCoordString = coordToString([x2, y1])\n            if upperCoordString in coordsTable and rightCoordString in coordsTable:\n                rectangleCount += 1\n    return rectangleCount\n\n\ndef isInUpperRight(coord1, coord2):\n    x1, y1 = coord1\n    x2, y2 = coord2\n    return x2 > x1 and y2 > y1\n\n\ndef coordToString(coord):\n    x, y = coord\n    return str(x) + \"-\" + str(y)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func rectangleMania(_ coords: [[Int]]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let firstCoords = [[0, 0], [0, 1], [1, 1], [1, 0]]\n      try assertEqual(1, program.rectangleMania(firstCoords))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let secondCoords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0]]\n      try assertEqual(3, program.rectangleMania(secondCoords))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let thirdCoords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0]]\n      try assertEqual(6, program.rectangleMania(thirdCoords))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let fourthCoords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0], [1, 3], [3, 3]]\n      try assertEqual(8, program.rectangleMania(fourthCoords))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let fifthCoords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0], [1, 3], [3, 3], [0, -4], [3, -4]]\n      try assertEqual(10, program.rectangleMania(fifthCoords))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let sixthCoords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0], [1, 3], [3, 3], [0, -4], [3, -4], [1, -3], [3, -3]]\n      try assertEqual(13, program.rectangleMania(sixthCoords))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let seventhCoords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0], [1, 3], [3, 3], [0, -4], [3, -4], [1, -3], [3, -3], [-1, 0], [-10, 0], [-1, -1], [2, -2]]\n      try assertEqual(13, program.rectangleMania(seventhCoords))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let eighthCoords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0], [1, 3], [3, 3], [0, -4], [3, -4], [1, -3], [3, -3], [-1, 0], [-10, 0], [-1, -1], [2, -2], [0, -1], [1, -4], [-10, -4]]\n      try assertEqual(23, program.rectangleMania(eighthCoords))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let ninthCoords = [[0, 0], [0, 1], [1, 0], [2, 1], [1, 3], [3, 3], [0, -4], [3, -5], [1, -3], [3, -2], [-1, 0], [-10, 0], [-1, -1], [2, -2]]\n      try assertEqual(0, program.rectangleMania(ninthCoords))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let tenthCoords = [[0, 0], [0, 1], [1, 1]]\n      try assertEqual(0, program.rectangleMania(tenthCoords))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let thirdCoords = [[0, 0], [0, 1], [1, 1], [1, 0], [2, 1], [2, 0], [3, 1], [3, 0]]\n      try assertEqual(6, program.rectangleMania(thirdCoords))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  let UP = \"up\"\n  let DOWN = \"down\"\n  let LEFT = \"left\"\n  let RIGHT = \"right\"\n\n  func coordToString(_ coord: [Int]) -> String {\n    let x = coord[0]\n    let y = coord[1]\n\n    return \"\\(x)-\\(y)\"\n  }\n\n  // O(n^2) time | O(n^2) space\n  func rectangleMania(_ coords: [[Int]]) -> Int {\n    let coordsTable = getCoordsTable(coords)\n    return getRectangleCount(coords, coordsTable)\n  }\n\n  func getCoordsTable(_ coords: [[Int]]) -> [String: [String: [[Int]]]] {\n    var coordsTable = [String: [String: [[Int]]]]()\n\n    for coord1 in coords {\n      var coord1Directions: [String: [[Int]]] = [UP: [], DOWN: [], LEFT: [], RIGHT: []]\n\n      for coord2 in coords {\n        let coord2Direction = getCoordDirection(coord1, coord2)\n\n        if var coordinatesForDirection = coord1Directions[coord2Direction] {\n          coordinatesForDirection.append(coord2)\n          coord1Directions[coord2Direction] = coordinatesForDirection\n        }\n      }\n\n      let coords1String = coordToString(coord1)\n      coordsTable[coords1String] = coord1Directions\n    }\n\n    return coordsTable\n  }\n\n  func getCoordDirection(_ coord1: [Int], _ coord2: [Int]) -> String {\n    let x1 = coord1[0]\n    let y1 = coord1[1]\n\n    let x2 = coord2[0]\n    let y2 = coord2[1]\n\n    if y1 == y2 {\n      if x1 < x2 {\n        return RIGHT\n      } else {\n        return LEFT\n      }\n    } else if x1 == x2 {\n      if y1 < y2 {\n        return UP\n      } else {\n        return DOWN\n      }\n    }\n\n    return \"\"\n  }\n\n  func getRectangleCount(_ coords: [[Int]], _ coordsTable: [String: [String: [[Int]]]]) -> Int {\n    var rectangleCount = 0\n\n    for coord in coords {\n      rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, coord)\n    }\n\n    return rectangleCount\n  }\n\n  func clockwiseCountRectangles(_ coord: [Int], _ coordsTable: [String: [String: [[Int]]]], _ direction: String, _ origin: [Int]) -> Int {\n    let coordString = coordToString(coord)\n\n    if direction == LEFT {\n      if let directionsForCoordinate = coordsTable[coordString], let coordinatesForDirection = directionsForCoordinate[direction], coordinatesForDirection.contains(origin) {\n        return 1\n      } else {\n        return 0\n      }\n    } else {\n      var rectangleCount = 0\n      let nextDirection = getNextClockwiseDirection(direction)\n\n      if let directionsForCoordinate = coordsTable[coordString], let coordinatesForDirection = directionsForCoordinate[direction] {\n        for nextCoord in coordinatesForDirection {\n          rectangleCount += clockwiseCountRectangles(nextCoord, coordsTable, nextDirection, origin)\n        }\n      }\n\n      return rectangleCount\n    }\n  }\n\n  func getNextClockwiseDirection(_ direction: String) -> String {\n    if direction == UP {\n      return RIGHT\n    }\n\n    if direction == RIGHT {\n      return DOWN\n    }\n\n    if direction == DOWN {\n      return LEFT\n    }\n\n    return \"\"\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  let UP = \"up\"\n  let DOWN = \"down\"\n  let LEFT = \"left\"\n  let RIGHT = \"right\"\n\n  func coordToString(_ coord: [Int]) -> String {\n    let x = coord[0]\n    let y = coord[1]\n\n    return \"\\(x)-\\(y)\"\n  }\n\n  // O(n^2) time | O(n) space\n  func rectangleMania(_ coords: [[Int]]) -> Int {\n    let coordsTable = getCoordsTable(coords)\n    return getRectangleCount(coords, coordsTable)\n  }\n\n  func getCoordsTable(_ coords: [[Int]]) -> [String: [Int: [[Int]]]] {\n    var coordsTable: [String: [Int: [[Int]]]] = [\"x\": [:], \"y\": [:]]\n\n    for coord in coords {\n      let x = coord[0]\n      let y = coord[1]\n\n      if var tableAtX = coordsTable[\"x\"], var coordinatesForX = tableAtX[x] {\n        coordinatesForX.append(coord)\n        tableAtX[x] = coordinatesForX\n        coordsTable[\"x\"] = tableAtX\n      } else if var tableAtX = coordsTable[\"x\"] {\n        tableAtX[x] = [coord]\n        coordsTable[\"x\"] = tableAtX\n      }\n\n      if var tableAtY = coordsTable[\"y\"], var coordinatesForY = tableAtY[y] {\n        coordinatesForY.append(coord)\n        tableAtY[y] = coordinatesForY\n        coordsTable[\"y\"] = tableAtY\n      } else if var tableAtY = coordsTable[\"y\"] {\n        tableAtY[y] = [coord]\n        coordsTable[\"y\"] = tableAtY\n      }\n    }\n\n    return coordsTable\n  }\n\n  func getRectangleCount(_ coords: [[Int]], _ coordsTable: [String: [Int: [[Int]]]]) -> Int {\n    var rectangleCount = 0\n\n    for coord in coords {\n      let lowerLeftY = coord[1]\n      rectangleCount += clockwiseCountRectangles(coord, coordsTable, UP, lowerLeftY)\n    }\n\n    return rectangleCount\n  }\n\n  func clockwiseCountRectangles(_ coord: [Int], _ coordsTable: [String: [Int: [[Int]]]], _ direction: String, _ lowerLeftY: Int) -> Int {\n    let x1 = coord[0]\n    let y1 = coord[1]\n\n    if direction == DOWN {\n      if let tableAtX = coordsTable[\"x\"], let relevantCoordinates = tableAtX[x1] {\n        for coord2 in relevantCoordinates {\n          let lowerRightY = coord2[1]\n          if lowerLeftY == lowerRightY {\n            return 1\n          }\n        }\n      }\n\n      return 0\n    } else {\n      var rectangleCount = 0\n\n      if direction == UP {\n        if let tableAtX = coordsTable[\"x\"], let relevantCoordinates = tableAtX[x1] {\n          for coord2 in relevantCoordinates {\n            let y2 = coord2[1]\n\n            let isAbove = y2 > y1\n\n            if isAbove {\n              rectangleCount += clockwiseCountRectangles(coord2, coordsTable, RIGHT, lowerLeftY)\n            }\n          }\n        }\n      } else if direction == RIGHT {\n        if let tableAtY = coordsTable[\"y\"], let relevantCoordinates = tableAtY[y1] {\n          for coord2 in relevantCoordinates {\n            let x2 = coord2[0]\n\n            let isRight = x2 > x1\n\n            if isRight {\n              rectangleCount += clockwiseCountRectangles(coord2, coordsTable, DOWN, lowerLeftY)\n            }\n          }\n        }\n      }\n\n      return rectangleCount\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  let UP = \"up\"\n  let DOWN = \"down\"\n  let LEFT = \"left\"\n  let RIGHT = \"right\"\n\n  func coordToString(_ coord: [Int]) -> String {\n    let x = coord[0]\n    let y = coord[1]\n\n    return \"\\(x)-\\(y)\"\n  }\n\n  // O(n^2) time | O(n) space\n  func rectangleMania(_ coords: [[Int]]) -> Int {\n    let coordsTable = getCoordsTable(coords)\n    return getRectangleCount(coords, coordsTable)\n  }\n\n  func getCoordsTable(_ coords: [[Int]]) -> [String: Bool] {\n    var coordsTable = [String: Bool]()\n\n    for coord in coords {\n      let coordString = coordToString(coord)\n      coordsTable[coordString] = true\n    }\n\n    return coordsTable\n  }\n\n  func getRectangleCount(_ coords: [[Int]], _ coordsTable: [String: Bool]) -> Int {\n    var rectangleCount = 0\n\n    for coord1 in coords {\n      let x1 = coord1[0]\n      let y1 = coord1[1]\n\n      for coord2 in coords {\n        let x2 = coord2[0]\n        let y2 = coord2[1]\n\n        if !isInUpperRightCorner(coord1, coord2) {\n          continue\n        }\n\n        let leftCoordString = coordToString([x1, y2])\n        let bottomCoordString = coordToString([x2, y1])\n\n        if coordsTable.keys.contains(leftCoordString), coordsTable.keys.contains(bottomCoordString) {\n          rectangleCount += 1\n        }\n      }\n    }\n\n    return rectangleCount\n  }\n\n  func isInUpperRightCorner(_ coord1: [Int], _ coord2: [Int]) -> Bool {\n    let x1 = coord1[0]\n    let y1 = coord1[1]\n\n    let x2 = coord2[0]\n    let y2 = coord2[1]\n\n    return x2 > x1 && y2 > y1\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "type Coord = [number, number];\n\nexport function rectangleMania(coords: Coord[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\ntype Coord = [number, number];\n\nit('Test Case #1', function () {\n  const coords: Coord[] = [\n    [0, 0],\n    [0, 1],\n    [1, 1],\n    [1, 0],\n    [2, 1],\n    [2, 0],\n    [3, 1],\n    [3, 0],\n  ];\n  chai.expect(program.rectangleMania(coords)).to.deep.equal(6);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Coord = [number, number];\n\nenum Direction {\n  Up,\n  Right,\n  Down,\n  Left,\n}\n\ninterface CoordDirection {\n  [Direction.Up]: Coord[];\n  [Direction.Right]: Coord[];\n  [Direction.Down]: Coord[];\n  [Direction.Left]: Coord[];\n}\n\ninterface CoordsTable {\n  [key: string]: CoordDirection;\n}\n\n// O(n^2) time | O(n^2) space - where n is the number of coordinates\nexport function rectangleMania(coords: Coord[]) {\n  const coordsTable = getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nfunction getCoordsTable(coords: Coord[]) {\n  const coordsTable: CoordsTable = {};\n  for (const coord1 of coords) {\n    const coord1Directions: CoordDirection = {\n      [Direction.Up]: [],\n      [Direction.Right]: [],\n      [Direction.Down]: [],\n      [Direction.Left]: [],\n    };\n    for (const coord2 of coords) {\n      const coord2Direction = getCoordDirection(coord1, coord2);\n      if (coord2Direction !== null) coord1Directions[coord2Direction].push(coord2);\n    }\n    const coord1String = coordToString(coord1);\n    coordsTable[coord1String] = coord1Directions;\n  }\n  return coordsTable;\n}\n\nfunction getCoordDirection(coord1: Coord, coord2: Coord) {\n  const [x1, y1] = coord1;\n  const [x2, y2] = coord2;\n  if (y2 === y1) {\n    if (x2 > x1) {\n      return Direction.Right;\n    } else if (x2 < x1) {\n      return Direction.Left;\n    }\n  } else if (x2 === x1) {\n    if (y2 > y1) {\n      return Direction.Up;\n    } else if (y2 < y1) {\n      return Direction.Down;\n    }\n  }\n  return null;\n}\n\nfunction getRectangleCount(coords: Coord[], coordsTable: CoordsTable) {\n  let rectangleCount = 0;\n  for (const coord of coords) {\n    rectangleCount += clockwiseCountRectangles(coord, coordsTable, Direction.Up, coord);\n  }\n  return rectangleCount;\n}\n\nfunction clockwiseCountRectangles(coord: Coord, coordsTable: CoordsTable, direction: Direction | null, origin: Coord) {\n  const coordString = coordToString(coord);\n  if (direction === null) return 0;\n  else if (direction === Direction.Left) {\n    const rectangleFound = coordsTable[coordString][Direction.Left].includes(origin);\n    return rectangleFound ? 1 : 0;\n  } else {\n    let rectangleCount = 0;\n    const nextDirection = getNextClockwiseDirection(direction);\n    for (const nextCoord of coordsTable[coordString][direction]) {\n      rectangleCount += clockwiseCountRectangles(nextCoord, coordsTable, nextDirection, origin);\n    }\n    return rectangleCount;\n  }\n}\n\nfunction getNextClockwiseDirection(direction: Direction | null) {\n  if (direction === Direction.Up) return Direction.Right;\n  if (direction === Direction.Right) return Direction.Down;\n  if (direction === Direction.Down) return Direction.Left;\n  return null;\n}\n\nfunction coordToString(coord: Coord) {\n  const [x, y] = coord;\n  return `${x}-${y}`;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Coord = [number, number];\n\nenum Direction {\n  Up,\n  Right,\n  Down,\n}\n\ninterface CoordsTable {\n  x: {\n    [key: number]: Coord[];\n  };\n  y: {\n    [key: number]: Coord[];\n  };\n}\n\n// O(n^2) time | O(n) space - where n is the number of coordinates\nexport function rectangleMania(coords: Coord[]) {\n  const coordsTable = getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nfunction getCoordsTable(coords: Coord[]) {\n  const coordsTable: CoordsTable = {x: {}, y: {}};\n  for (const coord of coords) {\n    const [x, y] = coord;\n    coordsTable.x[x] = coordsTable.x[x] || [];\n    coordsTable.x[x].push(coord);\n    coordsTable.y[y] = coordsTable.y[y] || [];\n    coordsTable.y[y].push(coord);\n  }\n  return coordsTable;\n}\n\nfunction getRectangleCount(coords: Coord[], coordsTable: CoordsTable) {\n  let rectangleCount = 0;\n  for (const coord of coords) {\n    const lowerLeftY = coord[1];\n    rectangleCount += clockwiseCountRectangles(coord, coordsTable, Direction.Up, lowerLeftY);\n  }\n  return rectangleCount;\n}\n\nfunction clockwiseCountRectangles(coord1: Coord, coordsTable: CoordsTable, direction: Direction, lowerLeftY: number) {\n  const [x1, y1] = coord1;\n  if (direction === Direction.Down) {\n    const relevantCoords = coordsTable.x[x1];\n    for (const coord2 of relevantCoords) {\n      const lowerRightY = coord2[1];\n      if (lowerRightY === lowerLeftY) return 1;\n    }\n    return 0;\n  } else {\n    let rectangleCount = 0;\n    if (direction === Direction.Up) {\n      const relevantCoords = coordsTable.x[x1];\n      for (const coord2 of relevantCoords) {\n        const y2 = coord2[1];\n        const isAbove = y2 > y1;\n        if (isAbove) rectangleCount += clockwiseCountRectangles(coord2, coordsTable, Direction.Right, lowerLeftY);\n      }\n    } else if (direction === Direction.Right) {\n      const relevantCoords = coordsTable.y[y1];\n      for (const coord2 of relevantCoords) {\n        const x2 = coord2[0];\n        const isRight = x2 > x1;\n        if (isRight) rectangleCount += clockwiseCountRectangles(coord2, coordsTable, Direction.Down, lowerLeftY);\n      }\n    }\n    return rectangleCount;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Coord = [number, number];\n\ninterface CoordsTable {\n  [key: string]: boolean;\n}\n\n// O(n^2) time | O(n) space - where n is the number of coordinates\nexport function rectangleMania(coords: Coord[]) {\n  const coordsTable = getCoordsTable(coords);\n  return getRectangleCount(coords, coordsTable);\n}\n\nfunction getCoordsTable(coords: Coord[]) {\n  const coordsTable: CoordsTable = {};\n  for (const coord of coords) {\n    const coordString = coordToString(coord);\n    coordsTable[coordString] = true;\n  }\n  return coordsTable;\n}\n\nfunction getRectangleCount(coords: Coord[], coordsTable: CoordsTable) {\n  let rectangleCount = 0;\n  for (const [x1, y1] of coords) {\n    for (const [x2, y2] of coords) {\n      if (!isInUpperRight([x1, y1], [x2, y2])) continue;\n      const upperCoordString = coordToString([x1, y2]);\n      const rightCoordString = coordToString([x2, y1]);\n      if (upperCoordString in coordsTable && rightCoordString in coordsTable) rectangleCount++;\n    }\n  }\n  return rectangleCount;\n}\n\nfunction isInUpperRight(coord1: Coord, coord2: Coord) {\n  const [x1, y1] = coord1;\n  const [x2, y2] = coord2;\n  return x2 > x1 && y2 > y1;\n}\n\nfunction coordToString(coord: Coord) {\n  const [x, y] = coord;\n  return `${x}-${y}`;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          -4
+        ],
+        [
+          3,
+          -4
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          -4
+        ],
+        [
+          3,
+          -4
+        ],
+        [
+          1,
+          -3
+        ],
+        [
+          3,
+          -3
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          -4
+        ],
+        [
+          3,
+          -4
+        ],
+        [
+          1,
+          -3
+        ],
+        [
+          3,
+          -3
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -10,
+          0
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          2,
+          -2
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          -4
+        ],
+        [
+          3,
+          -4
+        ],
+        [
+          1,
+          -3
+        ],
+        [
+          3,
+          -3
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -10,
+          0
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          0,
+          -1
+        ],
+        [
+          1,
+          -4
+        ],
+        [
+          -10,
+          -4
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          0,
+          -4
+        ],
+        [
+          3,
+          -5
+        ],
+        [
+          1,
+          -3
+        ],
+        [
+          3,
+          -2
+        ],
+        [
+          -1,
+          0
+        ],
+        [
+          -10,
+          0
+        ],
+        [
+          -1,
+          -1
+        ],
+        [
+          2,
+          -2
+        ]
+      ]
+    },
+    {
+      "coords": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      6,
+      1,
+      3,
+      8,
+      10,
+      13,
+      13,
+      23,
+      0,
+      0
+    ]
+  ]
+}

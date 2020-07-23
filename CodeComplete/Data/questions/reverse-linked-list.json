@@ -1,0 +1,647 @@
+{
+  "Summary": {
+    "Name": "Reverse Linked List",
+    "Category": "Linked Lists",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-09-01T00:00:00Z",
+      "number": 257,
+      "timeOne": 0,
+      "timeTwo": 1251,
+      "url": "https://player.vimeo.com/video/347174597"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can iterate through the Linked List from head to tail and reverse it in place along the way.\nYou'll need to manipulate three nodes at once at every step.\nImagine you have three variables pointing to three consecutive nodes in a Linked List. Start by setting the \"next\" property of the second node to the first node. Then, set the first variable to the second node, and set the second variable to the third node. Finally, set the third variable to the second variable's \"next\" property (at this point, the second variable is the original third node). Repeat this process until you're at the tail of the Linked List.",
+  "SpaceTime": "O(n) time | O(1) space - where n is the number of nodes in the Linked List \n",
+  "PromptHTML": "<p>\n  Write a function that takes in the head of a Singly Linked List, reverses the\n  list in place (i.e., doesn't create a brand new list), and returns its new head.\n</p>\n<p>\n  Each <span>LinkedList</span> node has an integer <span>value</span> as well as\n  a <span>next</span> node pointing to the next node in the list or to\n  <span>None</span> / <span>null</span> if it's the tail of the list.\n</p>\n<p>\n  You can assume that the input Linked List will always have at least one node; in other\n  words, the head will never be <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">head</span> = 0 -> 1 -> 2 -> 3 -> 4 -> 5 <span class=\"CodeEditor-promptComment\">// the head node with value 0</span>\n</pre>\n<h3>Sample Output</h3>\n<pre>\n5 -> 4 -> 3 -> 2 -> 1 -> 0 <span class=\"CodeEditor-promptComment\">// the new head node with value 5</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "linkedlist",
+    "outputType": "linkedlist"
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "linkedList",
+      "Example": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      },
+      "Schema": {
+        "description": "A Singly Linked List is represented by a list of <span>nodes</span> and a <span>head</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>next</span> pointers and by the <span>head</span>.\n",
+        "properties": {
+          "head": {
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "next": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "next"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "head",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value) {\n    this->value = value;\n    this->next = NULL;\n  }\n};\n\nLinkedList *reverseLinkedList(LinkedList *head) {\n  // Write your code here.\n  return NULL;\n}\n",
+      "StartingTest": "#include <vector>\n\nLinkedList *newLinkedList(vector<int> values);\nvector<int> toArray(LinkedList *ll);\nbool arraysEqual(vector<int> arr1, vector<int> arr2);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      LinkedList *test = newLinkedList({0});\n      vector<int> result = toArray(reverseLinkedList(test));\n      vector<int> expected = {0};\n      assert(arraysEqual(result, expected));\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      LinkedList *test = newLinkedList({0, 1});\n      vector<int> result = toArray(reverseLinkedList(test));\n      vector<int> expected = {1, 0};\n      assert(arraysEqual(result, expected));\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      LinkedList *test = newLinkedList({0, 1, 2});\n      vector<int> result = toArray(reverseLinkedList(test));\n      vector<int> expected = {2, 1, 0};\n      assert(arraysEqual(result, expected));\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      LinkedList *test = newLinkedList({0, 1, 2, 3});\n      vector<int> result = toArray(reverseLinkedList(test));\n      vector<int> expected = {3, 2, 1, 0};\n      assert(arraysEqual(result, expected));\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      LinkedList *test = newLinkedList({0, 1, 2, 3, 4});\n      vector<int> result = toArray(reverseLinkedList(test));\n      vector<int> expected = {4, 3, 2, 1, 0};\n      assert(arraysEqual(result, expected));\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      LinkedList *test = newLinkedList({0, 1, 2, 3, 4, 5});\n      vector<int> result = toArray(reverseLinkedList(test));\n      vector<int> expected = {5, 4, 3, 2, 1, 0};\n      assert(arraysEqual(result, expected));\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      LinkedList *test =\n          newLinkedList({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});\n      vector<int> result = toArray(reverseLinkedList(test));\n      vector<int> expected = {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};\n      assert(arraysEqual(result, expected));\n    });\n  }\n};\n\nLinkedList *newLinkedList(vector<int> values) {\n  LinkedList *ll = new LinkedList(values[0]);\n  LinkedList *current = ll;\n  for (int i = 1; i < values.size(); i++) {\n    current->next = new LinkedList(values[i]);\n    current = current->next;\n  }\n  return ll;\n}\n\nvector<int> toArray(LinkedList *ll) {\n  vector<int> arr = {};\n  LinkedList *current = ll;\n  while (current != NULL) {\n    arr.push_back(current->value);\n    current = current->next;\n  }\n  return arr;\n}\n\nbool arraysEqual(vector<int> arr1, vector<int> arr2) {\n  if (arr1.size() != arr2.size())\n    return false;\n  for (int i = 0; i < arr1.size(); i++) {\n    if (arr1[i] != arr2[i])\n      return false;\n  }\n  return true;\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <vector>\n\nLinkedList *newLinkedList(vector<int> values);\nvector<int> toArray(LinkedList *ll);\nbool arraysEqual(vector<int> arr1, vector<int> arr2);\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      LinkedList *test = newLinkedList({0, 1, 2, 3, 4, 5});\n      vector<int> result = toArray(reverseLinkedList(test));\n      vector<int> expected = {5, 4, 3, 2, 1, 0};\n      assert(arraysEqual(result, expected));\n    });\n  }\n};\n\nLinkedList *newLinkedList(vector<int> values) {\n  LinkedList *ll = new LinkedList(values[0]);\n  LinkedList *current = ll;\n  for (int i = 1; i < values.size(); i++) {\n    current->next = new LinkedList(values[i]);\n    current = current->next;\n  }\n  return ll;\n}\n\nvector<int> toArray(LinkedList *ll) {\n  vector<int> arr = {};\n  LinkedList *current = ll;\n  while (current != NULL) {\n    arr.push_back(current->value);\n    current = current->next;\n  }\n  return arr;\n}\n\nbool arraysEqual(vector<int> arr1, vector<int> arr2) {\n  if (arr1.size() != arr2.size())\n    return false;\n  for (int i = 0; i < arr1.size(); i++) {\n    if (arr1[i] != arr2[i])\n      return false;\n  }\n  return true;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value) {\n    this->value = value;\n    this->next = NULL;\n  }\n};\n\n// O(n) time | O(1) space - where n is the number of nodes in the Linked List\nLinkedList *reverseLinkedList(LinkedList *head) {\n  LinkedList *p1 = NULL;\n  LinkedList *p2 = head;\n  while (p2 != NULL) {\n    LinkedList *p3 = p2->next;\n    p2->next = p1;\n    p1 = p2;\n    p2 = p3;\n  }\n  return p1;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static LinkedList ReverseLinkedList(LinkedList head) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic class LinkedList {\n\t\tpublic int Value;\n\t\tpublic LinkedList Next = null;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.Value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.LinkedList test = newLinkedList(new int[] {0});\n\t\tList<int> result = toList(Program.ReverseLinkedList(test));\n\t\tint[] expected = new int[] {0};\n\t\tUtils.AssertTrue(arraysEqual(result, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tProgram.LinkedList test = newLinkedList(new int[] {0, 1});\n\t\tList<int> result = toList(Program.ReverseLinkedList(test));\n\t\tint[] expected = new int[] {1, 0};\n\t\tUtils.AssertTrue(arraysEqual(result, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tProgram.LinkedList test = newLinkedList(new int[] {0, 1, 2});\n\t\tList<int> result = toList(Program.ReverseLinkedList(test));\n\t\tint[] expected = new int[] {2, 1, 0};\n\t\tUtils.AssertTrue(arraysEqual(result, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tProgram.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3});\n\t\tList<int> result = toList(Program.ReverseLinkedList(test));\n\t\tint[] expected = new int[] {3, 2, 1, 0};\n\t\tUtils.AssertTrue(arraysEqual(result, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tProgram.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3, 4});\n\t\tList<int> result = toList(Program.ReverseLinkedList(test));\n\t\tint[] expected = new int[] {4, 3, 2, 1, 0};\n\t\tUtils.AssertTrue(arraysEqual(result, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tProgram.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3, 4, 5});\n\t\tList<int> result = toList(Program.ReverseLinkedList(test));\n\t\tint[] expected = new int[] {5, 4, 3, 2, 1, 0};\n\t\tUtils.AssertTrue(arraysEqual(result, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tProgram.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,\n\t\t                                                   11, 12});\n\t\tList<int> result = toList(Program.ReverseLinkedList(test));\n\t\tint[] expected = new int[] {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};\n\t\tUtils.AssertTrue(arraysEqual(result, expected));\n\t}\n\n\tpublic Program.LinkedList newLinkedList(int[] values) {\n\t\tProgram.LinkedList ll = new Program.LinkedList(values[0]);\n\t\tProgram.LinkedList current = ll;\n\t\tfor (int i = 1; i < values.Length; i++) {\n\t\t\tcurrent.Next = new Program.LinkedList(values[i]);\n\t\t\tcurrent = current.Next;\n\t\t}\n\t\treturn ll;\n\t}\n\n\tpublic List<int> toList(Program.LinkedList ll) {\n\t\tList<int> arr = new List<int>();\n\t\tProgram.LinkedList current = ll;\n\t\twhile (current != null) {\n\t\t\tarr.Add(current.Value);\n\t\t\tcurrent = current.Next;\n\t\t}\n\t\treturn arr;\n\t}\n\n\tpublic bool arraysEqual(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) return false;\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) return false;\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3, 4, 5});\n\t\tList<int> result = toList(Program.ReverseLinkedList(test));\n\t\tint[] expected = new int[] {5, 4, 3, 2, 1, 0};\n\t\tUtils.AssertTrue(arraysEqual(result, expected));\n\t}\n\n\tpublic Program.LinkedList newLinkedList(int[] values) {\n\t\tProgram.LinkedList ll = new Program.LinkedList(values[0]);\n\t\tProgram.LinkedList current = ll;\n\t\tfor (int i = 1; i < values.Length; i++) {\n\t\t\tcurrent.Next = new Program.LinkedList(values[i]);\n\t\t\tcurrent = current.Next;\n\t\t}\n\t\treturn ll;\n\t}\n\n\tpublic List<int> toList(Program.LinkedList ll) {\n\t\tList<int> arr = new List<int>();\n\t\tProgram.LinkedList current = ll;\n\t\twhile (current != null) {\n\t\t\tarr.Add(current.Value);\n\t\t\tcurrent = current.Next;\n\t\t}\n\t\treturn arr;\n\t}\n\n\tpublic bool arraysEqual(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) return false;\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) return false;\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(1) space - where n is the number of nodes in the Linked List\n\tpublic static LinkedList ReverseLinkedList(LinkedList head) {\n\t\tLinkedList p1 = null;\n\t\tLinkedList p2 = head;\n\t\twhile (p2 != null) {\n\t\t\tLinkedList p3 = p2.Next;\n\t\t\tp2.Next = p1;\n\t\t\tp1 = p2;\n\t\t\tp2 = p3;\n\t\t}\n\t\treturn p1;\n\t}\n\n\tpublic class LinkedList {\n\t\tpublic int Value;\n\t\tpublic LinkedList Next = null;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.Value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\nfunc ReverseLinkedList(head *LinkedList) *LinkedList {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewLinkedList(val int, others ...int) *LinkedList {\n\tll := &LinkedList{Value: val}\n\tcurrent := ll\n\tfor _, other := range others {\n\t\tcurrent.Next = &LinkedList{Value: other}\n\t\tcurrent = current.Next\n\t}\n\treturn ll\n}\n\nfunc (ll *LinkedList) ToArray() []int {\n\tvals := []int{}\n\tcurrent := ll\n\tfor current != nil {\n\t\tvals = append(vals, current.Value)\n\t\tcurrent = current.Next\n\t}\n\treturn vals\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := NewLinkedList(0)\n\toutput := ReverseLinkedList(input)\n\texpected := []int{0}\n\trequire.NotNil(t, output)\n\trequire.Equal(t, expected, output.ToArray())\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tinput := NewLinkedList(0, 1)\n\toutput := ReverseLinkedList(input)\n\texpected := []int{1, 0}\n\trequire.NotNil(t, output)\n\trequire.Equal(t, expected, output.ToArray())\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tinput := NewLinkedList(0, 1, 2)\n\toutput := ReverseLinkedList(input)\n\texpected := []int{2, 1, 0}\n\trequire.NotNil(t, output)\n\trequire.Equal(t, expected, output.ToArray())\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tinput := NewLinkedList(0, 1, 2, 3)\n\toutput := ReverseLinkedList(input)\n\texpected := []int{3, 2, 1, 0}\n\trequire.NotNil(t, output)\n\trequire.Equal(t, expected, output.ToArray())\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tinput := NewLinkedList(0, 1, 2, 3, 4)\n\toutput := ReverseLinkedList(input)\n\texpected := []int{4, 3, 2, 1, 0}\n\trequire.NotNil(t, output)\n\trequire.Equal(t, expected, output.ToArray())\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tinput := NewLinkedList(0, 1, 2, 3, 4, 5)\n\toutput := ReverseLinkedList(input)\n\texpected := []int{5, 4, 3, 2, 1, 0}\n\trequire.NotNil(t, output)\n\trequire.Equal(t, expected, output.ToArray())\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tinput := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)\n\toutput := ReverseLinkedList(input)\n\texpected := []int{12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}\n\trequire.NotNil(t, output)\n\trequire.Equal(t, expected, output.ToArray())\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewLinkedList(val int, others ...int) *LinkedList {\n\tll := &LinkedList{Value: val}\n\tcurrent := ll\n\tfor _, other := range others {\n\t\tcurrent.Next = &LinkedList{Value: other}\n\t\tcurrent = current.Next\n\t}\n\treturn ll\n}\n\nfunc (ll *LinkedList) ToArray() []int {\n\tvals := []int{}\n\tcurrent := ll\n\tfor current != nil {\n\t\tvals = append(vals, current.Value)\n\t\tcurrent = current.Next\n\t}\n\treturn vals\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := NewLinkedList(0, 1, 2, 3, 4, 5)\n\toutput := ReverseLinkedList(input)\n\texpected := []int{5, 4, 3, 2, 1, 0}\n\trequire.NotNil(t, output)\n\trequire.Equal(t, expected, output.ToArray())\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\n// O(n) time | O(1) space - where n is the number of nodes in the Linked List\nfunc ReverseLinkedList(head *LinkedList) *LinkedList {\n\tvar p1, p2 *LinkedList = nil, head\n\tfor p2 != nil {\n\t\tp3 := p2.Next\n\t\tp2.Next = p1\n\t\tp1 = p2\n\t\tp2 = p3\n\t}\n\treturn p1\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static LinkedList reverseLinkedList(LinkedList head) {\n    // Write your code here.\n    return null;\n  }\n\n  static class LinkedList {\n    int value;\n    LinkedList next = null;\n\n    public LinkedList(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.LinkedList test = newLinkedList(new int[] {0});\n    List<Integer> result = toArrayList(Program.reverseLinkedList(test));\n    int[] expected = new int[] {0};\n    Utils.assertTrue(arraysEqual(result, expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    Program.LinkedList test = newLinkedList(new int[] {0, 1});\n    List<Integer> result = toArrayList(Program.reverseLinkedList(test));\n    int[] expected = new int[] {1, 0};\n    Utils.assertTrue(arraysEqual(result, expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    Program.LinkedList test = newLinkedList(new int[] {0, 1, 2});\n    List<Integer> result = toArrayList(Program.reverseLinkedList(test));\n    int[] expected = new int[] {2, 1, 0};\n    Utils.assertTrue(arraysEqual(result, expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    Program.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3});\n    List<Integer> result = toArrayList(Program.reverseLinkedList(test));\n    int[] expected = new int[] {3, 2, 1, 0};\n    Utils.assertTrue(arraysEqual(result, expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    Program.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3, 4});\n    List<Integer> result = toArrayList(Program.reverseLinkedList(test));\n    int[] expected = new int[] {4, 3, 2, 1, 0};\n    Utils.assertTrue(arraysEqual(result, expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    Program.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3, 4, 5});\n    List<Integer> result = toArrayList(Program.reverseLinkedList(test));\n    int[] expected = new int[] {5, 4, 3, 2, 1, 0};\n    Utils.assertTrue(arraysEqual(result, expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    Program.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});\n    List<Integer> result = toArrayList(Program.reverseLinkedList(test));\n    int[] expected = new int[] {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};\n    Utils.assertTrue(arraysEqual(result, expected));\n  }\n\n  public Program.LinkedList newLinkedList(int[] values) {\n    Program.LinkedList ll = new Program.LinkedList(values[0]);\n    Program.LinkedList current = ll;\n    for (int i = 1; i < values.length; i++) {\n      current.next = new Program.LinkedList(values[i]);\n      current = current.next;\n    }\n    return ll;\n  }\n\n  public List<Integer> toArrayList(Program.LinkedList ll) {\n    List<Integer> arr = new ArrayList<Integer>();\n    Program.LinkedList current = ll;\n    while (current != null) {\n      arr.add(current.value);\n      current = current.next;\n    }\n    return arr;\n  }\n\n  public boolean arraysEqual(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) return false;\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) return false;\n    }\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.LinkedList test = newLinkedList(new int[] {0, 1, 2, 3, 4, 5});\n    List<Integer> result = toArrayList(Program.reverseLinkedList(test));\n    int[] expected = new int[] {5, 4, 3, 2, 1, 0};\n    Utils.assertTrue(arraysEqual(result, expected));\n  }\n\n  public Program.LinkedList newLinkedList(int[] values) {\n    Program.LinkedList ll = new Program.LinkedList(values[0]);\n    Program.LinkedList current = ll;\n    for (int i = 1; i < values.length; i++) {\n      current.next = new Program.LinkedList(values[i]);\n      current = current.next;\n    }\n    return ll;\n  }\n\n  public List<Integer> toArrayList(Program.LinkedList ll) {\n    List<Integer> arr = new ArrayList<Integer>();\n    Program.LinkedList current = ll;\n    while (current != null) {\n      arr.add(current.value);\n      current = current.next;\n    }\n    return arr;\n  }\n\n  public boolean arraysEqual(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) return false;\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) return false;\n    }\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space - where n is the number of nodes in the Linked List\n  public static LinkedList reverseLinkedList(LinkedList head) {\n    LinkedList p1 = null;\n    LinkedList p2 = head;\n    while (p2 != null) {\n      LinkedList p3 = p2.next;\n      p2.next = p1;\n      p1 = p2;\n      p2 = p3;\n    }\n    return p1;\n  }\n\n  static class LinkedList {\n    int value;\n    LinkedList next = null;\n\n    public LinkedList(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function reverseLinkedList(head) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.reverseLinkedList = reverseLinkedList;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n\n  addMany(values) {\n    let current = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNodesInArray() {\n    const nodes = [];\n    let current = this;\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n}\n\nit('Test Case #1', function () {\n  const test = new LinkedList(0);\n  const result = program.reverseLinkedList(test).getNodesInArray();\n  const expected = new LinkedList(0).getNodesInArray();\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #2', function () {\n  const test = new LinkedList(0).addMany([1]);\n  const result = program.reverseLinkedList(test).getNodesInArray();\n  const expected = new LinkedList(1).addMany([0]).getNodesInArray();\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #3', function () {\n  const test = new LinkedList(0).addMany([1, 2]);\n  const result = program.reverseLinkedList(test).getNodesInArray();\n  const expected = new LinkedList(2).addMany([1, 0]).getNodesInArray();\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #4', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3]);\n  const result = program.reverseLinkedList(test).getNodesInArray();\n  const expected = new LinkedList(3).addMany([2, 1, 0]).getNodesInArray();\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #5', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3, 4]);\n  const result = program.reverseLinkedList(test).getNodesInArray();\n  const expected = new LinkedList(4).addMany([3, 2, 1, 0]).getNodesInArray();\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #6', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3, 4, 5]);\n  const result = program.reverseLinkedList(test).getNodesInArray();\n  const expected = new LinkedList(5).addMany([4, 3, 2, 1, 0]).getNodesInArray();\n  chai.expect(result).to.deep.equal(expected);\n});\n\nit('Test Case #7', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);\n  const result = program.reverseLinkedList(test).getNodesInArray();\n  const expected = new LinkedList(12).addMany([11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]).getNodesInArray();\n  chai.expect(result).to.deep.equal(expected);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n\n  addMany(values) {\n    let current = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNodesInArray() {\n    const nodes = [];\n    let current = this;\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n}\n\nit('Test Case #1', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3, 4, 5]);\n  const result = program.reverseLinkedList(test).getNodesInArray();\n  const expected = new LinkedList(5).addMany([4, 3, 2, 1, 0]).getNodesInArray();\n  chai.expect(result).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the number of nodes in the Linked List\nfunction reverseLinkedList(head) {\n  let p1 = null,\n    p2 = head;\n  while (p2 !== null) {\n    const p3 = p2.next;\n    p2.next = p1;\n    p1 = p2;\n    p2 = p3;\n  }\n  return p1;\n}\n\nexports.reverseLinkedList = reverseLinkedList;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def reverseLinkedList(head):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n    def addMany(self, values):\n        current = self\n        while current.next is not None:\n            current = current.next\n        for value in values:\n            current.next = LinkedList(value)\n            current = current.next\n        return self\n\n    def getNodesInArray(self):\n        nodes = []\n        current = self\n        while current is not None:\n            nodes.append(current.value)\n            current = current.next\n        return nodes\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test = LinkedList(0)\n        result = program.reverseLinkedList(test).getNodesInArray()\n        expected = LinkedList(0).getNodesInArray()\n        self.assertEqual(result, expected)\n\n    def test_case_2(self):\n        test = LinkedList(0).addMany([1])\n        result = program.reverseLinkedList(test).getNodesInArray()\n        expected = LinkedList(1).addMany([0]).getNodesInArray()\n        self.assertEqual(result, expected)\n\n    def test_case_3(self):\n        test = LinkedList(0).addMany([1, 2])\n        result = program.reverseLinkedList(test).getNodesInArray()\n        expected = LinkedList(2).addMany([1, 0]).getNodesInArray()\n        self.assertEqual(result, expected)\n\n    def test_case_4(self):\n        test = LinkedList(0).addMany([1, 2, 3])\n        result = program.reverseLinkedList(test).getNodesInArray()\n        expected = LinkedList(3).addMany([2, 1, 0]).getNodesInArray()\n        self.assertEqual(result, expected)\n\n    def test_case_5(self):\n        test = LinkedList(0).addMany([1, 2, 3, 4])\n        result = program.reverseLinkedList(test).getNodesInArray()\n        expected = LinkedList(4).addMany([3, 2, 1, 0]).getNodesInArray()\n        self.assertEqual(result, expected)\n\n    def test_case_6(self):\n        test = LinkedList(0).addMany([1, 2, 3, 4, 5])\n        result = program.reverseLinkedList(test).getNodesInArray()\n        expected = LinkedList(5).addMany([4, 3, 2, 1, 0]).getNodesInArray()\n        self.assertEqual(result, expected)\n\n    def test_case_7(self):\n        test = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])\n        result = program.reverseLinkedList(test).getNodesInArray()\n        expected = LinkedList(12).addMany([11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]).getNodesInArray()\n        self.assertEqual(result, expected)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n    def addMany(self, values):\n        current = self\n        while current.next is not None:\n            current = current.next\n        for value in values:\n            current.next = LinkedList(value)\n            current = current.next\n        return self\n\n    def getNodesInArray(self):\n        nodes = []\n        current = self\n        while current is not None:\n            nodes.append(current.value)\n            current = current.next\n        return nodes\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test = LinkedList(0).addMany([1, 2, 3, 4, 5])\n        result = program.reverseLinkedList(test).getNodesInArray()\n        expected = LinkedList(5).addMany([4, 3, 2, 1, 0]).getNodesInArray()\n        self.assertEqual(result, expected)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space - where n is the number of nodes in the Linked List\ndef reverseLinkedList(head):\n    p1, p2 = None, head\n    while p2 is not None:\n        p3 = p2.next\n        p2.next = p1\n        p1 = p2\n        p2 = p3\n    return p1\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is an input class. Do not edit.\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  func reverseLinkedList(_ head: LinkedList) -> LinkedList {\n    // Write your code here.\n    return head // replace me\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  let program = Program()\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let test = TestLinkedList(value: 0)\n      let result = program.reverseLinkedList(test) as! TestLinkedList\n      let expected = TestLinkedList(value: 0)\n      try assertEqual(expected.getNodesInArray(), result.getNodesInArray())\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try testReverseLinkedList(initialValue: 0, values: [1], reversedInitialValue: 1, reversedValues: [0])\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try testReverseLinkedList(initialValue: 0, values: [1, 2], reversedInitialValue: 2, reversedValues: [1, 0])\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try testReverseLinkedList(initialValue: 0, values: [1, 2, 3], reversedInitialValue: 3, reversedValues: [2, 1, 0])\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try testReverseLinkedList(initialValue: 0, values: [1, 2, 3, 4], reversedInitialValue: 4, reversedValues: [3, 2, 1, 0])\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try testReverseLinkedList(initialValue: 0, values: [1, 2, 3, 4, 5], reversedInitialValue: 5, reversedValues: [4, 3, 2, 1, 0])\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try testReverseLinkedList(initialValue: 0, values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], reversedInitialValue: 12, reversedValues: [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0])\n    }\n  }\n\n  func testReverseLinkedList(initialValue: Int, values: [Int], reversedInitialValue: Int, reversedValues: [Int]) throws {\n    let test = TestLinkedList(value: initialValue).addMany(values: values)\n    let result = program.reverseLinkedList(test) as! TestLinkedList\n    let expected = TestLinkedList(value: reversedInitialValue).addMany(values: reversedValues)\n    try assertEqual(expected.getNodesInArray(), result.getNodesInArray())\n  }\n}\n\nclass TestLinkedList: Program.LinkedList {\n  func addMany(values: [Int]) -> TestLinkedList {\n    var current: Program.LinkedList? = self\n\n    while current?.next != nil {\n      current = current?.next\n    }\n\n    for value in values {\n      current?.next = TestLinkedList(value: value)\n      current = current?.next\n    }\n    return self\n  }\n\n  func getNodesInArray() -> [Int] {\n    var nodes = [Int]()\n    var current: Program.LinkedList? = self\n\n    while current != nil {\n      if let value = current?.value {\n        nodes.append(value)\n      }\n      current = current?.next\n    }\n\n    return nodes\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  let program = Program()\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try testReverseLinkedList(initialValue: 0, values: [1, 2, 3, 4, 5], reversedInitialValue: 5, reversedValues: [4, 3, 2, 1, 0])\n    }\n  }\n\n  func testReverseLinkedList(initialValue: Int, values: [Int], reversedInitialValue: Int, reversedValues: [Int]) throws {\n    let test = TestLinkedList(value: initialValue).addMany(values: values)\n    let result = program.reverseLinkedList(test) as! TestLinkedList\n    let expected = TestLinkedList(value: reversedInitialValue).addMany(values: reversedValues)\n    try assertEqual(expected.getNodesInArray(), result.getNodesInArray())\n  }\n}\n\nclass TestLinkedList: Program.LinkedList {\n  func addMany(values: [Int]) -> TestLinkedList {\n    var current: Program.LinkedList? = self\n\n    while current?.next != nil {\n      current = current?.next\n    }\n\n    for value in values {\n      current?.next = TestLinkedList(value: value)\n      current = current?.next\n    }\n    return self\n  }\n\n  func getNodesInArray() -> [Int] {\n    var nodes = [Int]()\n    var current: Program.LinkedList? = self\n\n    while current != nil {\n      if let value = current?.value {\n        nodes.append(value)\n      }\n      current = current?.next\n    }\n\n    return nodes\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  // O(n) time | O(1) space\n  func reverseLinkedList(_ head: LinkedList) -> LinkedList {\n    var firstPointer: LinkedList?\n    var secondPointer: LinkedList? = head\n\n    while secondPointer != nil {\n      let thirdPointer = secondPointer?.next\n      secondPointer?.next = firstPointer\n      firstPointer = secondPointer\n      secondPointer = thirdPointer\n    }\n\n    return firstPointer!\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// This is an input class. Do not edit.\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nexport function reverseLinkedList(head: LinkedList) {\n  // Write your code here.\n  return head;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const test = addMany(new LinkedList(0), [1, 2, 3, 4, 5]);\n  const result = getNodesInArray(program.reverseLinkedList(test));\n  const expected = getNodesInArray(addMany(new LinkedList(5), [4, 3, 2, 1, 0]));\n  chai.expect(result).to.deep.equal(expected);\n});\n\nfunction addMany(linkedList: LinkedList, values: number[]) {\n  let current = linkedList;\n  while (current.next !== null) {\n    current = current.next;\n  }\n  for (const value of values) {\n    current.next = new LinkedList(value);\n    current = current.next;\n  }\n  return linkedList;\n}\n\nfunction getNodesInArray(linkedList: LinkedList | null) {\n  const nodes: number[] = [];\n  let current: LinkedList | null = linkedList;\n  while (current !== null) {\n    nodes.push(current.value);\n    current = current.next;\n  }\n  return nodes;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n) time | O(1) space - where n is the number of nodes in the Linked List\nexport function reverseLinkedList(head: LinkedList) {\n  let p1: LinkedList | null = null,\n    p2: LinkedList | null = head;\n  while (p2 !== null) {\n    const p3: LinkedList | null = p2.next;\n    p2.next = p1;\n    p1 = p2;\n    p2 = p3;\n  }\n  return p1;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": null,
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": null,
+            "value": 2
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": null,
+            "value": 3
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": null,
+            "value": 6
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": "11",
+            "value": 10
+          },
+          {
+            "id": "11",
+            "next": "12",
+            "value": 11
+          },
+          {
+            "id": "12",
+            "next": null,
+            "value": 12
+          }
+        ]
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "head": "5",
+        "nodes": [
+          {
+            "id": "5",
+            "next": "4",
+            "value": 5
+          },
+          {
+            "id": "4",
+            "next": "3",
+            "value": 4
+          },
+          {
+            "id": "3",
+            "next": "2",
+            "value": 3
+          },
+          {
+            "id": "2",
+            "next": "1",
+            "value": 2
+          },
+          {
+            "id": "1",
+            "next": "0",
+            "value": 1
+          },
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "0",
+            "value": 1
+          },
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "1",
+            "value": 2
+          },
+          {
+            "id": "1",
+            "next": "0",
+            "value": 1
+          },
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "head": "3",
+        "nodes": [
+          {
+            "id": "3",
+            "next": "2",
+            "value": 3
+          },
+          {
+            "id": "2",
+            "next": "1",
+            "value": 2
+          },
+          {
+            "id": "1",
+            "next": "0",
+            "value": 1
+          },
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "head": "6",
+        "nodes": [
+          {
+            "id": "6",
+            "next": "5",
+            "value": 6
+          },
+          {
+            "id": "5",
+            "next": "4",
+            "value": 5
+          },
+          {
+            "id": "4",
+            "next": "3",
+            "value": 4
+          },
+          {
+            "id": "3",
+            "next": "2",
+            "value": 3
+          },
+          {
+            "id": "2",
+            "next": "1",
+            "value": 2
+          },
+          {
+            "id": "1",
+            "next": "0",
+            "value": 1
+          },
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "head": "12",
+        "nodes": [
+          {
+            "id": "12",
+            "next": "11",
+            "value": 12
+          },
+          {
+            "id": "11",
+            "next": "10",
+            "value": 11
+          },
+          {
+            "id": "10",
+            "next": "9",
+            "value": 10
+          },
+          {
+            "id": "9",
+            "next": "8",
+            "value": 9
+          },
+          {
+            "id": "8",
+            "next": "7",
+            "value": 8
+          },
+          {
+            "id": "7",
+            "next": "6",
+            "value": 7
+          },
+          {
+            "id": "6",
+            "next": "5",
+            "value": 6
+          },
+          {
+            "id": "5",
+            "next": "4",
+            "value": 5
+          },
+          {
+            "id": "4",
+            "next": "3",
+            "value": 4
+          },
+          {
+            "id": "3",
+            "next": "2",
+            "value": 3
+          },
+          {
+            "id": "2",
+            "next": "1",
+            "value": 2
+          },
+          {
+            "id": "1",
+            "next": "0",
+            "value": 1
+          },
+          {
+            "id": "0",
+            "next": null,
+            "value": 0
+          }
+        ]
+      }
+    ]
+  ]
+}

@@ -1,0 +1,467 @@
+{
+  "Summary": {
+    "Name": "Three Number Sum",
+    "Category": "Arrays",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 452,
+      "timeOne": 0,
+      "timeTwo": 1295,
+      "url": "https://player.vimeo.com/video/225941849"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Using three for loops to calculate the sums of all possible triplets in the array would generate an algorithm that runs in O(n^3) time, where n is the length of the input array. Can you come up with something faster using only two for loops?\nTry sorting the array and traversing it once. At each number, place a left pointer on the number immediately to the right of your current number and a right pointer on the final number in the array. Check if the current number, the left number, and the right number sum up to the target sum. How can you proceed from there, remembering the fact that you sorted the array?\nSince the array is now sorted (see Hint #2), you know that moving the left pointer mentioned in Hint #2 one place to the right will lead to a greater left number and thus a greater sum. Similarly, you know that moving the right pointer one place to the left will lead to a smaller right number and thus a smaller sum. This means that, depending on the size of each triplet's (current number, left number, right number) sum relative to the target sum, you should either move the left pointer, the right pointer, or both to obtain a potentially valid triplet.\n",
+  "SpaceTime": "O(n^2) time | O(n) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a non-empty array of distinct integers and an\n  integer representing a target sum. The function should find all triplets in\n  the array that sum up to the target sum and return a two-dimensional array of\n  all these triplets. The numbers in each triplet should be ordered in ascending\n  order, and the triplets themselves should be ordered in ascending order with\n  respect to the numbers they hold.\n</p>\n<p>\n  If no three numbers sum up to the target sum, the function should return an\n  empty array.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [12, 3, 1, 2, -6, 5, -8, 6]\n<span class=\"CodeEditor-promptParameter\">targetSum</span> = 0\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]]\n</pre>\n",
+  "Notes": "<p class=\"CodeEditor-notesQuestion\">\n  The first step in the solution is to sort the input array. Why is the\n  <i>O(nlog(n))</i> runtime of the sorting step not reflected in the overall\n  time complexity of the algorithm?\n</p>\n<p class=\"CodeEditor-notesAnswer\">\n  The nested loops in the solution run in <i>O(n^2)</i> time; this dwarfs the\n  <i>O(nlog(n))</i> runtime of the sorting step and allows us to remove it from\n  the final time complexity of the algorithm.\n</p>\n",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        12,
+        3,
+        1,
+        2,
+        -6,
+        5,
+        -8,
+        6
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      }
+    },
+    {
+      "Name": "targetSum",
+      "Example": 0,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<vector<int>> threeNumberSum(vector<int> array, int targetSum) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> expected{{1, 2, 3}};\n      assert(threeNumberSum({1, 2, 3}, 6) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<vector<int>> expected{};\n      assert(threeNumberSum({1, 2, 3}, 7) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<vector<int>> expected{{-2, 10, 49}};\n      assert(threeNumberSum({8, 10, -2, 49, 14}, 57) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<vector<int>> expected{{-8, 2, 6}, {-8, 3, 5}, {-6, 1, 5}};\n      assert(threeNumberSum({12, 3, 1, 2, -6, 5, -8, 6}, 0) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<vector<int>> expected{{-8, 3, 5}, {-6, 1, 5}, {-1, 0, 1}};\n      assert(threeNumberSum({12, 3, 1, 2, -6, 5, 0, -8, -1}, 0) == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<vector<int>> expected{\n          {-8, 2, 6}, {-8, 3, 5}, {-6, 0, 6}, {-6, 1, 5}, {-1, 0, 1}};\n      assert(threeNumberSum({12, 3, 1, 2, -6, 5, 0, -8, -1, 6}, 0) == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<vector<int>> expected{{-8, 2, 6}, {-8, 3, 5},  {-6, 0, 6},\n                                   {-6, 1, 5}, {-5, -1, 6}, {-5, 0, 5},\n                                   {-5, 2, 3}, {-1, 0, 1}};\n      assert(threeNumberSum({12, 3, 1, 2, -6, 5, 0, -8, -1, 6, -5}, 0) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<vector<int>> expected{{1, 2, 15}, {1, 8, 9}, {2, 7, 9}, {3, 6, 9},\n                                   {3, 7, 8},  {4, 5, 9}, {4, 6, 8}, {5, 6, 7}};\n      assert(threeNumberSum({1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 18) == expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<vector<int>> expected{{8, 9, 15}};\n      assert(threeNumberSum({1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 32) == expected);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<vector<int>> expected{};\n      assert(threeNumberSum({1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 33) == expected);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<vector<int>> expected{};\n      assert(threeNumberSum({1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 5) == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> expected{{-8, 2, 6}, {-8, 3, 5}, {-6, 1, 5}};\n      assert(threeNumberSum({12, 3, 1, 2, -6, 5, -8, 6}, 0) == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <algorithm>\nusing namespace std;\n\n// O(n^2) time | O(n) space\nvector<vector<int>> threeNumberSum(vector<int> array, int targetSum) {\n  sort(array.begin(), array.end());\n  vector<vector<int>> triplets;\n  for (int i = 0; i < array.size() - 2; i++) {\n    int left = i + 1;\n    int right = array.size() - 1;\n    while (left < right) {\n      int currentSum = array[i] + array[left] + array[right];\n      if (currentSum == targetSum) {\n        triplets.push_back({array[i], array[left], array[right]});\n        left++;\n        right--;\n      } else if (currentSum < targetSum) {\n        left++;\n      } else if (currentSum > targetSum) {\n        right--;\n      }\n    }\n  }\n  return triplets;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<int[]> ThreeNumberSum(int[] array, int targetSum) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tprivate bool compare(List<int[]> triplets1, List<int[]> triplets2) {\n\t\tif (triplets1.Count != triplets2.Count) return false;\n\t\tfor (int i = 0; i < triplets1.Count; i++) {\n\t\t\tif (!Enumerable.SequenceEqual(triplets1[i], triplets2[i])) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {1, 2, 3});\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {1, 2, 3}, 6);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {1, 2, 3}, 7);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {-2, 10, 49});\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {8, 10, -2, 49, 14}, 57);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {-8, 2, 6});\n\t\texpected.Add(new int[] {-8, 3, 5});\n\t\texpected.Add(new int[] {-6, 1, 5});\n\t\tList<int[]> output =\n\t\t  Program.ThreeNumberSum(new int[] {12, 3, 1, 2, -6, 5, -8, 6}, 0);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {-8, 3, 5});\n\t\texpected.Add(new int[] {-6, 1, 5});\n\t\texpected.Add(new int[] {-1, 0, 1});\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {12, 3, 1, 2, -6, 5, 0, -8,\n\t\t                                                       -1}, 0);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {-8, 2, 6});\n\t\texpected.Add(new int[] {-8, 3, 5});\n\t\texpected.Add(new int[] {-6, 0, 6});\n\t\texpected.Add(new int[] {-6, 1, 5});\n\t\texpected.Add(new int[] {-1, 0, 1});\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {12, 3, 1, 2, -6, 5, 0, -8,\n\t\t                                                       -1, 6}, 0);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {-8, 2, 6});\n\t\texpected.Add(new int[] {-8, 3, 5});\n\t\texpected.Add(new int[] {-6, 0, 6});\n\t\texpected.Add(new int[] {-6, 1, 5});\n\t\texpected.Add(new int[] {-5, -1, 6});\n\t\texpected.Add(new int[] {-5, 0, 5});\n\t\texpected.Add(new int[] {-5, 2, 3});\n\t\texpected.Add(new int[] {-1, 0, 1});\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {12, 3, 1, 2, -6, 5, 0, -8,\n\t\t                                                       -1, 6, -5}, 0);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {1, 2, 15});\n\t\texpected.Add(new int[] {1, 8, 9});\n\t\texpected.Add(new int[] {2, 7, 9});\n\t\texpected.Add(new int[] {3, 6, 9});\n\t\texpected.Add(new int[] {3, 7, 8});\n\t\texpected.Add(new int[] {4, 5, 9});\n\t\texpected.Add(new int[] {4, 6, 8});\n\t\texpected.Add(new int[] {5, 6, 7});\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9,\n\t\t                                                       15}, 18);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {8, 9, 15});\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9,\n\t\t                                                       15}, 32);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9,\n\t\t                                                       15}, 33);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\tList<int[]> output = Program.ThreeNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9,\n\t\t                                                       15}, 5);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tprivate bool compare(List<int[]> triplets1, List<int[]> triplets2) {\n\t\tif (triplets1.Count != triplets2.Count) return false;\n\t\tfor (int i = 0; i < triplets1.Count; i++) {\n\t\t\tif (!Enumerable.SequenceEqual(triplets1[i], triplets2[i])) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int[]> expected = new List<int[]>();\n\t\texpected.Add(new int[] {-8, 2, 6});\n\t\texpected.Add(new int[] {-8, 3, 5});\n\t\texpected.Add(new int[] {-6, 1, 5});\n\t\tList<int[]> output =\n\t\t  Program.ThreeNumberSum(new int[] {12, 3, 1, 2, -6, 5, -8, 6}, 0);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^2) time | O(n) space\n\tpublic static List<int[]> ThreeNumberSum(int[] array, int targetSum) {\n\t\tArray.Sort(array);\n\t\tList<int[]> triplets = new List<int[]>();\n\t\tfor (int i = 0; i < array.Length - 2; i++) {\n\t\t\tint left = i + 1;\n\t\t\tint right = array.Length - 1;\n\t\t\twhile (left < right) {\n\t\t\t\tint currentSum = array[i] + array[left] + array[right];\n\t\t\t\tif (currentSum == targetSum) {\n\t\t\t\t\tint[] newTriplet = {array[i], array[left], array[right]};\n\t\t\t\t\ttriplets.Add(newTriplet);\n\t\t\t\t\tleft++;\n\t\t\t\t\tright--;\n\t\t\t\t} else if (currentSum < targetSum) {\n\t\t\t\t\tleft++;\n\t\t\t\t} else if (currentSum > targetSum) {\n\t\t\t\t\tright--;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn triplets;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc ThreeNumberSum(array []int, target int) [][]int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := [][]int{{1, 2, 3}}\n\toutput := ThreeNumberSum([]int{1, 2, 3}, 6)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := [][]int{}\n\toutput := ThreeNumberSum([]int{1, 2, 3}, 7)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := [][]int{{-2, 10, 49}}\n\toutput := ThreeNumberSum([]int{8, 10, -2, 49, 14}, 57)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := [][]int{{-8, 2, 6}, {-8, 3, 5}, {-6, 1, 5}}\n\toutput := ThreeNumberSum([]int{12, 3, 1, 2, -6, 5, -8, 6}, 0)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := [][]int{{-8, 3, 5}, {-6, 1, 5}, {-1, 0, 1}}\n\toutput := ThreeNumberSum([]int{12, 3, 1, 2, -6, 5, 0, -8, -1}, 0)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := [][]int{{-8, 2, 6}, {-8, 3, 5}, {-6, 0, 6}, {-6, 1, 5}, {-1, 0, 1}}\n\toutput := ThreeNumberSum([]int{12, 3, 1, 2, -6, 5, 0, -8, -1, 6}, 0)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := [][]int{{-8, 2, 6}, {-8, 3, 5}, {-6, 0, 6}, {-6, 1, 5}, {-5, -1, 6}, {-5, 0, 5}, {-5, 2, 3}, {-1, 0, 1}}\n\toutput := ThreeNumberSum([]int{12, 3, 1, 2, -6, 5, 0, -8, -1, 6, -5}, 0)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := [][]int{{1, 2, 15}, {1, 8, 9}, {2, 7, 9}, {3, 6, 9}, {3, 7, 8}, {4, 5, 9}, {4, 6, 8}, {5, 6, 7}}\n\toutput := ThreeNumberSum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 18)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := [][]int{{8, 9, 15}}\n\toutput := ThreeNumberSum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 32)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := [][]int{}\n\toutput := ThreeNumberSum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 33)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := [][]int{}\n\toutput := ThreeNumberSum([]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 5)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := [][]int{{-8, 2, 6}, {-8, 3, 5}, {-6, 1, 5}}\n\toutput := ThreeNumberSum([]int{12, 3, 1, 2, -6, 5, -8, 6}, 0)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"sort\"\n\n// O(n^2) time | O(n) space\nfunc ThreeNumberSum(array []int, target int) [][]int {\n\tsort.Ints(array)\n\ttriplets := [][]int{}\n\tfor i := 0; i < len(array)-2; i++ {\n\t\tleft, right := i+1, len(array)-1\n\t\tfor left < right {\n\t\t\tcurrentSum := array[i] + array[left] + array[right]\n\t\t\tif currentSum == target {\n\t\t\t\ttriplets = append(triplets, []int{array[i], array[left], array[right]})\n\t\t\t\tleft += 1\n\t\t\t\tright -= 1\n\t\t\t} else if currentSum < target {\n\t\t\t\tleft += 1\n\t\t\t} else if currentSum > target {\n\t\t\t\tright -= 1\n\t\t\t}\n\t\t}\n\t}\n\treturn triplets\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<Integer[]> threeNumberSum(int[] array, int targetSum) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  private boolean compare(List<Integer[]> triplets1, List<Integer[]> triplets2) {\n    if (triplets1.size() != triplets2.size()) return false;\n    for (int i = 0; i < triplets1.size(); i++) {\n      if (!Arrays.equals(triplets1.get(i), triplets2.get(i))) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  @Test\n  public void TestCase1() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {1, 2, 3});\n    List<Integer[]> output = Program.threeNumberSum(new int[] {1, 2, 3}, 6);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    List<Integer[]> output = Program.threeNumberSum(new int[] {1, 2, 3}, 7);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {-2, 10, 49});\n    List<Integer[]> output = Program.threeNumberSum(new int[] {8, 10, -2, 49, 14}, 57);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {-8, 2, 6});\n    expected.add(new Integer[] {-8, 3, 5});\n    expected.add(new Integer[] {-6, 1, 5});\n    List<Integer[]> output = Program.threeNumberSum(new int[] {12, 3, 1, 2, -6, 5, -8, 6}, 0);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {-8, 3, 5});\n    expected.add(new Integer[] {-6, 1, 5});\n    expected.add(new Integer[] {-1, 0, 1});\n    List<Integer[]> output = Program.threeNumberSum(new int[] {12, 3, 1, 2, -6, 5, 0, -8, -1}, 0);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {-8, 2, 6});\n    expected.add(new Integer[] {-8, 3, 5});\n    expected.add(new Integer[] {-6, 0, 6});\n    expected.add(new Integer[] {-6, 1, 5});\n    expected.add(new Integer[] {-1, 0, 1});\n    List<Integer[]> output =\n        Program.threeNumberSum(new int[] {12, 3, 1, 2, -6, 5, 0, -8, -1, 6}, 0);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {-8, 2, 6});\n    expected.add(new Integer[] {-8, 3, 5});\n    expected.add(new Integer[] {-6, 0, 6});\n    expected.add(new Integer[] {-6, 1, 5});\n    expected.add(new Integer[] {-5, -1, 6});\n    expected.add(new Integer[] {-5, 0, 5});\n    expected.add(new Integer[] {-5, 2, 3});\n    expected.add(new Integer[] {-1, 0, 1});\n    List<Integer[]> output =\n        Program.threeNumberSum(new int[] {12, 3, 1, 2, -6, 5, 0, -8, -1, 6, -5}, 0);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {1, 2, 15});\n    expected.add(new Integer[] {1, 8, 9});\n    expected.add(new Integer[] {2, 7, 9});\n    expected.add(new Integer[] {3, 6, 9});\n    expected.add(new Integer[] {3, 7, 8});\n    expected.add(new Integer[] {4, 5, 9});\n    expected.add(new Integer[] {4, 6, 8});\n    expected.add(new Integer[] {5, 6, 7});\n    List<Integer[]> output = Program.threeNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 18);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {8, 9, 15});\n    List<Integer[]> output = Program.threeNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 32);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase10() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    List<Integer[]> output = Program.threeNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 33);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase11() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    List<Integer[]> output = Program.threeNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 15}, 5);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  private boolean compare(List<Integer[]> triplets1, List<Integer[]> triplets2) {\n    if (triplets1.size() != triplets2.size()) return false;\n    for (int i = 0; i < triplets1.size(); i++) {\n      if (!Arrays.equals(triplets1.get(i), triplets2.get(i))) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  @Test\n  public void TestCase1() {\n    List<Integer[]> expected = new ArrayList<Integer[]>();\n    expected.add(new Integer[] {-8, 2, 6});\n    expected.add(new Integer[] {-8, 3, 5});\n    expected.add(new Integer[] {-6, 1, 5});\n    List<Integer[]> output = Program.threeNumberSum(new int[] {12, 3, 1, 2, -6, 5, -8, 6}, 0);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^2) time | O(n) space\n  public static List<Integer[]> threeNumberSum(int[] array, int targetSum) {\n    Arrays.sort(array);\n    List<Integer[]> triplets = new ArrayList<Integer[]>();\n    for (int i = 0; i < array.length - 2; i++) {\n      int left = i + 1;\n      int right = array.length - 1;\n      while (left < right) {\n        int currentSum = array[i] + array[left] + array[right];\n        if (currentSum == targetSum) {\n          Integer[] newTriplet = {array[i], array[left], array[right]};\n          triplets.add(newTriplet);\n          left++;\n          right--;\n        } else if (currentSum < targetSum) {\n          left++;\n        } else if (currentSum > targetSum) {\n          right--;\n        }\n      }\n    }\n    return triplets;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function threeNumberSum(array, targetSum) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.threeNumberSum = threeNumberSum;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.threeNumberSum([1, 2, 3], 6)).to.deep.equal([[1, 2, 3]]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.threeNumberSum([1, 2, 3], 7)).to.deep.equal([]);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.threeNumberSum([8, 10, -2, 49, 14], 57)).to.deep.equal([[-2, 10, 49]]);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.threeNumberSum([12, 3, 1, 2, -6, 5, -8, 6], 0)).to.deep.equal([\n    [-8, 2, 6],\n    [-8, 3, 5],\n    [-6, 1, 5],\n  ]);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.threeNumberSum([12, 3, 1, 2, -6, 5, 0, -8, -1], 0)).to.deep.equal([\n    [-8, 3, 5],\n    [-6, 1, 5],\n    [-1, 0, 1],\n  ]);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.threeNumberSum([12, 3, 1, 2, -6, 5, 0, -8, -1, 6], 0)).to.deep.equal([\n    [-8, 2, 6],\n    [-8, 3, 5],\n    [-6, 0, 6],\n    [-6, 1, 5],\n    [-1, 0, 1],\n  ]);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.threeNumberSum([12, 3, 1, 2, -6, 5, 0, -8, -1, 6, -5], 0)).to.deep.equal([\n    [-8, 2, 6],\n    [-8, 3, 5],\n    [-6, 0, 6],\n    [-6, 1, 5],\n    [-5, -1, 6],\n    [-5, 0, 5],\n    [-5, 2, 3],\n    [-1, 0, 1],\n  ]);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.threeNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 18)).to.deep.equal([\n    [1, 2, 15],\n    [1, 8, 9],\n    [2, 7, 9],\n    [3, 6, 9],\n    [3, 7, 8],\n    [4, 5, 9],\n    [4, 6, 8],\n    [5, 6, 7],\n  ]);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.threeNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 32)).to.deep.equal([[8, 9, 15]]);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.threeNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 33)).to.deep.equal([]);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.threeNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 5)).to.deep.equal([]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.threeNumberSum([12, 3, 1, 2, -6, 5, -8, 6], 0)).to.deep.equal([\n    [-8, 2, 6],\n    [-8, 3, 5],\n    [-6, 1, 5],\n  ]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nfunction threeNumberSum(array, targetSum) {\n  array.sort((a, b) => a - b);\n  const triplets = [];\n  for (let i = 0; i < array.length - 2; i++) {\n    let left = i + 1;\n    let right = array.length - 1;\n    while (left < right) {\n      const currentSum = array[i] + array[left] + array[right];\n      if (currentSum === targetSum) {\n        triplets.push([array[i], array[left], array[right]]);\n        left++;\n        right--;\n      } else if (currentSum < targetSum) {\n        left++;\n      } else if (currentSum > targetSum) {\n        right--;\n      }\n    }\n  }\n  return triplets;\n}\n\nexports.threeNumberSum = threeNumberSum;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def threeNumberSum(array, targetSum):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.threeNumberSum([1, 2, 3], 6), [[1, 2, 3]])\n\n    def test_case_2(self):\n        self.assertEqual(program.threeNumberSum([1, 2, 3], 7), [])\n\n    def test_case_3(self):\n        self.assertEqual(program.threeNumberSum([8, 10, -2, 49, 14], 57), [[-2, 10, 49]])\n\n    def test_case_4(self):\n        self.assertEqual(program.threeNumberSum([12, 3, 1, 2, -6, 5, -8, 6], 0), [[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]])\n\n    def test_case_5(self):\n        self.assertEqual(\n            program.threeNumberSum([12, 3, 1, 2, -6, 5, 0, -8, -1], 0), [[-8, 3, 5], [-6, 1, 5], [-1, 0, 1]]\n        )\n\n    def test_case_6(self):\n        self.assertEqual(\n            program.threeNumberSum([12, 3, 1, 2, -6, 5, 0, -8, -1, 6], 0),\n            [[-8, 2, 6], [-8, 3, 5], [-6, 0, 6], [-6, 1, 5], [-1, 0, 1]],\n        )\n\n    def test_case_7(self):\n        self.assertEqual(\n            program.threeNumberSum([12, 3, 1, 2, -6, 5, 0, -8, -1, 6, -5], 0),\n            [[-8, 2, 6], [-8, 3, 5], [-6, 0, 6], [-6, 1, 5], [-5, -1, 6], [-5, 0, 5], [-5, 2, 3], [-1, 0, 1]],\n        )\n\n    def test_case_8(self):\n        self.assertEqual(\n            program.threeNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 18),\n            [[1, 2, 15], [1, 8, 9], [2, 7, 9], [3, 6, 9], [3, 7, 8], [4, 5, 9], [4, 6, 8], [5, 6, 7]],\n        )\n\n    def test_case_9(self):\n        self.assertEqual(program.threeNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 32), [[8, 9, 15]])\n\n    def test_case_10(self):\n        self.assertEqual(program.threeNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 33), [])\n\n    def test_case_11(self):\n        self.assertEqual(program.threeNumberSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 15], 5), [])\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.threeNumberSum([12, 3, 1, 2, -6, 5, -8, 6], 0), [[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space\ndef threeNumberSum(array, targetSum):\n    array.sort()\n    triplets = []\n    for i in range(len(array) - 2):\n        left = i + 1\n        right = len(array) - 1\n        while left < right:\n            currentSum = array[i] + array[left] + array[right]\n            if currentSum == targetSum:\n                triplets.append([array[i], array[left], array[right]])\n                left += 1\n                right -= 1\n            elif currentSum < targetSum:\n                left += 1\n            elif currentSum > targetSum:\n                right -= 1\n    return triplets\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func threeNumberSum(array: inout [Int], targetSum: Int) -> [[Int]] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var array = [1, 2, 3]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 6)\n      try assertEqual([[1, 2, 3]], threeNumberSumResult)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var array = [1, 2, 3]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 7)\n      try assertEqual([], threeNumberSumResult)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var array = [8, 10, -2, 49, 14]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 57)\n      try assertEqual([[-2, 10, 49]], threeNumberSumResult)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var array = [12, 3, 1, 2, -6, 5, -8, 6]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 0)\n      try assertEqual([[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]], threeNumberSumResult)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var array = [12, 3, 1, 2, -6, 5, 0, -8, -1]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 0)\n      try assertEqual([[-8, 3, 5], [-6, 1, 5], [-1, 0, 1]], threeNumberSumResult)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var array = [12, 3, 1, 2, -6, 5, 0, -8, -1, 6]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 0)\n      try assertEqual([[-8, 2, 6], [-8, 3, 5], [-6, 0, 6], [-6, 1, 5], [-1, 0, 1]], threeNumberSumResult)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var array = [12, 3, 1, 2, -6, 5, 0, -8, -1, 6, -5]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 0)\n      try assertEqual([[-8, 2, 6], [-8, 3, 5], [-6, 0, 6], [-6, 1, 5], [-5, -1, 6], [-5, 0, 5], [-5, 2, 3], [-1, 0, 1]], threeNumberSumResult)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 15]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 18)\n      try assertEqual([[1, 2, 15], [1, 8, 9], [2, 7, 9], [3, 6, 9], [3, 7, 8], [4, 5, 9], [4, 6, 8], [5, 6, 7]], threeNumberSumResult)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 15]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 32)\n      try assertEqual([[8, 9, 15]], threeNumberSumResult)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 15]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 33)\n      try assertEqual([], threeNumberSumResult)\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 15]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 5)\n      try assertEqual([], threeNumberSumResult)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var array = [12, 3, 1, 2, -6, 5, -8, 6]\n      let threeNumberSumResult = program.threeNumberSum(array: &array, targetSum: 0)\n      try assertEqual([[-8, 2, 6], [-8, 3, 5], [-6, 1, 5]], threeNumberSumResult)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(n) space\n  func threeNumberSum(array: inout [Int], targetSum: Int) -> [[Int]] {\n    array.sort()\n\n    var triplets: [[Int]] = []\n\n    for i in 0 ..< array.count - 2 {\n      var left = i + 1\n      var right = array.count - 1\n\n      while left < right {\n        let currentSum = array[i] + array[left] + array[right]\n\n        if currentSum == targetSum {\n          triplets.append([array[i], array[left], array[right]])\n\n          left = left + 1\n          right = right - 1\n        } else if currentSum < targetSum {\n          left = left + 1\n        } else if currentSum > targetSum {\n          right = right - 1\n        }\n      }\n    }\n    return triplets\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "type Triplet = [number, number, number];\n\nexport function threeNumberSum(array: number[], targetSum: number): Triplet[] {\n  // Write your code here.\n  return [[-1, -1, -1]];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.threeNumberSum([12, 3, 1, 2, -6, 5, -8, 6], 0)).to.deep.equal([\n    [-8, 2, 6],\n    [-8, 3, 5],\n    [-6, 1, 5],\n  ]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Triplet = [number, number, number];\n\n// O(n^2) time | O(n) space\nexport function threeNumberSum(array: number[], targetSum: number) {\n  array.sort((a, b) => a - b);\n  const triplets: Triplet[] = [];\n  for (let i = 0; i < array.length - 2; i++) {\n    let left = i + 1;\n    let right = array.length - 1;\n    while (left < right) {\n      const currentSum = array[i] + array[left] + array[right];\n      if (currentSum === targetSum) {\n        triplets.push([array[i], array[left], array[right]]);\n        left++;\n        right--;\n      } else if (currentSum < targetSum) {\n        left++;\n      } else if (currentSum > targetSum) {\n        right--;\n      }\n    }\n  }\n  return triplets;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        12,
+        3,
+        1,
+        2,
+        -6,
+        5,
+        -8,
+        6
+      ],
+      "targetSum": 0
+    },
+    {
+      "array": [
+        1,
+        2,
+        3
+      ],
+      "targetSum": 6
+    },
+    {
+      "array": [
+        1,
+        2,
+        3
+      ],
+      "targetSum": 7
+    },
+    {
+      "array": [
+        8,
+        10,
+        -2,
+        49,
+        14
+      ],
+      "targetSum": 57
+    },
+    {
+      "array": [
+        12,
+        3,
+        1,
+        2,
+        -6,
+        5,
+        0,
+        -8,
+        -1
+      ],
+      "targetSum": 0
+    },
+    {
+      "array": [
+        12,
+        3,
+        1,
+        2,
+        -6,
+        5,
+        0,
+        -8,
+        -1,
+        6
+      ],
+      "targetSum": 0
+    },
+    {
+      "array": [
+        12,
+        3,
+        1,
+        2,
+        -6,
+        5,
+        0,
+        -8,
+        -1,
+        6,
+        -5
+      ],
+      "targetSum": 0
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        15
+      ],
+      "targetSum": 18
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        15
+      ],
+      "targetSum": 32
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        15
+      ],
+      "targetSum": 33
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        15
+      ],
+      "targetSum": 5
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        [
+          -8,
+          2,
+          6
+        ],
+        [
+          -8,
+          3,
+          5
+        ],
+        [
+          -6,
+          1,
+          5
+        ]
+      ],
+      [
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      [],
+      [
+        [
+          -2,
+          10,
+          49
+        ]
+      ],
+      [
+        [
+          -8,
+          3,
+          5
+        ],
+        [
+          -6,
+          1,
+          5
+        ],
+        [
+          -1,
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          -8,
+          2,
+          6
+        ],
+        [
+          -8,
+          3,
+          5
+        ],
+        [
+          -6,
+          0,
+          6
+        ],
+        [
+          -6,
+          1,
+          5
+        ],
+        [
+          -1,
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          -8,
+          2,
+          6
+        ],
+        [
+          -8,
+          3,
+          5
+        ],
+        [
+          -6,
+          0,
+          6
+        ],
+        [
+          -6,
+          1,
+          5
+        ],
+        [
+          -5,
+          -1,
+          6
+        ],
+        [
+          -5,
+          0,
+          5
+        ],
+        [
+          -5,
+          2,
+          3
+        ],
+        [
+          -1,
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          1,
+          2,
+          15
+        ],
+        [
+          1,
+          8,
+          9
+        ],
+        [
+          2,
+          7,
+          9
+        ],
+        [
+          3,
+          6,
+          9
+        ],
+        [
+          3,
+          7,
+          8
+        ],
+        [
+          4,
+          5,
+          9
+        ],
+        [
+          4,
+          6,
+          8
+        ],
+        [
+          5,
+          6,
+          7
+        ]
+      ],
+      [
+        [
+          8,
+          9,
+          15
+        ]
+      ],
+      [],
+      []
+    ]
+  ]
+}

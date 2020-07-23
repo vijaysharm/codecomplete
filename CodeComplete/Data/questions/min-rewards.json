@@ -1,0 +1,289 @@
+{
+  "Summary": {
+    "Name": "Min Rewards",
+    "Category": "Arrays",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-05-04T00:00:00Z",
+      "number": 462,
+      "timeOne": 0,
+      "timeTwo": 2029,
+      "url": "https://player.vimeo.com/video/333329909"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You could try iterating through the input list of scores and incrementing the number of rewards you give to each student if they have a greater score than the previous student's score. However, if you reach a student with a smaller score than the previous student's score, you'll have to backtrack through the array to fix previous reward assignments. During this backtrack, is it correct to simply increment the reward of a student whose score is greater than the next student's score?\nNotice that there are local mins and local maxes in the input list of scores: scores that are smaller than both scores next to them and scores that are greater than both scores next to them. Find the local mins, and try expanding away from them until you reach local maxes, assigning (and incrementing) rewards as you go.\nDo you actually need to find the local mins mentioned in Hint #2? Can you simply do two sweeps of the input list of scores, one from left to right, and one from right to left?\n",
+  "SpaceTime": "O(n) time | O(n) space - where in is the length of the input array\n",
+  "PromptHTML": "<p>\n  Imagine that you're a teacher who's just graded the final exam in a class. You\n  have a list of student scores on the final exam in a particular order (not\n  necessarily sorted), and you want to reward your students. You decide to do so\n  fairly by giving them arbitrary rewards following two rules:\n</p>\n<ul>\n  <li>1) All students must receive at least one reward.</li>\n  <li>\n    2) Any given student must receive strictly more rewards than an adjacent\n    student (a student immediately to the left or to the right) with a lower\n    score and must receive strictly fewer rewards than an adjacent student with\n    a higher score.\n  </li>\n</ul>\n<p>\n  Write a function that takes in a list of scores and returns the minimum number\n  of rewards that you must give out to students to satisfy the two rules.\n</p>\n<p>\n  You can assume that all students have different scores; in other words, the\n  scores are all unique.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">scores</span> = [8, 4, 2, 1, 3, 6, 7, 9, 5]\n</pre>\n<h3>Sample Output</h3>\n<pre>25 <span class=\"CodeEditor-promptComment\">// you would give out the following rewards: [4, 3, 2, 1, 2, 3, 4, 5, 1]</span></pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "scores",
+      "Example": [
+        8,
+        4,
+        2,
+        1,
+        3,
+        6,
+        7,
+        9,
+        5
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array",
+        "uniqueItems": true
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint minRewards(vector<int> scores) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() { assert(minRewards({1}) == 1); });\n\n    RunTest(\"Test Case 2\", []() { assert(minRewards({5, 10}) == 3); });\n\n    RunTest(\"Test Case 3\", []() { assert(minRewards({10, 5}) == 3); });\n\n    RunTest(\"Test Case 4\", []() { assert(minRewards({4, 2, 1, 3}) == 8); });\n\n    RunTest(\"Test Case 5\", []() { assert(minRewards({0, 4, 2, 1, 3}) == 9); });\n\n    RunTest(\"Test Case 6\", []() {\n      assert(minRewards({8, 4, 2, 1, 3, 6, 7, 9, 5}) == 25);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(minRewards({2, 20, 13, 12, 11, 8, 4, 3, 1, 5, 6, 7, 9, 0}) == 52);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(minRewards({2, 1, 4, 3, 6, 5, 8, 7, 10, 9}) == 15);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      assert(minRewards({800, 400, 20, 10, 30, 61, 70, 90,  17, 21, 22,\n                         13,  12,  11, 8,  4,  2,  1,  3,   6,  7,  9,\n                         0,   68,  55, 67, 57, 60, 51, 661, 50, 65, 53}) == 93);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(minRewards({8, 4, 2, 1, 3, 6, 7, 9, 5}) == 25);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <algorithm>\n#include <vector>\n#include <numeric>\nusing namespace std;\n\n// O(n^2) time | O(n) space - where in is the length of the input array\nint minRewards(vector<int> scores) {\n  vector<int> rewards = vector<int>(scores.size(), 1);\n  for (int i = 1; i < scores.size(); i++) {\n    int j = i - 1;\n    if (scores[i] > scores[j]) {\n      rewards[i] = rewards[j] + 1;\n    } else {\n      while (j >= 0 && scores[j] > scores[j + 1]) {\n        rewards[j] = max(rewards[j], rewards[j + 1] + 1);\n        j--;\n      }\n    }\n  }\n  return accumulate(rewards.begin(), rewards.end(), 0);\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <algorithm>\n#include <vector>\n#include <numeric>\nusing namespace std;\n\nvector<int> getLocalMinIdxs(vector<int> array);\nvoid expandFromLocalMinIdx(int localMinIdx, vector<int> scores,\n                           vector<int> *rewards);\n\n// O(n) time | O(n) space - where in is the length of the input array\nint minRewards(vector<int> scores) {\n  vector<int> rewards = vector<int>(scores.size(), 1);\n  vector<int> localMinIdxs = getLocalMinIdxs(scores);\n  for (int localMinIdx : localMinIdxs) {\n    expandFromLocalMinIdx(localMinIdx, scores, &rewards);\n  }\n  return accumulate(rewards.begin(), rewards.end(), 0);\n}\n\nvector<int> getLocalMinIdxs(vector<int> array) {\n  if (array.size() == 1)\n    return vector<int>{0};\n  vector<int> localMinIdxs = {};\n  for (int i = 0; i < array.size(); i++) {\n    if (i == 0 && array[i] < array[i + 1])\n      localMinIdxs.push_back(i);\n    if (i == array.size() - 1 && array[i] < array[i - 1])\n      localMinIdxs.push_back(i);\n    if (i == 0 || i == array.size() - 1)\n      continue;\n    if (array[i] < array[i + 1] && array[i] < array[i - 1])\n      localMinIdxs.push_back(i);\n  }\n  return localMinIdxs;\n}\n\nvoid expandFromLocalMinIdx(int localMinIdx, vector<int> scores,\n                           vector<int> *rewards) {\n  int leftIdx = localMinIdx - 1;\n  while (leftIdx >= 0 && scores[leftIdx] > scores[leftIdx + 1]) {\n    rewards->at(leftIdx) =\n        max(rewards->at(leftIdx), rewards->at(leftIdx + 1) + 1);\n    leftIdx--;\n  }\n  int rightIdx = localMinIdx + 1;\n  while (rightIdx < scores.size() && scores[rightIdx] > scores[rightIdx - 1]) {\n    rewards->at(rightIdx) = rewards->at(rightIdx - 1) + 1;\n    rightIdx++;\n  }\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <algorithm>\n#include <vector>\n#include <numeric>\nusing namespace std;\n\n// O(n) time | O(n) space - where in is the length of the input array\nint minRewards(vector<int> scores) {\n  vector<int> rewards = vector<int>(scores.size(), 1);\n  for (int i = 1; i < scores.size(); i++) {\n    if (scores[i] > scores[i - 1])\n      rewards[i] = rewards[i - 1] + 1;\n  }\n  for (int i = scores.size() - 2; i >= 0; i--) {\n    if (scores[i] > scores[i + 1]) {\n      rewards[i] = max(rewards[i], rewards[i + 1] + 1);\n    }\n  }\n  return accumulate(rewards.begin(), rewards.end(), 0);\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int MinRewards(int[] scores) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar input = new int[] {1};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 1;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tvar input = new int[] {5, 10};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 3;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tvar input = new int[] {10, 5};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 3;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tvar input = new int[] {4, 2, 1, 3};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 8;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tvar input = new int[] {0, 4, 2, 1, 3};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 9;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tvar input = new int[] {8, 4, 2, 1, 3, 6, 7, 9, 5};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 25;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tvar input = new int[] {2, 20, 13, 12, 11, 8, 4, 3, 1, 5, 6, 7, 9, 0};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 52;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tvar input = new int[] {2, 1, 4, 3, 6, 5, 8, 7, 10, 9};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 15;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tvar input = new int[] {800, 400, 20, 10, 30, 61, 70, 90, 17, 21, 22,\n\t\t\t               13, 12, 11, 8, 4, 2, 1, 3, 6, 7, 9, 0, 68,\n\t\t\t               55, 67, 57, 60, 51, 661, 50, 65, 53};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 93;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar input = new int[] {8, 4, 2, 1, 3, 6, 7, 9, 5};\n\t\tvar actual = Program.MinRewards(input);\n\t\tvar expected = 25;\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Linq;\n\n// O(n^2) time | O(n) space - where in is the length of the input array\npublic class Program {\n\tpublic static int MinRewards(int[] scores) {\n\t\tint[] rewards = new int[scores.Length];\n\t\tArray.Fill(rewards, 1);\n\t\tfor (int i = 1; i < scores.Length; i++) {\n\t\t\tint j = i - 1;\n\t\t\tif (scores[i] > scores[j]) {\n\t\t\t\trewards[i] = rewards[j] + 1;\n\t\t\t} else {\n\t\t\t\twhile (j >= 0 && scores[j] > scores[j + 1]) {\n\t\t\t\t\trewards[j] = Math.Max(rewards[j], rewards[j + 1] + 1);\n\t\t\t\t\tj--;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn rewards.Sum();\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\n// O(n) time | O(n) space - where in is the length of the input array\npublic class Program {\n\tpublic static int MinRewards(int[] scores) {\n\t\tint[] rewards = new int[scores.Length];\n\t\tArray.Fill(rewards, 1);\n\t\tList<int> localMinIdxs = getLocalMinIdxs(scores);\n\t\tforeach (int localMinIdx in localMinIdxs) {\n\t\t\texpandFromLocalMinIdx(localMinIdx, scores, rewards);\n\t\t}\n\t\treturn rewards.Sum();\n\t}\n\n\tpublic static List<int> getLocalMinIdxs(int[] array) {\n\t\tList<int> localMinIdxs = new List<int>();\n\t\tif (array.Length == 1) {\n\t\t\tlocalMinIdxs.Add(0);\n\t\t\treturn localMinIdxs;\n\t\t}\n\t\tfor (int i = 0; i < array.Length; i++) {\n\t\t\tif (i == 0 && array[i] < array[i + 1]) localMinIdxs.Add(i);\n\t\t\tif (i == array.Length - 1 && array[i] < array[i - 1]) localMinIdxs.Add(i);\n\t\t\tif (i == 0 || i == array.Length - 1) continue;\n\t\t\tif (array[i] < array[i + 1] && array[i] < array[i - 1]) localMinIdxs.Add(i);\n\t\t}\n\t\treturn localMinIdxs;\n\t}\n\n\tpublic static void expandFromLocalMinIdx(int localMinIdx, int[] scores, int[] rewards) {\n\t\tint leftIdx = localMinIdx - 1;\n\t\twhile (leftIdx >= 0 && scores[leftIdx] > scores[leftIdx + 1]) {\n\t\t\trewards[leftIdx] = Math.Max(rewards[leftIdx], rewards[leftIdx + 1] + 1);\n\t\t\tleftIdx--;\n\t\t}\n\t\tint rightIdx = localMinIdx + 1;\n\t\twhile (rightIdx < scores.Length && scores[rightIdx] > scores[rightIdx - 1]) {\n\t\t\trewards[rightIdx] = rewards[rightIdx - 1] + 1;\n\t\t\trightIdx++;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Linq;\n\n// O(n) time | O(n) space - where in is the length of the input array\npublic class Program {\n\tpublic static int MinRewards(int[] scores) {\n\t\tint[] rewards = new int[scores.Length];\n\t\tArray.Fill(rewards, 1);\n\t\tfor (int i = 1; i < scores.Length; i++) {\n\t\t\tif (scores[i] > scores[i - 1]) rewards[i] = rewards[i - 1] + 1;\n\t\t}\n\t\tfor (int i = scores.Length - 2; i >= 0; i--) {\n\t\t\tif (scores[i] > scores[i + 1]) {\n\t\t\t\trewards[i] = Math.Max(rewards[i], rewards[i + 1] + 1);\n\t\t\t}\n\t\t}\n\t\treturn rewards.Sum();\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc MinRewards(scores []int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := []int{1}\n\toutput := MinRewards(input)\n\texpected := 1\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tinput := []int{5, 10}\n\toutput := MinRewards(input)\n\texpected := 3\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tinput := []int{10, 5}\n\toutput := MinRewards(input)\n\texpected := 3\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tinput := []int{4, 2, 1, 3}\n\toutput := MinRewards(input)\n\texpected := 8\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tinput := []int{0, 4, 2, 1, 3}\n\toutput := MinRewards(input)\n\texpected := 9\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tinput := []int{8, 4, 2, 1, 3, 6, 7, 9, 5}\n\toutput := MinRewards(input)\n\texpected := 25\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tinput := []int{2, 20, 13, 12, 11, 8, 4, 3, 1, 5, 6, 7, 9, 0}\n\toutput := MinRewards(input)\n\texpected := 52\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tinput := []int{2, 1, 4, 3, 6, 5, 8, 7, 10, 9}\n\toutput := MinRewards(input)\n\texpected := 15\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tinput := []int{800, 400, 20, 10, 30, 61, 70, 90, 17, 21, 22, 13, 12, 11, 8, 4, 2, 1, 3, 6, 7, 9, 0, 68, 55, 67, 57, 60, 51, 661, 50, 65, 53}\n\toutput := MinRewards(input)\n\texpected := 93\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := []int{8, 4, 2, 1, 3, 6, 7, 9, 5}\n\toutput := MinRewards(input)\n\texpected := 25\n\trequire.Equal(t, expected, output)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n^2) time | O(n) space - where in is the length of the input array\nfunc MinRewards(scores []int) int {\n\trewards := make([]int, len(scores))\n\tfill(rewards, 1)\n\tfor i := 1; i < len(scores); i++ {\n\t\tj := i - 1\n\t\tif scores[i] > scores[j] {\n\t\t\trewards[i] = rewards[j] + 1\n\t\t\tcontinue\n\t\t}\n\t\tfor j >= 0 && scores[j] > scores[j+1] {\n\t\t\trewards[j] = max(rewards[j], rewards[j+1]+1)\n\t\t\tj--\n\t\t}\n\t}\n\treturn sum(rewards)\n}\n\nfunc fill(arr []int, val int) {\n\tfor i := range arr {\n\t\tarr[i] = val\n\t}\n}\n\nfunc sum(arr []int) int {\n\tsum := 0\n\tfor i := range arr {\n\t\tsum += arr[i]\n\t}\n\treturn sum\n}\n\nfunc max(i, j int) int {\n\tif i > j {\n\t\treturn i\n\t}\n\treturn j\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space - where in is the length of the input array\nfunc MinRewards(scores []int) int {\n\trewards := make([]int, len(scores))\n\tfill(rewards, 1)\n\tlocalMinIdxs := getLocalMinIdxs(scores)\n\tfor _, localMinIdx := range localMinIdxs {\n\t\texpandFromLocalMinIdx(localMinIdx, scores, rewards)\n\t}\n\treturn sum(rewards)\n}\n\nfunc getLocalMinIdxs(arr []int) []int {\n\tlocalMinIdxs := []int{}\n\tif len(arr) == 1 {\n\t\tlocalMinIdxs = append(localMinIdxs, 0)\n\t\treturn localMinIdxs\n\t}\n\tfor i := 0; i < len(arr); i++ {\n\t\tif i == 0 && arr[i] < arr[i+1] {\n\t\t\tlocalMinIdxs = append(localMinIdxs, i)\n\t\t}\n\t\tif i == len(arr)-1 && arr[i] < arr[i-1] {\n\t\t\tlocalMinIdxs = append(localMinIdxs, i)\n\t\t}\n\t\tif i == 0 || i == len(arr)-1 {\n\t\t\tcontinue\n\t\t}\n\t\tif arr[i] < arr[i+1] && arr[i] < arr[i-1] {\n\t\t\tlocalMinIdxs = append(localMinIdxs, i)\n\t\t}\n\t}\n\treturn localMinIdxs\n}\n\nfunc expandFromLocalMinIdx(localMinIdx int, scores, rewards []int) {\n\tleftIdx := localMinIdx - 1\n\tfor leftIdx >= 0 && scores[leftIdx] > scores[leftIdx+1] {\n\t\trewards[leftIdx] = max(rewards[leftIdx], rewards[leftIdx+1]+1)\n\t\tleftIdx--\n\t}\n\trightIdx := localMinIdx + 1\n\tfor rightIdx < len(scores) && scores[rightIdx] > scores[rightIdx-1] {\n\t\trewards[rightIdx] = rewards[rightIdx-1] + 1\n\t\trightIdx++\n\t}\n}\n\nfunc fill(arr []int, val int) {\n\tfor i := range arr {\n\t\tarr[i] = val\n\t}\n}\n\nfunc sum(arr []int) int {\n\tsum := 0\n\tfor i := range arr {\n\t\tsum += arr[i]\n\t}\n\treturn sum\n}\n\nfunc max(i, j int) int {\n\tif i > j {\n\t\treturn i\n\t}\n\treturn j\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space - where in is the length of the input array\nfunc MinRewards(scores []int) int {\n\trewards := make([]int, len(scores))\n\tfill(rewards, 1)\n\tfor i := 1; i < len(scores); i++ {\n\t\tif scores[i] > scores[i-1] {\n\t\t\trewards[i] = rewards[i-1] + 1\n\t\t}\n\t}\n\tfor i := len(scores) - 2; i >= 0; i-- {\n\t\tif scores[i] > scores[i+1] {\n\t\t\trewards[i] = max(rewards[i], rewards[i+1]+1)\n\t\t}\n\t}\n\treturn sum(rewards)\n}\n\nfunc fill(arr []int, val int) {\n\tfor i := range arr {\n\t\tarr[i] = val\n\t}\n}\n\nfunc sum(arr []int) int {\n\tsum := 0\n\tfor i := range arr {\n\t\tsum += arr[i]\n\t}\n\treturn sum\n}\n\nfunc max(i, j int) int {\n\tif i > j {\n\t\treturn i\n\t}\n\treturn j\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int minRewards(int[] scores) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.minRewards(new int[] {1}) == 1);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.minRewards(new int[] {5, 10}) == 3);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.minRewards(new int[] {10, 5}) == 3);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.minRewards(new int[] {4, 2, 1, 3}) == 8);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.minRewards(new int[] {0, 4, 2, 1, 3}) == 9);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.minRewards(new int[] {8, 4, 2, 1, 3, 6, 7, 9, 5}) == 25);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(\n        Program.minRewards(new int[] {2, 20, 13, 12, 11, 8, 4, 3, 1, 5, 6, 7, 9, 0}) == 52);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.minRewards(new int[] {2, 1, 4, 3, 6, 5, 8, 7, 10, 9}) == 15);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(\n        Program.minRewards(\n                new int[] {\n                  800, 400, 20, 10, 30, 61, 70, 90, 17, 21, 22, 13, 12, 11, 8, 4, 2, 1, 3, 6, 7, 9,\n                  0, 68, 55, 67, 57, 60, 51, 661, 50, 65, 53\n                })\n            == 93);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.minRewards(new int[] {8, 4, 2, 1, 3, 6, 7, 9, 5}) == 25);\n  }\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\nimport java.util.stream.*;\n\n// O(n^2) time | O(n) space - where in is the length of the input array\nclass Program {\n  public static int minRewards(int[] scores) {\n    int[] rewards = new int[scores.length];\n    Arrays.fill(rewards, 1);\n    for (int i = 1; i < scores.length; i++) {\n      int j = i - 1;\n      if (scores[i] > scores[j]) {\n        rewards[i] = rewards[j] + 1;\n      } else {\n        while (j >= 0 && scores[j] > scores[j + 1]) {\n          rewards[j] = Math.max(rewards[j], rewards[j + 1] + 1);\n          j--;\n        }\n      }\n    }\n    return IntStream.of(rewards).sum();\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\nimport java.util.stream.*;\n\n// O(n) time | O(n) space - where in is the length of the input array\nclass Program {\n  public static int minRewards(int[] scores) {\n    int[] rewards = new int[scores.length];\n    Arrays.fill(rewards, 1);\n    List<Integer> localMinIdxs = getLocalMinIdxs(scores);\n    for (Integer localMinIdx : localMinIdxs) {\n      expandFromLocalMinIdx(localMinIdx, scores, rewards);\n    }\n    return IntStream.of(rewards).sum();\n  }\n\n  public static List<Integer> getLocalMinIdxs(int[] array) {\n    List<Integer> localMinIdxs = new ArrayList<Integer>();\n    if (array.length == 1) {\n      localMinIdxs.add(0);\n      return localMinIdxs;\n    }\n    for (int i = 0; i < array.length; i++) {\n      if (i == 0 && array[i] < array[i + 1]) localMinIdxs.add(i);\n      if (i == array.length - 1 && array[i] < array[i - 1]) localMinIdxs.add(i);\n      if (i == 0 || i == array.length - 1) continue;\n      if (array[i] < array[i + 1] && array[i] < array[i - 1]) localMinIdxs.add(i);\n    }\n    return localMinIdxs;\n  }\n\n  public static void expandFromLocalMinIdx(int localMinIdx, int[] scores, int[] rewards) {\n    int leftIdx = localMinIdx - 1;\n    while (leftIdx >= 0 && scores[leftIdx] > scores[leftIdx + 1]) {\n      rewards[leftIdx] = Math.max(rewards[leftIdx], rewards[leftIdx + 1] + 1);\n      leftIdx--;\n    }\n    int rightIdx = localMinIdx + 1;\n    while (rightIdx < scores.length && scores[rightIdx] > scores[rightIdx - 1]) {\n      rewards[rightIdx] = rewards[rightIdx - 1] + 1;\n      rightIdx++;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\nimport java.util.stream.*;\n\n// O(n) time | O(n) space - where in is the length of the input array\nclass Program {\n  public static int minRewards(int[] scores) {\n    int[] rewards = new int[scores.length];\n    Arrays.fill(rewards, 1);\n    for (int i = 1; i < scores.length; i++) {\n      if (scores[i] > scores[i - 1]) rewards[i] = rewards[i - 1] + 1;\n    }\n    for (int i = scores.length - 2; i >= 0; i--) {\n      if (scores[i] > scores[i + 1]) {\n        rewards[i] = Math.max(rewards[i], rewards[i + 1] + 1);\n      }\n    }\n    return IntStream.of(rewards).sum();\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function minRewards(scores) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.minRewards = minRewards;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.minRewards([1])).to.deep.equal(1);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.minRewards([5, 10])).to.deep.equal(3);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.minRewards([10, 5])).to.deep.equal(3);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.minRewards([4, 2, 1, 3])).to.deep.equal(8);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.minRewards([0, 4, 2, 1, 3])).to.deep.equal(9);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.minRewards([8, 4, 2, 1, 3, 6, 7, 9, 5])).to.deep.equal(25);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.minRewards([2, 20, 13, 12, 11, 8, 4, 3, 1, 5, 6, 7, 9, 0])).to.deep.equal(52);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.minRewards([2, 1, 4, 3, 6, 5, 8, 7, 10, 9])).to.deep.equal(15);\n});\n\nit('Test Case #9', function () {\n  chai\n    .expect(\n      program.minRewards([\n        800,\n        400,\n        20,\n        10,\n        30,\n        61,\n        70,\n        90,\n        17,\n        21,\n        22,\n        13,\n        12,\n        11,\n        8,\n        4,\n        2,\n        1,\n        3,\n        6,\n        7,\n        9,\n        0,\n        68,\n        55,\n        67,\n        57,\n        60,\n        51,\n        661,\n        50,\n        65,\n        53,\n      ]),\n    )\n    .to.deep.equal(93);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.minRewards([8, 4, 2, 1, 3, 6, 7, 9, 5])).to.deep.equal(25);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space - where in is the length of the input array\nfunction minRewards(scores) {\n  const rewards = scores.map(_ => 1);\n  for (let i = 1; i < scores.length; i++) {\n    let j = i - 1;\n    if (scores[i] > scores[j]) {\n      rewards[i] = rewards[j] + 1;\n    } else {\n      while (j >= 0 && scores[j] > scores[j + 1]) {\n        rewards[j] = Math.max(rewards[j], rewards[j + 1] + 1);\n        j--;\n      }\n    }\n  }\n  return rewards.reduce((a, b) => a + b);\n}\n\nexports.minRewards = minRewards;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where in is the length of the input array\nfunction minRewards(scores) {\n  const rewards = scores.map(_ => 1);\n  const localMinIdxs = getLocalMinIdxs(scores);\n  for (const localMinIdx of localMinIdxs) {\n    expandFromLocalMinIdx(localMinIdx, scores, rewards);\n  }\n  return rewards.reduce((a, b) => a + b);\n}\n\nfunction getLocalMinIdxs(array) {\n  if (array.length === 1) return [0];\n  const localMinIdxs = [];\n  for (let i = 0; i < array.length; i++) {\n    if (i === 0 && array[i] < array[i + 1]) localMinIdxs.push(i);\n    if (i === array.length - 1 && array[i] < array[i - 1]) localMinIdxs.push(i);\n    if (i === 0 || i === array.length - 1) continue;\n    if (array[i] < array[i + 1] && array[i] < array[i - 1]) localMinIdxs.push(i);\n  }\n  return localMinIdxs;\n}\n\nfunction expandFromLocalMinIdx(localMinIdx, scores, rewards) {\n  let leftIdx = localMinIdx - 1;\n  while (leftIdx >= 0 && scores[leftIdx] > scores[leftIdx + 1]) {\n    rewards[leftIdx] = Math.max(rewards[leftIdx], rewards[leftIdx + 1] + 1);\n    leftIdx--;\n  }\n  let rightIdx = localMinIdx + 1;\n  while (rightIdx < scores.length && scores[rightIdx] > scores[rightIdx - 1]) {\n    rewards[rightIdx] = rewards[rightIdx - 1] + 1;\n    rightIdx++;\n  }\n}\n\nexports.minRewards = minRewards;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where in is the length of the input array\nfunction minRewards(scores) {\n  const rewards = scores.map(_ => 1);\n  for (let i = 1; i < scores.length; i++) {\n    if (scores[i] > scores[i - 1]) rewards[i] = rewards[i - 1] + 1;\n  }\n  for (let i = scores.length - 2; i >= 0; i--) {\n    if (scores[i] > scores[i + 1]) rewards[i] = Math.max(rewards[i], rewards[i + 1] + 1);\n  }\n  return rewards.reduce((a, b) => a + b);\n}\n\nexports.minRewards = minRewards;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def minRewards(scores):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.minRewards([1]), 1)\n\n    def test_case_2(self):\n        self.assertEqual(program.minRewards([5, 10]), 3)\n\n    def test_case_3(self):\n        self.assertEqual(program.minRewards([10, 5]), 3)\n\n    def test_case_4(self):\n        self.assertEqual(program.minRewards([4, 2, 1, 3]), 8)\n\n    def test_case_5(self):\n        self.assertEqual(program.minRewards([0, 4, 2, 1, 3]), 9)\n\n    def test_case_6(self):\n        self.assertEqual(program.minRewards([8, 4, 2, 1, 3, 6, 7, 9, 5]), 25)\n\n    def test_case_7(self):\n        self.assertEqual(program.minRewards([2, 20, 13, 12, 11, 8, 4, 3, 1, 5, 6, 7, 9, 0]), 52)\n\n    def test_case_8(self):\n        self.assertEqual(program.minRewards([2, 1, 4, 3, 6, 5, 8, 7, 10, 9]), 15)\n\n    def test_case_9(self):\n        self.assertEqual(\n            program.minRewards(\n                [\n                    800,\n                    400,\n                    20,\n                    10,\n                    30,\n                    61,\n                    70,\n                    90,\n                    17,\n                    21,\n                    22,\n                    13,\n                    12,\n                    11,\n                    8,\n                    4,\n                    2,\n                    1,\n                    3,\n                    6,\n                    7,\n                    9,\n                    0,\n                    68,\n                    55,\n                    67,\n                    57,\n                    60,\n                    51,\n                    661,\n                    50,\n                    65,\n                    53,\n                ]\n            ),\n            93,\n        )\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.minRewards([8, 4, 2, 1, 3, 6, 7, 9, 5]), 25)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space - where in is the length of the input array\ndef minRewards(scores):\n    rewards = [1 for _ in scores]\n    for i in range(1, len(scores)):\n        j = i - 1\n        if scores[i] > scores[j]:\n            rewards[i] = rewards[j] + 1\n        else:\n            while j >= 0 and scores[j] > scores[j + 1]:\n                rewards[j] = max(rewards[j], rewards[j + 1] + 1)\n                j -= 1\n    return sum(rewards)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space - where in is the length of the input array\ndef minRewards(scores):\n    rewards = [1 for _ in scores]\n    localMinIdxs = getLocalMinIdxs(scores)\n    for localMinIdx in localMinIdxs:\n        expandFromLocalMinIdx(localMinIdx, scores, rewards)\n    return sum(rewards)\n\n\ndef getLocalMinIdxs(array):\n    if len(array) == 1:\n        return [0]\n    localMinIdxs = []\n    for i in range(len(array)):\n        if i == 0 and array[i] < array[i + 1]:\n            localMinIdxs.append(i)\n        if i == len(array) - 1 and array[i] < array[i - 1]:\n            localMinIdxs.append(i)\n        if i == 0 or i == len(array) - 1:\n            continue\n        if array[i] < array[i + 1] and array[i] < array[i - 1]:\n            localMinIdxs.append(i)\n    return localMinIdxs\n\n\ndef expandFromLocalMinIdx(localMinIdx, scores, rewards):\n    leftIdx = localMinIdx - 1\n    while leftIdx >= 0 and scores[leftIdx] > scores[leftIdx + 1]:\n        rewards[leftIdx] = max(rewards[leftIdx], rewards[leftIdx + 1] + 1)\n        leftIdx -= 1\n    rightIdx = localMinIdx + 1\n    while rightIdx < len(scores) and scores[rightIdx] > scores[rightIdx - 1]:\n        rewards[rightIdx] = rewards[rightIdx - 1] + 1\n        rightIdx += 1\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space - where in is the length of the input array\ndef minRewards(scores):\n    rewards = [1 for _ in scores]\n    for i in range(1, len(scores)):\n        if scores[i] > scores[i - 1]:\n            rewards[i] = rewards[i - 1] + 1\n    for i in reversed((range(len(scores) - 1))):\n        if scores[i] > scores[i + 1]:\n            rewards[i] = max(rewards[i], rewards[i + 1] + 1)\n    return sum(rewards)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func minRewards(_ scores: [Int]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(1, program.minRewards([1]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(3, program.minRewards([5, 10]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(3, program.minRewards([10, 5]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(8, program.minRewards([4, 2, 1, 3]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(9, program.minRewards([0, 4, 2, 1, 3]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(25, program.minRewards([8, 4, 2, 1, 3, 6, 7, 9, 5]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(52, program.minRewards([2, 20, 13, 12, 11, 8, 4, 3, 1, 5, 6, 7, 9, 0]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(15, program.minRewards([2, 1, 4, 3, 6, 5, 8, 7, 10, 9]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(93, program.minRewards([800, 400, 20, 10, 30, 61, 70, 90, 17, 21, 22, 13, 12, 11, 8, 4, 2, 1, 3, 6, 7, 9, 0, 68, 55, 67, 57, 60, 51, 661, 50, 65, 53]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(25, program.minRewards([8, 4, 2, 1, 3, 6, 7, 9, 5]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(n) space\n  func minRewards(_ scores: [Int]) -> Int {\n    var rewards = Array(repeating: 1, count: scores.count)\n\n    for i in 1 ..< scores.count {\n      var j = i - 1\n\n      if scores[i] > scores[j] {\n        rewards[i] = rewards[j] + 1\n      } else {\n        while j >= 0, scores[j] > scores[j + 1] {\n          rewards[j] = max(rewards[j], rewards[j + 1] + 1)\n          j -= 1\n        }\n      }\n    }\n\n    return rewards.reduce(0) { $0 + $1 }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func minRewards(_ scores: [Int]) -> Int {\n    var rewards = Array(repeating: 1, count: scores.count)\n    let localMinIndices = getLocalMinIndices(scores)\n\n    for localMinIndex in localMinIndices {\n      expandFromLocalMinIndex(localMinIndex, scores, &rewards)\n    }\n\n    return rewards.reduce(0) { $0 + $1 }\n  }\n\n  func getLocalMinIndices(_ scores: [Int]) -> [Int] {\n    if scores.count == 1 {\n      return [0]\n    }\n\n    var localMinIndices = [Int]()\n\n    for i in 0 ..< scores.count {\n      if i == 0 && scores[i] < scores[i + 1] {\n        localMinIndices.append(i)\n      }\n\n      if i == scores.count - 1 && scores[i] < scores[i - 1] {\n        localMinIndices.append(i)\n      }\n\n      if i == 0 || i == scores.count - 1 {\n        continue\n      }\n\n      if scores[i] < scores[i - 1], scores[i] < scores[i + 1] {\n        localMinIndices.append(i)\n      }\n    }\n\n    return localMinIndices\n  }\n\n  func expandFromLocalMinIndex(_ localMinIndex: Int, _ scores: [Int], _ rewards: inout [Int]) {\n    var leftIndex = localMinIndex - 1\n\n    while leftIndex >= 0, scores[leftIndex] > scores[leftIndex + 1] {\n      rewards[leftIndex] = max(rewards[leftIndex], rewards[leftIndex + 1] + 1)\n      leftIndex -= 1\n    }\n\n    var rightIndex = localMinIndex + 1\n\n    while rightIndex < scores.count, scores[rightIndex] > scores[rightIndex - 1] {\n      rewards[rightIndex] = rewards[rightIndex - 1] + 1\n      rightIndex += 1\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func minRewards(_ scores: [Int]) -> Int {\n    var rewards = Array(repeating: 1, count: scores.count)\n\n    for i in stride(from: 1, to: scores.count, by: 1) {\n      if scores[i] > scores[i - 1] {\n        rewards[i] = rewards[i - 1] + 1\n      }\n    }\n\n    for i in stride(from: scores.count - 2, through: 0, by: -1) {\n      if scores[i] > scores[i + 1] {\n        rewards[i] = max(rewards[i], rewards[i + 1] + 1)\n      }\n    }\n\n    return rewards.reduce(0) { $0 + $1 }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function minRewards(scores: number[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.minRewards([8, 4, 2, 1, 3, 6, 7, 9, 5])).to.deep.equal(25);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space - where in is the length of the input array\nexport function minRewards(scores: number[]) {\n  const rewards = scores.map(_ => 1);\n  for (let i = 1; i < scores.length; i++) {\n    let j = i - 1;\n    if (scores[i] > scores[j]) {\n      rewards[i] = rewards[j] + 1;\n    } else {\n      while (j >= 0 && scores[j] > scores[j + 1]) {\n        rewards[j] = Math.max(rewards[j], rewards[j + 1] + 1);\n        j--;\n      }\n    }\n  }\n  return rewards.reduce((a, b) => a + b);\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where in is the length of the input array\nexport function minRewards(scores: number[]) {\n  const rewards = scores.map(_ => 1);\n  const localMinIdxs = getLocalMinIdxs(scores);\n  for (const localMinIdx of localMinIdxs) {\n    expandFromLocalMinIdx(localMinIdx, scores, rewards);\n  }\n  return rewards.reduce((a, b) => a + b);\n}\n\nfunction getLocalMinIdxs(array: number[]) {\n  if (array.length === 1) return [0];\n  const localMinIdxs: number[] = [];\n  for (let i = 0; i < array.length; i++) {\n    if (i === 0 && array[i] < array[i + 1]) localMinIdxs.push(i);\n    if (i === array.length - 1 && array[i] < array[i - 1]) localMinIdxs.push(i);\n    if (i === 0 || i === array.length - 1) continue;\n    if (array[i] < array[i + 1] && array[i] < array[i - 1]) localMinIdxs.push(i);\n  }\n  return localMinIdxs;\n}\n\nfunction expandFromLocalMinIdx(localMinIdx: number, scores: number[], rewards: number[]) {\n  let leftIdx = localMinIdx - 1;\n  while (leftIdx >= 0 && scores[leftIdx] > scores[leftIdx + 1]) {\n    rewards[leftIdx] = Math.max(rewards[leftIdx], rewards[leftIdx + 1] + 1);\n    leftIdx--;\n  }\n  let rightIdx = localMinIdx + 1;\n  while (rightIdx < scores.length && scores[rightIdx] > scores[rightIdx - 1]) {\n    rewards[rightIdx] = rewards[rightIdx - 1] + 1;\n    rightIdx++;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space - where in is the length of the input array\nexport function minRewards(scores: number[]) {\n  const rewards = scores.map(_ => 1);\n  for (let i = 1; i < scores.length; i++) {\n    if (scores[i] > scores[i - 1]) rewards[i] = rewards[i - 1] + 1;\n  }\n  for (let i = scores.length - 2; i >= 0; i--) {\n    if (scores[i] > scores[i + 1]) rewards[i] = Math.max(rewards[i], rewards[i + 1] + 1);\n  }\n  return rewards.reduce((a, b) => a + b);\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "scores": [
+        8,
+        4,
+        2,
+        1,
+        3,
+        6,
+        7,
+        9,
+        5
+      ]
+    },
+    {
+      "scores": [
+        1
+      ]
+    },
+    {
+      "scores": [
+        5,
+        10
+      ]
+    },
+    {
+      "scores": [
+        10,
+        5
+      ]
+    },
+    {
+      "scores": [
+        4,
+        2,
+        1,
+        3
+      ]
+    },
+    {
+      "scores": [
+        0,
+        4,
+        2,
+        1,
+        3
+      ]
+    },
+    {
+      "scores": [
+        2,
+        20,
+        13,
+        12,
+        11,
+        8,
+        4,
+        3,
+        1,
+        5,
+        6,
+        7,
+        9,
+        0
+      ]
+    },
+    {
+      "scores": [
+        2,
+        1,
+        4,
+        3,
+        6,
+        5,
+        8,
+        7,
+        10,
+        9
+      ]
+    },
+    {
+      "scores": [
+        800,
+        400,
+        20,
+        10,
+        30,
+        61,
+        70,
+        90,
+        17,
+        21,
+        22,
+        13,
+        12,
+        11,
+        8,
+        4,
+        2,
+        1,
+        3,
+        6,
+        7,
+        9,
+        0,
+        68,
+        55,
+        67,
+        57,
+        60,
+        51,
+        661,
+        50,
+        65,
+        53
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      25,
+      1,
+      3,
+      3,
+      8,
+      9,
+      52,
+      15,
+      93
+    ]
+  ]
+}

@@ -1,0 +1,295 @@
+{
+  "Summary": {
+    "Name": "Water Area",
+    "Category": "Dynamic Programming",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 658,
+      "timeOne": 0,
+      "timeTwo": 1633,
+      "url": "https://player.vimeo.com/video/225758783"
+    }
+  },
+  "Prompt": "",
+  "Hints": "In order to calculate the amount of water above a single point in the input array, you must know the height of the tallest pillar to its left and the height of the tallest pillar to its right.\nIf a point can hold water above it, then the smallest of the two heights mentioned in Hint #1 minus the height at that respective point should lead you to the amount of water above it.\nTry building an array of the left and right max heights for each point in the input array. You should be able to build this array and to compute the final amount of water above each point in just two loops over the input array.\n",
+  "SpaceTime": "O(n) time | O(n) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  You're given an array of non-negative integers where each non-zero integer\n  represents the height of a pillar of width <span>1</span>. Imagine water being\n  poured over all of the pillars; write a function that returns the surface area\n  of the water trapped between the pillars viewed from the front. Note that\n  spilled water should be ignored.\n</p>\n<p>\n  Refer to the first minute of this question's video explanation for a visual\n  example.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">heights</span> = [0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n48\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "heights",
+      "Example": [
+        0,
+        8,
+        0,
+        0,
+        5,
+        0,
+        0,
+        10,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3
+      ],
+      "Schema": {
+        "items": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint waterArea(vector<int> heights) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "vector<int> vector1;\nvector<int> vector2{0, 0, 0, 0, 0};\nvector<int> vector3{0, 1, 0, 0, 0};\nvector<int> vector4{0, 1, 1, 0, 0};\nvector<int> vector5{0, 1, 2, 1, 1};\nvector<int> vector6{0, 1, 0, 1, 0};\nvector<int> vector7{0, 1, 0, 1, 0, 2, 0, 3};\nvector<int> vector8{0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3};\nvector<int> vector9{0, 8, 0, 0, 10, 0, 0, 10, 0, 0, 1, 1, 0, 3};\nvector<int> vector10{0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 100};\nvector<int> vector11{0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 0};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() { assert(waterArea(vector1) == 0); });\n\n    RunTest(\"Test Case 2\", []() { assert(waterArea(vector2) == 0); });\n\n    RunTest(\"Test Case 3\", []() { assert(waterArea(vector3) == 0); });\n\n    RunTest(\"Test Case 4\", []() { assert(waterArea(vector4) == 0); });\n\n    RunTest(\"Test Case 5\", []() { assert(waterArea(vector5) == 0); });\n\n    RunTest(\"Test Case 6\", []() { assert(waterArea(vector6) == 1); });\n\n    RunTest(\"Test Case 7\", []() { assert(waterArea(vector7) == 4); });\n\n    RunTest(\"Test Case 8\", []() { assert(waterArea(vector8) == 48); });\n\n    RunTest(\"Test Case 9\", []() { assert(waterArea(vector9) == 49); });\n\n    RunTest(\"Test Case 10\", []() { assert(waterArea(vector10) == 1075); });\n\n    RunTest(\"Test Case 11\", []() { assert(waterArea(vector11) == 39); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input{0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3};\n      assert(waterArea(input) == 48);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(n) time | O(n) space\nint waterArea(vector<int> heights) {\n  vector<int> maxes(heights.size(), 0);\n  int leftMax = 0;\n  for (int i = 0; i < heights.size(); i++) {\n    int height = heights[i];\n    maxes[i] = leftMax;\n    leftMax = max(leftMax, height);\n  }\n  int rightMax = 0;\n  for (int i = heights.size() - 1; i >= 0; i--) {\n    int height = heights[i];\n    int minHeight = min(rightMax, maxes[i]);\n    if (height < minHeight) {\n      maxes[i] = minHeight - height;\n    } else {\n      maxes[i] = 0;\n    }\n    rightMax = max(rightMax, height);\n  }\n  int total = 0;\n  for (int i = 0; i < heights.size(); i++) {\n    total += maxes[i];\n  }\n  return total;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int WaterArea(int[] heights) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] input = {0, 0, 0, 0, 0};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] input = {0, 1, 0, 0, 0};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] input = {0, 1, 1, 0, 0};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] input = {0, 1, 2, 1, 1};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] input = {0, 1, 0, 1, 0};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] input = {0, 1, 0, 1, 0, 2, 0, 3};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] input = {0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 48);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] input = {0, 8, 0, 0, 10, 0, 0, 10, 0, 0, 1, 1, 0, 3};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 49);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] input = {0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 100};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 1075);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[] input = {0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 0};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 39);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3};\n\t\tUtils.AssertTrue(Program.WaterArea(input) == 48);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static int WaterArea(int[] heights) {\n\t\tint[] maxes = new int[heights.Length];\n\t\tint leftMax = 0;\n\t\tfor (int i = 0; i < heights.Length; i++) {\n\t\t\tint height = heights[i];\n\t\t\tmaxes[i] = leftMax;\n\t\t\tleftMax = Math.Max(leftMax, height);\n\t\t}\n\t\tint rightMax = 0;\n\t\tfor (int i = heights.Length - 1; i >= 0; i--) {\n\t\t\tint height = heights[i];\n\t\t\tint minHeight = Math.Min(rightMax, maxes[i]);\n\t\t\tif (height < minHeight) {\n\t\t\t\tmaxes[i] = minHeight - height;\n\t\t\t} else {\n\t\t\t\tmaxes[i] = 0;\n\t\t\t}\n\t\t\trightMax = Math.Max(rightMax, height);\n\t\t}\n\t\tint total = 0;\n\t\tfor (int i = 0; i < heights.Length; i++) {\n\t\t\ttotal += maxes[i];\n\t\t}\n\t\treturn total;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc WaterArea(heights []int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 0\n\toutput := WaterArea([]int{})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 0\n\toutput := WaterArea([]int{0, 0, 0, 0, 0})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 0\n\toutput := WaterArea([]int{0, 1, 0, 0, 0})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := 0\n\toutput := WaterArea([]int{0, 1, 1, 0, 0})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := 0\n\toutput := WaterArea([]int{0, 1, 2, 1, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := 1\n\toutput := WaterArea([]int{0, 1, 0, 1, 0})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := 4\n\toutput := WaterArea([]int{0, 1, 0, 1, 0, 2, 0, 3})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := 48\n\toutput := WaterArea([]int{0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := 49\n\toutput := WaterArea([]int{0, 8, 0, 0, 10, 0, 0, 10, 0, 0, 1, 1, 0, 3})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := 1075\n\toutput := WaterArea([]int{0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 100})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := 39\n\toutput := WaterArea([]int{0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 0})\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 48\n\toutput := WaterArea([]int{0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3})\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space\nfunc WaterArea(heights []int) int {\n\tmaxes := make([]int, len(heights))\n\tleftmax := 0\n\tfor i, height := range heights {\n\t\tmaxes[i] = leftmax\n\t\tleftmax = max(leftmax, height)\n\t}\n\trightmax := 0\n\tfor i := range heights {\n\t\tj := len(heights) - i - 1\n\t\theight := heights[j]\n\t\tminheight := min(rightmax, maxes[j])\n\t\tif height < minheight {\n\t\t\tmaxes[j] = minheight - height\n\t\t} else {\n\t\t\tmaxes[j] = 0\n\t\t}\n\t\trightmax = max(rightmax, height)\n\t}\n\treturn sum(maxes)\n}\n\nfunc min(arg1 int, rest ...int) int {\n\tcurr := arg1\n\tfor _, num := range rest {\n\t\tif num < curr {\n\t\t\tcurr = num\n\t\t}\n\t}\n\treturn curr\n}\n\nfunc max(arg1 int, rest ...int) int {\n\tcurr := arg1\n\tfor _, num := range rest {\n\t\tif num > curr {\n\t\t\tcurr = num\n\t\t}\n\t}\n\treturn curr\n}\n\nfunc sum(arr []int) int {\n\tacc := 0\n\tfor _, num := range arr {\n\t\tacc += num\n\t}\n\treturn acc\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int waterArea(int[] heights) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {};\n    Utils.assertTrue(Program.waterArea(input) == 0);\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] input = {0, 0, 0, 0, 0};\n    Utils.assertTrue(Program.waterArea(input) == 0);\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] input = {0, 1, 0, 0, 0};\n    Utils.assertTrue(Program.waterArea(input) == 0);\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] input = {0, 1, 1, 0, 0};\n    Utils.assertTrue(Program.waterArea(input) == 0);\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] input = {0, 1, 2, 1, 1};\n    Utils.assertTrue(Program.waterArea(input) == 0);\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] input = {0, 1, 0, 1, 0};\n    Utils.assertTrue(Program.waterArea(input) == 1);\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] input = {0, 1, 0, 1, 0, 2, 0, 3};\n    Utils.assertTrue(Program.waterArea(input) == 4);\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] input = {0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3};\n    Utils.assertTrue(Program.waterArea(input) == 48);\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] input = {0, 8, 0, 0, 10, 0, 0, 10, 0, 0, 1, 1, 0, 3};\n    Utils.assertTrue(Program.waterArea(input) == 49);\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] input = {0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 100};\n    Utils.assertTrue(Program.waterArea(input) == 1075);\n  }\n\n  @Test\n  public void TestCase11() {\n    int[] input = {0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 0};\n    Utils.assertTrue(Program.waterArea(input) == 39);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3};\n    Utils.assertTrue(Program.waterArea(input) == 48);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  public static int waterArea(int[] heights) {\n    int[] maxes = new int[heights.length];\n    int leftMax = 0;\n    for (int i = 0; i < heights.length; i++) {\n      int height = heights[i];\n      maxes[i] = leftMax;\n      leftMax = Math.max(leftMax, height);\n    }\n    int rightMax = 0;\n    for (int i = heights.length - 1; i >= 0; i--) {\n      int height = heights[i];\n      int minHeight = Math.min(rightMax, maxes[i]);\n      if (height < minHeight) {\n        maxes[i] = minHeight - height;\n      } else {\n        maxes[i] = 0;\n      }\n      rightMax = Math.max(rightMax, height);\n    }\n    int total = 0;\n    for (int i = 0; i < heights.length; i++) {\n      total += maxes[i];\n    }\n    return total;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function waterArea(heights) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.waterArea = waterArea;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.waterArea([])).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.waterArea([0, 0, 0, 0, 0])).to.deep.equal(0);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.waterArea([0, 1, 0, 0, 0])).to.deep.equal(0);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.waterArea([0, 1, 1, 0, 0])).to.deep.equal(0);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.waterArea([0, 1, 2, 1, 1])).to.deep.equal(0);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.waterArea([0, 1, 0, 1, 0])).to.deep.equal(1);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.waterArea([0, 1, 0, 1, 0, 2, 0, 3])).to.deep.equal(4);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.waterArea([0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3])).to.deep.equal(48);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.waterArea([0, 8, 0, 0, 10, 0, 0, 10, 0, 0, 1, 1, 0, 3])).to.deep.equal(49);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.waterArea([0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 100])).to.deep.equal(1075);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.waterArea([0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 0])).to.deep.equal(39);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.waterArea([0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3])).to.deep.equal(48);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction waterArea(heights) {\n  const maxes = new Array(heights.length).fill(0);\n  let leftMax = 0;\n  for (let i = 0; i < heights.length; i++) {\n    const height = heights[i];\n    maxes[i] = leftMax;\n    leftMax = Math.max(leftMax, height);\n  }\n  let rightMax = 0;\n  for (let i = heights.length - 1; i >= 0; i--) {\n    const height = heights[i];\n    const minHeight = Math.min(rightMax, maxes[i]);\n    if (height < minHeight) {\n      maxes[i] = minHeight - height;\n    } else {\n      maxes[i] = 0;\n    }\n    rightMax = Math.max(rightMax, height);\n  }\n  return maxes.reduce((a, b) => a + b, 0);\n}\n\nexports.waterArea = waterArea;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def waterArea(heights):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.waterArea([]), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.waterArea([0, 0, 0, 0, 0]), 0)\n\n    def test_case_3(self):\n        self.assertEqual(program.waterArea([0, 1, 0, 0, 0]), 0)\n\n    def test_case_4(self):\n        self.assertEqual(program.waterArea([0, 1, 1, 0, 0]), 0)\n\n    def test_case_5(self):\n        self.assertEqual(program.waterArea([0, 1, 2, 1, 1]), 0)\n\n    def test_case_6(self):\n        self.assertEqual(program.waterArea([0, 1, 0, 1, 0]), 1)\n\n    def test_case_7(self):\n        self.assertEqual(program.waterArea([0, 1, 0, 1, 0, 2, 0, 3]), 4)\n\n    def test_case_8(self):\n        self.assertEqual(program.waterArea([0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3]), 48)\n\n    def test_case_9(self):\n        self.assertEqual(program.waterArea([0, 8, 0, 0, 10, 0, 0, 10, 0, 0, 1, 1, 0, 3]), 49)\n\n    def test_case_10(self):\n        self.assertEqual(program.waterArea([0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 100]), 1075)\n\n    def test_case_11(self):\n        self.assertEqual(program.waterArea([0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 0]), 39)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.waterArea([0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3]), 48)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef waterArea(heights):\n    maxes = [0 for x in heights]\n    leftMax = 0\n    for i in range(len(heights)):\n        height = heights[i]\n        maxes[i] = leftMax\n        leftMax = max(leftMax, height)\n    rightMax = 0\n    for i in reversed(range(len(heights))):\n        height = heights[i]\n        minHeight = min(rightMax, maxes[i])\n        if height < minHeight:\n            maxes[i] = minHeight - height\n        else:\n            maxes[i] = 0\n        rightMax = max(rightMax, height)\n    return sum(maxes)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func waterArea(heights: [Int]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(0, program.waterArea(heights: [0]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(0, program.waterArea(heights: [0, 0, 0, 0, 0]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(0, program.waterArea(heights: [0, 1, 0, 0, 0]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(0, program.waterArea(heights: [0, 1, 1, 0, 0]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(0, program.waterArea(heights: [0, 1, 2, 1, 1]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(1, program.waterArea(heights: [0, 1, 0, 1, 0]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(4, program.waterArea(heights: [0, 1, 0, 1, 0, 2, 0, 3]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(48, program.waterArea(heights: [0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(49, program.waterArea(heights: [0, 8, 0, 0, 10, 0, 0, 10, 0, 0, 1, 1, 0, 3]))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(1075, program.waterArea(heights: [0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 100]))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(39, program.waterArea(heights: [0, 100, 0, 0, 10, 1, 1, 10, 1, 0, 1, 1, 0, 0]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(48, program.waterArea(heights: [0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func waterArea(heights: [Int]) -> Int {\n    var maxes = Array(repeating: 0, count: heights.count)\n    var leftMax = 0\n\n    for i in 0 ..< heights.count {\n      let currentHeight = heights[i]\n\n      maxes[i] = leftMax\n      leftMax = max(leftMax, currentHeight)\n    }\n\n    var rightMax = 0\n\n    for i in (0 ..< heights.count).reversed() {\n      let currentHeight = heights[i]\n\n      let minMax = min(rightMax, maxes[i])\n\n      if currentHeight < minMax {\n        maxes[i] = minMax - currentHeight\n      } else {\n        maxes[i] = 0\n      }\n\n      rightMax = max(rightMax, currentHeight)\n    }\n\n    return maxes.reduce(0) {\n      x, y in\n\n      x + y\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function waterArea(heights: number[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.waterArea([0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3])).to.deep.equal(48);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nexport function waterArea(heights: number[]) {\n  const maxes: number[] = new Array(heights.length).fill(0);\n  let leftMax = 0;\n  for (let i = 0; i < heights.length; i++) {\n    const height = heights[i];\n    maxes[i] = leftMax;\n    leftMax = Math.max(leftMax, height);\n  }\n  let rightMax = 0;\n  for (let i = heights.length - 1; i >= 0; i--) {\n    const height = heights[i];\n    const minHeight = Math.min(rightMax, maxes[i]);\n    if (height < minHeight) {\n      maxes[i] = minHeight - height;\n    } else {\n      maxes[i] = 0;\n    }\n    rightMax = Math.max(rightMax, height);\n  }\n  return maxes.reduce((a, b) => a + b, 0);\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "heights": [
+        0,
+        8,
+        0,
+        0,
+        5,
+        0,
+        0,
+        10,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3
+      ]
+    },
+    {
+      "heights": []
+    },
+    {
+      "heights": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "heights": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "heights": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "heights": [
+        0,
+        1,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "heights": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "heights": [
+        0,
+        1,
+        0,
+        1,
+        0,
+        2,
+        0,
+        3
+      ]
+    },
+    {
+      "heights": [
+        0,
+        8,
+        0,
+        0,
+        10,
+        0,
+        0,
+        10,
+        0,
+        0,
+        1,
+        1,
+        0,
+        3
+      ]
+    },
+    {
+      "heights": [
+        0,
+        100,
+        0,
+        0,
+        10,
+        1,
+        1,
+        10,
+        1,
+        0,
+        1,
+        1,
+        0,
+        100
+      ]
+    },
+    {
+      "heights": [
+        0,
+        100,
+        0,
+        0,
+        10,
+        1,
+        1,
+        10,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      48,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      4,
+      49,
+      1075,
+      39
+    ]
+  ]
+}

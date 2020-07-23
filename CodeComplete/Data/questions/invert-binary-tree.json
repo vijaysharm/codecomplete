@@ -1,0 +1,1285 @@
+{
+  "Summary": {
+    "Name": "Invert Binary Tree",
+    "Category": "Binary Trees",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 353,
+      "timeOne": 0,
+      "timeTwo": 1405,
+      "url": "https://player.vimeo.com/video/241868857"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Start by inverting the root node of the Binary Tree. Inverting this root node simply consists of swapping its left and right child nodes, which can be done the same way as swapping two variables.\nOnce the first swap mentioned in Hint #1 is done, you must invert the root node's left child node and its right child node. You can do so just as you did for the root node. Then, you will have to continue inverting child nodes' nodes until you reach the bottom of the tree.\nHow can you accomplish the process described in Hint #2? While recursion seems appropriate, would an iterative approach work? What would be the time and space complexity implications of both approaches?\n",
+  "SpaceTime": "O(n) time | O(d) space - where n is the number of nodes in the Binary Tree and d is the depth (height) of the Binary Tree\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a Binary Tree and inverts it. In other words,\n  the function should swap every left node in the tree for its corresponding\n  right node.\n</p>\n<p>\n  Each <span>BinaryTree</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. Children\n  nodes can either be <span>BinaryTree</span> nodes themselves or\n  <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> =    1\n       /     \\\n      2       3\n    /   \\   /   \\\n   4     5 6     7\n /   \\\n8     9\n</pre>\n<h3>Sample Output</h3>\n<pre>\n       1\n    /     \\\n   3       2\n /   \\   /   \\\n7     6 5     4\n            /   \\\n           9     8\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": "tree"
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          }
+        ],
+        "root": "1"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>left</span> and <span>right</span>\npointers and by the <span>root</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value);\n  void insert(vector<int> values, int i = 0);\n  void invertedInsert(vector<int> values, int i = 0);\n};\n\nvoid invertBinaryTree(BinaryTree *tree) {\n  // Write your code here.\n}\n",
+      "StartingTest": "#include <deque>\n\nBinaryTree::BinaryTree(int value) {\n  this->value = value;\n  this->left = NULL;\n  this->right = NULL;\n}\n\nvoid BinaryTree::insert(vector<int> values, int i) {\n  if (i >= values.size()) {\n    return;\n  }\n  deque<BinaryTree *> queue;\n  queue.push_back(this);\n  while (queue.size() > 0) {\n    BinaryTree *current = queue.front();\n    queue.pop_front();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->right);\n  }\n  this->insert(values, i + 1);\n}\n\nvoid BinaryTree::invertedInsert(vector<int> values, int i) {\n  if (i >= values.size()) {\n    return;\n  }\n  deque<BinaryTree *> queue;\n  queue.push_back(this);\n  while (queue.size() > 0) {\n    BinaryTree *current = queue.front();\n    queue.pop_front();\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->right);\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->left);\n  }\n  this->invertedInsert(values, i + 1);\n}\n\nbool compareBT(BinaryTree *a, BinaryTree *b) {\n  if (a == NULL && b == NULL) {\n    return true;\n  }\n  if (a != NULL && b != NULL) {\n    return a->value == b->value && compareBT(a->left, b->left) &&\n           compareBT(a->right, b->right);\n  }\n  return false;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree test1(1);\n      invertBinaryTree(&test1);\n      BinaryTree invertedTest1(1);\n      assert(compareBT(&test1, &invertedTest1) == 1);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      BinaryTree test2(1);\n      test2.insert({2});\n      invertBinaryTree(&test2);\n      BinaryTree invertedTest2(1);\n      invertedTest2.invertedInsert({2});\n      assert(compareBT(&test2, &invertedTest2) == 1);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      BinaryTree test3(1);\n      test3.insert({2, 3});\n      invertBinaryTree(&test3);\n      BinaryTree invertedtest3(1);\n      invertedtest3.invertedInsert({2, 3});\n      assert(compareBT(&test3, &invertedtest3) == 1);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      BinaryTree test4(1);\n      test4.insert({2, 3, 4});\n      invertBinaryTree(&test4);\n      BinaryTree invertedtest4(1);\n      invertedtest4.invertedInsert({2, 3, 4});\n      assert(compareBT(&test4, &invertedtest4) == 1);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      BinaryTree test5(1);\n      test5.insert({2, 3, 4, 5});\n      invertBinaryTree(&test5);\n      BinaryTree invertedtest5(1);\n      invertedtest5.invertedInsert({2, 3, 4, 5});\n      assert(compareBT(&test5, &invertedtest5) == 1);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      BinaryTree test6(1);\n      test6.insert({2, 3, 4, 5, 6});\n      invertBinaryTree(&test6);\n      BinaryTree invertedtest6(1);\n      invertedtest6.invertedInsert({2, 3, 4, 5, 6});\n      assert(compareBT(&test6, &invertedtest6) == 1);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      BinaryTree test7(1);\n      test7.insert({2, 3, 4, 5, 6, 7});\n      invertBinaryTree(&test7);\n      BinaryTree invertedtest7(1);\n      invertedtest7.invertedInsert({2, 3, 4, 5, 6, 7});\n      assert(compareBT(&test7, &invertedtest7) == 1);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      BinaryTree test8(1);\n      test8.insert({2, 3, 4, 5, 6, 7, 8});\n      invertBinaryTree(&test8);\n      BinaryTree invertedtest8(1);\n      invertedtest8.invertedInsert({2, 3, 4, 5, 6, 7, 8});\n      assert(compareBT(&test8, &invertedtest8) == 1);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      BinaryTree test9(1);\n      test9.insert({2, 3, 4, 5, 6, 7, 8, 9});\n      invertBinaryTree(&test9);\n      BinaryTree invertedtest9(1);\n      invertedtest9.invertedInsert({2, 3, 4, 5, 6, 7, 8, 9});\n      assert(compareBT(&test9, &invertedtest9) == 1);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      BinaryTree test10(1);\n      test10.insert({2, 3, 4, 5, 6, 7, 8, 9, 10});\n      invertBinaryTree(&test10);\n      BinaryTree invertedtest10(1);\n      invertedtest10.invertedInsert({2, 3, 4, 5, 6, 7, 8, 9, 10});\n      assert(compareBT(&test10, &invertedtest10) == 1);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      BinaryTree test11(1);\n      test11.insert(\n          {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18});\n      invertBinaryTree(&test11);\n      BinaryTree invertedtest11(1);\n      invertedtest11.invertedInsert(\n          {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18});\n      assert(compareBT(&test11, &invertedtest11) == 1);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <deque>\n\nBinaryTree::BinaryTree(int value) {\n  this->value = value;\n  this->left = NULL;\n  this->right = NULL;\n}\n\nvoid BinaryTree::insert(vector<int> values, int i) {\n  if (i >= values.size()) {\n    return;\n  }\n  deque<BinaryTree *> queue;\n  queue.push_back(this);\n  while (queue.size() > 0) {\n    BinaryTree *current = queue.front();\n    queue.pop_front();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->right);\n  }\n  this->insert(values, i + 1);\n}\n\nvoid BinaryTree::invertedInsert(vector<int> values, int i) {\n  if (i >= values.size()) {\n    return;\n  }\n  deque<BinaryTree *> queue;\n  queue.push_back(this);\n  while (queue.size() > 0) {\n    BinaryTree *current = queue.front();\n    queue.pop_front();\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->right);\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->left);\n  }\n  this->invertedInsert(values, i + 1);\n}\n\nbool compareBT(BinaryTree *a, BinaryTree *b) {\n  if (a == NULL && b == NULL) {\n    return true;\n  }\n  if (a != NULL && b != NULL) {\n    return a->value == b->value && compareBT(a->left, b->left) &&\n           compareBT(a->right, b->right);\n  }\n  return false;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree tree(1);\n      tree.insert({2, 3, 4, 5, 6, 7, 8, 9});\n      invertBinaryTree(&tree);\n      BinaryTree invertedTree(1);\n      invertedTree.invertedInsert({2, 3, 4, 5, 6, 7, 8, 9});\n      assert(compareBT(&tree, &invertedTree) == 1);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <deque>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value);\n  void insert(vector<int> values, int i = 0);\n  void invertedInsert(vector<int> values, int i = 0);\n};\n\nvoid swapLeftAndRight(BinaryTree *tree);\n\n// O(n) time | O(n) space\nvoid invertBinaryTree(BinaryTree *tree) {\n  deque<BinaryTree *> queue;\n  queue.push_back(tree);\n  while (queue.size() > 0) {\n    BinaryTree *current = queue.front();\n    queue.pop_front();\n    if (current == NULL) {\n      continue;\n    }\n    swap(current->left, current->right);\n    queue.push_back(current->left);\n    queue.push_back(current->right);\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value);\n  void insert(vector<int> values, int i = 0);\n  void invertedInsert(vector<int> values, int i = 0);\n};\n\nvoid swapLeftAndRight(BinaryTree *tree);\n\n// O(n) time | O(d) space\nvoid invertBinaryTree(BinaryTree *tree) {\n  if (tree == NULL) {\n    return;\n  }\n  swap(tree->left, tree->right);\n  invertBinaryTree(tree->left);\n  invertBinaryTree(tree->right);\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "\npublic class Program {\n\tpublic static void InvertBinaryTree(BinaryTree tree) {\n\t\t// Write your code here.\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestBinaryTree test1 = new TestBinaryTree(1);\n\t\tProgram.InvertBinaryTree(test1);\n\t\tInvertedBinaryTree invertedTest1 = new InvertedBinaryTree(1);\n\t\tUtils.AssertTrue(compareBT(test1, invertedTest1));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tTestBinaryTree test2 = new TestBinaryTree(1);\n\t\ttest2.insert(new int[] {2}, 0);\n\t\tProgram.InvertBinaryTree(test2);\n\t\tInvertedBinaryTree invertedTest2 = new InvertedBinaryTree(1);\n\t\tinvertedTest2.insert(new int[] {2}, 0);\n\t\tUtils.AssertTrue(compareBT(test2, invertedTest2));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tTestBinaryTree test3 = new TestBinaryTree(1);\n\t\ttest3.insert(new int[] {2, 3}, 0);\n\t\tProgram.InvertBinaryTree(test3);\n\t\tInvertedBinaryTree invertedTest3 = new InvertedBinaryTree(1);\n\t\tinvertedTest3.insert(new int[] {2, 3}, 0);\n\t\tUtils.AssertTrue(compareBT(test3, invertedTest3));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tTestBinaryTree test4 = new TestBinaryTree(1);\n\t\ttest4.insert(new int[] {2, 3, 4}, 0);\n\t\tProgram.InvertBinaryTree(test4);\n\t\tInvertedBinaryTree invertedTest4 = new InvertedBinaryTree(1);\n\t\tinvertedTest4.insert(new int[] {2, 3, 4}, 0);\n\t\tUtils.AssertTrue(compareBT(test4, invertedTest4));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tTestBinaryTree test5 = new TestBinaryTree(1);\n\t\ttest5.insert(new int[] {2, 3, 4, 5}, 0);\n\t\tProgram.InvertBinaryTree(test5);\n\t\tInvertedBinaryTree invertedTest5 = new InvertedBinaryTree(1);\n\t\tinvertedTest5.insert(new int[] {2, 3, 4, 5}, 0);\n\t\tUtils.AssertTrue(compareBT(test5, invertedTest5));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tTestBinaryTree test6 = new TestBinaryTree(1);\n\t\ttest6.insert(new int[] {2, 3, 4, 5, 6}, 0);\n\t\tProgram.InvertBinaryTree(test6);\n\t\tInvertedBinaryTree invertedTest6 = new InvertedBinaryTree(1);\n\t\tinvertedTest6.insert(new int[] {2, 3, 4, 5, 6}, 0);\n\t\tUtils.AssertTrue(compareBT(test6, invertedTest6));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tTestBinaryTree test7 = new TestBinaryTree(1);\n\t\ttest7.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n\t\tProgram.InvertBinaryTree(test7);\n\t\tInvertedBinaryTree invertedTest7 = new InvertedBinaryTree(1);\n\t\tinvertedTest7.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n\t\tUtils.AssertTrue(compareBT(test7, invertedTest7));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tTestBinaryTree test8 = new TestBinaryTree(1);\n\t\ttest8.insert(new int[] {2, 3, 4, 5, 6, 7, 8}, 0);\n\t\tProgram.InvertBinaryTree(test8);\n\t\tInvertedBinaryTree invertedTest8 = new InvertedBinaryTree(1);\n\t\tinvertedTest8.insert(new int[] {2, 3, 4, 5, 6, 7, 8}, 0);\n\t\tUtils.AssertTrue(compareBT(test8, invertedTest8));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tTestBinaryTree test9 = new TestBinaryTree(1);\n\t\ttest9.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9}, 0);\n\t\tProgram.InvertBinaryTree(test9);\n\t\tInvertedBinaryTree invertedTest9 = new InvertedBinaryTree(1);\n\t\tinvertedTest9.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9}, 0);\n\t\tUtils.AssertTrue(compareBT(test9, invertedTest9));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tTestBinaryTree test10 = new TestBinaryTree(1);\n\t\ttest10.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}, 0);\n\t\tProgram.InvertBinaryTree(test10);\n\t\tInvertedBinaryTree invertedTest10 = new InvertedBinaryTree(1);\n\t\tinvertedTest10.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}, 0);\n\t\tUtils.AssertTrue(compareBT(test10, invertedTest10));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tTestBinaryTree test11 = new TestBinaryTree(1);\n\t\ttest11.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,\n\t\t                         18}, 0);\n\t\tProgram.InvertBinaryTree(test11);\n\t\tInvertedBinaryTree invertedTest11 = new InvertedBinaryTree(1);\n\t\tinvertedTest11.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,\n\t\t                                 17, 18}, 0);\n\t\tUtils.AssertTrue(compareBT(test11, invertedTest11));\n\t}\n\n\tprivate bool compareBT(Program.BinaryTree tree1, InvertedBinaryTree tree2) {\n\t\tif (tree1 == null && tree2 == null) {\n\t\t\treturn true;\n\t\t}\n\t\tif (tree1 != null && tree2 != null) {\n\t\t\treturn tree1.value == tree2.value &&\n\t\t\t       compareBT(tree1.left, tree2.left) && compareBT(tree1.right,\n\t\t\t         tree2.right);\n\t\t}\n\t\treturn false;\n\t}\n\n\tclass InvertedBinaryTree {\n\t\tpublic int value;\n\t\tpublic InvertedBinaryTree left;\n\t\tpublic InvertedBinaryTree right;\n\n\t\tpublic InvertedBinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\n\t\tpublic void insert(int[] values, int i) {\n\t\t\tif (i >= values.Length) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tList<InvertedBinaryTree> queue = new List<InvertedBinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\tvar index = 0;\n\t\t\twhile (index < queue.Count) {\n\t\t\t\tInvertedBinaryTree current = queue[index];\n\t\t\t\tindex += 1;\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new InvertedBinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.right);\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new InvertedBinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.left);\n\t\t\t}\n\t\t\tinsert(values, i + 1);\n\t\t}\n\t}\n\n\tpublic class TestBinaryTree : Program.BinaryTree {\n\t\tpublic TestBinaryTree(int value) : base(value) {\n\t\t}\n\n\t\tpublic void insert(int[] values, int i) {\n\t\t\tif (i >= values.Length) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tList<Program.BinaryTree> queue = new List<Program.BinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\tvar index = 0;\n\t\t\twhile (index < queue.Count) {\n\t\t\t\tProgram.BinaryTree current = queue[index];\n\t\t\t\tindex += 1;\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new Program.BinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.left);\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new Program.BinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.right);\n\t\t\t}\n\t\t\tinsert(values, i + 1);\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestBinaryTree tree = new TestBinaryTree(1);\n\t\ttree.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9}, 0);\n\t\tProgram.InvertBinaryTree(tree);\n\t\tInvertedBinaryTree invertedTree = new InvertedBinaryTree(1);\n\t\tinvertedTree.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9}, 0);\n\t\tUtils.AssertTrue(compareBT(tree, invertedTree));\n\t}\n\n\tprivate bool compareBT(Program.BinaryTree tree1, InvertedBinaryTree tree2) {\n\t\tif (tree1 == null && tree2 == null) {\n\t\t\treturn true;\n\t\t}\n\t\tif (tree1 != null && tree2 != null) {\n\t\t\treturn tree1.value == tree2.value &&\n\t\t\t       compareBT(tree1.left, tree2.left) && compareBT(tree1.right,\n\t\t\t         tree2.right);\n\t\t}\n\t\treturn false;\n\t}\n\n\tclass InvertedBinaryTree {\n\t\tpublic int value;\n\t\tpublic InvertedBinaryTree left;\n\t\tpublic InvertedBinaryTree right;\n\n\t\tpublic InvertedBinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\n\t\tpublic void insert(int[] values, int i) {\n\t\t\tif (i >= values.Length) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tList<InvertedBinaryTree> queue = new List<InvertedBinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\tvar index = 0;\n\t\t\twhile (index < queue.Count) {\n\t\t\t\tInvertedBinaryTree current = queue[index];\n\t\t\t\tindex += 1;\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new InvertedBinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.right);\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new InvertedBinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.left);\n\t\t\t}\n\t\t\tinsert(values, i + 1);\n\t\t}\n\t}\n\n\tpublic class TestBinaryTree : Program.BinaryTree {\n\t\tpublic TestBinaryTree(int value) : base(value) {\n\t\t}\n\n\t\tpublic void insert(int[] values, int i) {\n\t\t\tif (i >= values.Length) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tList<Program.BinaryTree> queue = new List<Program.BinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\tvar index = 0;\n\t\t\twhile (index < queue.Count) {\n\t\t\t\tProgram.BinaryTree current = queue[index];\n\t\t\t\tindex += 1;\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new Program.BinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.left);\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new Program.BinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.right);\n\t\t\t}\n\t\t\tinsert(values, i + 1);\n\t\t}\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static void InvertBinaryTree(BinaryTree tree) {\n\t\tList<BinaryTree> queue = new List<BinaryTree>();\n\t\tqueue.Add(tree);\n\t\tvar index = 0;\n\t\twhile (index < queue.Count) {\n\t\t\tBinaryTree current = queue[index];\n\t\t\tindex += 1;\n\t\t\tif (current == null) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tswapLeftAndRight(current);\n\t\t\tif (current.left != null) {\n\t\t\t\tqueue.Add(current.left);\n\t\t\t}\n\t\t\tif (current.right != null) {\n\t\t\t\tqueue.Add(current.right);\n\t\t\t}\n\t\t}\n\t}\n\n\tprivate static void swapLeftAndRight(BinaryTree tree) {\n\t\tBinaryTree left = tree.left;\n\t\ttree.left = tree.right;\n\t\ttree.right = left;\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n\npublic class Program {\n\t// O(n) time | O(d) space\n\tpublic static void InvertBinaryTree(BinaryTree tree) {\n\t\tif (tree == null) {\n\t\t\treturn;\n\t\t}\n\t\tswapLeftAndRight(tree);\n\t\tInvertBinaryTree(tree.left);\n\t\tInvertBinaryTree(tree.right);\n\t}\n\n\tprivate static void swapLeftAndRight(BinaryTree tree) {\n\t\tBinaryTree left = tree.left;\n\t\ttree.left = tree.right;\n\t\ttree.right = left;\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype BinaryTree struct {\n\tValue int\n\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\nfunc (tree *BinaryTree) InvertBinaryTree() {\n\t// Write your code here.\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBinaryTree(root int, values ...int) *BinaryTree {\n\ttree := &BinaryTree{Value: root}\n\tfor _, value := range values {\n\t\ttree.Insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) Insert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tcurrent := queue[0]\n\t\tqueue = queue[1:]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\tbreak\n\t\t} else if current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Left, current.Right)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) InvertedInsert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tcurrent := queue[0]\n\t\tqueue = queue[1:]\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\tbreak\n\t\t} else if current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Right, current.Left)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) Equals(other *BinaryTree) bool {\n\tif other == nil || tree.Value != other.Value {\n\t\treturn false\n\t}\n\tif tree.Left != nil && !tree.Left.Equals(other.Left) {\n\t\treturn false\n\t}\n\tif tree.Right != nil && !tree.Right.Equals(other.Right) {\n\t\treturn false\n\t}\n\treturn true\n}\n\nfunc (tree *BinaryTree) InsertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.Insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) InvertedInsertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.InvertedInsert(value)\n\t}\n\treturn tree\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := NewBinaryTree(1)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\toutput := NewBinaryTree(1).Insert(2)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsert(2)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4, 5)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4, 5)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4, 5, 6)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4, 5, 6, 7)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7, 8)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4, 5, 6, 7, 8)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7, 8, 9)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4, 5, 6, 7, 8, 9)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7, 8, 9, 10)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4, 5, 6, 7, 8, 9, 10)\n\trequire.True(t, output.Equals(expected))\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18)\n\trequire.True(t, output.Equals(expected))\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBinaryTree(root int, values ...int) *BinaryTree {\n\ttree := &BinaryTree{Value: root}\n\tfor _, value := range values {\n\t\ttree.Insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) Insert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tcurrent := queue[0]\n\t\tqueue = queue[1:]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\tbreak\n\t\t} else if current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Left, current.Right)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) InvertedInsert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tcurrent := queue[0]\n\t\tqueue = queue[1:]\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\tbreak\n\t\t} else if current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Right, current.Left)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) Equals(other *BinaryTree) bool {\n\tif other == nil || tree.Value != other.Value {\n\t\treturn false\n\t}\n\tif tree.Left != nil && !tree.Left.Equals(other.Left) {\n\t\treturn false\n\t}\n\tif tree.Right != nil && !tree.Right.Equals(other.Right) {\n\t\treturn false\n\t}\n\treturn true\n}\n\nfunc (tree *BinaryTree) InsertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.Insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) InvertedInsertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.InvertedInsert(value)\n\t}\n\treturn tree\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7, 8, 9)\n\toutput.InvertBinaryTree()\n\texpected := NewBinaryTree(1).InvertedInsertAll(2, 3, 4, 5, 6, 7, 8, 9)\n\trequire.True(t, output.Equals(expected))\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue int\n\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\n// O(n) time | O(n) space\nfunc (tree *BinaryTree) InvertBinaryTree() {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tcurrent := queue[0]\n\t\tqueue = queue[1:]\n\t\tif current == nil {\n\t\t\tcontinue\n\t\t}\n\t\tcurrent.Left, current.Right = current.Right, current.Left\n\t\tqueue = append(queue, current.Left, current.Right)\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue int\n\n\tLeft  *BinaryTree\n\tRight *BinaryTree\n}\n\n// O(n) time | O(d) space\nfunc (tree *BinaryTree) InvertBinaryTree() {\n\ttree.Left, tree.Right = tree.Right, tree.Left\n\tif tree.Left != nil {\n\t\ttree.Left.InvertBinaryTree()\n\t}\n\tif tree.Right != nil {\n\t\ttree.Right.InvertBinaryTree()\n\t}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static void invertBinaryTree(BinaryTree tree) {\n    // Write your code here.\n  }\n\n  static class BinaryTree {\n    public int value;\n    public BinaryTree left;\n    public BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.ArrayDeque;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    TestBinaryTree test1 = new TestBinaryTree(1);\n    Program.invertBinaryTree(test1);\n    InvertedBinaryTree invertedTest1 = new InvertedBinaryTree(1);\n    Utils.assertTrue(compareBT(test1, invertedTest1));\n  }\n\n  @Test\n  public void TestCase2() {\n    TestBinaryTree test2 = new TestBinaryTree(1);\n    test2.insert(new int[] {2}, 0);\n    Program.invertBinaryTree(test2);\n    InvertedBinaryTree invertedTest2 = new InvertedBinaryTree(1);\n    invertedTest2.insert(new int[] {2}, 0);\n    Utils.assertTrue(compareBT(test2, invertedTest2));\n  }\n\n  @Test\n  public void TestCase3() {\n    TestBinaryTree test3 = new TestBinaryTree(1);\n    test3.insert(new int[] {2, 3}, 0);\n    Program.invertBinaryTree(test3);\n    InvertedBinaryTree invertedTest3 = new InvertedBinaryTree(1);\n    invertedTest3.insert(new int[] {2, 3}, 0);\n    Utils.assertTrue(compareBT(test3, invertedTest3));\n  }\n\n  @Test\n  public void TestCase4() {\n    TestBinaryTree test4 = new TestBinaryTree(1);\n    test4.insert(new int[] {2, 3, 4}, 0);\n    Program.invertBinaryTree(test4);\n    InvertedBinaryTree invertedTest4 = new InvertedBinaryTree(1);\n    invertedTest4.insert(new int[] {2, 3, 4}, 0);\n    Utils.assertTrue(compareBT(test4, invertedTest4));\n  }\n\n  @Test\n  public void TestCase5() {\n    TestBinaryTree test5 = new TestBinaryTree(1);\n    test5.insert(new int[] {2, 3, 4, 5}, 0);\n    Program.invertBinaryTree(test5);\n    InvertedBinaryTree invertedTest5 = new InvertedBinaryTree(1);\n    invertedTest5.insert(new int[] {2, 3, 4, 5}, 0);\n    Utils.assertTrue(compareBT(test5, invertedTest5));\n  }\n\n  @Test\n  public void TestCase6() {\n    TestBinaryTree test6 = new TestBinaryTree(1);\n    test6.insert(new int[] {2, 3, 4, 5, 6}, 0);\n    Program.invertBinaryTree(test6);\n    InvertedBinaryTree invertedTest6 = new InvertedBinaryTree(1);\n    invertedTest6.insert(new int[] {2, 3, 4, 5, 6}, 0);\n    Utils.assertTrue(compareBT(test6, invertedTest6));\n  }\n\n  @Test\n  public void TestCase7() {\n    TestBinaryTree test7 = new TestBinaryTree(1);\n    test7.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n    Program.invertBinaryTree(test7);\n    InvertedBinaryTree invertedTest7 = new InvertedBinaryTree(1);\n    invertedTest7.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n    Utils.assertTrue(compareBT(test7, invertedTest7));\n  }\n\n  @Test\n  public void TestCase8() {\n    TestBinaryTree test8 = new TestBinaryTree(1);\n    test8.insert(new int[] {2, 3, 4, 5, 6, 7, 8}, 0);\n    Program.invertBinaryTree(test8);\n    InvertedBinaryTree invertedTest8 = new InvertedBinaryTree(1);\n    invertedTest8.insert(new int[] {2, 3, 4, 5, 6, 7, 8}, 0);\n    Utils.assertTrue(compareBT(test8, invertedTest8));\n  }\n\n  @Test\n  public void TestCase9() {\n    TestBinaryTree test9 = new TestBinaryTree(1);\n    test9.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9}, 0);\n    Program.invertBinaryTree(test9);\n    InvertedBinaryTree invertedTest9 = new InvertedBinaryTree(1);\n    invertedTest9.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9}, 0);\n    Utils.assertTrue(compareBT(test9, invertedTest9));\n  }\n\n  @Test\n  public void TestCase10() {\n    TestBinaryTree test10 = new TestBinaryTree(1);\n    test10.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}, 0);\n    Program.invertBinaryTree(test10);\n    InvertedBinaryTree invertedTest10 = new InvertedBinaryTree(1);\n    invertedTest10.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}, 0);\n    Utils.assertTrue(compareBT(test10, invertedTest10));\n  }\n\n  @Test\n  public void TestCase11() {\n    TestBinaryTree test11 = new TestBinaryTree(1);\n    test11.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18}, 0);\n    Program.invertBinaryTree(test11);\n    InvertedBinaryTree invertedTest11 = new InvertedBinaryTree(1);\n    invertedTest11.insert(\n        new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18}, 0);\n    Utils.assertTrue(compareBT(test11, invertedTest11));\n  }\n\n  private boolean compareBT(Program.BinaryTree tree1, InvertedBinaryTree tree2) {\n    if (tree1 == null && tree2 == null) {\n      return true;\n    }\n    if (tree1 != null && tree2 != null) {\n      return tree1.value == tree2.value\n          && compareBT(tree1.left, tree2.left)\n          && compareBT(tree1.right, tree2.right);\n    }\n    return false;\n  }\n\n  class InvertedBinaryTree {\n    public int value;\n    public InvertedBinaryTree left;\n    public InvertedBinaryTree right;\n\n    public InvertedBinaryTree(int value) {\n      this.value = value;\n    }\n\n    public void insert(int[] values, int i) {\n      if (i >= values.length) {\n        return;\n      }\n      ArrayDeque<InvertedBinaryTree> queue = new ArrayDeque<InvertedBinaryTree>();\n      queue.addLast(this);\n      while (queue.size() > 0) {\n        InvertedBinaryTree current = queue.pollFirst();\n        if (current.right == null) {\n          current.right = new InvertedBinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.right);\n        if (current.left == null) {\n          current.left = new InvertedBinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.left);\n      }\n      insert(values, i + 1);\n    }\n  }\n\n  class TestBinaryTree extends Program.BinaryTree {\n    public TestBinaryTree(int value) {\n      super(value);\n    }\n\n    public void insert(int[] values, int i) {\n      if (i >= values.length) {\n        return;\n      }\n      ArrayDeque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n      queue.addLast(this);\n      while (queue.size() > 0) {\n        Program.BinaryTree current = queue.pollFirst();\n        if (current.left == null) {\n          current.left = new Program.BinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.left);\n        if (current.right == null) {\n          current.right = new Program.BinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.right);\n      }\n      insert(values, i + 1);\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.ArrayDeque;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    TestBinaryTree tree = new TestBinaryTree(1);\n    tree.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9}, 0);\n    Program.invertBinaryTree(tree);\n    InvertedBinaryTree invertedTree = new InvertedBinaryTree(1);\n    invertedTree.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9}, 0);\n    Utils.assertTrue(compareBT(tree, invertedTree));\n  }\n\n  private boolean compareBT(Program.BinaryTree tree1, InvertedBinaryTree tree2) {\n    if (tree1 == null && tree2 == null) {\n      return true;\n    }\n    if (tree1 != null && tree2 != null) {\n      return tree1.value == tree2.value\n          && compareBT(tree1.left, tree2.left)\n          && compareBT(tree1.right, tree2.right);\n    }\n    return false;\n  }\n\n  class InvertedBinaryTree {\n    public int value;\n    public InvertedBinaryTree left;\n    public InvertedBinaryTree right;\n\n    public InvertedBinaryTree(int value) {\n      this.value = value;\n    }\n\n    public void insert(int[] values, int i) {\n      if (i >= values.length) {\n        return;\n      }\n      ArrayDeque<InvertedBinaryTree> queue = new ArrayDeque<InvertedBinaryTree>();\n      queue.addLast(this);\n      while (queue.size() > 0) {\n        InvertedBinaryTree current = queue.pollFirst();\n        if (current.right == null) {\n          current.right = new InvertedBinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.right);\n        if (current.left == null) {\n          current.left = new InvertedBinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.left);\n      }\n      insert(values, i + 1);\n    }\n  }\n\n  class TestBinaryTree extends Program.BinaryTree {\n    public TestBinaryTree(int value) {\n      super(value);\n    }\n\n    public void insert(int[] values, int i) {\n      if (i >= values.length) {\n        return;\n      }\n      ArrayDeque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n      queue.addLast(this);\n      while (queue.size() > 0) {\n        Program.BinaryTree current = queue.pollFirst();\n        if (current.left == null) {\n          current.left = new Program.BinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.left);\n        if (current.right == null) {\n          current.right = new Program.BinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.right);\n      }\n      insert(values, i + 1);\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.ArrayDeque;\n\nclass Program {\n  // O(n) time | O(n) space\n  public static void invertBinaryTree(BinaryTree tree) {\n    ArrayDeque<BinaryTree> queue = new ArrayDeque<BinaryTree>();\n    queue.addLast(tree);\n    while (queue.size() > 0) {\n      BinaryTree current = queue.pollFirst();\n      swapLeftAndRight(current);\n      if (current.left != null) {\n        queue.addLast(current.left);\n      }\n      if (current.right != null) {\n        queue.addLast(current.right);\n      }\n    }\n  }\n\n  private static void swapLeftAndRight(BinaryTree tree) {\n    BinaryTree left = tree.left;\n    tree.left = tree.right;\n    tree.right = left;\n  }\n\n  static class BinaryTree {\n    public int value;\n    public BinaryTree left;\n    public BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(d) space\n  public static void invertBinaryTree(BinaryTree tree) {\n    if (tree == null) {\n      return;\n    }\n    swapLeftAndRight(tree);\n    invertBinaryTree(tree.left);\n    invertBinaryTree(tree.right);\n  }\n\n  private static void swapLeftAndRight(BinaryTree tree) {\n    BinaryTree left = tree.left;\n    tree.left = tree.right;\n    tree.right = left;\n  }\n\n  static class BinaryTree {\n    public int value;\n    public BinaryTree left;\n    public BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function invertBinaryTree(tree) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.invertBinaryTree = invertBinaryTree;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n\n  invertedInsert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n    }\n    this.invertedInsert(values, i + 1);\n    return this;\n  }\n}\n\nconst test1 = new BinaryTree(1);\nconst invertedTest1 = new BinaryTree(1);\n\nconst test2 = new BinaryTree(1).insert([2]);\nconst invertedTest2 = new BinaryTree(1).invertedInsert([2]);\n\nconst test3 = new BinaryTree(1).insert([2, 3]);\nconst invertedTest3 = new BinaryTree(1).invertedInsert([2, 3]);\n\nconst test4 = new BinaryTree(1).insert([2, 3, 4]);\nconst invertedTest4 = new BinaryTree(1).invertedInsert([2, 3, 4]);\n\nconst test5 = new BinaryTree(1).insert([2, 3, 4, 5]);\nconst invertedTest5 = new BinaryTree(1).invertedInsert([2, 3, 4, 5]);\n\nconst test6 = new BinaryTree(1).insert([2, 3, 4, 5, 6]);\nconst invertedTest6 = new BinaryTree(1).invertedInsert([2, 3, 4, 5, 6]);\n\nconst test7 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7]);\nconst invertedTest7 = new BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7]);\n\nconst test8 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8]);\nconst invertedTest8 = new BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8]);\n\nconst test9 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9]);\nconst invertedTest9 = new BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9]);\n\nconst test10 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10]);\nconst invertedTest10 = new BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9, 10]);\n\nconst test11 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);\nconst invertedTest11 = new BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);\n\nit('Test Case #1', function () {\n  program.invertBinaryTree(test1);\n  chai.expect(test1).to.deep.equal(invertedTest1);\n});\n\nit('Test Case #2', function () {\n  program.invertBinaryTree(test2);\n  chai.expect(test2).to.deep.equal(invertedTest2);\n});\n\nit('Test Case #3', function () {\n  program.invertBinaryTree(test3);\n  chai.expect(test3).to.deep.equal(invertedTest3);\n});\n\nit('Test Case #4', function () {\n  program.invertBinaryTree(test4);\n  chai.expect(test4).to.deep.equal(invertedTest4);\n});\n\nit('Test Case #5', function () {\n  program.invertBinaryTree(test5);\n  chai.expect(test5).to.deep.equal(invertedTest5);\n});\n\nit('Test Case #6', function () {\n  program.invertBinaryTree(test6);\n  chai.expect(test6).to.deep.equal(invertedTest6);\n});\n\nit('Test Case #7', function () {\n  program.invertBinaryTree(test7);\n  chai.expect(test7).to.deep.equal(invertedTest7);\n});\n\nit('Test Case #8', function () {\n  program.invertBinaryTree(test8);\n  chai.expect(test8).to.deep.equal(invertedTest8);\n});\n\nit('Test Case #9', function () {\n  program.invertBinaryTree(test9);\n  chai.expect(test9).to.deep.equal(invertedTest9);\n});\n\nit('Test Case #10', function () {\n  program.invertBinaryTree(test10);\n  chai.expect(test10).to.deep.equal(invertedTest10);\n});\n\nit('Test Case #11', function () {\n  program.invertBinaryTree(test11);\n  chai.expect(test11).to.deep.equal(invertedTest11);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n\n  invertedInsert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n    }\n    this.invertedInsert(values, i + 1);\n    return this;\n  }\n}\n\nit('Test Case #1', function () {\n  const tree = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9]);\n  const invertedTree = new BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9]);\n  program.invertBinaryTree(tree);\n  chai.expect(tree).to.deep.equal(invertedTree);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction invertBinaryTree(tree) {\n  const queue = [tree];\n  while (queue.length) {\n    const current = queue.shift();\n    if (current === null) continue;\n    swapLeftAndRight(current);\n    queue.push(current.left);\n    queue.push(current.right);\n  }\n}\n\nfunction swapLeftAndRight(tree) {\n  const left = tree.left;\n  tree.left = tree.right;\n  tree.right = left;\n}\n\nexports.invertBinaryTree = invertBinaryTree;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(d) space\nfunction invertBinaryTree(tree) {\n  if (tree === null) return;\n  swapLeftAndRight(tree);\n  invertBinaryTree(tree.left);\n  invertBinaryTree(tree.right);\n}\n\nfunction swapLeftAndRight(tree) {\n  const left = tree.left;\n  tree.left = tree.right;\n  tree.right = left;\n}\n\nexports.invertBinaryTree = invertBinaryTree;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def invertBinaryTree(tree):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def __eq__(self, other):\n        return isinstance(other, type(self)) and self.__dict__ == other.__dict__\n\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n\n    def invertedInsert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n        self.invertedInsert(values, i + 1)\n        return self\n\n\ntest1 = BinaryTree(1)\ninvertedTest1 = BinaryTree(1)\n\ntest2 = BinaryTree(1).insert([2])\ninvertedTest2 = BinaryTree(1).invertedInsert([2])\n\ntest3 = BinaryTree(1).insert([2, 3])\ninvertedTest3 = BinaryTree(1).invertedInsert([2, 3])\n\ntest4 = BinaryTree(1).insert([2, 3, 4])\ninvertedTest4 = BinaryTree(1).invertedInsert([2, 3, 4])\n\ntest5 = BinaryTree(1).insert([2, 3, 4, 5])\ninvertedTest5 = BinaryTree(1).invertedInsert([2, 3, 4, 5])\n\ntest6 = BinaryTree(1).insert([2, 3, 4, 5, 6])\ninvertedTest6 = BinaryTree(1).invertedInsert([2, 3, 4, 5, 6])\n\ntest7 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7])\ninvertedTest7 = BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7])\n\ntest8 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8])\ninvertedTest8 = BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8])\n\ntest9 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9])\ninvertedTest9 = BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9])\n\ntest10 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10])\ninvertedTest10 = BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9, 10])\n\ntest11 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18])\ninvertedTest11 = BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18])\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        program.invertBinaryTree(test1)\n        self.assertTrue(test1.__eq__(invertedTest1))\n\n    def test_case_2(self):\n        program.invertBinaryTree(test2)\n        self.assertTrue(test2.__eq__(invertedTest2))\n\n    def test_case_3(self):\n        program.invertBinaryTree(test3)\n        self.assertTrue(test3.__eq__(invertedTest3))\n\n    def test_case_4(self):\n        program.invertBinaryTree(test4)\n        self.assertTrue(test4.__eq__(invertedTest4))\n\n    def test_case_5(self):\n        program.invertBinaryTree(test5)\n        self.assertTrue(test5.__eq__(invertedTest5))\n\n    def test_case_6(self):\n        program.invertBinaryTree(test6)\n        self.assertTrue(test6.__eq__(invertedTest6))\n\n    def test_case_7(self):\n        program.invertBinaryTree(test7)\n        self.assertTrue(test7.__eq__(invertedTest7))\n\n    def test_case_8(self):\n        program.invertBinaryTree(test8)\n        self.assertTrue(test8.__eq__(invertedTest8))\n\n    def test_case_9(self):\n        program.invertBinaryTree(test9)\n        self.assertTrue(test9.__eq__(invertedTest9))\n\n    def test_case_10(self):\n        program.invertBinaryTree(test10)\n        self.assertTrue(test10.__eq__(invertedTest10))\n\n    def test_case_11(self):\n        program.invertBinaryTree(test11)\n        self.assertTrue(test11.__eq__(invertedTest11))\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def __eq__(self, other):\n        return isinstance(other, type(self)) and self.__dict__ == other.__dict__\n\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n\n    def invertedInsert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n        self.invertedInsert(values, i + 1)\n        return self\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        tree = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9])\n        invertedTree = BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9])\n        program.invertBinaryTree(tree)\n        self.assertTrue(tree.__eq__(invertedTree))\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef invertBinaryTree(tree):\n    queue = [tree]\n    while len(queue):\n        current = queue.pop(0)\n        if current is None:\n            continue\n        swapLeftAndRight(current)\n        queue.append(current.left)\n        queue.append(current.right)\n\n\ndef swapLeftAndRight(tree):\n    tree.left, tree.right = tree.right, tree.left\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(d) space\ndef invertBinaryTree(tree):\n    if tree is None:\n        return\n    swapLeftAndRight(tree)\n    invertBinaryTree(tree.left)\n    invertBinaryTree(tree.right)\n\n\ndef swapLeftAndRight(tree):\n    tree.left, tree.right = tree.right, tree.left\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func invertBinaryTree(tree: BinaryTree?) {\n    // Write your code here.\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func compareBT(firstTree: BinaryTree?, secondTree: BinaryTree?) -> Bool {\n    if firstTree === nil, secondTree === nil {\n      return true\n    }\n\n    if firstTree !== nil, secondTree !== nil {\n      return firstTree!.value == secondTree!.value && compareBT(firstTree: firstTree?.left, secondTree: secondTree?.left) && compareBT(firstTree: firstTree?.right, secondTree: secondTree?.right)\n    }\n\n    return false\n  }\n\n  let firstTree = BinaryTree(value: 1)\n  let invertedFirstTree = BinaryTree(value: 1)\n\n  let secondTree = BinaryTree(value: 1).insert(values: [2], index: 0)\n  let invertedSecondTree = BinaryTree(value: 1).invertedInsert(values: [2], index: 0)\n\n  let thirdTree = BinaryTree(value: 1).insert(values: [2, 3], index: 0)\n  let invertedThirdTree = BinaryTree(value: 1).invertedInsert(values: [2, 3], index: 0)\n\n  let fourthTree = BinaryTree(value: 1).insert(values: [2, 3, 4], index: 0)\n  let invertedFourthTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4], index: 0)\n\n  let fifthTree = BinaryTree(value: 1).insert(values: [2, 3, 4, 5], index: 0)\n  let invertedFifthTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4, 5], index: 0)\n\n  let sixthTree = BinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6], index: 0)\n  let invertedSixthTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4, 5, 6], index: 0)\n\n  let seventhTree = BinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6, 7], index: 0)\n  let invertedSeventhTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4, 5, 6, 7], index: 0)\n\n  let eighthTree = BinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6, 7, 8], index: 0)\n  let invertedEihgthTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4, 5, 6, 7, 8], index: 0)\n\n  let ninthTree = BinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6, 7, 8, 9], index: 0)\n  let invertedNinthTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4, 5, 6, 7, 8, 9], index: 0)\n\n  let tenthTree = BinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6, 7, 8, 9, 10], index: 0)\n  let invertedTenthTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4, 5, 6, 7, 8, 9, 10], index: 0)\n\n  let eleventhTree = BinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], index: 0)\n  let invertedEleventhTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], index: 0)\n\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      program.invertBinaryTree(tree: firstTree)\n      try assert(compareBT(firstTree: firstTree, secondTree: invertedFirstTree))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      if let secondTree = secondTree {\n        program.invertBinaryTree(tree: secondTree)\n        try assert(compareBT(firstTree: secondTree, secondTree: invertedSecondTree))\n      }\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      if let thirdTree = thirdTree {\n        program.invertBinaryTree(tree: thirdTree)\n        try assert(compareBT(firstTree: thirdTree, secondTree: thirdTree))\n      }\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      if let fourthTree = fourthTree {\n        program.invertBinaryTree(tree: fourthTree)\n        try assert(compareBT(firstTree: fourthTree, secondTree: invertedFourthTree))\n      }\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      if let fifthTree = fifthTree {\n        program.invertBinaryTree(tree: fifthTree)\n        try assert(compareBT(firstTree: fifthTree, secondTree: invertedFifthTree))\n      }\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      if let sixthTree = sixthTree {\n        program.invertBinaryTree(tree: sixthTree)\n        try assert(compareBT(firstTree: sixthTree, secondTree: invertedSixthTree))\n      }\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      if let seventhTree = seventhTree {\n        program.invertBinaryTree(tree: seventhTree)\n        try assert(compareBT(firstTree: seventhTree, secondTree: seventhTree))\n      }\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      if let eighthTree = eighthTree {\n        program.invertBinaryTree(tree: eighthTree)\n        try assert(compareBT(firstTree: eighthTree, secondTree: invertedEihgthTree))\n      }\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      if let ninthTree = ninthTree {\n        program.invertBinaryTree(tree: ninthTree)\n        try assert(compareBT(firstTree: ninthTree, secondTree: invertedNinthTree))\n      }\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      if let tenthTree = tenthTree {\n        program.invertBinaryTree(tree: tenthTree)\n        try assert(compareBT(firstTree: tenthTree, secondTree: invertedTenthTree))\n      }\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      if let eleventhTree = eleventhTree {\n        program.invertBinaryTree(tree: eleventhTree)\n        try assert(compareBT(firstTree: eleventhTree, secondTree: invertedEleventhTree))\n      }\n    }\n  }\n}\n\nclass BinaryTree {\n  var value: Int?\n  var left: BinaryTree?\n  var right: BinaryTree?\n\n  init(value: Int) {\n    self.value = value\n    left = nil\n    right = nil\n  }\n\n  func insert(values: [Int], index: Int) -> BinaryTree? {\n    if index >= values.count { return nil }\n\n    var queue: [BinaryTree?] = [self]\n\n    while queue.count > 0 {\n      let current = queue.removeFirst()\n\n      if current?.left === nil {\n        current?.left = BinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.left)\n\n      if current?.right === nil {\n        current?.right = BinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.right)\n    }\n\n    insert(values: values, index: index + 1)\n\n    return self\n  }\n\n  func invertedInsert(values: [Int], index: Int) -> BinaryTree? {\n    if index >= values.count { return nil }\n\n    var queue: [BinaryTree?] = [self]\n\n    while queue.count > 0 {\n      let current = queue.removeFirst()\n\n      if current?.right === nil {\n        current?.right = BinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.right)\n\n      if current?.left === nil {\n        current?.left = BinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.left)\n    }\n\n    invertedInsert(values: values, index: index + 1)\n\n    return self\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func compareBT(firstTree: BinaryTree?, secondTree: BinaryTree?) -> Bool {\n    if firstTree === nil, secondTree === nil {\n      return true\n    }\n\n    if firstTree !== nil, secondTree !== nil {\n      return firstTree!.value == secondTree!.value && compareBT(firstTree: firstTree?.left, secondTree: secondTree?.left) && compareBT(firstTree: firstTree?.right, secondTree: secondTree?.right)\n    }\n\n    return false\n  }\n\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let tree = BinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6, 7, 8, 9], index: 0)\n      let invertedTree = BinaryTree(value: 1).invertedInsert(values: [2, 3, 4, 5, 6, 7, 8, 9], index: 0)\n      program.invertBinaryTree(tree: tree)\n      try assert(compareBT(firstTree: tree, secondTree: invertedTree))\n    }\n  }\n}\n\nclass BinaryTree {\n  var value: Int?\n  var left: BinaryTree?\n  var right: BinaryTree?\n\n  init(value: Int) {\n    self.value = value\n    left = nil\n    right = nil\n  }\n\n  func insert(values: [Int], index: Int) -> BinaryTree? {\n    if index >= values.count { return nil }\n\n    var queue: [BinaryTree?] = [self]\n\n    while queue.count > 0 {\n      let current = queue.removeFirst()\n\n      if current?.left === nil {\n        current?.left = BinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.left)\n\n      if current?.right === nil {\n        current?.right = BinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.right)\n    }\n\n    insert(values: values, index: index + 1)\n\n    return self\n  }\n\n  func invertedInsert(values: [Int], index: Int) -> BinaryTree? {\n    if index >= values.count { return nil }\n\n    var queue: [BinaryTree?] = [self]\n\n    while queue.count > 0 {\n      let current = queue.removeFirst()\n\n      if current?.right === nil {\n        current?.right = BinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.right)\n\n      if current?.left === nil {\n        current?.left = BinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.left)\n    }\n\n    invertedInsert(values: values, index: index + 1)\n\n    return self\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func invertBinaryTree(tree: BinaryTree?) {\n    var queue: [BinaryTree?] = [tree]\n\n    while queue.count > 0 {\n      let current = queue.removeFirst()\n\n      if current === nil {\n        continue\n      }\n\n      swapLeftAndright(tree: current!)\n      queue.append(current?.left)\n      queue.append(current?.right)\n    }\n  }\n\n  func swapLeftAndright(tree: BinaryTree) {\n    let left = tree.left\n    tree.left = tree.right\n    tree.right = left\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(d) space\n  func invertBinaryTree(tree: BinaryTree?) {\n    if let tree = tree {\n      swapLeftAndright(tree: tree)\n      invertBinaryTree(tree: tree.left)\n      invertBinaryTree(tree: tree.right)\n    }\n  }\n\n  func swapLeftAndright(tree: BinaryTree) {\n    let left = tree.left\n    tree.left = tree.right\n    tree.right = left\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "class BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexport function invertBinaryTree(tree: BinaryTree | null) {\n  // Write your code here.\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(values: number[], i = 0): BinaryTree {\n    if (i >= values.length) return this;\n    const queue: BinaryTree[] = [this];\n    while (queue.length > 0) {\n      let current = queue.shift()!;\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n\n  invertedInsert(values: number[], i = 0): BinaryTree {\n    if (i >= values.length) return this;\n    const queue: BinaryTree[] = [this];\n    while (queue.length > 0) {\n      let current = queue.shift()!;\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n    }\n    this.invertedInsert(values, i + 1);\n    return this;\n  }\n}\n\nit('Test Case #1', function () {\n  const tree = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9]);\n  const invertedTree = new BinaryTree(1).invertedInsert([2, 3, 4, 5, 6, 7, 8, 9]);\n  program.invertBinaryTree(tree);\n  chai.expect(tree).to.deep.equal(invertedTree);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(n) space\nexport function invertBinaryTree(tree: BinaryTree | null) {\n  const queue: Array<BinaryTree | null> = [tree];\n  while (queue.length) {\n    const current = queue.shift()!;\n    if (current === null) continue;\n    swapLeftAndRight(current);\n    queue.push(current.left);\n    queue.push(current.right);\n  }\n}\n\nfunction swapLeftAndRight(tree: BinaryTree) {\n  const left = tree.left;\n  tree.left = tree.right;\n  tree.right = left;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(d) space\nexport function invertBinaryTree(tree: BinaryTree | null) {\n  if (tree === null) return;\n  swapLeftAndRight(tree);\n  invertBinaryTree(tree.left);\n  invertBinaryTree(tree.right);\n}\n\nfunction swapLeftAndRight(tree: BinaryTree) {\n  const left = tree.left;\n  tree.left = tree.right;\n  tree.right = left;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": "11",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": "12",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": "13",
+            "right": "14",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "11",
+            "left": "15",
+            "right": "16",
+            "value": 11
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": "17",
+            "value": 15
+          },
+          {
+            "id": "16",
+            "left": null,
+            "right": null,
+            "value": 16
+          },
+          {
+            "id": "17",
+            "left": null,
+            "right": "18",
+            "value": 17
+          },
+          {
+            "id": "18",
+            "left": null,
+            "right": "19",
+            "value": 18
+          },
+          {
+            "id": "19",
+            "left": "20",
+            "right": null,
+            "value": 19
+          },
+          {
+            "id": "20",
+            "left": "21",
+            "right": null,
+            "value": 20
+          },
+          {
+            "id": "21",
+            "left": null,
+            "right": null,
+            "value": 21
+          }
+        ],
+        "root": "1"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "5",
+            "right": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": "9",
+            "right": "8",
+            "value": 4
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "3",
+            "left": "7",
+            "right": "6",
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "5",
+            "right": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "5",
+            "right": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": "6",
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "5",
+            "right": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "3",
+            "left": "7",
+            "right": "6",
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "5",
+            "right": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": "8",
+            "value": 4
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "3",
+            "left": "7",
+            "right": "6",
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "5",
+            "right": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": "9",
+            "right": "8",
+            "value": 4
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "10",
+            "value": 5
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "3",
+            "left": "7",
+            "right": "6",
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "1"
+      },
+      {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "3",
+            "right": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "5",
+            "right": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": "9",
+            "right": "8",
+            "value": 4
+          },
+          {
+            "id": "8",
+            "left": "12",
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "9",
+            "left": "14",
+            "right": "13",
+            "value": 9
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": "10",
+            "value": 5
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "3",
+            "left": "7",
+            "right": "6",
+            "value": 3
+          },
+          {
+            "id": "6",
+            "left": "11",
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "11",
+            "left": "16",
+            "right": "15",
+            "value": 11
+          },
+          {
+            "id": "15",
+            "left": "17",
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "17",
+            "left": "18",
+            "right": null,
+            "value": 17
+          },
+          {
+            "id": "18",
+            "left": "19",
+            "right": null,
+            "value": 18
+          },
+          {
+            "id": "19",
+            "left": null,
+            "right": "20",
+            "value": 19
+          },
+          {
+            "id": "20",
+            "left": null,
+            "right": "21",
+            "value": 20
+          },
+          {
+            "id": "21",
+            "left": null,
+            "right": null,
+            "value": 21
+          },
+          {
+            "id": "16",
+            "left": null,
+            "right": null,
+            "value": 16
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "1"
+      }
+    ]
+  ]
+}

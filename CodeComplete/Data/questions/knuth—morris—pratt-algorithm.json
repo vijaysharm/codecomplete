@@ -1,0 +1,196 @@
+{
+  "Summary": {
+    "Name": "Knuth—Morris—Pratt Algorithm",
+    "Category": "Famous Algorithms",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "date": "2018-10-20T00:00:00Z",
+      "number": 502,
+      "timeOne": 0,
+      "timeTwo": 2881,
+      "url": "https://player.vimeo.com/video/293554991"
+    }
+  },
+  "Prompt": "",
+  "Hints": "The Knuth—Morris—Pratt algorithm works by identifying patterns in the potential substring and exploiting them to avoid doing needless character comparisons when searching for the substring in the main string. For instance, take the string \"ababac\" and the substring \"abac\"; comparing these strings will fail at the fourth character, where \"b\" is not equal to \"c\". Instead of having to restart our comparisons at the second character of the main string, however, we notice that the substring \"ab\", which is at the beginning of our potential substring, just appeared near our point of failure in the main string. How can we use this to our advantage?\nStart by traversing the potential substring and building out a pattern table. This 1-dimensional array should store, for every position in the substring, the last index at which a matching pattern has been seen; more specifically, this index should be the ending index of a prefix in the substring that is also a suffix at the given position. For example, the string \"abcababcd\" should yield the following pattern table: [-1, -1, -1, 0, 1, 0, 1, 2, -1].\nAfter the pattern table mentioned in Hint #2 has been built, traverse the main string and the potential substring with two separate pointers. When characters match, move the pointers forward. When characters don't match, check if the pointer in the substring is at the very beginning of the substring; if it is, then there is no match and you can move the pointer of the main string forward until there is a match; if it isn't, then move it to the position that comes right after the last seen pattern stored at the previous index in the pattern table.\n",
+  "SpaceTime": "O(n + m) time | O(m) space - where n is the length of the main string and m is the length of the potential substring\n",
+  "PromptHTML": "<p>\n  Write a function that takes in two strings and checks if the first string\n  contains the second one using the Knuth—Morris—Pratt algorithm. The function\n  should return a boolean.\n</p>\n<p>\n  If you're unfamiliar with the Knuth—Morris—Pratt Algorithm, we recommend\n  watching the Conceptual Overview section of this question's video explanation\n  before starting to code.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">string</span> = \"aefoaefcdaefcdaed\"\n<span class=\"CodeEditor-promptParameter\">substring</span> = \"aefcdaed\"\n</pre>\n<h3>Sample Output</h3>\n<pre>\ntrue\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "string",
+      "Example": "aefoaefcdaefcdaed",
+      "Schema": {
+        "type": "string"
+      }
+    },
+    {
+      "Name": "substring",
+      "Example": "aefcdaed",
+      "Schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nbool knuthMorrisPrattAlgorithm(string str, string substr) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"testwafwafawfawfawfawfawfawfawfa\",\n                                       \"fawfawfawfawfa\") == true);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      assert(knuthMorrisPrattAlgorithm(\n                 \"tesseatesgawatewtesaffawgfawtteafawtesftawfawfawfwfawftest\",\n                 \"test\") == true);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"aaabaabacdedfaabaabaaa\", \"aabaabaaa\") ==\n             true);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"abxabcabcaby\", \"abcaby\") == true);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"decadaafcdf\", \"daf\") == false);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcdaed\") ==\n             true);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\",\n                                       \"aefcaefaeiaefcd\") == false);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"aefcdfaecdaefaefcdaefeaefcdcdeae\",\n                                       \"aefcdaefeaefcd\") == true);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"bccbefbcdabbbcabfdcfe\", \"abc\") ==\n             false);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"adafccfefbbbfeeccbcfd\", \"ecb\") ==\n             false);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"testwherethefullstringmatches\",\n                                       \"testwherethefullstringmatches\") ==\n             true);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcdaed\") ==\n             true);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nvector<int> buildPattern(string substr);\nbool doesMatch(string str, string substr, vector<int> pattern);\n\n// O(n + m) time | O(m) space\nbool knuthMorrisPrattAlgorithm(string str, string substr) {\n  vector<int> pattern = buildPattern(substr);\n  return doesMatch(str, substr, pattern);\n}\n\nvector<int> buildPattern(string substr) {\n  vector<int> pattern(substr.size(), -1);\n  int j = 0;\n  int i = 1;\n  while (i < substr.size()) {\n    if (substr[i] == substr[j]) {\n      pattern[i] = j;\n      i++;\n      j++;\n    } else if (j > 0) {\n      j = pattern[j - 1] + 1;\n    } else {\n      i++;\n    }\n  }\n  return pattern;\n}\n\nbool doesMatch(string str, string substr, vector<int> pattern) {\n  int i = 0;\n  int j = 0;\n  while (i + substr.size() - j <= str.size()) {\n    if (str[i] == substr[j]) {\n      if (j == substr.size() - 1)\n        return true;\n      i++;\n      j++;\n    } else if (j > 0) {\n      j = pattern[j - 1] + 1;\n    } else {\n      i++;\n    }\n  }\n  return false;\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static bool KnuthMorrisPrattAlgorithm(string str, string substring) {\n\t\t// Write your code here.\n\t\treturn false;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\n\t\t\t  \"testwafwafawfawfawfawfawfawfawfa\",\n\t\t\t  \"fawfawfawfawfa\") == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\n\t\t\t  \"tesseatesgawatewtesaffawgfawtteafawtesftawfawfawfwfawftest\",\n\t\t\t  \"test\") == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"aaabaabacdedfaabaabaaa\",\n\t\t  \"aabaabaaa\") == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"abxabcabcaby\",\n\t\t  \"abcaby\") == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"decadaafcdf\", \"daf\") == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\",\n\t\t  \"aefcdaed\") == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\",\n\t\t  \"aefcaefaeiaefcd\") == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\n\t\t\t  \"aefcdfaecdaefaefcdaefeaefcdcdeae\",\n\t\t\t  \"aefcdaefeaefcd\") == true);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"bccbefbcdabbbcabfdcfe\",\n\t\t  \"abc\") == false);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"adafccfefbbbfeeccbcfd\",\n\t\t  \"ecb\") == false);\n\t}\n\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"testwherethefullstringmatches\",\n\t\t  \"testwherethefullstringmatches\") ==\n\t\t  true);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.KnuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\",\n\t\t  \"aefcdaed\") == true);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\t// O(n + m) time | O(m) space\n\tpublic static bool KnuthMorrisPrattAlgorithm(string str, string substring) {\n\t\tint[] pattern = buildPattern(substring);\n\t\treturn doesMatch(str, substring, pattern);\n\t}\n\n\tpublic static int[] buildPattern(string substring) {\n\t\tint[] pattern = new int[substring.Length];\n\t\tArray.Fill(pattern, -1);\n\t\tint j = 0;\n\t\tint i = 1;\n\t\twhile (i < substring.Length) {\n\t\t\tif (substring[i] == substring[j]) {\n\t\t\t\tpattern[i] = j;\n\t\t\t\ti++;\n\t\t\t\tj++;\n\t\t\t} else if (j > 0) {\n\t\t\t\tj = pattern[j - 1] + 1;\n\t\t\t} else {\n\t\t\t\ti++;\n\t\t\t}\n\t\t}\n\t\treturn pattern;\n\t}\n\n\tpublic static bool doesMatch(string str, string substring, int[] pattern) {\n\t\tint i = 0;\n\t\tint j = 0;\n\t\twhile (i + substring.Length - j <= str.Length) {\n\t\t\tif (str[i] == substring[j]) {\n\t\t\t\tif (j == substring.Length - 1) return true;\n\t\t\t\ti++;\n\t\t\t\tj++;\n\t\t\t} else if (j > 0) {\n\t\t\t\tj = pattern[j - 1] + 1;\n\t\t\t} else {\n\t\t\t\ti++;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc KnuthMorrisPrattAlgorithm(str, substr string) bool {\n\t// Write your code here.\n\treturn false\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := true\n\toutput := KnuthMorrisPrattAlgorithm(\"testwafwafawfawfawfawfawfawfawfa\", \"fawfawfawfawfa\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := true\n\toutput := KnuthMorrisPrattAlgorithm(\"tesseatesgawatewtesaffawgfawtteafawtesftawfawfawfwfawftest\", \"test\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := true\n\toutput := KnuthMorrisPrattAlgorithm(\"aaabaabacdedfaabaabaaa\", \"aabaabaaa\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := true\n\toutput := KnuthMorrisPrattAlgorithm(\"abxabcabcaby\", \"abcaby\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := false\n\toutput := KnuthMorrisPrattAlgorithm(\"decadaafcdf\", \"daf\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := true\n\toutput := KnuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcdaed\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := false\n\toutput := KnuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcaefaeiaefcd\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := true\n\toutput := KnuthMorrisPrattAlgorithm(\"aefcdfaecdaefaefcdaefeaefcdcdeae\", \"aefcdaefeaefcd\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := false\n\toutput := KnuthMorrisPrattAlgorithm(\"bccbefbcdabbbcabfdcfe\", \"abc\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := false\n\toutput := KnuthMorrisPrattAlgorithm(\"adafccfefbbbfeeccbcfd\", \"ecb\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := true\n\toutput := KnuthMorrisPrattAlgorithm(\"testwherethefullstringmatches\", \"testwherethefullstringmatches\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := true\n\toutput := KnuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcdaed\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n + m) time | O(m) space\nfunc KnuthMorrisPrattAlgorithm(str, substr string) bool {\n\tpattern := buildPattern(substr)\n\treturn doesMatch(str, substr, pattern)\n}\n\nfunc buildPattern(substr string) []int {\n\tpattern := make([]int, len(substr))\n\tfor i := range substr {\n\t\tpattern[i] = -1\n\t}\n\ti, j := 1, 0\n\tfor i < len(substr) {\n\t\tif substr[i] == substr[j] {\n\t\t\tpattern[i] = j\n\t\t\ti, j = i+1, j+1\n\t\t} else if j > 0 {\n\t\t\tj = pattern[j-1] + 1\n\t\t} else {\n\t\t\ti += 1\n\t\t}\n\t}\n\treturn pattern\n}\n\nfunc doesMatch(str, substr string, pattern []int) bool {\n\ti, j := 0, 0\n\tfor i+len(substr)-j <= len(str) {\n\t\tif str[i] == substr[j] {\n\t\t\tif j == len(substr)-1 {\n\t\t\t\treturn true\n\t\t\t}\n\t\t\ti, j = i+1, j+1\n\t\t} else if j > 0 {\n\t\t\tj = pattern[j-1] + 1\n\t\t} else {\n\t\t\ti += 1\n\t\t}\n\t}\n\treturn false\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static boolean knuthMorrisPrattAlgorithm(String string, String substring) {\n    // Write your code here.\n    return false;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(\n        Program.knuthMorrisPrattAlgorithm(\"testwafwafawfawfawfawfawfawfawfa\", \"fawfawfawfawfa\")\n            == true);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(\n        Program.knuthMorrisPrattAlgorithm(\n                \"tesseatesgawatewtesaffawgfawtteafawtesftawfawfawfwfawftest\", \"test\")\n            == true);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(\n        Program.knuthMorrisPrattAlgorithm(\"aaabaabacdedfaabaabaaa\", \"aabaabaaa\") == true);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.knuthMorrisPrattAlgorithm(\"abxabcabcaby\", \"abcaby\") == true);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.knuthMorrisPrattAlgorithm(\"decadaafcdf\", \"daf\") == false);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcdaed\") == true);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(\n        Program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcaefaeiaefcd\") == false);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(\n        Program.knuthMorrisPrattAlgorithm(\"aefcdfaecdaefaefcdaefeaefcdcdeae\", \"aefcdaefeaefcd\")\n            == true);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(Program.knuthMorrisPrattAlgorithm(\"bccbefbcdabbbcabfdcfe\", \"abc\") == false);\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(Program.knuthMorrisPrattAlgorithm(\"adafccfefbbbfeeccbcfd\", \"ecb\") == false);\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(\n        Program.knuthMorrisPrattAlgorithm(\n                \"testwherethefullstringmatches\", \"testwherethefullstringmatches\")\n            == true);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcdaed\") == true);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.Arrays;\n\nclass Program {\n  // O(n + m) time | O(m) space\n  public static boolean knuthMorrisPrattAlgorithm(String string, String substring) {\n    int[] pattern = buildPattern(substring);\n    return doesMatch(string, substring, pattern);\n  }\n\n  public static int[] buildPattern(String substring) {\n    int[] pattern = new int[substring.length()];\n    Arrays.fill(pattern, -1);\n    int j = 0;\n    int i = 1;\n    while (i < substring.length()) {\n      if (substring.charAt(i) == substring.charAt(j)) {\n        pattern[i] = j;\n        i++;\n        j++;\n      } else if (j > 0) {\n        j = pattern[j - 1] + 1;\n      } else {\n        i++;\n      }\n    }\n    return pattern;\n  }\n\n  public static boolean doesMatch(String string, String substring, int[] pattern) {\n    int i = 0;\n    int j = 0;\n    while (i + substring.length() - j <= string.length()) {\n      if (string.charAt(i) == substring.charAt(j)) {\n        if (j == substring.length() - 1) return true;\n        i++;\n        j++;\n      } else if (j > 0) {\n        j = pattern[j - 1] + 1;\n      } else {\n        i++;\n      }\n    }\n    return false;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function knuthMorrisPrattAlgorithm(string, substring) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.knuthMorrisPrattAlgorithm = knuthMorrisPrattAlgorithm;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai\n    .expect(program.knuthMorrisPrattAlgorithm('testwafwafawfawfawfawfawfawfawfa', 'fawfawfawfawfa'))\n    .to.deep.equal(true);\n});\n\nit('Test Case #2', function () {\n  chai\n    .expect(program.knuthMorrisPrattAlgorithm('tesseatesgawatewtesaffawgfawtteafawtesftawfawfawfwfawftest', 'test'))\n    .to.deep.equal(true);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('aaabaabacdedfaabaabaaa', 'aabaabaaa')).to.deep.equal(true);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('abxabcabcaby', 'abcaby')).to.deep.equal(true);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('decadaafcdf', 'daf')).to.deep.equal(false);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('aefoaefcdaefcdaed', 'aefcdaed')).to.deep.equal(true);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('aefoaefcdaefcdaed', 'aefcaefaeiaefcd')).to.deep.equal(false);\n});\n\nit('Test Case #8', function () {\n  chai\n    .expect(program.knuthMorrisPrattAlgorithm('aefcdfaecdaefaefcdaefeaefcdcdeae', 'aefcdaefeaefcd'))\n    .to.deep.equal(true);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('bccbefbcdabbbcabfdcfe', 'abc')).to.deep.equal(false);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('adafccfefbbbfeeccbcfd', 'ecb')).to.deep.equal(false);\n});\n\nit('Test Case #11', function () {\n  chai\n    .expect(program.knuthMorrisPrattAlgorithm('testwherethefullstringmatches', 'testwherethefullstringmatches'))\n    .to.deep.equal(true);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('aefoaefcdaefcdaed', 'aefcdaed')).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n + m) time | O(m) space\nfunction knuthMorrisPrattAlgorithm(string, substring) {\n  let pattern = buildPattern(substring);\n  return doesMatch(string, substring, pattern);\n}\n\nfunction buildPattern(substring) {\n  let pattern = new Array(substring.length).fill(-1);\n  let j = 0;\n  let i = 1;\n  while (i < substring.length) {\n    if (substring[i] === substring[j]) {\n      pattern[i] = j;\n      i++;\n      j++;\n    } else if (j > 0) {\n      j = pattern[j - 1] + 1;\n    } else {\n      i++;\n    }\n  }\n  return pattern;\n}\n\nfunction doesMatch(string, substring, pattern) {\n  let i = 0;\n  let j = 0;\n  while (i + substring.length - j <= string.length) {\n    if (string[i] === substring[j]) {\n      if (j === substring.length - 1) return true;\n      i++;\n      j++;\n    } else if (j > 0) {\n      j = pattern[j - 1] + 1;\n    } else {\n      i++;\n    }\n  }\n  return false;\n}\n\nexports.knuthMorrisPrattAlgorithm = knuthMorrisPrattAlgorithm;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def knuthMorrisPrattAlgorithm(string, substring):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"testwafwafawfawfawfawfawfawfawfa\", \"fawfawfawfawfa\"), True)\n\n    def test_case_2(self):\n        self.assertEqual(\n            program.knuthMorrisPrattAlgorithm(\"tesseatesgawatewtesaffawgfawtteafawtesftawfawfawfwfawftest\", \"test\"),\n            True,\n        )\n\n    def test_case_3(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"aaabaabacdedfaabaabaaa\", \"aabaabaaa\"), True)\n\n    def test_case_4(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"abxabcabcaby\", \"abcaby\"), True)\n\n    def test_case_5(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"decadaafcdf\", \"daf\"), False)\n\n    def test_case_6(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcdaed\"), True)\n\n    def test_case_7(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcaefaeiaefcd\"), False)\n\n    def test_case_8(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"aefcdfaecdaefaefcdaefeaefcdcdeae\", \"aefcdaefeaefcd\"), True)\n\n    def test_case_9(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"bccbefbcdabbbcabfdcfe\", \"abc\"), False)\n\n    def test_case_10(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"adafccfefbbbfeeccbcfd\", \"ecb\"), False)\n\n    def test_case_11(self):\n        self.assertEqual(\n            program.knuthMorrisPrattAlgorithm(\"testwherethefullstringmatches\", \"testwherethefullstringmatches\"), True\n        )\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", \"aefcdaed\"), True)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n + m) time | O(m) space\ndef knuthMorrisPrattAlgorithm(string, substring):\n    pattern = buildPattern(substring)\n    return doesMatch(string, substring, pattern)\n\n\ndef buildPattern(substring):\n    pattern = [-1 for i in substring]\n    j = 0\n    i = 1\n    while i < len(substring):\n        if substring[i] == substring[j]:\n            pattern[i] = j\n            i += 1\n            j += 1\n        elif j > 0:\n            j = pattern[j - 1] + 1\n        else:\n            i += 1\n    return pattern\n\n\ndef doesMatch(string, substring, pattern):\n    i = 0\n    j = 0\n    while i + len(substring) - j <= len(string):\n        if string[i] == substring[j]:\n            if j == len(substring) - 1:\n                return True\n            i += 1\n            j += 1\n        elif j > 0:\n            j = pattern[j - 1] + 1\n        else:\n            i += 1\n    return False\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func knuthMorrisPrattAlgorithm(_ string: String, subString: String) -> Bool {\n    // Write your code here.\n    return false\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(true, program.knuthMorrisPrattAlgorithm(\"testwafwafawfawfawfawfawfawfawfa\", subString: \"fawfawfawfawfa\"))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(true, program.knuthMorrisPrattAlgorithm(\"tesseatesgawatewtesaffawgfawtteafawtesftawfawfawfwfawftest\", subString: \"test\"))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(true, program.knuthMorrisPrattAlgorithm(\"aaabaabacdedfaabaabaaa\", subString: \"aaabaabacdedfaabaabaaa\"))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(true, program.knuthMorrisPrattAlgorithm(\"abxabcabcaby\", subString: \"abcaby\"))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(false, program.knuthMorrisPrattAlgorithm(\"decadaafcdf\", subString: \"daf\"))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(true, program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", subString: \"aefcdaed\"))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(false, program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", subString: \"aefcaefaeiaefcd\"))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(true, program.knuthMorrisPrattAlgorithm(\"aefcdfaecdaefaefcdaefeaefcdcdeae\", subString: \"aefcdaefeaefcd\"))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(false, program.knuthMorrisPrattAlgorithm(\"bccbefbcdabbbcabfdcfe\", subString: \"abc\"))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(false, program.knuthMorrisPrattAlgorithm(\"adafccfefbbbfeeccbcfd\", subString: \"ecb\"))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(true, program.knuthMorrisPrattAlgorithm(\"testwherethefullstringmatches\", subString: \"testwherethefullstringmatches\"))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(true, program.knuthMorrisPrattAlgorithm(\"aefoaefcdaefcdaed\", subString: \"aefcdaed\"))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n + m) time | O(m) space\n  func knuthMorrisPrattAlgorithm(_ string: String, subString: String) -> Bool {\n    let pattern = buildPattern(subString)\n    return doesMatch(string, subString, pattern)\n  }\n\n  func buildPattern(_ subString: String) -> [Int] {\n    var pattern = Array(repeating: -1, count: subString.count)\n\n    var i = 1\n    var j = 0\n\n    while i < subString.count {\n      let iStringIndex = subString.index(subString.startIndex, offsetBy: i)\n      let jStringIndex = subString.index(subString.startIndex, offsetBy: j)\n\n      if subString[iStringIndex] == subString[jStringIndex] {\n        pattern[i] = j\n\n        i += 1\n        j += 1\n      } else if j > 0 {\n        j = pattern[j - 1] + 1\n      } else {\n        i += 1\n      }\n    }\n\n    return pattern\n  }\n\n  func doesMatch(_ string: String, _ subString: String, _ pattern: [Int]) -> Bool {\n    var i = 0\n    var j = 0\n\n    while i + (subString.count - j) <= string.count {\n      let iStringIndex = string.index(string.startIndex, offsetBy: i)\n      let jStringIndex = subString.index(subString.startIndex, offsetBy: j)\n\n      if string[iStringIndex] == subString[jStringIndex] {\n        if j == subString.count - 1 {\n          return true\n        }\n\n        i += 1\n        j += 1\n      } else if j > 0 {\n        j = pattern[j - 1] + 1\n      } else {\n        i += 1\n      }\n    }\n\n    return false\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function knuthMorrisPrattAlgorithm(string: string, substring: string) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.knuthMorrisPrattAlgorithm('aefoaefcdaefcdaed', 'aefcdaed')).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n + m) time | O(m) space\nexport function knuthMorrisPrattAlgorithm(string: string, substring: string) {\n  let pattern = buildPattern(substring);\n  return doesMatch(string, substring, pattern);\n}\n\nfunction buildPattern(substring: string) {\n  let pattern: number[] = new Array(substring.length).fill(-1);\n  let j = 0;\n  let i = 1;\n  while (i < substring.length) {\n    if (substring[i] === substring[j]) {\n      pattern[i] = j;\n      i++;\n      j++;\n    } else if (j > 0) {\n      j = pattern[j - 1] + 1;\n    } else {\n      i++;\n    }\n  }\n  return pattern;\n}\n\nfunction doesMatch(string: string, substring: string, pattern: number[]) {\n  let i = 0;\n  let j = 0;\n  while (i + substring.length - j <= string.length) {\n    if (string[i] === substring[j]) {\n      if (j === substring.length - 1) return true;\n      i++;\n      j++;\n    } else if (j > 0) {\n      j = pattern[j - 1] + 1;\n    } else {\n      i++;\n    }\n  }\n  return false;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "string": "aefoaefcdaefcdaed",
+      "substring": "aefcdaed"
+    },
+    {
+      "string": "testwafwafawfawfawfawfawfawfawfa",
+      "substring": "fawfawfawfawfa"
+    },
+    {
+      "string": "tesseatesgawatewtesaffawgfawtteafawtesftawfawfawfwfawftest",
+      "substring": "test"
+    },
+    {
+      "string": "aaabaabacdedfaabaabaaa",
+      "substring": "aabaabaaa"
+    },
+    {
+      "string": "abxabcabcaby",
+      "substring": "abcaby"
+    },
+    {
+      "string": "decadaafcdf",
+      "substring": "daf"
+    },
+    {
+      "string": "aefoaefcdaefcdaed",
+      "substring": "aefcaefaeiaefcd"
+    },
+    {
+      "string": "aefcdfaecdaefaefcdaefeaefcdcdeae",
+      "substring": "aefcdaefeaefcd"
+    },
+    {
+      "string": "bccbefbcdabbbcabfdcfe",
+      "substring": "abc"
+    },
+    {
+      "string": "adafccfefbbbfeeccbcfd",
+      "substring": "ecb"
+    },
+    {
+      "string": "testwherethefullstringmatches",
+      "substring": "testwherethefullstringmatches"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true
+    ]
+  ]
+}

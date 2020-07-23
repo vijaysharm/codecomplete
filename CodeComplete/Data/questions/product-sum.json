@@ -1,0 +1,327 @@
+{
+  "Summary": {
+    "Name": "Product Sum",
+    "Category": "Recursion",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-09-01T00:00:00Z",
+      "number": 614,
+      "timeOne": 0,
+      "timeTwo": 800,
+      "url": "https://player.vimeo.com/video/347166190"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try using recursion to solve this problem.\nInitialize the product sum of the \"special\" array to 0. Then, iterate through all of the array's elements; if you come across a number, add it to the product sum; if you come across another \"special\" array, recursively call the productSum function on it and add the returned value to the product sum. How will you handle multiplying the product sums at a given level of depth?\nHave the productSum function take in a second parameter: the multiplier, initialized to 1. Whenever you recursively call the productSum function, pass in the multiplier incremented by 1.",
+  "SpaceTime": "O(n) time | O(d) space - where n is the total number of elements in the array, including sub-elements, and d is the greatest depth of \"special\" arrays in the array",
+  "PromptHTML": "<p>\n  Write a function that takes in a \"special\" array and returns its product sum.\n  A \"special\" array is a non-empty array that contains either integers or other\n  \"special\" arrays. The product sum of a \"special\" array is the sum of its\n  elements, where \"special\" arrays inside it are summed themselves and then\n  multiplied by their level of depth.\n</p>\n<p>\n  For example, the product sum of <span>[x, y]</span> is <span>x + y</span>; the\n  product sum of <span>[x, [y, z]]</span> is <span>x + 2y + 2z</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [5, 2, [7, -1], 3, [6, [-13, 8], 4]]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n12 <span class=\"CodeEditor-promptComment\">// calculated as: 5 + 2 + 2 * (7 - 1) + 3 + 2 * (6 + 3 * (-13 + 8) + 4)</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        5,
+        2,
+        [
+          7,
+          -1
+        ],
+        3,
+        [
+          6,
+          [
+            -13,
+            8
+          ],
+          4
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "array"
+            }
+          ]
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <any>\n#include <vector>\n\nusing namespace std;\n\n// Tip: You can use el.type() == typeid(vector<any>) to check whether an item is a list\n// or an integer.\nint productSum(vector<any> array) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "#include <any>\n#include <vector>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<any> test = {1, 2, 3, 4, 5};\n      assert(productSum(test) == 15);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<any> test = {1, 2, vector<any>{3}, 4, 5};\n\n      assert(productSum(test) == 18);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<any> test = {vector<any>{1, 2}, 3, vector<any>{4, 5}};\n      assert(productSum(test) == 27);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<any> test1 = {5};\n      vector<any> test2 = {};\n      test2.push_back(test1);\n      vector<any> test3 = {};\n      test3.push_back(test2);\n      vector<any> test4 = {};\n      test4.push_back(test3);\n      vector<any> test = {};\n      test.push_back(test4);\n      assert(productSum(test) == 600);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<any> test1 = {3, 4, 1};\n      vector<any> test2 = {};\n      test2.push_back(test1);\n      vector<any> test3 = {};\n      test3.push_back(test2);\n      vector<any> test = {\n          9,\n          vector<any>{2, -3, 4},\n          1,\n          vector<any>{1, 1, vector<any>{1, 1, 1}},\n          vector<any>{test3, 8},\n          vector<any>{1, 2, 3, 4, 5, vector<any>{6, 7}, -7},\n          vector<any>{1, vector<any>{2, 3, vector<any>{4, 5}},\n                      vector<any>{6, 0, vector<any>{7, 0, -8}}, -7},\n          vector<any>{1, -3, 2,\n                      vector<any>{1, -3, 2, vector<any>{1, -3, 2},\n                                  vector<any>{1, -3, 2, vector<any>{1, -3, 2}},\n                                  vector<any>{1, -3, 2}}},\n          -3,\n      };\n      assert(productSum(test) == 1351);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<any> test = {5, 2, vector<any>{7, -1}, 3,\n                          vector<any>{6, vector<any>{-13, 8}, 4}};\n      assert(productSum(test) == 12);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <any>\n#include <vector>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<any> test = {5, 2, vector<any>{7, -1}, 3,\n                          vector<any>{6, vector<any>{-13, 8}, 4}};\n      assert(productSum(test) == 12);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <any>\n#include <vector>\n\nusing namespace std;\n\n// O(n) time | O(d) space - where n is the total number of elements in the\n// array, including sub-elements, and d is the greatest depth of \"special\"\n// arrays in the array\nint productSum(vector<any> array, int multiplier = 1) {\n  int sum = 0;\n  for (auto el : array) {\n    if (el.type() == typeid(vector<any>)) {\n      sum += productSum(any_cast<vector<any>>(el), multiplier + 1);\n    } else {\n      sum += any_cast<int>(el);\n    }\n  }\n  return sum * multiplier;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\t// Tip: You can use `el is IList<object>` to check whether an item is a list or\n\t// an integer.\n\tpublic static int ProductSum(List<object> array) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<object> test = new List<object>(){\n\t\t\t1, 2, 3, 4, 5\n\t\t};\n\t\tUtils.AssertTrue(Program.ProductSum(test) == 15);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<object> test = new List<object>(){\n\t\t\t1,\n\t\t\t2,\n\t\t\tnew List<object>(){\n\t\t\t\t3\n\t\t\t},\n\t\t\t4,\n\t\t\t5,\n\t\t};\n\t\tUtils.AssertTrue(Program.ProductSum(test) == 18);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<object> test = new List<object>(){\n\t\t\tnew List<object>(){\n\t\t\t\t1, 2\n\t\t\t},\n\t\t\t3,\n\t\t\tnew List<object>(){\n\t\t\t\t4, 5\n\t\t\t}\n\t\t};\n\t\tUtils.AssertTrue(Program.ProductSum(test) == 27);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<object> test = new List<object>();\n\t\ttest.Add(\n\t\t\tnew List<object>(){\n\t\t\tnew List<object>(){\n\t\t\t        new List<object>(){\n\t\t\t                new List<object>(){\n\t\t\t                        5\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}\n\t\t\t);\n\t\tUtils.AssertTrue(Program.ProductSum(test) == 600);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<object> test = new List<object>(){\n\t\t\t9,\n\t\t\tnew List<object>(){\n\t\t\t\t2, -3, 4\n\t\t\t},\n\t\t\t1,\n\t\t\tnew List<object>(){\n\t\t\t\t1, 1,\n\t\t\t\tnew List<object>(){\n\t\t\t\t\t1, 1, 1\n\t\t\t\t},\n\t\t\t},\n\t\t\tnew List<object>(){\n\t\t\t\tnew List<object>(){\n\t\t\t\t\tnew List<object>(){\n\t\t\t\t\t\tnew List<object>(){\n\t\t\t\t\t\t\t3, 4, 1\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t}, 8\n\t\t\t},\n\t\t\tnew List<object>(){\n\t\t\t\t1, 2, 3, 4, 5,\n\t\t\t\tnew List<object>(){\n\t\t\t\t\t6, 7\n\t\t\t\t},\n\t\t\t\t-7,\n\t\t\t},\n\t\t\tnew List<object>(){\n\t\t\t\t1,\n\t\t\t\tnew List<object>(){\n\t\t\t\t\t2, 3,\n\t\t\t\t\tnew List<object>(){\n\t\t\t\t\t\t4, 5\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t\tnew List<object>(){\n\t\t\t\t\t6, 0,\n\t\t\t\t\tnew List<object>(){\n\t\t\t\t\t\t7, 0, -8\n\t\t\t\t\t},\n\t\t\t\t}, -7,\n\t\t\t},\n\t\t\tnew List<object>(){\n\t\t\t\t1, -3, 2,\n\t\t\t\tnew List<object>(){\n\t\t\t\t\t1, -3, 2,\n\t\t\t\t\tnew List<object>(){\n\t\t\t\t\t\t1, -3, 2\n\t\t\t\t\t},\n\t\t\t\t\tnew List<object>(){\n\t\t\t\t\t\t1, -3, 2,\n\t\t\t\t\t\tnew List<object>(){\n\t\t\t\t\t\t\t1, -3, 2\n\t\t\t\t\t\t},\n\t\t\t\t\t},\n\t\t\t\t\tnew List<object>(){\n\t\t\t\t\t\t1, -3, 2\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t}, -3\n\t\t};\n\t\tUtils.AssertTrue(Program.ProductSum(test) == 1351);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<object> test = new List<object>(){\n\t\t\t5,\n\t\t\t2,\n\t\t\tnew List<object>(){\n\t\t\t\t7, -1\n\t\t\t},\n\t\t\t3,\n\t\t\tnew List<object>(){\n\t\t\t\t6,\n\t\t\t\tnew List<object>(){\n\t\t\t\t\t-13, 8\n\t\t\t\t},\n\t\t\t\t4,\n\t\t\t},\n\t\t};\n\t\tUtils.AssertTrue(Program.ProductSum(test) == 12);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<object> test = new List<object>(){\n\t\t\t5,\n\t\t\t2,\n\t\t\tnew List<object>(){\n\t\t\t\t7, -1\n\t\t\t},\n\t\t\t3,\n\t\t\tnew List<object>(){\n\t\t\t\t6,\n\t\t\t\tnew List<object>(){\n\t\t\t\t\t-13, 8\n\t\t\t\t},\n\t\t\t\t4,\n\t\t\t},\n\t\t};\n\t\tUtils.AssertTrue(Program.ProductSum(test) == 12);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(d) space - where n is the total number of elements in the array,\n\t// including sub-elements, and d is the greatest depth of \"special\" arrays in the array\n\tpublic static int ProductSum(List<object> array) {\n\t\treturn productSumHelper(array, 1);\n\t}\n\n\tpublic static int productSumHelper(List<object> array, int multiplier) {\n\t\tint sum = 0;\n\t\tforeach (object el in array) {\n\t\t\tif (el is IList<object>) {\n\t\t\t\tsum += productSumHelper((List<object>)el, multiplier + 1);\n\t\t\t} else {\n\t\t\t\tsum += (int)el;\n\t\t\t}\n\t\t}\n\t\treturn sum * multiplier;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype SpecialArray []interface{}\n\n// Tip: Each element of `array` can either be cast\n// to `SpecialArray` or `int`.\nfunc ProductSum(array []interface{}) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := SpecialArray{1, 2, 3, 4, 5}\n\toutput := ProductSum(input)\n\texpected := 15\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tinput := SpecialArray{1, 2, SpecialArray{3}, 4, 5}\n\toutput := ProductSum(input)\n\texpected := 18\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tinput := SpecialArray{SpecialArray{1, 2}, 3, SpecialArray{4, 5}}\n\toutput := ProductSum(input)\n\texpected := 27\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tinput := SpecialArray{SpecialArray{SpecialArray{\n\t\tSpecialArray{SpecialArray{5}},\n\t}}}\n\toutput := ProductSum(input)\n\texpected := 600\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tinput := SpecialArray{\n\t\t9,\n\t\tSpecialArray{2, -3, 4},\n\t\t1,\n\t\tSpecialArray{\n\t\t\t1, 1,\n\t\t\tSpecialArray{1, 1, 1},\n\t\t},\n\t\tSpecialArray{\n\t\t\tSpecialArray{\n\t\t\t\tSpecialArray{\n\t\t\t\t\tSpecialArray{3, 4, 1},\n\t\t\t\t},\n\t\t\t}, 8,\n\t\t},\n\t\tSpecialArray{\n\t\t\t1, 2, 3, 4, 5,\n\t\t\tSpecialArray{6, 7},\n\t\t\t-7,\n\t\t},\n\t\tSpecialArray{\n\t\t\t1,\n\t\t\tSpecialArray{\n\t\t\t\t2, 3,\n\t\t\t\tSpecialArray{4, 5},\n\t\t\t},\n\t\t\tSpecialArray{\n\t\t\t\t6, 0,\n\t\t\t\tSpecialArray{7, 0, -8},\n\t\t\t}, -7,\n\t\t},\n\t\tSpecialArray{\n\t\t\t1, -3, 2,\n\t\t\tSpecialArray{\n\t\t\t\t1, -3, 2,\n\t\t\t\tSpecialArray{1, -3, 2},\n\t\t\t\tSpecialArray{\n\t\t\t\t\t1, -3, 2,\n\t\t\t\t\tSpecialArray{1, -3, 2},\n\t\t\t\t},\n\t\t\t\tSpecialArray{1, -3, 2},\n\t\t\t},\n\t\t},\n\t\t-3,\n\t}\n\toutput := ProductSum(input)\n\texpected := 1351\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tinput := SpecialArray{\n\t\t5, 2,\n\t\tSpecialArray{7, -1},\n\t\t3,\n\t\tSpecialArray{\n\t\t\t6,\n\t\t\tSpecialArray{\n\t\t\t\t-13, 8,\n\t\t\t},\n\t\t\t4,\n\t\t},\n\t}\n\toutput := ProductSum(input)\n\texpected := 12\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := SpecialArray{\n\t\t5, 2,\n\t\tSpecialArray{7, -1},\n\t\t3,\n\t\tSpecialArray{\n\t\t\t6,\n\t\t\tSpecialArray{\n\t\t\t\t-13, 8,\n\t\t\t},\n\t\t\t4,\n\t\t},\n\t}\n\toutput := ProductSum(input)\n\texpected := 12\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype SpecialArray []interface{}\n\n// O(n) time | O(d) space - where n is the total number of elements in the array,\n// including sub-elements, and d is the greatest depth of \"special\" arrays in the array\nfunc ProductSum(array SpecialArray) int {\n\treturn helper(array, 1)\n}\n\nfunc helper(array SpecialArray, multiplier int) int {\n\tsum := 0\n\tfor _, el := range array {\n\t\tif cast, ok := el.(SpecialArray); ok {\n\t\t\tsum += helper(cast, multiplier+1)\n\t\t} else if cast, ok := el.(int); ok {\n\t\t\tsum += cast\n\t\t}\n\t}\n\treturn sum * multiplier\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  // Tip: You can use `element instanceof ArrayList` to check whether an item\n  // is an array or an integer.\n  public static int productSum(List<Object> array) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Object> test = new ArrayList<Object>(Arrays.asList(1, 2, 3, 4, 5));\n    Utils.assertTrue(Program.productSum(test) == 15);\n  }\n\n  @Test\n  public void TestCase2() {\n    List<Object> test =\n        new ArrayList<Object>(Arrays.asList(1, 2, new ArrayList<Object>(Arrays.asList(3)), 4, 5));\n    Utils.assertTrue(Program.productSum(test) == 18);\n  }\n\n  @Test\n  public void TestCase3() {\n    List<Object> test =\n        new ArrayList<Object>(\n            Arrays.asList(\n                new ArrayList<Object>(Arrays.asList(1, 2)),\n                3,\n                new ArrayList<Object>(Arrays.asList(4, 5))));\n    Utils.assertTrue(Program.productSum(test) == 27);\n  }\n\n  @Test\n  public void TestCase4() {\n    List<Object> test = new ArrayList<Object>();\n    test.add(\n        new ArrayList<Object>(\n            Arrays.asList(\n                new ArrayList<Object>(\n                    Arrays.asList(\n                        new ArrayList<Object>(\n                            Arrays.asList(new ArrayList<Object>(Arrays.asList(5)))))))));\n    Utils.assertTrue(Program.productSum(test) == 600);\n  }\n\n  @Test\n  public void TestCase5() {\n    List<Object> test =\n        new ArrayList<Object>(\n            Arrays.asList(\n                9,\n                new ArrayList<Object>(Arrays.asList(2, -3, 4)),\n                1,\n                new ArrayList<Object>(\n                    Arrays.asList(1, 1, new ArrayList<Object>(Arrays.asList(1, 1, 1)))),\n                new ArrayList<Object>(\n                    Arrays.asList(\n                        new ArrayList<Object>(\n                            Arrays.asList(\n                                new ArrayList<Object>(\n                                    Arrays.asList(new ArrayList<Object>(Arrays.asList(3, 4, 1)))))),\n                        8)),\n                new ArrayList<Object>(\n                    Arrays.asList(1, 2, 3, 4, 5, new ArrayList<Object>(Arrays.asList(6, 7)), -7)),\n                new ArrayList<Object>(\n                    Arrays.asList(\n                        1,\n                        new ArrayList<Object>(\n                            Arrays.asList(2, 3, new ArrayList<Object>(Arrays.asList(4, 5)))),\n                        new ArrayList<Object>(\n                            Arrays.asList(6, 0, new ArrayList<Object>(Arrays.asList(7, 0, -8)))),\n                        -7)),\n                new ArrayList<Object>(\n                    Arrays.asList(\n                        1,\n                        -3,\n                        2,\n                        new ArrayList<Object>(\n                            Arrays.asList(\n                                1,\n                                -3,\n                                2,\n                                new ArrayList<Object>(Arrays.asList(1, -3, 2)),\n                                new ArrayList<Object>(\n                                    Arrays.asList(\n                                        1,\n                                        -3,\n                                        2,\n                                        new ArrayList<Object>(Arrays.asList(1, -3, 2)),\n                                        new ArrayList<Object>(Arrays.asList(1, -3, 2)))))))),\n                -3));\n    Utils.assertTrue(Program.productSum(test) == 1351);\n  }\n\n  @Test\n  public void TestCase6() {\n    List<Object> test =\n        new ArrayList<Object>(\n            Arrays.asList(\n                5,\n                2,\n                new ArrayList<Object>(Arrays.asList(7, -1)),\n                3,\n                new ArrayList<Object>(\n                    Arrays.asList(6, new ArrayList<Object>(Arrays.asList(-13, 8)), 4))));\n    Utils.assertTrue(Program.productSum(test) == 12);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Object> test =\n        new ArrayList<Object>(\n            Arrays.asList(\n                5,\n                2,\n                new ArrayList<Object>(Arrays.asList(7, -1)),\n                3,\n                new ArrayList<Object>(\n                    Arrays.asList(6, new ArrayList<Object>(Arrays.asList(-13, 8)), 4))));\n    Utils.assertTrue(Program.productSum(test) == 12);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(d) space - where n is the total number of elements in the array,\n  // including sub-elements, and d is the greatest depth of \"special\" arrays in the array\n  public static int productSum(List<Object> array) {\n    return productSumHelper(array, 1);\n  }\n\n  public static int productSumHelper(List<Object> array, int multiplier) {\n    int sum = 0;\n    for (Object el : array) {\n      if (el instanceof ArrayList) {\n        @SuppressWarnings(\"unchecked\")\n        ArrayList<Object> ls = (ArrayList<Object>) el;\n        sum += productSumHelper(ls, multiplier + 1);\n      } else {\n        sum += (int) el;\n      }\n    }\n    return sum * multiplier;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// Tip: You can use the Array.isArray function to check whether an item\n// is a list or an integer.\nfunction productSum(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.productSum = productSum;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const test = [1, 2, 3, 4, 5];\n  chai.expect(program.productSum(test)).to.deep.equal(15);\n});\n\nit('Test Case #2', function () {\n  const test = [1, 2, [3], 4, 5];\n  chai.expect(program.productSum(test)).to.deep.equal(18);\n});\n\nit('Test Case #3', function () {\n  const test = [[1, 2], 3, [4, 5]];\n  chai.expect(program.productSum(test)).to.deep.equal(27);\n});\n\nit('Test Case #4', function () {\n  const test = [[[[[5]]]]];\n  chai.expect(program.productSum(test)).to.deep.equal(600);\n});\n\nit('Test Case #5', function () {\n  const test = [\n    9,\n    [2, -3, 4],\n    1,\n    [1, 1, [1, 1, 1]],\n    [[[[3, 4, 1]]], 8],\n    [1, 2, 3, 4, 5, [6, 7], -7],\n    [1, [2, 3, [4, 5]], [6, 0, [7, 0, -8]], -7],\n    [1, -3, 2, [1, -3, 2, [1, -3, 2], [1, -3, 2, [1, -3, 2]], [1, -3, 2]]],\n    -3,\n  ];\n  chai.expect(program.productSum(test)).to.deep.equal(1351);\n});\n\nit('Test Case #6', function () {\n  const test = [5, 2, [7, -1], 3, [6, [-13, 8], 4]];\n  chai.expect(program.productSum(test)).to.deep.equal(12);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const test = [5, 2, [7, -1], 3, [6, [-13, 8], 4]];\n  chai.expect(program.productSum(test)).to.deep.equal(12);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(d) space - where n is the total number of elements in the array,\n// including sub-elements, and d is the greatest depth of \"special\" arrays in the array\nfunction productSum(array, multiplier = 1) {\n  let sum = 0;\n  for (const element of array) {\n    if (Array.isArray(element)) {\n      sum += productSum(element, multiplier + 1);\n    } else {\n      sum += element;\n    }\n  }\n  return sum * multiplier;\n}\n\nexports.productSum = productSum;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# Tip: You can use the type(element) function to check whether an item\n# is a list or an integer.\ndef productSum(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test = [1, 2, 3, 4, 5]\n        self.assertEqual(program.productSum(test), 15)\n\n    def test_case_2(self):\n        test = [1, 2, [3], 4, 5]\n        self.assertEqual(program.productSum(test), 18)\n\n    def test_case_3(self):\n        test = [[1, 2], 3, [4, 5]]\n        self.assertEqual(program.productSum(test), 27)\n\n    def test_case_4(self):\n        test = [[[[[5]]]]]\n        self.assertEqual(program.productSum(test), 600)\n\n    def test_case_5(self):\n        test = [\n            9,\n            [2, -3, 4],\n            1,\n            [1, 1, [1, 1, 1]],\n            [[[[3, 4, 1]]], 8],\n            [1, 2, 3, 4, 5, [6, 7], -7],\n            [1, [2, 3, [4, 5]], [6, 0, [7, 0, -8]], -7],\n            [1, -3, 2, [1, -3, 2, [1, -3, 2], [1, -3, 2, [1, -3, 2]], [1, -3, 2]]],\n            -3,\n        ]\n        self.assertEqual(program.productSum(test), 1351)\n\n    def test_case_6(self):\n        test = [5, 2, [7, -1], 3, [6, [-13, 8], 4]]\n        self.assertEqual(program.productSum(test), 12)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test = [5, 2, [7, -1], 3, [6, [-13, 8], 4]]\n        self.assertEqual(program.productSum(test), 12)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(d) space - where n is the total number of elements in the array,\n# including sub-elements, and d is the greatest depth of \"special\" arrays in the array\ndef productSum(array, multiplier=1):\n    sum = 0\n    for element in array:\n        if type(element) is list:\n            sum += productSum(element, multiplier + 1)\n        else:\n            sum += element\n    return sum * multiplier\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // Tip: You can cast each element with `as? [Any]` to check whether it is\n  // an array or an integer.\n  func productSum(_ array: [Any], multiplier: Int) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let firstTest: [Any] = [1, 2, 3, 4, 5]\n      try assertEqual(15, program.productSum(firstTest, multiplier: 1))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let secondTest: [Any] = [1, 2, [3], 4, 5]\n      try assertEqual(18, program.productSum(secondTest, multiplier: 1))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let thirdTest: [Any] = [[1, 2], 3, [4, 5]]\n      try assertEqual(27, program.productSum(thirdTest, multiplier: 1))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let fourthTest: [Any] = [[[[[5]]]]]\n      try assertEqual(600, program.productSum(fourthTest, multiplier: 1))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let fifthTest: [Any] = [\n        9,\n        [2, -3, 4],\n        1,\n        [1, 1, [1, 1, 1]],\n        [[[[3, 4, 1]]], 8],\n        [1, 2, 3, 4, 5, [6, 7], -7],\n        [1, [2, 3, [4, 5]], [6, 0, [7, 0, -8]], -7],\n        [1, -3, 2, [1, -3, 2, [1, -3, 2], [1, -3, 2, [1, -3, 2]], [1, -3, 2]]],\n        -3,\n      ]\n      try assertEqual(1351, program.productSum(fifthTest, multiplier: 1))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let sixthTest: [Any] = [5, 2, [7, -1], 3, [6, [-13, 8], 4]]\n      try assertEqual(12, program.productSum(sixthTest, multiplier: 1))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let sixthTest: [Any] = [5, 2, [7, -1], 3, [6, [-13, 8], 4]]\n      try assertEqual(12, program.productSum(sixthTest, multiplier: 1))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(d) space\n  func productSum(_ array: [Any], multiplier: Int) -> Int {\n    var sum = 0\n\n    for element in array {\n      if let elementAsArray = element as? [Any] {\n        sum += productSum(elementAsArray, multiplier: multiplier + 1)\n      } else if let elementAsInt = element as? Int {\n        sum += elementAsInt\n      }\n    }\n\n    return sum * multiplier\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "type SpecialArray = Array<number | SpecialArray>;\n\n// Tip: You can use the Array.isArray function to check whether an item\n// is a list or an integer.\nexport function productSum(array: SpecialArray) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\ntype SpecialArray = Array<number | SpecialArray>;\n\nit('Test Case #1', function () {\n  const test: SpecialArray = [5, 2, [7, -1], 3, [6, [-13, 8], 4]];\n  chai.expect(program.productSum(test)).to.deep.equal(12);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype SpecialArray = Array<number | SpecialArray>;\n\n// O(n) time | O(d) space - where n is the total number of elements in the array,\n// including sub-elements, and d is the greatest depth of \"special\" arrays in the array\nexport function productSum(array: SpecialArray, multiplier = 1) {\n  let sum = 0;\n  for (const element of array) {\n    if (Array.isArray(element)) {\n      sum += productSum(element, multiplier + 1);\n    } else {\n      sum += element;\n    }\n  }\n  return sum * multiplier;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        5,
+        2,
+        [
+          7,
+          -1
+        ],
+        3,
+        [
+          6,
+          [
+            -13,
+            8
+          ],
+          4
+        ]
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        [
+          3
+        ],
+        4,
+        5
+      ]
+    },
+    {
+      "array": [
+        [
+          1,
+          2
+        ],
+        3,
+        [
+          4,
+          5
+        ]
+      ]
+    },
+    {
+      "array": [
+        [
+          [
+            [
+              [
+                5
+              ]
+            ]
+          ]
+        ]
+      ]
+    },
+    {
+      "array": [
+        9,
+        [
+          2,
+          -3,
+          4
+        ],
+        1,
+        [
+          1,
+          1,
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            [
+              [
+                3,
+                4,
+                1
+              ]
+            ]
+          ],
+          8
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          [
+            6,
+            7
+          ],
+          -7
+        ],
+        [
+          1,
+          [
+            2,
+            3,
+            [
+              4,
+              5
+            ]
+          ],
+          [
+            6,
+            0,
+            [
+              7,
+              0,
+              -8
+            ]
+          ],
+          -7
+        ],
+        [
+          1,
+          -3,
+          2,
+          [
+            1,
+            -3,
+            2,
+            [
+              1,
+              -3,
+              2
+            ],
+            [
+              1,
+              -3,
+              2,
+              [
+                1,
+                -3,
+                2
+              ]
+            ],
+            [
+              1,
+              -3,
+              2
+            ]
+          ]
+        ],
+        -3
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      12,
+      15,
+      18,
+      27,
+      600,
+      1351
+    ]
+  ]
+}

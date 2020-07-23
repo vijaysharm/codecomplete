@@ -1,0 +1,296 @@
+{
+  "Summary": {
+    "Name": "Max Sum Increasing Subsequence",
+    "Category": "Dynamic Programming",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 654,
+      "timeOne": 0,
+      "timeTwo": 1105,
+      "url": "https://player.vimeo.com/video/225712211"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try building an array of the same length as the input array. At each index in this new array, store the maximum sum that can be generated from an increasing subsequence ending with the number found at that index in the input array.\nCan you efficiently keep track of potential sequences in another array? Instead of storing entire sequences, try storing the indices of previous numbers. For example, at index 3 in this other array, store the index of the before-last number in the max-sum increasing subsequence ending with the number at index 3.\n",
+  "SpaceTime": "O(n^2) time | O(n) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a non-empty array of integers and returns the\n  greatest sum that can be generated from a strictly-increasing subsequence in\n  the array as well as an array of the numbers in that subsequence.\n</p>\n<p>\n  A subsequence of an array is a set of numbers that aren't necessarily adjacent\n  in the array but that are in the same order as they appear in the array. For\n  instance, the numbers <span>[1, 3, 4]</span> form a subsequence of the array\n  <span>[1, 2, 3, 4]</span>, and so do the numbers <span>[2, 4]</span>. Note\n  that a single number in an array and the array itself are both valid\n  subsequences of the array.\n</p>\n<p>\n  You can assume that there will only be one increasing subsequence with the\n  greatest sum.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [10, 70, 20, 30, 50, 11, 30]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[110, [10, 20, 30, 50]] <span class=\"CodeEditor-promptComment\">// The subsequence [10, 20, 30, 50] is strictly increasing and yields the greatest sum: 110.</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        10,
+        70,
+        20,
+        30,
+        50,
+        11,
+        30
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<vector<int>> maxSumIncreasingSubsequence(vector<int> array) {\n  // Write your code here.\n  return {\n      {0}, // Sum of sequence.\n      {},  // Elements of the sequence.\n  };\n}\n",
+      "StartingTest": "vector<int> vector1{1};\nvector<int> vector2{-1};\nvector<int> vector3{-1, 1};\nvector<int> vector4{5, 4, 3, 2, 1};\nvector<int> vector5{1, 2, 3, 4, 5};\nvector<int> vector6{-5, -4, -3, -2, -1};\nvector<int> vector7{10, 70, 20, 30, 50, 11, 30};\nvector<int> vector8{8, 12, 2, 3, 15, 5, 7};\nvector<int> vector9{10, 15, 4, 5, 11, 14, 31, 25, 31, 23, 25, 31, 50};\n\nvector<vector<int>> vector1S{{1}, {1}};\nvector<vector<int>> vector2S{{-1}, {-1}};\nvector<vector<int>> vector3S{{1}, {1}};\nvector<vector<int>> vector4S{{5}, {5}};\nvector<vector<int>> vector5S{{15}, {1, 2, 3, 4, 5}};\nvector<vector<int>> vector6S{{-1}, {-1}};\nvector<vector<int>> vector7S{{110}, {10, 20, 30, 50}};\nvector<vector<int>> vector8S{{35}, {8, 12, 15}};\nvector<vector<int>> vector9S{{164}, {10, 11, 14, 23, 25, 31, 50}};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(maxSumIncreasingSubsequence(vector1) == vector1S); });\n\n    RunTest(\"Test Case 2\",\n            []() { assert(maxSumIncreasingSubsequence(vector2) == vector2S); });\n\n    RunTest(\"Test Case 3\",\n            []() { assert(maxSumIncreasingSubsequence(vector3) == vector3S); });\n\n    RunTest(\"Test Case 4\",\n            []() { assert(maxSumIncreasingSubsequence(vector4) == vector4S); });\n\n    RunTest(\"Test Case 5\",\n            []() { assert(maxSumIncreasingSubsequence(vector5) == vector5S); });\n\n    RunTest(\"Test Case 6\",\n            []() { assert(maxSumIncreasingSubsequence(vector6) == vector6S); });\n\n    RunTest(\"Test Case 7\",\n            []() { assert(maxSumIncreasingSubsequence(vector7) == vector7S); });\n\n    RunTest(\"Test Case 8\",\n            []() { assert(maxSumIncreasingSubsequence(vector8) == vector8S); });\n\n    RunTest(\"Test Case 9\",\n            []() { assert(maxSumIncreasingSubsequence(vector9) == vector9S); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n        vector<int> input{10, 70, 20, 30, 50, 11, 30};\n        vector<vector<int>> expected{{110}, {10, 20, 30, 50}};\n        assert(maxSumIncreasingSubsequence(input) == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <climits>\nusing namespace std;\n\nvector<vector<int>> buildSequence(vector<int> array, vector<int> sequences,\n                                  int currentIdx, int sum);\n\n// O(n^2) time | O(n) space\nvector<vector<int>> maxSumIncreasingSubsequence(vector<int> array) {\n  vector<int> sequences(array.size(), INT_MIN);\n  vector<int> sums = array;\n  int maxSumIdx = 0;\n  for (int i = 0; i < array.size(); i++) {\n    int currentNum = array[i];\n    for (int j = 0; j < i; j++) {\n      int otherNum = array[j];\n      if (otherNum < currentNum && sums[j] + currentNum >= sums[i]) {\n        sums[i] = sums[j] + currentNum;\n        sequences[i] = j;\n      }\n    }\n    if (sums[i] >= sums[maxSumIdx]) {\n      maxSumIdx = i;\n    }\n  }\n  return buildSequence(array, sequences, maxSumIdx, sums[maxSumIdx]);\n}\n\nvector<vector<int>> buildSequence(vector<int> array, vector<int> sequences,\n                                  int currentIdx, int sum) {\n  vector<vector<int>> sequence = {{}, {}};\n  sequence[0].push_back(sum);\n  while (currentIdx != INT_MIN) {\n    sequence[1].insert(sequence[1].begin(), array[currentIdx]);\n    currentIdx = sequences[currentIdx];\n  }\n  return sequence;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<List<int> > MaxSumIncreasingSubsequence(int[] array) {\n\t\t// Write your code here.\n\t\treturn new List<List<int> >(){\n\t\t\t       new List<int>(){\n\t\t\t\t       -1, // Sum of the items.\n\t\t\t       },\n\t\t\t       new List<int>(), // Item sequence.\n\t\t};\n\t}\n}\n",
+      "StartingTest": "using System;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {1};\n\t\tTuple<int, int[]> expected = Tuple.Create(1, new int[] {1});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] input = {-1};\n\t\tTuple<int, int[]> expected = Tuple.Create(-1, new int[] {-1});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] input = {-1, 1};\n\t\tTuple<int, int[]> expected = Tuple.Create(1, new int[] {1});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] input = {5, 4, 3, 2, 1};\n\t\tTuple<int, int[]> expected = Tuple.Create(5, new int[] {5});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] input = {1, 2, 3, 4, 5};\n\t\tTuple<int, int[]> expected = Tuple.Create(15, new int[] {1, 2, 3, 4, 5});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] input = {-5, -4, -3, -2, -1};\n\t\tTuple<int, int[]> expected = Tuple.Create(-1, new int[] {-1});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] input = {10, 70, 20, 30, 50, 11, 30};\n\t\tTuple<int, int[]> expected = Tuple.Create(110, new int[] {10, 20, 30, 50});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] input = {8, 12, 2, 3, 15, 5, 7};\n\t\tTuple<int, int[]> expected = Tuple.Create(35, new int[] {8, 12, 15});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] input = {10, 15, 4, 5, 11, 14, 31, 25, 31, 23, 25, 31, 50};\n\t\tTuple<int, int[]> expected = Tuple.Create(164, new int[] {10, 11, 14, 23, 25, 31,\n\t\t                                                          50});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\tprivate static bool compare(List<List<int> > arr1, Tuple<int, int[]> arr2) {\n\t\tif (arr1[0][0] != arr2.Item1) {\n\t\t\treturn false;\n\t\t}\n\t\tif (arr1[1].Count != arr2.Item2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1[1].Count; i++) {\n\t\t\tif (arr1[1][i] != arr2.Item2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {10, 70, 20, 30, 50, 11, 30};\n\t\tTuple<int, int[]> expected = Tuple.Create(110, new int[] {10, 20, 30, 50});\n\t\tUtils.AssertTrue(compare(Program.MaxSumIncreasingSubsequence(input), expected));\n\t}\n\n\tprivate static bool compare(List<List<int> > arr1, Tuple<int, int[]> arr2) {\n\t\tif (arr1[0][0] != arr2.Item1) {\n\t\t\treturn false;\n\t\t}\n\t\tif (arr1[1].Count != arr2.Item2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1[1].Count; i++) {\n\t\t\tif (arr1[1][i] != arr2.Item2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^2) time | O(n) space\n\tpublic static List<List<int> > MaxSumIncreasingSubsequence(int[] array) {\n\t\tint[] sequences = new int[array.Length];\n\t\tArray.Fill(sequences, Int32.MinValue);\n\t\tint[] sums = (int[]) array.Clone();\n\t\tint maxSumIdx = 0;\n\t\tfor (int i = 0; i < array.Length; i++) {\n\t\t\tint currentNum = array[i];\n\t\t\tfor (int j = 0; j < i; j++) {\n\t\t\t\tint otherNum = array[j];\n\t\t\t\tif (otherNum < currentNum && sums[j] + currentNum >= sums[i]) {\n\t\t\t\t\tsums[i] = sums[j] + currentNum;\n\t\t\t\t\tsequences[i] = j;\n\t\t\t\t}\n\t\t\t}\n\t\t\tif (sums[i] >= sums[maxSumIdx]) {\n\t\t\t\tmaxSumIdx = i;\n\t\t\t}\n\t\t}\n\t\treturn buildSequence(array, sequences, maxSumIdx, sums[maxSumIdx]);\n\t}\n\n\tpublic static List<List<int> > buildSequence(int[] array, int[] sequences, int currentIdx,\n\t  int sums) {\n\t\tList<List<int> > sequence = new List<List<int> >();\n\t\tsequence.Add(new List<int>());\n\t\tsequence.Add(new List<int>());\n\t\tsequence[0].Add(sums);\n\t\twhile (currentIdx != Int32.MinValue) {\n\t\t\tsequence[1].Insert(0, array[currentIdx]);\n\t\t\tcurrentIdx = sequences[currentIdx];\n\t\t}\n\t\treturn sequence;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc MaxSumIncreasingSubsequence(array []int) []interface{} {\n\t// Write your code here.\n\treturn []interface{}{\n\t\t10,             // Example max sum\n\t\t[]int{2, 3, 5}, // Example max sequence\n\t}\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{1}), []interface{}{1, []int{1}})\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{-1}), []interface{}{-1, []int{-1}})\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{-1, 1}), []interface{}{1, []int{1}})\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{5, 4, 3, 2, 1}), []interface{}{5, []int{5}})\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{1, 2, 3, 4, 5}), []interface{}{15, []int{1, 2, 3, 4, 5}})\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{-5, -4, -3, -2, -1}), []interface{}{-1, []int{-1}})\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{10, 70, 20, 30, 50, 11, 30}), []interface{}{110, []int{10, 20, 30, 50}})\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{8, 12, 2, 3, 15, 5, 7}), []interface{}{35, []int{8, 12, 15}})\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\trequire.Equal(t, MaxSumIncreasingSubsequence([]int{10, 15, 4, 5, 11, 14, 31, 25, 31, 23, 25, 31, 50}), []interface{}{164, []int{10, 11, 14, 23, 25, 31, 50}})\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := MaxSumIncreasingSubsequence([]int{10, 70, 20, 30, 50, 11, 30})\n\trequire.Equal(t, []interface{}{110, []int{10, 20, 30, 50}}, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// O(n^2) time | O(n) space\nfunc MaxSumIncreasingSubsequence(array []int) []interface{} {\n\tsequences := make([]int, len(array))\n\tsums := make([]int, len(array))\n\tfor i := range sequences {\n\t\tsequences[i] = math.MinInt32\n\t\tsums[i] = array[i]\n\t}\n\tmaxSumIndex := 0\n\tfor i, currentNum := range array {\n\t\tfor j := 0; j < i; j++ {\n\t\t\totherNum := array[j]\n\t\t\tif otherNum < currentNum && sums[j]+currentNum >= sums[i] {\n\t\t\t\tsums[i] = sums[j] + currentNum\n\t\t\t\tsequences[i] = j\n\t\t\t}\n\t\t}\n\t\tif sums[i] > sums[maxSumIndex] {\n\t\t\tmaxSumIndex = i\n\t\t}\n\t}\n\n\tmaxSum := sums[maxSumIndex]\n\tsequence := buildSequence(array, sequences, maxSumIndex)\n\treturn []interface{}{maxSum, sequence}\n}\n\nfunc buildSequence(array []int, sequences []int, index int) []int {\n\tsequence := []int{}\n\tfor index != math.MinInt32 {\n\t\tsequence = append(sequence, array[index])\n\t\tindex = sequences[index]\n\t}\n\treverse(sequence)\n\treturn sequence\n}\n\nfunc reverse(numbers []int) {\n\tfor i, j := 0, len(numbers)-1; i < j; i, j = i+1, j-1 {\n\t\tnumbers[i], numbers[j] = numbers[j], numbers[i]\n\t}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<List<Integer>> maxSumIncreasingSubsequence(int[] array) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {1};\n    int[][] expected = {{1}, {1}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] input = {-1};\n    int[][] expected = {{-1}, {-1}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] input = {-1, 1};\n    int[][] expected = {{1}, {1}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] input = {5, 4, 3, 2, 1};\n    int[][] expected = {{5}, {5}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] input = {1, 2, 3, 4, 5};\n    int[][] expected = {{15}, {1, 2, 3, 4, 5}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] input = {-5, -4, -3, -2, -1};\n    int[][] expected = {{-1}, {-1}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] input = {10, 70, 20, 30, 50, 11, 30};\n    int[][] expected = {{110}, {10, 20, 30, 50}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] input = {8, 12, 2, 3, 15, 5, 7};\n    int[][] expected = {{35}, {8, 12, 15}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] input = {10, 15, 4, 5, 11, 14, 31, 25, 31, 23, 25, 31, 50};\n    int[][] expected = {{164}, {10, 11, 14, 23, 25, 31, 50}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  public static boolean compare(List<List<Integer>> arr1, int[][] arr2) {\n    if (arr1.get(0).get(0) != arr2[0][0]) {\n      return false;\n    }\n    for (int i = 0; i < arr1.get(1).size(); i++) {\n      if (arr1.get(1).get(i) != arr2[1][i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {10, 70, 20, 30, 50, 11, 30};\n    int[][] expected = {{110}, {10, 20, 30, 50}};\n    Utils.assertTrue(compare(Program.maxSumIncreasingSubsequence(input), expected));\n  }\n\n  public static boolean compare(List<List<Integer>> arr1, int[][] arr2) {\n    if (arr1.get(0).get(0) != arr2[0][0]) {\n      return false;\n    }\n    for (int i = 0; i < arr1.get(1).size(); i++) {\n      if (arr1.get(1).get(i) != arr2[1][i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^2) time | O(n) space\n  public static List<List<Integer>> maxSumIncreasingSubsequence(int[] array) {\n    int[] sequences = new int[array.length];\n    Arrays.fill(sequences, Integer.MIN_VALUE);\n    int[] sums = array.clone();\n    int maxSumIdx = 0;\n    for (int i = 0; i < array.length; i++) {\n      int currentNum = array[i];\n      for (int j = 0; j < i; j++) {\n        int otherNum = array[j];\n        if (otherNum < currentNum && sums[j] + currentNum >= sums[i]) {\n          sums[i] = sums[j] + currentNum;\n          sequences[i] = j;\n        }\n      }\n      if (sums[i] >= sums[maxSumIdx]) {\n        maxSumIdx = i;\n      }\n    }\n    return buildSequence(array, sequences, maxSumIdx, sums[maxSumIdx]);\n  }\n\n  public static List<List<Integer>> buildSequence(\n      int[] array, int[] sequences, int currentIdx, int sums) {\n    List<List<Integer>> sequence = new ArrayList<List<Integer>>();\n    sequence.add(new ArrayList<Integer>());\n    sequence.add(new ArrayList<Integer>());\n    sequence.get(0).add(sums);\n    while (currentIdx != Integer.MIN_VALUE) {\n      sequence.get(1).add(0, array[currentIdx]);\n      currentIdx = sequences[currentIdx];\n    }\n    return sequence;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function maxSumIncreasingSubsequence(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.maxSumIncreasingSubsequence = maxSumIncreasingSubsequence;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([1])).to.deep.equal([1, [1]]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([-1])).to.deep.equal([-1, [-1]]);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([-1, 1])).to.deep.equal([1, [1]]);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([5, 4, 3, 2, 1])).to.deep.equal([5, [5]]);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([1, 2, 3, 4, 5])).to.deep.equal([15, [1, 2, 3, 4, 5]]);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([-5, -4, -3, -2, -1])).to.deep.equal([-1, [-1]]);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([10, 70, 20, 30, 50, 11, 30])).to.deep.equal([110, [10, 20, 30, 50]]);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([8, 12, 2, 3, 15, 5, 7])).to.deep.equal([35, [8, 12, 15]]);\n});\n\nit('Test Case #9', function () {\n  chai\n    .expect(program.maxSumIncreasingSubsequence([10, 15, 4, 5, 11, 14, 31, 25, 31, 23, 25, 31, 50]))\n    .to.deep.equal([164, [10, 11, 14, 23, 25, 31, 50]]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([10, 70, 20, 30, 50, 11, 30])).to.deep.equal([110, [10, 20, 30, 50]]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nfunction maxSumIncreasingSubsequence(array) {\n  const sequences = new Array(array.length);\n  const sums = array.map(num => num);\n  let maxSumIdx = 0;\n  for (let i = 0; i < array.length; i++) {\n    const currentNum = array[i];\n    for (let j = 0; j < i; j++) {\n      const otherNum = array[j];\n      if (otherNum < currentNum && sums[j] + currentNum >= sums[i]) {\n        sums[i] = sums[j] + currentNum;\n        sequences[i] = j;\n      }\n    }\n    if (sums[i] >= sums[maxSumIdx]) maxSumIdx = i;\n  }\n  return [sums[maxSumIdx], buildSequence(array, sequences, maxSumIdx)];\n}\n\nfunction buildSequence(array, sequences, currentIdx) {\n  const sequence = [];\n  while (currentIdx !== undefined) {\n    sequence.unshift(array[currentIdx]);\n    currentIdx = sequences[currentIdx];\n  }\n  return sequence;\n}\n\nexports.maxSumIncreasingSubsequence = maxSumIncreasingSubsequence;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def maxSumIncreasingSubsequence(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([1]), [1, [1]])\n\n    def test_case_2(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([-1]), [-1, [-1]])\n\n    def test_case_3(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([-1, 1]), [1, [1]])\n\n    def test_case_4(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([5, 4, 3, 2, 1]), [5, [5]])\n\n    def test_case_5(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([1, 2, 3, 4, 5]), [15, [1, 2, 3, 4, 5]])\n\n    def test_case_6(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([-5, -4, -3, -2, -1]), [-1, [-1]])\n\n    def test_case_7(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([10, 70, 20, 30, 50, 11, 30]), [110, [10, 20, 30, 50]])\n\n    def test_case_8(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([8, 12, 2, 3, 15, 5, 7]), [35, [8, 12, 15]])\n\n    def test_case_9(self):\n        self.assertEqual(\n            program.maxSumIncreasingSubsequence([10, 15, 4, 5, 11, 14, 31, 25, 31, 23, 25, 31, 50]),\n            [164, [10, 11, 14, 23, 25, 31, 50]],\n        )\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.maxSumIncreasingSubsequence([10, 70, 20, 30, 50, 11, 30]), [110, [10, 20, 30, 50]])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space\ndef maxSumIncreasingSubsequence(array):\n    sequences = [None for x in array]\n    sums = [num for num in array]\n    maxSumIdx = 0\n    for i in range(len(array)):\n        currentNum = array[i]\n        for j in range(0, i):\n            otherNum = array[j]\n            if otherNum < currentNum and sums[j] + currentNum >= sums[i]:\n                sums[i] = sums[j] + currentNum\n                sequences[i] = j\n        if sums[i] >= sums[maxSumIdx]:\n            maxSumIdx = i\n    return [sums[maxSumIdx], buildSequence(array, sequences, maxSumIdx)]\n\n\ndef buildSequence(array, sequences, currentIdx):\n    sequence = []\n    while currentIdx is not None:\n        sequence.append(array[currentIdx])\n        currentIdx = sequences[currentIdx]\n    return list(reversed(sequence))\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func maximumSumIncreasingSubsequence(array: [Int]) -> (Int, [Int]) {\n    // Write your code here.\n    return (-1, [])\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [1]) == (1, [1]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [-1]) == (-1, [-1]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [-1, 1]) == (1, [1]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [5, 4, 3, 2, 1]) == (5, [5]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [1, 2, 3, 4, 5]) == (15, [1, 2, 3, 4, 5]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [-5, -4, -3, -2, -1]) == (-1, [-1]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [10, 70, 20, 30, 50, 11, 30]) == (110, [10, 20, 30, 50]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [8, 12, 2, 3, 15, 5, 7]) == (35, [8, 12, 15]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assert(program.maximumSumIncreasingSubsequence(array: [10, 15, 4, 5, 11, 14, 31, 25, 31, 23, 25, 31, 50]) == (164, [10, 11, 14, 23, 25, 31, 50]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let output = program.maximumSumIncreasingSubsequence(array: [10, 70, 20, 30, 50, 11, 30])\n      try assert(output == (110, [10, 20, 30, 50]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(n) space\n  func maximumSumIncreasingSubsequence(array: [Int]) -> (Int, [Int]) {\n    var maxSumIndex = 0\n    var sums = array.map { $0 }\n    var previousIndices: [Int?] = Array(repeating: nil, count: array.count)\n\n    for i in 0 ..< array.count {\n      let currentNumber = array[i]\n      for j in 0 ..< i {\n        let previousNumber = array[j]\n        if previousNumber < currentNumber, sums[j] + currentNumber > sums[i] {\n          sums[i] = sums[j] + currentNumber\n          previousIndices[i] = j\n        }\n      }\n\n      if sums[i] > sums[maxSumIndex] {\n        maxSumIndex = i\n      }\n    }\n\n    return (sums[maxSumIndex], buildSequence(array, maxSumIndex, previousIndices))\n  }\n\n  func buildSequence(_ array: [Int], _ maxSumIndex: Int, _ previousIndices: [Int?]) -> [Int] {\n    var sequence = [Int]()\n    var currentIndex: Int? = maxSumIndex\n\n    while currentIndex != nil {\n      sequence.insert(array[currentIndex!], at: 0)\n      currentIndex = previousIndices[currentIndex!]\n    }\n\n    return sequence\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function maxSumIncreasingSubsequence(array: number[]): [number, number[]] {\n  // Write your code here.\n  return [-1, [-1]];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.maxSumIncreasingSubsequence([10, 70, 20, 30, 50, 11, 30])).to.deep.equal([110, [10, 20, 30, 50]]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nexport function maxSumIncreasingSubsequence(array: number[]): [number, number[]] {\n  const sequences: number[] = new Array(array.length);\n  const sums: number[] = array.map(num => num);\n  let maxSumIdx = 0;\n  for (let i = 0; i < array.length; i++) {\n    const currentNum = array[i];\n    for (let j = 0; j < i; j++) {\n      const otherNum = array[j];\n      if (otherNum < currentNum && sums[j] + currentNum >= sums[i]) {\n        sums[i] = sums[j] + currentNum;\n        sequences[i] = j;\n      }\n    }\n    if (sums[i] >= sums[maxSumIdx]) maxSumIdx = i;\n  }\n  return [sums[maxSumIdx], buildSequence(array, sequences, maxSumIdx)];\n}\n\nfunction buildSequence(array: number[], sequences: number[], currentIdx: number) {\n  const sequence: number[] = [];\n  while (currentIdx !== undefined) {\n    sequence.unshift(array[currentIdx]);\n    currentIdx = sequences[currentIdx];\n  }\n  return sequence;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        10,
+        70,
+        20,
+        30,
+        50,
+        11,
+        30
+      ]
+    },
+    {
+      "array": [
+        1
+      ]
+    },
+    {
+      "array": [
+        -1
+      ]
+    },
+    {
+      "array": [
+        -1,
+        1
+      ]
+    },
+    {
+      "array": [
+        5,
+        4,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "array": [
+        -5,
+        -4,
+        -3,
+        -2,
+        -1
+      ]
+    },
+    {
+      "array": [
+        8,
+        12,
+        2,
+        3,
+        15,
+        5,
+        7
+      ]
+    },
+    {
+      "array": [
+        10,
+        15,
+        4,
+        5,
+        11,
+        14,
+        31,
+        25,
+        31,
+        23,
+        25,
+        31,
+        50
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        110,
+        [
+          10,
+          20,
+          30,
+          50
+        ]
+      ],
+      [
+        1,
+        [
+          1
+        ]
+      ],
+      [
+        -1,
+        [
+          -1
+        ]
+      ],
+      [
+        1,
+        [
+          1
+        ]
+      ],
+      [
+        5,
+        [
+          5
+        ]
+      ],
+      [
+        15,
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      [
+        -1,
+        [
+          -1
+        ]
+      ],
+      [
+        35,
+        [
+          8,
+          12,
+          15
+        ]
+      ],
+      [
+        164,
+        [
+          10,
+          11,
+          14,
+          23,
+          25,
+          31,
+          50
+        ]
+      ]
+    ]
+  ]
+}

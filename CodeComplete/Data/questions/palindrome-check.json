@@ -1,0 +1,194 @@
+{
+  "Summary": {
+    "Name": "Palindrome Check",
+    "Category": "Strings",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "number": 1,
+      "timeOne": 0,
+      "timeTwo": 1130,
+      "url": "https://player.vimeo.com/video/225764612"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Start by building the input string in reverse order and comparing this newly built string to the input string. Can you do this without using string concatenations?\nCan you optimize your algorithm by using recursion? What are the implications of recursion on an algorithm's space-time complexity analysis?\nGo back to an iterative solution and try using pointers to solve this problem: start with a pointer at the first index of the string and a pointer at the final index of the string. What can you do from there?\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the input string\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a non-empty string and that returns a boolean\n  representing whether the string is a palindrome.\n</p>\n<p>\n  A palindrome is defined as a string that's written the same forward and\n  backward. Note that single-character strings are palindromes.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">string</span> = \"abcdcba\"\n</pre>\n<h3>Sample Output</h3>\n<pre>\ntrue <span class=\"CodeEditor-promptComment\">// it's written the same forward and backward</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "string",
+      "Example": "abcdcba",
+      "Schema": {
+        "minLength": 1,
+        "type": "string"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nbool isPalindrome(string str) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() { assert(isPalindrome(\"a\")); });\n\n    RunTest(\"Test Case 2\", []() { assert(!isPalindrome(\"ab\")); });\n\n    RunTest(\"Test Case 3\", []() { assert(isPalindrome(\"aba\")); });\n\n    RunTest(\"Test Case 4\", []() { assert(!isPalindrome(\"abb\")); });\n\n    RunTest(\"Test Case 5\", []() { assert(isPalindrome(\"abba\")); });\n\n    RunTest(\"Test Case 6\", []() { assert(isPalindrome(\"abcdcba\")); });\n\n    RunTest(\"Test Case 7\", []() { assert(isPalindrome(\"abcdefghhgfedcba\")); });\n\n    RunTest(\"Test Case 8\", []() { assert(isPalindrome(\"abcdefghihgfedcba\")); });\n\n    RunTest(\"Test Case 9\",\n            []() { assert(!isPalindrome(\"abcdefghihgfeddcba\")); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() { assert(isPalindrome(\"abcdcba\")); });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n^2) time | O(n) space\nbool isPalindrome(string str) {\n  string reversedString = \"\";\n  for (int i = str.length() - 1; i >= 0; i--) {\n    reversedString += str[i];\n  }\n  return str == reversedString;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <numeric>\nusing namespace std;\n\n// O(n) time | O(n) space\nbool isPalindrome(string str) {\n  vector<char> reversedChars;\n  for (int i = str.length() - 1; i >= 0; i--) {\n    reversedChars.push_back(str[i]);\n  }\n  return str == string(reversedChars.begin(), reversedChars.end());\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nbool helper(string str, int i);\n\n// O(n) time | O(n) space\nbool isPalindrome(string str) { return helper(str, 0); }\n\nbool helper(string str, int i) {\n  int j = str.length() - 1 - i;\n  return i >= j ? true : str[i] == str[j] && helper(str, i + 1);\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n) time | O(1) space\nbool isPalindrome(string str) {\n  int leftIdx = 0;\n  int rightIdx = str.length() - 1;\n  while (leftIdx < rightIdx) {\n    if (str[leftIdx] != str[rightIdx]) {\n      return false;\n    }\n    leftIdx++;\n    rightIdx--;\n  }\n  return true;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static bool IsPalindrome(string str) {\n\t\t// Write your code here.\n\t\treturn false;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.IsPalindrome(\"a\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(!Program.IsPalindrome(\"ab\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.IsPalindrome(\"aba\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(!Program.IsPalindrome(\"abb\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.IsPalindrome(\"abba\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.IsPalindrome(\"abcdcba\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.IsPalindrome(\"abcdefghhgfedcba\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.IsPalindrome(\"abcdefghihgfedcba\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(!Program.IsPalindrome(\"abcdefghihgfeddcba\"));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.IsPalindrome(\"abcdcba\"));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n^2) time | O(n) space\n\tpublic static bool IsPalindrome(string str) {\n\t\tstring reversedstring = \"\";\n\t\tfor (int i = str.Length - 1; i >= 0; i--) {\n\t\t\treversedstring += str[i];\n\t\t}\n\t\treturn str.Equals(reversedstring);\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Text;\n\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static bool IsPalindrome(string str) {\n\t\tStringBuilder reversedstring = new StringBuilder();\n\t\tfor (int i = str.Length - 1; i >= 0; i--) {\n\t\t\treversedstring.Append(str[i]);\n\t\t}\n\t\treturn str.Equals(reversedstring.ToString());\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static bool IsPalindrome(string str) {\n\t\treturn IsPalindrome(str, 0);\n\t}\n\n\tpublic static bool IsPalindrome(string str, int i) {\n\t\tint j = str.Length - 1 - i;\n\t\treturn i >= j ? true : str[i] == str[j] && IsPalindrome(str, i + 1);\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static bool IsPalindrome(string str) {\n\t\tint leftIdx = 0;\n\t\tint rightIdx = str.Length - 1;\n\t\twhile (leftIdx < rightIdx) {\n\t\t\tif (str[leftIdx] != str[rightIdx]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t\tleftIdx++;\n\t\t\trightIdx--;\n\t\t}\n\t\treturn true;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc IsPalindrome(str string) bool {\n\t// Write your code here.\n\treturn false\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := true\n\toutput := IsPalindrome(\"a\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := false\n\toutput := IsPalindrome(\"ab\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := true\n\toutput := IsPalindrome(\"aba\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := false\n\toutput := IsPalindrome(\"abb\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := true\n\toutput := IsPalindrome(\"abba\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := true\n\toutput := IsPalindrome(\"abcdcba\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := true\n\toutput := IsPalindrome(\"abcdefghhgfedcba\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := true\n\toutput := IsPalindrome(\"abcdefghihgfedcba\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := false\n\toutput := IsPalindrome(\"abcdefghihgfeddcba\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := true\n\toutput := IsPalindrome(\"abcdcba\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n^2) time | O(n) space\nfunc IsPalindrome(str string) bool {\n\treversed := make([]byte, len(str))\n\tfor i := len(str) - 1; i >= 0; i-- {\n\t\tj := len(str) - i - 1\n\t\treversed[j] = str[i]\n\t}\n\tfor i := range str {\n\t\tif reversed[i] != str[i] {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space\nfunc IsPalindrome(str string) bool {\n\tresult := []byte{}\n\tfor i := len(str) - 1; i >= 0; i-- {\n\t\tresult = append(result, str[i])\n\t}\n\treturn str == string(result)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space\nfunc IsPalindrome(str string) bool {\n\treturn helper(str, 0)\n}\n\nfunc helper(str string, i int) bool {\n\tj := len(str) - 1 - i\n\tif i >= j {\n\t\treturn true\n\t}\n\tif str[i] != str[j] {\n\t\treturn false\n\t}\n\treturn helper(str, i+1)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space\nfunc IsPalindrome(str string) bool {\n\tfor i := 0; i < len(str); i++ {\n\t\tj := len(str) - i - 1\n\t\tif str[i] != str[j] {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static boolean isPalindrome(String str) {\n    // Write your code here.\n    return false;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.isPalindrome(\"a\"));\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(!Program.isPalindrome(\"ab\"));\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.isPalindrome(\"aba\"));\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(!Program.isPalindrome(\"abb\"));\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.isPalindrome(\"abba\"));\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.isPalindrome(\"abcdcba\"));\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.isPalindrome(\"abcdefghhgfedcba\"));\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.isPalindrome(\"abcdefghihgfedcba\"));\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(!Program.isPalindrome(\"abcdefghihgfeddcba\"));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.isPalindrome(\"abcdcba\"));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(n) space\n  public static boolean isPalindrome(String str) {\n    String reversedString = \"\";\n    for (int i = str.length() - 1; i >= 0; i--) {\n      reversedString += str.charAt(i);\n    }\n    return str.equals(reversedString);\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  public static boolean isPalindrome(String str) {\n    StringBuilder reversedString = new StringBuilder();\n    for (int i = str.length() - 1; i >= 0; i--) {\n      reversedString.append(str.charAt(i));\n    }\n    return str.equals(reversedString.toString());\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  public static boolean isPalindrome(String str) {\n    return isPalindrome(str, 0);\n  }\n\n  public static boolean isPalindrome(String str, int i) {\n    int j = str.length() - 1 - i;\n    return i >= j ? true : str.charAt(i) == str.charAt(j) && isPalindrome(str, i + 1);\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static boolean isPalindrome(String str) {\n    int leftIdx = 0;\n    int rightIdx = str.length() - 1;\n    while (leftIdx < rightIdx) {\n      if (str.charAt(leftIdx) != str.charAt(rightIdx)) {\n        return false;\n      }\n      leftIdx++;\n      rightIdx--;\n    }\n    return true;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function isPalindrome(string) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.isPalindrome = isPalindrome;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.isPalindrome('a')).to.deep.equal(true);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.isPalindrome('ab')).to.deep.equal(false);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.isPalindrome('aba')).to.deep.equal(true);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.isPalindrome('abb')).to.deep.equal(false);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.isPalindrome('abba')).to.deep.equal(true);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.isPalindrome('abcdcba')).to.deep.equal(true);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.isPalindrome('abcdefghhgfedcba')).to.deep.equal(true);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.isPalindrome('abcdefghihgfedcba')).to.deep.equal(true);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.isPalindrome('abcdefghihgfeddcba')).to.deep.equal(false);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.isPalindrome('abcdcba')).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nfunction isPalindrome(string) {\n  let reversedString = '';\n  for (let i = string.length - 1; i >= 0; i--) {\n    reversedString += string[i];\n  }\n  return string === reversedString;\n}\n\nexports.isPalindrome = isPalindrome;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction isPalindrome(string) {\n  const reversedChars = [];\n  for (let i = string.length - 1; i >= 0; i--) {\n    reversedChars.push(string[i]);\n  }\n  return string === reversedChars.join('');\n}\n\nexports.isPalindrome = isPalindrome;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction isPalindrome(string, i = 0) {\n  const j = string.length - 1 - i;\n  return i >= j ? true : string[i] === string[j] && isPalindrome(string, i + 1);\n}\n\nexports.isPalindrome = isPalindrome;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nfunction isPalindrome(string) {\n  let leftIdx = 0;\n  let rightIdx = string.length - 1;\n  while (leftIdx < rightIdx) {\n    if (string[leftIdx] !== string[rightIdx]) return false;\n    leftIdx++;\n    rightIdx--;\n  }\n  return true;\n}\n\nexports.isPalindrome = isPalindrome;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def isPalindrome(string):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.isPalindrome(\"a\"), True)\n\n    def test_case_2(self):\n        self.assertEqual(program.isPalindrome(\"ab\"), False)\n\n    def test_case_3(self):\n        self.assertEqual(program.isPalindrome(\"aba\"), True)\n\n    def test_case_4(self):\n        self.assertEqual(program.isPalindrome(\"abb\"), False)\n\n    def test_case_5(self):\n        self.assertEqual(program.isPalindrome(\"abba\"), True)\n\n    def test_case_6(self):\n        self.assertEqual(program.isPalindrome(\"abcdcba\"), True)\n\n    def test_case_7(self):\n        self.assertEqual(program.isPalindrome(\"abcdefghhgfedcba\"), True)\n\n    def test_case_8(self):\n        self.assertEqual(program.isPalindrome(\"abcdefghihgfedcba\"), True)\n\n    def test_case_9(self):\n        self.assertEqual(program.isPalindrome(\"abcdefghihgfeddcba\"), False)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.isPalindrome(\"abcdcba\"), True)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space\ndef isPalindrome(string):\n    reversedString = \"\"\n    for i in reversed(range(len(string))):\n        reversedString += string[i]\n    return string == reversedString\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef isPalindrome(string):\n    reversedChars = []\n    for i in reversed(range(len(string))):\n        reversedChars.append(string[i])\n    return string == \"\".join(reversedChars)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef isPalindrome(string, i=0):\n    j = len(string) - 1 - i\n    return True if i >= j else string[i] == string[j] and isPalindrome(string, i + 1)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space\ndef isPalindrome(string):\n    leftIdx = 0\n    rightIdx = len(string) - 1\n    while leftIdx < rightIdx:\n        if string[leftIdx] != string[rightIdx]:\n            return False\n        leftIdx += 1\n        rightIdx -= 1\n    return True\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func isPalindrome(string: String) -> Bool {\n    // Write your code here.\n    return false\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(true, program.isPalindrome(string: \"a\"))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(false, program.isPalindrome(string: \"ab\"))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(true, program.isPalindrome(string: \"aba\"))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(false, program.isPalindrome(string: \"abb\"))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(true, program.isPalindrome(string: \"abba\"))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(true, program.isPalindrome(string: \"abcdcba\"))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(true, program.isPalindrome(string: \"abcdefghhgfedcba\"))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(true, program.isPalindrome(string: \"abcdefghihgfedcba\"))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(false, program.isPalindrome(string: \"abcdefghihgfeddcba\"))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(true, program.isPalindrome(string: \"abcdcba\"))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(n) space\n  func isPalindrome(string: String) -> Bool {\n    var reversedString = \"\"\n\n    for i in (0 ..< string.count).reversed() {\n      let startIndex = string.index(string.startIndex, offsetBy: i)\n\n      let currentChar = string[startIndex]\n      reversedString.append(currentChar)\n    }\n\n    return string == reversedString\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func isPalindrome(string: String) -> Bool {\n    var reversedChars = [Character]()\n\n    for i in (0 ..< string.count).reversed() {\n      let startIndex = string.index(string.startIndex, offsetBy: i)\n\n      let currentChar = string[startIndex]\n      reversedChars.append(currentChar)\n    }\n\n    let reversedString = String(reversedChars)\n\n    return string == reversedString\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func isPalindrome(string: String, firstIndex: Int = 0) -> Bool {\n    let lastIndex = string.count - 1 - firstIndex\n\n    if firstIndex >= lastIndex {\n      return true\n    }\n\n    let startIndex = string.index(string.startIndex, offsetBy: firstIndex)\n    let endIndex = string.index(string.startIndex, offsetBy: lastIndex)\n\n    let firstAndLastAreEqual = string[startIndex] == string[endIndex]\n    let palindromeCheck = isPalindrome(string: string, firstIndex: firstIndex + 1)\n\n    return firstAndLastAreEqual && palindromeCheck\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  func isPalindrome(string: String) -> Bool {\n    var leftPointer = 0\n    var rightPointer = string.count - 1\n    var leftIndex = string.index(string.startIndex, offsetBy: leftPointer)\n    var rightIndex = string.index(string.startIndex, offsetBy: rightPointer)\n\n    while leftIndex < rightIndex {\n      if string[leftIndex] != string[rightIndex] {\n        return false\n      }\n\n      leftPointer = leftPointer + 1\n      rightPointer = rightPointer - 1\n      leftIndex = string.index(string.startIndex, offsetBy: leftPointer)\n      rightIndex = string.index(string.startIndex, offsetBy: rightPointer)\n    }\n\n    return true\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function isPalindrome(string: string) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.isPalindrome('abcdcba')).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nexport function isPalindrome(string: string) {\n  let reversedString = '';\n  for (let i = string.length - 1; i >= 0; i--) {\n    reversedString += string[i];\n  }\n  return string === reversedString;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nexport function isPalindrome(string: string) {\n  const reversedChars: string[] = [];\n  for (let i = string.length - 1; i >= 0; i--) {\n    reversedChars.push(string[i]);\n  }\n  return string === reversedChars.join('');\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nexport function isPalindrome(string: string, i = 0): boolean {\n  const j = string.length - 1 - i;\n  return i >= j ? true : string[i] === string[j] && isPalindrome(string, i + 1);\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nexport function isPalindrome(string: string) {\n  let leftIdx = 0;\n  let rightIdx = string.length - 1;\n  while (leftIdx < rightIdx) {\n    if (string[leftIdx] !== string[rightIdx]) return false;\n    leftIdx++;\n    rightIdx--;\n  }\n  return true;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "string": "abcdcba"
+    },
+    {
+      "string": "a"
+    },
+    {
+      "string": "ab"
+    },
+    {
+      "string": "aba"
+    },
+    {
+      "string": "abb"
+    },
+    {
+      "string": "abba"
+    },
+    {
+      "string": "abcdefghhgfedcba"
+    },
+    {
+      "string": "abcdefghihgfedcba"
+    },
+    {
+      "string": "abcdefghihgfeddcba"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      false
+    ]
+  ]
+}

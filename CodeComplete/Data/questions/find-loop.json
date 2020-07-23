@@ -1,0 +1,1159 @@
+{
+  "Summary": {
+    "Name": "Find Loop",
+    "Category": "Linked Lists",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 255,
+      "timeOne": 0,
+      "timeTwo": 1140,
+      "url": "https://player.vimeo.com/video/242227953"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try traversing the linked list with two pointers, one iterating through every single node in the list and another iterating through every other node in the list (skipping a node every time). Eventually, both pointers will point to the same node since there is a loop in the list and since one pointer is moving faster than the other. Stop once the pointers overlap each other. How can you find the origin of the loop from here?\nCan you come up with a mathematical relation between the respective distances traveled by each pointer? How far will the first pointer have traveled when the pointers overlap? What about the second pointer? How can this relation then help you find the actual origin of the loop in the list?\nLet D be the distance between the start of the linked list and the origin of the loop in the list. Let P be distance between the origin of the loop and the node N where the first and second pointers overlap (going in the primary direction of the list). By the time the pointers reach N, the first pointer will have traveled a distance of length D + P, and the second pointer will have traveled a distance of length 2D + 2P, since it will have traveled twice as much as the first pointer. Thus, the distance between N and the origin of the loop (going in the primary direction of the list) can be arithmetically deduced to be 2D + 2P - D - 2P = D. With both pointers D length away from the origin of the loop, how can you find the origin?\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the number of nodes in the Linked List \n",
+  "PromptHTML": "<p>\n  Write a function that takes in the head of a Singly Linked List that contains\n  a loop (in other words, the list's tail node points to some node in the list\n  instead of <span>None</span> / <span>null</span>). The function should return\n  the node (the actual node--not just its value) from which the loop originates\n  in constant space.\n</p>\n<p>\n  Each <span>LinkedList</span> node has an integer <span>value</span> as well as\n  a <span>next</span> node pointing to the next node in the list.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">head</span> = 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 <span class=\"CodeEditor-promptComment\">// the head node with value 0</span>\n                           ^         v\n                           9 <- 8 <- 7\n</pre>\n<h3>Sample Output</h3>\n<pre>\n4 -> 5 -> 6 <span class=\"CodeEditor-promptComment\">// the node with value 4</span>\n^         v\n9 <- 8 <- 7\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "linkedlist",
+    "outputType": "linkedlist"
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "linkedList",
+      "Example": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "4",
+            "value": 9
+          }
+        ]
+      },
+      "Schema": {
+        "description": "A Singly Linked List is represented by a list of <span>nodes</span> and a <span>head</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>next</span> pointers and by the <span>head</span>.\n",
+        "properties": {
+          "head": {
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "next": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "next"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "head",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value);\n};\n\nLinkedList *findLoop(LinkedList *head) {\n  // Write your code here.\n  return NULL;\n}\n",
+      "StartingTest": "LinkedList::LinkedList(int value) {\n  this->value = value;\n  this->next = NULL;\n}\n\nvoid addMany(LinkedList *ll, vector<int> values) {\n  LinkedList *current = ll;\n  while (current->next != NULL) {\n    current = current->next;\n  }\n  for (int value : values) {\n    current->next = new LinkedList(value);\n    current = current->next;\n  }\n}\n\nLinkedList *getNthNode(LinkedList *ll, int n) {\n  int counter = 1;\n  LinkedList *current = ll;\n  while (counter < n) {\n    current = current->next;\n    counter++;\n  }\n  return current;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 1);\n      assert(findLoop(&test) == getNthNode(&test, 1));\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 2);\n      assert(findLoop(&test) == getNthNode(&test, 2));\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 3);\n      assert(findLoop(&test) == getNthNode(&test, 3));\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 4);\n      assert(findLoop(&test) == getNthNode(&test, 4));\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 5);\n      assert(findLoop(&test) == getNthNode(&test, 5));\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 6);\n      assert(findLoop(&test) == getNthNode(&test, 6));\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 7);\n      assert(findLoop(&test) == getNthNode(&test, 7));\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 8);\n      assert(findLoop(&test) == getNthNode(&test, 8));\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 9);\n      assert(findLoop(&test) == getNthNode(&test, 9));\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 10);\n      assert(findLoop(&test) == getNthNode(&test, 10));\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 0);\n      assert(findLoop(&test) == getNthNode(&test, 0));\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nLinkedList::LinkedList(int value) {\n  this->value = value;\n  this->next = NULL;\n}\n\nvoid addMany(LinkedList *ll, vector<int> values) {\n  LinkedList *current = ll;\n  while (current->next != NULL) {\n    current = current->next;\n  }\n  for (int value : values) {\n    current->next = new LinkedList(value);\n    current = current->next;\n  }\n}\n\nLinkedList *getNthNode(LinkedList *ll, int n) {\n  int counter = 1;\n  LinkedList *current = ll;\n  while (counter < n) {\n    current = current->next;\n    counter++;\n  }\n  return current;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      LinkedList test(0);\n      addMany(&test, {1, 2, 3, 4, 5, 6, 7, 8, 9});\n      getNthNode(&test, 10)->next = getNthNode(&test, 5);\n      assert(findLoop(&test) == getNthNode(&test, 5));\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value);\n};\n\n// O(n) time | O(1) space\nLinkedList *findLoop(LinkedList *head) {\n  LinkedList *first = head->next;\n  LinkedList *second = head->next->next;\n  while (first != second) {\n    first = first->next;\n    second = second->next->next;\n  }\n  first = head;\n  while (first != second) {\n    first = first->next;\n    second = second->next;\n  }\n  return first;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static LinkedList FindLoop(LinkedList head) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic class LinkedList {\n\t\tpublic int value;\n\t\tpublic LinkedList next = null;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestLinkedList test1 = new TestLinkedList(0);\n\t\ttest1.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest1.getNthNode(10).next = test1.getNthNode(1);\n\t\tUtils.AssertTrue(Program.FindLoop(test1) == test1.getNthNode(1));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tTestLinkedList test2 = new TestLinkedList(0);\n\t\ttest2.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest2.getNthNode(10).next = test2.getNthNode(2);\n\t\tUtils.AssertTrue(Program.FindLoop(test2) == test2.getNthNode(2));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tTestLinkedList test3 = new TestLinkedList(0);\n\t\ttest3.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest3.getNthNode(10).next = test3.getNthNode(3);\n\t\tUtils.AssertTrue(Program.FindLoop(test3) == test3.getNthNode(3));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tTestLinkedList test4 = new TestLinkedList(0);\n\t\ttest4.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest4.getNthNode(10).next = test4.getNthNode(4);\n\t\tUtils.AssertTrue(Program.FindLoop(test4) == test4.getNthNode(4));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tTestLinkedList test5 = new TestLinkedList(0);\n\t\ttest5.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest5.getNthNode(10).next = test5.getNthNode(5);\n\t\tUtils.AssertTrue(Program.FindLoop(test5) == test5.getNthNode(5));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tTestLinkedList test6 = new TestLinkedList(0);\n\t\ttest6.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest6.getNthNode(10).next = test6.getNthNode(6);\n\t\tUtils.AssertTrue(Program.FindLoop(test6) == test6.getNthNode(6));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tTestLinkedList test7 = new TestLinkedList(0);\n\t\ttest7.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest7.getNthNode(10).next = test7.getNthNode(7);\n\t\tUtils.AssertTrue(Program.FindLoop(test7) == test7.getNthNode(7));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tTestLinkedList test8 = new TestLinkedList(0);\n\t\ttest8.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest8.getNthNode(10).next = test8.getNthNode(8);\n\t\tUtils.AssertTrue(Program.FindLoop(test8) == test8.getNthNode(8));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tTestLinkedList test9 = new TestLinkedList(0);\n\t\ttest9.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest9.getNthNode(10).next = test9.getNthNode(9);\n\t\tUtils.AssertTrue(Program.FindLoop(test9) == test9.getNthNode(9));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tTestLinkedList test10 = new TestLinkedList(0);\n\t\ttest10.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest10.getNthNode(10).next = test10.getNthNode(10);\n\t\tUtils.AssertTrue(Program.FindLoop(test10) == test10.getNthNode(10));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tTestLinkedList test11 = new TestLinkedList(0);\n\t\ttest11.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest11.getNthNode(10).next = test11.getNthNode(0);\n\t\tUtils.AssertTrue(Program.FindLoop(test11) == test11.getNthNode(0));\n\t}\n\n\tpublic class TestLinkedList : Program.LinkedList {\n\t\tpublic TestLinkedList(int value) : base(value) {\n\t\t}\n\n\t\tpublic void addMany(int[] values) {\n\t\t\tProgram.LinkedList current = this;\n\t\t\twhile (current.next != null) {\n\t\t\t\tcurrent = current.next;\n\t\t\t}\n\t\t\tforeach (int value in values) {\n\t\t\t\tcurrent.next = new Program.LinkedList(value);\n\t\t\t\tcurrent = current.next;\n\t\t\t}\n\t\t}\n\n\t\tpublic Program.LinkedList getNthNode(int n) {\n\t\t\tint counter = 1;\n\t\t\tProgram.LinkedList current = this;\n\t\t\twhile (counter < n) {\n\t\t\t\tcurrent = current.next;\n\t\t\t\tcounter++;\n\t\t\t}\n\t\t\treturn current;\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\ttest.getNthNode(10).next = test.getNthNode(5);\n\t\tUtils.AssertTrue(Program.FindLoop(test) == test.getNthNode(5));\n\t}\n\n\tpublic class TestLinkedList : Program.LinkedList {\n\t\tpublic TestLinkedList(int value) : base(value) {\n\t\t}\n\n\t\tpublic void addMany(int[] values) {\n\t\t\tProgram.LinkedList current = this;\n\t\t\twhile (current.next != null) {\n\t\t\t\tcurrent = current.next;\n\t\t\t}\n\t\t\tforeach (int value in values) {\n\t\t\t\tcurrent.next = new Program.LinkedList(value);\n\t\t\t\tcurrent = current.next;\n\t\t\t}\n\t\t}\n\n\t\tpublic Program.LinkedList getNthNode(int n) {\n\t\t\tint counter = 1;\n\t\t\tProgram.LinkedList current = this;\n\t\t\twhile (counter < n) {\n\t\t\t\tcurrent = current.next;\n\t\t\t\tcounter++;\n\t\t\t}\n\t\t\treturn current;\n\t\t}\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static LinkedList FindLoop(LinkedList head) {\n\t\tLinkedList first = head.next;\n\t\tLinkedList second = head.next.next;\n\t\twhile (first != second) {\n\t\t\tfirst = first.next;\n\t\t\tsecond = second.next.next;\n\t\t}\n\t\tfirst = head;\n\t\twhile (first != second) {\n\t\t\tfirst = first.next;\n\t\t\tsecond = second.next;\n\t\t}\n\t\treturn first;\n\t}\n\n\tpublic class LinkedList {\n\t\tpublic int value;\n\t\tpublic LinkedList next = null;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\nfunc FindLoop(head *LinkedList) *LinkedList {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewLinkedList(root int, children ...int) *LinkedList {\n\tll := &LinkedList{root, nil}\n\tll.Add(children...)\n\treturn ll\n}\n\nfunc (ll *LinkedList) Add(values ...int) {\n\tcurrent := ll\n\tfor current.Next != nil {\n\t\tcurrent = current.Next\n\t}\n\tfor value := range values {\n\t\tcurrent.Next = &LinkedList{value, nil}\n\t\tcurrent = current.Next\n\t}\n}\n\nfunc (ll *LinkedList) GetNth(n int) *LinkedList {\n\tcounter, current := 1, ll\n\tfor counter < n {\n\t\tcounter, current = counter+1, current.Next\n\t}\n\treturn current\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(1)\n\toutput, expected := FindLoop(ll), ll.GetNth(1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(2)\n\toutput, expected := FindLoop(ll), ll.GetNth(2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(3)\n\toutput, expected := FindLoop(ll), ll.GetNth(3)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(4)\n\toutput, expected := FindLoop(ll), ll.GetNth(4)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(5)\n\toutput, expected := FindLoop(ll), ll.GetNth(5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(6)\n\toutput, expected := FindLoop(ll), ll.GetNth(6)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(7)\n\toutput, expected := FindLoop(ll), ll.GetNth(7)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(8)\n\toutput, expected := FindLoop(ll), ll.GetNth(8)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(9)\n\toutput, expected := FindLoop(ll), ll.GetNth(9)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(10)\n\toutput, expected := FindLoop(ll), ll.GetNth(10)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(0)\n\toutput, expected := FindLoop(ll), ll.GetNth(0)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewLinkedList(root int, children ...int) *LinkedList {\n\tll := &LinkedList{root, nil}\n\tll.Add(children...)\n\treturn ll\n}\n\nfunc (ll *LinkedList) Add(values ...int) {\n\tcurrent := ll\n\tfor current.Next != nil {\n\t\tcurrent = current.Next\n\t}\n\tfor value := range values {\n\t\tcurrent.Next = &LinkedList{value, nil}\n\t\tcurrent = current.Next\n\t}\n}\n\nfunc (ll *LinkedList) GetNth(n int) *LinkedList {\n\tcounter, current := 1, ll\n\tfor counter < n {\n\t\tcounter, current = counter+1, current.Next\n\t}\n\treturn current\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tll.GetNth(10).Next = ll.GetNth(5)\n\toutput, expected := FindLoop(ll), ll.GetNth(5)\n\trequire.Equal(t, expected, output)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\n// O(n) time | O(1) space\nfunc FindLoop(head *LinkedList) *LinkedList {\n\tfirst := head.Next\n\tsecond := first.Next\n\tfor first != second {\n\t\tfirst, second = first.Next, second.Next.Next\n\t}\n\tfirst = head\n\tfor first != second {\n\t\tfirst = first.Next\n\t\tsecond = second.Next\n\t}\n\treturn first\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static LinkedList findLoop(LinkedList head) {\n    // Write your code here.\n    return null;\n  }\n\n  static class LinkedList {\n    int value;\n    LinkedList next = null;\n\n    public LinkedList(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    TestLinkedList test1 = new TestLinkedList(0);\n    test1.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test1.getNthNode(10).next = test1.getNthNode(1);\n    Utils.assertTrue(Program.findLoop(test1) == test1.getNthNode(1));\n  }\n\n  @Test\n  public void TestCase2() {\n    TestLinkedList test2 = new TestLinkedList(0);\n    test2.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test2.getNthNode(10).next = test2.getNthNode(2);\n    Utils.assertTrue(Program.findLoop(test2) == test2.getNthNode(2));\n  }\n\n  @Test\n  public void TestCase3() {\n    TestLinkedList test3 = new TestLinkedList(0);\n    test3.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test3.getNthNode(10).next = test3.getNthNode(3);\n    Utils.assertTrue(Program.findLoop(test3) == test3.getNthNode(3));\n  }\n\n  @Test\n  public void TestCase4() {\n    TestLinkedList test4 = new TestLinkedList(0);\n    test4.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test4.getNthNode(10).next = test4.getNthNode(4);\n    Utils.assertTrue(Program.findLoop(test4) == test4.getNthNode(4));\n  }\n\n  @Test\n  public void TestCase5() {\n    TestLinkedList test5 = new TestLinkedList(0);\n    test5.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test5.getNthNode(10).next = test5.getNthNode(5);\n    Utils.assertTrue(Program.findLoop(test5) == test5.getNthNode(5));\n  }\n\n  @Test\n  public void TestCase6() {\n    TestLinkedList test6 = new TestLinkedList(0);\n    test6.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test6.getNthNode(10).next = test6.getNthNode(6);\n    Utils.assertTrue(Program.findLoop(test6) == test6.getNthNode(6));\n  }\n\n  @Test\n  public void TestCase7() {\n    TestLinkedList test7 = new TestLinkedList(0);\n    test7.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test7.getNthNode(10).next = test7.getNthNode(7);\n    Utils.assertTrue(Program.findLoop(test7) == test7.getNthNode(7));\n  }\n\n  @Test\n  public void TestCase8() {\n    TestLinkedList test8 = new TestLinkedList(0);\n    test8.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test8.getNthNode(10).next = test8.getNthNode(8);\n    Utils.assertTrue(Program.findLoop(test8) == test8.getNthNode(8));\n  }\n\n  @Test\n  public void TestCase9() {\n    TestLinkedList test9 = new TestLinkedList(0);\n    test9.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test9.getNthNode(10).next = test9.getNthNode(9);\n    Utils.assertTrue(Program.findLoop(test9) == test9.getNthNode(9));\n  }\n\n  @Test\n  public void TestCase10() {\n    TestLinkedList test10 = new TestLinkedList(0);\n    test10.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test10.getNthNode(10).next = test10.getNthNode(10);\n    Utils.assertTrue(Program.findLoop(test10) == test10.getNthNode(10));\n  }\n\n  @Test\n  public void TestCase11() {\n    TestLinkedList test11 = new TestLinkedList(0);\n    test11.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test11.getNthNode(10).next = test11.getNthNode(0);\n    Utils.assertTrue(Program.findLoop(test11) == test11.getNthNode(0));\n  }\n\n  class TestLinkedList extends Program.LinkedList {\n    public TestLinkedList(int value) {\n      super(value);\n    }\n\n    public void addMany(int[] values) {\n      Program.LinkedList current = this;\n      while (current.next != null) {\n        current = current.next;\n      }\n      for (int value : values) {\n        current.next = new Program.LinkedList(value);\n        current = current.next;\n      }\n    }\n\n    public Program.LinkedList getNthNode(int n) {\n      int counter = 1;\n      Program.LinkedList current = this;\n      while (counter < n) {\n        current = current.next;\n        counter++;\n      }\n      return current;\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    test.getNthNode(10).next = test.getNthNode(5);\n    Utils.assertTrue(Program.findLoop(test) == test.getNthNode(5));\n  }\n\n  class TestLinkedList extends Program.LinkedList {\n    public TestLinkedList(int value) {\n      super(value);\n    }\n\n    public void addMany(int[] values) {\n      Program.LinkedList current = this;\n      while (current.next != null) {\n        current = current.next;\n      }\n      for (int value : values) {\n        current.next = new Program.LinkedList(value);\n        current = current.next;\n      }\n    }\n\n    public Program.LinkedList getNthNode(int n) {\n      int counter = 1;\n      Program.LinkedList current = this;\n      while (counter < n) {\n        current = current.next;\n        counter++;\n      }\n      return current;\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static LinkedList findLoop(LinkedList head) {\n    LinkedList first = head.next;\n    LinkedList second = head.next.next;\n    while (first != second) {\n      first = first.next;\n      second = second.next.next;\n    }\n    first = head;\n    while (first != second) {\n      first = first.next;\n      second = second.next;\n    }\n    return first;\n  }\n\n  static class LinkedList {\n    int value;\n    LinkedList next = null;\n\n    public LinkedList(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// This is an input class. Do not edit.\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nfunction findLoop(head) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.LinkedList = LinkedList;\nexports.findLoop = findLoop;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass StartLinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nconst linkedListClass = program.LinkedList || StartLinkedList;\n\nclass LinkedList extends linkedListClass {\n  constructor(value) {\n    super(value);\n  }\n\n  addMany(values) {\n    let current = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNthNode(n) {\n    let counter = 1;\n    let current = this;\n    while (counter < n) {\n      current = current.next;\n      counter++;\n    }\n    return current;\n  }\n}\n\nit('Test Case #1', function () {\n  const test1 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test1.getNthNode(10).next = test1.getNthNode(1);\n  chai.expect(program.findLoop(test1)).to.deep.equal(test1.getNthNode(1));\n});\n\nit('Test Case #2', function () {\n  const test2 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test2.getNthNode(10).next = test2.getNthNode(2);\n  chai.expect(program.findLoop(test2)).to.deep.equal(test2.getNthNode(2));\n});\n\nit('Test Case #3', function () {\n  const test3 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test3.getNthNode(10).next = test3.getNthNode(3);\n  chai.expect(program.findLoop(test3)).to.deep.equal(test3.getNthNode(3));\n});\n\nit('Test Case #4', function () {\n  const test4 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test4.getNthNode(10).next = test4.getNthNode(4);\n  chai.expect(program.findLoop(test4)).to.deep.equal(test4.getNthNode(4));\n});\n\nit('Test Case #5', function () {\n  const test5 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test5.getNthNode(10).next = test5.getNthNode(5);\n  chai.expect(program.findLoop(test5)).to.deep.equal(test5.getNthNode(5));\n});\n\nit('Test Case #6', function () {\n  const test6 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test6.getNthNode(10).next = test6.getNthNode(6);\n  chai.expect(program.findLoop(test6)).to.deep.equal(test6.getNthNode(6));\n});\n\nit('Test Case #7', function () {\n  const test7 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test7.getNthNode(10).next = test7.getNthNode(7);\n  chai.expect(program.findLoop(test7)).to.deep.equal(test7.getNthNode(7));\n});\n\nit('Test Case #8', function () {\n  const test8 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test8.getNthNode(10).next = test8.getNthNode(8);\n  chai.expect(program.findLoop(test8)).to.deep.equal(test8.getNthNode(8));\n});\n\nit('Test Case #9', function () {\n  const test9 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test9.getNthNode(10).next = test9.getNthNode(9);\n  chai.expect(program.findLoop(test9)).to.deep.equal(test9.getNthNode(9));\n});\n\nit('Test Case #10', function () {\n  const test10 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test10.getNthNode(10).next = test10.getNthNode(10);\n  chai.expect(program.findLoop(test10)).to.deep.equal(test10.getNthNode(10));\n});\n\nit('Test Case #11', function () {\n  const test11 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test11.getNthNode(10).next = test11.getNthNode(0);\n  chai.expect(program.findLoop(test11)).to.deep.equal(test11.getNthNode(0));\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass StartLinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nconst linkedListClass = program.LinkedList || StartLinkedList;\n\nclass LinkedList extends linkedListClass {\n  constructor(value) {\n    super(value);\n  }\n\n  addMany(values) {\n    let current = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNthNode(n) {\n    let counter = 1;\n    let current = this;\n    while (counter < n) {\n      current = current.next;\n      counter++;\n    }\n    return current;\n  }\n}\n\nit('Test Case #1', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test.getNthNode(10).next = test.getNthNode(5);\n  chai.expect(program.findLoop(test)).to.deep.equal(test.getNthNode(5));\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n) time | O(1) space\nfunction findLoop(head) {\n  let first = head.next;\n  let second = head.next.next;\n  while (first !== second) {\n    first = first.next;\n    second = second.next.next;\n  }\n  first = head;\n  while (first !== second) {\n    first = first.next;\n    second = second.next;\n  }\n  return first;\n}\n\nexports.LinkedList = LinkedList;\nexports.findLoop = findLoop;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# This is an input class. Do not edit.\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\ndef findLoop(head):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass StartLinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\nlinkedListClass = StartLinkedList\nif hasattr(program, \"LinkedList\"):\n    linkedListClass = program.LinkedList\n\n\nclass LinkedList(linkedListClass):\n    def addMany(self, values):\n        current = self\n        while current.next is not None:\n            current = current.next\n        for value in values:\n            current.next = LinkedList(value)\n            current = current.next\n        return self\n\n    def getNthNode(self, n):\n        counter = 1\n        current = self\n        while counter < n:\n            current = current.next\n            counter += 1\n        return current\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test1 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test1.getNthNode(10).next = test1.getNthNode(1)\n        self.assertEqual(program.findLoop(test1), test1.getNthNode(1))\n\n    def test_case_2(self):\n        test2 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test2.getNthNode(10).next = test2.getNthNode(2)\n        self.assertEqual(program.findLoop(test2), test2.getNthNode(2))\n\n    def test_case_3(self):\n        test3 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test3.getNthNode(10).next = test3.getNthNode(3)\n        self.assertEqual(program.findLoop(test3), test3.getNthNode(3))\n\n    def test_case_4(self):\n        test4 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test4.getNthNode(10).next = test4.getNthNode(4)\n        self.assertEqual(program.findLoop(test4), test4.getNthNode(4))\n\n    def test_case_5(self):\n        test5 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test5.getNthNode(10).next = test5.getNthNode(5)\n        self.assertEqual(program.findLoop(test5), test5.getNthNode(5))\n\n    def test_case_6(self):\n        test6 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test6.getNthNode(10).next = test6.getNthNode(6)\n        self.assertEqual(program.findLoop(test6), test6.getNthNode(6))\n\n    def test_case_7(self):\n        test7 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test7.getNthNode(10).next = test7.getNthNode(7)\n        self.assertEqual(program.findLoop(test7), test7.getNthNode(7))\n\n    def test_case_8(self):\n        test8 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test8.getNthNode(10).next = test8.getNthNode(8)\n        self.assertEqual(program.findLoop(test8), test8.getNthNode(8))\n\n    def test_case_9(self):\n        test9 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test9.getNthNode(10).next = test9.getNthNode(9)\n        self.assertEqual(program.findLoop(test9), test9.getNthNode(9))\n\n    def test_case_10(self):\n        test10 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test10.getNthNode(10).next = test10.getNthNode(10)\n        self.assertEqual(program.findLoop(test10), test10.getNthNode(10))\n\n    def test_case_11(self):\n        test11 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test11.getNthNode(10).next = test11.getNthNode(0)\n        self.assertEqual(program.findLoop(test11), test11.getNthNode(0))\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass StartLinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\nlinkedListClass = StartLinkedList\nif hasattr(program, \"LinkedList\"):\n    linkedListClass = program.LinkedList\n\n\nclass LinkedList(linkedListClass):\n    def addMany(self, values):\n        current = self\n        while current.next is not None:\n            current = current.next\n        for value in values:\n            current.next = LinkedList(value)\n            current = current.next\n        return self\n\n    def getNthNode(self, n):\n        counter = 1\n        current = self\n        while counter < n:\n            current = current.next\n            counter += 1\n        return current\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        test.getNthNode(10).next = test.getNthNode(5)\n        self.assertEqual(program.findLoop(test), test.getNthNode(5))\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\n# O(n) time | O(1) space\ndef findLoop(head):\n    first = head.next\n    second = head.next.next\n    while first != second:\n        first = first.next\n        second = second.next.next\n    first = head\n    while first != second:\n        first = first.next\n        second = second.next\n    return first\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is an input class. Do not edit.\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n      next = nil\n    }\n  }\n\n  func findLoop(head: LinkedList) -> LinkedList? {\n    // Write your code here.\n    return nil\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let test1 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test1.getNthNode(n: 10).next = test1.getNthNode(n: 1)\n      try assert(program.findLoop(head: test1) === test1.getNthNode(n: 1))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let test2 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test2.getNthNode(n: 10).next = test2.getNthNode(n: 2)\n      try assert(program.findLoop(head: test2) === test2.getNthNode(n: 2))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let test3 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test3.getNthNode(n: 10).next = test3.getNthNode(n: 3)\n      try assert(program.findLoop(head: test3) === test3.getNthNode(n: 3))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let test4 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test4.getNthNode(n: 10).next = test4.getNthNode(n: 4)\n      try assert(program.findLoop(head: test4) === test4.getNthNode(n: 4))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let test5 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test5.getNthNode(n: 10).next = test5.getNthNode(n: 5)\n      try assert(program.findLoop(head: test5) === test5.getNthNode(n: 5))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let test6 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test6.getNthNode(n: 10).next = test6.getNthNode(n: 6)\n      try assert(program.findLoop(head: test6) === test6.getNthNode(n: 6))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let test7 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test7.getNthNode(n: 10).next = test7.getNthNode(n: 7)\n      try assert(program.findLoop(head: test7) === test7.getNthNode(n: 7))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let test8 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test8.getNthNode(n: 10).next = test8.getNthNode(n: 8)\n      try assert(program.findLoop(head: test8) === test8.getNthNode(n: 8))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let test9 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test9.getNthNode(n: 10).next = test9.getNthNode(n: 9)\n      try assert(program.findLoop(head: test9) === test9.getNthNode(n: 9))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let test10 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test10.getNthNode(n: 10).next = test10.getNthNode(n: 10)\n      try assert(program.findLoop(head: test10) === test10.getNthNode(n: 10))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let test11 = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test11.getNthNode(n: 10).next = test11.getNthNode(n: 0)\n      try assert(program.findLoop(head: test11) === test11.getNthNode(n: 0))\n    }\n  }\n}\n\nclass TestLinkedList: Program.LinkedList {\n  func addMany(values: [Int]) -> TestLinkedList {\n    var current = self as Program.LinkedList\n\n    while current.next != nil {\n      current = current.next!\n    }\n\n    for value in values {\n      current.next = Program.LinkedList(value: value)\n      current = current.next!\n    }\n\n    return self\n  }\n\n  func getNthNode(n: Int) -> Program.LinkedList {\n    var counter = 1\n    var current = self as Program.LinkedList\n\n    while counter < n {\n      counter += 1\n\n      if let next = current.next {\n        current = next\n      }\n    }\n\n    return current\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let test = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      test.getNthNode(n: 10).next = test.getNthNode(n: 5)\n      try assert(program.findLoop(head: test) === test.getNthNode(n: 5))\n    }\n  }\n}\n\nclass TestLinkedList: Program.LinkedList {\n  func addMany(values: [Int]) -> TestLinkedList {\n    var current = self as Program.LinkedList\n\n    while current.next != nil {\n      current = current.next!\n    }\n\n    for value in values {\n      current.next = Program.LinkedList(value: value)\n      current = current.next!\n    }\n\n    return self\n  }\n\n  func getNthNode(n: Int) -> Program.LinkedList {\n    var counter = 1\n    var current = self as Program.LinkedList\n\n    while counter < n {\n      counter += 1\n\n      if let next = current.next {\n        current = next\n      }\n    }\n\n    return current\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n      next = nil\n    }\n  }\n\n  // O(n) time | O(1) space\n  func findLoop(head: LinkedList) -> LinkedList? {\n    var firstPointer = head.next\n    var secondPointer = head.next?.next\n\n    while firstPointer !== secondPointer {\n      firstPointer = firstPointer?.next\n      secondPointer = secondPointer?.next?.next\n    }\n\n    firstPointer = head\n\n    while firstPointer !== secondPointer {\n      firstPointer = firstPointer?.next\n      secondPointer = secondPointer?.next\n    }\n\n    return firstPointer\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// This is an input class. Do not edit.\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nexport function findLoop(head: LinkedList) {\n  // Write your code here.\n  return head;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n\n  addMany(values: number[]) {\n    let current: LinkedList = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNthNode(n: number) {\n    let counter = 1;\n    let current: LinkedList = this;\n    while (counter < n) {\n      current = current!.next!;\n      counter++;\n    }\n    return current;\n  }\n}\n\nit('Test Case #1', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  test.getNthNode(10).next = test.getNthNode(5);\n  chai.expect(program.findLoop(test)).to.deep.equal(test.getNthNode(5));\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n) time | O(1) space\nexport function findLoop(head: LinkedList) {\n  let first: LinkedList = head.next!;\n  let second: LinkedList = head.next!.next!;\n  while (first !== second) {\n    first = first.next!;\n    second = second.next!.next!;\n  }\n  first = head;\n  while (first !== second) {\n    first = first.next!;\n    second = second.next!;\n  }\n  return first;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "4",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "0",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "1",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "2",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "3",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "5",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "6",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "7",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "8",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "9",
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 5
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 4
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 3
+          },
+          {
+            "id": "3",
+            "next": "2",
+            "value": 2
+          }
+        ]
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "head": "4",
+        "nodes": [
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "4",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "0",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "1",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "2",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "3",
+        "nodes": [
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "3",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "5",
+        "nodes": [
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "5",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "6",
+        "nodes": [
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "6",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "7",
+        "nodes": [
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "7",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "8",
+        "nodes": [
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "8",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "9",
+        "nodes": [
+          {
+            "id": "9",
+            "next": "9",
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "3",
+        "nodes": [
+          {
+            "id": "3",
+            "next": "2",
+            "value": 3
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          }
+        ]
+      }
+    ]
+  ]
+}

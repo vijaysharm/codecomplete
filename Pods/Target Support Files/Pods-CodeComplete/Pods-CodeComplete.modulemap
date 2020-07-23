@@ -1,0 +1,6 @@
+framework module Pods_CodeComplete {
+  umbrella header "Pods-CodeComplete-umbrella.h"
+
+  export *
+  module * { export * }
+}

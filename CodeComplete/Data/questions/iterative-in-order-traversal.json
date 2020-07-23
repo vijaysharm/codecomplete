@@ -1,0 +1,718 @@
+{
+  "Summary": {
+    "Name": "Iterative In-order Traversal",
+    "Category": "Binary Trees",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "number": 357,
+      "timeOne": 0,
+      "timeTwo": 1242,
+      "url": "https://player.vimeo.com/video/249313089"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Start by realizing that in-order traversal always traverses left child nodes before parent nodes before right child nodes. In other words, you will somehow have to traverse the entire left side of the input Binary Tree before calling the input callback on the root node and before traversing the entire right side.\nWhile each node in the input Binary Tree does have a \"parent\" property, allowing you to traverse your way back up the tree if need be, the difficulty arises when you must choose which node to actually call the input callback on. For instance, on your way back up the left side of the input tree, how do you know whether to traverse the right side of a node or to keep going up? Is there something that you can keep track of in order to know which node to call the input callback back on next at any time during the life of your algorithm?\nTry keeping track of three nodes at all times: a current node (the node currently being traversed), a previous node (the node traversed just before the current one), and a next node (the next node to be traversed). Determine which node to traverse next and when to call the input callback on the current node by analyzing the previous node. For instance, if the previous node is actually the current node's left child node, then you know that you must call the callback on the current node and that you must then explore the right side of the current node before going back up. Figure out all of the possible scenarios, and develop an algorithm to handle all of these scenarios.\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the number of nodes in the Binary Tree\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a Binary Tree (where nodes have an additional\n  pointer to their parent node) and traverses it iteratively using the in-order\n  tree-traversal technique; the traversal should specifically <i>not</i> use\n  recursion. As the tree is being traversed, a callback function passed in as an\n  argument to the main function should be called on each node (i.e.,\n  <span>callback(currentNode)</span>).\n</p>\n<p>\n  Each <span>BinaryTree</span> node has an integer <span>value</span>, a\n  <span>parent</span> node, a <span>left</span> child node, and a\n  <span>right</span> child node. Children nodes can either be\n  <span>BinaryTree</span> nodes themselves or <span>None</span> /\n  <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> =    1\n       /     \\\n      2       3\n    /       /   \\\n   4       6     7\n     \\\n      9\n<span class=\"CodeEditor-promptParameter\">callback</span> = someCallback\n</pre>\n<h3>Sample Output</h3>\n<pre>\n<span class=\"CodeEditor-promptComment\">// The input callback will have been called in the following order:</span>\ncallback(4)\ncallback(9)\ncallback(2)\ncallback(1)\ncallback(6)\ncallback(3)\ncallback(7)\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          }
+        ],
+        "root": "1"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node.\nEvery node has to have a unique string <span>id</span> that will be referenced by other nodes'\n<span>left</span> and <span>right</span> pointers and by the <span>root</span>. The\n<span>parent</span> pointer of each node will be deduced from the collection of <span>nodes</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n  BinaryTree *parent;\n\n  BinaryTree(int value, BinaryTree *parent = NULL);\n  void insert(vector<int> values, int i = 0);\n};\n\nvoid iterativeInOrderTraversal(BinaryTree *tree,\n                               void (*callback)(BinaryTree *tree)) {\n  // Write your code here.\n}\n",
+      "StartingTest": "#include <deque>\n\nBinaryTree::BinaryTree(int value, BinaryTree *parent) {\n  this->value = value;\n  this->left = NULL;\n  this->right = NULL;\n  this->parent = parent;\n}\n\nvoid BinaryTree::insert(vector<int> values, int i) {\n  if (i >= values.size()) {\n    return;\n  }\n  deque<BinaryTree *> queue;\n  queue.push_back(this);\n  while (queue.size() > 0) {\n    BinaryTree *current = queue.front();\n    queue.pop_front();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[i], current);\n      break;\n    }\n    queue.push_back(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[i], current);\n      break;\n    }\n    queue.push_back(current->right);\n  }\n  this->insert(values, i + 1);\n}\n\nvector<int> testArray = {};\n\nvoid testCallback(BinaryTree *tree) {\n  if (tree == NULL) {\n    return;\n  }\n  testArray.push_back(tree->value);\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree test1(1);\n      iterativeInOrderTraversal(&test1, &testCallback);\n      vector<int> expected{1};\n      assert(testArray == expected);\n      testArray = {};\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      BinaryTree test2(1);\n      test2.insert({2, 3, 4});\n      iterativeInOrderTraversal(&test2, &testCallback);\n      vector<int> expected{4, 2, 1, 3};\n      assert(testArray == expected);\n      testArray = {};\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      BinaryTree test3(1);\n      test3.insert({2, 3, 4, 5, 6, 7});\n      iterativeInOrderTraversal(&test3, &testCallback);\n      vector<int> expected{4, 2, 5, 1, 6, 3, 7};\n      assert(testArray == expected);\n      testArray = {};\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      BinaryTree test4(1);\n      test4.insert({2, 3, 4, 5, 6, 7, 8, 9, 10});\n      iterativeInOrderTraversal(&test4, &testCallback);\n      vector<int> expected{8, 4, 9, 2, 10, 5, 1, 6, 3, 7};\n      assert(testArray == expected);\n      testArray = {};\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      BinaryTree test5(1);\n      test5.insert({2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});\n      iterativeInOrderTraversal(&test5, &testCallback);\n      vector<int> expected{8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 7};\n      assert(testArray == expected);\n      testArray = {};\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      BinaryTree test6(1);\n      test6.insert(\n          {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18});\n      iterativeInOrderTraversal(&test6, &testCallback);\n      vector<int> expected{16, 8, 17, 4, 18, 9, 2,  10, 5,\n                           11, 1, 12, 6, 13, 3, 14, 7,  15};\n      assert(testArray == expected);\n      testArray = {};\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <deque>\n\nBinaryTree::BinaryTree(int value, BinaryTree *parent) {\n  this->value = value;\n  this->left = NULL;\n  this->right = NULL;\n  this->parent = parent;\n}\n\nvector<int> testArray = {};\n\nvoid testCallback(BinaryTree *tree) {\n  if (tree == NULL) {\n    return;\n  }\n  testArray.push_back(tree->value);\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree* root = new BinaryTree(1, NULL);\n      root->left = new BinaryTree(2, root);\n      root->left->left = new BinaryTree(4, root->left);\n      root->left->left->right = new BinaryTree(9, root->left->left);\n      root->right = new BinaryTree(3, root);\n      root->right->left = new BinaryTree(6, root->right);\n      root->right->right = new BinaryTree(7, root->right);\n\n      testArray = {};\n      iterativeInOrderTraversal(root, &testCallback);\n      vector<int> expected{4, 9, 2, 1, 6, 3, 7};\n      assert(testArray == expected);\n    });\n\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n  BinaryTree *parent;\n\n  BinaryTree(int value, BinaryTree *parent = NULL);\n  void insert(vector<int> values, int i = 0);\n};\n\n// O(n) time | O(1) space\nvoid iterativeInOrderTraversal(BinaryTree *tree,\n                               void (*callback)(BinaryTree *tree)) {\n  BinaryTree *previousNode = NULL;\n  BinaryTree *currentNode = tree;\n  while (currentNode != NULL) {\n    BinaryTree *nextNode;\n    if (previousNode == NULL || previousNode == currentNode->parent) {\n      if (currentNode->left != NULL) {\n        nextNode = currentNode->left;\n      } else {\n        (*callback)(currentNode);\n        nextNode = currentNode->right != NULL ? currentNode->right\n                                              : currentNode->parent;\n      }\n    } else if (previousNode == currentNode->left) {\n      (*callback)(currentNode);\n      nextNode =\n          currentNode->right != NULL ? currentNode->right : currentNode->parent;\n    } else {\n      nextNode = currentNode->parent;\n    }\n    previousNode = currentNode;\n    currentNode = nextNode;\n  }\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System;\n\npublic class Program {\n\tpublic static void IterativeInOrderTraversal(BinaryTree tree, Action<BinaryTree> callback) {\n\t\t// Write your code here.\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\t\tpublic BinaryTree parent;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\n\t\tpublic BinaryTree(int value, BinaryTree parent) {\n\t\t\tthis.value = value;\n\t\t\tthis.parent = parent;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tpublic static List<int> testArray = new List<int>();\n\n\tstatic void testCallback(Program.BinaryTree tree) {\n\t\tif (tree == null) {\n\t\t\treturn;\n\t\t}\n\t\tProgramTest.testArray.Add(tree.value);\n\t\treturn;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestBinaryTree test1 = new TestBinaryTree(1);\n\t\tProgram.IterativeInOrderTraversal(test1, ProgramTest.testCallback);\n\t\tint[] expected = {1};\n\t\tUtils.AssertTrue(compare(ProgramTest.testArray, expected));\n\t\tProgramTest.testArray.Clear();\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tTestBinaryTree test2 = new TestBinaryTree(1);\n\t\ttest2.insert(new int[] {2, 3, 4}, 0);\n\t\tProgram.IterativeInOrderTraversal(test2, ProgramTest.testCallback);\n\t\tint[] expected = {4, 2, 1, 3};\n\t\tUtils.AssertTrue(compare(ProgramTest.testArray, expected));\n\t\tProgramTest.testArray.Clear();\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tTestBinaryTree test3 = new TestBinaryTree(1);\n\t\ttest3.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n\t\tProgram.IterativeInOrderTraversal(test3, ProgramTest.testCallback);\n\t\tint[] expected = {4, 2, 5, 1, 6, 3, 7};\n\t\tUtils.AssertTrue(compare(ProgramTest.testArray, expected));\n\t\tProgramTest.testArray.Clear();\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tTestBinaryTree test4 = new TestBinaryTree(1);\n\t\ttest4.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}, 0);\n\t\tProgram.IterativeInOrderTraversal(test4, ProgramTest.testCallback);\n\t\tint[] expected = {8, 4, 9, 2, 10, 5, 1, 6, 3, 7};\n\t\tUtils.AssertTrue(compare(ProgramTest.testArray, expected));\n\t\tProgramTest.testArray.Clear();\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tTestBinaryTree test5 = new TestBinaryTree(1);\n\t\ttest5.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, 0);\n\t\tProgram.IterativeInOrderTraversal(test5, ProgramTest.testCallback);\n\t\tint[] expected = {8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 7};\n\t\tUtils.AssertTrue(compare(ProgramTest.testArray, expected));\n\t\tProgramTest.testArray.Clear();\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tTestBinaryTree test6 = new TestBinaryTree(1);\n\t\ttest6.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18},\n\t\t  0);\n\t\tProgram.IterativeInOrderTraversal(test6, ProgramTest.testCallback);\n\t\tint[] expected = {16, 8, 17, 4, 18, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15};\n\t\tUtils.AssertTrue(compare(ProgramTest.testArray, expected));\n\t\tProgramTest.testArray.Clear();\n\t}\n\n\tprivate bool compare(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\tpublic class TestBinaryTree : Program.BinaryTree {\n\t\tpublic TestBinaryTree(int value) : base(value) {\n\t\t}\n\n\t\tpublic TestBinaryTree(int value, Program.BinaryTree parent) : base(value, parent) {\n\t\t}\n\n\t\tpublic void insert(int[] values, int i) {\n\t\t\tif (i >= values.Length) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tList<Program.BinaryTree> queue = new List<Program.BinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\tvar index = 0;\n\t\t\twhile (index < queue.Count) {\n\t\t\t\tProgram.BinaryTree current = queue[index];\n\t\t\t\tindex += 1;\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new Program.BinaryTree(values[i], current);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.left);\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new Program.BinaryTree(values[i], current);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.right);\n\t\t\t}\n\t\t\tinsert(values, i + 1);\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tpublic List<int> testArray = new List<int>();\n\n\tvoid testCallback(Program.BinaryTree tree) {\n\t\tif (tree == null) {\n\t\t\treturn;\n\t\t}\n\t\ttestArray.Add(tree.value);\n\t\treturn;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar root = new Program.BinaryTree(1);\n\t\troot.left = new Program.BinaryTree(2, root);\n\t\troot.left.left = new Program.BinaryTree(4, root.left);\n\t\troot.left.left.right = new Program.BinaryTree(9, root.left.left);\n\t\troot.right = new Program.BinaryTree(3, root);\n\t\troot.right.left = new Program.BinaryTree(6, root.right);\n\t\troot.right.right = new Program.BinaryTree(7, root.right);\n\n\t\ttestArray.Clear();\n\t\tProgram.IterativeInOrderTraversal(root, testCallback);\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(testArray, new List<int> {\n\t\t\t4, 9, 2, 1, 6, 3, 7\n\t\t}));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static void IterativeInOrderTraversal(BinaryTree tree, Action<BinaryTree> callback) {\n\t\tBinaryTree previousNode = null;\n\t\tBinaryTree currentNode = tree;\n\t\twhile (currentNode != null) {\n\t\t\tBinaryTree nextNode;\n\t\t\tif (previousNode == null || previousNode == currentNode.parent) {\n\t\t\t\tif (currentNode.left != null) {\n\t\t\t\t\tnextNode = currentNode.left;\n\t\t\t\t} else {\n\t\t\t\t\tcallback(currentNode);\n\t\t\t\t\tnextNode = currentNode.right !=\n\t\t\t\t\t  null ? currentNode.right : currentNode.parent;\n\t\t\t\t}\n\t\t\t} else if (previousNode == currentNode.left) {\n\t\t\t\tcallback(currentNode);\n\t\t\t\tnextNode = currentNode.right !=\n\t\t\t\t  null ? currentNode.right : currentNode.parent;\n\t\t\t} else {\n\t\t\t\tnextNode = currentNode.parent;\n\t\t\t}\n\t\t\tpreviousNode = currentNode;\n\t\t\tcurrentNode = nextNode;\n\t\t}\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\t\tpublic BinaryTree parent;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\n\t\tpublic BinaryTree(int value, BinaryTree parent) {\n\t\t\tthis.value = value;\n\t\t\tthis.parent = parent;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype BinaryTree struct {\n\tValue int\n\n\tLeft   *BinaryTree\n\tRight  *BinaryTree\n\tParent *BinaryTree\n}\n\nfunc (tree *BinaryTree) IterativeInOrderTraversal(callback func(int)) {\n\t// Write your code here.\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBinaryTree(root int, values ...int) *BinaryTree {\n\ttree := &BinaryTree{Value: root}\n\tfor _, value := range values {\n\t\ttree.Insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) Insert(value int) *BinaryTree {\n\tqueue := []*BinaryTree{tree}\n\tfor len(queue) > 0 {\n\t\tcurrent := queue[0]\n\t\tqueue = queue[1:]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\tcurrent.Left.Parent = current\n\t\t\tbreak\n\t\t} else if current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\tcurrent.Right.Parent = current\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Left, current.Right)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) InsertAll(values ...int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.Insert(value)\n\t}\n\treturn tree\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\ttree := NewBinaryTree(1)\n\toutput := []int{}\n\ttree.IterativeInOrderTraversal(func(i int) {\n\t\toutput = append(output, i)\n\t})\n\texpected := []int{1}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\ttree := NewBinaryTree(1).InsertAll(2, 3, 4)\n\toutput := []int{}\n\ttree.IterativeInOrderTraversal(func(i int) {\n\t\toutput = append(output, i)\n\t})\n\texpected := []int{4, 2, 1, 3}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\ttree := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7)\n\toutput := []int{}\n\ttree.IterativeInOrderTraversal(func(i int) {\n\t\toutput = append(output, i)\n\t})\n\texpected := []int{4, 2, 5, 1, 6, 3, 7}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\ttree := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7, 8, 9, 10)\n\toutput := []int{}\n\ttree.IterativeInOrderTraversal(func(i int) {\n\t\toutput = append(output, i)\n\t})\n\texpected := []int{8, 4, 9, 2, 10, 5, 1, 6, 3, 7}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\ttree := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)\n\toutput := []int{}\n\ttree.IterativeInOrderTraversal(func(i int) {\n\t\toutput = append(output, i)\n\t})\n\texpected := []int{8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 7}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\ttree := NewBinaryTree(1).InsertAll(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18)\n\toutput := []int{}\n\ttree.IterativeInOrderTraversal(func(i int) {\n\t\toutput = append(output, i)\n\t})\n\texpected := []int{16, 8, 17, 4, 18, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15}\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBinaryTree(root int, parent *BinaryTree) *BinaryTree {\n\treturn &BinaryTree{Value: root, Parent: parent}\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\troot := NewBinaryTree(1, nil)\n\troot.Left = NewBinaryTree(2, root)\n\troot.Left.Left = NewBinaryTree(4, root.Left)\n\troot.Left.Left.Right = NewBinaryTree(9, root.Left.Left)\n\troot.Right = NewBinaryTree(3, root)\n\troot.Right.Left = NewBinaryTree(6, root.Right)\n\troot.Right.Right = NewBinaryTree(7, root.Right)\n\n\toutput := []int{}\n\troot.IterativeInOrderTraversal(func(i int) {\n\t\toutput = append(output, i)\n\t})\n\texpected := []int{4, 9, 2, 1, 6, 3, 7}\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue int\n\n\tLeft   *BinaryTree\n\tRight  *BinaryTree\n\tParent *BinaryTree\n}\n\n// O(n) time | O(1) space\nfunc (tree *BinaryTree) IterativeInOrderTraversal(callback func(int)) {\n\tvar previous, next *BinaryTree\n\tcurrent := tree\n\tfor current != nil {\n\t\tif previous == nil || previous == current.Parent {\n\t\t\tif current.Left != nil {\n\t\t\t\tnext = current.Left\n\t\t\t} else {\n\t\t\t\tcallback(current.Value)\n\t\t\t\tif current.Right != nil {\n\t\t\t\t\tnext = current.Right\n\t\t\t\t} else {\n\t\t\t\t\tnext = current.Parent\n\t\t\t\t}\n\t\t\t}\n\t\t} else if previous == current.Left {\n\t\t\tcallback(current.Value)\n\t\t\tif current.Right != nil {\n\t\t\t\tnext = current.Right\n\t\t\t} else {\n\t\t\t\tnext = current.Parent\n\t\t\t}\n\t\t} else {\n\t\t\tnext = current.Parent\n\t\t}\n\t\tprevious, current = current, next\n\t}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.function.Function;\n\nclass Program {\n  public static void iterativeInOrderTraversal(\n      BinaryTree tree, Function<BinaryTree, Void> callback) {\n    // Write your code here.\n  }\n\n  static class BinaryTree {\n    public int value;\n    public BinaryTree left;\n    public BinaryTree right;\n    public BinaryTree parent;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n\n    public BinaryTree(int value, BinaryTree parent) {\n      this.value = value;\n      this.parent = parent;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  public static List<Integer> testArray = new ArrayList<Integer>();\n\n  static Void testCallback(Program.BinaryTree tree) {\n    if (tree == null) {\n      return null;\n    }\n    ProgramTest.testArray.add(tree.value);\n    return null;\n  }\n\n  @Test\n  public void TestCase1() {\n    TestBinaryTree test1 = new TestBinaryTree(1);\n    Program.iterativeInOrderTraversal(test1, ProgramTest::testCallback);\n    int[] expected = {1};\n    Utils.assertTrue(compare(this.testArray, expected));\n    this.testArray.clear();\n  }\n\n  @Test\n  public void TestCase2() {\n    TestBinaryTree test2 = new TestBinaryTree(1);\n    test2.insert(new int[] {2, 3, 4}, 0);\n    Program.iterativeInOrderTraversal(test2, ProgramTest::testCallback);\n    int[] expected = {4, 2, 1, 3};\n    Utils.assertTrue(compare(this.testArray, expected));\n    this.testArray.clear();\n  }\n\n  @Test\n  public void TestCase3() {\n    TestBinaryTree test3 = new TestBinaryTree(1);\n    test3.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n    Program.iterativeInOrderTraversal(test3, ProgramTest::testCallback);\n    int[] expected = {4, 2, 5, 1, 6, 3, 7};\n    Utils.assertTrue(compare(this.testArray, expected));\n    this.testArray.clear();\n  }\n\n  @Test\n  public void TestCase4() {\n    TestBinaryTree test4 = new TestBinaryTree(1);\n    test4.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10}, 0);\n    Program.iterativeInOrderTraversal(test4, ProgramTest::testCallback);\n    int[] expected = {8, 4, 9, 2, 10, 5, 1, 6, 3, 7};\n    Utils.assertTrue(compare(this.testArray, expected));\n    this.testArray.clear();\n  }\n\n  @Test\n  public void TestCase5() {\n    TestBinaryTree test5 = new TestBinaryTree(1);\n    test5.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}, 0);\n    Program.iterativeInOrderTraversal(test5, ProgramTest::testCallback);\n    int[] expected = {8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 7};\n    Utils.assertTrue(compare(this.testArray, expected));\n    this.testArray.clear();\n  }\n\n  @Test\n  public void TestCase6() {\n    TestBinaryTree test6 = new TestBinaryTree(1);\n    test6.insert(new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18}, 0);\n    Program.iterativeInOrderTraversal(test6, ProgramTest::testCallback);\n    int[] expected = {16, 8, 17, 4, 18, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15};\n    Utils.assertTrue(compare(this.testArray, expected));\n    this.testArray.clear();\n  }\n\n  private boolean compare(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  class TestBinaryTree extends Program.BinaryTree {\n    public TestBinaryTree(int value) {\n      super(value);\n    }\n\n    public TestBinaryTree(int value, Program.BinaryTree parent) {\n      super(value, parent);\n    }\n\n    public void insert(int[] values, int i) {\n      if (i >= values.length) {\n        return;\n      }\n      ArrayDeque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n      queue.addLast(this);\n      while (queue.size() > 0) {\n        Program.BinaryTree current = queue.pollFirst();\n        if (current.left == null) {\n          current.left = new Program.BinaryTree(values[i], current);\n          break;\n        }\n        queue.addLast(current.left);\n        if (current.right == null) {\n          current.right = new Program.BinaryTree(values[i], current);\n          break;\n        }\n        queue.addLast(current.right);\n      }\n      insert(values, i + 1);\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  public List<Integer> testArray = new ArrayList<Integer>();\n\n  public Void testCallback(Program.BinaryTree tree) {\n    if (tree == null) {\n      return null;\n    }\n    testArray.add(tree.value);\n    return null;\n  }\n\n  @Test\n  public void TestCase1() {\n    var root = new Program.BinaryTree(1);\n    root.left = new Program.BinaryTree(2, root);\n    root.left.left = new Program.BinaryTree(4, root.left);\n    root.left.left.right = new Program.BinaryTree(9, root.left.left);\n    root.right = new Program.BinaryTree(3, root);\n    root.right.left = new Program.BinaryTree(6, root.right);\n    root.right.right = new Program.BinaryTree(7, root.right);\n\n    this.testArray.clear();\n    Program.iterativeInOrderTraversal(root, this::testCallback);\n    List<Integer> expected = Arrays.asList(new Integer[]{4, 9, 2, 1, 6, 3, 7});\n    Utils.assertTrue(expected.equals(this.testArray));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.function.Function;\n\nclass Program {\n  // O(n) time | O(1) space\n  public static void iterativeInOrderTraversal(\n      BinaryTree tree, Function<BinaryTree, Void> callback) {\n    BinaryTree previousNode = null;\n    BinaryTree currentNode = tree;\n    while (currentNode != null) {\n      BinaryTree nextNode;\n      if (previousNode == null || previousNode == currentNode.parent) {\n        if (currentNode.left != null) {\n          nextNode = currentNode.left;\n        } else {\n          callback.apply(currentNode);\n          nextNode = currentNode.right != null ? currentNode.right : currentNode.parent;\n        }\n      } else if (previousNode == currentNode.left) {\n        callback.apply(currentNode);\n        nextNode = currentNode.right != null ? currentNode.right : currentNode.parent;\n      } else {\n        nextNode = currentNode.parent;\n      }\n      previousNode = currentNode;\n      currentNode = nextNode;\n    }\n  }\n\n  static class BinaryTree {\n    public int value;\n    public BinaryTree left;\n    public BinaryTree right;\n    public BinaryTree parent;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n\n    public BinaryTree(int value, BinaryTree parent) {\n      this.value = value;\n      this.parent = parent;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function iterativeInOrderTraversal(tree, callback) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.iterativeInOrderTraversal = iterativeInOrderTraversal;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass BinaryTree {\n  constructor(value, parent = null) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n    this.parent = parent;\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i], current);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i], current);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n}\n\nlet testArray = [];\n\nfunction testCallback(tree) {\n  if (tree === null) return;\n  testArray.push(tree.value);\n}\n\nconst test1 = new BinaryTree(1);\n\nconst test2 = new BinaryTree(1).insert([2, 3, 4]);\n\nconst test3 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7]);\n\nconst test4 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10]);\n\nconst test5 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);\n\nconst test6 = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]);\n\nit('Test Case #1', function () {\n  testArray = [];\n  program.iterativeInOrderTraversal(test1, testCallback);\n  chai.expect(testArray).to.deep.equal([1]);\n});\n\nit('Test Case #2', function () {\n  testArray = [];\n  program.iterativeInOrderTraversal(test2, testCallback);\n  chai.expect(testArray).to.deep.equal([4, 2, 1, 3]);\n});\n\nit('Test Case #3', function () {\n  testArray = [];\n  program.iterativeInOrderTraversal(test3, testCallback);\n  chai.expect(testArray).to.deep.equal([4, 2, 5, 1, 6, 3, 7]);\n});\n\nit('Test Case #4', function () {\n  testArray = [];\n  program.iterativeInOrderTraversal(test4, testCallback);\n  chai.expect(testArray).to.deep.equal([8, 4, 9, 2, 10, 5, 1, 6, 3, 7]);\n});\n\nit('Test Case #5', function () {\n  testArray = [];\n  program.iterativeInOrderTraversal(test5, testCallback);\n  chai.expect(testArray).to.deep.equal([8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 7]);\n});\n\nit('Test Case #6', function () {\n  testArray = [];\n  program.iterativeInOrderTraversal(test6, testCallback);\n  chai.expect(testArray).to.deep.equal([16, 8, 17, 4, 18, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass BinaryTree {\n  constructor(value, parent = null) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n    this.parent = parent;\n  }\n}\n\nlet testArray = [];\n\nfunction testCallback(tree) {\n  if (tree === null) return;\n  testArray.push(tree.value);\n}\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1);\n  root.left = new BinaryTree(2, root);\n  root.left.left = new BinaryTree(4, root.left);\n  root.left.left.right = new BinaryTree(9, root.left.left);\n  root.right = new BinaryTree(3, root);\n  root.right.left = new BinaryTree(6, root.right);\n  root.right.right = new BinaryTree(7, root.right);\n\n  testArray = [];\n  program.iterativeInOrderTraversal(root, testCallback);\n  chai.expect(testArray).to.deep.equal([4, 9, 2, 1, 6, 3, 7]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nfunction iterativeInOrderTraversal(tree, callback) {\n  let previousNode = null;\n  let currentNode = tree;\n  while (currentNode !== null) {\n    let nextNode;\n    if (previousNode === null || previousNode === currentNode.parent) {\n      if (currentNode.left !== null) {\n        nextNode = currentNode.left;\n      } else {\n        callback(currentNode);\n        nextNode = currentNode.right !== null ? currentNode.right : currentNode.parent;\n      }\n    } else if (previousNode === currentNode.left) {\n      callback(currentNode);\n      nextNode = currentNode.right !== null ? currentNode.right : currentNode.parent;\n    } else {\n      nextNode = currentNode.parent;\n    }\n    previousNode = currentNode;\n    currentNode = nextNode;\n  }\n}\n\nexports.iterativeInOrderTraversal = iterativeInOrderTraversal;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def iterativeInOrderTraversal(tree, callback):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass BinaryTree:\n    def __init__(self, value, parent=None):\n        self.value = value\n        self.left = None\n        self.right = None\n        self.parent = parent\n\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i], current)\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i], current)\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n\n\ndef testCallback(testArray, tree):\n    if tree is None:\n        return\n    testArray.append(tree.value)\n\n\ntest1 = BinaryTree(1)\n\ntest2 = BinaryTree(1).insert([2, 3, 4])\n\ntest3 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7])\n\ntest4 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10])\n\ntest5 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13])\n\ntest6 = BinaryTree(1).insert([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18])\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        testArray = []\n        actualTestCallback = lambda x: testCallback(testArray, x)\n        program.iterativeInOrderTraversal(test1, actualTestCallback)\n        self.assertEqual(testArray, [1])\n\n    def test_case_2(self):\n        testArray = []\n        actualTestCallback = lambda x: testCallback(testArray, x)\n        program.iterativeInOrderTraversal(test2, actualTestCallback)\n        self.assertEqual(testArray, [4, 2, 1, 3])\n\n    def test_case_3(self):\n        testArray = []\n        actualTestCallback = lambda x: testCallback(testArray, x)\n        program.iterativeInOrderTraversal(test3, actualTestCallback)\n        self.assertEqual(testArray, [4, 2, 5, 1, 6, 3, 7])\n\n    def test_case_4(self):\n        testArray = []\n        actualTestCallback = lambda x: testCallback(testArray, x)\n        program.iterativeInOrderTraversal(test4, actualTestCallback)\n        self.assertEqual(testArray, [8, 4, 9, 2, 10, 5, 1, 6, 3, 7])\n\n    def test_case_5(self):\n        testArray = []\n        actualTestCallback = lambda x: testCallback(testArray, x)\n        program.iterativeInOrderTraversal(test5, actualTestCallback)\n        self.assertEqual(testArray, [8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 7])\n\n    def test_case_6(self):\n        testArray = []\n        actualTestCallback = lambda x: testCallback(testArray, x)\n        program.iterativeInOrderTraversal(test6, actualTestCallback)\n        self.assertEqual(testArray, [16, 8, 17, 4, 18, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15])\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass BinaryTree:\n    def __init__(self, value, parent=None):\n        self.value = value\n        self.left = None\n        self.right = None\n        self.parent = parent\n\n\ndef testCallback(testArray, tree):\n    if tree is None:\n        return\n    testArray.append(tree.value)\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        root = BinaryTree(1)\n        root.left = BinaryTree(2, parent=root)\n        root.left.left = BinaryTree(4, parent=root.left)\n        root.left.left.right = BinaryTree(9, parent=root.left.left)\n        root.right = BinaryTree(3, parent=root)\n        root.right.left = BinaryTree(6, parent=root.right)\n        root.right.right = BinaryTree(7, parent=root.right)\n\n        testArray = []\n        actualTestCallback = lambda x: testCallback(testArray, x)\n        program.iterativeInOrderTraversal(root, actualTestCallback)\n        self.assertEqual(testArray, [4, 9, 2, 1, 6, 3, 7])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space\ndef iterativeInOrderTraversal(tree, callback):\n    previousNode = None\n    currentNode = tree\n    while currentNode is not None:\n        if previousNode is None or previousNode == currentNode.parent:\n            if currentNode.left is not None:\n                nextNode = currentNode.left\n            else:\n                callback(currentNode)\n                nextNode = currentNode.right if currentNode.right is not None else currentNode.parent\n        elif previousNode == currentNode.left:\n            callback(currentNode)\n            nextNode = currentNode.right if currentNode.right is not None else currentNode.parent\n        else:\n            nextNode = currentNode.parent\n        previousNode = currentNode\n        currentNode = nextNode\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  class BinaryTree {\n    var value: Int\n    var parent: BinaryTree?\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int, parent: BinaryTree?) {\n      self.value = value\n      self.parent = parent\n    }\n  }\n\n  func iterativeInOrderTraversal(_ tree: BinaryTree, _ callback: (BinaryTree) -> Void) {\n    // Write your code here.\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    let firstTest = TestBinaryTree(value: 1, parent: nil)\n    let secondTest = TestBinaryTree(value: 1, parent: nil).insert(values: [2, 3, 4], index: 0)\n    let thirdTest = TestBinaryTree(value: 1, parent: nil).insert(values: [2, 3, 4, 5, 6, 7], index: 0)\n    let fourthTest = TestBinaryTree(value: 1, parent: nil).insert(values: [2, 3, 4, 5, 6, 7, 8, 9, 10], index: 0)\n    let fifthTest = TestBinaryTree(value: 1, parent: nil).insert(values: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], index: 0)\n    let sixthTest = TestBinaryTree(value: 1, parent: nil).insert(values: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], index: 0)\n\n    var testArray = [Int]()\n    func testCallback(_ tree: Program.BinaryTree) {\n      testArray.append(tree.value)\n    }\n\n    runTest(\"Test Case 1\") { () throws -> Void in\n      testArray = []\n      program.iterativeInOrderTraversal(firstTest, testCallback(_:))\n      try assertEqual([1], testArray)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      testArray = []\n      program.iterativeInOrderTraversal(secondTest!, testCallback(_:))\n      try assertEqual([4, 2, 1, 3], testArray)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      testArray = []\n      program.iterativeInOrderTraversal(thirdTest!, testCallback(_:))\n      try assertEqual([4, 2, 5, 1, 6, 3, 7], testArray)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      testArray = []\n      program.iterativeInOrderTraversal(fourthTest!, testCallback(_:))\n      try assertEqual([8, 4, 9, 2, 10, 5, 1, 6, 3, 7], testArray)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      testArray = []\n      program.iterativeInOrderTraversal(fifthTest!, testCallback(_:))\n      try assertEqual([8, 4, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 7], testArray)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      testArray = []\n      program.iterativeInOrderTraversal(sixthTest!, testCallback(_:))\n      try assertEqual([16, 8, 17, 4, 18, 9, 2, 10, 5, 11, 1, 12, 6, 13, 3, 14, 7, 15], testArray)\n    }\n  }\n}\n\nclass TestBinaryTree: Program.BinaryTree {\n  func insert(values: [Int], index: Int) -> Program.BinaryTree? {\n    if index >= values.count { return nil }\n\n    var queue: [Program.BinaryTree?] = [self]\n\n    while queue.count > 0 {\n      let current = queue.removeFirst()\n\n      if current?.left === nil {\n        current?.left = TestBinaryTree(value: values[index], parent: current)\n        break\n      }\n\n      queue.append(current?.left)\n\n      if current?.right === nil {\n        current?.right = TestBinaryTree(value: values[index], parent: current)\n        break\n      }\n\n      queue.append(current?.right)\n    }\n\n    insert(values: values, index: index + 1)\n    return self\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n\n    var testArray = [Int]()\n    func testCallback(_ tree: Program.BinaryTree) {\n      testArray.append(tree.value)\n    }\n\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let root = Program.BinaryTree(value: 1, parent: nil)\n      root.left = Program.BinaryTree(value: 2, parent: root)\n      root.left!.left = Program.BinaryTree(value: 4, parent: root.left)\n      root.left!.left!.right = Program.BinaryTree(value: 9, parent: root.left!.left)\n      root.right = Program.BinaryTree(value: 3, parent: root)\n      root.right!.left = Program.BinaryTree(value: 6, parent: root.right)\n      root.right!.right = Program.BinaryTree(value: 7, parent: root.right)\n\n      testArray = []\n      program.iterativeInOrderTraversal(root, testCallback(_:))\n      try assertEqual(testArray, [4, 9, 2, 1, 6, 3, 7])\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree {\n    var value: Int\n    var parent: BinaryTree?\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int, parent: BinaryTree?) {\n      self.value = value\n      self.parent = parent\n    }\n  }\n\n  // O(n) time | O(1) space\n  func iterativeInOrderTraversal(_ tree: BinaryTree, _ callback: (BinaryTree) -> Void) {\n    var previousNode: BinaryTree?\n    var currentNode: BinaryTree? = tree\n\n    while currentNode !== nil {\n      let nextNode: BinaryTree?\n      if previousNode === nil || previousNode === currentNode?.parent {\n        if currentNode?.left !== nil {\n          nextNode = currentNode?.left\n        } else {\n          callback(currentNode!)\n          nextNode = currentNode?.right !== nil ? currentNode?.right : currentNode?.parent\n        }\n      } else if previousNode === currentNode?.left {\n        callback(currentNode!)\n        nextNode = currentNode?.right !== nil ? currentNode?.right : currentNode?.parent\n      } else {\n        nextNode = currentNode?.parent\n      }\n\n      previousNode = currentNode\n      currentNode = nextNode\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "class BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n  parent: BinaryTree | null;\n\n  constructor(value: number, parent: BinaryTree | null = null) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n    this.parent = parent;\n  }\n}\n\nexport function iterativeInOrderTraversal(tree: BinaryTree, callback: (node: BinaryTree) => void) {\n  // Write your code here.\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n  parent: BinaryTree | null;\n\n  constructor(value: number, parent: BinaryTree | null = null) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n    this.parent = parent;\n  }\n}\n\nlet testArray: number[] = [];\n\nfunction testCallback(tree: BinaryTree | null) {\n  if (tree === null) return;\n  testArray.push(tree.value);\n}\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1);\n  root.left = new BinaryTree(2, root);\n  root.left.left = new BinaryTree(4, root.left);\n  root.left.left.right = new BinaryTree(9, root.left.left);\n  root.right = new BinaryTree(3, root);\n  root.right.left = new BinaryTree(6, root.right);\n  root.right.right = new BinaryTree(7, root.right);\n\n  testArray = [];\n  program.iterativeInOrderTraversal(root, testCallback);\n  chai.expect(testArray).to.deep.equal([4, 9, 2, 1, 6, 3, 7]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n  parent: BinaryTree | null;\n\n  constructor(value: number, parent: BinaryTree | null = null) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n    this.parent = parent;\n  }\n}\n\n// O(n) time | O(1) space\nexport function iterativeInOrderTraversal(tree: BinaryTree, callback: (node: BinaryTree) => void) {\n  let previousNode: BinaryTree | null = null;\n  let currentNode: BinaryTree | null = tree;\n  while (currentNode !== null) {\n    let nextNode;\n    if (previousNode === null || previousNode === currentNode.parent) {\n      if (currentNode.left !== null) {\n        nextNode = currentNode.left;\n      } else {\n        callback(currentNode);\n        nextNode = currentNode.right !== null ? currentNode.right : currentNode.parent;\n      }\n    } else if (previousNode === currentNode.left) {\n      callback(currentNode);\n      nextNode = currentNode.right !== null ? currentNode.right : currentNode.parent;\n    } else {\n      nextNode = currentNode.parent;\n    }\n    previousNode = currentNode;\n    currentNode = nextNode;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "6",
+            "left": "12",
+            "right": "13",
+            "value": 6
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": "11",
+            "value": 5
+          },
+          {
+            "id": "11",
+            "left": null,
+            "right": null,
+            "value": 11
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": "14",
+            "right": "15",
+            "value": 7
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "6",
+            "left": "12",
+            "right": "13",
+            "value": 6
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          },
+          {
+            "id": "12",
+            "left": null,
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "10",
+            "right": "11",
+            "value": 5
+          },
+          {
+            "id": "11",
+            "left": null,
+            "right": null,
+            "value": 11
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "9",
+            "left": "18",
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "18",
+            "left": null,
+            "right": null,
+            "value": 18
+          },
+          {
+            "id": "8",
+            "left": "16",
+            "right": "17",
+            "value": 8
+          },
+          {
+            "id": "17",
+            "left": null,
+            "right": null,
+            "value": 17
+          },
+          {
+            "id": "16",
+            "left": null,
+            "right": null,
+            "value": 16
+          }
+        ],
+        "root": "1"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "traversalOrder": [
+          4,
+          9,
+          2,
+          1,
+          6,
+          3,
+          7
+        ]
+      },
+      {
+        "traversalOrder": [
+          1
+        ]
+      },
+      {
+        "traversalOrder": [
+          4,
+          2,
+          1,
+          3
+        ]
+      },
+      {
+        "traversalOrder": [
+          4,
+          2,
+          5,
+          1,
+          6,
+          3,
+          7
+        ]
+      },
+      {
+        "traversalOrder": [
+          8,
+          4,
+          9,
+          2,
+          10,
+          5,
+          1,
+          6,
+          3,
+          7
+        ]
+      },
+      {
+        "traversalOrder": [
+          8,
+          4,
+          9,
+          2,
+          10,
+          5,
+          11,
+          1,
+          12,
+          6,
+          13,
+          3,
+          7
+        ]
+      },
+      {
+        "traversalOrder": [
+          16,
+          8,
+          17,
+          4,
+          18,
+          9,
+          2,
+          10,
+          5,
+          11,
+          1,
+          12,
+          6,
+          13,
+          3,
+          14,
+          7,
+          15
+        ]
+      }
+    ]
+  ]
+}

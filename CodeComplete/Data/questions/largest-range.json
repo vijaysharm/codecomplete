@@ -1,0 +1,400 @@
+{
+  "Summary": {
+    "Name": "Largest Range",
+    "Category": "Arrays",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 460,
+      "timeOne": 0,
+      "timeTwo": 1107,
+      "url": "https://player.vimeo.com/video/241819502"
+    }
+  },
+  "Prompt": "",
+  "Hints": "How can you use a hash table to solve this problem with an algorithm that runs in linear time?\nIterate through the input array once, storing every unique number in a hash table and mapping every number to a falsy value. This hash table will not only provide for fast access of the numbers in the input array, but it will also allow you to keep track of \"visited\" and \"unvisited\" numbers, so as not to unnecessarily repeat work.\nIterate through the input array once more, this time stopping at every number to check if the number is marked as \"visited\" in the hash table. If it is, skip it; if it isn't, start expanding outwards from that number with a left number and a right number, continuously checking if those left and right numbers are in the hash table (and thus in the input array), and marking them as \"visited\" in the hash table if they are. This should allow you to quickly find the largest range in which the current number is contained, all the while setting you up not to perform unnecessary work later.\n",
+  "SpaceTime": "O(n) time | O(n) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in an array of integers and returns an array of\n  length 2 representing the largest range of integers contained in that array.\n</p>\n<p>\n  The first number in the output array should be the first number in the range,\n  while the second number should be the last number in the range.\n</p>\n<p>\n  A range of numbers is defined as a set of numbers that come right after each\n  other in the set of real integers. For instance, the output array\n  <span>[2, 6]</span> represents the range <span>{2, 3, 4, 5, 6}</span>, which\n  is a range of length 5. Note that numbers don't need to be sorted or adjacent\n  in the input array in order to form a range.\n</p>\n<p>You can assume that there will only be one largest range.</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[0, 7]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        1,
+        11,
+        3,
+        0,
+        15,
+        5,
+        2,
+        4,
+        10,
+        7,
+        12,
+        6
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> largestRange(vector<int> array) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{1, 1};\n      assert(largestRange({1}) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> expected{1, 2};\n      assert(largestRange({1, 2}) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> expected{1, 4};\n      assert(largestRange({4, 2, 1, 3}) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> expected{1, 4};\n      assert(largestRange({4, 2, 1, 3, 6}) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> expected{6, 10};\n      assert(largestRange({8, 4, 2, 10, 3, 6, 7, 9, 1}) == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> expected{0, 7};\n      assert(largestRange({1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> expected{10, 19};\n      assert(largestRange({19, -1, 18, 17, 2,  10, 3, 12, 5, 16, 4, 11,\n                           8,  7,  6,  15, 12, 12, 2, 1,  6, 13, 14}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> expected{-1, 19};\n      assert(largestRange({0,  9, 19, -1, 18, 17, 2,  10, 3, 12, 5,  16, 4,\n                           11, 8, 7,  6,  15, 12, 12, 2,  1, 6,  13, 14}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> expected{-7, 7};\n      assert(largestRange({0,  -5, 9,  19, -1, 18, 17, 2,  -4, -3,\n                           10, 3,  12, 5,  16, 4,  11, 7,  -6, -7,\n                           6,  15, 12, 12, 2,  1,  6,  13, 14, -2}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<int> expected{-7, 7};\n      assert(largestRange({0,  -5, 9,  19, -1, 18, 17, 2,  -4, -3,\n                           10, 3,  12, 5,  16, 4,  11, 7,  -6, -7,\n                           6,  15, 12, 12, 2,  1,  6,  13, 14, -2}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      vector<int> expected{-8, 19};\n      assert(largestRange({-7, -7, -7, -7, 8,  -8, 0,  9, 19, -1, -3, 18,\n                           17, 2,  10, 3,  12, 5,  16, 4, 11, -6, 8,  7,\n                           6,  15, 12, 12, -5, 2,  1,  6, 13, 14, -4, -2}) ==\n             expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{0, 7};\n      assert(largestRange({1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6}) ==\n             expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\nusing namespace std;\n\n// O(n) time | O(n) space\nvector<int> largestRange(vector<int> array) {\n  vector<int> bestRange = {};\n  int longestLength = 0;\n  unordered_map<int, bool> nums = {};\n  for (int num : array) {\n    nums[num] = true;\n  }\n  for (int num : array) {\n    if (!nums[num]) {\n      continue;\n    }\n    nums[num] = false;\n    int currentLength = 1;\n    int left = num - 1;\n    int right = num + 1;\n    while (nums.find(left) != nums.end()) {\n      nums[left] = false;\n      currentLength++;\n      left--;\n    }\n    while (nums.find(right) != nums.end()) {\n      nums[right] = false;\n      currentLength++;\n      right++;\n    }\n    if (currentLength > longestLength) {\n      longestLength = currentLength;\n      bestRange = {left + 1, right - 1};\n    }\n  }\n  return bestRange;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int[] LargestRange(int[] array) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\n\npublic class ProgramTest {\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {1, 1};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {1}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] expected = {1, 2};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {1, 2}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] expected = {1, 4};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {4, 2, 1,\n\t\t                                                                          3}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] expected = {1, 4};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {4, 2, 1,\n\t\t                                                                          3, 6}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] expected = {6, 10};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {8, 4, 2,\n\t\t                                                                          10, 3, 6,\n\t\t                                                                          7, 9, 1}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] expected = {0, 7};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {1, 11, 3,\n\t\t                                                                          0, 15, 5,\n\t\t                                                                          2, 4, 10,\n\t\t                                                                          7, 12,\n\t\t                                                                          6}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] expected = {10, 19};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {19, -1,\n\t\t                                                                          18, 17, 2,\n\t\t                                                                          10, 3, 12,\n\t\t                                                                          5, 16, 4,\n\t\t                                                                          11, 8, 7,\n\t\t                                                                          6, 15, 12,\n\t\t                                                                          12, 2, 1,\n\t\t                                                                          6, 13,\n\t\t                                                                          14}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] expected = {-1, 19};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {0, 9, 19,\n\t\t                                                                          -1, 18,\n\t\t                                                                          17, 2, 10,\n\t\t                                                                          3, 12, 5,\n\t\t                                                                          16, 4, 11,\n\t\t                                                                          8, 7, 6,\n\t\t                                                                          15, 12,\n\t\t                                                                          12, 2, 1,\n\t\t                                                                          6, 13,\n\t\t                                                                          14}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] expected = {-7, 7};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {0, -5, 9,\n\t\t                                                                          19, -1,\n\t\t                                                                          18, 17, 2,\n\t\t                                                                          -4, -3,\n\t\t                                                                          10, 3, 12,\n\t\t                                                                          5, 16, 4,\n\t\t                                                                          11, 7, -6,\n\t\t                                                                          -7, 6, 15,\n\t\t                                                                          12,\n\t\t                                                                          12, 2, 1,\n\t\t                                                                          6, 13, 14,\n\t\t                                                                          -2}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] expected = {-7, 7};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {0, -5, 9,\n\t\t                                                                          19, -1,\n\t\t                                                                          18, 17, 2,\n\t\t                                                                          -4, -3,\n\t\t                                                                          10, 3, 12,\n\t\t                                                                          5, 16, 4,\n\t\t                                                                          11, 7, -6,\n\t\t                                                                          -7, 6, 15,\n\t\t                                                                          12,\n\t\t                                                                          12, 2, 1,\n\t\t                                                                          6, 13, 14,\n\t\t                                                                          -2}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[] expected = {-8, 19};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {-7, -7,\n\t\t                                                                          -7, -7, 8,\n\t\t                                                                          -8, 0, 9,\n\t\t                                                                          19, -1,\n\t\t                                                                          -3, 18,\n\t\t                                                                          17, 2, 10,\n\t\t                                                                          3, 12, 5,\n\t\t                                                                          16, 4, 11,\n\t\t                                                                          -6, 8,\n\t\t                                                                          7, 6, 15,\n\t\t                                                                          12, 12,\n\t\t                                                                          -5, 2, 1,\n\t\t                                                                          6, 13, 14,\n\t\t                                                                          -4, -2}),\n\t\t  expected));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] expected = {0, 7};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.LargestRange(new int[] {1, 11, 3,\n\t\t                                                                          0, 15, 5,\n\t\t                                                                          2, 4, 10,\n\t\t                                                                          7, 12,\n\t\t                                                                          6}),\n\t\t  expected));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static int[] LargestRange(int[] array) {\n\t\tint[] bestRange = new int[2];\n\t\tint longestLength = 0;\n\t\tHashSet<int> nums = new HashSet<int>();\n\t\tforeach (int num in array) {\n\t\t\tnums.Add(num);\n\t\t}\n\t\tforeach (int num in array) {\n\t\t\tif (!nums.Contains(num)) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tnums.Remove(num);\n\t\t\tint currentLength = 1;\n\t\t\tint left = num - 1;\n\t\t\tint right = num + 1;\n\t\t\twhile (nums.Contains(left)) {\n\t\t\t\tnums.Remove(left);\n\t\t\t\tcurrentLength++;\n\t\t\t\tleft--;\n\t\t\t}\n\t\t\twhile (nums.Contains(right)) {\n\t\t\t\tnums.Remove(right);\n\t\t\t\tcurrentLength++;\n\t\t\t\tright++;\n\t\t\t}\n\t\t\tif (currentLength > longestLength) {\n\t\t\t\tlongestLength = currentLength;\n\t\t\t\tbestRange = new int[] {left + 1, right - 1};\n\t\t\t}\n\t\t}\n\t\treturn bestRange;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc LargestRange(array []int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{1, 1}\n\toutput := LargestRange([]int{1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := []int{1, 2}\n\toutput := LargestRange([]int{1, 2})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := []int{1, 4}\n\toutput := LargestRange([]int{4, 2, 1, 3})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := []int{1, 4}\n\toutput := LargestRange([]int{4, 2, 1, 3, 6})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := []int{6, 10}\n\toutput := LargestRange([]int{8, 4, 2, 10, 3, 6, 7, 9, 1})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := []int{0, 7}\n\toutput := LargestRange([]int{1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := []int{10, 19}\n\toutput := LargestRange([]int{19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := []int{-1, 19}\n\toutput := LargestRange([]int{0, 9, 19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := []int{-7, 7}\n\toutput := LargestRange([]int{0, -5, 9, 19, -1, 18, 17, 2, -4, -3, 10, 3, 12, 5, 16, 4, 11, 7, -6, -7, 6, 15, 12, 12, 2, 1, 6, 13, 14, -2})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := []int{-7, 7}\n\toutput := LargestRange([]int{0, -5, 9, 19, -1, 18, 17, 2, -4, -3, 10, 3, 12, 5, 16, 4, 11, 7, -6, -7, 6, 15, 12, 12, 2, 1, 6, 13, 14, -2})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := []int{-8, 19}\n\toutput := LargestRange([]int{-7, -7, -7, -7, 8, -8, 0, 9, 19, -1, -3, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, -6, 8, 7, 6, 15, 12, 12, -5, 2, 1, 6, 13, 14, -4, -2})\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{0, 7}\n\toutput := LargestRange([]int{1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6})\n\trequire.Equal(t, expected, output)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space\nfunc LargestRange(array []int) []int {\n\tbest := []int{}\n\tlongestLength := 0\n\tnums := map[int]bool{}\n\tfor _, num := range array {\n\t\tnums[num] = true\n\t}\n\tfor _, num := range array {\n\t\tif !nums[num] {\n\t\t\tcontinue\n\t\t}\n\t\tnums[num] = false\n\t\tcurrentLength, left, right := 1, num-1, num+1\n\t\tfor nums[left] {\n\t\t\tnums[left] = false\n\t\t\tcurrentLength += 1\n\t\t\tleft -= 1\n\t\t}\n\t\tfor nums[right] {\n\t\t\tnums[right] = false\n\t\t\tcurrentLength += 1\n\t\t\tright += 1\n\t\t}\n\t\tif currentLength > longestLength {\n\t\t\tlongestLength = currentLength\n\t\t\tbest = []int{left + 1, right - 1}\n\t\t}\n\t}\n\treturn best\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int[] largestRange(int[] array) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.Arrays;\n\nclass ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    int[] expected = {1, 1};\n    Utils.assertTrue(Arrays.equals(Program.largestRange(new int[] {1}), expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] expected = {1, 2};\n    Utils.assertTrue(Arrays.equals(Program.largestRange(new int[] {1, 2}), expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] expected = {1, 4};\n    Utils.assertTrue(Arrays.equals(Program.largestRange(new int[] {4, 2, 1, 3}), expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] expected = {1, 4};\n    Utils.assertTrue(Arrays.equals(Program.largestRange(new int[] {4, 2, 1, 3, 6}), expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] expected = {6, 10};\n    Utils.assertTrue(\n        Arrays.equals(Program.largestRange(new int[] {8, 4, 2, 10, 3, 6, 7, 9, 1}), expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] expected = {0, 7};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.largestRange(new int[] {1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6}), expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] expected = {10, 19};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.largestRange(\n                new int[] {\n                  19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14\n                }),\n            expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] expected = {-1, 19};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.largestRange(\n                new int[] {\n                  0, 9, 19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6,\n                  13, 14\n                }),\n            expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] expected = {-7, 7};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.largestRange(\n                new int[] {\n                  0, -5, 9, 19, -1, 18, 17, 2, -4, -3, 10, 3, 12, 5, 16, 4, 11, 7, -6, -7, 6, 15,\n                  12, 12, 2, 1, 6, 13, 14, -2\n                }),\n            expected));\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] expected = {-7, 7};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.largestRange(\n                new int[] {\n                  0, -5, 9, 19, -1, 18, 17, 2, -4, -3, 10, 3, 12, 5, 16, 4, 11, 7, -6, -7, 6, 15,\n                  12, 12, 2, 1, 6, 13, 14, -2\n                }),\n            expected));\n  }\n\n  @Test\n  public void TestCase11() {\n    int[] expected = {-8, 19};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.largestRange(\n                new int[] {\n                  -7, -7, -7, -7, 8, -8, 0, 9, 19, -1, -3, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, -6,\n                  8, 7, 6, 15, 12, 12, -5, 2, 1, 6, 13, 14, -4, -2\n                }),\n            expected));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.Arrays;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] expected = {0, 7};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.largestRange(new int[] {1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6}), expected));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space\n  public static int[] largestRange(int[] array) {\n    int[] bestRange = new int[2];\n    int longestLength = 0;\n    Map<Integer, Boolean> nums = new HashMap<Integer, Boolean>();\n    for (int num : array) {\n      nums.put(num, true);\n    }\n    for (int num : array) {\n      if (!nums.get(num)) {\n        continue;\n      }\n      nums.put(num, false);\n      int currentLength = 1;\n      int left = num - 1;\n      int right = num + 1;\n      while (nums.containsKey(left)) {\n        nums.put(left, false);\n        currentLength++;\n        left--;\n      }\n      while (nums.containsKey(right)) {\n        nums.put(right, false);\n        currentLength++;\n        right++;\n      }\n      if (currentLength > longestLength) {\n        longestLength = currentLength;\n        bestRange = new int[] {left + 1, right - 1};\n      }\n    }\n    return bestRange;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function largestRange(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.largestRange = largestRange;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.largestRange([1])).to.deep.equal([1, 1]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.largestRange([1, 2])).to.deep.equal([1, 2]);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.largestRange([4, 2, 1, 3])).to.deep.equal([1, 4]);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.largestRange([4, 2, 1, 3, 6])).to.deep.equal([1, 4]);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.largestRange([8, 4, 2, 10, 3, 6, 7, 9, 1])).to.deep.equal([6, 10]);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.largestRange([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6])).to.deep.equal([0, 7]);\n});\n\nit('Test Case #7', function () {\n  chai\n    .expect(program.largestRange([19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14]))\n    .to.deep.equal([10, 19]);\n});\n\nit('Test Case #8', function () {\n  chai\n    .expect(\n      program.largestRange([0, 9, 19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14]),\n    )\n    .to.deep.equal([-1, 19]);\n});\n\nit('Test Case #9', function () {\n  chai\n    .expect(\n      program.largestRange([\n        0,\n        -5,\n        9,\n        19,\n        -1,\n        18,\n        17,\n        2,\n        -4,\n        -3,\n        10,\n        3,\n        12,\n        5,\n        16,\n        4,\n        11,\n        7,\n        -6,\n        -7,\n        6,\n        15,\n        12,\n        12,\n        2,\n        1,\n        6,\n        13,\n        14,\n        -2,\n      ]),\n    )\n    .to.deep.equal([-7, 7]);\n});\n\nit('Test Case #10', function () {\n  chai\n    .expect(\n      program.largestRange([\n        0,\n        -5,\n        9,\n        19,\n        -1,\n        18,\n        17,\n        2,\n        -4,\n        -3,\n        10,\n        3,\n        12,\n        5,\n        16,\n        4,\n        11,\n        7,\n        -6,\n        -7,\n        6,\n        15,\n        12,\n        12,\n        2,\n        1,\n        6,\n        13,\n        14,\n        -2,\n      ]),\n    )\n    .to.deep.equal([-7, 7]);\n});\n\nit('Test Case #11', function () {\n  chai\n    .expect(\n      program.largestRange([\n        -7,\n        -7,\n        -7,\n        -7,\n        8,\n        -8,\n        0,\n        9,\n        19,\n        -1,\n        -3,\n        18,\n        17,\n        2,\n        10,\n        3,\n        12,\n        5,\n        16,\n        4,\n        11,\n        -6,\n        8,\n        7,\n        6,\n        15,\n        12,\n        12,\n        -5,\n        2,\n        1,\n        6,\n        13,\n        14,\n        -4,\n        -2,\n      ]),\n    )\n    .to.deep.equal([-8, 19]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.largestRange([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6])).to.deep.equal([0, 7]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction largestRange(array) {\n  let bestRange = [];\n  let longestLength = 0;\n  const nums = {};\n  for (const num of array) {\n    nums[num] = true;\n  }\n  for (const num of array) {\n    if (!nums[num]) continue;\n    nums[num] = false;\n    let currentLength = 1;\n    let left = num - 1;\n    let right = num + 1;\n    while (left in nums) {\n      nums[left] = false;\n      currentLength++;\n      left--;\n    }\n    while (right in nums) {\n      nums[right] = false;\n      currentLength++;\n      right++;\n    }\n    if (currentLength > longestLength) {\n      longestLength = currentLength;\n      bestRange = [left + 1, right - 1];\n    }\n  }\n  return bestRange;\n}\n\nexports.largestRange = largestRange;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def largestRange(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.largestRange([1]), [1, 1])\n\n    def test_case_2(self):\n        self.assertEqual(program.largestRange([1, 2]), [1, 2])\n\n    def test_case_3(self):\n        self.assertEqual(program.largestRange([4, 2, 1, 3]), [1, 4])\n\n    def test_case_4(self):\n        self.assertEqual(program.largestRange([4, 2, 1, 3, 6]), [1, 4])\n\n    def test_case_5(self):\n        self.assertEqual(program.largestRange([8, 4, 2, 10, 3, 6, 7, 9, 1]), [6, 10])\n\n    def test_case_6(self):\n        self.assertEqual(program.largestRange([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]), [0, 7])\n\n    def test_case_7(self):\n        self.assertEqual(\n            program.largestRange([19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14]),\n            [10, 19],\n        )\n\n    def test_case_8(self):\n        self.assertEqual(\n            program.largestRange(\n                [0, 9, 19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14]\n            ),\n            [-1, 19],\n        )\n\n    def test_case_9(self):\n        self.assertEqual(\n            program.largestRange(\n                [\n                    0,\n                    -5,\n                    9,\n                    19,\n                    -1,\n                    18,\n                    17,\n                    2,\n                    -4,\n                    -3,\n                    10,\n                    3,\n                    12,\n                    5,\n                    16,\n                    4,\n                    11,\n                    7,\n                    -6,\n                    -7,\n                    6,\n                    15,\n                    12,\n                    12,\n                    2,\n                    1,\n                    6,\n                    13,\n                    14,\n                    -2,\n                ]\n            ),\n            [-7, 7],\n        )\n\n    def test_case_10(self):\n        self.assertEqual(\n            program.largestRange(\n                [\n                    0,\n                    -5,\n                    9,\n                    19,\n                    -1,\n                    18,\n                    17,\n                    2,\n                    -4,\n                    -3,\n                    10,\n                    3,\n                    12,\n                    5,\n                    16,\n                    4,\n                    11,\n                    7,\n                    -6,\n                    -7,\n                    6,\n                    15,\n                    12,\n                    12,\n                    2,\n                    1,\n                    6,\n                    13,\n                    14,\n                    -2,\n                ]\n            ),\n            [-7, 7],\n        )\n\n    def test_case_11(self):\n        self.assertEqual(\n            program.largestRange(\n                [\n                    -7,\n                    -7,\n                    -7,\n                    -7,\n                    8,\n                    -8,\n                    0,\n                    9,\n                    19,\n                    -1,\n                    -3,\n                    18,\n                    17,\n                    2,\n                    10,\n                    3,\n                    12,\n                    5,\n                    16,\n                    4,\n                    11,\n                    -6,\n                    8,\n                    7,\n                    6,\n                    15,\n                    12,\n                    12,\n                    -5,\n                    2,\n                    1,\n                    6,\n                    13,\n                    14,\n                    -4,\n                    -2,\n                ]\n            ),\n            [-8, 19],\n        )\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.largestRange([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]), [0, 7])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef largestRange(array):\n    bestRange = []\n    longestLength = 0\n    nums = {}\n    for num in array:\n        nums[num] = True\n    for num in array:\n        if not nums[num]:\n            continue\n        nums[num] = False\n        currentLength = 1\n        left = num - 1\n        right = num + 1\n        while left in nums:\n            nums[left] = False\n            currentLength += 1\n            left -= 1\n        while right in nums:\n            nums[right] = False\n            currentLength += 1\n            right += 1\n        if currentLength > longestLength:\n            longestLength = currentLength\n            bestRange = [left + 1, right - 1]\n    return bestRange\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func largestRange(array: [Int]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual([1, 1], program.largestRange(array: [1]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual([1, 2], program.largestRange(array: [1, 2]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual([1, 4], program.largestRange(array: [4, 2, 1, 3]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual([1, 4], program.largestRange(array: [4, 2, 1, 3, 6]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual([6, 10], program.largestRange(array: [8, 4, 2, 10, 3, 6, 7, 9, 1]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual([0, 7], program.largestRange(array: [1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual([10, 19], program.largestRange(array: [19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual([-1, 19], program.largestRange(array: [0, 9, 19, -1, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, 8, 7, 6, 15, 12, 12, 2, 1, 6, 13, 14]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual([-7, 7], program.largestRange(array: [0, -5, 9, 19, -1, 18, 17, 2, -4, -3, 10, 3, 12, 5, 16, 4, 11, 7, -6, -7, 6, 15, 12, 12, 2, 1, 6, 13, 14, -2]))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual([-7, 7], program.largestRange(array: [0, -5, 9, 19, -1, 18, 17, 2, -4, -3, 10, 3, 12, 5, 16, 4, 11, 7, -6, -7, 6, 15, 12, 12, 2, 1, 6, 13, 14, -2]))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual([-8, 19], program.largestRange(array: [-7, -7, -7, -7, 8, -8, 0, 9, 19, -1, -3, 18, 17, 2, 10, 3, 12, 5, 16, 4, 11, -6, 8, 7, 6, 15, 12, 12, -5, 2, 1, 6, 13, 14, -4, -2]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual([0, 7], program.largestRange(array: [1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func largestRange(array: [Int]) -> [Int] {\n    var longestLength = 0\n    var bestRange = [Int]()\n    var hash = [Int: Bool]()\n\n    for number in array {\n      hash[number] = true\n    }\n\n    for number in array {\n      if let hashAtNumber = hash[number], !hashAtNumber {\n        continue\n      }\n\n      var currentLength = 1\n      var left = number - 1\n      var right = number + 1\n\n      while hash.keys.contains(left) {\n        hash[left] = false\n        currentLength += 1\n        left -= 1\n      }\n\n      while hash.keys.contains(right) {\n        hash[right] = false\n        currentLength += 1\n        right += 1\n      }\n\n      if currentLength > longestLength {\n        bestRange = [left + 1, right - 1]\n        longestLength = currentLength\n      }\n    }\n\n    return bestRange\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function largestRange(array: number[]): [number, number] {\n  // Write your code here.\n  return [-1, -1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.largestRange([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6])).to.deep.equal([0, 7]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nexport function largestRange(array: number[]) {\n  let bestRange: [number, number] = [-1, -1];\n  let longestLength = 0;\n  const nums: {[key: number]: boolean} = {};\n  for (const num of array) {\n    nums[num] = true;\n  }\n  for (const num of array) {\n    if (!nums[num]) continue;\n    nums[num] = false;\n    let currentLength = 1;\n    let left = num - 1;\n    let right = num + 1;\n    while (left in nums) {\n      nums[left] = false;\n      currentLength++;\n      left--;\n    }\n    while (right in nums) {\n      nums[right] = false;\n      currentLength++;\n      right++;\n    }\n    if (currentLength > longestLength) {\n      longestLength = currentLength;\n      bestRange = [left + 1, right - 1];\n    }\n  }\n  return bestRange;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        1,
+        11,
+        3,
+        0,
+        15,
+        5,
+        2,
+        4,
+        10,
+        7,
+        12,
+        6
+      ]
+    },
+    {
+      "array": [
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        2
+      ]
+    },
+    {
+      "array": [
+        4,
+        2,
+        1,
+        3
+      ]
+    },
+    {
+      "array": [
+        4,
+        2,
+        1,
+        3,
+        6
+      ]
+    },
+    {
+      "array": [
+        8,
+        4,
+        2,
+        10,
+        3,
+        6,
+        7,
+        9,
+        1
+      ]
+    },
+    {
+      "array": [
+        19,
+        -1,
+        18,
+        17,
+        2,
+        10,
+        3,
+        12,
+        5,
+        16,
+        4,
+        11,
+        8,
+        7,
+        6,
+        15,
+        12,
+        12,
+        2,
+        1,
+        6,
+        13,
+        14
+      ]
+    },
+    {
+      "array": [
+        0,
+        9,
+        19,
+        -1,
+        18,
+        17,
+        2,
+        10,
+        3,
+        12,
+        5,
+        16,
+        4,
+        11,
+        8,
+        7,
+        6,
+        15,
+        12,
+        12,
+        2,
+        1,
+        6,
+        13,
+        14
+      ]
+    },
+    {
+      "array": [
+        0,
+        -5,
+        9,
+        19,
+        -1,
+        18,
+        17,
+        2,
+        -4,
+        -3,
+        10,
+        3,
+        12,
+        5,
+        16,
+        4,
+        11,
+        7,
+        -6,
+        -7,
+        6,
+        15,
+        12,
+        12,
+        2,
+        1,
+        6,
+        13,
+        14,
+        -2
+      ]
+    },
+    {
+      "array": [
+        -7,
+        -7,
+        -7,
+        -7,
+        8,
+        -8,
+        0,
+        9,
+        19,
+        -1,
+        -3,
+        18,
+        17,
+        2,
+        10,
+        3,
+        12,
+        5,
+        16,
+        4,
+        11,
+        -6,
+        8,
+        7,
+        6,
+        15,
+        12,
+        12,
+        -5,
+        2,
+        1,
+        6,
+        13,
+        14,
+        -4,
+        -2
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "array": [
+        -1,
+        0,
+        1
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        0,
+        7
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        6,
+        10
+      ],
+      [
+        10,
+        19
+      ],
+      [
+        -1,
+        19
+      ],
+      [
+        -7,
+        7
+      ],
+      [
+        -8,
+        19
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        -1,
+        1
+      ]
+    ]
+  ]
+}

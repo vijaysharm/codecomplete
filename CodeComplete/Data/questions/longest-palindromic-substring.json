@@ -1,0 +1,189 @@
+{
+  "Summary": {
+    "Name": "Longest Palindromic Substring",
+    "Category": "Strings",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 3,
+      "timeOne": 0,
+      "timeTwo": 996,
+      "url": "https://player.vimeo.com/video/225764100"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try generating all possible substrings of the input string and checking for their palindromicity. What is the runtime of the isPalindrome check? What is the total runtime of this approach?\nRecognize that a palindrome is a string that is symmetrical with respect to its center, which can either be a character (in the case of odd-length palindromes) or an empty string (in the case of even-length palindromes). Thus, you can check the palindromicity of a string by simply expanding from its center and making sure that characters on both sides are indeed mirrored.\nTraverse the input string, and at each index, apply the logic mentioned in Hint #2. What does this accomplish? Is the runtime of this approach better?\n",
+  "SpaceTime": "O(n^2) time | O(1) space - where n is the length of the input string\n",
+  "PromptHTML": "<p>\n  Write a function that, given a string, returns its longest palindromic\n  substring.\n</p>\n<p>\n  A palindrome is defined as a string that's written the same forward and\n  backward. Note that single-character strings are palindromes.\n</p>\n<p>You can assume that there will only be one longest palindromic substring.</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">string</span> = \"abaxyzzyxf\"\n</pre>\n<h3>Sample Output</h3>\n<pre>\n\"xyzzyx\"\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "string",
+      "Example": "abaxyzzyxf",
+      "Schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nstring longestPalindromicSubstring(string str) {\n  // Write your code here.\n  return \"\";\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(longestPalindromicSubstring(\"a\") == \"a\"); });\n\n    RunTest(\"Test Case 2\", []() {\n      assert(longestPalindromicSubstring(\"it's highnoon\") == \"noon\");\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      assert(longestPalindromicSubstring(\"noon high it is\") == \"noon\");\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      assert(longestPalindromicSubstring(\"abccbait's highnoon\") == \"abccba\");\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      assert(longestPalindromicSubstring(\"abaxyzzyxf\") == \"xyzzyx\");\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      assert(longestPalindromicSubstring(\"abcdefgfedcbazzzzzzzzzzzzzzzzzzzz\") ==\n             \"zzzzzzzzzzzzzzzzzzzz\");\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(longestPalindromicSubstring(\"abcdefgfedcba\") == \"abcdefgfedcba\");\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(longestPalindromicSubstring(\"abcdefghfedcbaa\") == \"aa\");\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      assert(longestPalindromicSubstring(\"abcdefggfedcba\") == \"abcdefggfedcba\");\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      assert(longestPalindromicSubstring(\"zzzzzzz2345abbbba5432zzbbababa\") ==\n             \"zz2345abbbba5432zz\");\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      assert(longestPalindromicSubstring(\"z234a5abbbba54a32z\") == \"5abbbba5\");\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      assert(longestPalindromicSubstring(\"z234a5abbba54a32z\") == \"5abbba5\");\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(longestPalindromicSubstring(\"abaxyzzyxf\") == \"xyzzyx\");\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nbool isPalindrome(string str);\n\n// O(n^3) time | O(1) space\nstring longestPalindromicSubstring(string str) {\n  string longest = \"\";\n  for (int i = 0; i < str.length(); i++) {\n    for (int j = i; j < str.length(); j++) {\n      string substring = str.substr(i, j + 1 - i);\n      if (substring.length() > longest.length() && isPalindrome(substring)) {\n        longest = substring;\n      }\n    }\n  }\n  return longest;\n}\n\nbool isPalindrome(string str) {\n  int leftIdx = 0;\n  int rightIdx = str.length() - 1;\n  while (leftIdx < rightIdx) {\n    if (str[leftIdx] != str[rightIdx]) {\n      return false;\n    }\n    leftIdx++;\n    rightIdx--;\n  }\n  return true;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nvector<int> getLongestPalindromeFrom(string str, int leftIdx, int rightIdx);\n\n// O(n^2) time | O(1) space\nstring longestPalindromicSubstring(string str) {\n  vector<int> currentLongest{0, 1};\n  for (int i = 1; i < str.length(); i++) {\n    vector<int> odd = getLongestPalindromeFrom(str, i - 1, i + 1);\n    vector<int> even = getLongestPalindromeFrom(str, i - 1, i);\n    vector<int> longest = odd[1] - odd[0] > even[1] - even[0] ? odd : even;\n    currentLongest =\n        currentLongest[1] - currentLongest[0] > longest[1] - longest[0]\n            ? currentLongest\n            : longest;\n  }\n  return str.substr(currentLongest[0], currentLongest[1] - currentLongest[0]);\n}\n\nvector<int> getLongestPalindromeFrom(string str, int leftIdx, int rightIdx) {\n  while (leftIdx >= 0 && rightIdx < str.length()) {\n    if (str[leftIdx] != str[rightIdx]) {\n      break;\n    }\n    leftIdx--;\n    rightIdx++;\n  }\n  return vector<int>{leftIdx + 1, rightIdx};\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static string LongestPalindromicSubstring(string str) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"a\").Equals(\"a\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"it's highnoon\").Equals(\"noon\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"noon high it is\").Equals(\n\t\t\t  \"noon\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"abccbait's highnoon\").Equals(\n\t\t\t  \"abccba\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"abaxyzzyxf\").Equals(\"xyzzyx\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\n\t\t\t  \"abcdefgfedcbazzzzzzzzzzzzzzzzzzzz\").Equals(\n\t\t\t  \"zzzzzzzzzzzzzzzzzzzz\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"abcdefgfedcba\").Equals(\n\t\t\t  \"abcdefgfedcba\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"abcdefghfedcbaa\").Equals(\"aa\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"abcdefggfedcba\").Equals(\n\t\t\t  \"abcdefggfedcba\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\n\t\t\t  \"zzzzzzz2345abbbba5432zzbbababa\").Equals(\n\t\t\t  \"zz2345abbbba5432zz\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"z234a5abbbba54a32z\").Equals(\n\t\t\t  \"5abbbba5\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"z234a5abbba54a32z\").Equals(\n\t\t\t  \"5abbba5\"));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.LongestPalindromicSubstring(\"abaxyzzyxf\").Equals(\"xyzzyx\"));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n^3) time | O(1) space\n\tpublic static string LongestPalindromicSubstring(string str) {\n\t\tstring longest = \"\";\n\t\tfor (int i = 0; i < str.Length; i++) {\n\t\t\tfor (int j = i; j < str.Length; j++) {\n\t\t\t\tstring substring = str.Substring(i, j + 1 - i);\n\t\t\t\tif (substring.Length > longest.Length && IsPalindrome(substring)) {\n\t\t\t\t\tlongest = substring;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn longest;\n\t}\n\n\tpublic static bool IsPalindrome(string str) {\n\t\tint leftIdx = 0;\n\t\tint rightIdx = str.Length - 1;\n\t\twhile (leftIdx < rightIdx) {\n\t\t\tif (str[leftIdx] != str[rightIdx]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t\tleftIdx++;\n\t\t\trightIdx--;\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n^2) time | O(1) space\n\tpublic static string LongestPalindromicSubstring(string str) {\n\t\tint[] currentLongest = {0, 1};\n\t\tfor (int i = 1; i < str.Length; i++) {\n\t\t\tint[] odd = getLongestPalindromeFrom(str, i - 1, i + 1);\n\t\t\tint[] even = getLongestPalindromeFrom(str, i - 1, i);\n\t\t\tint[] longest = odd[1] - odd[0] > even[1] - even[0] ? odd : even;\n\t\t\tcurrentLongest = currentLongest[1] - currentLongest[0] >\n\t\t\t  longest[1] - longest[0] ? currentLongest : longest;\n\t\t}\n\t\treturn str.Substring(currentLongest[0], currentLongest[1] - currentLongest[0]);\n\t}\n\n\tpublic static int[] getLongestPalindromeFrom(string str, int leftIdx, int rightIdx) {\n\t\twhile (leftIdx >= 0 && rightIdx < str.Length) {\n\t\t\tif (str[leftIdx] != str[rightIdx]) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tleftIdx--;\n\t\t\trightIdx++;\n\t\t}\n\t\treturn new int[] {leftIdx + 1, rightIdx};\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc LongestPalindromicSubstring(str string) string {\n\t// Write your code here.\n\treturn \"\"\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := \"a\"\n\toutput := LongestPalindromicSubstring(\"a\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := \"noon\"\n\toutput := LongestPalindromicSubstring(\"it's highnoon\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := \"noon\"\n\toutput := LongestPalindromicSubstring(\"noon high it is\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := \"abccba\"\n\toutput := LongestPalindromicSubstring(\"abccbait's highnoon\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := \"xyzzyx\"\n\toutput := LongestPalindromicSubstring(\"abaxyzzyxf\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := \"zzzzzzzzzzzzzzzzzzzz\"\n\toutput := LongestPalindromicSubstring(\"abcdefgfedcbazzzzzzzzzzzzzzzzzzzz\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := \"abcdefgfedcba\"\n\toutput := LongestPalindromicSubstring(\"abcdefgfedcba\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := \"aa\"\n\toutput := LongestPalindromicSubstring(\"abcdefghfedcbaa\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := \"abcdefggfedcba\"\n\toutput := LongestPalindromicSubstring(\"abcdefggfedcba\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := \"zz2345abbbba5432zz\"\n\toutput := LongestPalindromicSubstring(\"zzzzzzz2345abbbba5432zzbbababa\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := \"5abbbba5\"\n\toutput := LongestPalindromicSubstring(\"z234a5abbbba54a32z\")\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\texpected := \"5abbba5\"\n\toutput := LongestPalindromicSubstring(\"z234a5abbba54a32z\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := \"xyzzyx\"\n\toutput := LongestPalindromicSubstring(\"abaxyzzyxf\")\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n^3) time | O(1) space\nfunc LongestPalindromicSubstring(str string) string {\n\tlongest := \"\"\n\tfor i := range str {\n\t\tfor j := i; j < len(str); j++ {\n\t\t\tsubstring := str[i : j+1]\n\t\t\tif len(substring) > len(longest) && isPalindrome(substring) {\n\t\t\t\tlongest = substring\n\t\t\t}\n\t\t}\n\t}\n\treturn longest\n}\n\nfunc isPalindrome(str string) bool {\n\tfor i := range str {\n\t\tj := len(str) - i - 1\n\t\tif str[i] != str[j] {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype substring struct {\n\tleft  int\n\tright int\n}\n\nfunc (ss substring) length() int {\n\treturn ss.right - ss.left\n}\n\n// O(n^2) time | O(1) space\nfunc LongestPalindromicSubstring(str string) string {\n\tresult := substring{0, 1}\n\tfor i := 1; i < len(str); i++ {\n\t\todd := getLongestPalindromeFrom(str, i-1, i+1)\n\t\teven := getLongestPalindromeFrom(str, i-1, i)\n\t\tlongest := even\n\t\tif odd.length() > even.length() {\n\t\t\tlongest = odd\n\t\t}\n\t\tif longest.length() > result.length() {\n\t\t\tresult = longest\n\t\t}\n\t}\n\treturn str[result.left:result.right]\n}\n\nfunc getLongestPalindromeFrom(str string, leftIndex, rightIndex int) substring {\n\tfor leftIndex >= 0 && rightIndex < len(str) {\n\t\tif str[leftIndex] != str[rightIndex] {\n\t\t\tbreak\n\t\t}\n\t\tleftIndex -= 1\n\t\trightIndex += 1\n\t}\n\treturn substring{leftIndex + 1, rightIndex}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static String longestPalindromicSubstring(String str) {\n    // Write your code here.\n    return \"\";\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"a\").equals(\"a\"));\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"it's highnoon\").equals(\"noon\"));\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"noon high it is\").equals(\"noon\"));\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"abccbait's highnoon\").equals(\"abccba\"));\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"abaxyzzyxf\").equals(\"xyzzyx\"));\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(\n        Program.longestPalindromicSubstring(\"abcdefgfedcbazzzzzzzzzzzzzzzzzzzz\")\n            .equals(\"zzzzzzzzzzzzzzzzzzzz\"));\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"abcdefgfedcba\").equals(\"abcdefgfedcba\"));\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"abcdefghfedcbaa\").equals(\"aa\"));\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(\n        Program.longestPalindromicSubstring(\"abcdefggfedcba\").equals(\"abcdefggfedcba\"));\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(\n        Program.longestPalindromicSubstring(\"zzzzzzz2345abbbba5432zzbbababa\")\n            .equals(\"zz2345abbbba5432zz\"));\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"z234a5abbbba54a32z\").equals(\"5abbbba5\"));\n  }\n\n  @Test\n  public void TestCase12() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"z234a5abbba54a32z\").equals(\"5abbba5\"));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.longestPalindromicSubstring(\"abaxyzzyxf\").equals(\"xyzzyx\"));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^3) time | O(1) space\n  public static String longestPalindromicSubstring(String str) {\n    String longest = \"\";\n    for (int i = 0; i < str.length(); i++) {\n      for (int j = i; j < str.length(); j++) {\n        String substring = str.substring(i, j + 1);\n        if (substring.length() > longest.length() && isPalindrome(substring)) {\n          longest = substring;\n        }\n      }\n    }\n    return longest;\n  }\n\n  public static boolean isPalindrome(String str) {\n    int leftIdx = 0;\n    int rightIdx = str.length() - 1;\n    while (leftIdx < rightIdx) {\n      if (str.charAt(leftIdx) != str.charAt(rightIdx)) {\n        return false;\n      }\n      leftIdx++;\n      rightIdx--;\n    }\n    return true;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(1) space\n  public static String longestPalindromicSubstring(String str) {\n    int[] currentLongest = {0, 1};\n    for (int i = 1; i < str.length(); i++) {\n      int[] odd = getLongestPalindromeFrom(str, i - 1, i + 1);\n      int[] even = getLongestPalindromeFrom(str, i - 1, i);\n      int[] longest = odd[1] - odd[0] > even[1] - even[0] ? odd : even;\n      currentLongest =\n          currentLongest[1] - currentLongest[0] > longest[1] - longest[0]\n              ? currentLongest\n              : longest;\n    }\n    return str.substring(currentLongest[0], currentLongest[1]);\n  }\n\n  public static int[] getLongestPalindromeFrom(String str, int leftIdx, int rightIdx) {\n    while (leftIdx >= 0 && rightIdx < str.length()) {\n      if (str.charAt(leftIdx) != str.charAt(rightIdx)) {\n        break;\n      }\n      leftIdx--;\n      rightIdx++;\n    }\n    return new int[] {leftIdx + 1, rightIdx};\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function longestPalindromicSubstring(string) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.longestPalindromicSubstring = longestPalindromicSubstring;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.longestPalindromicSubstring('a')).to.deep.equal('a');\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.longestPalindromicSubstring(\"it's highnoon\")).to.deep.equal('noon');\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.longestPalindromicSubstring('noon high it is')).to.deep.equal('noon');\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.longestPalindromicSubstring(\"abccbait's highnoon\")).to.deep.equal('abccba');\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.longestPalindromicSubstring('abaxyzzyxf')).to.deep.equal('xyzzyx');\n});\n\nit('Test Case #6', function () {\n  chai\n    .expect(program.longestPalindromicSubstring('abcdefgfedcbazzzzzzzzzzzzzzzzzzzz'))\n    .to.deep.equal('zzzzzzzzzzzzzzzzzzzz');\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.longestPalindromicSubstring('abcdefgfedcba')).to.deep.equal('abcdefgfedcba');\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.longestPalindromicSubstring('abcdefghfedcbaa')).to.deep.equal('aa');\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.longestPalindromicSubstring('abcdefggfedcba')).to.deep.equal('abcdefggfedcba');\n});\n\nit('Test Case #10', function () {\n  chai\n    .expect(program.longestPalindromicSubstring('zzzzzzz2345abbbba5432zzbbababa'))\n    .to.deep.equal('zz2345abbbba5432zz');\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.longestPalindromicSubstring('z234a5abbbba54a32z')).to.deep.equal('5abbbba5');\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.longestPalindromicSubstring('z234a5abbba54a32z')).to.deep.equal('5abbba5');\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.longestPalindromicSubstring('abaxyzzyxf')).to.deep.equal('xyzzyx');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^3) time | O(1) space\nfunction longestPalindromicSubstring(string) {\n  let longest = '';\n  for (let i = 0; i < string.length; i++) {\n    for (let j = i; j < string.length; j++) {\n      const substring = string.slice(i, j + 1);\n      if (substring.length > longest.length && isPalindrome(substring)) {\n        longest = substring;\n      }\n    }\n  }\n  return longest;\n}\n\nfunction isPalindrome(string) {\n  let leftIdx = 0;\n  let rightIdx = string.length - 1;\n  while (leftIdx < rightIdx) {\n    if (string[leftIdx] !== string[rightIdx]) return false;\n    leftIdx++;\n    rightIdx--;\n  }\n  return true;\n}\n\nexports.longestPalindromicSubstring = longestPalindromicSubstring;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(1) space\nfunction longestPalindromicSubstring(string) {\n  let currentLongest = [0, 1];\n  for (let i = 1; i < string.length; i++) {\n    const odd = getLongestPalindromeFrom(string, i - 1, i + 1);\n    const even = getLongestPalindromeFrom(string, i - 1, i);\n    const longest = odd[1] - odd[0] > even[1] - even[0] ? odd : even;\n    currentLongest = currentLongest[1] - currentLongest[0] > longest[1] - longest[0] ? currentLongest : longest;\n  }\n  return string.slice(currentLongest[0], currentLongest[1]);\n}\n\nfunction getLongestPalindromeFrom(string, leftIdx, rightIdx) {\n  while (leftIdx >= 0 && rightIdx < string.length) {\n    if (string[leftIdx] !== string[rightIdx]) break;\n    leftIdx--;\n    rightIdx++;\n  }\n  return [leftIdx + 1, rightIdx];\n}\n\nexports.longestPalindromicSubstring = longestPalindromicSubstring;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def longestPalindromicSubstring(string):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"a\"), \"a\")\n\n    def test_case_2(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"it's highnoon\"), \"noon\")\n\n    def test_case_3(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"noon high it is\"), \"noon\")\n\n    def test_case_4(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"abccbait's highnoon\"), \"abccba\")\n\n    def test_case_5(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"abaxyzzyxf\"), \"xyzzyx\")\n\n    def test_case_6(self):\n        self.assertEqual(\n            program.longestPalindromicSubstring(\"abcdefgfedcbazzzzzzzzzzzzzzzzzzzz\"), \"zzzzzzzzzzzzzzzzzzzz\"\n        )\n\n    def test_case_7(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"abcdefgfedcba\"), \"abcdefgfedcba\")\n\n    def test_case_8(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"abcdefghfedcbaa\"), \"aa\")\n\n    def test_case_9(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"abcdefggfedcba\"), \"abcdefggfedcba\")\n\n    def test_case_10(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"zzzzzzz2345abbbba5432zzbbababa\"), \"zz2345abbbba5432zz\")\n\n    def test_case_11(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"z234a5abbbba54a32z\"), \"5abbbba5\")\n\n    def test_case_12(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"z234a5abbba54a32z\"), \"5abbba5\")\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.longestPalindromicSubstring(\"abaxyzzyxf\"), \"xyzzyx\")\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^3) time | O(1) space\ndef longestPalindromicSubstring(string):\n    longest = \"\"\n    for i in range(len(string)):\n        for j in range(i, len(string)):\n            substring = string[i : j + 1]\n            if len(substring) > len(longest) and isPalindrome(substring):\n                longest = substring\n    return longest\n\n\ndef isPalindrome(string):\n    leftIdx = 0\n    rightIdx = len(string) - 1\n    while leftIdx < rightIdx:\n        if string[leftIdx] != string[rightIdx]:\n            return False\n        leftIdx += 1\n        rightIdx -= 1\n    return True\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(1) space\ndef longestPalindromicSubstring(string):\n    currentLongest = [0, 1]\n    for i in range(1, len(string)):\n        odd = getLongestPalindromeFrom(string, i - 1, i + 1)\n        even = getLongestPalindromeFrom(string, i - 1, i)\n        longest = max(odd, even, key=lambda x: x[1] - x[0])\n        currentLongest = max(longest, currentLongest, key=lambda x: x[1] - x[0])\n    return string[currentLongest[0] : currentLongest[1]]\n\n\ndef getLongestPalindromeFrom(string, leftIdx, rightIdx):\n    while leftIdx >= 0 and rightIdx < len(string):\n        if string[leftIdx] != string[rightIdx]:\n            break\n        leftIdx -= 1\n        rightIdx += 1\n    return [leftIdx + 1, rightIdx]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func longestPalindromicSubstring(string: String) -> String {\n    // Write your code here.\n    return \"\"\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(\"a\", program.longestPalindromicSubstring(string: \"a\"))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(\"noon\", program.longestPalindromicSubstring(string: \"it's highnoon\"))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(\"noon\", program.longestPalindromicSubstring(string: \"noon high it is\"))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(\"abccba\", program.longestPalindromicSubstring(string: \"abccbait's highnoon\"))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(\"xyzzyx\", program.longestPalindromicSubstring(string: \"abaxyzzyxf\"))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(\"zzzzzzzzzzzzzzzzzzzz\", program.longestPalindromicSubstring(string: \"abcdefgfedcbazzzzzzzzzzzzzzzzzzzz\"))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(\"abcdefgfedcba\", program.longestPalindromicSubstring(string: \"abcdefgfedcba\"))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(\"aa\", program.longestPalindromicSubstring(string: \"abcdefghfedcbaa\"))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(\"abcdefggfedcba\", program.longestPalindromicSubstring(string: \"abcdefggfedcba\"))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(\"zz2345abbbba5432zz\", program.longestPalindromicSubstring(string: \"zzzzzzz2345abbbba5432zzbbababa\"))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(\"5abbbba5\", program.longestPalindromicSubstring(string: \"z234a5abbbba54a32z\"))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(\"5abbba5\", program.longestPalindromicSubstring(string: \"z234a5abbba54a32z\"))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(\"xyzzyx\", program.longestPalindromicSubstring(string: \"abaxyzzyxf\"))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^3) time | O(1) space\n  func longestPalindromicSubstring(string: String) -> String {\n    var longest = \"\"\n\n    for i in 0 ..< string.count {\n      for j in i ..< string.count {\n        let leftIndex = string.index(string.startIndex, offsetBy: i)\n        let rightIndex = string.index(string.startIndex, offsetBy: j + 1)\n        let substring = String(string[leftIndex ..< rightIndex])\n\n        if substring.count > longest.count, isPalindrome(string: substring) {\n          longest = substring\n        }\n      }\n    }\n\n    return longest\n  }\n\n  func isPalindrome(string: String) -> Bool {\n    var leftPointer = 0\n    var rightPointer = string.count - 1\n    var leftIndex = string.index(string.startIndex, offsetBy: leftPointer)\n    var rightIndex = string.index(string.startIndex, offsetBy: rightPointer)\n\n    while leftIndex < rightIndex {\n      if string[leftIndex] != string[rightIndex] {\n        return false\n      }\n\n      leftPointer = leftPointer + 1\n      rightPointer = rightPointer - 1\n      leftIndex = string.index(string.startIndex, offsetBy: leftPointer)\n      rightIndex = string.index(string.startIndex, offsetBy: rightPointer)\n    }\n\n    return true\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(1) space\n  func longestPalindromicSubstring(string: String) -> String {\n    var currentLongest = [0, 1]\n\n    for i in 1 ..< string.count {\n      var oddLeftIndex = i - 1\n      var oddRightIndex = i + 1\n      let odd = getLongestPalindromeFrom(string: string, leftIndex: &oddLeftIndex, rightIndex: &oddRightIndex)\n\n      var evenLeftIndex = i - 1\n      var evenRightIndex = i\n      let even = getLongestPalindromeFrom(string: string, leftIndex: &evenLeftIndex, rightIndex: &evenRightIndex)\n\n      var temporaryLongest = [Int]()\n\n      if let oddFirst = odd.first, let oddLast = odd.last, let evenFirst = even.first, let evenLast = even.last {\n        if oddLast - oddFirst > evenLast - evenFirst {\n          temporaryLongest = odd\n        } else {\n          temporaryLongest = even\n        }\n      }\n\n      if let temporaryFirst = temporaryLongest.first, let temporaryLast = temporaryLongest.last, let currentFirst = currentLongest.first, let currentLast = currentLongest.last {\n        if temporaryLast - temporaryFirst > currentLast - currentFirst {\n          currentLongest = temporaryLongest\n        }\n      }\n    }\n\n    let firstIndex = string.index(string.startIndex, offsetBy: currentLongest.first!)\n    let lastIndex = string.index(string.startIndex, offsetBy: currentLongest.last!)\n    let result = String(string[firstIndex ..< lastIndex])\n\n    return result\n  }\n\n  func getLongestPalindromeFrom(string: String, leftIndex: inout Int, rightIndex: inout Int) -> [Int] {\n    while leftIndex >= 0, rightIndex < string.count {\n      let leftStringIndex = string.index(string.startIndex, offsetBy: leftIndex)\n      let rightStringIndex = string.index(string.startIndex, offsetBy: rightIndex)\n\n      if string[leftStringIndex] != string[rightStringIndex] {\n        break\n      }\n\n      leftIndex -= 1\n      rightIndex += 1\n    }\n\n    return [leftIndex + 1, rightIndex]\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function longestPalindromicSubstring(string: string) {\n  // Write your code here.\n  return '';\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.longestPalindromicSubstring('abaxyzzyxf')).to.deep.equal('xyzzyx');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^3) time | O(1) space\nexport function longestPalindromicSubstring(string: string) {\n  let longest = '';\n  for (let i = 0; i < string.length; i++) {\n    for (let j = i; j < string.length; j++) {\n      const substring = string.slice(i, j + 1);\n      if (substring.length > longest.length && isPalindrome(substring)) {\n        longest = substring;\n      }\n    }\n  }\n  return longest;\n}\n\nfunction isPalindrome(string: string) {\n  let leftIdx = 0;\n  let rightIdx = string.length - 1;\n  while (leftIdx < rightIdx) {\n    if (string[leftIdx] !== string[rightIdx]) return false;\n    leftIdx++;\n    rightIdx--;\n  }\n  return true;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(1) space\nexport function longestPalindromicSubstring(string: string) {\n  let currentLongest = [0, 1];\n  for (let i = 1; i < string.length; i++) {\n    const odd = getLongestPalindromeFrom(string, i - 1, i + 1);\n    const even = getLongestPalindromeFrom(string, i - 1, i);\n    const longest = odd[1] - odd[0] > even[1] - even[0] ? odd : even;\n    currentLongest = currentLongest[1] - currentLongest[0] > longest[1] - longest[0] ? currentLongest : longest;\n  }\n  return string.slice(currentLongest[0], currentLongest[1]);\n}\n\nfunction getLongestPalindromeFrom(string: string, leftIdx: number, rightIdx: number) {\n  while (leftIdx >= 0 && rightIdx < string.length) {\n    if (string[leftIdx] !== string[rightIdx]) break;\n    leftIdx--;\n    rightIdx++;\n  }\n  return [leftIdx + 1, rightIdx];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "string": "abaxyzzyxf"
+    },
+    {
+      "string": "a"
+    },
+    {
+      "string": "it's highnoon"
+    },
+    {
+      "string": "noon high it is"
+    },
+    {
+      "string": "abccbait's highnoon"
+    },
+    {
+      "string": "abcdefgfedcbazzzzzzzzzzzzzzzzzzzz"
+    },
+    {
+      "string": "abcdefgfedcba"
+    },
+    {
+      "string": "abcdefghfedcbaa"
+    },
+    {
+      "string": "abcdefggfedcba"
+    },
+    {
+      "string": "zzzzzzz2345abbbba5432zzbbababa"
+    },
+    {
+      "string": "z234a5abbbba54a32z"
+    },
+    {
+      "string": "z234a5abbba54a32z"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      "xyzzyx",
+      "a",
+      "noon",
+      "noon",
+      "abccba",
+      "zzzzzzzzzzzzzzzzzzzz",
+      "abcdefgfedcba",
+      "aa",
+      "abcdefggfedcba",
+      "zz2345abbbba5432zz",
+      "5abbbba5",
+      "5abbba5"
+    ]
+  ]
+}

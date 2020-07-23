@@ -1,0 +1,388 @@
+{
+  "Summary": {
+    "Name": "Four Number Sum",
+    "Category": "Arrays",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 453,
+      "timeOne": 0,
+      "timeTwo": 2327,
+      "url": "https://player.vimeo.com/video/250023080"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Using four for loops to calculate the sums of all possible quadruplets in the array would generate an algorithm that runs in O(n^4) time, where n is the length of the input array. Can you come up with something faster using fewer for loops?\nYou can calculate the sums of every pair of numbers in the array in O(n^2) time using just two for loops. Then, assuming that you've stored all of these sums in a hash table, you can fairly easily find which two sums can be paired to add up to the target sum: the numbers summing up to these two sums constitute candidates for valid quadruplets; you just have to make sure that no number was used to generate both of the two sums.\nYou can do everything described in Hint #2 with just two sibling for loops nested inside a third for loop. Your goal is to create a hash table mapping the sums of every pair of numbers in the array to an array of arrays, with each subarray representing the indices of each pair summing up to that number. Loop through the input array with a simple for loop. Inside this loop, loop through the input array again, starting at the index of the first loop. At each iteration, calculate the difference between the target sum and the sum of the two numbers represented by the indices of the for loops. If that difference is in the hash table that you're building, then valid quadruplets can be formed by combining the current pair of numbers with each pair stored in the hash table at the difference just calculated. Following this nested for loop, loop through the array again, this time starting at index zero all the way to the index of the first for loop. At each iteration, calculate the sum of the two numbers represented by the indices of the for loops and add it to the hash table if it isn't already there; then add the pair of indices to the array that the sum in the hash table maps to.\n",
+  "SpaceTime": "Average: O(n^2) time | O(n^2) space - where n is the length of the input array\nWorst: O(n^3) time | O(n^2) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a non-empty array of distinct integers and an\n  integer representing a target sum. The function should find all quadruplets in\n  the array that sum up to the target sum and return a two-dimensional array of\n  all these quadruplets in no particular order.\n</p>\n<p>\n  If no four numbers sum up to the target sum, the function should return an\n  empty array.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [7, 6, 4, -1, 1, 2]\n<span class=\"CodeEditor-promptParameter\">targetSum</span> = 16\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[[7, 6, 4, -1], [7, 6, 1, 2]] <span class=\"CodeEditor-promptComment\">// the quadruplets could be ordered differently</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        7,
+        6,
+        4,
+        -1,
+        1,
+        2
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      }
+    },
+    {
+      "Name": "targetSum",
+      "Example": 16,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<vector<int>> fourNumberSum(vector<int> array, int targetSum) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "string sortAndStringify(vector<int> array) {\n  sort(array.begin(), array.end());\n  string s;\n  for (int elem : array) {\n    s += to_string(elem);\n    s += \",\";\n  }\n  return s;\n}\n\nbool isIncluded(vector<string> array, string str1) {\n  for (string str2 : array) {\n    if (str1 == str2) {\n      return true;\n    }\n  }\n  return false;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> output = fourNumberSum({1, 2, 3, 4, 5, 6, 7}, 10);\n      vector<string> output2{};\n      for (vector<int> arr : output) {\n        output2.push_back(sortAndStringify(arr));\n      }\n      vector<vector<int>> quadruplets{\n          {1, 2, 3, 4},\n      };\n      assert(output2.size() == 1);\n      for (vector<int> quadruplet : quadruplets) {\n        string str1 = sortAndStringify(quadruplet);\n        bool included = isIncluded(output2, str1);\n        assert(included == true);\n      }\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<vector<int>> output = fourNumberSum({7, 6, 4, -1, 1, 2}, 16);\n      vector<string> output2{};\n      for (vector<int> arr : output) {\n        output2.push_back(sortAndStringify(arr));\n      }\n      vector<vector<int>> quadruplets{\n          {7, 6, 4, -1},\n          {7, 6, 1, 2},\n      };\n      assert(output2.size() == 2);\n      for (vector<int> quadruplet : quadruplets) {\n        string str1 = sortAndStringify(quadruplet);\n        bool included = isIncluded(output2, str1);\n        assert(included == true);\n      }\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<vector<int>> output = fourNumberSum({5, -5, -2, 2, 3, -3}, 0);\n      vector<string> output2{};\n      for (vector<int> arr : output) {\n        output2.push_back(sortAndStringify(arr));\n      }\n      vector<vector<int>> quadruplets{\n          {5, -5, -2, 2},\n          {5, -5, 3, -3},\n          {-2, 2, 3, -3},\n      };\n      assert(output2.size() == 3);\n      for (vector<int> quadruplet : quadruplets) {\n        string str1 = sortAndStringify(quadruplet);\n        bool included = isIncluded(output2, str1);\n        assert(included == true);\n      }\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<vector<int>> output =\n          fourNumberSum({-2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 4);\n      vector<string> output2{};\n      for (vector<int> arr : output) {\n        output2.push_back(sortAndStringify(arr));\n      }\n      vector<vector<int>> quadruplets{\n          {-2, -1, 1, 6},\n          {-2, 1, 2, 3},\n          {-2, -1, 2, 5},\n          {-2, -1, 3, 4},\n      };\n      assert(output2.size() == 4);\n      for (vector<int> quadruplet : quadruplets) {\n        string str1 = sortAndStringify(quadruplet);\n        bool included = isIncluded(output2, str1);\n        assert(included == true);\n      }\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<vector<int>> output =\n          fourNumberSum({-1, 22, 18, 4, 7, 11, 2, -5, -3}, 30);\n      vector<string> output2{};\n      for (vector<int> arr : output) {\n        output2.push_back(sortAndStringify(arr));\n      }\n      vector<vector<int>> quadruplets{\n          {-1, 22, 7, 2},  {22, 4, 7, -3},  {-1, 18, 11, 2},\n          {18, 4, 11, -3}, {22, 11, 2, -5},\n      };\n      assert(output2.size() == 5);\n      for (vector<int> quadruplet : quadruplets) {\n        string str1 = sortAndStringify(quadruplet);\n        bool included = isIncluded(output2, str1);\n        assert(included == true);\n      }\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<vector<int>> output =\n          fourNumberSum({-10, -3, -5, 2, 15, -7, 28, -6, 12, 8, 11, 5}, 20);\n      vector<string> output2{};\n      for (vector<int> arr : output) {\n        output2.push_back(sortAndStringify(arr));\n      }\n      vector<vector<int>> quadruplets{\n          {-5, 2, 15, 8},  {-3, 2, -7, 28}, {-10, -3, 28, 5}, {-10, 28, -6, 8},\n          {-7, 28, -6, 5}, {-5, 2, 12, 11}, {-5, 12, 8, 5},\n      };\n      assert(output2.size() == 7);\n      for (vector<int> quadruplet : quadruplets) {\n        string str1 = sortAndStringify(quadruplet);\n        bool included = isIncluded(output2, str1);\n        assert(included == true);\n      }\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<vector<int>> output = fourNumberSum({1, 2, 3, 4, 5}, 100);\n      vector<string> output2{};\n      for (vector<int> arr : output) {\n        output2.push_back(sortAndStringify(arr));\n      }\n      assert(output2.size() == 0);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nstring sortAndStringify(vector<int> array) {\n  sort(array.begin(), array.end());\n  string s;\n  for (int elem : array) {\n    s += to_string(elem);\n    s += \",\";\n  }\n  return s;\n}\n\nbool isIncluded(vector<string> array, string str1) {\n  for (string str2 : array) {\n    if (str1 == str2) {\n      return true;\n    }\n  }\n  return false;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> output = fourNumberSum({7, 6, 4, -1, 1, 2}, 16);\n      vector<string> output2{};\n      for (vector<int> arr : output) {\n        output2.push_back(sortAndStringify(arr));\n      }\n      vector<vector<int>> quadruplets{\n          {7, 6, 4, -1},\n          {7, 6, 1, 2},\n      };\n      assert(output2.size() == 2);\n      for (vector<int> quadruplet : quadruplets) {\n        string str1 = sortAndStringify(quadruplet);\n        bool included = isIncluded(output2, str1);\n        assert(included == true);\n      }\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <unordered_map>\n#include <algorithm>\nusing namespace std;\n\n// Average: O(n^2) time | O(n^2) space\n// Worst: O(n^3) time | O(n^2) space\nvector<vector<int>> fourNumberSum(vector<int> array, int targetSum) {\n  unordered_map<int, vector<vector<int>>> allPairSums;\n  vector<vector<int>> quadruplets{};\n  for (int i = 1; i < array.size() - 1; i++) {\n    for (int j = i + 1; j < array.size(); j++) {\n      int currentSum = array[i] + array[j];\n      int difference = targetSum - currentSum;\n      if (allPairSums.find(difference) != allPairSums.end()) {\n        for (vector<int> pair : allPairSums[difference]) {\n          pair.push_back(array[i]);\n          pair.push_back(array[j]);\n          quadruplets.push_back(pair);\n        }\n      }\n    }\n    for (int k = 0; k < i; k++) {\n      int currentSum = array[i] + array[k];\n      if (allPairSums.find(currentSum) == allPairSums.end()) {\n        allPairSums[currentSum] = vector<vector<int>>{{array[k], array[i]}};\n      } else {\n        allPairSums[currentSum].push_back(vector<int>{array[k], array[i]});\n      }\n    }\n  }\n  return quadruplets;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<int[]> FourNumberSum(int[] array, int targetSum) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tprivate bool compare(List<int[]> quads1, List<int[]> quads2) {\n\t\tforeach (int[] quad in quads2) {\n\t\t\tArray.Sort(quad);\n\t\t}\n\t\tforeach (int[] quad in quads1) {\n\t\t\tArray.Sort(quad);\n\t\t}\n\t\tforeach (int[] quad2 in quads2) {\n\t\t\tbool found = false;\n\t\t\tforeach (int[] quad1 in quads1) {\n\t\t\t\tif (Enumerable.SequenceEqual(quad2, quad1)) {\n\t\t\t\t\tfound = true;\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\t\t\tif (found == false) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int[]> output = Program.FourNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7}, 10);\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tquadruplets.Add(new int[] {1, 2, 3, 4});\n\t\tUtils.AssertEquals(quadruplets.Count, output.Count);\n\t\tUtils.AssertTrue(this.compare(quadruplets, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<int[]> output = Program.FourNumberSum(new int[] {7, 6, 4, -1, 1, 2}, 16);\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tquadruplets.Add(new int[] {7, 6, 4, -1});\n\t\tquadruplets.Add(new int[] {7, 6, 1, 2});\n\t\tUtils.AssertTrue(quadruplets.Count == output.Count);\n\t\tUtils.AssertTrue(this.compare(quadruplets, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<int[]> output = Program.FourNumberSum(new int[] {5, -5, -2, 2, 3, -3}, 0);\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tquadruplets.Add(new int[] {5, -5, -2, 2});\n\t\tquadruplets.Add(new int[] {5, -5, 3, -3});\n\t\tquadruplets.Add(new int[] {-2, 2, 3, -3});\n\t\tUtils.AssertEquals(quadruplets.Count, output.Count);\n\t\tUtils.AssertTrue(this.compare(quadruplets, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<int[]> output = Program.FourNumberSum(new int[] {-2, -1, 1, 2, 3, 4, 5, 6, 7,\n\t\t                                                      8, 9}, 4);\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tquadruplets.Add(new int[] {-2, -1, 1, 6});\n\t\tquadruplets.Add(new int[] {-2, 1, 2, 3});\n\t\tquadruplets.Add(new int[] {-2, -1, 2, 5});\n\t\tquadruplets.Add(new int[] {-2, -1, 3, 4});\n\t\tUtils.AssertEquals(quadruplets.Count, output.Count);\n\t\tUtils.AssertTrue(this.compare(quadruplets, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<int[]> output = Program.FourNumberSum(new int[] {-1, 22, 18, 4, 7, 11, 2, -5,\n\t\t                                                      -3}, 30);\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tquadruplets.Add(new int[] {-1, 22, 7, 2});\n\t\tquadruplets.Add(new int[] {22, 4, 7, -3});\n\t\tquadruplets.Add(new int[] {-1, 18, 11, 2});\n\t\tquadruplets.Add(new int[] {18, 4, 11, -3});\n\t\tquadruplets.Add(new int[] {22, 11, 2, -5});\n\t\tUtils.AssertEquals(quadruplets.Count, output.Count);\n\t\tUtils.AssertTrue(this.compare(quadruplets, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<int[]> output = Program.FourNumberSum(new int[] {-10, -3, -5, 2, 15, -7, 28,\n\t\t                                                      -6, 12, 8, 11, 5}, 20);\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tquadruplets.Add(new int[] {-5, 2, 15, 8});\n\t\tquadruplets.Add(new int[] {-3, 2, -7, 28});\n\t\tquadruplets.Add(new int[] {-10, -3, 28, 5});\n\t\tquadruplets.Add(new int[] {-10, 28, -6, 8});\n\t\tquadruplets.Add(new int[] {-7, 28, -6, 5});\n\t\tquadruplets.Add(new int[] {-5, 2, 12, 11});\n\t\tquadruplets.Add(new int[] {-5, 12, 8, 5});\n\t\tUtils.AssertEquals(quadruplets.Count, output.Count);\n\t\tUtils.AssertTrue(this.compare(quadruplets, output));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<int[]> output = Program.FourNumberSum(new int[] {1, 2, 3, 4, 5}, 100);\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tUtils.AssertEquals(quadruplets.Count, output.Count);\n\t\tUtils.AssertTrue(this.compare(quadruplets, output));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System;\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tprivate bool compare(List<int[]> quads1, List<int[]> quads2) {\n\t\tforeach (int[] quad in quads2) {\n\t\t\tArray.Sort(quad);\n\t\t}\n\t\tforeach (int[] quad in quads1) {\n\t\t\tArray.Sort(quad);\n\t\t}\n\t\tforeach (int[] quad2 in quads2) {\n\t\t\tbool found = false;\n\t\t\tforeach (int[] quad1 in quads1) {\n\t\t\t\tif (Enumerable.SequenceEqual(quad2, quad1)) {\n\t\t\t\t\tfound = true;\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\t\t\tif (found == false) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int[]> output = Program.FourNumberSum(new int[] {7, 6, 4, -1, 1, 2}, 16);\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tquadruplets.Add(new int[] {7, 6, 4, -1});\n\t\tquadruplets.Add(new int[] {7, 6, 1, 2});\n\t\tUtils.AssertTrue(quadruplets.Count == output.Count);\n\t\tUtils.AssertTrue(this.compare(quadruplets, output));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\n// Average: O(n^2) time | O(n^2) space\n// Worst: O(n^3) time | O(n^2) space\npublic class Program {\n\tpublic static List<int[]> FourNumberSum(int[] array, int targetSum) {\n\t\tDictionary<int, List<int[]> > allPairSums = new Dictionary<int, List<int[]> >();\n\t\tList<int[]> quadruplets = new List<int[]>();\n\t\tfor (int i = 1; i < array.Length - 1; i++) {\n\t\t\tfor (int j = i + 1; j < array.Length; j++) {\n\t\t\t\tint currentSum = array[i] + array[j];\n\t\t\t\tint difference = targetSum - currentSum;\n\t\t\t\tif (allPairSums.ContainsKey(difference)) {\n\t\t\t\t\tforeach (int[] pair in allPairSums[difference]) {\n\t\t\t\t\t\tint[] newQuadruplet =\n\t\t\t\t\t\t{pair[0], pair[1], array[i], array[j]};\n\t\t\t\t\t\tquadruplets.Add(newQuadruplet);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t\tfor (int k = 0; k < i; k++) {\n\t\t\t\tint currentSum = array[i] + array[k];\n\t\t\t\tint[] pair = {array[k], array[i]};\n\t\t\t\tif (!allPairSums.ContainsKey(currentSum)) {\n\t\t\t\t\tList<int[]> pairGroup = new List<int[]>();\n\t\t\t\t\tpairGroup.Add(pair);\n\t\t\t\t\tallPairSums.Add(currentSum, pairGroup);\n\t\t\t\t} else {\n\t\t\t\t\tallPairSums[currentSum].Add(pair);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn quadruplets;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc FourNumberSum(array []int, target int) [][]int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc doTest(t *TestCase, expected, output [][]int) {\n\tt.Helper()\n\trequire.Len(t, output, len(expected))\n\tfor _, quad := range expected {\n\t\tsort.Ints(quad)\n\t\tourquad := fmt.Sprintf(\"%v\", quad)\n\t\tfound := false\n\t\tfor _, theirquad := range output {\n\t\t\tsort.Ints(theirquad)\n\t\t\tif fmt.Sprintf(\"%v\", theirquad) == ourquad {\n\t\t\t\tfound = true\n\t\t\t\tbreak\n\t\t\t}\n\t\t}\n\t\trequire.True(t, found)\n\t}\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := [][]int{{1, 2, 3, 4}}\n\toutput := FourNumberSum([]int{1, 2, 3, 4, 5, 6, 7}, 10)\n\tdoTest(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := [][]int{{7, 6, 4, -1}, {7, 6, 1, 2}}\n\toutput := FourNumberSum([]int{7, 6, 4, -1, 1, 2}, 16)\n\tdoTest(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := [][]int{{5, -5, -2, 2}, {5, -5, 3, -3}, {-2, 2, 3, -3}}\n\toutput := FourNumberSum([]int{5, -5, -2, 2, 3, -3}, 0)\n\tdoTest(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := [][]int{\n\t\t{-2, -1, 1, 6},\n\t\t{-2, 1, 2, 3},\n\t\t{-2, -1, 2, 5},\n\t\t{-2, -1, 3, 4},\n\t}\n\toutput := FourNumberSum([]int{-2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 4)\n\tdoTest(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := [][]int{\n\t\t{-1, 22, 7, 2},\n\t\t{22, 4, 7, -3},\n\t\t{-1, 18, 11, 2},\n\t\t{18, 4, 11, -3},\n\t\t{22, 11, 2, -5},\n\t}\n\toutput := FourNumberSum([]int{-1, 22, 18, 4, 7, 11, 2, -5, -3}, 30)\n\tdoTest(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := [][]int{\n\t\t{-5, 2, 15, 8},\n\t\t{-3, 2, -7, 28},\n\t\t{-10, -3, 28, 5},\n\t\t{-10, 28, -6, 8},\n\t\t{-7, 28, -6, 5},\n\t\t{-5, 2, 12, 11},\n\t\t{-5, 12, 8, 5},\n\t}\n\toutput := FourNumberSum([]int{-10, -3, -5, 2, 15, -7, 28, -6, 12, 8, 11, 5}, 20)\n\tdoTest(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := [][]int{}\n\toutput := FourNumberSum([]int{1, 2, 3, 4, 5}, 100)\n\tdoTest(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc doTest(t *TestCase, expected, output [][]int) {\n\tt.Helper()\n\trequire.Len(t, output, len(expected))\n\tfor _, quad := range expected {\n\t\tsort.Ints(quad)\n\t\tourquad := fmt.Sprintf(\"%v\", quad)\n\t\tfound := false\n\t\tfor _, theirquad := range output {\n\t\t\tsort.Ints(theirquad)\n\t\t\tif fmt.Sprintf(\"%v\", theirquad) == ourquad {\n\t\t\t\tfound = true\n\t\t\t\tbreak\n\t\t\t}\n\t\t}\n\t\trequire.True(t, found)\n\t}\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := [][]int{{7, 6, 4, -1}, {7, 6, 1, 2}}\n\toutput := FourNumberSum([]int{7, 6, 4, -1, 1, 2}, 16)\n\tdoTest(t, expected, output)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// Average: O(n^2) time | O(n^2) space\n// Worst: O(n^3) time | O(n^2) space\nfunc FourNumberSum(array []int, target int) [][]int {\n\tallPairSums := map[int][][]int{}\n\tquadruplets := [][]int{}\n\tfor i := 1; i < len(array)-1; i++ {\n\t\tfor j := i + 1; j < len(array); j++ {\n\t\t\tcurrentSum := array[i] + array[j]\n\t\t\tdifference := target - currentSum\n\t\t\tif pairs, found := allPairSums[difference]; found {\n\t\t\t\tfor _, pair := range pairs {\n\t\t\t\t\tnewquad := append(pair, array[i], array[j])\n\t\t\t\t\tquadruplets = append(quadruplets, newquad)\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tfor k := 0; k < i; k++ {\n\t\t\tcurrentSum := array[i] + array[k]\n\t\t\tallPairSums[currentSum] = append(allPairSums[currentSum], []int{array[k], array[i]})\n\t\t}\n\t}\n\treturn quadruplets\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<Integer[]> fourNumberSum(int[] array, int targetSum) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  private boolean compare(List<Integer[]> quads1, List<Integer[]> quads2) {\n    for (Integer[] quad : quads2) {\n      Arrays.sort(quad);\n    }\n    for (Integer[] quad : quads1) {\n      Arrays.sort(quad);\n    }\n    for (Integer[] quad2 : quads2) {\n      boolean found = false;\n      for (Integer[] quad1 : quads1) {\n        if (Arrays.equals(quad2, quad1)) {\n          found = true;\n          break;\n        }\n      }\n      if (found == false) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  @Test\n  public void TestCase1() {\n    List<Integer[]> output = Program.fourNumberSum(new int[] {1, 2, 3, 4, 5, 6, 7}, 10);\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    quadruplets.add(new Integer[] {1, 2, 3, 4});\n    Utils.assertEquals(quadruplets.size(), output.size());\n    Utils.assertTrue(this.compare(quadruplets, output));\n  }\n\n  @Test\n  public void TestCase2() {\n    List<Integer[]> output = Program.fourNumberSum(new int[] {7, 6, 4, -1, 1, 2}, 16);\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    quadruplets.add(new Integer[] {7, 6, 4, -1});\n    quadruplets.add(new Integer[] {7, 6, 1, 2});\n    Utils.assertTrue(quadruplets.size() == output.size());\n    Utils.assertTrue(this.compare(quadruplets, output));\n  }\n\n  @Test\n  public void TestCase3() {\n    List<Integer[]> output = Program.fourNumberSum(new int[] {5, -5, -2, 2, 3, -3}, 0);\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    quadruplets.add(new Integer[] {5, -5, -2, 2});\n    quadruplets.add(new Integer[] {5, -5, 3, -3});\n    quadruplets.add(new Integer[] {-2, 2, 3, -3});\n    Utils.assertEquals(quadruplets.size(), output.size());\n    Utils.assertTrue(this.compare(quadruplets, output));\n  }\n\n  @Test\n  public void TestCase4() {\n    List<Integer[]> output =\n        Program.fourNumberSum(new int[] {-2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 4);\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    quadruplets.add(new Integer[] {-2, -1, 1, 6});\n    quadruplets.add(new Integer[] {-2, 1, 2, 3});\n    quadruplets.add(new Integer[] {-2, -1, 2, 5});\n    quadruplets.add(new Integer[] {-2, -1, 3, 4});\n    Utils.assertEquals(quadruplets.size(), output.size());\n    Utils.assertTrue(this.compare(quadruplets, output));\n  }\n\n  @Test\n  public void TestCase5() {\n    List<Integer[]> output = Program.fourNumberSum(new int[] {-1, 22, 18, 4, 7, 11, 2, -5, -3}, 30);\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    quadruplets.add(new Integer[] {-1, 22, 7, 2});\n    quadruplets.add(new Integer[] {22, 4, 7, -3});\n    quadruplets.add(new Integer[] {-1, 18, 11, 2});\n    quadruplets.add(new Integer[] {18, 4, 11, -3});\n    quadruplets.add(new Integer[] {22, 11, 2, -5});\n    Utils.assertEquals(quadruplets.size(), output.size());\n    Utils.assertTrue(this.compare(quadruplets, output));\n  }\n\n  @Test\n  public void TestCase6() {\n    List<Integer[]> output =\n        Program.fourNumberSum(new int[] {-10, -3, -5, 2, 15, -7, 28, -6, 12, 8, 11, 5}, 20);\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    quadruplets.add(new Integer[] {-5, 2, 15, 8});\n    quadruplets.add(new Integer[] {-3, 2, -7, 28});\n    quadruplets.add(new Integer[] {-10, -3, 28, 5});\n    quadruplets.add(new Integer[] {-10, 28, -6, 8});\n    quadruplets.add(new Integer[] {-7, 28, -6, 5});\n    quadruplets.add(new Integer[] {-5, 2, 12, 11});\n    quadruplets.add(new Integer[] {-5, 12, 8, 5});\n    Utils.assertEquals(quadruplets.size(), output.size());\n    Utils.assertTrue(this.compare(quadruplets, output));\n  }\n\n  @Test\n  public void TestCase7() {\n    List<Integer[]> output = Program.fourNumberSum(new int[] {1, 2, 3, 4, 5}, 100);\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    Utils.assertEquals(quadruplets.size(), output.size());\n    Utils.assertTrue(this.compare(quadruplets, output));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  private boolean compare(List<Integer[]> quads1, List<Integer[]> quads2) {\n    for (Integer[] quad : quads2) {\n      Arrays.sort(quad);\n    }\n    for (Integer[] quad : quads1) {\n      Arrays.sort(quad);\n    }\n    for (Integer[] quad2 : quads2) {\n      boolean found = false;\n      for (Integer[] quad1 : quads1) {\n        if (Arrays.equals(quad2, quad1)) {\n          found = true;\n          break;\n        }\n      }\n      if (found == false) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  @Test\n  public void TestCase1() {\n    List<Integer[]> output = Program.fourNumberSum(new int[] {7, 6, 4, -1, 1, 2}, 16);\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    quadruplets.add(new Integer[] {7, 6, 4, -1});\n    quadruplets.add(new Integer[] {7, 6, 1, 2});\n    Utils.assertTrue(quadruplets.size() == output.size());\n    Utils.assertTrue(this.compare(quadruplets, output));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\n// Average: O(n^2) time | O(n^2) space\n// Worst: O(n^3) time | O(n^2) space\nclass Program {\n  public static List<Integer[]> fourNumberSum(int[] array, int targetSum) {\n    Map<Integer, List<Integer[]>> allPairSums = new HashMap<>();\n    List<Integer[]> quadruplets = new ArrayList<Integer[]>();\n    for (int i = 1; i < array.length - 1; i++) {\n      for (int j = i + 1; j < array.length; j++) {\n        int currentSum = array[i] + array[j];\n        int difference = targetSum - currentSum;\n        if (allPairSums.containsKey(difference)) {\n          for (Integer[] pair : allPairSums.get(difference)) {\n            Integer[] newQuadruplet = {pair[0], pair[1], array[i], array[j]};\n            quadruplets.add(newQuadruplet);\n          }\n        }\n      }\n      for (int k = 0; k < i; k++) {\n        int currentSum = array[i] + array[k];\n        Integer[] pair = {array[k], array[i]};\n        if (!allPairSums.containsKey(currentSum)) {\n          List<Integer[]> pairGroup = new ArrayList<Integer[]>();\n          pairGroup.add(pair);\n          allPairSums.put(currentSum, pairGroup);\n        } else {\n          allPairSums.get(currentSum).add(pair);\n        }\n      }\n    }\n    return quadruplets;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function fourNumberSum(array, targetSum) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.fourNumberSum = fourNumberSum;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nfunction sortAndStringify(array) {\n  return array.sort((a, b) => a - b).join(',');\n}\n\nit('Test Case #1', function () {\n  let output = program.fourNumberSum([1, 2, 3, 4, 5, 6, 7], 10);\n  output = output.map(sortAndStringify);\n  const quadruplets = [[1, 2, 3, 4]];\n  chai.expect(output.length === 1).to.be.true;\n  for (const quadruplet of quadruplets) {\n    chai.expect(output).to.include(sortAndStringify(quadruplet));\n  }\n});\n\nit('Test Case #2', function () {\n  let output = program.fourNumberSum([7, 6, 4, -1, 1, 2], 16);\n  output = output.map(sortAndStringify);\n  const quadruplets = [\n    [7, 6, 4, -1],\n    [7, 6, 1, 2],\n  ];\n  chai.expect(output.length === 2).to.be.true;\n  for (const quadruplet of quadruplets) {\n    chai.expect(output).to.include(sortAndStringify(quadruplet));\n  }\n});\n\nit('Test Case #3', function () {\n  let output = program.fourNumberSum([5, -5, -2, 2, 3, -3], 0);\n  output = output.map(sortAndStringify);\n  const quadruplets = [\n    [5, -5, -2, 2],\n    [5, -5, 3, -3],\n    [-2, 2, 3, -3],\n  ];\n  chai.expect(output.length === 3).to.be.true;\n  for (const quadruplet of quadruplets) {\n    chai.expect(output).to.include(sortAndStringify(quadruplet));\n  }\n});\n\nit('Test Case #4', function () {\n  let output = program.fourNumberSum([-2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9], 4);\n  output = output.map(sortAndStringify);\n  const quadruplets = [\n    [-2, -1, 1, 6],\n    [-2, 1, 2, 3],\n    [-2, -1, 2, 5],\n    [-2, -1, 3, 4],\n  ];\n  chai.expect(output.length === 4).to.be.true;\n  for (const quadruplet of quadruplets) {\n    chai.expect(output).to.include(sortAndStringify(quadruplet));\n  }\n});\n\nit('Test Case #5', function () {\n  let output = program.fourNumberSum([-1, 22, 18, 4, 7, 11, 2, -5, -3], 30);\n  output = output.map(sortAndStringify);\n  const quadruplets = [\n    [-1, 22, 7, 2],\n    [22, 4, 7, -3],\n    [-1, 18, 11, 2],\n    [18, 4, 11, -3],\n    [22, 11, 2, -5],\n  ];\n  chai.expect(output.length === 5).to.be.true;\n  for (const quadruplet of quadruplets) {\n    chai.expect(output).to.include(sortAndStringify(quadruplet));\n  }\n});\n\nit('Test Case #6', function () {\n  let output = program.fourNumberSum([-10, -3, -5, 2, 15, -7, 28, -6, 12, 8, 11, 5], 20);\n  output = output.map(sortAndStringify);\n  const quadruplets = [\n    [-5, 2, 15, 8],\n    [-3, 2, -7, 28],\n    [-10, -3, 28, 5],\n    [-10, 28, -6, 8],\n    [-7, 28, -6, 5],\n    [-5, 2, 12, 11],\n    [-5, 12, 8, 5],\n  ];\n  chai.expect(output.length === 7).to.be.true;\n  for (const quadruplet of quadruplets) {\n    chai.expect(output).to.include(sortAndStringify(quadruplet));\n  }\n});\n\nit('Test Case #7', function () {\n  let output = program.fourNumberSum([1, 2, 3, 4, 5], 100);\n  output = output.map(sortAndStringify);\n  chai.expect(output.length === 0).to.be.true;\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nfunction sortAndStringify(array) {\n  return array.sort((a, b) => a - b).join(',');\n}\n\nit('Test Case #1', function () {\n  let output = program.fourNumberSum([7, 6, 4, -1, 1, 2], 16);\n  output = output.map(sortAndStringify);\n  const quadruplets = [\n    [7, 6, 4, -1],\n    [7, 6, 1, 2],\n  ];\n  chai.expect(output.length === 2).to.be.true;\n  for (const quadruplet of quadruplets) {\n    chai.expect(output).to.include(sortAndStringify(quadruplet));\n  }\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average: O(n^2) time | O(n^2) space\n// Worst: O(n^3) time | O(n^2) space\nfunction fourNumberSum(array, targetSum) {\n  const allPairSums = {};\n  const quadruplets = [];\n  for (let i = 1; i < array.length - 1; i++) {\n    for (let j = i + 1; j < array.length; j++) {\n      const currentSum = array[i] + array[j];\n      const difference = targetSum - currentSum;\n      if (difference in allPairSums) {\n        for (const pair of allPairSums[difference]) {\n          quadruplets.push(pair.concat([array[i], array[j]]));\n        }\n      }\n    }\n    for (let k = 0; k < i; k++) {\n      const currentSum = array[i] + array[k];\n      if (!(currentSum in allPairSums)) {\n        allPairSums[currentSum] = [[array[k], array[i]]];\n      } else {\n        allPairSums[currentSum].push([array[k], array[i]]);\n      }\n    }\n  }\n  return quadruplets;\n}\n\nexports.fourNumberSum = fourNumberSum;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def fourNumberSum(array, targetSum):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\ndef sortAndStringify(array):\n    return \",\".join(sorted(list(map(lambda x: str(x), array))))\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        output = program.fourNumberSum([1, 2, 3, 4, 5, 6, 7], 10)\n        output = list(map(sortAndStringify, output))\n        quadruplets = [[1, 2, 3, 4]]\n        self.assertTrue(len(output) == 1)\n        for quadruplet in quadruplets:\n            self.assertTrue(sortAndStringify(quadruplet) in output)\n\n    def test_case_2(self):\n        output = program.fourNumberSum([7, 6, 4, -1, 1, 2], 16)\n        output = list(map(sortAndStringify, output))\n        quadruplets = [[7, 6, 4, -1], [7, 6, 1, 2]]\n        self.assertTrue(len(output) == 2)\n        for quadruplet in quadruplets:\n            self.assertTrue(sortAndStringify(quadruplet) in output)\n\n    def test_case_3(self):\n        output = program.fourNumberSum([5, -5, -2, 2, 3, -3], 0)\n        output = list(map(sortAndStringify, output))\n        quadruplets = [[5, -5, -2, 2], [5, -5, 3, -3], [-2, 2, 3, -3]]\n        self.assertTrue(len(output) == 3)\n        for quadruplet in quadruplets:\n            self.assertTrue(sortAndStringify(quadruplet) in output)\n\n    def test_case_4(self):\n        output = program.fourNumberSum([-2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9], 4)\n        output = list(map(sortAndStringify, output))\n        quadruplets = [[-2, -1, 1, 6], [-2, 1, 2, 3], [-2, -1, 2, 5], [-2, -1, 3, 4]]\n        self.assertTrue(len(output) == 4)\n        for quadruplet in quadruplets:\n            self.assertTrue(sortAndStringify(quadruplet) in output)\n\n    def test_case_5(self):\n        output = program.fourNumberSum([-1, 22, 18, 4, 7, 11, 2, -5, -3], 30)\n        output = list(map(sortAndStringify, output))\n        quadruplets = [[-1, 22, 7, 2], [22, 4, 7, -3], [-1, 18, 11, 2], [18, 4, 11, -3], [22, 11, 2, -5]]\n        self.assertTrue(len(output) == 5)\n        for quadruplet in quadruplets:\n            self.assertTrue(sortAndStringify(quadruplet) in output)\n\n    def test_case_6(self):\n        output = program.fourNumberSum([-10, -3, -5, 2, 15, -7, 28, -6, 12, 8, 11, 5], 20)\n        output = list(map(sortAndStringify, output))\n        quadruplets = [\n            [-5, 2, 15, 8],\n            [-3, 2, -7, 28],\n            [-10, -3, 28, 5],\n            [-10, 28, -6, 8],\n            [-7, 28, -6, 5],\n            [-5, 2, 12, 11],\n            [-5, 12, 8, 5],\n        ]\n        self.assertTrue(len(output) == 7)\n        for quadruplet in quadruplets:\n            self.assertTrue(sortAndStringify(quadruplet) in output)\n\n    def test_case_7(self):\n        output = program.fourNumberSum([1, 2, 3, 4, 5], 100)\n        output = list(map(sortAndStringify, output))\n        self.assertTrue(len(output) == 0)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\ndef sortAndStringify(array):\n    return \",\".join(sorted(list(map(lambda x: str(x), array))))\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        output = program.fourNumberSum([7, 6, 4, -1, 1, 2], 16)\n        output = list(map(sortAndStringify, output))\n        quadruplets = [[7, 6, 4, -1], [7, 6, 1, 2]]\n        self.assertTrue(len(output) == 2)\n        for quadruplet in quadruplets:\n            self.assertTrue(sortAndStringify(quadruplet) in output)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Average: O(n^2) time | O(n^2) space\n# Worst: O(n^3) time | O(n^2) space\ndef fourNumberSum(array, targetSum):\n    allPairSums = {}\n    quadruplets = []\n    for i in range(1, len(array) - 1):\n        for j in range(i + 1, len(array)):\n            currentSum = array[i] + array[j]\n            difference = targetSum - currentSum\n            if difference in allPairSums:\n                for pair in allPairSums[difference]:\n                    quadruplets.append(pair + [array[i], array[j]])\n        for k in range(0, i):\n            currentSum = array[i] + array[k]\n            if currentSum not in allPairSums:\n                allPairSums[currentSum] = [[array[k], array[i]]]\n            else:\n                allPairSums[currentSum].append([array[k], array[i]])\n    return quadruplets\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func fourNumberSum(array: [Int], targetSum: Int) -> [[Int]] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  let program = Program()\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var count = 1\n      var target = 10\n      var numbers = [1, 2, 3, 4, 5, 6, 7]\n      var quadruplets =\n        [\n          [1, 2, 3, 4],\n        ]\n\n      try testFourNumberSum(count: count, target: target, numbers: numbers, quadruplets: quadruplets)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var count = 2\n      var target = 16\n      var numbers = [7, 6, 4, -1, 1, 2]\n      var quadruplets =\n        [\n          [7, 6, 4, -1],\n          [7, 6, 1, 2],\n        ]\n\n      try testFourNumberSum(count: count, target: target, numbers: numbers, quadruplets: quadruplets)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var count = 3\n      var target = 0\n      var numbers = [5, -5, -2, 2, 3, -3]\n      var quadruplets =\n        [\n          [5, -5, -2, 2],\n          [5, -5, 3, -3],\n          [-2, 2, 3, -3],\n        ]\n\n      try testFourNumberSum(count: count, target: target, numbers: numbers, quadruplets: quadruplets)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var count = 4\n      var target = 4\n      var numbers = [-2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n      var quadruplets =\n        [\n          [-2, -1, 1, 6],\n          [-2, 1, 2, 3],\n          [-2, -1, 2, 5],\n          [-2, -1, 3, 4],\n        ]\n\n      try testFourNumberSum(count: count, target: target, numbers: numbers, quadruplets: quadruplets)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var count = 5\n      var target = 30\n      var numbers = [-1, 22, 18, 4, 7, 11, 2, -5, -3]\n      var quadruplets =\n        [\n          [-1, 22, 7, 2],\n          [22, 4, 7, -3],\n          [-1, 18, 11, 2],\n          [18, 4, 11, -3],\n          [22, 11, 2, -5],\n        ]\n\n      try testFourNumberSum(count: count, target: target, numbers: numbers, quadruplets: quadruplets)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var count = 7\n      var target = 20\n      var numbers = [-10, -3, -5, 2, 15, -7, 28, -6, 12, 8, 11, 5]\n      var quadruplets =\n        [\n          [-5, 2, 15, 8],\n          [-3, 2, -7, 28],\n          [-10, -3, 28, 5],\n          [-10, 28, -6, 8],\n          [-7, 28, -6, 5],\n          [-5, 2, 12, 11],\n          [-5, 12, 8, 5],\n        ]\n\n      try testFourNumberSum(count: count, target: target, numbers: numbers, quadruplets: quadruplets)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var target = 100\n      var numbers = [1, 2, 3, 4, 5]\n      let output = program.fourNumberSum(array: numbers, targetSum: target)\n      let outputStringified = output.map {\n        array -> String in\n\n        sortAndStringify(array: array)\n      }\n\n      try assertEqual(0, output.count)\n    }\n  }\n\n  func sortAndStringify(array: [Int]) -> String {\n    let stringifiedArray = array.sorted(by: { $0 < $1 }).map { \"\\($0)\" }.reduce(\"\") { $0 + $1 }\n    return stringifiedArray\n  }\n\n  func testFourNumberSum(count: Int, target: Int, numbers: [Int], quadruplets: [[Int]]) throws {\n    let output = program.fourNumberSum(array: numbers, targetSum: target)\n\n    let outputStringified = output.map {\n      array -> String in\n\n      sortAndStringify(array: array)\n    }\n\n    try assertEqual(count, output.count)\n\n    for quadruplet in quadruplets {\n      try assert(outputStringified.contains(sortAndStringify(array: quadruplet)))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  let program = Program()\n  func test() {\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var count = 2\n      var target = 16\n      var numbers = [7, 6, 4, -1, 1, 2]\n      var quadruplets =\n        [\n          [7, 6, 4, -1],\n          [7, 6, 1, 2],\n        ]\n\n      try testFourNumberSum(count: count, target: target, numbers: numbers, quadruplets: quadruplets)\n    }\n  }\n\n  func sortAndStringify(array: [Int]) -> String {\n    let stringifiedArray = array.sorted(by: { $0 < $1 }).map { \"\\($0)\" }.reduce(\"\") { $0 + $1 }\n    return stringifiedArray\n  }\n\n  func testFourNumberSum(count: Int, target: Int, numbers: [Int], quadruplets: [[Int]]) throws {\n    let output = program.fourNumberSum(array: numbers, targetSum: target)\n\n    let outputStringified = output.map {\n      array -> String in\n\n      sortAndStringify(array: array)\n    }\n\n    try assertEqual(count, output.count)\n\n    for quadruplet in quadruplets {\n      try assert(outputStringified.contains(sortAndStringify(array: quadruplet)))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // Average: O(n^2) time | O(n^2) space\n  // Worst: O(n^3) time | O(n^2) space\n  func fourNumberSum(array: [Int], targetSum: Int) -> [[Int]] {\n    var allPairSums = [Int: [[Int]]]()\n\n    var quadruplets = [[Int]]()\n\n    for i in 1 ..< array.count - 1 {\n      for j in i + 1 ..< array.count {\n        let currentSum = array[i] + array[j]\n        let difference = targetSum - currentSum\n\n        if allPairSums.keys.contains(difference) {\n          for pair in allPairSums[difference]! {\n            quadruplets.append(pair + [array[i], array[j]])\n          }\n        }\n      }\n\n      for k in 0 ..< i {\n        let currentSum = array[k] + array[i]\n\n        if !allPairSums.keys.contains(currentSum) {\n          allPairSums[currentSum] = [[array[k], array[i]]]\n        } else {\n          allPairSums[currentSum]!.append([array[k], array[i]])\n        }\n      }\n    }\n\n    return quadruplets\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function fourNumberSum(array: number[], targetSum: number) {\n  // Write your code here.\n  return [[-1, -1, -1, -1]];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nfunction sortAndStringify(array: number[]) {\n  return array.sort((a, b) => a - b).join(',');\n}\n\nit('Test Case #1', function () {\n  const output = program.fourNumberSum([7, 6, 4, -1, 1, 2], 16);\n  const stringOutput = output.map(sortAndStringify);\n  const quadruplets = [\n    [7, 6, 4, -1],\n    [7, 6, 1, 2],\n  ];\n  chai.expect(stringOutput.length === 2).to.be.true;\n  for (const quadruplet of quadruplets) {\n    chai.expect(stringOutput).to.include(sortAndStringify(quadruplet));\n  }\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface Pairs {\n  [key: number]: [number, number][];\n}\n\n// Average: O(n^2) time | O(n^2) space\n// Worst: O(n^3) time | O(n^2) space\nexport function fourNumberSum(array: number[], targetSum: number) {\n  const allPairSums: Pairs = {};\n  const quadruplets: number[][] = [];\n  for (let i = 1; i < array.length - 1; i++) {\n    for (let j = i + 1; j < array.length; j++) {\n      const currentSum = array[i] + array[j];\n      const difference = targetSum - currentSum;\n      if (difference in allPairSums) {\n        for (const pair of allPairSums[difference]) {\n          quadruplets.push(pair.concat([array[i], array[j]]));\n        }\n      }\n    }\n    for (let k = 0; k < i; k++) {\n      const currentSum = array[i] + array[k];\n      if (!(currentSum in allPairSums)) {\n        allPairSums[currentSum] = [[array[k], array[i]]];\n      } else {\n        allPairSums[currentSum].push([array[k], array[i]]);\n      }\n    }\n  }\n  return quadruplets;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        7,
+        6,
+        4,
+        -1,
+        1,
+        2
+      ],
+      "targetSum": 16
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "targetSum": 10
+    },
+    {
+      "array": [
+        5,
+        -5,
+        -2,
+        2,
+        3,
+        -3
+      ],
+      "targetSum": 0
+    },
+    {
+      "array": [
+        -2,
+        -1,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "targetSum": 4
+    },
+    {
+      "array": [
+        -1,
+        22,
+        18,
+        4,
+        7,
+        11,
+        2,
+        -5,
+        -3
+      ],
+      "targetSum": 30
+    },
+    {
+      "array": [
+        -10,
+        -3,
+        -5,
+        2,
+        15,
+        -7,
+        28,
+        -6,
+        12,
+        8,
+        11,
+        5
+      ],
+      "targetSum": 20
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "targetSum": 100
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        [
+          7,
+          6,
+          4,
+          -1
+        ],
+        [
+          7,
+          6,
+          1,
+          2
+        ]
+      ],
+      [
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      [
+        [
+          5,
+          -5,
+          -2,
+          2
+        ],
+        [
+          5,
+          -5,
+          3,
+          -3
+        ],
+        [
+          -2,
+          2,
+          3,
+          -3
+        ]
+      ],
+      [
+        [
+          -2,
+          -1,
+          1,
+          6
+        ],
+        [
+          -2,
+          1,
+          2,
+          3
+        ],
+        [
+          -2,
+          -1,
+          2,
+          5
+        ],
+        [
+          -2,
+          -1,
+          3,
+          4
+        ]
+      ],
+      [
+        [
+          -1,
+          22,
+          7,
+          2
+        ],
+        [
+          22,
+          4,
+          7,
+          -3
+        ],
+        [
+          -1,
+          18,
+          11,
+          2
+        ],
+        [
+          18,
+          4,
+          11,
+          -3
+        ],
+        [
+          22,
+          11,
+          2,
+          -5
+        ]
+      ],
+      [
+        [
+          -5,
+          2,
+          15,
+          8
+        ],
+        [
+          -3,
+          2,
+          -7,
+          28
+        ],
+        [
+          -10,
+          -3,
+          28,
+          5
+        ],
+        [
+          -10,
+          28,
+          -6,
+          8
+        ],
+        [
+          -7,
+          28,
+          -6,
+          5
+        ],
+        [
+          -5,
+          2,
+          12,
+          11
+        ],
+        [
+          -5,
+          12,
+          8,
+          5
+        ]
+      ],
+      []
+    ]
+  ]
+}

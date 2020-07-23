@@ -1,0 +1,340 @@
+{
+  "Summary": {
+    "Name": "Single Cycle Check",
+    "Category": "Graphs",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-05-04T00:00:00Z",
+      "number": 102,
+      "timeOne": 0,
+      "timeTwo": 727,
+      "url": "https://player.vimeo.com/video/330773483"
+    }
+  },
+  "Prompt": "",
+  "Hints": "In order to check if the input array has a single cycle, you have to jump through all of the elements in the array. Could you keep a counter, jump through elements in the array, and stop once you've jumped through as many elements as are contained in the array?\nAssume the input array has length n. If you start at index 0 and jump through n elements, what are the simplest conditions that you can check to see if the array doesn't have a single cycle?\nGiven Hint #2, there are 2 conditions that need to be met for the input array to have a single cycle. First, the starting element (in this case, the element at index 0) cannot be jumped through more than once, at the very beginning, so long as you haven't jumped through all of the other elements in the array. Second, the (n + 1)th element you jump through, where n is the length of the array, must be the first element you visited: the element at index 0 in this case.\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the input array",
+  "PromptHTML": "<p>\n  You're given an array of integers where each integer represents a jump of its\n  value in the array. For instance, the integer <span>2</span> represents a jump\n  of two indices forward in the array; the integer <span>-3</span> represents a\n  jump of three indices backward in the array.\n</p>\n<p>\n  If a jump spills past the array's bounds, it wraps over to the other side. For\n  instance, a jump of <span>-1</span> at index <span>0</span> brings us to the last index in\n  the array. Similarly, a jump of <span>1</span> at the last index in the array brings us to\n  index <span>0</span>.\n</p>\n<p>\n  Write a function that returns a boolean representing whether the jumps in the\n  array form a single cycle. A single cycle occurs if, starting at any index in\n  the array and following the jumps, every element in the array is visited\n  exactly once before landing back on the starting index.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [2, 3, 1, -4, -4, 2]\n</pre>\n<h3>Sample Output</h3>\n<pre>\ntrue\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        2,
+        3,
+        1,
+        -4,
+        -4,
+        2
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nbool hasSingleCycle(vector<int> array) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      assert(hasSingleCycle({2, 2, -1}) == true);\n    });\n\n    RunTest(\"Test Case 2\", []() { assert(hasSingleCycle({2, 2, 2}) == true); });\n\n    RunTest(\"Test Case 3\", []() {\n      assert(hasSingleCycle({1, 1, 1, 1, 1}) == true);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      assert(hasSingleCycle({-1, 2, 2}) == true);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      assert(hasSingleCycle({0, 1, 1, 1, 1}) == false);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      assert(hasSingleCycle({1, 1, 0, 1, 1}) == false);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(hasSingleCycle({1, 1, 1, 1, 2}) == false);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(hasSingleCycle({3, 5, 6, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2,\n                             -5, 2}) == true);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      assert(hasSingleCycle({3, 5, 5, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2,\n                             -5, 2}) == false);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      assert(hasSingleCycle({1, 2, 3, 4, -2, 3, 7, 8, 1}) == true);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      assert(hasSingleCycle({1, 2, 3, 4, -2, 3, 7, 8, -8}) == true);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      assert(hasSingleCycle({1, 2, 3, 4, -2, 3, 7, 8, -26}) == true);\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      assert(hasSingleCycle({10, 11, -6, -23, -2, 3, 88, 908, -26}) == true);\n    });\n\n    RunTest(\"Test Case 14\", []() {\n      assert(hasSingleCycle({10, 11, -6, -23, -2, 3, 88, 909, -26}) == false);\n    });\n\n    RunTest(\"Test Case 15\", []() {\n      assert(hasSingleCycle({2, 3, 1, -4, -4, 2}) == true);\n    });\n\n    RunTest(\"Test Case 16\", []() {\n      assert(hasSingleCycle({1, -1, 1, -1}) == false);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      assert(hasSingleCycle({2, 3, 1, -4, -4, 2}) == true);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nint getNextIdx(int currentIdx, vector<int> array);\n\n// O(n) time | O(1) space - where n is the length of the input array\nbool hasSingleCycle(vector<int> array) {\n  int numElementsVisited = 0;\n  int currentIdx = 0;\n  while (numElementsVisited < array.size()) {\n    if (numElementsVisited > 0 && currentIdx == 0)\n      return false;\n    numElementsVisited++;\n    currentIdx = getNextIdx(currentIdx, array);\n  }\n  return currentIdx == 0;\n}\n\nint getNextIdx(int currentIdx, vector<int> array) {\n  int jump = array[currentIdx];\n  int nextIdx = (currentIdx + jump) % (int)array.size();\n  return nextIdx >= 0 ? nextIdx : nextIdx + array.size();\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static bool HasSingleCycle(int[] array) {\n\t\t// Write your code here.\n\t\treturn false;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {2, 2, -1}));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {2, 2, 2}));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {1, 1, 1, 1, 1}));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {-1, 2, 2}));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertFalse(Program.HasSingleCycle(new int[] {0, 1, 1, 1, 1}));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertFalse(Program.HasSingleCycle(new int[] {1, 1, 0, 1, 1}));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertFalse(Program.HasSingleCycle(new int[] {1, 1, 1, 1, 2}));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {3, 5, 6, -5, -2, -5, -12, -2, -1,\n\t\t                                                   2, -6, 1, 1, 2, -5, 2}));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertFalse(Program.HasSingleCycle(new int[] {3, 5, 5, -5, -2, -5, -12, -2,\n\t\t                                                    -1, 2, -6, 1, 1, 2, -5, 2}));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {1, 2, 3, 4, -2, 3, 7, 8, 1}));\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {1, 2, 3, 4, -2, 3, 7, 8, -8}));\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {1, 2, 3, 4, -2, 3, 7, 8, -26}));\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {10, 11, -6, -23, -2, 3, 88, 908,\n\t\t                                                   -26}));\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tUtils.AssertFalse(Program.HasSingleCycle(new int[] {10, 11, -6, -23, -2, 3, 88, 909,\n\t\t                                                    -26}));\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {2, 3, 1, -4, -4, 2}));\n\t}\n\n\t[Test]\n\tpublic void TestCase16() {\n\t\tUtils.AssertFalse(Program.HasSingleCycle(new int[] {1, -1, 1, -1}));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.HasSingleCycle(new int[] {2, 3, 1, -4, -4, 2}));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(1) space - where n is the length of the input array\n\tpublic static bool HasSingleCycle(int[] array) {\n\t\tint numElementsVisited = 0;\n\t\tint currentIdx = 0;\n\t\twhile (numElementsVisited < array.Length) {\n\t\t\tif (numElementsVisited > 0 && currentIdx == 0) return false;\n\t\t\tnumElementsVisited++;\n\t\t\tcurrentIdx = getNextIdx(currentIdx, array);\n\t\t}\n\t\treturn currentIdx == 0;\n\t}\n\n\tpublic static int getNextIdx(int currentIdx, int[] array) {\n\t\tint jump = array[currentIdx];\n\t\tint nextIdx = (currentIdx + jump) % array.Length;\n\t\treturn nextIdx >= 0 ? nextIdx : nextIdx + array.Length;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc HasSingleCycle(array []int) bool {\n\t// Write your code here.\n\treturn false\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := []int{2, 2, -1}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tinput := []int{2, 2, 2}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tinput := []int{1, 1, 1, 1, 1}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tinput := []int{-1, 2, 2}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tinput := []int{0, 1, 1, 1, 1}\n\toutput := HasSingleCycle(input)\n\texpected := false\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tinput := []int{1, 1, 0, 1, 1}\n\toutput := HasSingleCycle(input)\n\texpected := false\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tinput := []int{1, 1, 1, 1, 2}\n\toutput := HasSingleCycle(input)\n\texpected := false\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tinput := []int{3, 5, 6, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tinput := []int{3, 5, 5, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2}\n\toutput := HasSingleCycle(input)\n\texpected := false\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tinput := []int{1, 2, 3, 4, -2, 3, 7, 8, 1}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tinput := []int{1, 2, 3, 4, -2, 3, 7, 8, -8}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\tinput := []int{1, 2, 3, 4, -2, 3, 7, 8, -26}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\tinput := []int{10, 11, -6, -23, -2, 3, 88, 908, -26}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\tinput := []int{10, 11, -6, -23, -2, 3, 88, 909, -26}\n\toutput := HasSingleCycle(input)\n\texpected := false\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\tinput := []int{2, 3, 1, -4, -4, 2}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase16(t *TestCase) {\n\tinput := []int{1, -1, 1, -1}\n\toutput := HasSingleCycle(input)\n\texpected := false\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tinput := []int{2, 3, 1, -4, -4, 2}\n\toutput := HasSingleCycle(input)\n\texpected := true\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space - where n is the length of the input array\nfunc HasSingleCycle(array []int) bool {\n\tnumElementsVisited := 0\n\tcurrentIdx := 0\n\tfor numElementsVisited < len(array) {\n\t\tif numElementsVisited > 0 && currentIdx == 0 {\n\t\t\treturn false\n\t\t}\n\t\tnumElementsVisited++\n\t\tcurrentIdx = getNextIdx(currentIdx, array)\n\t}\n\treturn currentIdx == 0\n}\n\nfunc getNextIdx(currentIdx int, array []int) int {\n\tjump := array[currentIdx]\n\tnextIdx := (currentIdx + jump) % len(array)\n\tif nextIdx >= 0 {\n\t\treturn nextIdx\n\t}\n\treturn nextIdx + len(array)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static boolean hasSingleCycle(int[] array) {\n    // Write your code here.\n    return false;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {2, 2, -1}));\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {2, 2, 2}));\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {1, 1, 1, 1, 1}));\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {-1, 2, 2}));\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertFalse(Program.hasSingleCycle(new int[] {0, 1, 1, 1, 1}));\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertFalse(Program.hasSingleCycle(new int[] {1, 1, 0, 1, 1}));\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertFalse(Program.hasSingleCycle(new int[] {1, 1, 1, 1, 2}));\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(\n        Program.hasSingleCycle(\n            new int[] {3, 5, 6, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2}));\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertFalse(\n        Program.hasSingleCycle(\n            new int[] {3, 5, 5, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2}));\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {1, 2, 3, 4, -2, 3, 7, 8, 1}));\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {1, 2, 3, 4, -2, 3, 7, 8, -8}));\n  }\n\n  @Test\n  public void TestCase12() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {1, 2, 3, 4, -2, 3, 7, 8, -26}));\n  }\n\n  @Test\n  public void TestCase13() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {10, 11, -6, -23, -2, 3, 88, 908, -26}));\n  }\n\n  @Test\n  public void TestCase14() {\n    Utils.assertFalse(Program.hasSingleCycle(new int[] {10, 11, -6, -23, -2, 3, 88, 909, -26}));\n  }\n\n  @Test\n  public void TestCase15() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {2, 3, 1, -4, -4, 2}));\n  }\n\n  @Test\n  public void TestCase16() {\n    Utils.assertFalse(Program.hasSingleCycle(new int[] {1, -1, 1, -1}));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.hasSingleCycle(new int[] {2, 3, 1, -4, -4, 2}));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space - where n is the length of the input array\n  public static boolean hasSingleCycle(int[] array) {\n    int numElementsVisited = 0;\n    int currentIdx = 0;\n    while (numElementsVisited < array.length) {\n      if (numElementsVisited > 0 && currentIdx == 0) return false;\n      numElementsVisited++;\n      currentIdx = getNextIdx(currentIdx, array);\n    }\n    return currentIdx == 0;\n  }\n\n  public static int getNextIdx(int currentIdx, int[] array) {\n    int jump = array[currentIdx];\n    int nextIdx = (currentIdx + jump) % array.length;\n    return nextIdx >= 0 ? nextIdx : nextIdx + array.length;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function hasSingleCycle(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.hasSingleCycle = hasSingleCycle;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.hasSingleCycle([2, 2, -1])).to.deep.equal(true);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.hasSingleCycle([2, 2, 2])).to.deep.equal(true);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.hasSingleCycle([1, 1, 1, 1, 1])).to.deep.equal(true);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.hasSingleCycle([-1, 2, 2])).to.deep.equal(true);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.hasSingleCycle([0, 1, 1, 1, 1])).to.deep.equal(false);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.hasSingleCycle([1, 1, 0, 1, 1])).to.deep.equal(false);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.hasSingleCycle([1, 1, 1, 1, 2])).to.deep.equal(false);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.hasSingleCycle([3, 5, 6, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2])).to.deep.equal(true);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.hasSingleCycle([3, 5, 5, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2])).to.deep.equal(false);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.hasSingleCycle([1, 2, 3, 4, -2, 3, 7, 8, 1])).to.deep.equal(true);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.hasSingleCycle([1, 2, 3, 4, -2, 3, 7, 8, -8])).to.deep.equal(true);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.hasSingleCycle([1, 2, 3, 4, -2, 3, 7, 8, -26])).to.deep.equal(true);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.hasSingleCycle([10, 11, -6, -23, -2, 3, 88, 908, -26])).to.deep.equal(true);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.hasSingleCycle([10, 11, -6, -23, -2, 3, 88, 909, -26])).to.deep.equal(false);\n});\n\nit('Test Case #15', function () {\n  chai.expect(program.hasSingleCycle([2, 3, 1, -4, -4, 2])).to.deep.equal(true);\n});\n\nit('Test Case #16', function () {\n  chai.expect(program.hasSingleCycle([1, -1, 1, -1])).to.deep.equal(false);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.hasSingleCycle([2, 3, 1, -4, -4, 2])).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the input array\nfunction hasSingleCycle(array) {\n  let numElementsVisited = 0;\n  let currentIdx = 0;\n  while (numElementsVisited < array.length) {\n    if (numElementsVisited > 0 && currentIdx === 0) return false;\n    numElementsVisited++;\n    currentIdx = getNextIdx(currentIdx, array);\n  }\n  return currentIdx === 0;\n}\n\nfunction getNextIdx(currentIdx, array) {\n  const jump = array[currentIdx];\n  const nextIdx = (currentIdx + jump) % array.length;\n  return nextIdx >= 0 ? nextIdx : nextIdx + array.length;\n}\n\nexports.hasSingleCycle = hasSingleCycle;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def hasSingleCycle(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.hasSingleCycle([2, 2, -1]), True)\n\n    def test_case_2(self):\n        self.assertEqual(program.hasSingleCycle([2, 2, 2]), True)\n\n    def test_case_3(self):\n        self.assertEqual(program.hasSingleCycle([1, 1, 1, 1, 1]), True)\n\n    def test_case_4(self):\n        self.assertEqual(program.hasSingleCycle([-1, 2, 2]), True)\n\n    def test_case_5(self):\n        self.assertEqual(program.hasSingleCycle([0, 1, 1, 1, 1]), False)\n\n    def test_case_6(self):\n        self.assertEqual(program.hasSingleCycle([1, 1, 0, 1, 1]), False)\n\n    def test_case_7(self):\n        self.assertEqual(program.hasSingleCycle([1, 1, 1, 1, 2]), False)\n\n    def test_case_8(self):\n        self.assertEqual(program.hasSingleCycle([3, 5, 6, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2]), True)\n\n    def test_case_9(self):\n        self.assertEqual(program.hasSingleCycle([3, 5, 5, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2]), False)\n\n    def test_case_10(self):\n        self.assertEqual(program.hasSingleCycle([1, 2, 3, 4, -2, 3, 7, 8, 1]), True)\n\n    def test_case_11(self):\n        self.assertEqual(program.hasSingleCycle([1, 2, 3, 4, -2, 3, 7, 8, -8]), True)\n\n    def test_case_12(self):\n        self.assertEqual(program.hasSingleCycle([1, 2, 3, 4, -2, 3, 7, 8, -26]), True)\n\n    def test_case_13(self):\n        self.assertEqual(program.hasSingleCycle([10, 11, -6, -23, -2, 3, 88, 908, -26]), True)\n\n    def test_case_14(self):\n        self.assertEqual(program.hasSingleCycle([10, 11, -6, -23, -2, 3, 88, 909, -26]), False)\n\n    def test_case_15(self):\n        self.assertEqual(program.hasSingleCycle([2, 3, 1, -4, -4, 2]), True)\n\n    def test_case_16(self):\n        self.assertEqual(program.hasSingleCycle([1, -1, 1, -1]), False)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.hasSingleCycle([2, 3, 1, -4, -4, 2]), True)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space - where n is the length of the input array\ndef hasSingleCycle(array):\n    numElementsVisited = 0\n    currentIdx = 0\n    while numElementsVisited < len(array):\n        if numElementsVisited > 0 and currentIdx == 0:\n            return False\n        numElementsVisited += 1\n        currentIdx = getNextIdx(currentIdx, array)\n    return currentIdx == 0\n\n\ndef getNextIdx(currentIdx, array):\n    jump = array[currentIdx]\n    nextIdx = (currentIdx + jump) % len(array)\n    return nextIdx if nextIdx >= 0 else nextIdx + len(array)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func hasSingleCycle(array: [Int]) -> Bool {\n    // Write your code here.\n    return false\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [2, 2, -1]))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [2, 2, 2]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [1, 1, 1, 1, 1]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [-1, 2, 2]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(false, program.hasSingleCycle(array: [0, 1, 1, 1, 1]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(false, program.hasSingleCycle(array: [1, 1, 0, 1, 1]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(false, program.hasSingleCycle(array: [1, 1, 1, 1, 2]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [3, 5, 6, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(false, program.hasSingleCycle(array: [3, 5, 5, -5, -2, -5, -12, -2, -1, 2, -6, 1, 1, 2, -5, 2]))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [1, 2, 3, 4, -2, 3, 7, 8, 1]))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [1, 2, 3, 4, -2, 3, 7, 8, -8]))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [1, 2, 3, 4, -2, 3, 7, 8, -26]))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [10, 11, -6, -23, -2, 3, 88, 908, -26]))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual(false, program.hasSingleCycle(array: [10, 11, -6, -23, -2, 3, 88, 909, -26]))\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [2, 3, 1, -4, -4, 2]))\n    }\n    runTest(\"Test Case 16\") { () throws -> Void in\n      try assertEqual(false, program.hasSingleCycle(array: [1, -1, 1, -1]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(true, program.hasSingleCycle(array: [2, 3, 1, -4, -4, 2]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  func hasSingleCycle(array: [Int]) -> Bool {\n    var currentIndex = 0\n    var numberOfElementsVisited = 0\n\n    var innerArray = array\n    while numberOfElementsVisited < array.count {\n      if currentIndex == 0, numberOfElementsVisited > 0 {\n        return false\n      }\n\n      numberOfElementsVisited += 1\n      currentIndex = getNextIndex(&currentIndex, array: &innerArray)\n    }\n\n    return currentIndex == 0\n  }\n\n  func getNextIndex(_ currentIndex: inout Int, array: inout [Int]) -> Int {\n    let jump = array[currentIndex]\n    let nextIndex = (jump + currentIndex) % array.count\n\n    if nextIndex >= 0 {\n      return nextIndex\n    } else {\n      return nextIndex + array.count\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function hasSingleCycle(array: number[]) {\n  // Write your code here.\n  return false;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.hasSingleCycle([2, 3, 1, -4, -4, 2])).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the input array\nexport function hasSingleCycle(array: number[]) {\n  let numElementsVisited = 0;\n  let currentIdx = 0;\n  while (numElementsVisited < array.length) {\n    if (numElementsVisited > 0 && currentIdx === 0) return false;\n    numElementsVisited++;\n    currentIdx = getNextIdx(currentIdx, array);\n  }\n  return currentIdx === 0;\n}\n\nfunction getNextIdx(currentIdx: number, array: number[]) {\n  const jump = array[currentIdx];\n  const nextIdx = (currentIdx + jump) % array.length;\n  return nextIdx >= 0 ? nextIdx : nextIdx + array.length;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        2,
+        3,
+        1,
+        -4,
+        -4,
+        2
+      ]
+    },
+    {
+      "array": [
+        2,
+        2,
+        -1
+      ]
+    },
+    {
+      "array": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        -1,
+        2,
+        2
+      ]
+    },
+    {
+      "array": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "array": [
+        3,
+        5,
+        6,
+        -5,
+        -2,
+        -5,
+        -12,
+        -2,
+        -1,
+        2,
+        -6,
+        1,
+        1,
+        2,
+        -5,
+        2
+      ]
+    },
+    {
+      "array": [
+        3,
+        5,
+        5,
+        -5,
+        -2,
+        -5,
+        -12,
+        -2,
+        -1,
+        2,
+        -6,
+        1,
+        1,
+        2,
+        -5,
+        2
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        -2,
+        3,
+        7,
+        8,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        -2,
+        3,
+        7,
+        8,
+        -8
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        -2,
+        3,
+        7,
+        8,
+        -26
+      ]
+    },
+    {
+      "array": [
+        10,
+        11,
+        -6,
+        -23,
+        -2,
+        3,
+        88,
+        908,
+        -26
+      ]
+    },
+    {
+      "array": [
+        10,
+        11,
+        -6,
+        -23,
+        -2,
+        3,
+        88,
+        909,
+        -26
+      ]
+    },
+    {
+      "array": [
+        1,
+        -1,
+        1,
+        -1
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false
+    ]
+  ]
+}

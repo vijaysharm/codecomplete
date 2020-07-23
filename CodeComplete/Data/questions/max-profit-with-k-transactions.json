@@ -1,0 +1,340 @@
+{
+  "Summary": {
+    "Name": "Max Profit With K Transactions",
+    "Category": "Dynamic Programming",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "number": 661,
+      "timeOne": 0,
+      "timeTwo": 2014,
+      "url": "https://player.vimeo.com/video/225692229"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try building a two-dimensional array of the maximum profits you can make on each day with zero, one, two, etc., k transactions. Let columns represent days and rows represent the number of transactions.\nBuild up the array mentioned in Hint #1 one row at a time. In other words, find the maximum profits that you can make on each day with zero transactions first, then with one transaction, etc., until you reach k transactions. Find a formula that relates the maximum profit at any given point to previous profits. Once you find that formula, identify certain values that you repeatedly need and that you can temporarily store to optimize your algorithm.\nDo you really need to store the entire two-dimensional array mentioned in Hint #1? Identify what stored values you actually use throughout the process of building the array and come up with a way of storing only what you need and nothing more.\n",
+  "SpaceTime": "O(nk) time | O(n) space - where n is the number of prices and k is the number of transactions\n",
+  "PromptHTML": "<p>\n  You're given an array of positive integers representing the prices of a single stock on\n  various days (each index in the array represents a different day). You're also\n  given an integer <span>k</span>, which represents the number of transactions\n  you're allowed to make. One transaction consists of buying the stock on a\n  given day and selling it on another, later day.\n</p>\n<p>\n  Write a function that returns the maximum profit that you can make by buying\n  and selling the stock, given k transactions.\n</p>\n<p>\n  Note that you can only hold one share of the stock at a time; in other words,\n  you can't buy more than one share of the stock on any given day, and you can't\n  buy a share of the stock if you're still holding another share. Also, you\n  don't need to use all k transactions that you're allowed.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">prices</span> = [5, 11, 3, 50, 60, 90]\n<span class=\"CodeEditor-promptParameter\">k</span> = 2\n</pre>\n<h3>Sample Output</h3>\n<pre>\n93 <span class=\"CodeEditor-promptComment\">// Buy: 5, Sell: 11; Buy: 3, Sell: 90</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "prices",
+      "Example": [
+        5,
+        11,
+        3,
+        50,
+        60,
+        90
+      ],
+      "Schema": {
+        "items": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "k",
+      "Example": 2,
+      "Schema": {
+        "minimum": 0,
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint maxProfitWithKTransactions(vector<int> prices, int k) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "vector<int> vector1;\nvector<int> vector2{1};\nvector<int> vector3{1, 10};\nvector<int> vector4{1, 10};\nvector<int> vector5{3, 2, 5, 7, 1, 3, 7};\nvector<int> vector6{5, 11, 3, 50, 60, 90};\nvector<int> vector7{5, 11, 3, 50, 60, 90};\nvector<int> vector8{5, 11, 3, 50, 40, 90};\nvector<int> vector9{5, 11, 3, 50, 40, 90};\nvector<int> vector10{50, 25, 12, 4, 3, 10, 1, 100};\nvector<int> vector11{100, 99, 98, 97, 1};\nvector<int> vector12{1, 100, 2, 200, 3, 300, 4, 400, 5, 500};\nvector<int> vector13{1, 100, 101, 200, 201, 300, 301, 400, 401, 500};\nvector<int> vector14{1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5};\nvector<int> vector15{1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(maxProfitWithKTransactions(vector1, 1) == 0); });\n\n    RunTest(\"Test Case 2\",\n            []() { assert(maxProfitWithKTransactions(vector2, 1) == 0); });\n\n    RunTest(\"Test Case 3\",\n            []() { assert(maxProfitWithKTransactions(vector3, 1) == 9); });\n\n    RunTest(\"Test Case 4\",\n            []() { assert(maxProfitWithKTransactions(vector4, 3) == 9); });\n\n    RunTest(\"Test Case 5\",\n            []() { assert(maxProfitWithKTransactions(vector5, 1) == 6); });\n\n    RunTest(\"Test Case 6\",\n            []() { assert(maxProfitWithKTransactions(vector6, 2) == 93); });\n\n    RunTest(\"Test Case 7\",\n            []() { assert(maxProfitWithKTransactions(vector7, 3) == 93); });\n\n    RunTest(\"Test Case 8\",\n            []() { assert(maxProfitWithKTransactions(vector8, 2) == 97); });\n\n    RunTest(\"Test Case 9\",\n            []() { assert(maxProfitWithKTransactions(vector9, 3) == 103); });\n\n    RunTest(\"Test Case 10\",\n            []() { assert(maxProfitWithKTransactions(vector10, 2) == 106); });\n\n    RunTest(\"Test Case 11\",\n            []() { assert(maxProfitWithKTransactions(vector11, 5) == 0); });\n\n    RunTest(\"Test Case 12\",\n            []() { assert(maxProfitWithKTransactions(vector12, 5) == 1485); });\n\n    RunTest(\"Test Case 13\",\n            []() { assert(maxProfitWithKTransactions(vector13, 5) == 499); });\n\n    RunTest(\"Test Case 14\",\n            []() { assert(maxProfitWithKTransactions(vector14, 4) == 84); });\n\n    RunTest(\"Test Case 15\",\n            []() { assert(maxProfitWithKTransactions(vector15, 2) == 62); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input{5, 11, 3, 50, 60, 90};\n      assert(maxProfitWithKTransactions(input, 2) == 93);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <climits>\nusing namespace std;\n\n// O(nk) time | O(nk) space\nint maxProfitWithKTransactions(vector<int> prices, int k) {\n  if (prices.size() == 0) {\n    return 0;\n  }\n  vector<vector<int>> profits(k + 1, vector<int>(prices.size(), 0));\n  for (int t = 1; t < k + 1; t++) {\n    int maxThusFar = INT_MIN;\n    for (int d = 1; d < prices.size(); d++) {\n      maxThusFar = max(maxThusFar, profits[t - 1][d - 1] - prices[d - 1]);\n      profits[t][d] = max(profits[t][d - 1], maxThusFar + prices[d]);\n    }\n  }\n  return profits[k][prices.size() - 1];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <climits>\nusing namespace std;\n\n// O(nk) time | O(n) space\nint maxProfitWithKTransactions(vector<int> prices, int k) {\n  if (prices.size() == 0) {\n    return 0;\n  }\n  int *evenProfits = new int[prices.size()];\n  int *oddProfits = new int[prices.size()];\n  for (int i = 0; i < prices.size(); i++) {\n    evenProfits[i] = 0;\n    oddProfits[i] = 0;\n  }\n  for (int t = 1; t < k + 1; t++) {\n    int maxThusFar = INT_MIN;\n    int *currentProfits = new int[prices.size()];\n    int *previousProfits = new int[prices.size()];\n    if (t % 2 == 1) {\n      currentProfits = oddProfits;\n      previousProfits = evenProfits;\n    } else {\n      currentProfits = evenProfits;\n      previousProfits = oddProfits;\n    }\n    for (int d = 1; d < prices.size(); d++) {\n      maxThusFar = max(maxThusFar, previousProfits[d - 1] - prices[d - 1]);\n      currentProfits[d] = max(currentProfits[d - 1], maxThusFar + prices[d]);\n    }\n  }\n  return k % 2 == 0 ? evenProfits[prices.size() - 1]\n                    : oddProfits[prices.size() - 1];\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int MaxProfitWithKTransactions(int[] prices, int k) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {};\n\t\tUtils.AssertEquals(0, Program.MaxProfitWithKTransactions(input, 1) );\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] input = {1};\n\t\tUtils.AssertEquals(0, Program.MaxProfitWithKTransactions(input, 1) );\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] input = {1, 10};\n\t\tUtils.AssertEquals(9, Program.MaxProfitWithKTransactions(input, 1) );\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] input = {1, 10};\n\t\tUtils.AssertEquals(9, Program.MaxProfitWithKTransactions(input, 3) );\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] input = {3, 2, 5, 7, 1, 3, 7};\n\t\tUtils.AssertEquals(6, Program.MaxProfitWithKTransactions(input, 1) );\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] input = {5, 11, 3, 50, 60, 90};\n\t\tUtils.AssertEquals(93, Program.MaxProfitWithKTransactions(input, 2) );\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] input = {5, 11, 3, 50, 60, 90};\n\t\tUtils.AssertEquals(93, Program.MaxProfitWithKTransactions(input, 3) );\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] input = {5, 11, 3, 50, 40, 90};\n\t\tUtils.AssertEquals(97, Program.MaxProfitWithKTransactions(input, 2) );\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] input = {5, 11, 3, 50, 40, 90};\n\t\tUtils.AssertEquals(103, Program.MaxProfitWithKTransactions(input, 3) );\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] input = {50, 25, 12, 4, 3, 10, 1, 100};\n\t\tUtils.AssertEquals(106, Program.MaxProfitWithKTransactions(input, 2) );\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[] input = {100, 99, 98, 97, 1};\n\t\tUtils.AssertEquals(0, Program.MaxProfitWithKTransactions(input, 5) );\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tint[] input = {1, 100, 2, 200, 3, 300, 4, 400, 5, 500};\n\t\tUtils.AssertEquals(1485, Program.MaxProfitWithKTransactions(input, 5) );\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tint[] input = {1, 100, 101, 200, 201, 300, 301, 400, 401, 500};\n\t\tUtils.AssertEquals(499, Program.MaxProfitWithKTransactions(input, 5) );\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tint[] input = {1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5};\n\t\tUtils.AssertEquals(84, Program.MaxProfitWithKTransactions(input, 4) );\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tint[] input = {1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5};\n\t\tUtils.AssertEquals(62, Program.MaxProfitWithKTransactions(input, 2) );\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {5, 11, 3, 50, 60, 90};\n\t\tUtils.AssertEquals(93, Program.MaxProfitWithKTransactions(input, 2) );\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(nk) time | O(nk) space\n\tpublic static int MaxProfitWithKTransactions(int[] prices, int k) {\n\t\tif (prices.Length == 0) {\n\t\t\treturn 0;\n\t\t}\n\t\tint[,] profits = new int[k + 1,prices.Length];\n\t\tfor (int t = 1; t < k + 1; t++) {\n\t\t\tint maxThusFar = Int32.MinValue;\n\t\t\tfor (int d = 1; d <prices.Length; d++) {\n\t\t\t\tmaxThusFar =\n\t\t\t\t  Math.Max(maxThusFar, profits[t - 1,d - 1] - prices[d - 1]);\n\t\t\t\tprofits[t,d] = Math.Max(profits[t,d - 1], maxThusFar + prices[d]);\n\t\t\t}\n\t\t}\n\t\treturn profits[k,prices.Length - 1];\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(nk) time | O(n) space\n\tpublic static int MaxProfitWithKTransactions(int[] prices, int k) {\n\t\tif (prices.Length == 0) {\n\t\t\treturn 0;\n\t\t}\n\t\tint[] evenProfits = new int[prices.Length];\n\t\tint[] oddProfits = new int[prices.Length];\n\t\tfor (int i = 0; i < prices.Length; i++) {\n\t\t\tevenProfits[i] = 0;\n\t\t\toddProfits[i] = 0;\n\t\t}\n\t\tfor (int t = 1; t < k + 1; t++) {\n\t\t\tint maxThusFar = Int32.MinValue;\n\t\t\tint[] currentProfits = new int[prices.Length];\n\t\t\tint[] previousProfits = new int[prices.Length];\n\t\t\tif (t % 2 == 1) {\n\t\t\t\tcurrentProfits = oddProfits;\n\t\t\t\tpreviousProfits = evenProfits;\n\t\t\t} else {\n\t\t\t\tcurrentProfits = evenProfits;\n\t\t\t\tpreviousProfits = oddProfits;\n\t\t\t}\n\t\t\tfor (int d = 1; d < prices.Length; d++) {\n\t\t\t\tmaxThusFar =\n\t\t\t\t  Math.Max(maxThusFar,\n\t\t\t\t    previousProfits[d - 1] - prices[d - 1]);\n\t\t\t\tcurrentProfits[d] = Math.Max(currentProfits[d - 1],\n\t\t\t\t    maxThusFar + prices[d]);\n\t\t\t}\n\t\t}\n\t\treturn k % 2 == 0 ? evenProfits[prices.Length - 1] : oddProfits[prices.Length - 1];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc MaxProfitWithKTransactions(prices []int, k int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\trequire.Equal(t, 0, MaxProfitWithKTransactions([]int{}, 1))\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\trequire.Equal(t, 0, MaxProfitWithKTransactions([]int{1}, 1))\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\trequire.Equal(t, 9, MaxProfitWithKTransactions([]int{1, 10}, 1))\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\trequire.Equal(t, 9, MaxProfitWithKTransactions([]int{1, 10}, 3))\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\trequire.Equal(t, 6, MaxProfitWithKTransactions([]int{3, 2, 5, 7, 1, 3, 7}, 1))\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\trequire.Equal(t, 93, MaxProfitWithKTransactions([]int{5, 11, 3, 50, 60, 90}, 2))\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\trequire.Equal(t, 93, MaxProfitWithKTransactions([]int{5, 11, 3, 50, 60, 90}, 3))\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\trequire.Equal(t, 97, MaxProfitWithKTransactions([]int{5, 11, 3, 50, 40, 90}, 2))\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\trequire.Equal(t, 103, MaxProfitWithKTransactions([]int{5, 11, 3, 50, 40, 90}, 3))\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\trequire.Equal(t, 106, MaxProfitWithKTransactions([]int{50, 25, 12, 4, 3, 10, 1, 100}, 2))\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\trequire.Equal(t, 0, MaxProfitWithKTransactions([]int{100, 99, 98, 97, 1}, 5))\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\trequire.Equal(t, 1485, MaxProfitWithKTransactions([]int{1, 100, 2, 200, 3, 300, 4, 400, 5, 500}, 5))\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\trequire.Equal(t, 499, MaxProfitWithKTransactions([]int{1, 100, 101, 200, 201, 300, 301, 400, 401, 500}, 5))\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\trequire.Equal(t, 84, MaxProfitWithKTransactions([]int{1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5}, 4))\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\trequire.Equal(t, 62, MaxProfitWithKTransactions([]int{1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5}, 2))\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\trequire.Equal(t, 93, MaxProfitWithKTransactions([]int{5, 11, 3, 50, 60, 90}, 2))\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// O(nk) time | O(nk) space\nfunc MaxProfitWithKTransactions(prices []int, k int) int {\n\tif len(prices) == 0 {\n\t\treturn 0\n\t}\n\tprofits := make([][]int, k+1)\n\tfor i := range profits {\n\t\tprofits[i] = make([]int, len(prices))\n\t}\n\tfor t := 1; t < k+1; t++ {\n\t\tmaxThusFar := math.MinInt32\n\t\tfor d := 1; d < len(prices); d++ {\n\t\t\tmaxThusFar = max(maxThusFar, profits[t-1][d-1]-prices[d-1])\n\t\t\tprofits[t][d] = max(profits[t][d-1], maxThusFar+prices[d])\n\t\t}\n\t}\n\treturn profits[k][len(prices)-1]\n}\n\nfunc max(arg int, rest ...int) int {\n\tcurr := arg\n\tfor _, num := range rest {\n\t\tif curr < num {\n\t\t\tcurr = num\n\t\t}\n\t}\n\treturn curr\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// # O(nk) time | O(n) space\nfunc MaxProfitWithKTransactions(prices []int, k int) int {\n\tif len(prices) == 0 {\n\t\treturn 0\n\t}\n\tevenProfits := make([]int, len(prices))\n\toddProfits := make([]int, len(prices))\n\tvar currentProfits, previousProfits []int\n\tfor t := 1; t < k+1; t++ {\n\t\tmaxThusFar := math.MinInt32\n\t\tif t%2 == 1 {\n\t\t\tcurrentProfits, previousProfits = oddProfits, evenProfits\n\t\t} else {\n\t\t\tcurrentProfits, previousProfits = evenProfits, oddProfits\n\t\t}\n\t\tfor d := 1; d < len(prices); d++ {\n\t\t\tmaxThusFar = max(maxThusFar, previousProfits[d-1]-prices[d-1])\n\t\t\tcurrentProfits[d] = max(currentProfits[d-1], maxThusFar+prices[d])\n\t\t}\n\t}\n\tif k%2 == 0 {\n\t\treturn evenProfits[len(prices)-1]\n\t}\n\treturn oddProfits[len(prices)-1]\n}\n\nfunc max(arg int, rest ...int) int {\n\tcurr := arg\n\tfor _, num := range rest {\n\t\tif curr < num {\n\t\t\tcurr = num\n\t\t}\n\t}\n\treturn curr\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int maxProfitWithKTransactions(int[] prices, int k) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 1) == 0);\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] input = {1};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 1) == 0);\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] input = {1, 10};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 1) == 9);\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] input = {1, 10};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 3) == 9);\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] input = {3, 2, 5, 7, 1, 3, 7};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 1) == 6);\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] input = {5, 11, 3, 50, 60, 90};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 2) == 93);\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] input = {5, 11, 3, 50, 60, 90};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 3) == 93);\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] input = {5, 11, 3, 50, 40, 90};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 2) == 97);\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] input = {5, 11, 3, 50, 40, 90};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 3) == 103);\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] input = {50, 25, 12, 4, 3, 10, 1, 100};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 2) == 106);\n  }\n\n  @Test\n  public void TestCase11() {\n    int[] input = {100, 99, 98, 97, 1};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 5) == 0);\n  }\n\n  @Test\n  public void TestCase12() {\n    int[] input = {1, 100, 2, 200, 3, 300, 4, 400, 5, 500};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 5) == 1485);\n  }\n\n  @Test\n  public void TestCase13() {\n    int[] input = {1, 100, 101, 200, 201, 300, 301, 400, 401, 500};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 5) == 499);\n  }\n\n  @Test\n  public void TestCase14() {\n    int[] input = {1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 4) == 84);\n  }\n\n  @Test\n  public void TestCase15() {\n    int[] input = {1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 2) == 62);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {5, 11, 3, 50, 60, 90};\n    Utils.assertTrue(Program.maxProfitWithKTransactions(input, 2) == 93);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nk) time | O(nk) space\n  public static int maxProfitWithKTransactions(int[] prices, int k) {\n    if (prices.length == 0) {\n      return 0;\n    }\n    int[][] profits = new int[k + 1][prices.length];\n    for (int t = 1; t < k + 1; t++) {\n      int maxThusFar = Integer.MIN_VALUE;\n      for (int d = 1; d < prices.length; d++) {\n        maxThusFar = Math.max(maxThusFar, profits[t - 1][d - 1] - prices[d - 1]);\n        profits[t][d] = Math.max(profits[t][d - 1], maxThusFar + prices[d]);\n      }\n    }\n    return profits[k][prices.length - 1];\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nk) time | O(n) space\n  public static int maxProfitWithKTransactions(int[] prices, int k) {\n    if (prices.length == 0) {\n      return 0;\n    }\n    int[] evenProfits = new int[prices.length];\n    int[] oddProfits = new int[prices.length];\n\n    int[] currentProfits;\n    int[] previousProfits;\n    for (int t = 1; t < k + 1; t++) {\n      int maxThusFar = Integer.MIN_VALUE;\n      if (t % 2 == 1) {\n        currentProfits = oddProfits;\n        previousProfits = evenProfits;\n      } else {\n        currentProfits = evenProfits;\n        previousProfits = oddProfits;\n      }\n      for (int d = 1; d < prices.length; d++) {\n        maxThusFar = Math.max(maxThusFar, previousProfits[d - 1] - prices[d - 1]);\n        currentProfits[d] = Math.max(currentProfits[d - 1], maxThusFar + prices[d]);\n      }\n    }\n    return k % 2 == 0 ? evenProfits[prices.length - 1] : oddProfits[prices.length - 1];\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function maxProfitWithKTransactions(prices, k) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.maxProfitWithKTransactions = maxProfitWithKTransactions;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.maxProfitWithKTransactions([], 1)).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.maxProfitWithKTransactions([1], 1)).to.deep.equal(0);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.maxProfitWithKTransactions([1, 10], 1)).to.deep.equal(9);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.maxProfitWithKTransactions([1, 10], 3)).to.deep.equal(9);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.maxProfitWithKTransactions([3, 2, 5, 7, 1, 3, 7], 1)).to.deep.equal(6);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 2)).to.deep.equal(93);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 3)).to.deep.equal(93);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.maxProfitWithKTransactions([5, 11, 3, 50, 40, 90], 2)).to.deep.equal(97);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.maxProfitWithKTransactions([5, 11, 3, 50, 40, 90], 3)).to.deep.equal(103);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.maxProfitWithKTransactions([50, 25, 12, 4, 3, 10, 1, 100], 2)).to.deep.equal(106);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.maxProfitWithKTransactions([100, 99, 98, 97, 1], 5)).to.deep.equal(0);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.maxProfitWithKTransactions([1, 100, 2, 200, 3, 300, 4, 400, 5, 500], 5)).to.deep.equal(1485);\n});\n\nit('Test Case #13', function () {\n  chai\n    .expect(program.maxProfitWithKTransactions([1, 100, 101, 200, 201, 300, 301, 400, 401, 500], 5))\n    .to.deep.equal(499);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.maxProfitWithKTransactions([1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5], 4)).to.deep.equal(84);\n});\n\nit('Test Case #15', function () {\n  chai.expect(program.maxProfitWithKTransactions([1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5], 2)).to.deep.equal(62);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 2)).to.deep.equal(93);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nk) time | O(nk) space\nfunction maxProfitWithKTransactions(prices, k) {\n  if (!prices.length) return 0;\n  const profits = [];\n  for (let t = 0; t < k + 1; t++) {\n    const row = new Array(prices.length).fill(0);\n    profits.push(row);\n  }\n  for (let t = 1; t < k + 1; t++) {\n    let maxThusFar = -Infinity;\n    for (let d = 1; d < prices.length; d++) {\n      maxThusFar = Math.max(maxThusFar, profits[t - 1][d - 1] - prices[d - 1]);\n      profits[t][d] = Math.max(profits[t][d - 1], maxThusFar + prices[d]);\n    }\n  }\n  return profits[k][prices.length - 1];\n}\n\nexports.maxProfitWithKTransactions = maxProfitWithKTransactions;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nk) time | O(n) space\nfunction maxProfitWithKTransactions(prices, k) {\n  if (!prices.length) return 0;\n  const evenProfits = new Array(prices.length).fill(0);\n  const oddProfits = new Array(prices.length).fill(0);\n  for (let t = 1; t < k + 1; t++) {\n    let maxThusFar = -Infinity;\n    let currentProfits, previousProfits;\n    if (t % 2 === 1) {\n      currentProfits = oddProfits;\n      previousProfits = evenProfits;\n    } else {\n      currentProfits = evenProfits;\n      previousProfits = oddProfits;\n    }\n    for (let d = 1; d < prices.length; d++) {\n      maxThusFar = Math.max(maxThusFar, previousProfits[d - 1] - prices[d - 1]);\n      currentProfits[d] = Math.max(currentProfits[d - 1], maxThusFar + prices[d]);\n    }\n  }\n  return k % 2 === 0 ? evenProfits[prices.length - 1] : oddProfits[prices.length - 1];\n}\n\nexports.maxProfitWithKTransactions = maxProfitWithKTransactions;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def maxProfitWithKTransactions(prices, k):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.maxProfitWithKTransactions([], 1), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.maxProfitWithKTransactions([1], 1), 0)\n\n    def test_case_3(self):\n        self.assertEqual(program.maxProfitWithKTransactions([1, 10], 1), 9)\n\n    def test_case_4(self):\n        self.assertEqual(program.maxProfitWithKTransactions([1, 10], 3), 9)\n\n    def test_case_5(self):\n        self.assertEqual(program.maxProfitWithKTransactions([3, 2, 5, 7, 1, 3, 7], 1), 6)\n\n    def test_case_6(self):\n        self.assertEqual(program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 2), 93)\n\n    def test_case_7(self):\n        self.assertEqual(program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 3), 93)\n\n    def test_case_8(self):\n        self.assertEqual(program.maxProfitWithKTransactions([5, 11, 3, 50, 40, 90], 2), 97)\n\n    def test_case_9(self):\n        self.assertEqual(program.maxProfitWithKTransactions([5, 11, 3, 50, 40, 90], 3), 103)\n\n    def test_case_10(self):\n        self.assertEqual(program.maxProfitWithKTransactions([50, 25, 12, 4, 3, 10, 1, 100], 2), 106)\n\n    def test_case_11(self):\n        self.assertEqual(program.maxProfitWithKTransactions([100, 99, 98, 97, 1], 5), 0)\n\n    def test_case_12(self):\n        self.assertEqual(program.maxProfitWithKTransactions([1, 100, 2, 200, 3, 300, 4, 400, 5, 500], 5), 1485)\n\n    def test_case_13(self):\n        self.assertEqual(program.maxProfitWithKTransactions([1, 100, 101, 200, 201, 300, 301, 400, 401, 500], 5), 499)\n\n    def test_case_14(self):\n        self.assertEqual(program.maxProfitWithKTransactions([1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5], 4), 84)\n\n    def test_case_15(self):\n        self.assertEqual(program.maxProfitWithKTransactions([1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5], 2), 62)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 2), 93)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nk) time | O(nk) space\ndef maxProfitWithKTransactions(prices, k):\n    if not len(prices):\n        return 0\n    profits = [[0 for d in prices] for t in range(k + 1)]\n    for t in range(1, k + 1):\n        maxThusFar = float(\"-inf\")\n        for d in range(1, len(prices)):\n            maxThusFar = max(maxThusFar, profits[t - 1][d - 1] - prices[d - 1])\n            profits[t][d] = max(profits[t][d - 1], maxThusFar + prices[d])\n    return profits[-1][-1]\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nk) time | O(n) space\ndef maxProfitWithKTransactions(prices, k):\n    if not len(prices):\n        return 0\n    evenProfits = [0 for d in prices]\n    oddProfits = [0 for d in prices]\n    for t in range(1, k + 1):\n        maxThusFar = float(\"-inf\")\n        if t % 2 == 1:\n            currentProfits = oddProfits\n            previousProfits = evenProfits\n        else:\n            currentProfits = evenProfits\n            previousProfits = oddProfits\n        for d in range(1, len(prices)):\n            maxThusFar = max(maxThusFar, previousProfits[d - 1] - prices[d - 1])\n            currentProfits[d] = max(currentProfits[d - 1], maxThusFar + prices[d])\n    return evenProfits[-1] if k % 2 == 0 else oddProfits[-1]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func maxProfitWithKTransactions(_ prices: [Int], _ k: Int) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(0, program.maxProfitWithKTransactions([], 1))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(0, program.maxProfitWithKTransactions([1], 1))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(9, program.maxProfitWithKTransactions([1, 10], 1))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(9, program.maxProfitWithKTransactions([1, 10], 3))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(6, program.maxProfitWithKTransactions([3, 2, 5, 7, 1, 3, 7], 1))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(93, program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 2))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(93, program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 3))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(97, program.maxProfitWithKTransactions([5, 11, 3, 50, 40, 90], 2))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(103, program.maxProfitWithKTransactions([5, 11, 3, 50, 40, 90], 3))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(106, program.maxProfitWithKTransactions([50, 25, 12, 4, 3, 10, 1, 100], 2))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(0, program.maxProfitWithKTransactions([100, 99, 98, 97, 1], 5))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(1485, program.maxProfitWithKTransactions([1, 100, 2, 200, 3, 300, 4, 400, 5, 500], 5))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(499, program.maxProfitWithKTransactions([1, 100, 101, 200, 201, 300, 301, 400, 401, 500], 5))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual(84, program.maxProfitWithKTransactions([1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5], 4))\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      try assertEqual(62, program.maxProfitWithKTransactions([1, 25, 24, 23, 12, 36, 14, 40, 31, 41, 5], 2))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(93, program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 2))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nk) time | O(nk) space\n  func maxProfitWithKTransactions(_ prices: [Int], _ k: Int) -> Int {\n    if prices.count == 0 {\n      return 0\n    }\n\n    var profits = [[Int]]()\n\n    for _ in stride(from: 0, through: k, by: 1) {\n      let row = Array(repeating: 0, count: prices.count)\n      profits.append(row)\n    }\n\n    for transaction in stride(from: 1, through: k, by: 1) {\n      var maxProfitThusFar = Int.min\n\n      for day in stride(from: 1, to: prices.count, by: 1) {\n        maxProfitThusFar = max(maxProfitThusFar, profits[transaction - 1][day - 1] - prices[day - 1])\n        profits[transaction][day] = max(profits[transaction][day - 1], maxProfitThusFar + prices[day])\n      }\n    }\n\n    return profits[k][prices.count - 1]\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nk) time | O(n) space\n  func maxProfitWithKTransactions(_ prices: [Int], _ k: Int) -> Int {\n    if prices.count == 0 {\n      return 0\n    }\n\n    var evenProfits = Array(repeating: 0, count: prices.count)\n    var oddProfits = Array(repeating: 0, count: prices.count)\n\n    for transaction in stride(from: 1, through: k, by: 1) {\n      var maxProfitThusFar = Int.min\n\n      if transaction % 2 == 0 {\n        secondSolutionHelper(&evenProfits, &oddProfits, &maxProfitThusFar, prices)\n      } else {\n        secondSolutionHelper(&oddProfits, &evenProfits, &maxProfitThusFar, prices)\n      }\n    }\n\n    if k % 2 == 0 {\n      return evenProfits[prices.count - 1]\n    } else {\n      return oddProfits[prices.count - 1]\n    }\n  }\n\n  func secondSolutionHelper(_ currentProfits: inout [Int], _ previousProfits: inout [Int], _ maxProfitThusFar: inout Int, _ prices: [Int]) {\n    for day in stride(from: 1, to: prices.count, by: 1) {\n      maxProfitThusFar = max(maxProfitThusFar, previousProfits[day - 1] - prices[day - 1])\n      currentProfits[day] = max(currentProfits[day - 1], maxProfitThusFar + prices[day])\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function maxProfitWithKTransactions(prices: number[], k: number) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.maxProfitWithKTransactions([5, 11, 3, 50, 60, 90], 2)).to.deep.equal(93);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nk) time | O(nk) space\nexport function maxProfitWithKTransactions(prices: number[], k: number) {\n  if (!prices.length) return 0;\n  const profits: number[][] = [];\n  for (let t = 0; t < k + 1; t++) {\n    const row: number[] = new Array(prices.length).fill(0);\n    profits.push(row);\n  }\n  for (let t = 1; t < k + 1; t++) {\n    let maxThusFar = -Infinity;\n    for (let d = 1; d < prices.length; d++) {\n      maxThusFar = Math.max(maxThusFar, profits[t - 1][d - 1] - prices[d - 1]);\n      profits[t][d] = Math.max(profits[t][d - 1], maxThusFar + prices[d]);\n    }\n  }\n  return profits[k][prices.length - 1];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nk) time | O(n) space\nexport function maxProfitWithKTransactions(prices: number[], k: number) {\n  if (!prices.length) return 0;\n  const evenProfits: number[] = new Array(prices.length).fill(0);\n  const oddProfits: number[] = new Array(prices.length).fill(0);\n  for (let t = 1; t < k + 1; t++) {\n    let maxThusFar = -Infinity;\n    let currentProfits, previousProfits;\n    if (t % 2 === 1) {\n      currentProfits = oddProfits;\n      previousProfits = evenProfits;\n    } else {\n      currentProfits = evenProfits;\n      previousProfits = oddProfits;\n    }\n    for (let d = 1; d < prices.length; d++) {\n      maxThusFar = Math.max(maxThusFar, previousProfits[d - 1] - prices[d - 1]);\n      currentProfits[d] = Math.max(currentProfits[d - 1], maxThusFar + prices[d]);\n    }\n  }\n  return k % 2 === 0 ? evenProfits[prices.length - 1] : oddProfits[prices.length - 1];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "k": 2,
+      "prices": [
+        5,
+        11,
+        3,
+        50,
+        60,
+        90
+      ]
+    },
+    {
+      "k": 1,
+      "prices": []
+    },
+    {
+      "k": 1,
+      "prices": [
+        1
+      ]
+    },
+    {
+      "k": 1,
+      "prices": [
+        1,
+        10
+      ]
+    },
+    {
+      "k": 3,
+      "prices": [
+        1,
+        10
+      ]
+    },
+    {
+      "k": 1,
+      "prices": [
+        3,
+        2,
+        5,
+        7,
+        1,
+        3,
+        7
+      ]
+    },
+    {
+      "k": 3,
+      "prices": [
+        5,
+        11,
+        3,
+        50,
+        60,
+        90
+      ]
+    },
+    {
+      "k": 2,
+      "prices": [
+        5,
+        11,
+        3,
+        50,
+        40,
+        90
+      ]
+    },
+    {
+      "k": 3,
+      "prices": [
+        5,
+        11,
+        3,
+        50,
+        40,
+        90
+      ]
+    },
+    {
+      "k": 2,
+      "prices": [
+        50,
+        25,
+        12,
+        4,
+        3,
+        10,
+        1,
+        100
+      ]
+    },
+    {
+      "k": 5,
+      "prices": [
+        100,
+        99,
+        98,
+        97,
+        1
+      ]
+    },
+    {
+      "k": 5,
+      "prices": [
+        1,
+        100,
+        2,
+        200,
+        3,
+        300,
+        4,
+        400,
+        5,
+        500
+      ]
+    },
+    {
+      "k": 5,
+      "prices": [
+        1,
+        100,
+        101,
+        200,
+        201,
+        300,
+        301,
+        400,
+        401,
+        500
+      ]
+    },
+    {
+      "k": 4,
+      "prices": [
+        1,
+        25,
+        24,
+        23,
+        12,
+        36,
+        14,
+        40,
+        31,
+        41,
+        5
+      ]
+    },
+    {
+      "k": 2,
+      "prices": [
+        1,
+        25,
+        24,
+        23,
+        12,
+        36,
+        14,
+        40,
+        31,
+        41,
+        5
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      93,
+      0,
+      0,
+      9,
+      9,
+      6,
+      93,
+      97,
+      103,
+      106,
+      0,
+      1485,
+      499,
+      84,
+      62
+    ]
+  ]
+}

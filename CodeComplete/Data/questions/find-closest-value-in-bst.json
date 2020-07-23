@@ -1,0 +1,2126 @@
+{
+  "Summary": {
+    "Name": "Find Closest Value In BST",
+    "Category": "Binary Search Trees",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "number": 401,
+      "timeOne": 0,
+      "timeTwo": 948,
+      "url": "https://player.vimeo.com/video/228453275"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try traversing the BST node by node, all the while keeping track of the node with the value closest to the target value. Calculating the absolute value of the difference between a node's value and the target value should allow you to check if that node is closer than the current closest one.\nMake use of the BST property to determine what side of any given node has values close to the target value and is therefore worth exploring.\nWhat are the advantages and disadvantages of solving this problem iteratively as opposed to recursively?\n",
+  "SpaceTime": "Average: O(log(n)) time | O(1) space - where n is the number of nodes in the BST\nWorst: O(n) time | O(1) space - where n is the number of nodes in the BST\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a Binary Search Tree (BST) and a target integer\n  value and returns the closest value to that target value contained in the BST.\n</p>\n<p>You can assume that there will only be one closest value.</p>\n<p>\n  Each <span>BST</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. A node is\n  said to be a valid <span>BST</span> node if and only if it satisfies the BST\n  property: its <span>value</span> is strictly greater than the values of every\n  node to its left; its <span>value</span> is less than or equal to the values\n  of every node to its right; and its children nodes are either valid\n  <span>BST</span> nodes themselves or <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> =   10\n       /     \\\n      5      15\n    /   \\   /   \\\n   2     5 13   22\n /           \\\n1            14\n<span class=\"CodeEditor-promptParameter\">target</span> = 12\n</pre>\n<h3>Sample Output</h3>\n<pre>13</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "5",
+            "right": "15",
+            "value": 10
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "5-2",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "13",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": "14",
+            "value": 13
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          }
+        ],
+        "root": "10"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>left</span> and <span>right</span>\npointers and by the <span>root</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "Name": "target",
+      "Example": 12,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "class BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int val);\n  BST &insert(int val);\n};\n\nint findClosestValueInBst(BST *tree, int target) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "BST::BST(int val) {\n  value = val;\n  left = NULL;\n  right = NULL;\n}\n\nBST &BST::insert(int val) {\n  if (val < value) {\n    if (left == NULL) {\n      BST *newBST = new BST(val);\n      left = newBST;\n    } else {\n      left->insert(val);\n    }\n  } else {\n    if (right == NULL) {\n      BST *newBST = new BST(val);\n      right = newBST;\n    } else {\n      right->insert(val);\n    }\n  }\n  return *this;\n}\n\nBST getTest() {\n  BST test(100);\n  test.insert(5)\n      .insert(15)\n      .insert(5)\n      .insert(2)\n      .insert(1)\n      .insert(22)\n      .insert(1)\n      .insert(1)\n      .insert(3)\n      .insert(1)\n      .insert(1)\n      .insert(502)\n      .insert(55000)\n      .insert(204)\n      .insert(205)\n      .insert(207)\n      .insert(206)\n      .insert(208)\n      .insert(203)\n      .insert(-51)\n      .insert(-403)\n      .insert(1001)\n      .insert(57)\n      .insert(60)\n      .insert(4500);\n  return test;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 100) == 100);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 208) == 208);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 4500) == 4500);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 4501) == 4500);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, -70) == -51);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 2000) == 1001);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 6) == 5);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 30000) == 55000);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, -1) == 1);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 29751) == 55000);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      auto test = getTest();\n      assert(findClosestValueInBst(&test, 29749) == 4500);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nBST::BST(int val) {\n  value = val;\n  left = NULL;\n  right = NULL;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BST* root = new BST(10);\n      root->left = new BST(5);\n      root->left->left = new BST(2);\n      root->left->left->left = new BST(1);\n      root->left->right = new BST(5);\n      root->right = new BST(15);\n      root->right->left = new BST(13);\n      root->right->left->right = new BST(14);\n      root->right->right = new BST(22);\n      int expected = 13;\n      int actual = findClosestValueInBst(root, 12);\n      assert(expected == actual);\n    });\n\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <cmath>\n#include <float.h>\nusing namespace std;\n\nclass BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int val);\n  BST &insert(int val);\n};\n\nint findClosestValueInBst(BST *tree, int target);\nint findClosestValueInBstHelper(BST *tree, int target, double closest);\n\n// Average: O(log(n)) time | O(log(n)) space\n// Worst: O(n) time | O(n) space\nint findClosestValueInBst(BST *tree, int target) {\n  return findClosestValueInBstHelper(tree, target, DBL_MAX);\n}\n\nint findClosestValueInBstHelper(BST *tree, int target, double closest) {\n  if (abs(target - closest) > abs(target - tree->value)) {\n    closest = tree->value;\n  }\n  if (target < tree->value && tree->left != NULL) {\n    return findClosestValueInBstHelper(tree->left, target, closest);\n  } else if (target > tree->value && tree->right != NULL) {\n    return findClosestValueInBstHelper(tree->right, target, closest);\n  } else {\n    return (int)closest;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <cmath>\n#include <float.h>\nusing namespace std;\n\nclass BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int val);\n  BST &insert(int val);\n};\n\nint findClosestValueInBst(BST *tree, int target);\nint findClosestValueInBstHelper(BST *tree, int target, double closest);\n\n// Average: O(log(n)) time | O(1) space\n// Worst: O(n) time | O(1) space\nint findClosestValueInBst(BST *tree, int target) {\n  return findClosestValueInBstHelper(tree, target, DBL_MAX);\n}\n\nint findClosestValueInBstHelper(BST *tree, int target, double closest) {\n  BST *currentNode = tree;\n  while (currentNode != NULL) {\n    if (abs(target - closest) > abs(target - currentNode->value)) {\n      closest = currentNode->value;\n    }\n    if (target < currentNode->value) {\n      currentNode = currentNode->left;\n    } else if (target > currentNode->value) {\n      currentNode = currentNode->right;\n    } else {\n      break;\n    }\n  }\n  return (int)closest;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int FindClosestValueInBst(BST tree, int target) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\tpublic TestBST test;\n\n\tpublic ProgramTest() {\n\t\tthis.test = new TestBST(100);\n\t\tthis.test.insert(5).insert(15).insert(5).insert(2).insert(1).insert(22).insert(1)\n\t\t.insert(1).insert(3).insert(1).insert(1).insert(502).insert(55000).insert(204)\n\t\t.insert(205).insert(207).insert(206).insert(208).insert(203).insert(-51)\n\t\t.insert(-403).insert(1001).insert(57).insert(60).insert(4500);\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 100) == 100);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 208) == 208);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 4500) == 4500);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 4501) == 4500);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, -70) == -51);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 2000) == 1001);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 6) == 5);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 30000) == 55000);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, -1) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 29751) == 55000);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tUtils.AssertTrue(Program.FindClosestValueInBst(this.test, 29749) == 4500);\n\t}\n\n\tpublic class TestBST : Program.BST {\n\t\tpublic TestBST(int value) : base(value) {\n\t\t}\n\n\t\tpublic TestBST insert(int value) {\n\t\t\tProgram.BST current = null;\n\t\t\tif (value < this.value) {\n\t\t\t\tif (this.left == null) {\n\t\t\t\t\tProgram.BST newBST = new Program.BST(value);\n\t\t\t\t\tthis.left = newBST;\n\t\t\t\t\treturn this;\n\t\t\t\t} else {\n\t\t\t\t\tcurrent = this.left;\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (right == null) {\n\t\t\t\t\tProgram.BST newBST = new Program.BST(value);\n\t\t\t\t\tthis.right = newBST;\n\t\t\t\t\treturn this;\n\t\t\t\t} else {\n\t\t\t\t\tcurrent = this.right;\n\t\t\t\t}\n\t\t\t}\n\t\t\twhile (true) {\n\t\t\t\tif (value < current.value) {\n\t\t\t\t\tif (current.left == null) {\n\t\t\t\t\t\tProgram.BST newBST = new Program.BST(value);\n\t\t\t\t\t\tcurrent.left = newBST;\n\t\t\t\t\t\treturn this;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tcurrent = current.left;\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tif (current.right == null) {\n\t\t\t\t\t\tProgram.BST newBST = new Program.BST(value);\n\t\t\t\t\t\tcurrent.right = newBST;\n\t\t\t\t\t\treturn this;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tcurrent = current.right;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar root = new Program.BST(10);\n\t\troot.left = new Program.BST(5);\n\t\troot.left.left = new Program.BST(2);\n\t\troot.left.left.left = new Program.BST(1);\n\t\troot.left.right = new Program.BST(5);\n\t\troot.right = new Program.BST(15);\n\t\troot.right.left = new Program.BST(13);\n\t\troot.right.left.right = new Program.BST(14);\n\t\troot.right.right = new Program.BST(22);\n\n\t\tvar expected = 13;\n\t\tvar actual = Program.FindClosestValueInBst(root, 12);\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\t// Average: O(log(n)) time | O(log(n)) space\n\t// Worst: O(n) time | O(n) space\n\tpublic static int FindClosestValueInBst(BST tree, int target) {\n\t\treturn FindClosestValueInBst(tree, target, Int32.MaxValue);\n\t}\n\n\tpublic static int FindClosestValueInBst(BST tree, int target, double closest) {\n\t\tif (Math.Abs(target - closest) > Math.Abs(target - tree.value)) {\n\t\t\tclosest = tree.value;\n\t\t}\n\t\tif (target < tree.value && tree.left != null) {\n\t\t\treturn FindClosestValueInBst(tree.left, target, closest);\n\t\t} else if (target > tree.value && tree.right != null) {\n\t\t\treturn FindClosestValueInBst(tree.right, target, closest);\n\t\t} else {\n\t\t\treturn (int)closest;\n\t\t}\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\t// Average: O(log(n)) time | O(1) space\n\t// Worst: O(n) time | O(1) space\n\tpublic static int FindClosestValueInBst(BST tree, int target) {\n\t\treturn FindClosestValueInBst(tree, target, Int32.MaxValue);\n\t}\n\n\tpublic static int FindClosestValueInBst(BST tree, int target, double closest) {\n\t\tBST currentNode = tree;\n\t\twhile (currentNode != null) {\n\t\t\tif (Math.Abs(target - closest) > Math.Abs(target - currentNode.value)) {\n\t\t\t\tclosest = currentNode.value;\n\t\t\t}\n\t\t\tif (target < currentNode.value) {\n\t\t\t\tcurrentNode = currentNode.left;\n\t\t\t} else if (target > currentNode.value) {\n\t\t\t\tcurrentNode = currentNode.right;\n\t\t\t} else {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n\t\treturn (int)closest;\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\nfunc (tree *BST) FindClosestValue(target int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBST(root int, values ...int) *BST {\n\ttree := &BST{Value: root}\n\tfor _, value := range values {\n\t\ttree.Insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BST) Insert(value int) {\n\tif value < tree.Value {\n\t\tif tree.Left == nil {\n\t\t\ttree.Left = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Left.Insert(value)\n\t\t}\n\t} else {\n\t\tif tree.Right == nil {\n\t\t\ttree.Right = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Right.Insert(value)\n\t\t}\n\t}\n}\n\nvar test = NewBST(100, 5, 15, 5, 2, 1, 22, 1, 1, 3, 1, 1, 502, 55000, 204, 205, 207, 206, 208, 203, -51, -403, 1001, 57, 60, 4500)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := test.FindClosestValue(100)\n\texpected := 100\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\toutput := test.FindClosestValue(208)\n\texpected := 208\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\toutput := test.FindClosestValue(4500)\n\texpected := 4500\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\toutput := test.FindClosestValue(4501)\n\texpected := 4500\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\toutput := test.FindClosestValue(-70)\n\texpected := -51\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\toutput := test.FindClosestValue(2000)\n\texpected := 1001\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\toutput := test.FindClosestValue(6)\n\texpected := 5\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\toutput := test.FindClosestValue(30000)\n\texpected := 55000\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\toutput := test.FindClosestValue(-1)\n\texpected := 1\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\toutput := test.FindClosestValue(29751)\n\texpected := 55000\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\toutput := test.FindClosestValue(29749)\n\texpected := 4500\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBST(value int) *BST {\n\treturn &BST{Value: value}\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\troot := NewBST(10)\n\troot.Left = NewBST(5)\n\troot.Left.Left = NewBST(2)\n\troot.Left.Left.Left = NewBST(1)\n\troot.Left.Right = NewBST(5)\n\troot.Right = NewBST(15)\n\troot.Right.Left = NewBST(13)\n\troot.Right.Left.Right = NewBST(14)\n\troot.Right.Right = NewBST(22)\n\n\texpected := 13\n\tactual := root.FindClosestValue(12)\n\trequire.Equal(t, expected, actual)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\n// Average: O(log(n)) time | O(log(n)) space\n// Worst: O(n) time | O(n) space\nfunc (tree *BST) FindClosestValue(target int) int {\n\treturn tree.findClosestValue(target, math.MaxInt32)\n}\n\nfunc (tree *BST) findClosestValue(target, closest int) int {\n\tif absdiff(target, closest) > absdiff(target, tree.Value) {\n\t\tclosest = tree.Value\n\t}\n\tif target < tree.Value && tree.Left != nil {\n\t\treturn tree.Left.findClosestValue(target, closest)\n\t} else if target > tree.Value && tree.Right != nil {\n\t\treturn tree.Right.findClosestValue(target, closest)\n\t}\n\treturn closest\n}\n\nfunc absdiff(a, b int) int {\n\tout := math.Abs(float64(a) - float64(b))\n\treturn int(out)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\n// Average: O(log(n)) time | O(1) space\n// Worst: O(n) time | O(1) space\nfunc (tree *BST) FindClosestValue(target int) int {\n\treturn tree.findClosestValue(target, math.MaxInt32)\n}\n\nfunc (tree *BST) findClosestValue(target, closest int) int {\n\tcurrentnode := tree\n\tfor currentnode != nil {\n\t\tif absdiff(target, closest) > absdiff(target, currentnode.Value) {\n\t\t\tclosest = currentnode.Value\n\t\t}\n\t\tif target < currentnode.Value {\n\t\t\tcurrentnode = currentnode.Left\n\t\t} else if target > currentnode.Value {\n\t\t\tcurrentnode = currentnode.Right\n\t\t} else {\n\t\t\tbreak\n\t\t}\n\t}\n\treturn closest\n}\n\nfunc absdiff(a, b int) int {\n\tout := math.Abs(float64(a) - float64(b))\n\treturn int(out)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int findClosestValueInBst(BST tree, int target) {\n    // Write your code here.\n    return -1;\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  public TestBST test;\n\n  public ProgramTest() {\n    this.test = new TestBST(100);\n    this.test\n        .insert(5)\n        .insert(15)\n        .insert(5)\n        .insert(2)\n        .insert(1)\n        .insert(22)\n        .insert(1)\n        .insert(1)\n        .insert(3)\n        .insert(1)\n        .insert(1)\n        .insert(502)\n        .insert(55000)\n        .insert(204)\n        .insert(205)\n        .insert(207)\n        .insert(206)\n        .insert(208)\n        .insert(203)\n        .insert(-51)\n        .insert(-403)\n        .insert(1001)\n        .insert(57)\n        .insert(60)\n        .insert(4500);\n  }\n\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 100) == 100);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 208) == 208);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 4500) == 4500);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 4501) == 4500);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, -70) == -51);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 2000) == 1001);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 6) == 5);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 30000) == 55000);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, -1) == 1);\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 29751) == 55000);\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(Program.findClosestValueInBst(this.test, 29749) == 4500);\n  }\n\n  class TestBST extends Program.BST {\n    public TestBST(int value) {\n      super(value);\n    }\n\n    public TestBST insert(int value) {\n      Program.BST current = null;\n      if (value < this.value) {\n        if (this.left == null) {\n          Program.BST newBST = new Program.BST(value);\n          this.left = newBST;\n          return this;\n        } else {\n          current = this.left;\n        }\n      } else {\n        if (right == null) {\n          Program.BST newBST = new Program.BST(value);\n          this.right = newBST;\n          return this;\n        } else {\n          current = this.right;\n        }\n      }\n      while (true) {\n        if (value < current.value) {\n          if (current.left == null) {\n            Program.BST newBST = new Program.BST(value);\n            current.left = newBST;\n            return this;\n          } else {\n            current = current.left;\n          }\n        } else {\n          if (current.right == null) {\n            Program.BST newBST = new Program.BST(value);\n            current.right = newBST;\n            return this;\n          } else {\n            current = current.right;\n          }\n        }\n      }\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    var root = new Program.BST(10);\n    root.left = new Program.BST(5);\n    root.left.left = new Program.BST(2);\n    root.left.left.left = new Program.BST(1);\n    root.left.right = new Program.BST(5);\n    root.right = new Program.BST(15);\n    root.right.left = new Program.BST(13);\n    root.right.left.right = new Program.BST(14);\n    root.right.right = new Program.BST(22);\n\n    var expected = 13;\n    var actual = Program.findClosestValueInBst(root, 12);\n\tUtils.assertEquals(expected, actual);\n  }\n\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // Average: O(log(n)) time | O(log(n)) space\n  // Worst: O(n) time | O(n) space\n  public static int findClosestValueInBst(BST tree, int target) {\n    return findClosestValueInBst(tree, target, Double.MAX_VALUE);\n  }\n\n  public static int findClosestValueInBst(BST tree, int target, double closest) {\n    if (Math.abs(target - closest) > Math.abs(target - tree.value)) {\n      closest = tree.value;\n    }\n    if (target < tree.value && tree.left != null) {\n      return findClosestValueInBst(tree.left, target, closest);\n    } else if (target > tree.value && tree.right != null) {\n      return findClosestValueInBst(tree.right, target, closest);\n    } else {\n      return (int) closest;\n    }\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // Average: O(log(n)) time | O(1) space\n  // Worst: O(n) time | O(1) space\n  public static int findClosestValueInBst(BST tree, int target) {\n    return findClosestValueInBst(tree, target, Double.MAX_VALUE);\n  }\n\n  public static int findClosestValueInBst(BST tree, int target, double closest) {\n    BST currentNode = tree;\n    while (currentNode != null) {\n      if (Math.abs(target - closest) > Math.abs(target - currentNode.value)) {\n        closest = currentNode.value;\n      }\n      if (target < currentNode.value) {\n        currentNode = currentNode.left;\n      } else if (target > currentNode.value) {\n        currentNode = currentNode.right;\n      } else {\n        break;\n      }\n    }\n    return (int) closest;\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function findClosestValueInBst(tree, target) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.findClosestValueInBst = findClosestValueInBst;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass BST {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(value) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n    return this;\n  }\n}\n\nconst test = new BST(100)\n  .insert(5)\n  .insert(15)\n  .insert(5)\n  .insert(2)\n  .insert(1)\n  .insert(22)\n  .insert(1)\n  .insert(1)\n  .insert(3)\n  .insert(1)\n  .insert(1)\n  .insert(502)\n  .insert(55000)\n  .insert(204)\n  .insert(205)\n  .insert(207)\n  .insert(206)\n  .insert(208)\n  .insert(203)\n  .insert(-51)\n  .insert(-403)\n  .insert(1001)\n  .insert(57)\n  .insert(60)\n  .insert(4500);\n\nit('Test Case #1', function () {\n  chai.expect(program.findClosestValueInBst(test, 100)).to.deep.equal(100);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.findClosestValueInBst(test, 208)).to.deep.equal(208);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.findClosestValueInBst(test, 4500)).to.deep.equal(4500);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.findClosestValueInBst(test, 4501)).to.deep.equal(4500);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.findClosestValueInBst(test, -70)).to.deep.equal(-51);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.findClosestValueInBst(test, 2000)).to.deep.equal(1001);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.findClosestValueInBst(test, 6)).to.deep.equal(5);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.findClosestValueInBst(test, 30000)).to.deep.equal(55000);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.findClosestValueInBst(test, -1)).to.deep.equal(1);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.findClosestValueInBst(test, 29751)).to.deep.equal(55000);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.findClosestValueInBst(test, 29749)).to.deep.equal(4500);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass BST {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const root = new BST(10);\n  root.left = new BST(5);\n  root.left.left = new BST(2);\n  root.left.left.left = new BST(1);\n  root.left.right = new BST(5);\n  root.right = new BST(15);\n  root.right.left = new BST(13);\n  root.right.left.right = new BST(14);\n  root.right.right = new BST(22);\n  const expected = 13;\n  const actual = program.findClosestValueInBst(root, 12);\n  chai.expect(actual).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average: O(log(n)) time | O(log(n)) space\n// Worst: O(n) time | O(n) space\nfunction findClosestValueInBst(tree, target) {\n  return findClosestValueInBstHelper(tree, target, Infinity);\n}\n\nfunction findClosestValueInBstHelper(tree, target, closest) {\n  if (tree === null) return closest;\n  if (Math.abs(target - closest) > Math.abs(target - tree.value)) {\n    closest = tree.value;\n  }\n  if (target < tree.value) {\n    return findClosestValueInBstHelper(tree.left, target, closest);\n  } else if (target > tree.value) {\n    return findClosestValueInBstHelper(tree.right, target, closest);\n  } else {\n    return closest;\n  }\n}\n\nexports.findClosestValueInBst = findClosestValueInBst;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average: O(log(n)) time | O(1) space\n// Worst: O(n) time | O(1) space\nfunction findClosestValueInBst(tree, target) {\n  return findClosestValueInBstHelper(tree, target, Infinity);\n}\n\nfunction findClosestValueInBstHelper(tree, target, closest) {\n  let currentNode = tree;\n  while (currentNode !== null) {\n    if (Math.abs(target - closest) > Math.abs(target - currentNode.value)) {\n      closest = currentNode.value;\n    }\n    if (target < currentNode.value) {\n      currentNode = currentNode.left;\n    } else if (target > currentNode.value) {\n      currentNode = currentNode.right;\n    } else {\n      break;\n    }\n  }\n  return closest;\n}\n\nexports.findClosestValueInBst = findClosestValueInBst;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def findClosestValueInBst(tree, target):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def insert(self, value):\n        if value < self.value:\n            if self.left is None:\n                self.left = BST(value)\n            else:\n                self.left.insert(value)\n        else:\n            if self.right is None:\n                self.right = BST(value)\n            else:\n                self.right.insert(value)\n        return self\n\n\ntest = (\n    BST(100)\n    .insert(5)\n    .insert(15)\n    .insert(5)\n    .insert(2)\n    .insert(1)\n    .insert(22)\n    .insert(1)\n    .insert(1)\n    .insert(3)\n    .insert(1)\n    .insert(1)\n    .insert(502)\n    .insert(55000)\n    .insert(204)\n    .insert(205)\n    .insert(207)\n    .insert(206)\n    .insert(208)\n    .insert(203)\n    .insert(-51)\n    .insert(-403)\n    .insert(1001)\n    .insert(57)\n    .insert(60)\n    .insert(4500)\n)\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.findClosestValueInBst(test, 100), 100)\n\n    def test_case_2(self):\n        self.assertEqual(program.findClosestValueInBst(test, 208), 208)\n\n    def test_case_3(self):\n        self.assertEqual(program.findClosestValueInBst(test, 4500), 4500)\n\n    def test_case_4(self):\n        self.assertEqual(program.findClosestValueInBst(test, 4501), 4500)\n\n    def test_case_5(self):\n        self.assertEqual(program.findClosestValueInBst(test, -70), -51)\n\n    def test_case_6(self):\n        self.assertEqual(program.findClosestValueInBst(test, 2000), 1001)\n\n    def test_case_7(self):\n        self.assertEqual(program.findClosestValueInBst(test, 6), 5)\n\n    def test_case_8(self):\n        self.assertEqual(program.findClosestValueInBst(test, 30000), 55000)\n\n    def test_case_9(self):\n        self.assertEqual(program.findClosestValueInBst(test, -1), 1)\n\n    def test_case_10(self):\n        self.assertEqual(program.findClosestValueInBst(test, 29751), 55000)\n\n    def test_case_11(self):\n        self.assertEqual(program.findClosestValueInBst(test, 29749), 4500)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        root = BST(10)\n        root.left = BST(5)\n        root.left.left = BST(2)\n        root.left.left.left = BST(1)\n        root.left.right = BST(5)\n        root.right = BST(15)\n        root.right.left = BST(13)\n        root.right.left.right = BST(14)\n        root.right.right = BST(22)\n        expected = 13\n        actual = program.findClosestValueInBst(root, 12)\n        self.assertEqual(expected, actual)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Average: O(log(n)) time | O(log(n)) space\n# Worst: O(n) time | O(n) space\ndef findClosestValueInBst(tree, target):\n    return findClosestValueInBstHelper(tree, target, float(\"inf\"))\n\n\ndef findClosestValueInBstHelper(tree, target, closest):\n    if tree is None:\n        return closest\n    if abs(target - closest) > abs(target - tree.value):\n        closest = tree.value\n    if target < tree.value:\n        return findClosestValueInBstHelper(tree.left, target, closest)\n    elif target > tree.value:\n        return findClosestValueInBstHelper(tree.right, target, closest)\n    else:\n        return closest\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Average: O(log(n)) time | O(1) space\n# Worst: O(n) time | O(1) space\ndef findClosestValueInBst(tree, target):\n    return findClosestValueInBstHelper(tree, target, float(\"inf\"))\n\n\ndef findClosestValueInBstHelper(tree, target, closest):\n    currentNode = tree\n    while currentNode is not None:\n        if abs(target - closest) > abs(target - currentNode.value):\n            closest = currentNode.value\n        if target < currentNode.value:\n            currentNode = currentNode.left\n        elif target > currentNode.value:\n            currentNode = currentNode.right\n        else:\n            break\n    return closest\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  func findClosestValueInBST(tree: BST?, target: Int) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  var tree: Program.BST?\n\n  func test() {\n    let program = Program()\n    tree = newBST(root: 100, 5, 15, 5, 2, 1, 22, 1, 1,\n                  3, 1, 1, 502, 55000, 204, 205, 207, 206, 208,\n                  203, -51, -403, 1001, 57, 60, 4500)\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(100, program.findClosestValueInBST(tree: tree, target: 100))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(208, program.findClosestValueInBST(tree: tree, target: 208))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(4500, program.findClosestValueInBST(tree: tree, target: 4500))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(4500, program.findClosestValueInBST(tree: tree, target: 4501))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(-51, program.findClosestValueInBST(tree: tree, target: -70))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(1001, program.findClosestValueInBST(tree: tree, target: 2000))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(5, program.findClosestValueInBST(tree: tree, target: 6))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(55000, program.findClosestValueInBST(tree: tree, target: 30000))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(1, program.findClosestValueInBST(tree: tree, target: -1))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(55000, program.findClosestValueInBST(tree: tree, target: 29751))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(4500, program.findClosestValueInBST(tree: tree, target: 29749))\n    }\n  }\n}\n\nfunc newBST(root: Int, _ values: Int...) -> Program.BST {\n  let tree = Program.BST(value: root)\n  for value in values {\n    bstInsert(tree: tree, value: value)\n  }\n  return tree\n}\n\nfunc bstInsert(tree: Program.BST, value: Int) {\n  if value < tree.value {\n    if let left = tree.left {\n      bstInsert(tree: left, value: value)\n    } else {\n      tree.left = Program.BST(value: value)\n    }\n  } else {\n    if let right = tree.right {\n      bstInsert(tree: right, value: value)\n    } else {\n      tree.right = Program.BST(value: value)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let root = Program.BST(value: 10)\n      root.left = Program.BST(value: 5)\n      root.left!.left = Program.BST(value: 2)\n      root.left!.left!.left = Program.BST(value: 1)\n      root.left!.right = Program.BST(value: 5)\n      root.right = Program.BST(value: 15)\n      root.right!.left = Program.BST(value: 13)\n      root.right!.left!.right = Program.BST(value: 14)\n      root.right!.right = Program.BST(value: 22)\n      let expected = 13\n      let actual = program.findClosestValueInBST(tree: root, target: 12)\n\n      try assertEqual(expected, actual)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  // Average: O(log(n)) time | O(log(n)) space\n  // Worst: O(n) time | O(n) space\n  func findClosestValueInBST(tree: BST?, target: Int) -> Int {\n    var closest = Int(Int32.max)\n    return findClosestValueInBSTHelper(tree: tree,\n                                       target: target, closest: &closest)\n  }\n\n  func findClosestValueInBSTHelper(tree: BST?,\n                                   target: Int, closest: inout Int) -> Int {\n    if tree === nil {\n      return closest\n    }\n\n    if let tree = tree {\n      let closestDifference = target - closest\n      let currentDifference = target - tree.value\n\n      if closestDifference.magnitude > currentDifference.magnitude {\n        closest = tree.value\n      }\n    }\n\n    if let tree = tree, target < tree.value {\n      if let left = tree.left {\n        return findClosestValueInBSTHelper(\n          tree: left, target: target, closest: &closest\n        )\n      } else {\n        return closest\n      }\n    } else if let tree = tree, target > tree.value {\n      if let right = tree.right {\n        return findClosestValueInBSTHelper(\n          tree: right, target: target, closest: &closest\n        )\n      } else {\n        return closest\n      }\n    } else {\n      return closest\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BST {\n    var value: Int\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  // Average: O(log(n)) time | O(1) space\n  // Worst: O(n) time | O(1) space\n  func findClosestValueInBST(tree: BST?, target: Int) -> Int {\n    var closest = Int(Int32.max)\n\n    return findClosestValueInBSTHelper(tree: tree, target: target, closest: &closest)\n  }\n\n  func findClosestValueInBSTHelper(tree: BST?, target: Int,\n                                   closest: inout Int) -> Int {\n    var currentNode = tree\n\n    while currentNode !== nil {\n      if let node = currentNode {\n        let closestDifference = target - closest\n        let currentDifference = target - node.value\n\n        if closestDifference.magnitude > currentDifference.magnitude {\n          closest = node.value\n        }\n      }\n\n      if let node = currentNode, target < node.value {\n        currentNode = node.left\n      } else if let node = currentNode, target > node.value {\n        currentNode = node.right\n      } else {\n        break\n      }\n    }\n\n    return closest\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "class BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexport function findClosestValueInBst(tree: BST, target: number) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const root = new BST(10);\n  root.left = new BST(5);\n  root.left.left = new BST(2);\n  root.left.left.left = new BST(1);\n  root.left.right = new BST(5);\n  root.right = new BST(15);\n  root.right.left = new BST(13);\n  root.right.left.right = new BST(14);\n  root.right.right = new BST(22);\n  const expected = 13;\n  const actual = program.findClosestValueInBst(root, 12);\n  chai.expect(actual).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// Average: O(log(n)) time | O(log(n)) space\n// Worst: O(n) time | O(n) space\nexport function findClosestValueInBst(tree: BST, target: number) {\n  return findClosestValueInBstHelper(tree, target, Infinity);\n}\n\nfunction findClosestValueInBstHelper(tree: BST | null, target: number, closest: number): number {\n  if (tree === null) return closest;\n  if (Math.abs(target - closest) > Math.abs(target - tree.value)) {\n    closest = tree.value;\n  }\n  if (target < tree.value) {\n    return findClosestValueInBstHelper(tree.left, target, closest);\n  } else if (target > tree.value) {\n    return findClosestValueInBstHelper(tree.right, target, closest);\n  } else {\n    return closest;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// Average: O(log(n)) time | O(1) space\n// Worst: O(n) time | O(1) space\nexport function findClosestValueInBst(tree: BST, target: number) {\n  return findClosestValueInBstHelper(tree, target, Infinity);\n}\n\nfunction findClosestValueInBstHelper(tree: BST | null, target: number, closest: number) {\n  let currentNode = tree;\n  while (currentNode !== null) {\n    if (Math.abs(target - closest) > Math.abs(target - currentNode.value)) {\n      closest = currentNode.value;\n    }\n    if (target < currentNode.value) {\n      currentNode = currentNode.left;\n    } else if (target > currentNode.value) {\n      currentNode = currentNode.right;\n    } else {\n      break;\n    }\n  }\n  return closest;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "target": 12,
+      "tree": {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "5",
+            "right": "15",
+            "value": 10
+          },
+          {
+            "id": "15",
+            "left": "13",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": "14",
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "5-2",
+            "value": 5
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "10"
+      }
+    },
+    {
+      "target": 100,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": 208,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": 4500,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": 4501,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": -70,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": 2000,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": 6,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": 30000,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": -1,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": 29751,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "target": 29749,
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      13,
+      100,
+      208,
+      4500,
+      4500,
+      -51,
+      1001,
+      5,
+      55000,
+      1,
+      55000,
+      4500
+    ]
+  ]
+}

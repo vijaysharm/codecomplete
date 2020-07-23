@@ -1,0 +1,1270 @@
+{
+  "Summary": {
+    "Name": "Merge Linked Lists",
+    "Category": "Linked Lists",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-11-21T00:00:00Z",
+      "number": 258,
+      "timeOne": 0,
+      "timeTwo": 1697,
+      "url": "https://player.vimeo.com/video/374459208"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can iterate through the Linked Lists from head to tail and merge them along the way by inserting nodes from the second Linked List into the first Linked List.\nYou'll need to manipulate three nodes at once at every step.\nAt every step, you'll need to have three variables (p1, p2, and p1Prev) pointing to the current node in the first Linked List (p1), the current node in the second Linked List (p2), and the previous node in the first Linked List (p1Prev). If the value of p1 is smaller than the value of p2, then you can just \"move forward\" in the first Linked List by moving p1 and p1Prev forward by one position (p1Prev becomes p1 and p1 becomes p1.next). If the value of p1 is greater than the value of p2, then you need to insert p2 before p1. You'll have to first make p1Prev point to p2, then make p2 point to p1, all the while not losing track of p2's \"next\" node, which you'll need to move to right after. You'll also have to handle edge cases when you're dealing with head nodes or tail nodes.\nYou can implement this algorithm both iteratively and recursively following nearly identical logic.",
+  "SpaceTime": "O(n + m) time | O(1) space - where n is the number of nodes in the first Linked List and m is the number of nodes in the second Linked List",
+  "PromptHTML": "<p>\n  Write a function that takes in the heads of two Singly Linked Lists that are\n  in sorted order, respectively. The function should merge the lists in place\n  (i.e., it shouldn't create a brand new list) and return the head of the merged\n  list; the merged list should be in sorted order.\n</p>\n<p>\n  Each <span>LinkedList</span> node has an integer <span>value</span> as well as\n  a <span>next</span> node pointing to the next node in the list or to\n  <span>None</span> / <span>null</span> if it's the tail of the list.\n</p>\n<p>\n  You can assume that the input linked lists will always have at least one node; in other\n  words, the heads will never be <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">headOne</span> = 2 -> 6 -> 7 -> 8 <span class=\"CodeEditor-promptComment\">// the head node with value 2</span>\n<span class=\"CodeEditor-promptParameter\">headTwo</span> = 1 -> 3 -> 4 -> 5 -> 9 -> 10 <span class=\"CodeEditor-promptComment\">// the head node with value 1</span>\n</pre>\n<h3>Sample Output</h3>\n<pre>\n1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10 <span class=\"CodeEditor-promptComment\">// the new head node with value 1</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "linkedlist",
+    "outputType": "linkedlist"
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "linkedListOne",
+      "Example": {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "6",
+            "value": 2
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": null,
+            "value": 8
+          }
+        ]
+      },
+      "Schema": {
+        "description": "A Singly Linked List is represented by a list of <span>nodes</span> and a <span>head</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>next</span> pointers and by the <span>head</span>.\n",
+        "properties": {
+          "head": {
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "next": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "next"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "head",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "Name": "linkedListTwo",
+      "Example": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "9",
+            "value": 5
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      "Schema": {
+        "description": "A Singly Linked List is represented by a list of <span>nodes</span> and a <span>head</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>next</span> pointers and by the <span>head</span>.\n",
+        "properties": {
+          "head": {
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "next": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "next"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "head",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\n\nusing namespace std;\n\n// This is an input class. Do not edit.\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value) {\n    this->value = value;\n    next = NULL;\n  }\n};\n\nLinkedList *mergeLinkedLists(LinkedList *headOne, LinkedList *headTwo) {\n  // Write your code here.\n  return NULL;\n}\n",
+      "StartingTest": "LinkedList *addMany(LinkedList *ll, vector<int> values) {\n  LinkedList *current = ll;\n  while (current->next != NULL) {\n    current = current->next;\n  }\n  for (auto value : values) {\n    current->next = new LinkedList(value);\n    current = current->next;\n  }\n  return ll;\n}\n\nvector<int> getNodesInArray(LinkedList *ll) {\n  vector<int> nodes;\n  LinkedList *current = ll;\n  while (current != NULL) {\n    nodes.push_back(current->value);\n    current = current->next;\n  }\n  return nodes;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      LinkedList *list1 = new LinkedList(1);\n      addMany(list1, {2, 3, 4, 5});\n      LinkedList *list2 = new LinkedList(6);\n      addMany(list2, {7, 8, 9, 10});\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      LinkedList *list1 = new LinkedList(6);\n      addMany(list1, {7, 8, 9, 10});\n      LinkedList *list2 = new LinkedList(1);\n      addMany(list2, {2, 3, 4, 5});\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      LinkedList *list1 = new LinkedList(1);\n      addMany(list1, {3, 5, 7, 9});\n      LinkedList *list2 = new LinkedList(2);\n      addMany(list2, {4, 6, 8, 10});\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      LinkedList *list1 = new LinkedList(2);\n      addMany(list1, {6, 7, 8});\n      LinkedList *list2 = new LinkedList(1);\n      addMany(list2, {3, 4, 5, 9, 10});\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      LinkedList *list1 = new LinkedList(1);\n      addMany(list1, {2, 3, 4, 5, 7, 8, 9, 10});\n      LinkedList *list2 = new LinkedList(6);\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      LinkedList *list1 = new LinkedList(6);\n      LinkedList *list2 = new LinkedList(1);\n      addMany(list2, {2, 3, 4, 5, 7, 8, 9, 10});\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      LinkedList *list1 = new LinkedList(1);\n      LinkedList *list2 = new LinkedList(2);\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      LinkedList *list1 = new LinkedList(2);\n      LinkedList *list2 = new LinkedList(1);\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      LinkedList *list1 = new LinkedList(1);\n      addMany(list1, {1, 1, 3, 4, 5, 5, 5, 5, 10});\n      LinkedList *list2 = new LinkedList(1);\n      addMany(list2, {1, 2, 2, 5, 6, 10, 10});\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 1, 1, 1, 1, 2, 2,  3,  4,\n                                   5, 5, 5, 5, 5, 6, 10, 10, 10};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nLinkedList *addMany(LinkedList *ll, vector<int> values) {\n  LinkedList *current = ll;\n  while (current->next != NULL) {\n    current = current->next;\n  }\n  for (auto value : values) {\n    current->next = new LinkedList(value);\n    current = current->next;\n  }\n  return ll;\n}\n\nvector<int> getNodesInArray(LinkedList *ll) {\n  vector<int> nodes;\n  LinkedList *current = ll;\n  while (current != NULL) {\n    nodes.push_back(current->value);\n    current = current->next;\n  }\n  return nodes;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      LinkedList *list1 = new LinkedList(2);\n      addMany(list1, {6, 7, 8});\n      LinkedList *list2 = new LinkedList(1);\n      addMany(list2, {3, 4, 5, 9, 10});\n      LinkedList *output = mergeLinkedLists(list1, list2);\n      vector<int> expectedNodes = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};\n      assert(getNodesInArray(output) == expectedNodes);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n\nusing namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value) {\n    this->value = value;\n    this->next = NULL;\n  }\n};\n\n// O(n + m) time | O(1) space - where n is the number of nodes in the first\n// Linked List and m is the number of nodes in the second Linked List\nLinkedList *mergeLinkedLists(LinkedList *headOne, LinkedList *headTwo) {\n  LinkedList *p1 = headOne;\n  LinkedList *p1Prev = NULL;\n  LinkedList *p2 = headTwo;\n  while (p1 != NULL && p2 != NULL) {\n    if (p1->value < p2->value) {\n      p1Prev = p1;\n      p1 = p1->next;\n    } else {\n      if (p1Prev != NULL)\n        p1Prev->next = p2;\n      p1Prev = p2;\n      p2 = p2->next;\n      p1Prev->next = p1;\n    }\n  }\n  if (p1 == NULL)\n    p1Prev->next = p2;\n  return headOne->value < headTwo->value ? headOne : headTwo;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n\nusing namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value) {\n    this->value = value;\n    next = NULL;\n  }\n};\n\nvoid recursiveMerge(LinkedList *p1, LinkedList *p2, LinkedList *p1Prev);\n\n// O(n + m) time | O(n + m) space - where n is the number of nodes in the first\n// Linked List and m is the number of nodes in the second Linked List\nLinkedList *mergeLinkedLists(LinkedList *headOne, LinkedList *headTwo) {\n  recursiveMerge(headOne, headTwo, NULL);\n  return headOne->value < headTwo->value ? headOne : headTwo;\n}\n\nvoid recursiveMerge(LinkedList *p1, LinkedList *p2, LinkedList *p1Prev) {\n  if (p1 == NULL) {\n    p1Prev->next = p2;\n    return;\n  }\n  if (p2 == NULL)\n    return;\n\n  if (p1->value < p2->value) {\n    recursiveMerge(p1->next, p2, p1);\n  } else {\n    if (p1Prev != NULL)\n      p1Prev->next = p2;\n    LinkedList *newP2 = p2->next;\n    p2->next = p1;\n    recursiveMerge(p1, newP2, p2);\n  }\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\t// This is an input class. Do not edit.\n\tpublic class LinkedList {\n\t\tpublic int value;\n\t\tpublic LinkedList next;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.value = value;\n\t\t\tthis.next = null;\n\t\t}\n\t}\n\n\tpublic static LinkedList mergeLinkedLists(LinkedList headOne, LinkedList headTwo) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\n\tpublic class TestLinkedList : Program.LinkedList {\n\t\tpublic TestLinkedList(int val) : base(val) {\n\t\t}\n\n\t\tpublic TestLinkedList addMany(List<int> values) {\n\t\t\tTestLinkedList current = this;\n\t\t\twhile (current.next != null) {\n\t\t\t\tcurrent = (TestLinkedList) current.next;\n\t\t\t}\n\t\t\tforeach (int value in values) {\n\t\t\t\tcurrent.next = new TestLinkedList(value);\n\t\t\t\tcurrent = (TestLinkedList) current.next;\n\t\t\t}\n\t\t\treturn this;\n\t\t}\n\n\t\tpublic List<int> getNodesInArray() {\n\t\t\tList<int> nodes = new List<int>();\n\t\t\tTestLinkedList current = this;\n\t\t\twhile (current != null) {\n\t\t\t\tnodes.Add(current.value);\n\t\t\t\tcurrent = (TestLinkedList) current.next;\n\t\t\t}\n\t\t\treturn nodes;\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestLinkedList list1 = new TestLinkedList(1);\n\t\tlist1.addMany(new List<int>(){\n\t\t\t2, 3, 4, 5\n\t\t});\n\t\tTestLinkedList list2 = new TestLinkedList(6);\n\t\tlist2.addMany(new List<int>(){\n\t\t\t7, 8, 9, 10\n\t\t});\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tTestLinkedList list1 = new TestLinkedList(6);\n\t\tlist1.addMany(new List<int>(){\n\t\t\t7, 8, 9, 10\n\t\t});\n\t\tTestLinkedList list2 = new TestLinkedList(1);\n\t\tlist2.addMany(new List<int>(){\n\t\t\t2, 3, 4, 5\n\t\t});\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tTestLinkedList list1 = new TestLinkedList(1);\n\t\tlist1.addMany(new List<int>(){\n\t\t\t3, 5, 7, 9\n\t\t});\n\t\tTestLinkedList list2 = new TestLinkedList(2);\n\t\tlist2.addMany(new List<int>(){\n\t\t\t4, 6, 8, 10\n\t\t});\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tTestLinkedList list1 = new TestLinkedList(2);\n\t\tlist1.addMany(new List<int>(){\n\t\t\t6, 7, 8\n\t\t});\n\t\tTestLinkedList list2 = new TestLinkedList(1);\n\t\tlist2.addMany(new List<int>(){\n\t\t\t3, 4, 5, 9, 10\n\t\t});\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tTestLinkedList list1 = new TestLinkedList(1);\n\t\tlist1.addMany(new List<int>(){\n\t\t\t2, 3, 4, 5, 7, 8, 9, 10\n\t\t});\n\t\tTestLinkedList list2 = new TestLinkedList(6);\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tTestLinkedList list1 = new TestLinkedList(6);\n\t\tTestLinkedList list2 = new TestLinkedList(1);\n\t\tlist2.addMany(new List<int>(){\n\t\t\t2, 3, 4, 5, 7, 8, 9, 10\n\t\t});\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tTestLinkedList list1 = new TestLinkedList(1);\n\t\tTestLinkedList list2 = new TestLinkedList(2);\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tTestLinkedList list1 = new TestLinkedList(2);\n\t\tTestLinkedList list2 = new TestLinkedList(1);\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tTestLinkedList list1 = new TestLinkedList(1);\n\t\tlist1.addMany(new List<int>(){\n\t\t\t1, 1, 3, 4, 5, 5, 5, 5, 10\n\t\t});\n\t\tTestLinkedList list2 = new TestLinkedList(1);\n\t\tlist2.addMany(new List<int>(){\n\t\t\t1, 2, 2, 5, 6, 10, 10\n\t\t});\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(new [] {1, 1, 1, 1, 1, 2, 2,    3,    4,\n\t\t                                                5, 5, 5, 5, 5, 6, 10, 10, 10});\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tpublic class TestLinkedList : Program.LinkedList {\n\t\tpublic TestLinkedList(int val) : base(val) {\n\t\t}\n\n\t\tpublic TestLinkedList addMany(List<int> values) {\n\t\t\tTestLinkedList current = this;\n\t\t\twhile (current.next != null) {\n\t\t\t\tcurrent = (TestLinkedList) current.next;\n\t\t\t}\n\t\t\tforeach (int value in values) {\n\t\t\t\tcurrent.next = new TestLinkedList(value);\n\t\t\t\tcurrent = (TestLinkedList) current.next;\n\t\t\t}\n\t\t\treturn this;\n\t\t}\n\n\t\tpublic List<int> getNodesInArray() {\n\t\t\tList<int> nodes = new List<int>();\n\t\t\tTestLinkedList current = this;\n\t\t\twhile (current != null) {\n\t\t\t\tnodes.Add(current.value);\n\t\t\t\tcurrent = (TestLinkedList) current.next;\n\t\t\t}\n\t\t\treturn nodes;\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestLinkedList list1 = new TestLinkedList(2);\n\t\tlist1.addMany(new List<int>(){\n\t\t\t6, 7, 8\n\t\t});\n\t\tTestLinkedList list2 = new TestLinkedList(1);\n\t\tlist2.addMany(new List<int>(){\n\t\t\t3, 4, 5, 9, 10\n\t\t});\n\t\tTestLinkedList output = (TestLinkedList) Program.mergeLinkedLists(list1, list2);\n\t\tList<int> expectedNodes = new List<int>(){\n\t\t\t1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\t\t};\n\t\tUtils.AssertTrue(output.getNodesInArray().SequenceEqual(expectedNodes));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\tpublic class LinkedList {\n\t\tpublic int value;\n\t\tpublic LinkedList next;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.value = value;\n\t\t\tthis.next = null;\n\t\t}\n\t}\n\n\t// O(n + m) time | O(1) space - where n is the number of nodes in the first\n\t// Linked List and m is the number of nodes in the second Linked List\n\tpublic static LinkedList mergeLinkedLists(LinkedList headOne, LinkedList headTwo) {\n\t\tLinkedList p1 = headOne;\n\t\tLinkedList p1Prev = null;\n\t\tLinkedList p2 = headTwo;\n\t\twhile (p1 != null && p2 != null) {\n\t\t\tif (p1.value < p2.value) {\n\t\t\t\tp1Prev = p1;\n\t\t\t\tp1 = p1.next;\n\t\t\t} else {\n\t\t\t\tif (p1Prev != null)\n\t\t\t\t\tp1Prev.next = p2;\n\t\t\t\tp1Prev = p2;\n\t\t\t\tp2 = p2.next;\n\t\t\t\tp1Prev.next = p1;\n\t\t\t}\n\t\t}\n\t\tif (p1 == null)\n\t\t\tp1Prev.next = p2;\n\t\treturn headOne.value < headTwo.value ? headOne : headTwo;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\tpublic class LinkedList {\n\t\tpublic int value;\n\t\tpublic LinkedList next;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.value = value;\n\t\t\tthis.next = null;\n\t\t}\n\t}\n\n\t// O(n + m) time | O(n + m) space - where n is the number of nodes in the first\n\t// Linked List and m is the number of nodes in the second Linked List\n\tpublic static LinkedList mergeLinkedLists(LinkedList headOne, LinkedList headTwo) {\n\t\trecursiveMerge(headOne, headTwo, null);\n\t\treturn headOne.value < headTwo.value ? headOne : headTwo;\n\t}\n\n\tpublic static void recursiveMerge(LinkedList p1, LinkedList p2, LinkedList p1Prev) {\n\t\tif (p1 == null) {\n\t\t\tp1Prev.next = p2;\n\t\t\treturn;\n\t\t}\n\t\tif (p2 == null)\n\t\t\treturn;\n\n\t\tif (p1.value < p2.value) {\n\t\t\trecursiveMerge(p1.next, p2, p1);\n\t\t} else {\n\t\t\tif (p1Prev != null)\n\t\t\t\tp1Prev.next = p2;\n\t\t\tLinkedList newP2 = p2.next;\n\t\t\tp2.next = p1;\n\t\t\trecursiveMerge(p1, newP2, p2);\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\n// This is an input struct. Do not edit.\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\nfunc MergeLinkedLists(headOne *LinkedList, headTwo *LinkedList) *LinkedList {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewLinkedList(val int, others ...int) *LinkedList {\n\tll := &LinkedList{Value: val}\n\tcurrent := ll\n\tfor _, other := range others {\n\t\tcurrent.Next = &LinkedList{Value: other}\n\t\tcurrent = current.Next\n\t}\n\treturn ll\n}\n\nfunc (ll *LinkedList) ToArray() []int {\n\tvals := []int{}\n\tcurrent := ll\n\tfor current != nil {\n\t\tvals = append(vals, current.Value)\n\t\tcurrent = current.Next\n\t}\n\treturn vals\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tlist1 := NewLinkedList(1, 2, 3, 4, 5)\n\tlist2 := NewLinkedList(6, 7, 8, 9, 10)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tlist1 := NewLinkedList(6, 7, 8, 9, 10)\n\tlist2 := NewLinkedList(1, 2, 3, 4, 5)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tlist1 := NewLinkedList(1, 3, 5, 7, 9)\n\tlist2 := NewLinkedList(2, 4, 6, 8, 10)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tlist1 := NewLinkedList(2, 6, 7, 8)\n\tlist2 := NewLinkedList(1, 3, 4, 5, 9, 10)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tlist1 := NewLinkedList(1, 2, 3, 4, 5, 7, 8, 9, 10)\n\tlist2 := NewLinkedList(6)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tlist1 := NewLinkedList(6)\n\tlist2 := NewLinkedList(1, 2, 3, 4, 5, 7, 8, 9, 10)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tlist1 := NewLinkedList(1)\n\tlist2 := NewLinkedList(2)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tlist1 := NewLinkedList(2)\n\tlist2 := NewLinkedList(1)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tlist1 := NewLinkedList(1, 1, 1, 3, 4, 5, 5, 5, 5, 10)\n\tlist2 := NewLinkedList(1, 1, 2, 2, 5, 6, 10, 10)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 1, 1, 1, 1, 2, 2, 3, 4, 5, 5, 5, 5, 5, 6, 10, 10, 10}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewLinkedList(val int, others ...int) *LinkedList {\n\tll := &LinkedList{Value: val}\n\tcurrent := ll\n\tfor _, other := range others {\n\t\tcurrent.Next = &LinkedList{Value: other}\n\t\tcurrent = current.Next\n\t}\n\treturn ll\n}\n\nfunc (ll *LinkedList) ToArray() []int {\n\tvals := []int{}\n\tcurrent := ll\n\tfor current != nil {\n\t\tvals = append(vals, current.Value)\n\t\tcurrent = current.Next\n\t}\n\treturn vals\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tlist1 := NewLinkedList(2, 6, 7, 8)\n\tlist2 := NewLinkedList(1, 3, 4, 5, 9, 10)\n\toutput := MergeLinkedLists(list1, list2)\n\texpectedNodes := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}\n\trequire.Equal(t, output.ToArray(), expectedNodes)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\n// O(n + m) time | O(1) space - where n is the number of nodes in the first\n// Linked List and m is the number of nodes in the second Linked List\nfunc MergeLinkedLists(headOne *LinkedList, headTwo *LinkedList) *LinkedList {\n\tp1 := headOne\n\tvar p1Prev *LinkedList\n\tp2 := headTwo\n\tfor p1 != nil && p2 != nil {\n\t\tif p1.Value < p2.Value {\n\t\t\tp1Prev = p1\n\t\t\tp1 = p1.Next\n\t\t} else {\n\t\t\tif p1Prev != nil {\n\t\t\t\tp1Prev.Next = p2\n\t\t\t}\n\t\t\tp1Prev = p2\n\t\t\tp2 = p2.Next\n\t\t\tp1Prev.Next = p1\n\t\t}\n\t}\n\n\tif p1 == nil {\n\t\tp1Prev.Next = p2\n\t}\n\n\tif headOne.Value < headTwo.Value {\n\t\treturn headOne\n\t}\n\treturn headTwo\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\n// O(n + m) time | O(n + m) space - where n is the number of nodes in the first\n// Linked List and m is the number of nodes in the second Linked List\nfunc MergeLinkedLists(headOne *LinkedList, headTwo *LinkedList) *LinkedList {\n\trecursiveMerge(headOne, headTwo, nil)\n\tif headOne.Value < headTwo.Value {\n\t\treturn headOne\n\t}\n\treturn headTwo\n}\n\nfunc recursiveMerge(p1, p2, p1Prev *LinkedList) {\n\tif p1 == nil {\n\t\tp1Prev.Next = p2\n\t\treturn\n\t}\n\tif p2 == nil {\n\t\treturn\n\t}\n\n\tif p1.Value < p2.Value {\n\t\trecursiveMerge(p1.Next, p2, p1)\n\t\treturn\n\t}\n\n\tif p1Prev != nil {\n\t\tp1Prev.Next = p2\n\t}\n\tnewP2 := p2.Next\n\tp2.Next = p1\n\trecursiveMerge(p1, newP2, p2)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  // This is an input class. Do not edit.\n  public static class LinkedList {\n    int value;\n    LinkedList next;\n\n    LinkedList(int value) {\n      this.value = value;\n      this.next = null;\n    }\n  }\n\n  public static LinkedList mergeLinkedLists(LinkedList headOne, LinkedList headTwo) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n\n  public Program.LinkedList addMany(Program.LinkedList ll, List<Integer> values) {\n    Program.LinkedList current = ll;\n    while (current.next != null) {\n      current = current.next;\n    }\n    for (int value : values) {\n      current.next = new Program.LinkedList(value);\n      current = current.next;\n    }\n    return ll;\n  }\n\n  public List<Integer> getNodesInArray(Program.LinkedList ll) {\n    List<Integer> nodes = new ArrayList<Integer>();\n    Program.LinkedList current = ll;\n    while (current != null) {\n      nodes.add(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n\n  @Test\n  public void TestCase1() {\n    Program.LinkedList list1 = new Program.LinkedList(1);\n    addMany(list1, new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5)));\n    Program.LinkedList list2 = new Program.LinkedList(6);\n    addMany(list2, new ArrayList<Integer>(Arrays.asList(7, 8, 9, 10)));\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n\n  @Test\n  public void TestCase2() {\n    Program.LinkedList list1 = new Program.LinkedList(6);\n    addMany(list1, new ArrayList<Integer>(Arrays.asList(7, 8, 9, 10)));\n    Program.LinkedList list2 = new Program.LinkedList(1);\n    addMany(list2, new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5)));\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n\n  @Test\n  public void TestCase3() {\n    Program.LinkedList list1 = new Program.LinkedList(1);\n    addMany(list1, new ArrayList<Integer>(Arrays.asList(3, 5, 7, 9)));\n    Program.LinkedList list2 = new Program.LinkedList(2);\n    addMany(list2, new ArrayList<Integer>(Arrays.asList(4, 6, 8, 10)));\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n\n  @Test\n  public void TestCase4() {\n    Program.LinkedList list1 = new Program.LinkedList(2);\n    addMany(list1, new ArrayList<Integer>(Arrays.asList(6, 7, 8)));\n    Program.LinkedList list2 = new Program.LinkedList(1);\n    addMany(list2, new ArrayList<Integer>(Arrays.asList(3, 4, 5, 9, 10)));\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n\n  @Test\n  public void TestCase5() {\n    Program.LinkedList list1 = new Program.LinkedList(1);\n    addMany(list1, new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 7, 8, 9, 10)));\n    Program.LinkedList list2 = new Program.LinkedList(6);\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n\n  @Test\n  public void TestCase6() {\n    Program.LinkedList list1 = new Program.LinkedList(6);\n    Program.LinkedList list2 = new Program.LinkedList(1);\n    addMany(list2, new ArrayList<Integer>(Arrays.asList(2, 3, 4, 5, 7, 8, 9, 10)));\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n\n  @Test\n  public void TestCase7() {\n    Program.LinkedList list1 = new Program.LinkedList(1);\n    Program.LinkedList list2 = new Program.LinkedList(2);\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes = new ArrayList<Integer>(Arrays.asList(1, 2));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n\n  @Test\n  public void TestCase8() {\n    Program.LinkedList list1 = new Program.LinkedList(2);\n    Program.LinkedList list2 = new Program.LinkedList(1);\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes = new ArrayList<Integer>(Arrays.asList(1, 2));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n\n  @Test\n  public void TestCase9() {\n    Program.LinkedList list1 = new Program.LinkedList(1);\n    addMany(list1, new ArrayList<Integer>(Arrays.asList(1, 1, 3, 4, 5, 5, 5, 5, 10)));\n    Program.LinkedList list2 = new Program.LinkedList(1);\n    addMany(list2, new ArrayList<Integer>(Arrays.asList(1, 2, 2, 5, 6, 10, 10)));\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes =\n        new ArrayList<Integer>(\n            Arrays.asList(1, 1, 1, 1, 1, 2, 2, 3, 4, 5, 5, 5, 5, 5, 6, 10, 10, 10));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  public Program.LinkedList addMany(Program.LinkedList ll, List<Integer> values) {\n    Program.LinkedList current = ll;\n    while (current.next != null) {\n      current = current.next;\n    }\n    for (int value : values) {\n      current.next = new Program.LinkedList(value);\n      current = current.next;\n    }\n    return ll;\n  }\n\n  public List<Integer> getNodesInArray(Program.LinkedList ll) {\n    List<Integer> nodes = new ArrayList<Integer>();\n    Program.LinkedList current = ll;\n    while (current != null) {\n      nodes.add(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n\n  @Test\n  public void TestCase1() {\n    Program.LinkedList list1 = new Program.LinkedList(2);\n    addMany(list1, new ArrayList<Integer>(Arrays.asList(6, 7, 8)));\n    Program.LinkedList list2 = new Program.LinkedList(1);\n    addMany(list2, new ArrayList<Integer>(Arrays.asList(3, 4, 5, 9, 10)));\n    Program.LinkedList output = Program.mergeLinkedLists(list1, list2);\n    List<Integer> expectedNodes =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));\n    Utils.assertTrue(getNodesInArray(output).equals(expectedNodes));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  public static class LinkedList {\n    int value;\n    LinkedList next;\n\n    LinkedList(int value) {\n      this.value = value;\n      this.next = null;\n    }\n  }\n\n  // O(n + m) time | O(1) space - where n is the number of nodes in the first\n  // Linked List and m is the number of nodes in the second Linked List\n  public static LinkedList mergeLinkedLists(LinkedList headOne, LinkedList headTwo) {\n    LinkedList p1 = headOne;\n    LinkedList p1Prev = null;\n    LinkedList p2 = headTwo;\n    while (p1 != null && p2 != null) {\n      if (p1.value < p2.value) {\n        p1Prev = p1;\n        p1 = p1.next;\n      } else {\n        if (p1Prev != null) p1Prev.next = p2;\n        p1Prev = p2;\n        p2 = p2.next;\n        p1Prev.next = p1;\n      }\n    }\n    if (p1 == null) p1Prev.next = p2;\n    return headOne.value < headTwo.value ? headOne : headTwo;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  public static class LinkedList {\n    int value;\n    LinkedList next;\n\n    LinkedList(int value) {\n      this.value = value;\n      this.next = null;\n    }\n  }\n\n  // O(n + m) time | O(n + m) space - where n is the number of nodes in the first\n  // Linked List and m is the number of nodes in the second Linked List\n  public static LinkedList mergeLinkedLists(LinkedList headOne, LinkedList headTwo) {\n    recursiveMerge(headOne, headTwo, null);\n    return headOne.value < headTwo.value ? headOne : headTwo;\n  }\n\n  public static void recursiveMerge(LinkedList p1, LinkedList p2, LinkedList p1Prev) {\n    if (p1 == null) {\n      p1Prev.next = p2;\n      return;\n    }\n    if (p2 == null) return;\n\n    if (p1.value < p2.value) {\n      recursiveMerge(p1.next, p2, p1);\n    } else {\n      if (p1Prev != null) p1Prev.next = p2;\n      LinkedList newP2 = p2.next;\n      p2.next = p1;\n      recursiveMerge(p1, newP2, p2);\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// This is an input class. Do not edit.\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nfunction mergeLinkedLists(headOne, headTwo) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.LinkedList = LinkedList;\nexports.mergeLinkedLists = mergeLinkedLists;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass LinkedList extends program.LinkedList {\n  constructor(value) {\n    super(value);\n  }\n\n  addMany(values) {\n    let current = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNodesInArray() {\n    const nodes = [];\n    let current = this;\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n}\n\nit('Test Case #1', function () {\n  const list1 = new LinkedList(1).addMany([2, 3, 4, 5]);\n  const list2 = new LinkedList(6).addMany([7, 8, 9, 10]);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n\nit('Test Case #2', function () {\n  const list1 = new LinkedList(6).addMany([7, 8, 9, 10]);\n  const list2 = new LinkedList(1).addMany([2, 3, 4, 5]);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n\nit('Test Case #3', function () {\n  const list1 = new LinkedList(1).addMany([3, 5, 7, 9]);\n  const list2 = new LinkedList(2).addMany([4, 6, 8, 10]);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n\nit('Test Case #4', function () {\n  const list1 = new LinkedList(2).addMany([6, 7, 8]);\n  const list2 = new LinkedList(1).addMany([3, 4, 5, 9, 10]);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n\nit('Test Case #5', function () {\n  const list1 = new LinkedList(1).addMany([2, 3, 4, 5, 7, 8, 9, 10]);\n  const list2 = new LinkedList(6);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n\nit('Test Case #6', function () {\n  const list1 = new LinkedList(6);\n  const list2 = new LinkedList(1).addMany([2, 3, 4, 5, 7, 8, 9, 10]);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n\nit('Test Case #7', function () {\n  const list1 = new LinkedList(1);\n  const list2 = new LinkedList(2);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n\nit('Test Case #8', function () {\n  const list1 = new LinkedList(2);\n  const list2 = new LinkedList(1);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n\nit('Test Case #9', function () {\n  const list1 = new LinkedList(1).addMany([1, 1, 3, 4, 5, 5, 5, 5, 10]);\n  const list2 = new LinkedList(1).addMany([1, 2, 2, 5, 6, 10, 10]);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 1, 1, 1, 1, 2, 2, 3, 4, 5, 5, 5, 5, 5, 6, 10, 10, 10];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass LinkedList extends program.LinkedList {\n  constructor(value) {\n    super(value);\n  }\n\n  addMany(values) {\n    let current = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNodesInArray() {\n    const nodes = [];\n    let current = this;\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n}\n\nit('Test Case #1', function () {\n  const list1 = new LinkedList(2).addMany([6, 7, 8]);\n  const list2 = new LinkedList(1).addMany([3, 4, 5, 9, 10]);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n  chai.expect(output.getNodesInArray()).to.deep.equal(expectedNodes);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n + m) time | O(1) space - where n is the number of nodes in the first\n// Linked List and m is the number of nodes in the second Linked List\nfunction mergeLinkedLists(headOne, headTwo) {\n  let p1 = headOne;\n  let p1Prev = null;\n  let p2 = headTwo;\n  while (p1 !== null && p2 !== null) {\n    if (p1.value < p2.value) {\n      p1Prev = p1;\n      p1 = p1.next;\n    } else {\n      if (p1Prev !== null) p1Prev.next = p2;\n      p1Prev = p2;\n      p2 = p2.next;\n      p1Prev.next = p1;\n    }\n  }\n  if (p1 === null) p1Prev.next = p2;\n  return headOne.value < headTwo.value ? headOne : headTwo;\n}\n\nexports.LinkedList = LinkedList;\nexports.mergeLinkedLists = mergeLinkedLists;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n + m) time | O(n + m) space - where n is the number of nodes in the first\n// Linked List and m is the number of nodes in the second Linked List\nfunction mergeLinkedLists(headOne, headTwo) {\n  recursiveMerge(headOne, headTwo, null);\n  return headOne.value < headTwo.value ? headOne : headTwo;\n}\n\nfunction recursiveMerge(p1, p2, p1Prev) {\n  if (p1 === null) {\n    p1Prev.next = p2;\n    return;\n  }\n  if (p2 === null) return;\n\n  if (p1.value < p2.value) {\n    recursiveMerge(p1.next, p2, p1);\n  } else {\n    if (p1Prev !== null) p1Prev.next = p2;\n    const newP2 = p2.next;\n    p2.next = p1;\n    recursiveMerge(p1, newP2, p2);\n  }\n}\n\nexports.LinkedList = LinkedList;\nexports.mergeLinkedLists = mergeLinkedLists;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# This is an input class. Do not edit.\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\ndef mergeLinkedLists(headOne, headTwo):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass LinkedList(program.LinkedList):\n    def addMany(self, values):\n        current = self\n        while current.next is not None:\n            current = current.next\n        for value in values:\n            current.next = LinkedList(value)\n            current = current.next\n        return self\n\n    def getNodesInArray(self):\n        nodes = []\n        current = self\n        while current is not None:\n            nodes.append(current.value)\n            current = current.next\n        return nodes\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        list1 = LinkedList(1).addMany([2, 3, 4, 5])\n        list2 = LinkedList(6).addMany([7, 8, 9, 10])\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n\n    def test_case_2(self):\n        list1 = LinkedList(6).addMany([7, 8, 9, 10])\n        list2 = LinkedList(1).addMany([2, 3, 4, 5])\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n\n    def test_case_3(self):\n        list1 = LinkedList(1).addMany([3, 5, 7, 9])\n        list2 = LinkedList(2).addMany([4, 6, 8, 10])\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n\n    def test_case_4(self):\n        list1 = LinkedList(2).addMany([6, 7, 8])\n        list2 = LinkedList(1).addMany([3, 4, 5, 9, 10])\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n\n    def test_case_5(self):\n        list1 = LinkedList(1).addMany([2, 3, 4, 5, 7, 8, 9, 10])\n        list2 = LinkedList(6)\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n\n    def test_case_6(self):\n        list1 = LinkedList(6)\n        list2 = LinkedList(1).addMany([2, 3, 4, 5, 7, 8, 9, 10])\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n\n    def test_case_7(self):\n        list1 = LinkedList(1)\n        list2 = LinkedList(2)\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n\n    def test_case_8(self):\n        list1 = LinkedList(2)\n        list2 = LinkedList(1)\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n\n    def test_case_9(self):\n        list1 = LinkedList(1).addMany([1, 1, 3, 4, 5, 5, 5, 5, 10])\n        list2 = LinkedList(1).addMany([1, 2, 2, 5, 6, 10, 10])\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 1, 1, 1, 1, 2, 2, 3, 4, 5, 5, 5, 5, 5, 6, 10, 10, 10]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass LinkedList(program.LinkedList):\n    def addMany(self, values):\n        current = self\n        while current.next is not None:\n            current = current.next\n        for value in values:\n            current.next = LinkedList(value)\n            current = current.next\n        return self\n\n    def getNodesInArray(self):\n        nodes = []\n        current = self\n        while current is not None:\n            nodes.append(current.value)\n            current = current.next\n        return nodes\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        list1 = LinkedList(2).addMany([6, 7, 8])\n        list2 = LinkedList(1).addMany([3, 4, 5, 9, 10])\n        output = program.mergeLinkedLists(list1, list2)\n        expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n        self.assertEqual(output.getNodesInArray(), expectedNodes)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\n# O(n + m) time | O(1) space - where n is the number of nodes in the first\n# Linked List and m is the number of nodes in the second Linked List\ndef mergeLinkedLists(headOne, headTwo):\n    p1 = headOne\n    p1Prev = None\n    p2 = headTwo\n    while p1 is not None and p2 is not None:\n        if p1.value < p2.value:\n            p1Prev = p1\n            p1 = p1.next\n        else:\n            if p1Prev is not None:\n                p1Prev.next = p2\n            p1Prev = p2\n            p2 = p2.next\n            p1Prev.next = p1\n    if p1 is None:\n        p1Prev.next = p2\n    return headOne if headOne.value < headTwo.value else headTwo\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\n# O(n + m) time | O(n + m) space - where n is the number of nodes in the first\n# Linked List and m is the number of nodes in the second Linked List\ndef mergeLinkedLists(headOne, headTwo):\n    recursiveMerge(headOne, headTwo, None)\n    return headOne if headOne.value < headTwo.value else headTwo\n\n\ndef recursiveMerge(p1, p2, p1Prev):\n    if p1 is None:\n        p1Prev.next = p2\n        return\n    if p2 is None:\n        return\n\n    if p1.value < p2.value:\n        recursiveMerge(p1.next, p2, p1)\n    else:\n        if p1Prev is not None:\n            p1Prev.next = p2\n        newP2 = p2.next\n        p2.next = p1\n        recursiveMerge(p1, newP2, p2)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is an input class. Do not edit.\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  func mergeLinkedLists(_ headOne: LinkedList, _ headTwo: LinkedList) -> LinkedList {\n    // Write your code here.\n    return headOne // replace me\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let list1 = newLinkedList(1, 2, 3, 4, 5)\n      let list2 = newLinkedList(6, 7, 8, 9, 10)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n      try assertEqual(expectedNodes, output)\n    }\n\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let list1 = newLinkedList(6, 7, 8, 9, 10)\n      let list2 = newLinkedList(1, 2, 3, 4, 5)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n      try assertEqual(expectedNodes, output)\n    }\n\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let list1 = newLinkedList(1, 3, 5, 7, 9)\n      let list2 = newLinkedList(2, 4, 6, 8, 10)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n      try assertEqual(expectedNodes, output)\n    }\n\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let list1 = newLinkedList(2, 6, 7, 8)\n      let list2 = newLinkedList(1, 3, 4, 5, 9, 10)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n      try assertEqual(expectedNodes, output)\n    }\n\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let list1 = newLinkedList(1, 2, 3, 4, 5, 7, 8, 9, 10)\n      let list2 = newLinkedList(6)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n      try assertEqual(expectedNodes, output)\n    }\n\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let list1 = newLinkedList(6)\n      let list2 = newLinkedList(1, 2, 3, 4, 5, 7, 8, 9, 10)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n      try assertEqual(expectedNodes, output)\n    }\n\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let list1 = newLinkedList(1)\n      let list2 = newLinkedList(2)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2]\n      try assertEqual(expectedNodes, output)\n    }\n\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let list1 = newLinkedList(2)\n      let list2 = newLinkedList(1)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2]\n      try assertEqual(expectedNodes, output)\n    }\n\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let list1 = newLinkedList(1, 1, 1, 3, 4, 5, 5, 5, 5, 10)\n      let list2 = newLinkedList(1, 1, 2, 2, 5, 6, 10, 10)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 1, 1, 1, 1, 2, 2, 3, 4, 5, 5, 5, 5, 5, 6, 10, 10, 10]\n      try assertEqual(expectedNodes, output)\n    }\n  }\n}\n\nfunc newLinkedList(_ val: Int, _ others: Int...) -> Program.LinkedList {\n  let ll = Program.LinkedList(value: val)\n  var current = ll\n  for other in others {\n    let next = Program.LinkedList(value: other)\n    current.next = next\n    current = next\n  }\n  return ll\n}\n\nfunc toArray(_ ll: Program.LinkedList) -> [Int] {\n  var vals = [Int]()\n  var current = ll as Program.LinkedList?\n  while current != nil {\n    vals.append(current!.value)\n    current = current!.next\n  }\n  return vals\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let list1 = newLinkedList(2, 6, 7, 8)\n      let list2 = newLinkedList(1, 3, 4, 5, 9, 10)\n      var output = toArray(program.mergeLinkedLists(list1, list2))\n      let expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]\n      try assertEqual(expectedNodes, output)\n    }\n  }\n}\n\nfunc newLinkedList(_ val: Int, _ others: Int...) -> Program.LinkedList {\n  let ll = Program.LinkedList(value: val)\n  var current = ll\n  for other in others {\n    let next = Program.LinkedList(value: other)\n    current.next = next\n    current = next\n  }\n  return ll\n}\n\nfunc toArray(_ ll: Program.LinkedList) -> [Int] {\n  var vals = [Int]()\n  var current = ll as Program.LinkedList?\n  while current != nil {\n    vals.append(current!.value)\n    current = current!.next\n  }\n  return vals\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  // O(n + m) time | O(1) space - where n is the number of nodes in the first\n  // Linked List and m is the number of nodes in the second Linked List\n  func mergeLinkedLists(_ headOne: LinkedList, _ headTwo: LinkedList) -> LinkedList {\n    var p1 = headOne as LinkedList?\n    var p2 = headTwo as LinkedList?\n    var p1Prev: LinkedList?\n\n    while p1 != nil, p2 != nil {\n      if p1!.value < p2!.value {\n        p1Prev = p1\n        p1 = p1!.next\n      } else {\n        if p1Prev != nil {\n          p1Prev!.next = p2\n        }\n        p1Prev = p2\n        p2 = p2!.next\n        p1Prev!.next = p1\n      }\n    }\n\n    if p1 == nil, p1Prev != nil {\n      p1Prev!.next = p2\n    }\n\n    if headOne.value < headTwo.value {\n      return headOne\n    }\n    return headTwo\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class LinkedList {\n    var value: Int\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  // O(n + m) time | O(1) space - where n is the number of nodes in the first\n  // Linked List and m is the number of nodes in the second Linked List\n  func mergeLinkedLists(_ headOne: LinkedList, _ headTwo: LinkedList) -> LinkedList {\n    recursiveMerge(headOne, headTwo, nil)\n    if headOne.value < headTwo.value {\n      return headOne\n    }\n    return headTwo\n  }\n\n  func recursiveMerge(_ p1: LinkedList?, _ p2: LinkedList?, _ p1Prev: LinkedList?) {\n    if p1 == nil {\n      p1Prev!.next = p2\n      return\n    }\n\n    if p2 == nil {\n      return\n    }\n\n    if p1!.value < p2!.value {\n      recursiveMerge(p1!.next, p2, p1)\n      return\n    }\n\n    if p1Prev != nil {\n      p1Prev!.next = p2\n    }\n\n    let newP2 = p2!.next\n    p2!.next = p1\n    recursiveMerge(p1, newP2, p2)\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// This is an input class. Do not edit.\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nexport function mergeLinkedLists(headOne: LinkedList, headTwo: LinkedList) {\n  // Write your code here.\n  return headOne;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const list1 = addMany(new LinkedList(2), [6, 7, 8]);\n  const list2 = addMany(new LinkedList(1), [3, 4, 5, 9, 10]);\n  const output = program.mergeLinkedLists(list1, list2);\n  const expectedNodes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];\n  chai.expect(getNodesInArray(output)).to.deep.equal(expectedNodes);\n});\n\nfunction addMany(linkedList: LinkedList, values: number[]) {\n  let current = linkedList;\n  while (current.next !== null) {\n    current = current.next;\n  }\n  for (const value of values) {\n    current.next = new LinkedList(value);\n    current = current.next;\n  }\n  return linkedList;\n}\n\nfunction getNodesInArray(linkedList: LinkedList | null) {\n  const nodes: number[] = [];\n  let current: LinkedList | null = linkedList;\n  while (current !== null) {\n    nodes.push(current.value);\n    current = current.next;\n  }\n  return nodes;\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n + m) time | O(1) space - where n is the number of nodes in the first\n// Linked List and m is the number of nodes in the second Linked List\nexport function mergeLinkedLists(headOne: LinkedList, headTwo: LinkedList) {\n  let p1: LinkedList | null = headOne;\n  let p1Prev: LinkedList | null = null;\n  let p2: LinkedList | null = headTwo;\n  while (p1 !== null && p2 !== null) {\n    if (p1.value < p2.value) {\n      p1Prev = p1;\n      p1 = p1.next;\n    } else {\n      if (p1Prev !== null) p1Prev.next = p2;\n      p1Prev = p2;\n      p2 = p2.next;\n      p1Prev.next = p1;\n    }\n  }\n  if (p1 === null) p1Prev!.next = p2;\n  return headOne.value < headTwo.value ? headOne : headTwo;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n + m) time | O(n + m) space - where n is the number of nodes in the first\n// Linked List and m is the number of nodes in the second Linked List\nexport function mergeLinkedLists(headOne: LinkedList, headTwo: LinkedList) {\n  recursiveMerge(headOne, headTwo, null);\n  return headOne.value < headTwo.value ? headOne : headTwo;\n}\n\nfunction recursiveMerge(p1: LinkedList | null, p2: LinkedList | null, p1Prev: LinkedList | null) {\n  if (p1 === null) {\n    p1Prev!.next = p2;\n    return;\n  }\n  if (p2 === null) return;\n\n  if (p1.value < p2.value) {\n    recursiveMerge(p1.next, p2, p1);\n  } else {\n    if (p1Prev !== null) p1Prev.next = p2;\n    const newP2 = p2.next;\n    p2.next = p1;\n    recursiveMerge(p1, newP2, p2);\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "linkedListOne": {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "6",
+            "value": 2
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": null,
+            "value": 8
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "9",
+            "value": 5
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      }
+    },
+    {
+      "linkedListOne": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "6",
+        "nodes": [
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      }
+    },
+    {
+      "linkedListOne": {
+        "head": "6",
+        "nodes": [
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": null,
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "linkedListOne": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "next": "5",
+            "value": 3
+          },
+          {
+            "id": "5",
+            "next": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "next": "9",
+            "value": 7
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "next": "6",
+            "value": 4
+          },
+          {
+            "id": "6",
+            "next": "8",
+            "value": 6
+          },
+          {
+            "id": "8",
+            "next": "10",
+            "value": 8
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      }
+    },
+    {
+      "linkedListOne": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "6",
+        "nodes": [
+          {
+            "id": "6",
+            "next": null,
+            "value": 6
+          }
+        ]
+      }
+    },
+    {
+      "linkedListOne": {
+        "head": "6",
+        "nodes": [
+          {
+            "id": "6",
+            "next": null,
+            "value": 6
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      }
+    },
+    {
+      "linkedListOne": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": null,
+            "value": 1
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": null,
+            "value": 2
+          }
+        ]
+      }
+    },
+    {
+      "linkedListOne": {
+        "head": "2",
+        "nodes": [
+          {
+            "id": "2",
+            "next": null,
+            "value": 2
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": null,
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "linkedListOne": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "next": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "next": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "5-2",
+            "value": 5
+          },
+          {
+            "id": "5-2",
+            "next": "5-3",
+            "value": 5
+          },
+          {
+            "id": "5-3",
+            "next": "5-4",
+            "value": 5
+          },
+          {
+            "id": "5-4",
+            "next": "10",
+            "value": 5
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      "linkedListTwo": {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "2-2",
+            "value": 2
+          },
+          {
+            "id": "2-2",
+            "next": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "10",
+            "value": 6
+          },
+          {
+            "id": "10",
+            "next": "10-2",
+            "value": 10
+          },
+          {
+            "id": "10-2",
+            "next": null,
+            "value": 10
+          }
+        ]
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "next": null,
+            "value": 10
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": null,
+            "value": 2
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": null,
+            "value": 2
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "next": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "next": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "next": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "2-2",
+            "value": 2
+          },
+          {
+            "id": "2-2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "5-2",
+            "value": 5
+          },
+          {
+            "id": "5-2",
+            "next": "5-3",
+            "value": 5
+          },
+          {
+            "id": "5-3",
+            "next": "5-4",
+            "value": 5
+          },
+          {
+            "id": "5-4",
+            "next": "5-5",
+            "value": 5
+          },
+          {
+            "id": "5-5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "10",
+            "value": 6
+          },
+          {
+            "id": "10",
+            "next": "10-2",
+            "value": 10
+          },
+          {
+            "id": "10-2",
+            "next": "10-3",
+            "value": 10
+          },
+          {
+            "id": "10-3",
+            "next": null,
+            "value": 10
+          }
+        ]
+      }
+    ]
+  ]
+}

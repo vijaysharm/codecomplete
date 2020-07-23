@@ -1,0 +1,826 @@
+{
+  "Summary": {
+    "Name": "Boggle Board",
+    "Category": "Graphs",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 108,
+      "timeOne": 0,
+      "timeTwo": 2879,
+      "url": "https://player.vimeo.com/video/263857660"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can divide this question into two separate problems: one part involves traversing the boggle board in such a way that allows you to construct strings letter by letter; the other part involves actually comparing the strings you construct in the board against the words in the list that you're given. For the second part, what data structure lends itself very well to matching characters to multiple strings at once?\nTry creating a trie out of the input list of words. This will allow you to compare letters in the boggle board against all input words in constant time. How can you efficiently traverse the boggle board to construct all potentially valid strings, without counting letters twice in any string?\nTreat the board as a graph, where each element in the board is a node with up to 8 neighboring nodes. Traverse it in a depth-first-search-like fashion, checking if letters are contained in the trie and traversing the trie simultaneously if it makes sense to do so. How can you keep track of letters that you've already visited in order to avoid erroneously counting some of them twice in a single string? Could you keep track of visited nodes in an auxiliary data structure?\nKeeping in mind that you only want to mark nodes as visited in a single branch of the graph that you're traversing (i.e., you don't want the state of visited nodes in one branch of the graph to spill into the state of another branch of the graph), try marking any node you traverse as unvisited at the end of the recursive call that actually traverses it, after traversing through all of the node's neighbors and performing the same actions on them recursively.\n",
+  "SpaceTime": "O(nm*8^s + ws) time | O(nm + ws) space - where n is the width the board, m is the height of the board, w is the number of words, and s is the length of the longest word\n",
+  "PromptHTML": "<p>\n  You're given a two-dimensional array (a matrix) of potentially unequal height\n  and width containing letters; this matrix represents a boggle board. You're\n  also given a list of words.\n</p>\n<p>\n  Write a function that returns an array of all the words contained in the\n  boggle board.\n</p>\n<p>\n  A word is constructed in the boggle board by connecting adjacent\n  (horizontally, vertically, or diagonally) letters, without using any single\n  letter at a given position more than once; while a word can of course have\n  repeated letters, those repeated letters must come from different positions in\n  the boggle board in order for the word to be contained in the board. Note that\n  two or more words are allowed to overlap and use the same letters in the\n  boggle board.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">board</span> = [\n  [\"t\", \"h\", \"i\", \"s\", \"i\", \"s\", \"a\"],\n  [\"s\", \"i\", \"m\", \"p\", \"l\", \"e\", \"x\"],\n  [\"b\", \"x\", \"x\", \"x\", \"x\", \"e\", \"b\"],\n  [\"x\", \"o\", \"g\", \"g\", \"l\", \"x\", \"o\"],\n  [\"x\", \"x\", \"x\", \"D\", \"T\", \"r\", \"a\"],\n  [\"R\", \"E\", \"P\", \"E\", \"A\", \"d\", \"x\"],\n  [\"x\", \"x\", \"x\", \"x\", \"x\", \"x\", \"x\"],\n  [\"N\", \"O\", \"T\", \"R\", \"E\", \"-\", \"P\"],\n  [\"x\", \"x\", \"D\", \"E\", \"T\", \"A\", \"E\"],\n],\n<span class=\"CodeEditor-promptParameter\">words</span> = [\n  \"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\",\n  \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\",\n]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "board",
+      "Example": [
+        [
+          "t",
+          "h",
+          "i",
+          "s",
+          "i",
+          "s",
+          "a"
+        ],
+        [
+          "s",
+          "i",
+          "m",
+          "p",
+          "l",
+          "e",
+          "x"
+        ],
+        [
+          "b",
+          "x",
+          "x",
+          "x",
+          "x",
+          "e",
+          "b"
+        ],
+        [
+          "x",
+          "o",
+          "g",
+          "g",
+          "l",
+          "x",
+          "o"
+        ],
+        [
+          "x",
+          "x",
+          "x",
+          "D",
+          "T",
+          "r",
+          "a"
+        ],
+        [
+          "R",
+          "E",
+          "P",
+          "E",
+          "A",
+          "d",
+          "x"
+        ],
+        [
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x"
+        ],
+        [
+          "N",
+          "O",
+          "T",
+          "R",
+          "E",
+          "-",
+          "P"
+        ],
+        [
+          "x",
+          "x",
+          "D",
+          "E",
+          "T",
+          "A",
+          "E"
+        ]
+      ],
+      "Schema": {
+        "items": {
+          "items": {
+            "maxLength": 1,
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "words",
+      "Example": [
+        "this",
+        "is",
+        "not",
+        "a",
+        "simple",
+        "boggle",
+        "board",
+        "test",
+        "REPEATED",
+        "NOTRE-PEATED"
+      ],
+      "Schema": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<string> boggleBoard(vector<vector<char>> board, vector<string> words) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "bool contains(vector<string> wordArray, string targetWord) {\n  for (string word : wordArray) {\n    if (targetWord == word) {\n      return true;\n    }\n  }\n  return false;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<char>> board = {\n          {'y', 'g', 'f', 'y', 'e', 'i'}, {'c', 'o', 'r', 'p', 'o', 'u'},\n          {'j', 'u', 'z', 's', 'e', 'l'}, {'s', 'y', 'u', 'r', 'h', 'p'},\n          {'e', 'a', 'e', 'g', 'n', 'd'}, {'h', 'e', 'l', 's', 'a', 't'},\n      };\n      vector<string> words = {\n          \"san\",  \"sana\",  \"at\",     \"vomit\", \"yours\", \"help\",     \"end\",\n          \"been\", \"bed\",   \"danger\", \"calm\",  \"ok\",    \"chaos\",    \"complete\",\n          \"rear\", \"going\", \"storm\",  \"face\",  \"epual\", \"dangerous\"};\n      vector<string> expected = {\"yours\", \"help\", \"danger\", \"san\", \"at\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<vector<char>> board = {\n          {'a', 'b', 'c', 'd', 'e'}, {'f', 'g', 'h', 'i', 'j'},\n          {'k', 'l', 'm', 'n', 'o'}, {'p', 'q', 'r', 's', 't'},\n          {'u', 'v', 'w', 'x', 'y'},\n      };\n      vector<string> words = {\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbgl\",\n                              \"agmsytojedinhcbfl\"};\n      vector<string> expected = {\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbfl\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<vector<char>> board = {\n          {'a', 'b'},\n          {'c', 'd'},\n      };\n      vector<string> words = {\"abcd\", \"abdc\", \"acbd\", \"acdb\",\n                              \"adbc\", \"adcb\", \"abca\"};\n      vector<string> expected = {\"abcd\", \"abdc\", \"acbd\",\n                                 \"acdb\", \"adbc\", \"adcb\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<vector<char>> board = {\n          {'f', 't', 'r', 'o', 'p', 'i', 'k', 'b', 'o'},\n          {'r', 'w', 'l', 'p', 'e', 'u', 'e', 'a', 'b'},\n          {'j', 'o', 't', 's', 'e', 'l', 'f', 'l', 'p'},\n          {'s', 'z', 'u', 't', 'h', 'u', 'o', 'p', 'i'},\n          {'k', 'a', 'e', 'g', 'n', 'd', 'r', 'g', 'a'},\n          {'h', 'n', 'l', 's', 'a', 't', 'e', 't', 'x'},\n      };\n      vector<string> words = {\"frozen\",   \"rotten\",  \"teleport\", \"city\",\n                              \"zutgatz\",  \"kappa\",   \"before\",   \"rope\",\n                              \"obligate\", \"annoying\"};\n      vector<string> expected = {\"frozen\", \"rotten\", \"teleport\", \"kappa\",\n                                 \"before\", \"rope\",   \"obligate\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<vector<char>> board = {\n          {'c', 'o', 'm'}, {'r', 'p', 'l'}, {'c', 'i', 't'}, {'o', 'a', 'e'},\n          {'f', 'o', 'd'}, {'z', 'r', 'b'}, {'g', 'i', 'a'}, {'o', 'a', 'g'},\n          {'f', 's', 'z'}, {'t', 'e', 'i'}, {'t', 'w', 'd'},\n      };\n      vector<string> words = {\"commerce\", \"complicated\", \"twisted\", \"zigzag\",\n                              \"comma\",    \"foobar\",      \"baz\",     \"there\"};\n      vector<string> expected = {\"complicated\", \"twisted\", \"zigzag\", \"foobar\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<vector<char>> board = {\n          {'c', 'o', 'm'}, {'r', 'p', 'l'}, {'c', 'i', 't'}, {'o', 'a', 'e'},\n          {'f', 'o', 'd'}, {'z', 'r', 'b'}, {'g', 'i', 'a'}, {'o', 'a', 'g'},\n          {'f', 's', 'z'}, {'t', 'e', 'i'}, {'t', 'w', 'd'},\n      };\n      vector<string> words = {\"cr\",  \"oc\", \"ml\",      \"iao\", \"opo\", \"zrb\",\n                              \"big\", \"fs\", \"ogiagao\", \"dwd\", \"twt\"};\n      vector<string> expected = {\"cr\",  \"oc\",  \"ml\", \"iao\",\n                                 \"zrb\", \"big\", \"fs\", \"twt\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<vector<char>> board = {\n          {'c', 'o', 'm'}, {'r', 'p', 'l'}, {'c', 'i', 't'}, {'o', 'a', 'e'},\n          {'f', 'o', 'd'}, {'z', 'r', 'b'}, {'g', 'i', 'a'}, {'o', 'a', 'g'},\n          {'f', 's', 'z'}, {'t', 'e', 'i'}, {'t', 'w', 'd'},\n      };\n      vector<string> words = {\n          \"comlpriteacoofziraagsizefttw\", \"comlpriteacoofzirabagsizefottw\",\n          \"comlpriteacoofziraagsizefottw\", \"comlpriteacoofzirabagsizeftttw\"};\n      vector<string> expected = {\"comlpriteacoofziraagsizefttw\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<vector<char>> board = {\n          {'t', 'h', 'i', 's', 'i', 's', 'a'},\n          {'s', 'i', 'm', 'p', 'l', 'e', 'x'},\n          {'b', 'x', 'x', 'x', 'x', 'e', 'b'},\n          {'x', 'o', 'g', 'g', 'l', 'x', 'o'},\n          {'x', 'x', 'x', 'D', 'T', 'r', 'a'},\n          {'R', 'E', 'P', 'E', 'A', 'd', 'x'},\n          {'x', 'x', 'x', 'x', 'x', 'x', 'x'},\n          {'N', 'O', 'T', 'R', 'E', '-', 'P'},\n          {'x', 'x', 'D', 'E', 'T', 'A', 'E'},\n      };\n      vector<string> words = {\"this\",     \"is\",          \"not\",   \"a\",\n                              \"simple\",   \"boggle\",      \"board\", \"test\",\n                              \"REPEATED\", \"NOTRE-PEATED\"};\n      vector<string> expected = {\"this\",   \"is\",    \"a\",           \"simple\",\n                                 \"boggle\", \"board\", \"NOTRE-PEATED\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nbool contains(vector<string> wordArray, string targetWord) {\n  for (string word : wordArray) {\n    if (targetWord == word) {\n      return true;\n    }\n  }\n  return false;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<char>> board = {\n          {'t', 'h', 'i', 's', 'i', 's', 'a'},\n          {'s', 'i', 'm', 'p', 'l', 'e', 'x'},\n          {'b', 'x', 'x', 'x', 'x', 'e', 'b'},\n          {'x', 'o', 'g', 'g', 'l', 'x', 'o'},\n          {'x', 'x', 'x', 'D', 'T', 'r', 'a'},\n          {'R', 'E', 'P', 'E', 'A', 'd', 'x'},\n          {'x', 'x', 'x', 'x', 'x', 'x', 'x'},\n          {'N', 'O', 'T', 'R', 'E', '-', 'P'},\n          {'x', 'x', 'D', 'E', 'T', 'A', 'E'},\n      };\n      vector<string> words = {\"this\",     \"is\",          \"not\",   \"a\",\n                              \"simple\",   \"boggle\",      \"board\", \"test\",\n                              \"REPEATED\", \"NOTRE-PEATED\"};\n      vector<string> expected = {\"this\",   \"is\",    \"a\",           \"simple\",\n                                 \"boggle\", \"board\", \"NOTRE-PEATED\"};\n      vector<string> actual = boggleBoard(board, words);\n      assert(actual.size() == expected.size());\n      for (string word : actual) {\n        assert(contains(expected, word));\n      }\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <unordered_map>\n#include <vector>\nusing namespace std;\n\nclass TrieNode {\npublic:\n  unordered_map<char, TrieNode *> children;\n  string word = \"\";\n};\n\nclass Trie {\npublic:\n  TrieNode *root;\n  char endSymbol;\n\n  Trie();\n  void add(string str);\n};\n\nvoid explore(int i, int j, vector<vector<char>> board, TrieNode *trieNode,\n             vector<vector<bool>> *visited,\n             unordered_map<string, bool> *finalWords);\nvector<vector<int>> getNeighbors(int i, int j, vector<vector<char>> board);\n\n// O(nm*8^s + ws) time | O(nm + ws) space\nvector<string> boggleBoard(vector<vector<char>> board, vector<string> words) {\n  Trie trie;\n  for (string word : words) {\n    trie.add(word);\n  }\n  unordered_map<string, bool> finalWords;\n  vector<vector<bool>> visited(board.size(),\n                               vector<bool>(board[0].size(), false));\n  for (int i = 0; i < board.size(); i++) {\n    for (int j = 0; j < board[0].size(); j++) {\n      explore(i, j, board, trie.root, &visited, &finalWords);\n    }\n  }\n  vector<string> finalWordsArray;\n  for (auto it : finalWords) {\n    finalWordsArray.push_back(it.first);\n  }\n  return finalWordsArray;\n}\n\nvoid explore(int i, int j, vector<vector<char>> board, TrieNode *trieNode,\n             vector<vector<bool>> *visited,\n             unordered_map<string, bool> *finalWords) {\n  if (visited->at(i)[j]) {\n    return;\n  }\n  char letter = board[i][j];\n  if (trieNode->children.find(letter) == trieNode->children.end()) {\n    return;\n  }\n  visited->at(i)[j] = true;\n  trieNode = trieNode->children[letter];\n  if (trieNode->children.find('*') != trieNode->children.end()) {\n    finalWords->insert({trieNode->word, true});\n  }\n  vector<vector<int>> neighbors = getNeighbors(i, j, board);\n  for (vector<int> neighbor : neighbors) {\n    explore(neighbor[0], neighbor[1], board, trieNode, visited, finalWords);\n  }\n  visited->at(i)[j] = false;\n}\n\nvector<vector<int>> getNeighbors(int i, int j, vector<vector<char>> board) {\n  vector<vector<int>> neighbors;\n  if (i > 0 && j > 0) {\n    neighbors.push_back({i - 1, j - 1});\n  }\n  if (i > 0 && j < board[0].size() - 1) {\n    neighbors.push_back({i - 1, j + 1});\n  }\n  if (i < board.size() - 1 && j < board[0].size() - 1) {\n    neighbors.push_back({i + 1, j + 1});\n  }\n  if (i < board.size() - 1 && j > 0) {\n    neighbors.push_back({i + 1, j - 1});\n  }\n  if (i > 0) {\n    neighbors.push_back({i - 1, j});\n  }\n  if (i < board.size() - 1) {\n    neighbors.push_back({i + 1, j});\n  }\n  if (j > 0) {\n    neighbors.push_back({i, j - 1});\n  }\n  if (j < board[0].size() - 1) {\n    neighbors.push_back({i, j + 1});\n  }\n  return neighbors;\n}\n\nTrie::Trie() {\n  this->root = new TrieNode();\n  this->endSymbol = '*';\n}\n\nvoid Trie::add(string str) {\n  TrieNode *node = this->root;\n  for (char letter : str) {\n    if (node->children.find(letter) == node->children.end()) {\n      TrieNode *newNode = new TrieNode();\n      node->children.insert({letter, newNode});\n    }\n    node = node->children[letter];\n  }\n  node->children.insert({this->endSymbol, NULL});\n  node->word = str;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<string> BoggleBoard(char[,] board, string[] words) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tchar[,] board = {\n\t\t\t{'y', 'g', 'f', 'y', 'e', 'i'},\n\t\t\t{'c', 'o', 'r', 'p', 'o', 'u'},\n\t\t\t{'j', 'u', 'z', 's', 'e', 'l'},\n\t\t\t{'s', 'y', 'u', 'r', 'h', 'p'},\n\t\t\t{'e', 'a', 'e', 'g', 'n', 'd'},\n\t\t\t{'h', 'e', 'l', 's', 'a', 't'},\n\t\t};\n\t\tstring[] words =\n\t\t{\"san\", \"sana\", \"at\", \"vomit\", \"yours\", \"help\", \"end\", \"been\", \"bed\", \"danger\",\n\t\t \"calm\", \"ok\", \"chaos\", \"complete\", \"rear\", \"going\", \"storm\", \"face\",\n\t\t \"epual\", \"dangerous\"};\n\t\tstring[] expected = {\"yours\", \"help\", \"danger\", \"san\", \"at\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tchar[,] board = {\n\t\t\t{'a', 'b', 'c', 'd', 'e'},\n\t\t\t{'f', 'g', 'h', 'i', 'j'},\n\t\t\t{'k', 'l', 'm', 'n', 'o'},\n\t\t\t{'p', 'q', 'r', 's', 't'},\n\t\t\t{'u', 'v', 'w', 'x', 'y'},\n\t\t};\n\t\tstring[] words = {\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbgl\", \"agmsytojedinhcbfl\"};\n\t\tstring[] expected = {\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbfl\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tchar[,] board = {\n\t\t\t{'a', 'b'},\n\t\t\t{'c', 'd'},\n\t\t};\n\t\tstring[] words = {\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\", \"abca\"};\n\t\tstring[] expected = {\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tchar[,] board = {\n\t\t\t{'f', 't', 'r', 'o', 'p', 'i', 'k', 'b', 'o'},\n\t\t\t{'r', 'w', 'l', 'p', 'e', 'u', 'e', 'a', 'b'},\n\t\t\t{'j', 'o', 't', 's', 'e', 'l', 'f', 'l', 'p'},\n\t\t\t{'s', 'z', 'u', 't', 'h', 'u', 'o', 'p', 'i'},\n\t\t\t{'k', 'a', 'e', 'g', 'n', 'd', 'r', 'g', 'a'},\n\t\t\t{'h', 'n', 'l', 's', 'a', 't', 'e', 't', 'x'},\n\t\t};\n\t\tstring[] words =\n\t\t{\"frozen\", \"rotten\", \"teleport\", \"city\", \"zutgatz\", \"kappa\", \"before\", \"rope\",\n\t\t \"obligate\", \"annoying\"};\n\t\tstring[] expected =\n\t\t{\"frozen\", \"rotten\", \"teleport\", \"kappa\", \"before\", \"rope\", \"obligate\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tchar[,] board = {\n\t\t\t{'c', 'o', 'm'},\n\t\t\t{'r', 'p', 'l'},\n\t\t\t{'c', 'i', 't'},\n\t\t\t{'o', 'a', 'e'},\n\t\t\t{'f', 'o', 'd'},\n\t\t\t{'z', 'r', 'b'},\n\t\t\t{'g', 'i', 'a'},\n\t\t\t{'o', 'a', 'g'},\n\t\t\t{'f', 's', 'z'},\n\t\t\t{'t', 'e', 'i'},\n\t\t\t{'t', 'w', 'd'},\n\t\t};\n\t\tstring[] words =\n\t\t{\"commerce\", \"complicated\", \"twisted\", \"zigzag\", \"comma\", \"foobar\", \"baz\", \"there\"};\n\t\tstring[] expected = {\"complicated\", \"twisted\", \"zigzag\", \"foobar\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tchar[,] board = {\n\t\t\t{'c', 'o', 'm'},\n\t\t\t{'r', 'p', 'l'},\n\t\t\t{'c', 'i', 't'},\n\t\t\t{'o', 'a', 'e'},\n\t\t\t{'f', 'o', 'd'},\n\t\t\t{'z', 'r', 'b'},\n\t\t\t{'g', 'i', 'a'},\n\t\t\t{'o', 'a', 'g'},\n\t\t\t{'f', 's', 'z'},\n\t\t\t{'t', 'e', 'i'},\n\t\t\t{'t', 'w', 'd'},\n\t\t};\n\t\tstring[] words =\n\t\t{\"cr\", \"oc\", \"ml\", \"iao\", \"opo\", \"zrb\", \"big\", \"fs\", \"ogiagao\", \"dwd\", \"twt\"};\n\t\tstring[] expected = {\"cr\", \"oc\", \"ml\", \"iao\", \"zrb\", \"big\", \"fs\", \"twt\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tchar[,] board = {\n\t\t\t{'c', 'o', 'm'},\n\t\t\t{'r', 'p', 'l'},\n\t\t\t{'c', 'i', 't'},\n\t\t\t{'o', 'a', 'e'},\n\t\t\t{'f', 'o', 'd'},\n\t\t\t{'z', 'r', 'b'},\n\t\t\t{'g', 'i', 'a'},\n\t\t\t{'o', 'a', 'g'},\n\t\t\t{'f', 's', 'z'},\n\t\t\t{'t', 'e', 'i'},\n\t\t\t{'t', 'w', 'd'},\n\t\t};\n\t\tstring[] words =\n\t\t{\"comlpriteacoofziraagsizefttw\", \"comlpriteacoofzirabagsizefottw\",\n\t\t \"comlpriteacoofziraagsizefottw\", \"comlpriteacoofzirabagsizeftttw\"};\n\t\tstring[] expected = {\"comlpriteacoofziraagsizefttw\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tchar[,] board = {\n\t\t\t{'t', 'h', 'i', 's', 'i', 's', 'a'},\n\t\t\t{'s', 'i', 'm', 'p', 'l', 'e', 'x'},\n\t\t\t{'b', 'x', 'x', 'x', 'x', 'e', 'b'},\n\t\t\t{'x', 'o', 'g', 'g', 'l', 'x', 'o'},\n\t\t\t{'x', 'x', 'x', 'D', 'T', 'r', 'a'},\n\t\t\t{'R', 'E', 'P', 'E', 'A', 'd', 'x'},\n\t\t\t{'x', 'x', 'x', 'x', 'x', 'x', 'x'},\n\t\t\t{'N', 'O', 'T', 'R', 'E', '-', 'P'},\n\t\t\t{'x', 'x', 'D', 'E', 'T', 'A', 'E'},\n\t\t};\n\t\tstring[] words =\n\t\t{\"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\",\n\t\t \"NOTRE-PEATED\"};\n\t\tstring[] expected =\n\t\t{\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\tpublic static bool Contains(string[] wordArray, string targetWord) {\n\t\tforeach (string word in wordArray) {\n\t\t\tif (targetWord.Equals(word)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tchar[,] board = {\n\t\t\t{'t', 'h', 'i', 's', 'i', 's', 'a'},\n\t\t\t{'s', 'i', 'm', 'p', 'l', 'e', 'x'},\n\t\t\t{'b', 'x', 'x', 'x', 'x', 'e', 'b'},\n\t\t\t{'x', 'o', 'g', 'g', 'l', 'x', 'o'},\n\t\t\t{'x', 'x', 'x', 'D', 'T', 'r', 'a'},\n\t\t\t{'R', 'E', 'P', 'E', 'A', 'd', 'x'},\n\t\t\t{'x', 'x', 'x', 'x', 'x', 'x', 'x'},\n\t\t\t{'N', 'O', 'T', 'R', 'E', '-', 'P'},\n\t\t\t{'x', 'x', 'D', 'E', 'T', 'A', 'E'},\n\t\t};\n\t\tstring[] words =\n\t\t{\"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\",\n\t\t \"NOTRE-PEATED\"};\n\t\tstring[] expected =\n\t\t{\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"};\n\t\tList<string> actual = Program.BoggleBoard(board, words);\n\t\tUtils.AssertTrue(actual.Count == expected.Length);\n\t\tforeach (string word in actual) {\n\t\t\tUtils.AssertTrue(Contains(expected, word));\n\t\t}\n\t}\n\n\tpublic static bool Contains(string[] wordArray, string targetWord) {\n\t\tforeach (string word in wordArray) {\n\t\t\tif (targetWord.Equals(word)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(nm*8^s + ws) time | O(nm + ws) space\n\tpublic static List<string> BoggleBoard(char[,] board, string[] words) {\n\t\tTrie trie = new Trie();\n\t\tforeach (string word in words) {\n\t\t\ttrie.Add(word);\n\t\t}\n\t\tHashSet<string> finalWords = new HashSet<string>();\n\t\tbool[,] visited = new bool[board.GetLength(0),board.GetLength(1)];\n\t\tfor (int i = 0; i < board.GetLength(0); i++) {\n\t\t\tfor (int j = 0; j < board.GetLength(1); j++) {\n\t\t\t\texplore(i, j, board, trie.root, visited, finalWords);\n\t\t\t}\n\t\t}\n\t\tList<string> finalWordsArray = new List<string>();\n\t\tforeach (string key in finalWords) {\n\t\t\tfinalWordsArray.Add(key);\n\t\t}\n\t\treturn finalWordsArray;\n\t}\n\n\tpublic static void explore(int i, int j, char[,] board, TrieNode trieNode, bool[,] visited,\n\t  HashSet<string> finalWords) {\n\t\tif (visited[i,j]) {\n\t\t\treturn;\n\t\t}\n\t\tchar letter = board[i,j];\n\t\tif (!trieNode.children.ContainsKey(letter)) {\n\t\t\treturn;\n\t\t}\n\t\tvisited[i,j] = true;\n\t\ttrieNode = trieNode.children[letter];\n\t\tif (trieNode.children.ContainsKey('*')) {\n\t\t\tfinalWords.Add(trieNode.word);\n\t\t}\n\t\tList<int[]> neighbors = getNeighbors(i, j, board);\n\t\tforeach (int[] neighbor in neighbors) {\n\t\t\texplore(neighbor[0], neighbor[1], board, trieNode, visited, finalWords);\n\t\t}\n\t\tvisited[i,j] = false;\n\t}\n\n\tpublic static List<int[]> getNeighbors(int i, int j, char[,] board) {\n\t\tList<int[]> neighbors = new List<int[]>();\n\t\tif (i > 0 && j > 0) {\n\t\t\tneighbors.Add(new int[] {i - 1, j - 1});\n\t\t}\n\t\tif (i > 0 && j < board.GetLength(1) - 1) {\n\t\t\tneighbors.Add(new int[] {i - 1, j + 1});\n\t\t}\n\t\tif (i < board.GetLength(0) - 1 && j < board.GetLength(1) - 1) {\n\t\t\tneighbors.Add(new int[] {i + 1, j + 1});\n\t\t}\n\t\tif (i < board.GetLength(0) - 1 && j > 0) {\n\t\t\tneighbors.Add(new int[] {i + 1, j - 1});\n\t\t}\n\t\tif (i > 0) {\n\t\t\tneighbors.Add(new int[] {i - 1, j});\n\t\t}\n\t\tif (i < board.GetLength(0) - 1) {\n\t\t\tneighbors.Add(new int[] {i + 1, j});\n\t\t}\n\t\tif (j > 0) {\n\t\t\tneighbors.Add(new int[] {i, j - 1});\n\t\t}\n\t\tif (j < board.GetLength(1) - 1) {\n\t\t\tneighbors.Add(new int[] {i, j + 1});\n\t\t}\n\t\treturn neighbors;\n\t}\n\n\tpublic class TrieNode {\n\t\tpublic Dictionary<char, TrieNode> children = new Dictionary<char, TrieNode>();\n\t\tpublic string word = \"\";\n\t}\n\n\tpublic class Trie {\n\t\tpublic TrieNode root;\n\t\tpublic char endSymbol;\n\n\t\tpublic Trie() {\n\t\t\tthis.root = new TrieNode();\n\t\t\tthis.endSymbol = '*';\n\t\t}\n\n\t\tpublic void Add(string str) {\n\t\t\tTrieNode node = this.root;\n\t\t\tfor (int i = 0; i < str.Length; i++) {\n\t\t\t\tchar letter = str[i];\n\t\t\t\tif (!node.children.ContainsKey(letter)) {\n\t\t\t\t\tTrieNode newNode = new TrieNode();\n\t\t\t\t\tnode.children.Add(letter, newNode);\n\t\t\t\t}\n\t\t\t\tnode = node.children[letter];\n\t\t\t}\n\t\t\tnode.children[this.endSymbol] = null;\n\t\t\tnode.word = str;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc BoggleBoard(board [][]rune, words []string) []string {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'y', 'g', 'f', 'y', 'e', 'i'},\n\t\t{'c', 'o', 'r', 'p', 'o', 'u'},\n\t\t{'j', 'u', 'z', 's', 'e', 'l'},\n\t\t{'s', 'y', 'u', 'r', 'h', 'p'},\n\t\t{'e', 'a', 'e', 'g', 'n', 'd'},\n\t\t{'h', 'e', 'l', 's', 'a', 't'},\n\t}\n\twords := []string{\"san\", \"sana\", \"at\", \"vomit\", \"yours\", \"help\", \"end\", \"been\", \"bed\", \"danger\", \"calm\", \"ok\", \"chaos\", \"complete\", \"rear\", \"going\", \"storm\", \"face\", \"epual\", \"dangerous\"}\n\texpected := []string{\"yours\", \"help\", \"danger\", \"san\", \"at\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'a', 'b', 'c', 'd', 'e'},\n\t\t{'f', 'g', 'h', 'i', 'j'},\n\t\t{'k', 'l', 'm', 'n', 'o'},\n\t\t{'p', 'q', 'r', 's', 't'},\n\t\t{'u', 'v', 'w', 'x', 'y'},\n\t}\n\twords := []string{\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbgl\", \"agmsytojedinhcbfl\"}\n\texpected := []string{\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbfl\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'a', 'b'},\n\t\t{'c', 'd'},\n\t}\n\twords := []string{\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\", \"abca\"}\n\texpected := []string{\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'f', 't', 'r', 'o', 'p', 'i', 'k', 'b', 'o'},\n\t\t{'r', 'w', 'l', 'p', 'e', 'u', 'e', 'a', 'b'},\n\t\t{'j', 'o', 't', 's', 'e', 'l', 'f', 'l', 'p'},\n\t\t{'s', 'z', 'u', 't', 'h', 'u', 'o', 'p', 'i'},\n\t\t{'k', 'a', 'e', 'g', 'n', 'd', 'r', 'g', 'a'},\n\t\t{'h', 'n', 'l', 's', 'a', 't', 'e', 't', 'x'},\n\t}\n\twords := []string{\"frozen\", \"rotten\", \"teleport\", \"city\", \"zutgatz\", \"kappa\", \"before\", \"rope\", \"obligate\", \"annoying\"}\n\texpected := []string{\"frozen\", \"rotten\", \"teleport\", \"kappa\", \"before\", \"rope\", \"obligate\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'c', 'o', 'm'},\n\t\t{'r', 'p', 'l'},\n\t\t{'c', 'i', 't'},\n\t\t{'o', 'a', 'e'},\n\t\t{'f', 'o', 'd'},\n\t\t{'z', 'r', 'b'},\n\t\t{'g', 'i', 'a'},\n\t\t{'o', 'a', 'g'},\n\t\t{'f', 's', 'z'},\n\t\t{'t', 'e', 'i'},\n\t\t{'t', 'w', 'd'},\n\t}\n\twords := []string{\"commerce\", \"complicated\", \"twisted\", \"zigzag\", \"comma\", \"foobar\", \"baz\", \"there\"}\n\texpected := []string{\"complicated\", \"twisted\", \"zigzag\", \"foobar\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'c', 'o', 'm'},\n\t\t{'r', 'p', 'l'},\n\t\t{'c', 'i', 't'},\n\t\t{'o', 'a', 'e'},\n\t\t{'f', 'o', 'd'},\n\t\t{'z', 'r', 'b'},\n\t\t{'g', 'i', 'a'},\n\t\t{'o', 'a', 'g'},\n\t\t{'f', 's', 'z'},\n\t\t{'t', 'e', 'i'},\n\t\t{'t', 'w', 'd'},\n\t}\n\twords := []string{\"cr\", \"oc\", \"ml\", \"iao\", \"opo\", \"zrb\", \"big\", \"fs\", \"ogiagao\", \"dwd\", \"twt\"}\n\texpected := []string{\"cr\", \"oc\", \"ml\", \"iao\", \"zrb\", \"big\", \"fs\", \"twt\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'c', 'o', 'm'},\n\t\t{'r', 'p', 'l'},\n\t\t{'c', 'i', 't'},\n\t\t{'o', 'a', 'e'},\n\t\t{'f', 'o', 'd'},\n\t\t{'z', 'r', 'b'},\n\t\t{'g', 'i', 'a'},\n\t\t{'o', 'a', 'g'},\n\t\t{'f', 's', 'z'},\n\t\t{'t', 'e', 'i'},\n\t\t{'t', 'w', 'd'},\n\t}\n\twords := []string{\"comlpriteacoofziraagsizefttw\", \"comlpriteacoofzirabagsizefottw\", \"comlpriteacoofziraagsizefottw\", \"comlpriteacoofzirabagsizeftttw\"}\n\texpected := []string{\"comlpriteacoofziraagsizefttw\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'t', 'h', 'i', 's', 'i', 's', 'a'},\n\t\t{'s', 'i', 'm', 'p', 'l', 'e', 'x'},\n\t\t{'b', 'x', 'x', 'x', 'x', 'e', 'b'},\n\t\t{'x', 'o', 'g', 'g', 'l', 'x', 'o'},\n\t\t{'x', 'x', 'x', 'D', 'T', 'r', 'a'},\n\t\t{'R', 'E', 'P', 'E', 'A', 'd', 'x'},\n\t\t{'x', 'x', 'x', 'x', 'x', 'x', 'x'},\n\t\t{'N', 'O', 'T', 'R', 'E', '-', 'P'},\n\t\t{'x', 'x', 'D', 'E', 'T', 'A', 'E'},\n\t}\n\twords := []string{\"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\"}\n\texpected := []string{\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tboard := [][]rune{\n\t\t{'t', 'h', 'i', 's', 'i', 's', 'a'},\n\t\t{'s', 'i', 'm', 'p', 'l', 'e', 'x'},\n\t\t{'b', 'x', 'x', 'x', 'x', 'e', 'b'},\n\t\t{'x', 'o', 'g', 'g', 'l', 'x', 'o'},\n\t\t{'x', 'x', 'x', 'D', 'T', 'r', 'a'},\n\t\t{'R', 'E', 'P', 'E', 'A', 'd', 'x'},\n\t\t{'x', 'x', 'x', 'x', 'x', 'x', 'x'},\n\t\t{'N', 'O', 'T', 'R', 'E', '-', 'P'},\n\t\t{'x', 'x', 'D', 'E', 'T', 'A', 'E'},\n\t}\n\twords := []string{\"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\"}\n\texpected := []string{\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"}\n\toutput := BoggleBoard(board, words)\n\trequire.ElementsMatch(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(nm*8^s + ws) time | O(nm + ws) space\nfunc BoggleBoard(board [][]rune, words []string) []string {\n\ttrie := Trie{children: map[rune]Trie{}}\n\tfor _, word := range words {\n\t\ttrie.Add(word)\n\t}\n\n\tvisited := make([][]bool, len(board))\n\tfor i := range visited {\n\t\tvisited[i] = make([]bool, len(board[i]))\n\t}\n\n\tfinalWords := map[string]bool{}\n\tfor i := range board {\n\t\tfor j := range board[i] {\n\t\t\texplore(i, j, board, trie, visited, finalWords)\n\t\t}\n\t}\n\n\tresult := []string{}\n\tfor word := range finalWords {\n\t\tresult = append(result, word)\n\t}\n\treturn result\n}\n\nfunc explore(i, j int, board [][]rune, trie Trie, visited [][]bool, finalWords map[string]bool) {\n\tif visited[i][j] {\n\t\treturn\n\t}\n\tletter := board[i][j]\n\tif _, found := trie.children[letter]; !found {\n\t\treturn\n\t}\n\tvisited[i][j] = true\n\ttrie = trie.children[letter]\n\tif end, found := trie.children['*']; found {\n\t\tfinalWords[end.word] = true\n\t}\n\tneighbors := getNeighbors(i, j, board)\n\tfor _, neighbor := range neighbors {\n\t\texplore(neighbor[0], neighbor[1], board, trie, visited, finalWords)\n\t}\n\tvisited[i][j] = false\n}\n\nfunc getNeighbors(i, j int, board [][]rune) [][]int {\n\tneighbors := [][]int{}\n\tif i > 0 && j > 0 {\n\t\tneighbors = append(neighbors, []int{i - 1, j - 1})\n\t}\n\tif i > 0 && j < len(board[0])-1 {\n\t\tneighbors = append(neighbors, []int{i - 1, j + 1})\n\t}\n\tif i < len(board)-1 && j < len(board[0])-1 {\n\t\tneighbors = append(neighbors, []int{i + 1, j + 1})\n\t}\n\tif i < len(board)-1 && j > 0 {\n\t\tneighbors = append(neighbors, []int{i + 1, j - 1})\n\t}\n\tif i > 0 {\n\t\tneighbors = append(neighbors, []int{i - 1, j})\n\t}\n\tif i < len(board)-1 {\n\t\tneighbors = append(neighbors, []int{i + 1, j})\n\t}\n\tif j > 0 {\n\t\tneighbors = append(neighbors, []int{i, j - 1})\n\t}\n\tif j < len(board[0])-1 {\n\t\tneighbors = append(neighbors, []int{i, j + 1})\n\t}\n\treturn neighbors\n\n}\n\ntype Trie struct {\n\tchildren map[rune]Trie\n\n\tword string\n}\n\nfunc (t Trie) Add(word string) {\n\tcurrent := t\n\tfor _, letter := range word {\n\t\tif _, found := current.children[letter]; !found {\n\t\t\tcurrent.children[letter] = Trie{\n\t\t\t\tchildren: map[rune]Trie{},\n\t\t\t}\n\t\t}\n\t\tcurrent = current.children[letter]\n\t}\n\tcurrent.children['*'] = Trie{\n\t\tchildren: map[rune]Trie{},\n\t\tword:     word,\n\t}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<String> boggleBoard(char[][] board, String[] words) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    char[][] board = {\n      {'y', 'g', 'f', 'y', 'e', 'i'},\n      {'c', 'o', 'r', 'p', 'o', 'u'},\n      {'j', 'u', 'z', 's', 'e', 'l'},\n      {'s', 'y', 'u', 'r', 'h', 'p'},\n      {'e', 'a', 'e', 'g', 'n', 'd'},\n      {'h', 'e', 'l', 's', 'a', 't'},\n    };\n    String[] words = {\n      \"san\",\n      \"sana\",\n      \"at\",\n      \"vomit\",\n      \"yours\",\n      \"help\",\n      \"end\",\n      \"been\",\n      \"bed\",\n      \"danger\",\n      \"calm\",\n      \"ok\",\n      \"chaos\",\n      \"complete\",\n      \"rear\",\n      \"going\",\n      \"storm\",\n      \"face\",\n      \"epual\",\n      \"dangerous\"\n    };\n    String[] expected = {\"yours\", \"help\", \"danger\", \"san\", \"at\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  @Test\n  public void TestCase2() {\n    char[][] board = {\n      {'a', 'b', 'c', 'd', 'e'},\n      {'f', 'g', 'h', 'i', 'j'},\n      {'k', 'l', 'm', 'n', 'o'},\n      {'p', 'q', 'r', 's', 't'},\n      {'u', 'v', 'w', 'x', 'y'},\n    };\n    String[] words = {\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbgl\", \"agmsytojedinhcbfl\"};\n    String[] expected = {\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbfl\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  @Test\n  public void TestCase3() {\n    char[][] board = {\n      {'a', 'b'},\n      {'c', 'd'},\n    };\n    String[] words = {\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\", \"abca\"};\n    String[] expected = {\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  @Test\n  public void TestCase4() {\n    char[][] board = {\n      {'f', 't', 'r', 'o', 'p', 'i', 'k', 'b', 'o'},\n      {'r', 'w', 'l', 'p', 'e', 'u', 'e', 'a', 'b'},\n      {'j', 'o', 't', 's', 'e', 'l', 'f', 'l', 'p'},\n      {'s', 'z', 'u', 't', 'h', 'u', 'o', 'p', 'i'},\n      {'k', 'a', 'e', 'g', 'n', 'd', 'r', 'g', 'a'},\n      {'h', 'n', 'l', 's', 'a', 't', 'e', 't', 'x'},\n    };\n    String[] words = {\n      \"frozen\",\n      \"rotten\",\n      \"teleport\",\n      \"city\",\n      \"zutgatz\",\n      \"kappa\",\n      \"before\",\n      \"rope\",\n      \"obligate\",\n      \"annoying\"\n    };\n    String[] expected = {\"frozen\", \"rotten\", \"teleport\", \"kappa\", \"before\", \"rope\", \"obligate\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  @Test\n  public void TestCase5() {\n    char[][] board = {\n      {'c', 'o', 'm'},\n      {'r', 'p', 'l'},\n      {'c', 'i', 't'},\n      {'o', 'a', 'e'},\n      {'f', 'o', 'd'},\n      {'z', 'r', 'b'},\n      {'g', 'i', 'a'},\n      {'o', 'a', 'g'},\n      {'f', 's', 'z'},\n      {'t', 'e', 'i'},\n      {'t', 'w', 'd'},\n    };\n    String[] words = {\n      \"commerce\", \"complicated\", \"twisted\", \"zigzag\", \"comma\", \"foobar\", \"baz\", \"there\"\n    };\n    String[] expected = {\"complicated\", \"twisted\", \"zigzag\", \"foobar\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  @Test\n  public void TestCase6() {\n    char[][] board = {\n      {'c', 'o', 'm'},\n      {'r', 'p', 'l'},\n      {'c', 'i', 't'},\n      {'o', 'a', 'e'},\n      {'f', 'o', 'd'},\n      {'z', 'r', 'b'},\n      {'g', 'i', 'a'},\n      {'o', 'a', 'g'},\n      {'f', 's', 'z'},\n      {'t', 'e', 'i'},\n      {'t', 'w', 'd'},\n    };\n    String[] words = {\"cr\", \"oc\", \"ml\", \"iao\", \"opo\", \"zrb\", \"big\", \"fs\", \"ogiagao\", \"dwd\", \"twt\"};\n    String[] expected = {\"cr\", \"oc\", \"ml\", \"iao\", \"zrb\", \"big\", \"fs\", \"twt\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  @Test\n  public void TestCase7() {\n    char[][] board = {\n      {'c', 'o', 'm'},\n      {'r', 'p', 'l'},\n      {'c', 'i', 't'},\n      {'o', 'a', 'e'},\n      {'f', 'o', 'd'},\n      {'z', 'r', 'b'},\n      {'g', 'i', 'a'},\n      {'o', 'a', 'g'},\n      {'f', 's', 'z'},\n      {'t', 'e', 'i'},\n      {'t', 'w', 'd'},\n    };\n    String[] words = {\n      \"comlpriteacoofziraagsizefttw\",\n      \"comlpriteacoofzirabagsizefottw\",\n      \"comlpriteacoofziraagsizefottw\",\n      \"comlpriteacoofzirabagsizeftttw\"\n    };\n    String[] expected = {\"comlpriteacoofziraagsizefttw\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  @Test\n  public void TestCase8() {\n    char[][] board = {\n      {'t', 'h', 'i', 's', 'i', 's', 'a'},\n      {'s', 'i', 'm', 'p', 'l', 'e', 'x'},\n      {'b', 'x', 'x', 'x', 'x', 'e', 'b'},\n      {'x', 'o', 'g', 'g', 'l', 'x', 'o'},\n      {'x', 'x', 'x', 'D', 'T', 'r', 'a'},\n      {'R', 'E', 'P', 'E', 'A', 'd', 'x'},\n      {'x', 'x', 'x', 'x', 'x', 'x', 'x'},\n      {'N', 'O', 'T', 'R', 'E', '-', 'P'},\n      {'x', 'x', 'D', 'E', 'T', 'A', 'E'},\n    };\n    String[] words = {\n      \"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\"\n    };\n    String[] expected = {\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  public static boolean contains(String[] wordArray, String targetWord) {\n    for (String word : wordArray) {\n      if (targetWord.equals(word)) {\n        return true;\n      }\n    }\n    return false;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    char[][] board = {\n      {'t', 'h', 'i', 's', 'i', 's', 'a'},\n      {'s', 'i', 'm', 'p', 'l', 'e', 'x'},\n      {'b', 'x', 'x', 'x', 'x', 'e', 'b'},\n      {'x', 'o', 'g', 'g', 'l', 'x', 'o'},\n      {'x', 'x', 'x', 'D', 'T', 'r', 'a'},\n      {'R', 'E', 'P', 'E', 'A', 'd', 'x'},\n      {'x', 'x', 'x', 'x', 'x', 'x', 'x'},\n      {'N', 'O', 'T', 'R', 'E', '-', 'P'},\n      {'x', 'x', 'D', 'E', 'T', 'A', 'E'},\n    };\n    String[] words = {\n      \"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\"\n    };\n    String[] expected = {\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"};\n    List<String> actual = Program.boggleBoard(board, words);\n    Utils.assertTrue(actual.size() == expected.length);\n    for (String word : actual) {\n      Utils.assertTrue(contains(expected, word));\n    }\n  }\n\n  public static boolean contains(String[] wordArray, String targetWord) {\n    for (String word : wordArray) {\n      if (targetWord.equals(word)) {\n        return true;\n      }\n    }\n    return false;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(nm*8^s + ws) time | O(nm + ws) space\n  public static List<String> boggleBoard(char[][] board, String[] words) {\n    Trie trie = new Trie();\n    for (String word : words) {\n      trie.add(word);\n    }\n    Set<String> finalWords = new HashSet<String>();\n    boolean[][] visited = new boolean[board.length][board[0].length];\n    for (int i = 0; i < board.length; i++) {\n      for (int j = 0; j < board[0].length; j++) {\n        explore(i, j, board, trie.root, visited, finalWords);\n      }\n    }\n    List<String> finalWordsArray = new ArrayList<String>();\n    finalWordsArray.addAll(finalWords);\n    return finalWordsArray;\n  }\n\n  public static void explore(\n      int i,\n      int j,\n      char[][] board,\n      TrieNode trieNode,\n      boolean[][] visited,\n      Set<String> finalWords) {\n    if (visited[i][j]) {\n      return;\n    }\n    char letter = board[i][j];\n    if (!trieNode.children.containsKey(letter)) {\n      return;\n    }\n    visited[i][j] = true;\n    trieNode = trieNode.children.get(letter);\n    if (trieNode.children.containsKey('*')) {\n      finalWords.add(trieNode.word);\n    }\n    List<Integer[]> neighbors = getNeighbors(i, j, board);\n    for (Integer[] neighbor : neighbors) {\n      explore(neighbor[0], neighbor[1], board, trieNode, visited, finalWords);\n    }\n    visited[i][j] = false;\n  }\n\n  public static List<Integer[]> getNeighbors(int i, int j, char[][] board) {\n    List<Integer[]> neighbors = new ArrayList<Integer[]>();\n    if (i > 0 && j > 0) {\n      neighbors.add(new Integer[] {i - 1, j - 1});\n    }\n    if (i > 0 && j < board[0].length - 1) {\n      neighbors.add(new Integer[] {i - 1, j + 1});\n    }\n    if (i < board.length - 1 && j < board[0].length - 1) {\n      neighbors.add(new Integer[] {i + 1, j + 1});\n    }\n    if (i < board.length - 1 && j > 0) {\n      neighbors.add(new Integer[] {i + 1, j - 1});\n    }\n    if (i > 0) {\n      neighbors.add(new Integer[] {i - 1, j});\n    }\n    if (i < board.length - 1) {\n      neighbors.add(new Integer[] {i + 1, j});\n    }\n    if (j > 0) {\n      neighbors.add(new Integer[] {i, j - 1});\n    }\n    if (j < board[0].length - 1) {\n      neighbors.add(new Integer[] {i, j + 1});\n    }\n    return neighbors;\n  }\n\n  static class TrieNode {\n    Map<Character, TrieNode> children = new HashMap<Character, TrieNode>();\n    String word = \"\";\n  }\n\n  static class Trie {\n    TrieNode root;\n    char endSymbol;\n\n    public Trie() {\n      this.root = new TrieNode();\n      this.endSymbol = '*';\n    }\n\n    public void add(String str) {\n      TrieNode node = this.root;\n      for (int i = 0; i < str.length(); i++) {\n        char letter = str.charAt(i);\n        if (!node.children.containsKey(letter)) {\n          TrieNode newNode = new TrieNode();\n          node.children.put(letter, newNode);\n        }\n        node = node.children.get(letter);\n      }\n      node.children.put(this.endSymbol, null);\n      node.word = str;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function boggleBoard(board, words) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.boggleBoard = boggleBoard;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const board = [\n    ['y', 'g', 'f', 'y', 'e', 'i'],\n    ['c', 'o', 'r', 'p', 'o', 'u'],\n    ['j', 'u', 'z', 's', 'e', 'l'],\n    ['s', 'y', 'u', 'r', 'h', 'p'],\n    ['e', 'a', 'e', 'g', 'n', 'd'],\n    ['h', 'e', 'l', 's', 'a', 't'],\n  ];\n  const words = [\n    'san',\n    'sana',\n    'at',\n    'vomit',\n    'yours',\n    'help',\n    'end',\n    'been',\n    'bed',\n    'danger',\n    'calm',\n    'ok',\n    'chaos',\n    'complete',\n    'rear',\n    'going',\n    'storm',\n    'face',\n    'epual',\n    'dangerous',\n  ];\n  const expected = ['yours', 'help', 'danger', 'san', 'at'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #2', function () {\n  const board = [\n    ['a', 'b', 'c', 'd', 'e'],\n    ['f', 'g', 'h', 'i', 'j'],\n    ['k', 'l', 'm', 'n', 'o'],\n    ['p', 'q', 'r', 's', 't'],\n    ['u', 'v', 'w', 'x', 'y'],\n  ];\n  const words = ['agmsy', 'agmsytojed', 'agmsytojedinhcbgl', 'agmsytojedinhcbfl'];\n  const expected = ['agmsy', 'agmsytojed', 'agmsytojedinhcbfl'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #3', function () {\n  const board = [\n    ['a', 'b'],\n    ['c', 'd'],\n  ];\n  const words = ['abcd', 'abdc', 'acbd', 'acdb', 'adbc', 'adcb', 'abca'];\n  const expected = ['abcd', 'abdc', 'acbd', 'acdb', 'adbc', 'adcb'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #4', function () {\n  const board = [\n    ['f', 't', 'r', 'o', 'p', 'i', 'k', 'b', 'o'],\n    ['r', 'w', 'l', 'p', 'e', 'u', 'e', 'a', 'b'],\n    ['j', 'o', 't', 's', 'e', 'l', 'f', 'l', 'p'],\n    ['s', 'z', 'u', 't', 'h', 'u', 'o', 'p', 'i'],\n    ['k', 'a', 'e', 'g', 'n', 'd', 'r', 'g', 'a'],\n    ['h', 'n', 'l', 's', 'a', 't', 'e', 't', 'x'],\n  ];\n  const words = ['frozen', 'rotten', 'teleport', 'city', 'zutgatz', 'kappa', 'before', 'rope', 'obligate', 'annoying'];\n  const expected = ['frozen', 'rotten', 'teleport', 'kappa', 'before', 'rope', 'obligate'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #5', function () {\n  const board = [\n    ['c', 'o', 'm'],\n    ['r', 'p', 'l'],\n    ['c', 'i', 't'],\n    ['o', 'a', 'e'],\n    ['f', 'o', 'd'],\n    ['z', 'r', 'b'],\n    ['g', 'i', 'a'],\n    ['o', 'a', 'g'],\n    ['f', 's', 'z'],\n    ['t', 'e', 'i'],\n    ['t', 'w', 'd'],\n  ];\n  const words = ['commerce', 'complicated', 'twisted', 'zigzag', 'comma', 'foobar', 'baz', 'there'];\n  const expected = ['complicated', 'twisted', 'zigzag', 'foobar'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #6', function () {\n  const board = [\n    ['c', 'o', 'm'],\n    ['r', 'p', 'l'],\n    ['c', 'i', 't'],\n    ['o', 'a', 'e'],\n    ['f', 'o', 'd'],\n    ['z', 'r', 'b'],\n    ['g', 'i', 'a'],\n    ['o', 'a', 'g'],\n    ['f', 's', 'z'],\n    ['t', 'e', 'i'],\n    ['t', 'w', 'd'],\n  ];\n  const words = ['cr', 'oc', 'ml', 'iao', 'opo', 'zrb', 'big', 'fs', 'ogiagao', 'dwd', 'twt'];\n  const expected = ['cr', 'oc', 'ml', 'iao', 'zrb', 'big', 'fs', 'twt'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #7', function () {\n  const board = [\n    ['c', 'o', 'm'],\n    ['r', 'p', 'l'],\n    ['c', 'i', 't'],\n    ['o', 'a', 'e'],\n    ['f', 'o', 'd'],\n    ['z', 'r', 'b'],\n    ['g', 'i', 'a'],\n    ['o', 'a', 'g'],\n    ['f', 's', 'z'],\n    ['t', 'e', 'i'],\n    ['t', 'w', 'd'],\n  ];\n  const words = [\n    'comlpriteacoofziraagsizefttw',\n    'comlpriteacoofzirabagsizefottw',\n    'comlpriteacoofziraagsizefottw',\n    'comlpriteacoofzirabagsizeftttw',\n  ];\n  const expected = ['comlpriteacoofziraagsizefttw'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n\nit('Test Case #8', function () {\n  const board = [\n    ['t', 'h', 'i', 's', 'i', 's', 'a'],\n    ['s', 'i', 'm', 'p', 'l', 'e', 'x'],\n    ['b', 'x', 'x', 'x', 'x', 'e', 'b'],\n    ['x', 'o', 'g', 'g', 'l', 'x', 'o'],\n    ['x', 'x', 'x', 'D', 'T', 'r', 'a'],\n    ['R', 'E', 'P', 'E', 'A', 'd', 'x'],\n    ['x', 'x', 'x', 'x', 'x', 'x', 'x'],\n    ['N', 'O', 'T', 'R', 'E', '-', 'P'],\n    ['x', 'x', 'D', 'E', 'T', 'A', 'E'],\n  ];\n  const words = ['this', 'is', 'not', 'a', 'simple', 'boggle', 'board', 'test', 'REPEATED', 'NOTRE-PEATED'];\n  const expected = ['this', 'is', 'a', 'simple', 'boggle', 'board', 'NOTRE-PEATED'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const board = [\n    ['t', 'h', 'i', 's', 'i', 's', 'a'],\n    ['s', 'i', 'm', 'p', 'l', 'e', 'x'],\n    ['b', 'x', 'x', 'x', 'x', 'e', 'b'],\n    ['x', 'o', 'g', 'g', 'l', 'x', 'o'],\n    ['x', 'x', 'x', 'D', 'T', 'r', 'a'],\n    ['R', 'E', 'P', 'E', 'A', 'd', 'x'],\n    ['x', 'x', 'x', 'x', 'x', 'x', 'x'],\n    ['N', 'O', 'T', 'R', 'E', '-', 'P'],\n    ['x', 'x', 'D', 'E', 'T', 'A', 'E'],\n  ];\n  const words = ['this', 'is', 'not', 'a', 'simple', 'boggle', 'board', 'test', 'REPEATED', 'NOTRE-PEATED'];\n  const expected = ['this', 'is', 'a', 'simple', 'boggle', 'board', 'NOTRE-PEATED'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nm*8^s + ws) time | O(nm + ws) space\nfunction boggleBoard(board, words) {\n  const trie = new Trie();\n  for (const word of words) {\n    trie.add(word);\n  }\n  const finalWords = {};\n  const visited = board.map(row => row.map(letter => false));\n  for (let i = 0; i < board.length; i++) {\n    for (let j = 0; j < board[i].length; j++) {\n      explore(i, j, board, trie.root, visited, finalWords);\n    }\n  }\n  return Object.keys(finalWords);\n}\n\nfunction explore(i, j, board, trieNode, visited, finalWords) {\n  if (visited[i][j]) return;\n  const letter = board[i][j];\n  if (!(letter in trieNode)) return;\n  visited[i][j] = true;\n  trieNode = trieNode[letter];\n  if ('*' in trieNode) finalWords[trieNode['*']] = true;\n  const neighbors = getNeighbors(i, j, board);\n  for (const neighbor of neighbors) {\n    explore(neighbor[0], neighbor[1], board, trieNode, visited, finalWords);\n  }\n  visited[i][j] = false;\n}\n\nfunction getNeighbors(i, j, board) {\n  const neighbors = [];\n  if (i > 0 && j > 0) {\n    neighbors.push([i - 1, j - 1]);\n  }\n  if (i > 0 && j < board[0].length - 1) {\n    neighbors.push([i - 1, j + 1]);\n  }\n  if (i < board.length - 1 && j < board[0].length - 1) {\n    neighbors.push([i + 1, j + 1]);\n  }\n  if (i < board.length - 1 && j > 0) {\n    neighbors.push([i + 1, j - 1]);\n  }\n  if (i > 0) {\n    neighbors.push([i - 1, j]);\n  }\n  if (i < board.length - 1) {\n    neighbors.push([i + 1, j]);\n  }\n  if (j > 0) {\n    neighbors.push([i, j - 1]);\n  }\n  if (j < board[0].length - 1) {\n    neighbors.push([i, j + 1]);\n  }\n  return neighbors;\n}\n\nclass Trie {\n  constructor() {\n    this.root = {};\n    this.endSymbol = '*';\n  }\n\n  add(word) {\n    let current = this.root;\n    for (const letter of word) {\n      if (!(letter in current)) current[letter] = {};\n      current = current[letter];\n    }\n    current[this.endSymbol] = word;\n  }\n}\n\nexports.boggleBoard = boggleBoard;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def boggleBoard(board, words):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        board = [\n            [\"y\", \"g\", \"f\", \"y\", \"e\", \"i\"],\n            [\"c\", \"o\", \"r\", \"p\", \"o\", \"u\"],\n            [\"j\", \"u\", \"z\", \"s\", \"e\", \"l\"],\n            [\"s\", \"y\", \"u\", \"r\", \"h\", \"p\"],\n            [\"e\", \"a\", \"e\", \"g\", \"n\", \"d\"],\n            [\"h\", \"e\", \"l\", \"s\", \"a\", \"t\"],\n        ]\n        words = [\n            \"san\",\n            \"sana\",\n            \"at\",\n            \"vomit\",\n            \"yours\",\n            \"help\",\n            \"end\",\n            \"been\",\n            \"bed\",\n            \"danger\",\n            \"calm\",\n            \"ok\",\n            \"chaos\",\n            \"complete\",\n            \"rear\",\n            \"going\",\n            \"storm\",\n            \"face\",\n            \"epual\",\n            \"dangerous\",\n        ]\n        expected = [\"yours\", \"help\", \"danger\", \"san\", \"at\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n\n    def test_case_2(self):\n        board = [\n            [\"a\", \"b\", \"c\", \"d\", \"e\"],\n            [\"f\", \"g\", \"h\", \"i\", \"j\"],\n            [\"k\", \"l\", \"m\", \"n\", \"o\"],\n            [\"p\", \"q\", \"r\", \"s\", \"t\"],\n            [\"u\", \"v\", \"w\", \"x\", \"y\"],\n        ]\n        words = [\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbgl\", \"agmsytojedinhcbfl\"]\n        expected = [\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbfl\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n\n    def test_case_3(self):\n        board = [[\"a\", \"b\"], [\"c\", \"d\"]]\n        words = [\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\", \"abca\"]\n        expected = [\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n\n    def test_case_4(self):\n        board = [\n            [\"f\", \"t\", \"r\", \"o\", \"p\", \"i\", \"k\", \"b\", \"o\"],\n            [\"r\", \"w\", \"l\", \"p\", \"e\", \"u\", \"e\", \"a\", \"b\"],\n            [\"j\", \"o\", \"t\", \"s\", \"e\", \"l\", \"f\", \"l\", \"p\"],\n            [\"s\", \"z\", \"u\", \"t\", \"h\", \"u\", \"o\", \"p\", \"i\"],\n            [\"k\", \"a\", \"e\", \"g\", \"n\", \"d\", \"r\", \"g\", \"a\"],\n            [\"h\", \"n\", \"l\", \"s\", \"a\", \"t\", \"e\", \"t\", \"x\"],\n        ]\n        words = [\"frozen\", \"rotten\", \"teleport\", \"city\", \"zutgatz\", \"kappa\", \"before\", \"rope\", \"obligate\", \"annoying\"]\n        expected = [\"frozen\", \"rotten\", \"teleport\", \"kappa\", \"before\", \"rope\", \"obligate\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n\n    def test_case_5(self):\n        board = [\n            [\"c\", \"o\", \"m\"],\n            [\"r\", \"p\", \"l\"],\n            [\"c\", \"i\", \"t\"],\n            [\"o\", \"a\", \"e\"],\n            [\"f\", \"o\", \"d\"],\n            [\"z\", \"r\", \"b\"],\n            [\"g\", \"i\", \"a\"],\n            [\"o\", \"a\", \"g\"],\n            [\"f\", \"s\", \"z\"],\n            [\"t\", \"e\", \"i\"],\n            [\"t\", \"w\", \"d\"],\n        ]\n        words = [\"commerce\", \"complicated\", \"twisted\", \"zigzag\", \"comma\", \"foobar\", \"baz\", \"there\"]\n        expected = [\"complicated\", \"twisted\", \"zigzag\", \"foobar\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n\n    def test_case_6(self):\n        board = [\n            [\"c\", \"o\", \"m\"],\n            [\"r\", \"p\", \"l\"],\n            [\"c\", \"i\", \"t\"],\n            [\"o\", \"a\", \"e\"],\n            [\"f\", \"o\", \"d\"],\n            [\"z\", \"r\", \"b\"],\n            [\"g\", \"i\", \"a\"],\n            [\"o\", \"a\", \"g\"],\n            [\"f\", \"s\", \"z\"],\n            [\"t\", \"e\", \"i\"],\n            [\"t\", \"w\", \"d\"],\n        ]\n        words = [\"cr\", \"oc\", \"ml\", \"iao\", \"opo\", \"zrb\", \"big\", \"fs\", \"ogiagao\", \"dwd\", \"twt\"]\n        expected = [\"cr\", \"oc\", \"ml\", \"iao\", \"zrb\", \"big\", \"fs\", \"twt\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n\n    def test_case_7(self):\n        board = [\n            [\"c\", \"o\", \"m\"],\n            [\"r\", \"p\", \"l\"],\n            [\"c\", \"i\", \"t\"],\n            [\"o\", \"a\", \"e\"],\n            [\"f\", \"o\", \"d\"],\n            [\"z\", \"r\", \"b\"],\n            [\"g\", \"i\", \"a\"],\n            [\"o\", \"a\", \"g\"],\n            [\"f\", \"s\", \"z\"],\n            [\"t\", \"e\", \"i\"],\n            [\"t\", \"w\", \"d\"],\n        ]\n        words = [\n            \"comlpriteacoofziraagsizefttw\",\n            \"comlpriteacoofzirabagsizefottw\",\n            \"comlpriteacoofziraagsizefottw\",\n            \"comlpriteacoofzirabagsizeftttw\",\n        ]\n        expected = [\"comlpriteacoofziraagsizefttw\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n\n    def test_case_8(self):\n        board = [\n            [\"t\", \"h\", \"i\", \"s\", \"i\", \"s\", \"a\"],\n            [\"s\", \"i\", \"m\", \"p\", \"l\", \"e\", \"x\"],\n            [\"b\", \"x\", \"x\", \"x\", \"x\", \"e\", \"b\"],\n            [\"x\", \"o\", \"g\", \"g\", \"l\", \"x\", \"o\"],\n            [\"x\", \"x\", \"x\", \"D\", \"T\", \"r\", \"a\"],\n            [\"R\", \"E\", \"P\", \"E\", \"A\", \"d\", \"x\"],\n            [\"x\", \"x\", \"x\", \"x\", \"x\", \"x\", \"x\"],\n            [\"N\", \"O\", \"T\", \"R\", \"E\", \"-\", \"P\"],\n            [\"x\", \"x\", \"D\", \"E\", \"T\", \"A\", \"E\"],\n        ]\n        words = [\"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\"]\n        expected = [\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        board = [\n            [\"t\", \"h\", \"i\", \"s\", \"i\", \"s\", \"a\"],\n            [\"s\", \"i\", \"m\", \"p\", \"l\", \"e\", \"x\"],\n            [\"b\", \"x\", \"x\", \"x\", \"x\", \"e\", \"b\"],\n            [\"x\", \"o\", \"g\", \"g\", \"l\", \"x\", \"o\"],\n            [\"x\", \"x\", \"x\", \"D\", \"T\", \"r\", \"a\"],\n            [\"R\", \"E\", \"P\", \"E\", \"A\", \"d\", \"x\"],\n            [\"x\", \"x\", \"x\", \"x\", \"x\", \"x\", \"x\"],\n            [\"N\", \"O\", \"T\", \"R\", \"E\", \"-\", \"P\"],\n            [\"x\", \"x\", \"D\", \"E\", \"T\", \"A\", \"E\"],\n        ]\n        words = [\"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\"]\n        expected = [\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"]\n        actual = program.boggleBoard(board, words)\n        self.assertEqual(len(actual), len(expected))\n        for word in actual:\n            self.assertTrue(word in expected)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nm*8^s + ws) time | O(nm + ws) space\ndef boggleBoard(board, words):\n    trie = Trie()\n    for word in words:\n        trie.add(word)\n    finalWords = {}\n    visited = [[False for letter in row] for row in board]\n    for i in range(len(board)):\n        for j in range(len(board[i])):\n            explore(i, j, board, trie.root, visited, finalWords)\n    return list(finalWords.keys())\n\n\ndef explore(i, j, board, trieNode, visited, finalWords):\n    if visited[i][j]:\n        return\n    letter = board[i][j]\n    if letter not in trieNode:\n        return\n    visited[i][j] = True\n    trieNode = trieNode[letter]\n    if \"*\" in trieNode:\n        finalWords[trieNode[\"*\"]] = True\n    neighbors = getNeighbors(i, j, board)\n    for neighbor in neighbors:\n        explore(neighbor[0], neighbor[1], board, trieNode, visited, finalWords)\n    visited[i][j] = False\n\n\ndef getNeighbors(i, j, board):\n    neighbors = []\n    if i > 0 and j > 0:\n        neighbors.append([i - 1, j - 1])\n    if i > 0 and j < len(board[0]) - 1:\n        neighbors.append([i - 1, j + 1])\n    if i < len(board) - 1 and j < len(board[0]) - 1:\n        neighbors.append([i + 1, j + 1])\n    if i < len(board) - 1 and j > 0:\n        neighbors.append([i + 1, j - 1])\n    if i > 0:\n        neighbors.append([i - 1, j])\n    if i < len(board) - 1:\n        neighbors.append([i + 1, j])\n    if j > 0:\n        neighbors.append([i, j - 1])\n    if j < len(board[0]) - 1:\n        neighbors.append([i, j + 1])\n    return neighbors\n\n\nclass Trie:\n    def __init__(self):\n        self.root = {}\n        self.endSymbol = \"*\"\n\n    def add(self, word):\n        current = self.root\n        for letter in word:\n            if letter not in current:\n                current[letter] = {}\n            current = current[letter]\n        current[self.endSymbol] = word\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func boggleBoard(boggleBoard: [[String]], words: [String]) -> [String] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let board = [\n        [\"y\", \"g\", \"f\", \"y\", \"e\", \"i\"],\n        [\"c\", \"o\", \"r\", \"p\", \"o\", \"u\"],\n        [\"j\", \"u\", \"z\", \"s\", \"e\", \"l\"],\n        [\"s\", \"y\", \"u\", \"r\", \"h\", \"p\"],\n        [\"e\", \"a\", \"e\", \"g\", \"n\", \"d\"],\n        [\"h\", \"e\", \"l\", \"s\", \"a\", \"t\"],\n      ]\n      let words = [\"san\", \"sana\", \"at\", \"vomit\", \"yours\", \"help\", \"end\", \"been\", \"bed\", \"danger\", \"calm\", \"ok\", \"chaos\", \"complete\", \"rear\", \"going\", \"storm\", \"face\", \"epual\", \"dangerous\"]\n      let expected = [\"yours\", \"help\", \"danger\", \"san\", \"at\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let board = [\n        [\"a\", \"b\", \"c\", \"d\", \"e\"],\n        [\"f\", \"g\", \"h\", \"i\", \"j\"],\n        [\"k\", \"l\", \"m\", \"n\", \"o\"],\n        [\"p\", \"q\", \"r\", \"s\", \"t\"],\n        [\"u\", \"v\", \"w\", \"x\", \"y\"],\n      ]\n      let words = [\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbgl\", \"agmsytojedinhcbfl\"]\n      let expected = [\"agmsy\", \"agmsytojed\", \"agmsytojedinhcbfl\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let board = [\n        [\"a\", \"b\"],\n        [\"c\", \"d\"],\n      ]\n      let words = [\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\", \"abca\"]\n      let expected = [\"abcd\", \"abdc\", \"acbd\", \"acdb\", \"adbc\", \"adcb\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let board = [\n        [\"f\", \"t\", \"r\", \"o\", \"p\", \"i\", \"k\", \"b\", \"o\"],\n        [\"r\", \"w\", \"l\", \"p\", \"e\", \"u\", \"e\", \"a\", \"b\"],\n        [\"j\", \"o\", \"t\", \"s\", \"e\", \"l\", \"f\", \"l\", \"p\"],\n        [\"s\", \"z\", \"u\", \"t\", \"h\", \"u\", \"o\", \"p\", \"i\"],\n        [\"k\", \"a\", \"e\", \"g\", \"n\", \"d\", \"r\", \"g\", \"a\"],\n        [\"h\", \"n\", \"l\", \"s\", \"a\", \"t\", \"e\", \"t\", \"x\"],\n      ]\n      let words = [\"frozen\", \"rotten\", \"teleport\", \"city\", \"zutgatz\", \"kappa\", \"before\", \"rope\", \"obligate\", \"annoying\"]\n      let expected = [\"frozen\", \"rotten\", \"teleport\", \"kappa\", \"before\", \"rope\", \"obligate\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let board = [\n        [\"c\", \"o\", \"m\"],\n        [\"r\", \"p\", \"l\"],\n        [\"c\", \"i\", \"t\"],\n        [\"o\", \"a\", \"e\"],\n        [\"f\", \"o\", \"d\"],\n        [\"z\", \"r\", \"b\"],\n        [\"g\", \"i\", \"a\"],\n        [\"o\", \"a\", \"g\"],\n        [\"f\", \"s\", \"z\"],\n        [\"t\", \"e\", \"i\"],\n        [\"t\", \"w\", \"d\"],\n      ]\n      let words = [\"commerce\", \"complicated\", \"twisted\", \"zigzag\", \"comma\", \"foobar\", \"baz\", \"there\"]\n      let expected = [\"complicated\", \"twisted\", \"zigzag\", \"foobar\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let board = [\n        [\"c\", \"o\", \"m\"],\n        [\"r\", \"p\", \"l\"],\n        [\"c\", \"i\", \"t\"],\n        [\"o\", \"a\", \"e\"],\n        [\"f\", \"o\", \"d\"],\n        [\"z\", \"r\", \"b\"],\n        [\"g\", \"i\", \"a\"],\n        [\"o\", \"a\", \"g\"],\n        [\"f\", \"s\", \"z\"],\n        [\"t\", \"e\", \"i\"],\n        [\"t\", \"w\", \"d\"],\n      ]\n      let words = [\"cr\", \"oc\", \"ml\", \"iao\", \"opo\", \"zrb\", \"big\", \"fs\", \"ogiagao\", \"dwd\", \"twt\"]\n      let expected = [\"cr\", \"oc\", \"ml\", \"iao\", \"zrb\", \"big\", \"fs\", \"twt\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let board = [\n        [\"c\", \"o\", \"m\"],\n        [\"r\", \"p\", \"l\"],\n        [\"c\", \"i\", \"t\"],\n        [\"o\", \"a\", \"e\"],\n        [\"f\", \"o\", \"d\"],\n        [\"z\", \"r\", \"b\"],\n        [\"g\", \"i\", \"a\"],\n        [\"o\", \"a\", \"g\"],\n        [\"f\", \"s\", \"z\"],\n        [\"t\", \"e\", \"i\"],\n        [\"t\", \"w\", \"d\"],\n      ]\n      let words = [\"comlpriteacoofziraagsizefttw\", \"comlpriteacoofzirabagsizefottw\", \"comlpriteacoofziraagsizefottw\", \"comlpriteacoofzirabagsizeftttw\"]\n      let expected = [\"comlpriteacoofziraagsizefttw\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let board = [\n        [\"t\", \"h\", \"i\", \"s\", \"i\", \"s\", \"a\"],\n        [\"s\", \"i\", \"m\", \"p\", \"l\", \"e\", \"x\"],\n        [\"b\", \"x\", \"x\", \"x\", \"x\", \"e\", \"b\"],\n        [\"x\", \"o\", \"g\", \"g\", \"l\", \"x\", \"o\"],\n        [\"x\", \"x\", \"x\", \"D\", \"T\", \"r\", \"a\"],\n        [\"R\", \"E\", \"P\", \"E\", \"A\", \"d\", \"x\"],\n        [\"x\", \"x\", \"x\", \"x\", \"x\", \"x\", \"x\"],\n        [\"N\", \"O\", \"T\", \"R\", \"E\", \"-\", \"P\"],\n        [\"x\", \"x\", \"D\", \"E\", \"T\", \"A\", \"E\"],\n      ]\n      let words = [\"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\"]\n      let expected = [\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let board = [\n        [\"t\", \"h\", \"i\", \"s\", \"i\", \"s\", \"a\"],\n        [\"s\", \"i\", \"m\", \"p\", \"l\", \"e\", \"x\"],\n        [\"b\", \"x\", \"x\", \"x\", \"x\", \"e\", \"b\"],\n        [\"x\", \"o\", \"g\", \"g\", \"l\", \"x\", \"o\"],\n        [\"x\", \"x\", \"x\", \"D\", \"T\", \"r\", \"a\"],\n        [\"R\", \"E\", \"P\", \"E\", \"A\", \"d\", \"x\"],\n        [\"x\", \"x\", \"x\", \"x\", \"x\", \"x\", \"x\"],\n        [\"N\", \"O\", \"T\", \"R\", \"E\", \"-\", \"P\"],\n        [\"x\", \"x\", \"D\", \"E\", \"T\", \"A\", \"E\"],\n      ]\n      let words = [\"this\", \"is\", \"not\", \"a\", \"simple\", \"boggle\", \"board\", \"test\", \"REPEATED\", \"NOTRE-PEATED\"]\n      let expected = [\"this\", \"is\", \"a\", \"simple\", \"boggle\", \"board\", \"NOTRE-PEATED\"]\n      let actual = program.boggleBoard(boggleBoard: board, words: words)\n      try assertEqual(expected.count, actual.count)\n\n      for word in actual {\n        try assert(expected.contains(word))\n      }\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nm*8^s + ws) time | O(nm + ws) space\n  func boggleBoard(boggleBoard: [[String]], words: [String]) -> [String] {\n    let trie = Trie()\n\n    for word in words {\n      trie.add(word)\n    }\n\n    var finalWords = [String: Bool]()\n\n    var visited = boggleBoard.map { row in row.map { _ in false } }\n\n    for i in 0 ..< boggleBoard.count {\n      for j in 0 ..< boggleBoard[i].count {\n        explore(i, j, boggleBoard, trie.root, &visited, &finalWords)\n      }\n    }\n\n    let keys = Array(finalWords.keys)\n    return keys\n  }\n\n  func explore(_ i: Int, _ j: Int, _ board: [[String]], _ trieNode: TrieNode, _ visited: inout [[Bool]], _ finalWords: inout [String: Bool]) {\n    if visited[i][j] {\n      return\n    }\n\n    let letter = board[i][j]\n\n    if !trieNode.children.keys.contains(letter) {\n      return\n    }\n\n    visited[i][j] = true\n\n    let nextNode = trieNode.children[letter] as! TrieNode\n\n    if nextNode.children.keys.contains(\"*\") {\n      if let word = nextNode.children[\"*\"] as? String {\n        finalWords[word] = true\n      }\n    }\n\n    let neighbors = getNeighbors(i, j, board: board)\n\n    for neighbor in neighbors {\n      explore(neighbor[0], neighbor[1], board, nextNode, &visited, &finalWords)\n    }\n\n    visited[i][j] = false\n  }\n\n  func getNeighbors(_ i: Int, _ j: Int, board: [[String]]) -> [[Int]] {\n    var neighbors = [[Int]]()\n\n    if i > 0, j > 0 {\n      neighbors.append([i - 1, j - 1])\n    }\n\n    if i > 0 {\n      neighbors.append([i - 1, j])\n    }\n\n    if i > 0, j < board[i].count - 1 {\n      neighbors.append([i - 1, j + 1])\n    }\n\n    if j < board[i].count - 1 {\n      neighbors.append([i, j + 1])\n    }\n\n    if i < board.count - 1, j < board[i].count - 1 {\n      neighbors.append([i + 1, j + 1])\n    }\n\n    if i < board.count - 1 {\n      neighbors.append([i + 1, j])\n    }\n\n    if i < board.count - 1, j > 0 {\n      neighbors.append([i + 1, j - 1])\n    }\n\n    if j > 0 {\n      neighbors.append([i, j - 1])\n    }\n\n    return neighbors\n  }\n\n  class TrieNode {\n    var children: [String: Any] = [:]\n  }\n\n  class Trie {\n    var root: TrieNode\n    let endSymbol: String = \"*\"\n\n    init() {\n      root = TrieNode()\n    }\n\n    func add(_ word: String) {\n      var current = root\n\n      for character in word {\n        let stringifiedCharacter = String(character)\n\n        if !current.children.keys.contains(stringifiedCharacter) {\n          current.children[stringifiedCharacter] = TrieNode()\n        }\n\n        let nextNode = current.children[stringifiedCharacter] as! TrieNode\n        current = nextNode\n      }\n\n      current.children[endSymbol] = word\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function boggleBoard(board: string[][], words: string[]): string[] {\n  // Write your code here.\n  return [''];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const board = [\n    ['t', 'h', 'i', 's', 'i', 's', 'a'],\n    ['s', 'i', 'm', 'p', 'l', 'e', 'x'],\n    ['b', 'x', 'x', 'x', 'x', 'e', 'b'],\n    ['x', 'o', 'g', 'g', 'l', 'x', 'o'],\n    ['x', 'x', 'x', 'D', 'T', 'r', 'a'],\n    ['R', 'E', 'P', 'E', 'A', 'd', 'x'],\n    ['x', 'x', 'x', 'x', 'x', 'x', 'x'],\n    ['N', 'O', 'T', 'R', 'E', '-', 'P'],\n    ['x', 'x', 'D', 'E', 'T', 'A', 'E'],\n  ];\n  const words = ['this', 'is', 'not', 'a', 'simple', 'boggle', 'board', 'test', 'REPEATED', 'NOTRE-PEATED'];\n  const expected = ['this', 'is', 'a', 'simple', 'boggle', 'board', 'NOTRE-PEATED'];\n  const actual = program.boggleBoard(board, words);\n  chai.expect(actual.length).to.deep.equal(expected.length);\n  for (const word of actual) {\n    chai.expect(actual.includes(word)).to.deep.equal(true);\n  }\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface FinalWords {\n  [key: string]: boolean;\n}\n\n// O(nm*8^s + ws) time | O(nm + ws) space\nexport function boggleBoard(board: string[][], words: string[]) {\n  const trie = new Trie();\n  for (const word of words) {\n    trie.add(word);\n  }\n  const finalWords = {};\n  const visited = board.map(row => row.map(letter => false));\n  for (let i = 0; i < board.length; i++) {\n    for (let j = 0; j < board[i].length; j++) {\n      explore(i, j, board, trie.root, visited, finalWords);\n    }\n  }\n  return Object.keys(finalWords);\n}\n\nfunction explore(\n  i: number,\n  j: number,\n  board: string[][],\n  trieNode: TrieNode,\n  visited: boolean[][],\n  finalWords: FinalWords,\n) {\n  if (visited[i][j]) return;\n  const letter = board[i][j];\n  if (!(letter in trieNode)) return;\n  visited[i][j] = true;\n  trieNode = trieNode[letter] as TrieNode;\n  if ('*' in trieNode) finalWords[trieNode['*'] as string] = true;\n  const neighbors = getNeighbors(i, j, board);\n  for (const neighbor of neighbors) {\n    explore(neighbor[0], neighbor[1], board, trieNode, visited, finalWords);\n  }\n  visited[i][j] = false;\n}\n\nfunction getNeighbors(i: number, j: number, board: string[][]) {\n  const neighbors: [number, number][] = [];\n  if (i > 0 && j > 0) {\n    neighbors.push([i - 1, j - 1]);\n  }\n  if (i > 0 && j < board[0].length - 1) {\n    neighbors.push([i - 1, j + 1]);\n  }\n  if (i < board.length - 1 && j < board[0].length - 1) {\n    neighbors.push([i + 1, j + 1]);\n  }\n  if (i < board.length - 1 && j > 0) {\n    neighbors.push([i + 1, j - 1]);\n  }\n  if (i > 0) {\n    neighbors.push([i - 1, j]);\n  }\n  if (i < board.length - 1) {\n    neighbors.push([i + 1, j]);\n  }\n  if (j > 0) {\n    neighbors.push([i, j - 1]);\n  }\n  if (j < board[0].length - 1) {\n    neighbors.push([i, j + 1]);\n  }\n  return neighbors;\n}\n\ninterface TrieNode {\n  [key: string]: string | TrieNode;\n}\n\nclass Trie {\n  root: TrieNode;\n  endSymbol: string;\n\n  constructor() {\n    this.root = {};\n    this.endSymbol = '*';\n  }\n\n  add(word: string) {\n    let current = this.root;\n    for (const letter of word) {\n      if (!(letter in current)) current[letter] = {};\n      current = current[letter] as TrieNode;\n    }\n    current[this.endSymbol] = word;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "board": [
+        [
+          "t",
+          "h",
+          "i",
+          "s",
+          "i",
+          "s",
+          "a"
+        ],
+        [
+          "s",
+          "i",
+          "m",
+          "p",
+          "l",
+          "e",
+          "x"
+        ],
+        [
+          "b",
+          "x",
+          "x",
+          "x",
+          "x",
+          "e",
+          "b"
+        ],
+        [
+          "x",
+          "o",
+          "g",
+          "g",
+          "l",
+          "x",
+          "o"
+        ],
+        [
+          "x",
+          "x",
+          "x",
+          "D",
+          "T",
+          "r",
+          "a"
+        ],
+        [
+          "R",
+          "E",
+          "P",
+          "E",
+          "A",
+          "d",
+          "x"
+        ],
+        [
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x",
+          "x"
+        ],
+        [
+          "N",
+          "O",
+          "T",
+          "R",
+          "E",
+          "-",
+          "P"
+        ],
+        [
+          "x",
+          "x",
+          "D",
+          "E",
+          "T",
+          "A",
+          "E"
+        ]
+      ],
+      "words": [
+        "this",
+        "is",
+        "not",
+        "a",
+        "simple",
+        "boggle",
+        "board",
+        "test",
+        "REPEATED",
+        "NOTRE-PEATED"
+      ]
+    },
+    {
+      "board": [
+        [
+          "y",
+          "g",
+          "f",
+          "y",
+          "e",
+          "i"
+        ],
+        [
+          "c",
+          "o",
+          "r",
+          "p",
+          "o",
+          "u"
+        ],
+        [
+          "j",
+          "u",
+          "z",
+          "s",
+          "e",
+          "l"
+        ],
+        [
+          "s",
+          "y",
+          "u",
+          "r",
+          "h",
+          "p"
+        ],
+        [
+          "e",
+          "a",
+          "e",
+          "g",
+          "n",
+          "d"
+        ],
+        [
+          "h",
+          "e",
+          "l",
+          "s",
+          "a",
+          "t"
+        ]
+      ],
+      "words": [
+        "san",
+        "sana",
+        "at",
+        "vomit",
+        "yours",
+        "help",
+        "end",
+        "been",
+        "bed",
+        "danger",
+        "calm",
+        "ok",
+        "chaos",
+        "complete",
+        "rear",
+        "going",
+        "storm",
+        "face",
+        "epual",
+        "dangerous"
+      ]
+    },
+    {
+      "board": [
+        [
+          "a",
+          "b",
+          "c",
+          "d",
+          "e"
+        ],
+        [
+          "f",
+          "g",
+          "h",
+          "i",
+          "j"
+        ],
+        [
+          "k",
+          "l",
+          "m",
+          "n",
+          "o"
+        ],
+        [
+          "p",
+          "q",
+          "r",
+          "s",
+          "t"
+        ],
+        [
+          "u",
+          "v",
+          "w",
+          "x",
+          "y"
+        ]
+      ],
+      "words": [
+        "agmsy",
+        "agmsytojed",
+        "agmsytojedinhcbgl",
+        "agmsytojedinhcbfl"
+      ]
+    },
+    {
+      "board": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c",
+          "d"
+        ]
+      ],
+      "words": [
+        "abcd",
+        "abdc",
+        "acbd",
+        "acdb",
+        "adbc",
+        "adcb",
+        "abca"
+      ]
+    },
+    {
+      "board": [
+        [
+          "f",
+          "t",
+          "r",
+          "o",
+          "p",
+          "i",
+          "k",
+          "b",
+          "o"
+        ],
+        [
+          "r",
+          "w",
+          "l",
+          "p",
+          "e",
+          "u",
+          "e",
+          "a",
+          "b"
+        ],
+        [
+          "j",
+          "o",
+          "t",
+          "s",
+          "e",
+          "l",
+          "f",
+          "l",
+          "p"
+        ],
+        [
+          "s",
+          "z",
+          "u",
+          "t",
+          "h",
+          "u",
+          "o",
+          "p",
+          "i"
+        ],
+        [
+          "k",
+          "a",
+          "e",
+          "g",
+          "n",
+          "d",
+          "r",
+          "g",
+          "a"
+        ],
+        [
+          "h",
+          "n",
+          "l",
+          "s",
+          "a",
+          "t",
+          "e",
+          "t",
+          "x"
+        ]
+      ],
+      "words": [
+        "frozen",
+        "rotten",
+        "teleport",
+        "city",
+        "zutgatz",
+        "kappa",
+        "before",
+        "rope",
+        "obligate",
+        "annoying"
+      ]
+    },
+    {
+      "board": [
+        [
+          "c",
+          "o",
+          "m"
+        ],
+        [
+          "r",
+          "p",
+          "l"
+        ],
+        [
+          "c",
+          "i",
+          "t"
+        ],
+        [
+          "o",
+          "a",
+          "e"
+        ],
+        [
+          "f",
+          "o",
+          "d"
+        ],
+        [
+          "z",
+          "r",
+          "b"
+        ],
+        [
+          "g",
+          "i",
+          "a"
+        ],
+        [
+          "o",
+          "a",
+          "g"
+        ],
+        [
+          "f",
+          "s",
+          "z"
+        ],
+        [
+          "t",
+          "e",
+          "i"
+        ],
+        [
+          "t",
+          "w",
+          "d"
+        ]
+      ],
+      "words": [
+        "commerce",
+        "complicated",
+        "twisted",
+        "zigzag",
+        "comma",
+        "foobar",
+        "baz",
+        "there"
+      ]
+    },
+    {
+      "board": [
+        [
+          "c",
+          "o",
+          "m"
+        ],
+        [
+          "r",
+          "p",
+          "l"
+        ],
+        [
+          "c",
+          "i",
+          "t"
+        ],
+        [
+          "o",
+          "a",
+          "e"
+        ],
+        [
+          "f",
+          "o",
+          "d"
+        ],
+        [
+          "z",
+          "r",
+          "b"
+        ],
+        [
+          "g",
+          "i",
+          "a"
+        ],
+        [
+          "o",
+          "a",
+          "g"
+        ],
+        [
+          "f",
+          "s",
+          "z"
+        ],
+        [
+          "t",
+          "e",
+          "i"
+        ],
+        [
+          "t",
+          "w",
+          "d"
+        ]
+      ],
+      "words": [
+        "cr",
+        "oc",
+        "ml",
+        "iao",
+        "opo",
+        "zrb",
+        "big",
+        "fs",
+        "ogiagao",
+        "dwd",
+        "twt"
+      ]
+    },
+    {
+      "board": [
+        [
+          "c",
+          "o",
+          "m"
+        ],
+        [
+          "r",
+          "p",
+          "l"
+        ],
+        [
+          "c",
+          "i",
+          "t"
+        ],
+        [
+          "o",
+          "a",
+          "e"
+        ],
+        [
+          "f",
+          "o",
+          "d"
+        ],
+        [
+          "z",
+          "r",
+          "b"
+        ],
+        [
+          "g",
+          "i",
+          "a"
+        ],
+        [
+          "o",
+          "a",
+          "g"
+        ],
+        [
+          "f",
+          "s",
+          "z"
+        ],
+        [
+          "t",
+          "e",
+          "i"
+        ],
+        [
+          "t",
+          "w",
+          "d"
+        ]
+      ],
+      "words": [
+        "comlpriteacoofziraagsizefttw",
+        "comlpriteacoofzirabagsizefottw",
+        "comlpriteacoofziraagsizefottw",
+        "comlpriteacoofzirabagsizeftttw"
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        "NOTRE-PEATED",
+        "a",
+        "board",
+        "boggle",
+        "is",
+        "simple",
+        "this"
+      ],
+      [
+        "at",
+        "danger",
+        "help",
+        "san",
+        "yours"
+      ],
+      [
+        "agmsy",
+        "agmsytojed",
+        "agmsytojedinhcbfl"
+      ],
+      [
+        "abcd",
+        "abdc",
+        "acbd",
+        "acdb",
+        "adbc",
+        "adcb"
+      ],
+      [
+        "before",
+        "frozen",
+        "kappa",
+        "obligate",
+        "rope",
+        "rotten",
+        "teleport"
+      ],
+      [
+        "complicated",
+        "foobar",
+        "twisted",
+        "zigzag"
+      ],
+      [
+        "big",
+        "cr",
+        "fs",
+        "iao",
+        "ml",
+        "oc",
+        "twt",
+        "zrb"
+      ],
+      [
+        "comlpriteacoofziraagsizefttw"
+      ]
+    ]
+  ]
+}

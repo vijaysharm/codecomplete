@@ -1,0 +1,389 @@
+{
+  "Summary": {
+    "Name": "Move Element To End",
+    "Category": "Arrays",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "date": "2019-11-21T00:00:00Z",
+      "number": 466,
+      "timeOne": 0,
+      "timeTwo": 797,
+      "url": "https://player.vimeo.com/video/374589194"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can solve this problem in linear time.\nIn view of Hint #1, you can solve this problem without sorting the input array. Try setting two pointers at the start and end of the array, respectively, and progressively moving them inwards.\nFollowing Hint #2, set two pointers at the start and end of the array, respectively. Move the right pointer inwards so long as it points to the integer to move, and move the left pointer inwards so long as it doesn't point to the integer to move. When both pointers aren't moving, swap their values in place. Repeat this process until the pointers pass each other.\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the array",
+  "PromptHTML": "<p>\n  You're given an array of integers and an integer. Write a function that moves\n  all instances of that integer in the array to the end of the array and returns\n  the array.\n</p>\n<p>\n  The function should perform this in place (i.e., it should mutate the input\n  array) and doesn't need to maintain the order of the other integers.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [2, 1, 2, 2, 2, 3, 4, 2]\n<span class=\"CodeEditor-promptParameter\">toMove</span> = 2\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[1, 3, 4, 2, 2, 2, 2, 2] <span class=\"CodeEditor-promptComment\">// the numbers 1, 3, and 4 could be ordered differently</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        2,
+        1,
+        2,
+        2,
+        2,
+        3,
+        4,
+        2
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "toMove",
+      "Example": 2,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\n\nusing namespace std;\n\nvector<int> moveElementToEnd(vector<int> array, int toMove) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "#include <algorithm>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> array = {};\n      int toMove = 3;\n      vector<int> expected = {};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> array = {1, 2, 4, 5, 6};\n      int toMove = 3;\n      vector<int> expected = {1, 2, 4, 5, 6};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      sort(output.begin(), output.end());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> array = {3, 3, 3, 3, 3};\n      int toMove = 3;\n      vector<int> expected = {3, 3, 3, 3, 3};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      assert(output == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> array = {3, 1, 2, 4, 5};\n      int toMove = 3;\n      vector<int> expectedStart = {1, 2, 4, 5};\n      vector<int> expectedEnd = {3};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      vector<int> outputStart = vector<int>(output.begin(), output.begin() + 4);\n      sort(outputStart.begin(), outputStart.end());\n      vector<int> outputEnd = vector<int>(output.begin() + 4, output.end());\n      assert(outputStart == expectedStart);\n      assert(outputEnd == expectedEnd);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> array = {1, 2, 4, 5, 3};\n      int toMove = 3;\n      vector<int> expectedStart = {1, 2, 4, 5};\n      vector<int> expectedEnd = {3};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      vector<int> outputStart = vector<int>(output.begin(), output.begin() + 4);\n      sort(outputStart.begin(), outputStart.end());\n      vector<int> outputEnd = vector<int>(output.begin() + 4, output.end());\n      assert(outputStart == expectedStart);\n      assert(outputEnd == expectedEnd);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> array = {1, 2, 3, 4, 5};\n      int toMove = 3;\n      vector<int> expectedStart = {1, 2, 4, 5};\n      vector<int> expectedEnd = {3};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      vector<int> outputStart = vector<int>(output.begin(), output.begin() + 4);\n      sort(outputStart.begin(), outputStart.end());\n      vector<int> outputEnd = vector<int>(output.begin() + 4, output.end());\n      assert(outputStart == expectedStart);\n      assert(outputEnd == expectedEnd);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> array = {5, 5, 5, 5, 5, 5,  1,  2, 3,\n                           4, 6, 7, 8, 9, 10, 11, 12};\n      int toMove = 5;\n      vector<int> expectedStart = {1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12};\n      vector<int> expectedEnd = {5, 5, 5, 5, 5, 5};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      vector<int> outputStart =\n          vector<int>(output.begin(), output.begin() + 11);\n      sort(outputStart.begin(), outputStart.end());\n      vector<int> outputEnd = vector<int>(output.begin() + 11, output.end());\n      assert(outputStart == expectedStart);\n      assert(outputEnd == expectedEnd);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> array = {1,  2,  3, 4, 6, 7, 8, 9, 10,\n                           11, 12, 5, 5, 5, 5, 5, 5};\n      int toMove = 5;\n      vector<int> expectedStart = {1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12};\n      vector<int> expectedEnd = {5, 5, 5, 5, 5, 5};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      vector<int> outputStart =\n          vector<int>(output.begin(), output.begin() + 11);\n      sort(outputStart.begin(), outputStart.end());\n      vector<int> outputEnd = vector<int>(output.begin() + 11, output.end());\n      assert(outputStart == expectedStart);\n      assert(outputEnd == expectedEnd);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> array = {5, 1, 2, 5,  5,  3, 4, 6, 7,\n                           5, 8, 9, 10, 11, 5, 5, 12};\n      int toMove = 5;\n      vector<int> expectedStart = {1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12};\n      vector<int> expectedEnd = {5, 5, 5, 5, 5, 5};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      vector<int> outputStart =\n          vector<int>(output.begin(), output.begin() + 11);\n      sort(outputStart.begin(), outputStart.end());\n      vector<int> outputEnd = vector<int>(output.begin() + 11, output.end());\n      assert(outputStart == expectedStart);\n      assert(outputEnd == expectedEnd);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<int> array = {2, 1, 2, 2, 2, 3, 4, 2};\n      int toMove = 2;\n      vector<int> expectedStart = {1, 3, 4};\n      vector<int> expectedEnd = {2, 2, 2, 2, 2};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      vector<int> outputStart = vector<int>(output.begin(), output.begin() + 3);\n      sort(outputStart.begin(), outputStart.end());\n      vector<int> outputEnd = vector<int>(output.begin() + 3, output.end());\n      assert(outputStart == expectedStart);\n      assert(outputEnd == expectedEnd);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <algorithm>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> array = {2, 1, 2, 2, 2, 3, 4, 2};\n      int toMove = 2;\n      vector<int> expectedStart = {1, 3, 4};\n      vector<int> expectedEnd = {2, 2, 2, 2, 2};\n      vector<int> output = moveElementToEnd(array, toMove);\n      assert(output.size() == array.size());\n      vector<int> outputStart = vector<int>(output.begin(), output.begin() + 3);\n      sort(outputStart.begin(), outputStart.end());\n      vector<int> outputEnd = vector<int>(output.begin() + 3, output.end());\n      assert(outputStart == expectedStart);\n      assert(outputEnd == expectedEnd);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n\nusing namespace std;\n\n// O(n) time | O(1) space - where n is the length of the array\nvector<int> moveElementToEnd(vector<int> array, int toMove) {\n  int i = 0;\n  int j = array.size() - 1;\n  while (i < j) {\n    while (i < j && array[j] == toMove)\n      j--;\n    if (array[i] == toMove)\n      swap(array[i], array[j]);\n    i++;\n  }\n  return array;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<int> MoveElementToEnd(List<int> array, int toMove) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int> array = new List<int>();\n\t\tint toMove = 3;\n\t\tList<int> expected = new List<int>();\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tUtils.AssertTrue(output.SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<int> array = new List<int>(){\n\t\t\t1, 2, 4, 5, 6\n\t\t};\n\t\tint toMove = 3;\n\t\tList<int> expected = new List<int>(){\n\t\t\t1, 2, 4, 5, 6\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\toutput.Sort();\n\t\tUtils.AssertTrue(output.SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<int> array = new List<int>(){\n\t\t\t3, 3, 3, 3, 3\n\t\t};\n\t\tint toMove = 3;\n\t\tList<int> expected = new List<int>(){\n\t\t\t3, 3, 3, 3, 3\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tUtils.AssertTrue(output.SequenceEqual(expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<int> array = new List<int>(){\n\t\t\t3, 1, 2, 4, 5\n\t\t};\n\t\tint toMove = 3;\n\t\tList<int> expectedStart = new List<int>(){\n\t\t\t1, 2, 4, 5\n\t\t};\n\t\tList<int> expectedEnd = new List<int>(){\n\t\t\t3\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tList<int> outputStart = output.GetRange(0, 4);\n\t\toutputStart.Sort();\n\t\tList<int> outputEnd = output.GetRange(4, output.Count - 4);\n\t\tUtils.AssertTrue(outputStart.SequenceEqual(expectedStart));\n\t\tUtils.AssertTrue(outputEnd.SequenceEqual(expectedEnd));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<int> array = new List<int>(){\n\t\t\t1, 2, 4, 5, 3\n\t\t};\n\t\tint toMove = 3;\n\t\tList<int> expectedStart = new List<int>(){\n\t\t\t1, 2, 4, 5\n\t\t};\n\t\tList<int> expectedEnd = new List<int>(){\n\t\t\t3\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tList<int> outputStart = output.GetRange(0, 4);\n\t\toutputStart.Sort();\n\t\tList<int> outputEnd = output.GetRange(4, output.Count - 4);\n\t\tUtils.AssertTrue(outputStart.SequenceEqual(expectedStart));\n\t\tUtils.AssertTrue(outputEnd.SequenceEqual(expectedEnd));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<int> array = new List<int>(){\n\t\t\t1, 2, 3, 4, 5\n\t\t};\n\t\tint toMove = 3;\n\t\tList<int> expectedStart = new List<int>(){\n\t\t\t1, 2, 4, 5\n\t\t};\n\t\tList<int> expectedEnd = new List<int>(){\n\t\t\t3\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tList<int> outputStart = output.GetRange(0, 4);\n\t\toutputStart.Sort();\n\t\tList<int> outputEnd = output.GetRange(4, output.Count - 4);\n\t\tUtils.AssertTrue(outputStart.SequenceEqual(expectedStart));\n\t\tUtils.AssertTrue(outputEnd.SequenceEqual(expectedEnd));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<int> array = new List<int>(){\n\t\t\t5, 5, 5, 5, 5, 5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12\n\t\t};\n\t\tint toMove = 5;\n\t\tList<int> expectedStart = new List<int>(){\n\t\t\t1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12\n\t\t};\n\t\tList<int> expectedEnd = new List<int>(){\n\t\t\t5, 5, 5, 5, 5, 5\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tList<int> outputStart = output.GetRange(0, 11);\n\t\toutputStart.Sort();\n\t\tList<int> outputEnd = output.GetRange(11, output.Count - 11);\n\t\tUtils.AssertTrue(outputStart.SequenceEqual(expectedStart));\n\t\tUtils.AssertTrue(outputEnd.SequenceEqual(expectedEnd));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tList<int> array = new List<int>(){\n\t\t\t1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5\n\t\t};\n\t\tint toMove = 5;\n\t\tList<int> expectedStart = new List<int>(){\n\t\t\t1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12\n\t\t};\n\t\tList<int> expectedEnd = new List<int>(){\n\t\t\t5, 5, 5, 5, 5, 5\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tList<int> outputStart = output.GetRange(0, 11);\n\t\toutputStart.Sort();\n\t\tList<int> outputEnd = output.GetRange(11, output.Count - 11);\n\t\tUtils.AssertTrue(outputStart.SequenceEqual(expectedStart));\n\t\tUtils.AssertTrue(outputEnd.SequenceEqual(expectedEnd));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tList<int> array = new List<int>(){\n\t\t\t5, 1, 2, 5, 5, 3, 4, 6, 7, 5, 8, 9, 10, 11, 5, 5, 12\n\t\t};\n\t\tint toMove = 5;\n\t\tList<int> expectedStart = new List<int>(){\n\t\t\t1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12\n\t\t};\n\t\tList<int> expectedEnd = new List<int>(){\n\t\t\t5, 5, 5, 5, 5, 5\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tList<int> outputStart = output.GetRange(0, 11);\n\t\toutputStart.Sort();\n\t\tList<int> outputEnd = output.GetRange(11, output.Count - 11);\n\t\tUtils.AssertTrue(outputStart.SequenceEqual(expectedStart));\n\t\tUtils.AssertTrue(outputEnd.SequenceEqual(expectedEnd));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tList<int> array = new List<int>(){\n\t\t\t2, 1, 2, 2, 2, 3, 4, 2\n\t\t};\n\t\tint toMove = 2;\n\t\tList<int> expectedStart = new List<int>(){\n\t\t\t1, 3, 4\n\t\t};\n\t\tList<int> expectedEnd = new List<int>(){\n\t\t\t2, 2, 2, 2, 2\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tList<int> outputStart = output.GetRange(0, 3);\n\t\toutputStart.Sort();\n\t\tList<int> outputEnd = output.GetRange(3, output.Count-3);\n\t\tUtils.AssertTrue(outputStart.SequenceEqual(expectedStart));\n\t\tUtils.AssertTrue(outputEnd.SequenceEqual(expectedEnd));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int> array = new List<int>(){\n\t\t\t2, 1, 2, 2, 2, 3, 4, 2\n\t\t};\n\t\tint toMove = 2;\n\t\tList<int> expectedStart = new List<int>(){\n\t\t\t1, 3, 4\n\t\t};\n\t\tList<int> expectedEnd = new List<int>(){\n\t\t\t2, 2, 2, 2, 2\n\t\t};\n\t\tList<int> output = Program.MoveElementToEnd(array, toMove);\n\t\tList<int> outputStart = output.GetRange(0, 3);\n\t\toutputStart.Sort();\n\t\tList<int> outputEnd = output.GetRange(3, output.Count-3);\n\t\tUtils.AssertTrue(outputStart.SequenceEqual(expectedStart));\n\t\tUtils.AssertTrue(outputEnd.SequenceEqual(expectedEnd));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(1) space - where n is the length of the array\n\tpublic static List<int> MoveElementToEnd(List<int> array, int toMove) {\n\t\tint i = 0;\n\t\tint j = array.Count - 1;\n\t\twhile (i < j) {\n\t\t\twhile (i < j && array[j] == toMove) j--;\n\t\t\tif (array[i] == toMove) swap(i, j, array);\n\t\t\ti++;\n\t\t}\n\t\treturn array;\n\t}\n\n\tpublic static void swap(int i, int j, List<int> array) {\n\t\tint temp = array[j];\n\t\tarray[j] =  array[i];\n\t\tarray[i] =  temp;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc MoveElementToEnd(array []int, toMove int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"sort\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tarray := []int{}\n\ttoMove := 3\n\texpected := []int{}\n\toutput := MoveElementToEnd(array, toMove)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tarray := []int{1, 2, 4, 5, 6}\n\ttoMove := 3\n\texpected := []int{1, 2, 4, 5, 6}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tarray := []int{3, 3, 3, 3, 3}\n\ttoMove := 3\n\texpected := []int{3, 3, 3, 3, 3}\n\toutput := MoveElementToEnd(array, toMove)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tarray := []int{3, 1, 2, 4, 5}\n\ttoMove := 3\n\texpected := []int{1, 2, 4, 5, 3}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output[0:4])\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tarray := []int{1, 2, 4, 5, 3}\n\ttoMove := 3\n\texpected := []int{1, 2, 4, 5, 3}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output[0:4])\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tarray := []int{1, 2, 3, 4, 5}\n\ttoMove := 3\n\texpected := []int{1, 2, 4, 5, 3}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output[0:4])\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tarray := []int{5, 5, 5, 5, 5, 5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12}\n\ttoMove := 5\n\texpected := []int{1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output[0:11])\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tarray := []int{1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5}\n\ttoMove := 5\n\texpected := []int{1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output[0:11])\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tarray := []int{5, 1, 2, 5, 5, 3, 4, 6, 7, 5, 8, 9, 10, 11, 5, 5, 12}\n\ttoMove := 5\n\texpected := []int{1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output[0:11])\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tarray := []int{2, 1, 2, 2, 2, 3, 4, 2}\n\ttoMove := 2\n\texpected := []int{1, 3, 4, 2, 2, 2, 2, 2}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output[0:3])\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"sort\"\n\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tarray := []int{2, 1, 2, 2, 2, 3, 4, 2}\n\ttoMove := 2\n\texpected := []int{1, 3, 4, 2, 2, 2, 2, 2}\n\toutput := MoveElementToEnd(array, toMove)\n\tsort.Ints(output[0:3])\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space - where n is the length of the array\nfunc MoveElementToEnd(array []int, toMove int) []int {\n\ti, j := 0, len(array)-1\n\tfor i < j {\n\t\tfor i < j && array[j] == toMove {\n\t\t\tj--\n\t\t}\n\t\tif array[i] == toMove {\n\t\t\tarray[i], array[j] = array[j], array[i]\n\t\t}\n\t\ti++\n\t}\n\treturn array\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<Integer> moveElementToEnd(List<Integer> array, int toMove) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Integer> array = new ArrayList<Integer>();\n    int toMove = 3;\n    List<Integer> expected = new ArrayList<Integer>();\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    Utils.assertTrue(output.equals(expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    List<Integer> array = new ArrayList<Integer>(Arrays.asList(1, 2, 4, 5, 6));\n    int toMove = 3;\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(1, 2, 4, 5, 6));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    output.sort(Comparator.naturalOrder());\n    Utils.assertTrue(output.equals(expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    List<Integer> array = new ArrayList<Integer>(Arrays.asList(3, 3, 3, 3, 3));\n    int toMove = 3;\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(3, 3, 3, 3, 3));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    Utils.assertTrue(output.equals(expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    List<Integer> array = new ArrayList<Integer>(Arrays.asList(3, 1, 2, 4, 5));\n    int toMove = 3;\n    List<Integer> expectedStart = new ArrayList<Integer>(Arrays.asList(1, 2, 4, 5));\n    List<Integer> expectedEnd = new ArrayList<Integer>(Arrays.asList(3));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    List<Integer> outputStart = output.subList(0, 4);\n    outputStart.sort(Comparator.naturalOrder());\n    List<Integer> outputEnd = output.subList(4, output.size());\n    Utils.assertTrue(outputStart.equals(expectedStart));\n    Utils.assertTrue(outputEnd.equals(expectedEnd));\n  }\n\n  @Test\n  public void TestCase5() {\n    List<Integer> array = new ArrayList<Integer>(Arrays.asList(1, 2, 4, 5, 3));\n    int toMove = 3;\n    List<Integer> expectedStart = new ArrayList<Integer>(Arrays.asList(1, 2, 4, 5));\n    List<Integer> expectedEnd = new ArrayList<Integer>(Arrays.asList(3));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    List<Integer> outputStart = output.subList(0, 4);\n    outputStart.sort(Comparator.naturalOrder());\n    List<Integer> outputEnd = output.subList(4, output.size());\n    Utils.assertTrue(outputStart.equals(expectedStart));\n    Utils.assertTrue(outputEnd.equals(expectedEnd));\n  }\n\n  @Test\n  public void TestCase6() {\n    List<Integer> array = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));\n    int toMove = 3;\n    List<Integer> expectedStart = new ArrayList<Integer>(Arrays.asList(1, 2, 4, 5));\n    List<Integer> expectedEnd = new ArrayList<Integer>(Arrays.asList(3));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    List<Integer> outputStart = output.subList(0, 4);\n    outputStart.sort(Comparator.naturalOrder());\n    List<Integer> outputEnd = output.subList(4, output.size());\n    Utils.assertTrue(outputStart.equals(expectedStart));\n    Utils.assertTrue(outputEnd.equals(expectedEnd));\n  }\n\n  @Test\n  public void TestCase7() {\n    List<Integer> array =\n        new ArrayList<Integer>(Arrays.asList(5, 5, 5, 5, 5, 5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12));\n    int toMove = 5;\n    List<Integer> expectedStart =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12));\n    List<Integer> expectedEnd = new ArrayList<Integer>(Arrays.asList(5, 5, 5, 5, 5, 5));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    List<Integer> outputStart = output.subList(0, 11);\n    outputStart.sort(Comparator.naturalOrder());\n    List<Integer> outputEnd = output.subList(11, output.size());\n    Utils.assertTrue(outputStart.equals(expectedStart));\n    Utils.assertTrue(outputEnd.equals(expectedEnd));\n  }\n\n  @Test\n  public void TestCase8() {\n    List<Integer> array =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5));\n    int toMove = 5;\n    List<Integer> expectedStart =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12));\n    List<Integer> expectedEnd = new ArrayList<Integer>(Arrays.asList(5, 5, 5, 5, 5, 5));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    List<Integer> outputStart = output.subList(0, 11);\n    outputStart.sort(Comparator.naturalOrder());\n    List<Integer> outputEnd = output.subList(11, output.size());\n    Utils.assertTrue(outputStart.equals(expectedStart));\n    Utils.assertTrue(outputEnd.equals(expectedEnd));\n  }\n\n  @Test\n  public void TestCase9() {\n    List<Integer> array =\n        new ArrayList<Integer>(Arrays.asList(5, 1, 2, 5, 5, 3, 4, 6, 7, 5, 8, 9, 10, 11, 5, 5, 12));\n    int toMove = 5;\n    List<Integer> expectedStart =\n        new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12));\n    List<Integer> expectedEnd = new ArrayList<Integer>(Arrays.asList(5, 5, 5, 5, 5, 5));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    List<Integer> outputStart = output.subList(0, 11);\n    outputStart.sort(Comparator.naturalOrder());\n    List<Integer> outputEnd = output.subList(11, output.size());\n    Utils.assertTrue(outputStart.equals(expectedStart));\n    Utils.assertTrue(outputEnd.equals(expectedEnd));\n  }\n\n  @Test\n  public void TestCase10() {\n    List<Integer> array = new ArrayList<Integer>(Arrays.asList(2, 1, 2, 2, 2, 3, 4, 2));\n    int toMove = 2;\n    List<Integer> expectedStart = new ArrayList<Integer>(Arrays.asList(1, 3, 4));\n    List<Integer> expectedEnd = new ArrayList<Integer>(Arrays.asList(2, 2, 2, 2, 2));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    List<Integer> outputStart = output.subList(0, 3);\n    outputStart.sort(Comparator.naturalOrder());\n    List<Integer> outputEnd = output.subList(3, output.size());\n    Utils.assertTrue(outputStart.equals(expectedStart));\n    Utils.assertTrue(outputEnd.equals(expectedEnd));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<Integer> array = new ArrayList<Integer>(Arrays.asList(2, 1, 2, 2, 2, 3, 4, 2));\n    int toMove = 2;\n    List<Integer> expectedStart = new ArrayList<Integer>(Arrays.asList(1, 3, 4));\n    List<Integer> expectedEnd = new ArrayList<Integer>(Arrays.asList(2, 2, 2, 2, 2));\n    List<Integer> output = Program.moveElementToEnd(array, toMove);\n    List<Integer> outputStart = output.subList(0, 3);\n    outputStart.sort(Comparator.naturalOrder());\n    List<Integer> outputEnd = output.subList(3, output.size());\n    Utils.assertTrue(outputStart.equals(expectedStart));\n    Utils.assertTrue(outputEnd.equals(expectedEnd));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(1) space - where n is the length of the array\n  public static List<Integer> moveElementToEnd(List<Integer> array, int toMove) {\n    int i = 0;\n    int j = array.size() - 1;\n    while (i < j) {\n      while (i < j && array.get(j) == toMove) j--;\n      if (array.get(i) == toMove) swap(i, j, array);\n      i++;\n    }\n    return array;\n  }\n\n  public static void swap(int i, int j, List<Integer> array) {\n    int temp = array.get(j);\n    array.set(j, array.get(i));\n    array.set(i, temp);\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function moveElementToEnd(array, toMove) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.moveElementToEnd = moveElementToEnd;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const array = [];\n  const toMove = 3;\n  const expected = [];\n  const output = program.moveElementToEnd(array, toMove);\n  chai.expect(output).to.deep.equal(expected);\n});\n\nit('Test Case #2', function () {\n  const array = [1, 2, 4, 5, 6];\n  const toMove = 3;\n  const expected = [1, 2, 4, 5, 6];\n  const output = sorted(program.moveElementToEnd(array, toMove));\n  chai.expect(output).to.deep.equal(expected);\n});\n\nit('Test Case #3', function () {\n  const array = [3, 3, 3, 3, 3];\n  const toMove = 3;\n  const expected = [3, 3, 3, 3, 3];\n  const output = program.moveElementToEnd(array, toMove);\n  chai.expect(output).to.deep.equal(expected);\n});\n\nit('Test Case #4', function () {\n  const array = [3, 1, 2, 4, 5];\n  const toMove = 3;\n  const expectedStart = [1, 2, 4, 5];\n  const expectedEnd = [3];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 4));\n  const outputEnd = output.slice(4);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nit('Test Case #5', function () {\n  const array = [1, 2, 4, 5, 3];\n  const toMove = 3;\n  const expectedStart = [1, 2, 4, 5];\n  const expectedEnd = [3];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 4));\n  const outputEnd = output.slice(4);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nit('Test Case #6', function () {\n  const array = [1, 2, 3, 4, 5];\n  const toMove = 3;\n  const expectedStart = [1, 2, 4, 5];\n  const expectedEnd = [3];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 4));\n  const outputEnd = output.slice(4);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nit('Test Case #7', function () {\n  const array = [5, 5, 5, 5, 5, 5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12];\n  const toMove = 5;\n  const expectedStart = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12];\n  const expectedEnd = [5, 5, 5, 5, 5, 5];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 11));\n  const outputEnd = output.slice(11);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nit('Test Case #8', function () {\n  const array = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5];\n  const toMove = 5;\n  const expectedStart = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12];\n  const expectedEnd = [5, 5, 5, 5, 5, 5];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 11));\n  const outputEnd = output.slice(11);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nit('Test Case #9', function () {\n  const array = [5, 1, 2, 5, 5, 3, 4, 6, 7, 5, 8, 9, 10, 11, 5, 5, 12];\n  const toMove = 5;\n  const expectedStart = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12];\n  const expectedEnd = [5, 5, 5, 5, 5, 5];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 11));\n  const outputEnd = output.slice(11);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nit('Test Case #10', function () {\n  const array = [2, 1, 2, 2, 2, 3, 4, 2];\n  const toMove = 2;\n  const expectedStart = [1, 3, 4];\n  const expectedEnd = [2, 2, 2, 2, 2];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 3));\n  const outputEnd = output.slice(3);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nconst sorted = array => array.sort((a, b) => a - b);\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const array = [2, 1, 2, 2, 2, 3, 4, 2];\n  const toMove = 2;\n  const expectedStart = [1, 3, 4];\n  const expectedEnd = [2, 2, 2, 2, 2];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 3));\n  const outputEnd = output.slice(3);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nconst sorted = array => array.sort((a, b) => a - b);\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the array\nfunction moveElementToEnd(array, toMove) {\n  let i = 0;\n  let j = array.length - 1;\n  while (i < j) {\n    while (i < j && array[j] === toMove) j--;\n    if (array[i] === toMove) swap(i, j, array);\n    i++;\n  }\n  return array;\n}\n\nfunction swap(i, j, array) {\n  const temp = array[j];\n  array[j] = array[i];\n  array[i] = temp;\n}\n\nexports.moveElementToEnd = moveElementToEnd;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def moveElementToEnd(array, toMove):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        array = []\n        toMove = 3\n        expected = []\n        output = program.moveElementToEnd(array, toMove)\n        self.assertEqual(output, [])\n\n    def test_case_2(self):\n        array = [1, 2, 4, 5, 6]\n        toMove = 3\n        expected = [1, 2, 4, 5, 6]\n        output = sorted(program.moveElementToEnd(array, toMove))\n        self.assertEqual(output, expected)\n\n    def test_case_3(self):\n        array = [3, 3, 3, 3, 3]\n        toMove = 3\n        expected = [3, 3, 3, 3, 3]\n        output = program.moveElementToEnd(array, toMove)\n        self.assertEqual(output, expected)\n\n    def test_case_4(self):\n        array = [3, 1, 2, 4, 5]\n        toMove = 3\n        expectedStart = [1, 2, 4, 5]\n        expectedEnd = [3]\n        output = program.moveElementToEnd(array, toMove)\n        outputStart = sorted(output[0:4])\n        outputEnd = output[4:]\n        self.assertEqual(outputStart, expectedStart)\n        self.assertEqual(outputEnd, expectedEnd)\n\n    def test_case_5(self):\n        array = [1, 2, 4, 5, 3]\n        toMove = 3\n        expectedStart = [1, 2, 4, 5]\n        expectedEnd = [3]\n        output = program.moveElementToEnd(array, toMove)\n        outputStart = sorted(output[0:4])\n        outputEnd = output[4:]\n        self.assertEqual(outputStart, expectedStart)\n        self.assertEqual(outputEnd, expectedEnd)\n\n    def test_case_6(self):\n        array = [1, 2, 3, 4, 5]\n        toMove = 3\n        expectedStart = [1, 2, 4, 5]\n        expectedEnd = [3]\n        output = program.moveElementToEnd(array, toMove)\n        outputStart = sorted(output[0:4])\n        outputEnd = output[4:]\n        self.assertEqual(outputStart, expectedStart)\n        self.assertEqual(outputEnd, expectedEnd)\n\n    def test_case_7(self):\n        array = [5, 5, 5, 5, 5, 5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12]\n        toMove = 5\n        expectedStart = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12]\n        expectedEnd = [5, 5, 5, 5, 5, 5]\n        output = program.moveElementToEnd(array, toMove)\n        outputStart = sorted(output[0:11])\n        outputEnd = output[11:]\n        self.assertEqual(outputStart, expectedStart)\n        self.assertEqual(outputEnd, expectedEnd)\n\n    def test_case_8(self):\n        array = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5]\n        toMove = 5\n        expectedStart = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12]\n        expectedEnd = [5, 5, 5, 5, 5, 5]\n        output = program.moveElementToEnd(array, toMove)\n        outputStart = sorted(output[0:11])\n        outputEnd = output[11:]\n        self.assertEqual(outputStart, expectedStart)\n        self.assertEqual(outputEnd, expectedEnd)\n\n    def test_case_9(self):\n        array = [5, 1, 2, 5, 5, 3, 4, 6, 7, 5, 8, 9, 10, 11, 5, 5, 12]\n        toMove = 5\n        expectedStart = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12]\n        expectedEnd = [5, 5, 5, 5, 5, 5]\n        output = program.moveElementToEnd(array, toMove)\n        outputStart = sorted(output[0:11])\n        outputEnd = output[11:]\n        self.assertEqual(outputStart, expectedStart)\n        self.assertEqual(outputEnd, expectedEnd)\n\n    def test_case_10(self):\n        array = [2, 1, 2, 2, 2, 3, 4, 2]\n        toMove = 2\n        expectedStart = [1, 3, 4]\n        expectedEnd = [2, 2, 2, 2, 2]\n        output = program.moveElementToEnd(array, toMove)\n        outputStart = sorted(output[0:3])\n        outputEnd = output[3:]\n        self.assertEqual(outputStart, expectedStart)\n        self.assertEqual(outputEnd, expectedEnd)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        array = [2, 1, 2, 2, 2, 3, 4, 2]\n        toMove = 2\n        expectedStart = [1, 3, 4]\n        expectedEnd = [2, 2, 2, 2, 2]\n        output = program.moveElementToEnd(array, toMove)\n        outputStart = sorted(output[0:3])\n        outputEnd = output[3:]\n        self.assertEqual(outputStart, expectedStart)\n        self.assertEqual(outputEnd, expectedEnd)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space - where n is the length of the array\ndef moveElementToEnd(array, toMove):\n    i = 0\n    j = len(array) - 1\n    while i < j:\n        while i < j and array[j] == toMove:\n            j -= 1\n        if array[i] == toMove:\n            array[i], array[j] = array[j], array[i]\n        i += 1\n    return array\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func moveElementToEnd(_ array: inout [Int], _ toMove: Int) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var array = [Int]()\n      let toMove = 3\n      let expected = [Int]()\n      var output = program.moveElementToEnd(&array, toMove)\n      try assertEqual(output, expected)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var array = [1, 2, 4, 5, 6]\n      let toMove = 3\n      let expected = [1, 2, 4, 5, 6]\n      var output = program.moveElementToEnd(&array, toMove)\n      output.sort()\n      try assertEqual(output, expected)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var array = [3, 3, 3, 3, 3]\n      let toMove = 3\n      let expected = [3, 3, 3, 3, 3]\n      var output = program.moveElementToEnd(&array, toMove)\n      output.sort()\n      try assertEqual(output, expected)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var array = [3, 1, 2, 4, 5]\n      let toMove = 3\n      let expected = [1, 2, 4, 5, 3]\n      var output = program.moveElementToEnd(&array, toMove)\n      var outputStart = output.prefix(4)\n      outputStart.sort()\n      var outputEnd = output.suffix(1)\n      try assertEqual(Array(outputStart + outputEnd), expected)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var array = [1, 2, 4, 5, 3]\n      let toMove = 3\n      let expected = [1, 2, 4, 5, 3]\n      var output = program.moveElementToEnd(&array, toMove)\n      var outputStart = output.prefix(4)\n      outputStart.sort()\n      var outputEnd = output.suffix(1)\n      try assertEqual(Array(outputStart + outputEnd), expected)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var array = [1, 2, 3, 4, 5]\n      let toMove = 3\n      let expected = [1, 2, 4, 5, 3]\n      var output = program.moveElementToEnd(&array, toMove)\n      var outputStart = output.prefix(4)\n      outputStart.sort()\n      var outputEnd = output.suffix(1)\n      try assertEqual(Array(outputStart + outputEnd), expected)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var array = [5, 5, 5, 5, 5, 5, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12]\n      let toMove = 5\n      let expected = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5]\n      var output = program.moveElementToEnd(&array, toMove)\n      var outputStart = output.prefix(11)\n      outputStart.sort()\n      var outputEnd = output.suffix(expected.count - 11)\n      try assertEqual(Array(outputStart + outputEnd), expected)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var array = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5]\n      let toMove = 5\n      let expected = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5]\n      var output = program.moveElementToEnd(&array, toMove)\n      var outputStart = output.prefix(11)\n      outputStart.sort()\n      var outputEnd = output.suffix(expected.count - 11)\n      try assertEqual(Array(outputStart + outputEnd), expected)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      var array = [5, 1, 2, 5, 5, 3, 4, 6, 7, 5, 8, 9, 10, 11, 5, 5, 12]\n      let toMove = 5\n      let expected = [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 5, 5, 5, 5, 5, 5]\n      var output = program.moveElementToEnd(&array, toMove)\n      var outputStart = output.prefix(11)\n      outputStart.sort()\n      var outputEnd = output.suffix(expected.count - 11)\n      try assertEqual(Array(outputStart + outputEnd), expected)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      var array = [2, 1, 2, 2, 2, 3, 4, 2]\n      let toMove = 2\n      let expected = [1, 3, 4, 2, 2, 2, 2, 2]\n      var output = program.moveElementToEnd(&array, toMove)\n      var outputStart = output.prefix(3)\n      outputStart.sort()\n      var outputEnd = output.suffix(expected.count - 3)\n      try assertEqual(Array(outputStart + outputEnd), expected)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var array = [2, 1, 2, 2, 2, 3, 4, 2]\n      let toMove = 2\n      let expected = [1, 3, 4, 2, 2, 2, 2, 2]\n      var output = program.moveElementToEnd(&array, toMove)\n      var outputStart = output.prefix(3)\n      outputStart.sort()\n      var outputEnd = output.suffix(expected.count - 3)\n      try assertEqual(Array(outputStart + outputEnd), expected)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space - where n is the length of the array\n  func moveElementToEnd(_ array: inout [Int], _ toMove: Int) -> [Int] {\n    var i = 0\n    var j = array.count - 1\n    while i < j {\n      while i < j, array[j] == toMove {\n        j -= 1\n      }\n      if array[i] == toMove {\n        (array[i], array[j]) = (array[j], array[i])\n      }\n      i += 1\n    }\n    return array\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function moveElementToEnd(array: number[], toMove: number) {\n  // Write your code here.\n  return array;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const array = [2, 1, 2, 2, 2, 3, 4, 2];\n  const toMove = 2;\n  const expectedStart = [1, 3, 4];\n  const expectedEnd = [2, 2, 2, 2, 2];\n  const output = program.moveElementToEnd(array, toMove);\n  const outputStart = sorted(output.slice(0, 3));\n  const outputEnd = output.slice(3);\n  chai.expect(outputStart).to.deep.equal(expectedStart);\n  chai.expect(outputEnd).to.deep.equal(expectedEnd);\n});\n\nconst sorted = (array: number[]) => array.sort((a, b) => a - b);\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the array\nexport function moveElementToEnd(array: number[], toMove: number) {\n  let i = 0;\n  let j = array.length - 1;\n  while (i < j) {\n    while (i < j && array[j] === toMove) j--;\n    if (array[i] === toMove) swap(i, j, array);\n    i++;\n  }\n  return array;\n}\n\nfunction swap(i: number, j: number, array: number[]) {\n  const temp = array[j];\n  array[j] = array[i];\n  array[i] = temp;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        2,
+        1,
+        2,
+        2,
+        2,
+        3,
+        4,
+        2
+      ],
+      "toMove": 2
+    },
+    {
+      "array": [],
+      "toMove": 3
+    },
+    {
+      "array": [
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "toMove": 3
+    },
+    {
+      "array": [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "toMove": 3
+    },
+    {
+      "array": [
+        3,
+        1,
+        2,
+        4,
+        5
+      ],
+      "toMove": 3
+    },
+    {
+      "array": [
+        1,
+        2,
+        4,
+        5,
+        3
+      ],
+      "toMove": 3
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "toMove": 3
+    },
+    {
+      "array": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "toMove": 5
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "toMove": 5
+    },
+    {
+      "array": [
+        5,
+        1,
+        2,
+        5,
+        5,
+        3,
+        4,
+        6,
+        7,
+        5,
+        8,
+        9,
+        10,
+        11,
+        5,
+        5,
+        12
+      ],
+      "toMove": 5
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        4,
+        1,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      [],
+      [
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      [
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      [
+        5,
+        1,
+        2,
+        4,
+        3
+      ],
+      [
+        1,
+        2,
+        4,
+        5,
+        3
+      ],
+      [
+        1,
+        2,
+        5,
+        4,
+        3
+      ],
+      [
+        12,
+        11,
+        10,
+        9,
+        8,
+        7,
+        1,
+        2,
+        3,
+        4,
+        6,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      [
+        12,
+        1,
+        2,
+        11,
+        10,
+        3,
+        4,
+        6,
+        7,
+        9,
+        8,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    ]
+  ]
+}

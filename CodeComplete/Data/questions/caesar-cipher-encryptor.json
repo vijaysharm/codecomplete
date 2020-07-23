@@ -1,0 +1,186 @@
+{
+  "Summary": {
+    "Name": "Caesar Cipher Encryptor",
+    "Category": "Strings",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "number": 2,
+      "timeOne": 0,
+      "timeTwo": 979,
+      "url": "https://player.vimeo.com/video/225759200"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Most languages have built-in functions that give you the Unicode value of a character as well as the character corresponding to a Unicode value. Consider using such functions to determine which letters the input string's letters should be mapped to.\nTry creating your own mapping of letters to codes. In other words, try associating each letter in the alphabet with a specific number - its position in the alphabet, for instance - and using that to determine which letters the input string's letters should be mapped to.\nHow do you handle cases where a letter gets shifted to a position that requires wrapping around the alphabet? What about cases where the key is very large and causes multiple wrappings around the alphabet? The modulo operator should be your friend here. \n",
+  "SpaceTime": "O(n) time | O(n) space - where n is the length of the input string\n",
+  "PromptHTML": "<p>\n  Given a non-empty string of lowercase letters and a non-negative integer\n  representing a key, write a function that returns a new string obtained by\n  shifting every letter in the input string by k positions in the alphabet,\n  where k is the key.\n</p>\n<p>\n  Note that letters should \"wrap\" around the alphabet; in other words, the\n  letter <span>z</span> shifted by one returns the letter <span>a</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">string</span> = \"xyz\"\n<span class=\"CodeEditor-promptParameter\">key</span> = 2\n</pre>\n<h3>Sample Output</h3>\n<pre>\n\"zab\"\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "string",
+      "Example": "xyz",
+      "Schema": {
+        "minLength": 1,
+        "pattern": "^[a-z]+$",
+        "type": "string"
+      }
+    },
+    {
+      "Name": "key",
+      "Example": 2,
+      "Schema": {
+        "minimum": 0,
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nstring caesarCypherEncryptor(string str, int key) {\n  // Write your code here.\n  return \"\";\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(caesarCypherEncryptor(\"abc\", 0) == \"abc\"); });\n\n    RunTest(\"Test Case 2\",\n            []() { assert(caesarCypherEncryptor(\"abc\", 3) == \"def\"); });\n\n    RunTest(\"Test Case 3\",\n            []() { assert(caesarCypherEncryptor(\"xyz\", 2) == \"zab\"); });\n\n    RunTest(\"Test Case 4\",\n            []() { assert(caesarCypherEncryptor(\"xyz\", 5) == \"cde\"); });\n\n    RunTest(\"Test Case 5\",\n            []() { assert(caesarCypherEncryptor(\"abc\", 26) == \"abc\"); });\n\n    RunTest(\"Test Case 6\",\n            []() { assert(caesarCypherEncryptor(\"abc\", 52) == \"abc\"); });\n\n    RunTest(\"Test Case 7\",\n            []() { assert(caesarCypherEncryptor(\"abc\", 57) == \"fgh\"); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\",\n            []() { assert(caesarCypherEncryptor(\"xyz\", 2) == \"zab\"); });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <numeric>\nusing namespace std;\n\nchar getNewLetter(char letter, int key);\n\n// O(n) time | O(n) space\nstring caesarCypherEncryptor(string str, int key) {\n  vector<char> newLetters;\n  int newKey = key % 26;\n  for (int i = 0; i < str.length(); i++) {\n    newLetters.push_back(getNewLetter(str[i], newKey));\n  }\n  return string(newLetters.begin(), newLetters.end());\n}\n\nchar getNewLetter(char letter, int key) {\n  int newLetterCode = letter + key;\n  return newLetterCode <= 122 ? newLetterCode : 96 + newLetterCode % 122;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <numeric>\nusing namespace std;\n\nchar getNewLetter(char letter, int key, string alphabet);\n\n// O(n) time | O(n) space\nstring caesarCypherEncryptor(string str, int key) {\n  vector<char> newLetters;\n  int newKey = key % 26;\n  string alphabet = \"abcdefghijklmnopqrstuvwxyz\";\n  for (int i = 0; i < str.length(); i++) {\n    newLetters.push_back(getNewLetter(str[i], newKey, alphabet));\n  }\n  return string(newLetters.begin(), newLetters.end());\n}\n\nchar getNewLetter(char letter, int key, string alphabet) {\n  int newLetterCode = alphabet.find(letter) + key;\n  return newLetterCode <= 25 ? alphabet[newLetterCode]\n                             : alphabet[-1 + newLetterCode % 25];\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static string CaesarCypherEncryptor(string str, int key) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.CaesarCypherEncryptor(\"abc\", 0).Equals(\"abc\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.CaesarCypherEncryptor(\"abc\", 3).Equals(\"def\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.CaesarCypherEncryptor(\"xyz\", 2).Equals(\"zab\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.CaesarCypherEncryptor(\"xyz\", 5).Equals(\"cde\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.CaesarCypherEncryptor(\"abc\", 26).Equals(\"abc\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.CaesarCypherEncryptor(\"abc\", 52).Equals(\"abc\"));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.CaesarCypherEncryptor(\"abc\", 57).Equals(\"fgh\"));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.CaesarCypherEncryptor(\"xyz\", 2).Equals(\"zab\"));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static string CaesarCypherEncryptor(string str, int key) {\n\t\tchar[] newLetters = new char[str.Length];\n\t\tint newKey = key % 26;\n\t\tfor (int i = 0; i < str.Length; i++) {\n\t\t\tnewLetters[i] = getNewLetter(str[i], newKey);\n\t\t}\n\t\treturn new string(newLetters);\n\t}\n\n\tpublic static char getNewLetter(char letter, int key) {\n\t\tint newLetterCode = letter + key;\n\t\treturn newLetterCode <=\n\t\t       122 ? (char)newLetterCode : (char)(96 + newLetterCode % 122);\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static string CaesarCypherEncryptor(string str, int key) {\n\t\tchar[] newLetters = new char[str.Length];\n\t\tint newKey = key % 26;\n\t\tstring alphabet = \"abcdefghijklmnopqrstuvwxyz\";\n\t\tfor (int i = 0; i < str.Length; i++) {\n\t\t\tnewLetters[i] = getNewLetter(str[i], newKey, alphabet);\n\t\t}\n\t\treturn new string(newLetters);\n\t}\n\n\tpublic static char getNewLetter(char letter, int key, string alphabet) {\n\t\tint newLetterCode = alphabet.IndexOf(letter) + key;\n\t\treturn newLetterCode <=\n\t\t       25 ? alphabet[newLetterCode] : alphabet[-1 + newLetterCode % 25];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc CaesarCipherEncryptor(str string, key int) string {\n\t// Write your code here.\n\treturn \"\"\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := \"abc\"\n\toutput := CaesarCipherEncryptor(\"abc\", 0)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := \"def\"\n\toutput := CaesarCipherEncryptor(\"abc\", 3)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := \"zab\"\n\toutput := CaesarCipherEncryptor(\"xyz\", 2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := \"cde\"\n\toutput := CaesarCipherEncryptor(\"xyz\", 5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := \"abc\"\n\toutput := CaesarCipherEncryptor(\"abc\", 26)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := \"abc\"\n\toutput := CaesarCipherEncryptor(\"abc\", 52)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := \"fgh\"\n\toutput := CaesarCipherEncryptor(\"abc\", 57)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := \"zab\"\n\toutput := CaesarCipherEncryptor(\"xyz\", 2)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space\nfunc CaesarCipherEncryptor(str string, key int) string {\n\tshift, offset := rune(key%26), rune(26)\n\trunes := []rune(str)\n\tfor i, char := range runes {\n\t\tif char >= 'a' && char+shift <= 'z' {\n\t\t\tchar += shift\n\t\t} else {\n\t\t\tchar += shift - offset\n\t\t}\n\t\trunes[i] = char\n\t}\n\treturn string(runes)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport (\n\t\"strings\"\n)\n\n// O(n) time | O(n) space\nfunc CaesarCipherEncryptor(str string, key int) string {\n\trunes := []rune(str)\n\talphabet := \"abcdefghijklmnopqrstuvwxyz\"\n\tfor i, char := range runes {\n\t\tindex := strings.Index(alphabet, string(char))\n\t\tif index == -1 {\n\t\t\treturn \"\" // Bad input\n\t\t}\n\t\tnewindex := (index + key) % 26\n\t\trunes[i] = rune(alphabet[newindex])\n\t}\n\treturn string(runes)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static String caesarCypherEncryptor(String str, int key) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.caesarCypherEncryptor(\"abc\", 0).equals(\"abc\"));\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.caesarCypherEncryptor(\"abc\", 3).equals(\"def\"));\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.caesarCypherEncryptor(\"xyz\", 2).equals(\"zab\"));\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.caesarCypherEncryptor(\"xyz\", 5).equals(\"cde\"));\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.caesarCypherEncryptor(\"abc\", 26).equals(\"abc\"));\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.caesarCypherEncryptor(\"abc\", 52).equals(\"abc\"));\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.caesarCypherEncryptor(\"abc\", 57).equals(\"fgh\"));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.caesarCypherEncryptor(\"xyz\", 2).equals(\"zab\"));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  public static String caesarCypherEncryptor(String str, int key) {\n    char[] newLetters = new char[str.length()];\n    int newKey = key % 26;\n    for (int i = 0; i < str.length(); i++) {\n      newLetters[i] = getNewLetter(str.charAt(i), newKey);\n    }\n    return new String(newLetters);\n  }\n\n  public static char getNewLetter(char letter, int key) {\n    int newLetterCode = letter + key;\n    return newLetterCode <= 122 ? (char) newLetterCode : (char) (96 + newLetterCode % 122);\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  public static String caesarCypherEncryptor(String str, int key) {\n    char[] newLetters = new char[str.length()];\n    int newKey = key % 26;\n    String alphabet = \"abcdefghijklmnopqrstuvwxyz\";\n    for (int i = 0; i < str.length(); i++) {\n      newLetters[i] = getNewLetter(str.charAt(i), newKey, alphabet);\n    }\n    return new String(newLetters);\n  }\n\n  public static char getNewLetter(char letter, int key, String alphabet) {\n    int newLetterCode = alphabet.indexOf(letter) + key;\n    return newLetterCode <= 25\n        ? alphabet.charAt(newLetterCode)\n        : alphabet.charAt(-1 + newLetterCode % 25);\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function caesarCipherEncryptor(string, key) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.caesarCipherEncryptor = caesarCipherEncryptor;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.caesarCipherEncryptor('abc', 0)).to.deep.equal('abc');\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.caesarCipherEncryptor('abc', 3)).to.deep.equal('def');\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.caesarCipherEncryptor('xyz', 2)).to.deep.equal('zab');\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.caesarCipherEncryptor('xyz', 5)).to.deep.equal('cde');\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.caesarCipherEncryptor('abc', 26)).to.deep.equal('abc');\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.caesarCipherEncryptor('abc', 52)).to.deep.equal('abc');\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.caesarCipherEncryptor('abc', 57)).to.deep.equal('fgh');\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.caesarCipherEncryptor('xyz', 2)).to.deep.equal('zab');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction caesarCipherEncryptor(string, key) {\n  const newLetters = [];\n  const newKey = key % 26;\n  for (const letter of string) {\n    newLetters.push(getNewLetter(letter, newKey));\n  }\n  return newLetters.join('');\n}\n\nfunction getNewLetter(letter, key) {\n  const newLetterCode = letter.charCodeAt() + key;\n  return newLetterCode <= 122 ? String.fromCharCode(newLetterCode) : String.fromCharCode(96 + (newLetterCode % 122));\n}\n\nexports.caesarCipherEncryptor = caesarCipherEncryptor;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction caesarCipherEncryptor(string, key) {\n  const newLetters = [];\n  const newKey = key % 26;\n  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');\n  for (const letter of string) {\n    newLetters.push(getNewLetter(letter, newKey, alphabet));\n  }\n  return newLetters.join('');\n}\n\nfunction getNewLetter(letter, key, alphabet) {\n  const newLetterCode = alphabet.indexOf(letter) + key;\n  return newLetterCode <= 25 ? alphabet[newLetterCode] : alphabet[-1 + (newLetterCode % 25)];\n}\n\nexports.caesarCipherEncryptor = caesarCipherEncryptor;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def caesarCipherEncryptor(string, key):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.caesarCipherEncryptor(\"abc\", 0), \"abc\")\n\n    def test_case_2(self):\n        self.assertEqual(program.caesarCipherEncryptor(\"abc\", 3), \"def\")\n\n    def test_case_3(self):\n        self.assertEqual(program.caesarCipherEncryptor(\"xyz\", 2), \"zab\")\n\n    def test_case_4(self):\n        self.assertEqual(program.caesarCipherEncryptor(\"xyz\", 5), \"cde\")\n\n    def test_case_5(self):\n        self.assertEqual(program.caesarCipherEncryptor(\"abc\", 26), \"abc\")\n\n    def test_case_6(self):\n        self.assertEqual(program.caesarCipherEncryptor(\"abc\", 52), \"abc\")\n\n    def test_case_7(self):\n        self.assertEqual(program.caesarCipherEncryptor(\"abc\", 57), \"fgh\")\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.caesarCipherEncryptor(\"xyz\", 2), \"zab\")\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef caesarCipherEncryptor(string, key):\n    newLetters = []\n    newKey = key % 26\n    for letter in string:\n        newLetters.append(getNewLetter(letter, newKey))\n    return \"\".join(newLetters)\n\n\ndef getNewLetter(letter, key):\n    newLetterCode = ord(letter) + key\n    return chr(newLetterCode) if newLetterCode <= 122 else chr(96 + newLetterCode % 122)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef caesarCipherEncryptor(string, key):\n    newLetters = []\n    newKey = key % 26\n    alphabet = list(\"abcdefghijklmnopqrstuvwxyz\")\n    for letter in string:\n        newLetters.append(getNewLetter(letter, newKey, alphabet))\n    return \"\".join(newLetters)\n\n\ndef getNewLetter(letter, key, alphabet):\n    newLetterCode = alphabet.index(letter) + key\n    return alphabet[newLetterCode] if newLetterCode <= 25 else alphabet[-1 + newLetterCode % 25]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func caesarCipherEncryptor(string: String, key: UInt32) -> String {\n    // Write your code here.\n    return \"\"\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(\"abc\", program.caesarCipherEncryptor(string: \"abc\", key: 0))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(\"def\", program.caesarCipherEncryptor(string: \"abc\", key: 3))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(\"zab\", program.caesarCipherEncryptor(string: \"xyz\", key: 2))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(\"cde\", program.caesarCipherEncryptor(string: \"xyz\", key: 5))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(\"abc\", program.caesarCipherEncryptor(string: \"abc\", key: 26))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(\"abc\", program.caesarCipherEncryptor(string: \"abc\", key: 52))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(\"fgh\", program.caesarCipherEncryptor(string: \"abc\", key: 57))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(\"zab\", program.caesarCipherEncryptor(string: \"xyz\", key: 2))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func caesarCipherEncryptor(string: String, key: UInt32) -> String {\n    var newLetters = [Character]()\n    let newKey = key % 26\n\n    for letter in string {\n      newLetters.append(getNewLetter(letter, newKey))\n    }\n\n    return String(newLetters)\n  }\n\n  func getNewLetter(_ letter: Character, _ key: UInt32) -> Character {\n    let newLetterCode = letter.unicodeScalars.first!.value + key\n\n    let code: UnicodeScalar?\n\n    if newLetterCode <= 122 {\n      code = UnicodeScalar(newLetterCode)\n    } else {\n      code = UnicodeScalar(96 + newLetterCode % 122)\n    }\n\n    return Character(code!)\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func caesarCipherEncryptor(string: String, key: UInt32) -> String {\n    var newLetters = [Character]()\n    let newKey = key % 26\n\n    let alphabet = Array(\"abcdefghijklmnopqrstuvwxyz\")\n\n    for letter in string {\n      newLetters.append(getNewLetter(letter, newKey, alphabet))\n    }\n\n    return String(newLetters)\n  }\n\n  func getNewLetter(_ letter: Character, _ key: UInt32, _ alphabet: [Character]) -> Character {\n    let newLetterCode = alphabet.firstIndex(of: letter)! + Int(key)\n\n    if newLetterCode <= 25 {\n      return alphabet[newLetterCode]\n    } else {\n      return alphabet[-1 + newLetterCode % 25]\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function caesarCipherEncryptor(string: string, key: number) {\n  // Write your code here.\n  return '';\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.caesarCipherEncryptor('xyz', 2)).to.deep.equal('zab');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nexport function caesarCipherEncryptor(string: string, key: number) {\n  const newLetters = [];\n  const newKey = key % 26;\n  for (const letter of string) {\n    newLetters.push(getNewLetter(letter, newKey));\n  }\n  return newLetters.join('');\n}\n\nfunction getNewLetter(letter: string, key: number) {\n  const newLetterCode = letter.charCodeAt(0) + key;\n  return newLetterCode <= 122 ? String.fromCharCode(newLetterCode) : String.fromCharCode(96 + (newLetterCode % 122));\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nexport function caesarCipherEncryptor(string: string, key: number) {\n  const newLetters = [];\n  const newKey = key % 26;\n  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');\n  for (const letter of string) {\n    newLetters.push(getNewLetter(letter, newKey, alphabet));\n  }\n  return newLetters.join('');\n}\n\nfunction getNewLetter(letter: string, key: number, alphabet: string[]) {\n  const newLetterCode = alphabet.indexOf(letter) + key;\n  return newLetterCode <= 25 ? alphabet[newLetterCode] : alphabet[-1 + (newLetterCode % 25)];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "key": 2,
+      "string": "xyz"
+    },
+    {
+      "key": 0,
+      "string": "abc"
+    },
+    {
+      "key": 3,
+      "string": "abc"
+    },
+    {
+      "key": 5,
+      "string": "xyz"
+    },
+    {
+      "key": 26,
+      "string": "abc"
+    },
+    {
+      "key": 52,
+      "string": "abc"
+    },
+    {
+      "key": 57,
+      "string": "abc"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      "zab",
+      "abc",
+      "def",
+      "cde",
+      "abc",
+      "abc",
+      "fgh"
+    ]
+  ]
+}

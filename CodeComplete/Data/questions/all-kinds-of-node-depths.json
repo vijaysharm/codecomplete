@@ -1,0 +1,715 @@
+{
+  "Summary": {
+    "Name": "All Kinds Of Node Depths",
+    "Category": "Binary Trees",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "completed": false,
+      "date": "2020-05-11T00:00:00Z",
+      "number": 364,
+      "timeOne": 0,
+      "timeTwo": 2264,
+      "url": "https://player.vimeo.com/video/417075348"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can calculate the sum of a tree's node depths with a simple recursive function. Iterate through every node in the tree, call the simple recursive function on each node to caculate the sum of the node depths of the tree rooted at the node in question, and add up all of the sums to obtain the final sum.\nYou can solve this question in linear time by coming up with a relation between a tree's sum of node depths and the sums of node depths of the trees rooted at its left and right child nodes.\nThe depth of a node relative to a node X is 1 value smaller than its depth relative to node X's parent node Y. It follows that, if a subtree rooted at node X has a sum of node depths S, you can get the sum of those node depths relative to node Y by calculating: S + number-of-nodes-in-subtree-rooted-at-X, since this effectively increments all of the node depths relative to node X by 1.\nFrom Hint #3, we can deduce the formula: nodeDepths(node) = nodeDepths(node.left) + numberOfNodesInLeftSubtree + nodeDepths(node.right) + numberOfNodesInRightSubtree. We can easily count the number of nodes in each subtree with a single pass in the input tree, and then we can apply this formula to calculate all of the node depths in linear time and finally sum them up.",
+  "SpaceTime": "Average case: when the tree is balanced\nO(n) time | O(h) space - where n is the number of nodes in the Binary Tree and h is the height of the Binary Tree",
+  "PromptHTML": "<p>\n  The distance between a node in a Binary Tree and the tree's root is called the\n  node's depth.\n</p>\n<p>\n  Write a function that takes in a Binary Tree and returns the sum of all of\n  its subtrees' nodes' depths.\n</p>\n<p>\n  Each <span>BinaryTree</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. Children\n  nodes can either be <span>BinaryTree</span> nodes themselves or\n  <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> =    1\n       /     \\\n      2       3\n    /   \\   /   \\\n   4     5 6     7\n /   \\\n8     9\n</pre>\n<h3>Sample Output</h3>\n<pre>\n26\n<span class=\"CodeEditor-promptComment\">// The sum of the root tree's node depths is 16.</span>\n<span class=\"CodeEditor-promptComment\">// The sum of the tree rooted at 2's node depths is 6.</span>\n<span class=\"CodeEditor-promptComment\">// The sum of the tree rooted at 3's node depths is 2.</span>\n<span class=\"CodeEditor-promptComment\">// The sum of the tree rooted at 4's node depths is 2.</span>\n<span class=\"CodeEditor-promptComment\">// Summing all of these sums yields 26.</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          }
+        ],
+        "root": "1"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>left</span> and <span>right</span>\npointers and by the <span>root</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n};\n\nint allKindsOfNodeDepths(BinaryTree *root) {\n  // Write your code here.\n  return -1;\n}",
+      "StartingTest": "#include \"program.cpp\"\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input = {};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree* root = new BinaryTree(1);\n      root->left = new BinaryTree(2);\n      root->left->left = new BinaryTree(4);\n      root->left->left->left = new BinaryTree(8);\n      root->left->left->right = new BinaryTree(9);\n      root->left->right = new BinaryTree(5);\n      root->right = new BinaryTree(3);\n      root->right->left = new BinaryTree(6);\n      root->right->right = new BinaryTree(7);\n      int actual = allKindsOfNodeDepths(root);\n      assert(actual == 26);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n};\n\nint nodeDepths(BinaryTree *node, int depth = 0);\n\n// Average case: when the tree is balanced\n// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nint allKindsOfNodeDepths(BinaryTree *root) {\n  int sumOfAllDepths = 0;\n  vector<BinaryTree *> stack = {root};\n  while (stack.size() > 0) {\n    BinaryTree *node = stack.back();\n    stack.pop_back();\n    if (node == NULL)\n      continue;\n    sumOfAllDepths += nodeDepths(node);\n    stack.push_back(node->left);\n    stack.push_back(node->right);\n  }\n  return sumOfAllDepths;\n}\n\nint nodeDepths(BinaryTree *node, int depth) {\n  if (node == NULL)\n    return 0;\n  return depth + nodeDepths(node->left, depth + 1) +\n         nodeDepths(node->right, depth + 1);\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n};\n\nint nodeDepths(BinaryTree *node, int depth = 0);\n\n// Average case: when the tree is balanced\n// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nint allKindsOfNodeDepths(BinaryTree *root) {\n  if (root == NULL)\n    return 0;\n  return allKindsOfNodeDepths(root->left) + allKindsOfNodeDepths(root->right) +\n         nodeDepths(root);\n}\n\nint nodeDepths(BinaryTree *node, int depth) {\n  if (node == NULL)\n    return 0;\n  return depth + nodeDepths(node->left, depth + 1) +\n         nodeDepths(node->right, depth + 1);\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n};\n\nint sumAllNodeDepths(BinaryTree *node,\n                     unordered_map<BinaryTree *, int> &nodeDepths);\nvoid addNodeDepths(BinaryTree *node,\n                   unordered_map<BinaryTree *, int> &nodeDepths,\n                   unordered_map<BinaryTree *, int> &nodeCounts);\nvoid addNodeCounts(BinaryTree *node,\n                   unordered_map<BinaryTree *, int> &nodeCounts);\n\n// Average case: when the tree is balanced\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nint allKindsOfNodeDepths(BinaryTree *root) {\n  unordered_map<BinaryTree *, int> nodeCounts = {};\n  addNodeCounts(root, nodeCounts);\n  unordered_map<BinaryTree *, int> nodeDepths = {};\n  addNodeDepths(root, nodeDepths, nodeCounts);\n  return sumAllNodeDepths(root, nodeDepths);\n}\n\nint sumAllNodeDepths(BinaryTree *node,\n                     unordered_map<BinaryTree *, int> &nodeDepths) {\n  if (node == NULL)\n    return 0;\n  return sumAllNodeDepths(node->left, nodeDepths) +\n         sumAllNodeDepths(node->right, nodeDepths) + nodeDepths[node];\n}\n\nvoid addNodeDepths(BinaryTree *node,\n                   unordered_map<BinaryTree *, int> &nodeDepths,\n                   unordered_map<BinaryTree *, int> &nodeCounts) {\n  nodeDepths.insert({node, 0});\n  if (node->left != NULL) {\n    addNodeDepths(node->left, nodeDepths, nodeCounts);\n    nodeDepths[node] += nodeDepths[node->left] + nodeCounts[node->left];\n  }\n  if (node->right != NULL) {\n    addNodeDepths(node->right, nodeDepths, nodeCounts);\n    nodeDepths[node] += nodeDepths[node->right] + nodeCounts[node->right];\n  }\n}\n\nvoid addNodeCounts(BinaryTree *node,\n                   unordered_map<BinaryTree *, int> &nodeCounts) {\n  nodeCounts.insert({node, 1});\n  if (node->left != NULL) {\n    addNodeCounts(node->left, nodeCounts);\n    nodeCounts[node] += nodeCounts[node->left];\n  }\n  if (node->right != NULL) {\n    addNodeCounts(node->right, nodeCounts);\n    nodeCounts[node] += nodeCounts[node->right];\n  }\n}",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value) {\n    this->value = value;\n    left = NULL;\n    right = NULL;\n  }\n};\n\nstruct TreeInfo {\n  int numNodesInTree;\n  int sumOfDepths;\n  int sumOfAllDepths;\n};\n\nTreeInfo getTreeInfo(BinaryTree *tree);\n\n// Average case: when the tree is balanced\n// O(n) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nint allKindsOfNodeDepths(BinaryTree *root) {\n  return getTreeInfo(root).sumOfAllDepths;\n}\n\nTreeInfo getTreeInfo(BinaryTree *tree) {\n  if (tree == NULL) {\n    return TreeInfo{0, 0, 0};\n  }\n\n  TreeInfo leftTreeInfo = getTreeInfo(tree->left);\n  TreeInfo rightTreeInfo = getTreeInfo(tree->right);\n\n  int sumOfLeftDepths = leftTreeInfo.sumOfDepths + leftTreeInfo.numNodesInTree;\n  int sumOfRightDepths =\n      rightTreeInfo.sumOfDepths + rightTreeInfo.numNodesInTree;\n\n  int numNodesInTree =\n      1 + leftTreeInfo.numNodesInTree + rightTreeInfo.numNodesInTree;\n  int sumOfDepths = sumOfLeftDepths + sumOfRightDepths;\n  int sumOfAllDepths =\n      sumOfDepths + leftTreeInfo.sumOfAllDepths + rightTreeInfo.sumOfAllDepths;\n\n  return TreeInfo{\n      numNodesInTree,\n      sumOfDepths,\n      sumOfAllDepths,\n  };\n}"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "\npublic class Program {\n\tpublic static int AllKindsOfNodeDepths(BinaryTree root) {\n\t\t// Write your code here.\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar input = new int[] {};\n\t\tvar expected = true;\n\t\tvar actual = Program.isMonotonic(input);\n\t\tUtils.AssertEquals(expected, actual);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar root = new Program.BinaryTree(1);\n\t\troot.left = new Program.BinaryTree(2);\n\t\troot.left.left = new Program.BinaryTree(4);\n\t\troot.left.left.left = new Program.BinaryTree(8);\n\t\troot.left.left.right = new Program.BinaryTree(9);\n\t\troot.left.right = new Program.BinaryTree(5);\n\t\troot.right = new Program.BinaryTree(3);\n\t\troot.right.left = new Program.BinaryTree(6);\n\t\troot.right.right = new Program.BinaryTree(7);\n\t\tint actual = Program.AllKindsOfNodeDepths(root);\n\t\tUtils.AssertEquals(26, actual);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// Average case: when the tree is balanced\n\t// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n\t// the Binary Tree and h is the height of the Binary Tree\n\tpublic static int AllKindsOfNodeDepths(BinaryTree root) {\n\t\tint sumOfAllDepths = 0;\n\t\tStack<BinaryTree> stack = new Stack<BinaryTree>();\n\t\tstack.Push(root);\n\t\twhile (stack.Count > 0) {\n\t\t\tBinaryTree node = stack.Pop();\n\t\t\tif (node == null) continue;\n\n\t\t\tsumOfAllDepths += nodeDepths(node, 0);\n\t\t\tstack.Push(node.left);\n\t\t\tstack.Push(node.right);\n\t\t}\n\t\treturn sumOfAllDepths;\n\t}\n\n\tpublic static int nodeDepths(BinaryTree node, int depth) {\n\t\tif (node == null) return 0;\n\t\treturn depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1);\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n\npublic class Program {\n\t// Average case: when the tree is balanced\n\t// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n\t// the Binary Tree and h is the height of the Binary Tree\n\tpublic static int AllKindsOfNodeDepths(BinaryTree root) {\n\t\tif (root == null) return 0;\n\t\treturn AllKindsOfNodeDepths(root.left) + AllKindsOfNodeDepths(root.right) +\n\t\t       nodeDepths(root, 0);\n\t}\n\n\tpublic static int nodeDepths(BinaryTree node, int depth) {\n\t\tif (node == null) return 0;\n\t\treturn depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1);\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// Average case: when the tree is balanced\n\t// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n\tpublic static int AllKindsOfNodeDepths(BinaryTree root) {\n\t\tDictionary<BinaryTree, int> nodeCounts = new Dictionary<BinaryTree, int>();\n\t\tDictionary<BinaryTree, int> nodeDepths = new Dictionary<BinaryTree, int>();\n\t\taddNodeCounts(root, nodeCounts);\n\t\taddNodeDepths(root, nodeDepths, nodeCounts);\n\t\treturn sumAllNodeDepths(root, nodeDepths);\n\t}\n\n\tpublic static int sumAllNodeDepths(BinaryTree node,\n\t  Dictionary<BinaryTree, int> nodeDepths) {\n\t\tif (node == null) return 0;\n\t\treturn sumAllNodeDepths(node.left, nodeDepths) + sumAllNodeDepths(node.right,\n\t\t         nodeDepths) +\n\t\t       nodeDepths[node];\n\t}\n\n\tpublic static void addNodeDepths(BinaryTree node, Dictionary<BinaryTree, int> nodeDepths,\n\t  Dictionary<BinaryTree, int> nodeCounts) {\n\t\tnodeDepths[node] = 0;\n\t\tif (node.left != null) {\n\t\t\taddNodeDepths(node.left, nodeDepths, nodeCounts);\n\t\t\tnodeDepths[node] = nodeDepths[node] + nodeDepths[node.left] +\n\t\t\t  nodeCounts[node.left];\n\t\t}\n\t\tif (node.right != null) {\n\t\t\taddNodeDepths(node.right, nodeDepths, nodeCounts);\n\t\t\tnodeDepths[node] = nodeDepths[node] + nodeDepths[node.right] +\n\t\t\t  nodeCounts[node.right];\n\t\t}\n\t}\n\n\tpublic static void addNodeCounts(BinaryTree node, Dictionary<BinaryTree, int> nodeCounts) {\n\t\tnodeCounts[node] = 1;\n\t\tif (node.left != null) {\n\t\t\taddNodeCounts(node.left, nodeCounts);\n\t\t\tnodeCounts[node] = nodeCounts[node] + nodeCounts[node.left];\n\t\t}\n\t\tif (node.right != null) {\n\t\t\taddNodeCounts(node.right, nodeCounts);\n\t\t\tnodeCounts[node] = nodeCounts[node] + nodeCounts[node.right];\n\t\t}\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n\npublic class Program {\n\t// Average case: when the tree is balanced\n\t// O(n) time | O(h) space - where n is the number of nodes in\n\t// the Binary Tree and h is the height of the Binary Tree\n\tpublic static int AllKindsOfNodeDepths(BinaryTree root) {\n\t\treturn getTreeInfo(root).sumOfAllDepths;\n\t}\n\n\tpublic static TreeInfo getTreeInfo(BinaryTree tree) {\n\t\tif (tree == null) {\n\t\t\treturn new TreeInfo(0, 0, 0);\n\t\t}\n\n\t\tTreeInfo leftTreeInfo = getTreeInfo(tree.left);\n\t\tTreeInfo rightTreeInfo = getTreeInfo(tree.right);\n\n\t\tint sumOfLeftDepths = leftTreeInfo.sumOfDepths + leftTreeInfo.numNodesInTree;\n\t\tint sumOfRightDepths =\n\t\t  rightTreeInfo.sumOfDepths + rightTreeInfo.numNodesInTree;\n\n\t\tint numNodesInTree =\n\t\t  1 + leftTreeInfo.numNodesInTree + rightTreeInfo.numNodesInTree;\n\t\tint sumOfDepths = sumOfLeftDepths + sumOfRightDepths;\n\t\tint sumOfAllDepths =\n\t\t  sumOfDepths + leftTreeInfo.sumOfAllDepths + rightTreeInfo.sumOfAllDepths;\n\n\t\treturn new TreeInfo(numNodesInTree, sumOfDepths, sumOfAllDepths);\n\t}\n\n\tpublic class TreeInfo {\n\t\tpublic int numNodesInTree;\n\t\tpublic int sumOfDepths;\n\t\tpublic int sumOfAllDepths;\n\n\t\tpublic TreeInfo(int numNodesInTree, int sumOfDepths, int sumOfAllDepths) {\n\t\t\tthis.numNodesInTree = numNodesInTree;\n\t\t\tthis.sumOfDepths = sumOfDepths;\n\t\t\tthis.sumOfAllDepths = sumOfAllDepths;\n\t\t}\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t\tleft = null;\n\t\t\tright = null;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype BinaryTree struct {\n\tValue       int\n\tLeft, Right *BinaryTree\n}\n\nfunc AllKindsOfNodeDepths(root *BinaryTree) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 0\n\toutput := GetNthFib(1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 1\n\toutput := GetNthFib(3)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\troot := &BinaryTree{Value: 1}\n\troot.Left = &BinaryTree{Value: 2}\n\troot.Left.Left = &BinaryTree{Value: 4}\n\troot.Left.Left.Left = &BinaryTree{Value: 8}\n\troot.Left.Left.Right = &BinaryTree{Value: 9}\n\troot.Left.Right = &BinaryTree{Value: 5}\n\troot.Right = &BinaryTree{Value: 3}\n\troot.Right.Left = &BinaryTree{Value: 6}\n\troot.Right.Right = &BinaryTree{Value: 7}\n\tactual := AllKindsOfNodeDepths(root)\n\trequire.Equal(t, 26, actual)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue       int\n\tLeft, Right *BinaryTree\n}\n\n// Average case: when the tree is balanced\n// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nfunc AllKindsOfNodeDepths(root *BinaryTree) int {\n\tsumOfDepths := 0\n\tstack := []*BinaryTree{root}\n\tvar node *BinaryTree\n\tfor len(stack) > 0 {\n\t\tnode, stack = stack[len(stack)-1], stack[:len(stack)-1]\n\t\tif node == nil {\n\t\t\tcontinue\n\t\t}\n\t\tsumOfDepths += nodeDepths(node, 0)\n\t\tstack = append(stack, node.Left)\n\t\tstack = append(stack, node.Right)\n\t}\n\treturn sumOfDepths\n}\n\nfunc nodeDepths(node *BinaryTree, depth int) int {\n\tif node == nil {\n\t\treturn 0\n\t}\n\treturn depth + nodeDepths(node.Left, depth+1) + nodeDepths(node.Right, depth+1)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue       int\n\tLeft, Right *BinaryTree\n}\n\n// Average case: when the tree is balanced\n// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nfunc AllKindsOfNodeDepths(root *BinaryTree) int {\n\tif root == nil {\n\t\treturn 0\n\t}\n\treturn AllKindsOfNodeDepths(root.Left) + AllKindsOfNodeDepths(root.Right) + nodeDepths(root, 0)\n}\n\nfunc nodeDepths(node *BinaryTree, depth int) int {\n\tif node == nil {\n\t\treturn 0\n\t}\n\treturn depth + nodeDepths(node.Left, depth+1) + nodeDepths(node.Right, depth+1)\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue       int\n\tLeft, Right *BinaryTree\n}\n\n// Average case: when the tree is balanced\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nfunc AllKindsOfNodeDepths(root *BinaryTree) int {\n\tnodeCounts, nodeDepths := map[*BinaryTree]int{}, map[*BinaryTree]int{}\n\taddNodeCounts(root, nodeCounts)\n\taddNodeDepths(root, nodeDepths, nodeCounts)\n\treturn sumAllNodeDepths(root, nodeDepths)\n}\n\nfunc sumAllNodeDepths(node *BinaryTree, nodeDepths map[*BinaryTree]int) int {\n\tif node == nil {\n\t\treturn 0\n\t}\n\treturn sumAllNodeDepths(node.Left, nodeDepths) + sumAllNodeDepths(node.Right, nodeDepths) + nodeDepths[node]\n}\n\nfunc addNodeDepths(node *BinaryTree, nodeDepths, nodeCounts map[*BinaryTree]int) {\n\tnodeDepths[node] = 0\n\tif node.Left != nil {\n\t\taddNodeDepths(node.Left, nodeDepths, nodeCounts)\n\t\tnodeDepths[node] = nodeDepths[node] + nodeDepths[node.Left] + nodeCounts[node.Left]\n\t}\n\tif node.Right != nil {\n\t\taddNodeDepths(node.Right, nodeDepths, nodeCounts)\n\t\tnodeDepths[node] = nodeDepths[node] + nodeDepths[node.Right] + nodeCounts[node.Right]\n\t}\n}\n\nfunc addNodeCounts(node *BinaryTree, nodeCounts map[*BinaryTree]int) {\n\tnodeCounts[node] = 1\n\tif node.Left != nil {\n\t\taddNodeCounts(node.Left, nodeCounts)\n\t\tnodeCounts[node] = nodeCounts[node] + nodeCounts[node.Left]\n\t}\n\tif node.Right != nil {\n\t\taddNodeCounts(node.Right, nodeCounts)\n\t\tnodeCounts[node] = nodeCounts[node] + nodeCounts[node.Right]\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BinaryTree struct {\n\tValue       int\n\tLeft, Right *BinaryTree\n}\n\ntype TreeInfo struct {\n\tNumNodesInTree int\n\tSumOfDepths    int\n\tSumOfAllDepths int\n}\n\n// Average case: when the tree is balanced\n// O(n) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nfunc AllKindsOfNodeDepths(root *BinaryTree) int {\n\treturn getTreeInfo(root).SumOfAllDepths\n}\n\nfunc getTreeInfo(tree *BinaryTree) TreeInfo {\n\tif tree == nil {\n\t\treturn TreeInfo{}\n\t}\n\n\tleftInfo, rightInfo := getTreeInfo(tree.Left), getTreeInfo(tree.Right)\n\n\tsumOfLeftDepths := leftInfo.SumOfDepths + leftInfo.NumNodesInTree\n\tsumOfRightDepths := rightInfo.SumOfDepths + rightInfo.NumNodesInTree\n\n\tnumNodesInTree := 1 + leftInfo.NumNodesInTree + rightInfo.NumNodesInTree\n\tsumOfDepths := sumOfLeftDepths + sumOfRightDepths\n\tsumOfAllDepths := sumOfDepths + leftInfo.SumOfAllDepths + rightInfo.SumOfAllDepths\n\n\treturn TreeInfo{NumNodesInTree: numNodesInTree, SumOfDepths: sumOfDepths, SumOfAllDepths: sumOfAllDepths}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int allKindsOfNodeDepths(BinaryTree root) {\n    // Write your code here.\n  }\n\n  static class BinaryTree {\n    int value;\n    BinaryTree left;\n    BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input = new int[] {};\n    var expected = true;\n    var actual = Program.isMonotonic(input);\n    Utils.assertEquals(expected, actual);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    var root = new Program.BinaryTree(1);\n    root.left = new Program.BinaryTree(2);\n    root.left.left = new Program.BinaryTree(4);\n    root.left.left.left = new Program.BinaryTree(8);\n    root.left.left.right = new Program.BinaryTree(9);\n    root.left.right = new Program.BinaryTree(5);\n    root.right = new Program.BinaryTree(3);\n    root.right.left = new Program.BinaryTree(6);\n    root.right.right = new Program.BinaryTree(7);\n    int actual = Program.allKindsOfNodeDepths(root);\n    Utils.assertEquals(26, actual);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // Average case: when the tree is balanced\n  // O(nlog(n)) time | O(h) space - where n is the number of nodes in\n  // the Binary Tree and h is the height of the Binary Tree\n  public static int allKindsOfNodeDepths(BinaryTree root) {\n    int sumOfAllDepths = 0;\n    List<BinaryTree> stack = new ArrayList<BinaryTree>();\n    stack.add(root);\n    while (stack.size() > 0) {\n      BinaryTree node = stack.remove(stack.size() - 1);\n      if (node == null) continue;\n      sumOfAllDepths += nodeDepths(node, 0);\n      stack.add(node.left);\n      stack.add(node.right);\n    }\n    return sumOfAllDepths;\n  }\n\n  public static int nodeDepths(BinaryTree node, int depth) {\n    if (node == null) return 0;\n    return depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1);\n  }\n\n  static class BinaryTree {\n    int value;\n    BinaryTree left;\n    BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // Average case: when the tree is balanced\n  // O(nlog(n)) time | O(h) space - where n is the number of nodes in\n  // the Binary Tree and h is the height of the Binary Tree\n  public static int allKindsOfNodeDepths(BinaryTree root) {\n    if (root == null) return 0;\n    return allKindsOfNodeDepths(root.left) + allKindsOfNodeDepths(root.right) +\n         nodeDepths(root, 0);\n  }\n\n  public static int nodeDepths(BinaryTree node, int depth) {\n    if (node == null) return 0;\n    return depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1);\n  }\n\n  static class BinaryTree {\n    int value;\n    BinaryTree left;\n    BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // Average case: when the tree is balanced\n  // O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n  public static int allKindsOfNodeDepths(BinaryTree root) {\n    Map<BinaryTree, Integer> nodeCounts = new HashMap<BinaryTree, Integer>();\n    Map<BinaryTree, Integer> nodeDepths = new HashMap<BinaryTree, Integer>();\n    addNodeCounts(root, nodeCounts);\n    addNodeDepths(root, nodeDepths, nodeCounts);\n    return sumAllNodeDepths(root, nodeDepths);\n  }\n\n  public static int sumAllNodeDepths(BinaryTree node, Map<BinaryTree, Integer> nodeDepths) {\n    if (node == null) return 0;\n    return sumAllNodeDepths(node.left, nodeDepths) + sumAllNodeDepths(node.right, nodeDepths) + nodeDepths.get(node);\n  }\n\n  public static void addNodeDepths(BinaryTree node, Map<BinaryTree, Integer> nodeDepths, Map<BinaryTree, Integer> nodeCounts) {\n    nodeDepths.put(node, 0);\n    if (node.left != null) {\n      addNodeDepths(node.left, nodeDepths, nodeCounts);\n      nodeDepths.put(node, nodeDepths.get(node) + nodeDepths.get(node.left) + nodeCounts.get(node.left));\n    }\n    if (node.right != null) {\n      addNodeDepths(node.right, nodeDepths, nodeCounts);\n      nodeDepths.put(node, nodeDepths.get(node) + nodeDepths.get(node.right) + nodeCounts.get(node.right));\n    }\n  }\n\n  public static void addNodeCounts(BinaryTree node, Map<BinaryTree, Integer> nodeCounts) {\n    nodeCounts.put(node, 1);\n    if (node.left != null) {\n      addNodeCounts(node.left, nodeCounts);\n      nodeCounts.put(node, nodeCounts.get(node) + nodeCounts.get(node.left));\n    }\n    if (node.right != null) {\n      addNodeCounts(node.right, nodeCounts);\n      nodeCounts.put(node, nodeCounts.get(node) + nodeCounts.get(node.right));\n    }\n  }\n\n  static class BinaryTree {\n    int value;\n    BinaryTree left;\n    BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // Average case: when the tree is balanced\n  // O(n) time | O(h) space - where n is the number of nodes in\n  // the Binary Tree and h is the height of the Binary Tree\n  public static int allKindsOfNodeDepths(BinaryTree root) {\n    return getTreeInfo(root).sumOfAllDepths;\n  }\n\n  public static TreeInfo getTreeInfo(BinaryTree tree) {\n    if (tree == null) {\n      return new TreeInfo(0, 0, 0);\n    }\n\n    TreeInfo leftTreeInfo = getTreeInfo(tree.left);\n    TreeInfo rightTreeInfo = getTreeInfo(tree.right);\n\n    int sumOfLeftDepths = leftTreeInfo.sumOfDepths + leftTreeInfo.numNodesInTree;\n    int sumOfRightDepths =\n        rightTreeInfo.sumOfDepths + rightTreeInfo.numNodesInTree;\n\n    int numNodesInTree =\n        1 + leftTreeInfo.numNodesInTree + rightTreeInfo.numNodesInTree;\n    int sumOfDepths = sumOfLeftDepths + sumOfRightDepths;\n    int sumOfAllDepths =\n        sumOfDepths + leftTreeInfo.sumOfAllDepths + rightTreeInfo.sumOfAllDepths;\n\n    return new TreeInfo(numNodesInTree, sumOfDepths, sumOfAllDepths);\n  }\n\n  static class TreeInfo {\n    public int numNodesInTree;\n    public int sumOfDepths;\n    public int sumOfAllDepths;\n\n    public TreeInfo(int numNodesInTree, int sumOfDepths, int sumOfAllDepths) {\n      this.numNodesInTree = numNodesInTree;\n      this.sumOfDepths = sumOfDepths;\n      this.sumOfAllDepths = sumOfAllDepths;\n    }\n  }\n\n  static class BinaryTree {\n    int value;\n    BinaryTree left;\n    BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n      left = null;\n      right = null;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function allKindsOfNodeDepths(root) {\n  // Write your code here.\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// Do not edit the line below.\nexports.allKindsOfNodeDepths = allKindsOfNodeDepths;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.getNthFib(1)).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.getNthFib(2)).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.getNthFib(3)).to.deep.equal(1);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1);\n  root.left = new BinaryTree(2);\n  root.left.left = new BinaryTree(4);\n  root.left.left.left = new BinaryTree(8);\n  root.left.left.right = new BinaryTree(9);\n  root.left.right = new BinaryTree(5);\n  root.right = new BinaryTree(3);\n  root.right.left = new BinaryTree(6);\n  root.right.right = new BinaryTree(7);\n  const actual = program.allKindsOfNodeDepths(root);\n  chai.expect(actual).to.deep.equal(26);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average case: when the tree is balanced\n// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nfunction allKindsOfNodeDepths(root) {\n  let sumOfAllDepths = 0;\n  let stack = [root];\n  while (stack.length > 0) {\n    const node = stack.pop();\n    if (node === null) continue;\n    sumOfAllDepths += nodeDepths(node);\n    stack.push(node.left);\n    stack.push(node.right);\n  }\n  return sumOfAllDepths;\n}\n\nfunction nodeDepths(node, depth = 0) {\n  if (node === null) return 0;\n  return depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1);\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexports.allKindsOfNodeDepths = allKindsOfNodeDepths;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average case: when the tree is balanced\n// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nfunction allKindsOfNodeDepths(root) {\n  if (root == null) return 0;\n  return allKindsOfNodeDepths(root.left) + allKindsOfNodeDepths(root.right) + nodeDepths(root);\n}\n\nfunction nodeDepths(node, depth = 0) {\n  if (node === null) return 0;\n  return depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1);\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexports.allKindsOfNodeDepths = allKindsOfNodeDepths;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average case: when the tree is balanced\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nfunction allKindsOfNodeDepths(root) {\n  addNodeCounts(root);\n  addNodeDepths(root);\n  return sumAllNodeDepths(root);\n}\n\nfunction sumAllNodeDepths(node) {\n  if (node == null) return 0;\n  return sumAllNodeDepths(node.left) + sumAllNodeDepths(node.right) + node._sumOfDepths;\n}\n\nfunction addNodeDepths(node) {\n  node._sumOfDepths = 0;\n  if (node.left !== null) {\n    addNodeDepths(node.left);\n    node._sumOfDepths += node.left._sumOfDepths + node.left._numNodesInTree;\n  }\n  if (node.right !== null) {\n    addNodeDepths(node.right);\n    node._sumOfDepths += node.right._sumOfDepths + node.right._numNodesInTree;\n  }\n}\n\nfunction addNodeCounts(node) {\n  node._numNodesInTree = 1;\n  if (node.left !== null) {\n    addNodeCounts(node.left);\n    node._numNodesInTree += node.left._numNodesInTree;\n  }\n  if (node.right !== null) {\n    addNodeCounts(node.right);\n    node._numNodesInTree += node.right._numNodesInTree;\n  }\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexports.allKindsOfNodeDepths = allKindsOfNodeDepths;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average case: when the tree is balanced\n// O(n) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nfunction allKindsOfNodeDepths(root) {\n  return getTreeInfo(root).sumOfAllDepths;\n}\n\nfunction getTreeInfo(tree) {\n  if (tree === null) {\n    return {\n      numNodesInTree: 0,\n      sumOfDepths: 0,\n      sumOfAllDepths: 0,\n    };\n  }\n\n  const leftTreeInfo = getTreeInfo(tree.left);\n  const rightTreeInfo = getTreeInfo(tree.right);\n\n  const sumOfLeftDepths = leftTreeInfo.sumOfDepths + leftTreeInfo.numNodesInTree;\n  const sumOfRightDepths = rightTreeInfo.sumOfDepths + rightTreeInfo.numNodesInTree;\n\n  const numNodesInTree = 1 + leftTreeInfo.numNodesInTree + rightTreeInfo.numNodesInTree;\n  const sumOfDepths = sumOfLeftDepths + sumOfRightDepths;\n  const sumOfAllDepths = sumOfDepths + leftTreeInfo.sumOfAllDepths + rightTreeInfo.sumOfAllDepths;\n\n  return {\n    numNodesInTree,\n    sumOfDepths,\n    sumOfAllDepths,\n  };\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexports.allKindsOfNodeDepths = allKindsOfNodeDepths;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def allKindsOfNodeDepths(root):\n    # Write your code here.\n    pass\n\n\n# This is the class of the input binary tree.\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.getNthFib(1), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.getNthFib(2), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.getNthFib(3), 1)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        root = program.BinaryTree(1)\n        root.left = program.BinaryTree(2)\n        root.left.left = program.BinaryTree(4)\n        root.left.left.left = program.BinaryTree(8)\n        root.left.left.right = program.BinaryTree(9)\n        root.left.right = program.BinaryTree(5)\n        root.right = program.BinaryTree(3)\n        root.right.left = program.BinaryTree(6)\n        root.right.right = program.BinaryTree(7)\n        actual = program.allKindsOfNodeDepths(root)\n        self.assertEqual(actual, 26)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Average case: when the tree is balanced\n# O(nlog(n)) time | O(h) space - where n is the number of nodes in\n# the Binary Tree and h is the height of the Binary Tree\ndef allKindsOfNodeDepths(root):\n    sumOfAllDepths = 0\n    stack = [root]\n    while len(stack) > 0:\n        node = stack.pop()\n        if node is None:\n            continue\n        sumOfAllDepths += nodeDepths(node)\n        stack.append(node.left)\n        stack.append(node.right)\n    return sumOfAllDepths\n\n\ndef nodeDepths(node, depth=0):\n    if node is None:\n        return 0\n    return depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1)\n\n\n# This is the class of the input binary tree.\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Average case: when the tree is balanced\n# O(nlog(n)) time | O(h) space - where n is the number of nodes in\n# the Binary Tree and h is the height of the Binary Tree\ndef allKindsOfNodeDepths(root):\n    if root is None:\n        return 0\n    return allKindsOfNodeDepths(root.left) + allKindsOfNodeDepths(root.right) + nodeDepths(root)\n\n\ndef nodeDepths(node, depth=0):\n    if node is None:\n        return 0\n    return depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1)\n\n\n# This is the class of the input binary tree.\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Average case: when the tree is balanced\n# O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\ndef allKindsOfNodeDepths(root):\n    nodeCounts = {}\n    addNodeCounts(root, nodeCounts)\n    nodeDepths = {}\n    addNodeDepths(root, nodeDepths, nodeCounts)\n    return sumAllNodeDepths(root, nodeDepths)\n\n\ndef sumAllNodeDepths(node, nodeDepths):\n    if node is None:\n        return 0\n    return sumAllNodeDepths(node.left, nodeDepths) + sumAllNodeDepths(node.right, nodeDepths) + nodeDepths[node]\n\n\ndef addNodeDepths(node, nodeDepths, nodeCounts):\n    nodeDepths[node] = 0\n    if node.left is not None:\n        addNodeDepths(node.left, nodeDepths, nodeCounts)\n        nodeDepths[node] += nodeDepths[node.left] + nodeCounts[node.left]\n    if node.right is not None:\n        addNodeDepths(node.right, nodeDepths, nodeCounts)\n        nodeDepths[node] += nodeDepths[node.right] + nodeCounts[node.right]\n\n\ndef addNodeCounts(node, nodeCounts):\n    nodeCounts[node] = 1\n    if node.left is not None:\n        addNodeCounts(node.left, nodeCounts)\n        nodeCounts[node] += nodeCounts[node.left]\n    if node.right is not None:\n        addNodeCounts(node.right, nodeCounts)\n        nodeCounts[node] += nodeCounts[node.right]\n\n\n# This is the class of the input binary tree.\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Average case: when the tree is balanced\n# O(n) time | O(h) space - where n is the number of nodes in\n# the Binary Tree and h is the height of the Binary Tree\ndef allKindsOfNodeDepths(root):\n    return getTreeInfo(root).sumOfAllDepths\n\n\ndef getTreeInfo(tree):\n    if tree is None:\n        return TreeInfo(0, 0, 0)\n\n    leftTreeInfo = getTreeInfo(tree.left)\n    rightTreeInfo = getTreeInfo(tree.right)\n\n    sumOfLeftDepths = leftTreeInfo.sumOfDepths + leftTreeInfo.numNodesInTree\n    sumOfRightDepths = rightTreeInfo.sumOfDepths + rightTreeInfo.numNodesInTree\n\n    numNodesInTree = 1 + leftTreeInfo.numNodesInTree + rightTreeInfo.numNodesInTree\n    sumOfDepths = sumOfLeftDepths + sumOfRightDepths\n    sumOfAllDepths = sumOfDepths + leftTreeInfo.sumOfAllDepths + rightTreeInfo.sumOfAllDepths\n\n    return TreeInfo(numNodesInTree, sumOfDepths, sumOfAllDepths)\n\n\nclass TreeInfo:\n    def __init__(self, numNodesInTree, sumOfDepths, sumOfAllDepths):\n        self.numNodesInTree = numNodesInTree\n        self.sumOfDepths = sumOfDepths\n        self.sumOfAllDepths = sumOfAllDepths\n\n\n# This is the class of the input binary tree.\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  static func allKindsOfNodeDepths(_ root: BinaryTree?) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assert(getNthFib(n: 1) == 0)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assert(getNthFib(n: 2) == 1)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assert(getNthFib(n: 3) == 1)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var root = Program.BinaryTree(value: 1)\n      root.left = Program.BinaryTree(value: 2)\n      root.left!.left = Program.BinaryTree(value: 4)\n      root.left!.left!.left = Program.BinaryTree(value: 8)\n      root.left!.left!.right = Program.BinaryTree(value: 9)\n      root.left!.right = Program.BinaryTree(value: 5)\n      root.right = Program.BinaryTree(value: 3)\n      root.right!.left = Program.BinaryTree(value: 6)\n      root.right!.right = Program.BinaryTree(value: 7)\n      let actual = Program.allKindsOfNodeDepths(root)\n      try assert(actual == 26)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  // Average case: when the tree is balanced\n  // O(nlog(n)) time | O(h) space - where n is the number of nodes in\n  // the Binary Tree and h is the height of the Binary Tree\n  static func allKindsOfNodeDepths(_ root: BinaryTree?) -> Int {\n    var sumOfDepths = 0\n    var stack = [root]\n    while stack.count > 0 {\n      var node = stack[stack.count - 1]\n      stack.removeLast()\n      if node == nil {\n        continue\n      }\n\n      sumOfDepths += nodeDepths(node, 0)\n      stack.append(node?.left)\n      stack.append(node?.right)\n    }\n    return sumOfDepths\n  }\n\n  static func nodeDepths(_ root: BinaryTree?, _ depth: Int = 0) -> Int {\n    if let tree = root {\n      return depth + nodeDepths(tree.left, depth + 1) + nodeDepths(tree.right, depth + 1)\n    }\n    return 0\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  // Average case: when the tree is balanced\n  // O(nlog(n)) time | O(h) space - where n is the number of nodes in\n  // the Binary Tree and h is the height of the Binary Tree\n  static func allKindsOfNodeDepths(_ root: BinaryTree?) -> Int {\n    if let node = root {\n      return allKindsOfNodeDepths(node.left) + allKindsOfNodeDepths(node.right) + nodeDepths(root, 0)\n    }\n    return 0\n  }\n\n  static func nodeDepths(_ root: BinaryTree?, _ depth: Int = 0) -> Int {\n    if let tree = root {\n      return depth + nodeDepths(tree.left, depth + 1) + nodeDepths(tree.right, depth + 1)\n    }\n    return 0\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree: Hashable {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n    }\n\n    static func == (lhs: BinaryTree, rhs: BinaryTree) -> Bool {\n      return ObjectIdentifier(lhs) == ObjectIdentifier(rhs)\n    }\n\n    var hashValue: Int {\n      return ObjectIdentifier(self).hashValue\n    }\n  }\n\n  // Average case: when the tree is balanced\n  // O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\n  static func allKindsOfNodeDepths(_ root: BinaryTree?) -> Int {\n    var nodeCounts = [BinaryTree: Int]()\n    var nodeDepths = [BinaryTree: Int]()\n    addNodeCounts(root, &nodeCounts)\n    addNodeDepths(root, &nodeDepths, &nodeCounts)\n    return sumAllNodeDepths(root, nodeDepths)\n  }\n\n  static func sumAllNodeDepths(_ node: BinaryTree?, _ nodeDepths: [BinaryTree: Int]) -> Int {\n    if let n = node {\n      return sumAllNodeDepths(n.left, nodeDepths) + sumAllNodeDepths(n.right, nodeDepths) + nodeDepths[n]!\n    }\n    return 0\n  }\n\n  static func addNodeDepths(_ tree: BinaryTree?, _ nodeDepths: inout [BinaryTree: Int], _ nodeCounts: inout [BinaryTree: Int]) {\n    if let node = tree {\n      nodeDepths[node] = 0\n\n      if let left = node.left {\n        addNodeDepths(left, &nodeDepths, &nodeCounts)\n        nodeDepths[node] = nodeDepths[node]! + nodeDepths[left]! + nodeCounts[left]!\n      }\n\n      if let right = node.right {\n        addNodeDepths(right, &nodeDepths, &nodeCounts)\n        nodeDepths[node] = nodeDepths[node]! + nodeDepths[right]! + nodeCounts[right]!\n      }\n    }\n  }\n\n  static func addNodeCounts(_ tree: BinaryTree?, _ nodeCounts: inout [BinaryTree: Int]) {\n    if let node = tree {\n      nodeCounts[node] = 1\n\n      if let left = node.left {\n        addNodeCounts(left, &nodeCounts)\n        nodeCounts[node] = nodeCounts[node]! + nodeCounts[left]!\n      }\n\n      if let right = node.right {\n        addNodeCounts(right, &nodeCounts)\n        nodeCounts[node] = nodeCounts[node]! + nodeCounts[right]!\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree {\n    var value: Int\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n    }\n  }\n\n  struct TreeInfo {\n    var numNodesInTree: Int = 0\n    var sumOfDepths: Int = 0\n    var sumOfAllDepths: Int = 0\n  }\n\n  // Average case: when the tree is balanced\n  // O(n) time | O(h) space - where n is the number of nodes in\n  // the Binary Tree and h is the height of the Binary Tree\n  static func allKindsOfNodeDepths(_ root: BinaryTree?) -> Int {\n    return getTreeInfo(root).sumOfAllDepths\n  }\n\n  static func getTreeInfo(_ tree: BinaryTree?) -> TreeInfo {\n    if let node = tree {\n      var leftInfo = getTreeInfo(node.left)\n      var rightInfo = getTreeInfo(node.right)\n\n      var sumOfLeftDepths = leftInfo.sumOfDepths + leftInfo.numNodesInTree\n      var sumOfRightDepths = rightInfo.sumOfDepths + rightInfo.numNodesInTree\n\n      var numNodesInTree = 1 + leftInfo.numNodesInTree + rightInfo.numNodesInTree\n      var sumOfDepths = sumOfLeftDepths + sumOfRightDepths\n      var sumOfAllDepths = sumOfDepths + leftInfo.sumOfAllDepths + rightInfo.sumOfAllDepths\n\n      return TreeInfo(numNodesInTree: numNodesInTree, sumOfDepths: sumOfDepths, sumOfAllDepths: sumOfAllDepths)\n    }\n    return TreeInfo()\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function allKindsOfNodeDepths(root: BinaryTree) {\n  // Write your code here.\n  return -1;\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const root = new BinaryTree(1);\n  root.left = new BinaryTree(2);\n  root.left.left = new BinaryTree(4);\n  root.left.left.left = new BinaryTree(8);\n  root.left.left.right = new BinaryTree(9);\n  root.left.right = new BinaryTree(5);\n  root.right = new BinaryTree(3);\n  root.right.left = new BinaryTree(6);\n  root.right.right = new BinaryTree(7);\n  const actual = program.allKindsOfNodeDepths(root);\n  chai.expect(actual).to.deep.equal(26);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average case: when the tree is balanced\n// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nexport function allKindsOfNodeDepths(root: BinaryTree) {\n  let sumOfAllDepths = 0;\n  let stack: Array<BinaryTree | null> = [root];\n  while (stack.length > 0) {\n    const node = stack.pop() as BinaryTree | null;\n    if (node === null) continue;\n    sumOfAllDepths += nodeDepths(node);\n    stack.push(node.left);\n    stack.push(node.right);\n  }\n  return sumOfAllDepths;\n}\n\nfunction nodeDepths(node: BinaryTree | null, depth = 0): number {\n  if (node === null) return 0;\n  return depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1);\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average case: when the tree is balanced\n// O(nlog(n)) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nexport function allKindsOfNodeDepths(root: BinaryTree | null): number {\n  if (root == null) return 0;\n  return allKindsOfNodeDepths(root.left) + allKindsOfNodeDepths(root.right) + nodeDepths(root);\n}\n\nfunction nodeDepths(node: BinaryTree | null, depth = 0): number {\n  if (node === null) return 0;\n  return depth + nodeDepths(node.left, depth + 1) + nodeDepths(node.right, depth + 1);\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Average case: when the tree is balanced\n// O(n) time | O(n) space - where n is the number of nodes in the Binary Tree\nexport function allKindsOfNodeDepths(root: BinaryTree) {\n  addNodeCounts(root);\n  addNodeDepths(root);\n  return sumAllNodeDepths(root);\n}\n\nfunction sumAllNodeDepths(node: BinaryTree | null): number {\n  if (node == null) return 0;\n  return sumAllNodeDepths(node.left) + sumAllNodeDepths(node.right) + node._sumOfDepths!;\n}\n\nfunction addNodeDepths(node: BinaryTree) {\n  node._sumOfDepths = 0;\n  if (node.left !== null) {\n    addNodeDepths(node.left);\n    node._sumOfDepths += node.left._sumOfDepths! + node.left._numNodesInTree!;\n  }\n  if (node.right !== null) {\n    addNodeDepths(node.right);\n    node._sumOfDepths += node.right._sumOfDepths! + node.right._numNodesInTree!;\n  }\n}\n\nfunction addNodeCounts(node: BinaryTree) {\n  node._numNodesInTree = 1;\n  if (node.left !== null) {\n    addNodeCounts(node.left);\n    node._numNodesInTree += node.left._numNodesInTree!;\n  }\n  if (node.right !== null) {\n    addNodeCounts(node.right);\n    node._numNodesInTree += node.right._numNodesInTree!;\n  }\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n  _sumOfDepths?: number;\n  _numNodesInTree?: number;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface TreeInfo {\n  numNodesInTree: number;\n  sumOfDepths: number;\n  sumOfAllDepths: number;\n}\n\n// Average case: when the tree is balanced\n// O(n) time | O(h) space - where n is the number of nodes in\n// the Binary Tree and h is the height of the Binary Tree\nexport function allKindsOfNodeDepths(root: BinaryTree) {\n  return getTreeInfo(root).sumOfAllDepths;\n}\n\nfunction getTreeInfo(tree: BinaryTree | null): TreeInfo {\n  if (tree === null) {\n    return {\n      numNodesInTree: 0,\n      sumOfDepths: 0,\n      sumOfAllDepths: 0,\n    };\n  }\n\n  const leftTreeInfo = getTreeInfo(tree.left);\n  const rightTreeInfo = getTreeInfo(tree.right);\n\n  const sumOfLeftDepths = leftTreeInfo.sumOfDepths + leftTreeInfo.numNodesInTree;\n  const sumOfRightDepths = rightTreeInfo.sumOfDepths + rightTreeInfo.numNodesInTree;\n\n  const numNodesInTree = 1 + leftTreeInfo.numNodesInTree + rightTreeInfo.numNodesInTree;\n  const sumOfDepths = sumOfLeftDepths + sumOfRightDepths;\n  const sumOfAllDepths = sumOfDepths + leftTreeInfo.sumOfAllDepths + rightTreeInfo.sumOfAllDepths;\n\n  return {\n    numNodesInTree,\n    sumOfDepths,\n    sumOfAllDepths,\n  };\n}\n\n// This is the class of the input binary tree.\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "3",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "4",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "5",
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "6",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "8",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "3",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "4",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "5",
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "6",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": "10",
+            "value": 9
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": "11",
+            "value": 10
+          },
+          {
+            "id": "11",
+            "left": null,
+            "right": "12",
+            "value": 11
+          },
+          {
+            "id": "12",
+            "left": "13",
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "13",
+            "left": null,
+            "right": null,
+            "value": 13
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "8",
+            "right": "9",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": "10",
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": null,
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": "11",
+            "value": 10
+          },
+          {
+            "id": "11",
+            "left": "12",
+            "right": "13",
+            "value": 11
+          },
+          {
+            "id": "12",
+            "left": "14",
+            "right": null,
+            "value": 12
+          },
+          {
+            "id": "13",
+            "left": "15",
+            "right": "16",
+            "value": 13
+          },
+          {
+            "id": "14",
+            "left": null,
+            "right": null,
+            "value": 14
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": null,
+            "value": 15
+          },
+          {
+            "id": "16",
+            "left": null,
+            "right": null,
+            "value": 16
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "3",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "4",
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": "5",
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": "6",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": "7",
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": "8",
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "8",
+            "left": "9",
+            "right": null,
+            "value": 8
+          },
+          {
+            "id": "9",
+            "left": null,
+            "right": null,
+            "value": 9
+          }
+        ],
+        "root": "1"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      26,
+      0,
+      1,
+      2,
+      5,
+      56,
+      112,
+      135,
+      120
+    ]
+  ]
+}

@@ -1,0 +1,1310 @@
+{
+  "Summary": {
+    "Name": "Remove Kth Node From End",
+    "Category": "Linked Lists",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 254,
+      "timeOne": 0,
+      "timeTwo": 751,
+      "url": "https://player.vimeo.com/video/243485333"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Since you are given a Singly Linked List, you do not have access to any of the list's nodes' previous nodes. Thus, traversing the entire list and then counting k nodes back isn't an option. Is there a way for you to traverse the entire list and to know which node is the kth node from the end by the time you reach the final node in the list?\nCan you accomplish the task mentioned in Hint #1 by traversing the list all the while keeping track of two nodes at a time. How could this work?\nInitialize two variables pointing to the first node in the list. Traverse k nodes in the list, updating the second variable at every node (that is, take k steps with the second variable). Then, traverse the remainder of the list, this time updating both the second and the first variables (that is take as many steps with the first variable as the number of steps between the kth node from the start and the end of the list). Once you reach the end of the list, the first variable should point to the kth node from the end.\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the number of nodes in the Linked List \n",
+  "PromptHTML": "<p>\n  Write a function that takes in the head of a Singly Linked List and an integer\n  <span>k</span> and removes the kth node from the end of the list.\n</p>\n<p>\n  Each <span>LinkedList</span> node has an integer <span>value</span> as well as\n  a <span>next</span> node pointing to the next node in the list or to\n  <span>None</span> / <span>null</span> if it's the tail of the list.\n</p>\n<p>\n  You can assume that the input Linked List will always have at least 2 nodes\n  and, more specifically, at least k nodes.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">head</span> = 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 <span class=\"CodeEditor-promptComment\">// the head node with value 0</span>\n<span class=\"CodeEditor-promptParameter\">k</span> = 4\n</pre>\n<h3>Sample Output</h3>\n<pre>\n<span class=\"CodeEditor-promptComment\">// No output required.</span>\n<span class=\"CodeEditor-promptComment\">// The 4th node from the end of the list (the node with value 6) is removed.</span>\n0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 7 -> 8 -> 9\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "linkedlist",
+    "outputType": "linkedlist"
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "linkedList",
+      "Example": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      "Schema": {
+        "description": "A Singly Linked List is represented by a list of <span>nodes</span> and a <span>head</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>next</span> pointers and by the <span>head</span>.\n",
+        "properties": {
+          "head": {
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "next": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "next"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "head",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "Name": "k",
+      "Example": 4,
+      "Schema": {
+        "minimum": 1,
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value);\n  void addMany(vector<int> values);\n  vector<int> getNodesInArray();\n};\n\nvoid removeKthNodeFromEnd(LinkedList *head, int k) {\n  // Write your code here.\n}\n",
+      "StartingTest": "class TestLinkedList : public LinkedList {\npublic:\n  TestLinkedList(int value);\n  void addMany(vector<int> values);\n  vector<int> getNodesInArray();\n};\n\nLinkedList::LinkedList(int value) {\n  this->value = value;\n  this->next = NULL;\n}\n\nTestLinkedList::TestLinkedList(int value) : LinkedList(value) {\n  this->value = value;\n  this->next = NULL;\n}\n\nvoid TestLinkedList::addMany(vector<int> values) {\n  LinkedList *current = this;\n  while (current->next != NULL) {\n    current = current->next;\n  }\n  for (int value : values) {\n    current->next = new LinkedList(value);\n    current = current->next;\n  }\n}\n\nvector<int> TestLinkedList::getNodesInArray() {\n  vector<int> nodes{};\n  LinkedList *current = this;\n  while (current != NULL) {\n    nodes.push_back(current->value);\n    current = current->next;\n  }\n  return nodes;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      TestLinkedList test1(0);\n      test1.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result1(0);\n      result1.addMany({1, 2, 3, 4, 5, 6, 7, 8});\n      removeKthNodeFromEnd(&test1, 1);\n      assert(test1.getNodesInArray() == result1.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      TestLinkedList test2(0);\n      test2.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result2(0);\n      result2.addMany({1, 2, 3, 4, 5, 6, 7, 9});\n      removeKthNodeFromEnd(&test2, 2);\n      assert(test2.getNodesInArray() == result2.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      TestLinkedList test3(0);\n      test3.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result3(0);\n      result3.addMany({1, 2, 3, 4, 5, 6, 8, 9});\n      removeKthNodeFromEnd(&test3, 3);\n      assert(test3.getNodesInArray() == result3.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      TestLinkedList test4(0);\n      test4.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result4(0);\n      result4.addMany({1, 2, 3, 4, 5, 7, 8, 9});\n      removeKthNodeFromEnd(&test4, 4);\n      assert(test4.getNodesInArray() == result4.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      TestLinkedList test5(0);\n      test5.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result5(0);\n      result5.addMany({1, 2, 3, 4, 6, 7, 8, 9});\n      removeKthNodeFromEnd(&test5, 5);\n      assert(test5.getNodesInArray() == result5.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      TestLinkedList test6(0);\n      test6.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result6(0);\n      result6.addMany({1, 2, 3, 5, 6, 7, 8, 9});\n      removeKthNodeFromEnd(&test6, 6);\n      assert(test6.getNodesInArray() == result6.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      TestLinkedList test7(0);\n      test7.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result7(0);\n      result7.addMany({1, 2, 4, 5, 6, 7, 8, 9});\n      removeKthNodeFromEnd(&test7, 7);\n      assert(test7.getNodesInArray() == result7.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      TestLinkedList test8(0);\n      test8.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result8(0);\n      result8.addMany({1, 3, 4, 5, 6, 7, 8, 9});\n      removeKthNodeFromEnd(&test8, 8);\n      assert(test8.getNodesInArray() == result8.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      TestLinkedList test9(0);\n      test9.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result9(0);\n      result9.addMany({2, 3, 4, 5, 6, 7, 8, 9});\n      removeKthNodeFromEnd(&test9, 9);\n      assert(test9.getNodesInArray() == result9.getNodesInArray());\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      TestLinkedList test10(0);\n      test10.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList result10(1);\n      result10.addMany({2, 3, 4, 5, 6, 7, 8, 9});\n      removeKthNodeFromEnd(&test10, 10);\n      assert(test10.getNodesInArray() == result10.getNodesInArray());\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass TestLinkedList : public LinkedList {\npublic:\n  TestLinkedList(int value);\n  void addMany(vector<int> values);\n  vector<int> getNodesInArray();\n};\n\nLinkedList::LinkedList(int value) {\n  this->value = value;\n  this->next = NULL;\n}\n\nTestLinkedList::TestLinkedList(int value) : LinkedList(value) {\n  this->value = value;\n  this->next = NULL;\n}\n\nvoid TestLinkedList::addMany(vector<int> values) {\n  LinkedList *current = this;\n  while (current->next != NULL) {\n    current = current->next;\n  }\n  for (int value : values) {\n    current->next = new LinkedList(value);\n    current = current->next;\n  }\n}\n\nvector<int> TestLinkedList::getNodesInArray() {\n  vector<int> nodes{};\n  LinkedList *current = this;\n  while (current != NULL) {\n    nodes.push_back(current->value);\n    current = current->next;\n  }\n  return nodes;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      TestLinkedList test(0);\n      test.addMany({1, 2, 3, 4, 5, 6, 7, 8, 9});\n      TestLinkedList expected(0);\n      expected.addMany({1, 2, 3, 4, 5, 7, 8, 9});\n      removeKthNodeFromEnd(&test, 4);\n      assert(test.getNodesInArray() == expected.getNodesInArray());\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass LinkedList {\npublic:\n  int value;\n  LinkedList *next;\n\n  LinkedList(int value);\n};\n\n// O(n) time | O(1) space\nvoid removeKthNodeFromEnd(LinkedList *head, int k) {\n  int counter = 1;\n  LinkedList *first = head;\n  LinkedList *second = head;\n  while (counter <= k) {\n    second = second->next;\n    counter++;\n  }\n  if (second == NULL) {\n    head->value = head->next->value;\n    head->next = head->next->next;\n    return;\n  }\n  while (second->next != NULL) {\n    second = second->next;\n    first = first->next;\n  }\n  first->next = first->next->next;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "\npublic class Program {\n\tpublic static void RemoveKthNodeFromEnd(LinkedList head, int k) {\n\t\t// Write your code here.\n\t}\n\n\tpublic class LinkedList {\n\t\tpublic int Value;\n\t\tpublic LinkedList Next = null;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.Value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8};\n\t\tProgram.RemoveKthNodeFromEnd(test, 1);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 2);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 2, 3, 4, 5, 6, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 3);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 2, 3, 4, 5, 7, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 4);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 2, 3, 4, 6, 7, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 5);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 2, 3, 5, 6, 7, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 6);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 2, 4, 5, 6, 7, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 7);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 3, 4, 5, 6, 7, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 8);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 2, 3, 4, 5, 6, 7, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 9);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {1, 2, 3, 4, 5, 6, 7, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 10);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\tpublic bool compare(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\tpublic class TestLinkedList : Program.LinkedList {\n\n\t\tpublic TestLinkedList(int value) : base(value) {\n\t\t}\n\n\t\tpublic void addMany(int[] values) {\n\t\t\tProgram.LinkedList current = this;\n\t\t\twhile (current.Next != null) {\n\t\t\t\tcurrent = current.Next;\n\t\t\t}\n\t\t\tforeach (int value in values) {\n\t\t\t\tcurrent.Next = new Program.LinkedList(value);\n\t\t\t\tcurrent = current.Next;\n\t\t\t}\n\t\t}\n\n\t\tpublic List<int> getNodesInArray() {\n\t\t\tList<int> nodes = new List<int>();\n\t\t\tProgram.LinkedList current = this;\n\t\t\twhile (current != null) {\n\t\t\t\tnodes.Add(current.Value);\n\t\t\t\tcurrent = current.Next;\n\t\t\t}\n\t\t\treturn nodes;\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestLinkedList test = new TestLinkedList(0);\n\t\ttest.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n\t\tint[] expected = {0, 1, 2, 3, 4, 5, 7, 8, 9};\n\t\tProgram.RemoveKthNodeFromEnd(test, 4);\n\t\tUtils.AssertTrue(compare(test.getNodesInArray(), expected));\n\t}\n\n\tpublic bool compare(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\tpublic class TestLinkedList : Program.LinkedList {\n\n\t\tpublic TestLinkedList(int value) : base(value) {\n\t\t}\n\n\t\tpublic void addMany(int[] values) {\n\t\t\tProgram.LinkedList current = this;\n\t\t\twhile (current.Next != null) {\n\t\t\t\tcurrent = current.Next;\n\t\t\t}\n\t\t\tforeach (int value in values) {\n\t\t\t\tcurrent.Next = new Program.LinkedList(value);\n\t\t\t\tcurrent = current.Next;\n\t\t\t}\n\t\t}\n\n\t\tpublic List<int> getNodesInArray() {\n\t\t\tList<int> nodes = new List<int>();\n\t\t\tProgram.LinkedList current = this;\n\t\t\twhile (current != null) {\n\t\t\t\tnodes.Add(current.Value);\n\t\t\t\tcurrent = current.Next;\n\t\t\t}\n\t\t\treturn nodes;\n\t\t}\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static void RemoveKthNodeFromEnd(LinkedList head, int k) {\n\t\tint counter = 1;\n\t\tLinkedList first = head;\n\t\tLinkedList second = head;\n\t\twhile (counter <= k) {\n\t\t\tsecond = second.Next;\n\t\t\tcounter++;\n\t\t}\n\t\tif (second == null) {\n\t\t\thead.Value = head.Next.Value;\n\t\t\thead.Next = head.Next.Next;\n\t\t\treturn;\n\t\t}\n\t\twhile (second.Next != null) {\n\t\t\tsecond = second.Next;\n\t\t\tfirst = first.Next;\n\t\t}\n\t\tfirst.Next = first.Next.Next;\n\t}\n\n\tpublic class LinkedList {\n\t\tpublic int Value;\n\t\tpublic LinkedList Next = null;\n\n\t\tpublic LinkedList(int value) {\n\t\t\tthis.Value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\nfunc RemoveKthNodeFromEnd(head *LinkedList, k int) {\n\t// Write your code here.\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewLinkedList(root int, children ...int) *LinkedList {\n\tll := &LinkedList{root, nil}\n\tll.Add(children...)\n\treturn ll\n}\n\nfunc (ll *LinkedList) Add(values ...int) {\n\tcurrent := ll\n\tfor current.Next != nil {\n\t\tcurrent = current.Next\n\t}\n\tfor _, value := range values {\n\t\tcurrent.Next = &LinkedList{value, nil}\n\t\tcurrent = current.Next\n\t}\n}\n\nfunc (ll *LinkedList) ToArray() []int {\n\toutput, current := []int{ll.Value}, ll\n\tfor current.Next != nil {\n\t\tcurrent = current.Next\n\t\toutput = append(output, current.Value)\n\t}\n\treturn output\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 1)\n\toutput, expected := ll.ToArray(), []int{0, 1, 2, 3, 4, 5, 6, 7, 8}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 2)\n\toutput, expected := ll.ToArray(), []int{0, 1, 2, 3, 4, 5, 6, 7, 9}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 3)\n\toutput, expected := ll.ToArray(), []int{0, 1, 2, 3, 4, 5, 6, 8, 9}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 4)\n\toutput, expected := ll.ToArray(), []int{0, 1, 2, 3, 4, 5, 7, 8, 9}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 5)\n\toutput, expected := ll.ToArray(), []int{0, 1, 2, 3, 4, 6, 7, 8, 9}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 6)\n\toutput, expected := ll.ToArray(), []int{0, 1, 2, 3, 5, 6, 7, 8, 9}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 7)\n\toutput, expected := ll.ToArray(), []int{0, 1, 2, 4, 5, 6, 7, 8, 9}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 8)\n\toutput, expected := ll.ToArray(), []int{0, 1, 3, 4, 5, 6, 7, 8, 9}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 9)\n\toutput, expected := ll.ToArray(), []int{0, 2, 3, 4, 5, 6, 7, 8, 9}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 10)\n\toutput, expected := ll.ToArray(), []int{1, 2, 3, 4, 5, 6, 7, 8, 9}\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewLinkedList(root int, children ...int) *LinkedList {\n\tll := &LinkedList{root, nil}\n\tll.Add(children...)\n\treturn ll\n}\n\nfunc (ll *LinkedList) Add(values ...int) {\n\tcurrent := ll\n\tfor current.Next != nil {\n\t\tcurrent = current.Next\n\t}\n\tfor _, value := range values {\n\t\tcurrent.Next = &LinkedList{value, nil}\n\t\tcurrent = current.Next\n\t}\n}\n\nfunc (ll *LinkedList) ToArray() []int {\n\toutput, current := []int{ll.Value}, ll\n\tfor current.Next != nil {\n\t\tcurrent = current.Next\n\t\toutput = append(output, current.Value)\n\t}\n\treturn output\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tll := NewLinkedList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)\n\tRemoveKthNodeFromEnd(ll, 4)\n\toutput, expected := ll.ToArray(), []int{0, 1, 2, 3, 4, 5, 7, 8, 9}\n\trequire.Equal(t, expected, output)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype LinkedList struct {\n\tValue int\n\tNext  *LinkedList\n}\n\n// O(n) time | O(1) space\nfunc RemoveKthNodeFromEnd(head *LinkedList, k int) {\n\tcounter, first, second := 1, head, head\n\tfor counter <= k {\n\t\tsecond = second.Next\n\t\tcounter += 1\n\t}\n\tif second == nil {\n\t\thead.Value = head.Next.Value\n\t\thead.Next = head.Next.Next\n\t\treturn\n\t}\n\tfor second.Next != nil {\n\t\tsecond = second.Next\n\t\tfirst = first.Next\n\t}\n\tfirst.Next = first.Next.Next\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static void removeKthNodeFromEnd(LinkedList head, int k) {\n    // Write your code here.\n  }\n\n  static class LinkedList {\n    int value;\n    LinkedList next = null;\n\n    public LinkedList(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8};\n    Program.removeKthNodeFromEnd(test, 1);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 9};\n    Program.removeKthNodeFromEnd(test, 2);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 2, 3, 4, 5, 6, 8, 9};\n    Program.removeKthNodeFromEnd(test, 3);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 2, 3, 4, 5, 7, 8, 9};\n    Program.removeKthNodeFromEnd(test, 4);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 2, 3, 4, 6, 7, 8, 9};\n    Program.removeKthNodeFromEnd(test, 5);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 2, 3, 5, 6, 7, 8, 9};\n    Program.removeKthNodeFromEnd(test, 6);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 2, 4, 5, 6, 7, 8, 9};\n    Program.removeKthNodeFromEnd(test, 7);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 3, 4, 5, 6, 7, 8, 9};\n    Program.removeKthNodeFromEnd(test, 8);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 2, 3, 4, 5, 6, 7, 8, 9};\n    Program.removeKthNodeFromEnd(test, 9);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  @Test\n  public void TestCase10() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {1, 2, 3, 4, 5, 6, 7, 8, 9};\n    Program.removeKthNodeFromEnd(test, 10);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  public boolean compare(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  class TestLinkedList extends Program.LinkedList {\n\n    public TestLinkedList(int value) {\n      super(value);\n    }\n\n    public void addMany(int[] values) {\n      Program.LinkedList current = this;\n      while (current.next != null) {\n        current = current.next;\n      }\n      for (int value : values) {\n        current.next = new Program.LinkedList(value);\n        current = current.next;\n      }\n    }\n\n    public List<Integer> getNodesInArray() {\n      List<Integer> nodes = new ArrayList<Integer>();\n      Program.LinkedList current = this;\n      while (current != null) {\n        nodes.add(current.value);\n        current = current.next;\n      }\n      return nodes;\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    TestLinkedList test = new TestLinkedList(0);\n    test.addMany(new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9});\n    int[] expected = {0, 1, 2, 3, 4, 5, 7, 8, 9};\n    Program.removeKthNodeFromEnd(test, 4);\n    Utils.assertTrue(compare(test.getNodesInArray(), expected));\n  }\n\n  public boolean compare(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  class TestLinkedList extends Program.LinkedList {\n\n    public TestLinkedList(int value) {\n      super(value);\n    }\n\n    public void addMany(int[] values) {\n      Program.LinkedList current = this;\n      while (current.next != null) {\n        current = current.next;\n      }\n      for (int value : values) {\n        current.next = new Program.LinkedList(value);\n        current = current.next;\n      }\n    }\n\n    public List<Integer> getNodesInArray() {\n      List<Integer> nodes = new ArrayList<Integer>();\n      Program.LinkedList current = this;\n      while (current != null) {\n        nodes.add(current.value);\n        current = current.next;\n      }\n      return nodes;\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static void removeKthNodeFromEnd(LinkedList head, int k) {\n    int counter = 1;\n    LinkedList first = head;\n    LinkedList second = head;\n    while (counter <= k) {\n      second = second.next;\n      counter++;\n    }\n    if (second == null) {\n      head.value = head.next.value;\n      head.next = head.next.next;\n      return;\n    }\n    while (second.next != null) {\n      second = second.next;\n      first = first.next;\n    }\n    first.next = first.next.next;\n  }\n\n  static class LinkedList {\n    int value;\n    LinkedList next = null;\n\n    public LinkedList(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// This is an input class. Do not edit.\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nfunction removeKthNodeFromEnd(head, k) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.LinkedList = LinkedList;\nexports.removeKthNodeFromEnd = removeKthNodeFromEnd;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass StartLinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nconst linkedListClass = program.LinkedList || StartLinkedList;\n\nclass LinkedList extends linkedListClass {\n  constructor(value) {\n    super(value);\n  }\n\n  addMany(values) {\n    let current = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNodesInArray() {\n    const nodes = [];\n    let current = this;\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n}\n\nit('Test Case #1', function () {\n  const test1 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result1 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8]);\n  program.removeKthNodeFromEnd(test1, 1);\n  chai.expect(test1.getNodesInArray()).to.deep.equal(result1.getNodesInArray());\n});\n\nit('Test Case #2', function () {\n  const test2 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result2 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 9]);\n  program.removeKthNodeFromEnd(test2, 2);\n  chai.expect(test2.getNodesInArray()).to.deep.equal(result2.getNodesInArray());\n});\n\nit('Test Case #3', function () {\n  const test3 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result3 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 8, 9]);\n  program.removeKthNodeFromEnd(test3, 3);\n  chai.expect(test3.getNodesInArray()).to.deep.equal(result3.getNodesInArray());\n});\n\nit('Test Case #4', function () {\n  const test4 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result4 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test4, 4);\n  chai.expect(test4.getNodesInArray()).to.deep.equal(result4.getNodesInArray());\n});\n\nit('Test Case #5', function () {\n  const test5 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result5 = new LinkedList(0).addMany([1, 2, 3, 4, 6, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test5, 5);\n  chai.expect(test5.getNodesInArray()).to.deep.equal(result5.getNodesInArray());\n});\n\nit('Test Case #6', function () {\n  const test6 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result6 = new LinkedList(0).addMany([1, 2, 3, 5, 6, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test6, 6);\n  chai.expect(test6.getNodesInArray()).to.deep.equal(result6.getNodesInArray());\n});\n\nit('Test Case #7', function () {\n  const test7 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result7 = new LinkedList(0).addMany([1, 2, 4, 5, 6, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test7, 7);\n  chai.expect(test7.getNodesInArray()).to.deep.equal(result7.getNodesInArray());\n});\n\nit('Test Case #8', function () {\n  const test8 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result8 = new LinkedList(0).addMany([1, 3, 4, 5, 6, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test8, 8);\n  chai.expect(test8.getNodesInArray()).to.deep.equal(result8.getNodesInArray());\n});\n\nit('Test Case #9', function () {\n  const test9 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result9 = new LinkedList(0).addMany([2, 3, 4, 5, 6, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test9, 9);\n  chai.expect(test9.getNodesInArray()).to.deep.equal(result9.getNodesInArray());\n});\n\nit('Test Case #10', function () {\n  const test10 = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const result10 = new LinkedList(1).addMany([2, 3, 4, 5, 6, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test10, 10);\n  chai.expect(test10.getNodesInArray()).to.deep.equal(result10.getNodesInArray());\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass StartLinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nconst linkedListClass = program.LinkedList || StartLinkedList;\n\nclass LinkedList extends linkedListClass {\n  constructor(value) {\n    super(value);\n  }\n\n  addMany(values) {\n    let current = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNodesInArray() {\n    const nodes = [];\n    let current = this;\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n}\n\nit('Test Case #1', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const expected = new LinkedList(0).addMany([1, 2, 3, 4, 5, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test, 4);\n  chai.expect(test.getNodesInArray()).to.deep.equal(expected.getNodesInArray());\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  constructor(value) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n) time | O(1) space\nfunction removeKthNodeFromEnd(head, k) {\n  let counter = 1;\n  let first = head;\n  let second = head;\n  while (counter <= k) {\n    second = second.next;\n    counter++;\n  }\n  if (second === null) {\n    head.value = head.next.value;\n    head.next = head.next.next;\n    return;\n  }\n  while (second.next !== null) {\n    second = second.next;\n    first = first.next;\n  }\n  first.next = first.next.next;\n}\n\nexports.LinkedList = LinkedList;\nexports.removeKthNodeFromEnd = removeKthNodeFromEnd;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# This is an input class. Do not edit.\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\ndef removeKthNodeFromEnd(head, k):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass StartLinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\nlinkedListClass = StartLinkedList\nif hasattr(program, \"LinkedList\"):\n    linkedListClass = program.LinkedList\n\n\nclass LinkedList(linkedListClass):\n    def addMany(self, values):\n        current = self\n        while current.next is not None:\n            current = current.next\n        for value in values:\n            current.next = LinkedList(value)\n            current = current.next\n        return self\n\n    def getNodesInArray(self):\n        nodes = []\n        current = self\n        while current is not None:\n            nodes.append(current.value)\n            current = current.next\n        return nodes\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test1 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result1 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8])\n        program.removeKthNodeFromEnd(test1, 1)\n        self.assertEqual(test1.getNodesInArray(), result1.getNodesInArray())\n\n    def test_case_2(self):\n        test2 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result2 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 9])\n        program.removeKthNodeFromEnd(test2, 2)\n        self.assertEqual(test2.getNodesInArray(), result2.getNodesInArray())\n\n    def test_case_3(self):\n        test3 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result3 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 8, 9])\n        program.removeKthNodeFromEnd(test3, 3)\n        self.assertEqual(test3.getNodesInArray(), result3.getNodesInArray())\n\n    def test_case_4(self):\n        test4 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result4 = LinkedList(0).addMany([1, 2, 3, 4, 5, 7, 8, 9])\n        program.removeKthNodeFromEnd(test4, 4)\n        self.assertEqual(test4.getNodesInArray(), result4.getNodesInArray())\n\n    def test_case_5(self):\n        test5 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result5 = LinkedList(0).addMany([1, 2, 3, 4, 6, 7, 8, 9])\n        program.removeKthNodeFromEnd(test5, 5)\n        self.assertEqual(test5.getNodesInArray(), result5.getNodesInArray())\n\n    def test_case_6(self):\n        test6 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result6 = LinkedList(0).addMany([1, 2, 3, 5, 6, 7, 8, 9])\n        program.removeKthNodeFromEnd(test6, 6)\n        self.assertEqual(test6.getNodesInArray(), result6.getNodesInArray())\n\n    def test_case_7(self):\n        test7 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result7 = LinkedList(0).addMany([1, 2, 4, 5, 6, 7, 8, 9])\n        program.removeKthNodeFromEnd(test7, 7)\n        self.assertEqual(test7.getNodesInArray(), result7.getNodesInArray())\n\n    def test_case_8(self):\n        test8 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result8 = LinkedList(0).addMany([1, 3, 4, 5, 6, 7, 8, 9])\n        program.removeKthNodeFromEnd(test8, 8)\n        self.assertEqual(test8.getNodesInArray(), result8.getNodesInArray())\n\n    def test_case_9(self):\n        test9 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result9 = LinkedList(0).addMany([2, 3, 4, 5, 6, 7, 8, 9])\n        program.removeKthNodeFromEnd(test9, 9)\n        self.assertEqual(test9.getNodesInArray(), result9.getNodesInArray())\n\n    def test_case_10(self):\n        test10 = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        result10 = LinkedList(1).addMany([2, 3, 4, 5, 6, 7, 8, 9])\n        program.removeKthNodeFromEnd(test10, 10)\n        self.assertEqual(test10.getNodesInArray(), result10.getNodesInArray())\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass StartLinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\nlinkedListClass = StartLinkedList\nif hasattr(program, \"LinkedList\"):\n    linkedListClass = program.LinkedList\n\n\nclass LinkedList(linkedListClass):\n    def addMany(self, values):\n        current = self\n        while current.next is not None:\n            current = current.next\n        for value in values:\n            current.next = LinkedList(value)\n            current = current.next\n        return self\n\n    def getNodesInArray(self):\n        nodes = []\n        current = self\n        while current is not None:\n            nodes.append(current.value)\n            current = current.next\n        return nodes\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test = LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9])\n        expected = LinkedList(0).addMany([1, 2, 3, 4, 5, 7, 8, 9])\n        program.removeKthNodeFromEnd(test, 4)\n        self.assertEqual(test.getNodesInArray(), expected.getNodesInArray())\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList:\n    def __init__(self, value):\n        self.value = value\n        self.next = None\n\n\n# O(n) time | O(1) space\ndef removeKthNodeFromEnd(head, k):\n    counter = 1\n    first = head\n    second = head\n    while counter <= k:\n        second = second.next\n        counter += 1\n    if second is None:\n        head.value = head.next.value\n        head.next = head.next.next\n        return\n    while second.next is not None:\n        second = second.next\n        first = first.next\n    first.next = first.next.next\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is an input class. Do not edit.\n  class LinkedList {\n    var value: Int?\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n      next = nil\n    }\n  }\n\n  func removeKthNodeFromEnd(head: LinkedList, k: Int) {\n    // Write your code here.\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var firstTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var firstResult = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8])\n      program.removeKthNodeFromEnd(head: firstTest as Program.LinkedList, k: 1)\n      try assertEqual(firstResult.getNodesInArray(), firstTest.getNodesInArray())\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var secondTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var secondResult = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 9])\n      program.removeKthNodeFromEnd(head: secondTest as Program.LinkedList, k: 2)\n      try assertEqual(secondResult.getNodesInArray(), secondTest.getNodesInArray())\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var thirdTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var thirdResult = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 8, 9])\n      program.removeKthNodeFromEnd(head: thirdTest as Program.LinkedList, k: 3)\n      try assertEqual(thirdResult.getNodesInArray(), thirdTest.getNodesInArray())\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var fourthTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var fourthResult = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 7, 8, 9])\n      program.removeKthNodeFromEnd(head: fourthTest as Program.LinkedList, k: 4)\n      try assertEqual(fourthResult.getNodesInArray(), fourthTest.getNodesInArray())\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var fifthTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var fifthResult = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 6, 7, 8, 9])\n      program.removeKthNodeFromEnd(head: fifthTest as Program.LinkedList, k: 5)\n      try assertEqual(fifthResult.getNodesInArray(), fifthTest.getNodesInArray())\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var sixthTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var sixthResult = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 5, 6, 7, 8, 9])\n      program.removeKthNodeFromEnd(head: sixthTest as Program.LinkedList, k: 6)\n      try assertEqual(sixthResult.getNodesInArray(), sixthTest.getNodesInArray())\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var seventhTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var seventhResult = TestLinkedList(value: 0).addMany(values: [1, 2, 4, 5, 6, 7, 8, 9])\n      program.removeKthNodeFromEnd(head: seventhTest as Program.LinkedList, k: 7)\n      try assertEqual(seventhResult.getNodesInArray(), seventhTest.getNodesInArray())\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var eighthTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var eighthResult = TestLinkedList(value: 0).addMany(values: [1, 3, 4, 5, 6, 7, 8, 9])\n      program.removeKthNodeFromEnd(head: eighthTest as Program.LinkedList, k: 8)\n      try assertEqual(eighthResult.getNodesInArray(), eighthTest.getNodesInArray())\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      var ninthTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var ninthResult = TestLinkedList(value: 0).addMany(values: [2, 3, 4, 5, 6, 7, 8, 9])\n      program.removeKthNodeFromEnd(head: ninthTest as Program.LinkedList, k: 9)\n      try assertEqual(ninthResult.getNodesInArray(), ninthTest.getNodesInArray())\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      var tenthTest = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var tenthResult = TestLinkedList(value: 1).addMany(values: [2, 3, 4, 5, 6, 7, 8, 9])\n      program.removeKthNodeFromEnd(head: tenthResult as Program.LinkedList, k: 10)\n      try assertEqual(tenthResult.getNodesInArray(), tenthResult.getNodesInArray())\n    }\n  }\n}\n\nclass TestLinkedList: Program.LinkedList {\n  func addMany(values: [Int]) -> TestLinkedList {\n    var current = self as Program.LinkedList\n\n    while current.next != nil {\n      current = current.next!\n    }\n\n    for value in values {\n      current.next = Program.LinkedList(value: value)\n      current = current.next!\n    }\n\n    return self\n  }\n\n  func getNodesInArray() -> [Int] {\n    var nodes = [Int]()\n\n    var current: Program.LinkedList? = self as Program.LinkedList?\n\n    while current != nil {\n      nodes.append(current!.value!)\n      current = current!.next\n    }\n\n    return nodes\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var test = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      var expected = TestLinkedList(value: 0).addMany(values: [1, 2, 3, 4, 5, 7, 8, 9])\n      program.removeKthNodeFromEnd(head: test as Program.LinkedList, k: 4)\n      try assertEqual(expected.getNodesInArray(), test.getNodesInArray())\n    }\n  }\n}\n\nclass TestLinkedList: Program.LinkedList {\n  func addMany(values: [Int]) -> TestLinkedList {\n    var current = self as Program.LinkedList\n\n    while current.next != nil {\n      current = current.next!\n    }\n\n    for value in values {\n      current.next = Program.LinkedList(value: value)\n      current = current.next!\n    }\n\n    return self\n  }\n\n  func getNodesInArray() -> [Int] {\n    var nodes = [Int]()\n\n    var current: Program.LinkedList? = self as Program.LinkedList?\n\n    while current != nil {\n      nodes.append(current!.value!)\n      current = current!.next\n    }\n\n    return nodes\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class LinkedList {\n    var value: Int?\n    var next: LinkedList?\n\n    init(value: Int) {\n      self.value = value\n      next = nil\n    }\n  }\n\n  // O(n) time | O(1) space\n  func removeKthNodeFromEnd(head: LinkedList, k: Int) {\n    var counter = 1\n\n    var firstPointer: LinkedList? = head\n    var secondPointer: LinkedList? = head\n\n    while counter <= k {\n      secondPointer = secondPointer?.next\n      counter += 1\n    }\n\n    if secondPointer == nil {\n      head.value = head.next?.value\n      head.next = head.next?.next\n\n      return\n    }\n\n    while secondPointer?.next != nil {\n      firstPointer = firstPointer?.next\n      secondPointer = secondPointer?.next\n    }\n\n    firstPointer?.next = firstPointer?.next?.next\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// This is an input class. Do not edit.\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\nexport function removeKthNodeFromEnd(head: LinkedList, k: number) {\n  // Write your code here.\n  return head;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n\n  addMany(values: number[]): LinkedList {\n    let current: LinkedList = this;\n    while (current.next !== null) {\n      current = current.next;\n    }\n    for (const value of values) {\n      current.next = new LinkedList(value);\n      current = current.next;\n    }\n    return this;\n  }\n\n  getNodesInArray() {\n    const nodes: number[] = [];\n    let current: LinkedList | null = this;\n    while (current !== null) {\n      nodes.push(current.value);\n      current = current.next;\n    }\n    return nodes;\n  }\n}\n\nit('Test Case #1', function () {\n  const test = new LinkedList(0).addMany([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n  const expected = new LinkedList(0).addMany([1, 2, 3, 4, 5, 7, 8, 9]);\n  program.removeKthNodeFromEnd(test, 4);\n  chai.expect(test.getNodesInArray()).to.deep.equal(expected.getNodesInArray());\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass LinkedList {\n  value: number;\n  next: LinkedList | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.next = null;\n  }\n}\n\n// O(n) time | O(1) space\nexport function removeKthNodeFromEnd(head: LinkedList, k: number) {\n  let counter = 1;\n  let first: LinkedList = head;\n  let second: LinkedList | null = head;\n  while (counter <= k) {\n    second = second!.next;\n    counter++;\n  }\n  if (second === null) {\n    head.value = head.next!.value;\n    head.next = head.next!.next;\n    return;\n  }\n  while (second.next !== null) {\n    second = second.next;\n    first = first.next!;\n  }\n  first.next = first.next!.next;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "k": 4,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 1,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 2,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 3,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 5,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 6,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 7,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 8,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 9,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "k": 10,
+      "linkedList": {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "7",
+            "value": 5
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": null,
+            "value": 8
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "9",
+            "value": 7
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "8",
+            "value": 6
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "6",
+            "value": 4
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "5",
+            "value": 3
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "4",
+            "value": 2
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "1",
+            "value": 0
+          },
+          {
+            "id": "1",
+            "next": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "0",
+        "nodes": [
+          {
+            "id": "0",
+            "next": "2",
+            "value": 0
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      },
+      {
+        "head": "1",
+        "nodes": [
+          {
+            "id": "1",
+            "next": "2",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "next": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "next": "4",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "next": "5",
+            "value": 4
+          },
+          {
+            "id": "5",
+            "next": "6",
+            "value": 5
+          },
+          {
+            "id": "6",
+            "next": "7",
+            "value": 6
+          },
+          {
+            "id": "7",
+            "next": "8",
+            "value": 7
+          },
+          {
+            "id": "8",
+            "next": "9",
+            "value": 8
+          },
+          {
+            "id": "9",
+            "next": null,
+            "value": 9
+          }
+        ]
+      }
+    ]
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "Summary": {
+    "Name": "Max Subset Sum No Adjacent",
+    "Category": "Dynamic Programming",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 651,
+      "timeOne": 0,
+      "timeTwo": 924,
+      "url": "https://player.vimeo.com/video/249798598"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try building an array of the same length as the input array. At each index in this new array, store the maximum sum that can be generated using no adjacent numbers located between index 0 and the current index.\nCan you come up with a formula that relates the max sum at index i to the max sums at indices i - 1 and i - 2?\nDo you really need to store the entire array mentioned in Hint #1, or can you somehow store just the max sums that you need at any point in time?\n",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in an array of positive integers and returns the\n  maximum sum of non-adjacent elements in the array.\n</p>\n<p>If a sum can't be generated, the function should return <span>0</span>.</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [75, 105, 120, 75, 90, 135]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n330 <span class=\"CodeEditor-promptComment\">// 75, 120, 135</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        75,
+        105,
+        120,
+        75,
+        90,
+        135
+      ],
+      "Schema": {
+        "items": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nint maxSubsetSumNoAdjacent(vector<int> array) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "vector<int> vector1;\nvector<int> vector2{1};\nvector<int> vector3{1, 2};\nvector<int> vector4{1, 2, 3};\nvector<int> vector5{1, 15, 3};\nvector<int> vector6{7, 10, 12, 7, 9, 14};\nvector<int> vector7{4, 3, 5, 200, 5, 3};\nvector<int> vector8{10, 5, 20, 25, 15, 5, 5, 15};\nvector<int> vector9{10, 5, 20, 25, 15, 5, 5, 15, 3, 15, 5, 5, 15};\nvector<int> vector10{125, 21, 250, 120, 150, 300};\nvector<int> vector11{30, 25, 50, 55, 100};\nvector<int> vector12{30, 25, 50, 55, 100, 120};\nvector<int> vector13{7, 10, 12, 7, 9, 14, 15, 16, 25, 20, 4};\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(maxSubsetSumNoAdjacent(vector1) == 0); });\n\n    RunTest(\"Test Case 2\",\n            []() { assert(maxSubsetSumNoAdjacent(vector2) == 1); });\n\n    RunTest(\"Test Case 3\",\n            []() { assert(maxSubsetSumNoAdjacent(vector3) == 2); });\n\n    RunTest(\"Test Case 4\",\n            []() { assert(maxSubsetSumNoAdjacent(vector4) == 4); });\n\n    RunTest(\"Test Case 5\",\n            []() { assert(maxSubsetSumNoAdjacent(vector5) == 15); });\n\n    RunTest(\"Test Case 6\",\n            []() { assert(maxSubsetSumNoAdjacent(vector6) == 33); });\n\n    RunTest(\"Test Case 7\",\n            []() { assert(maxSubsetSumNoAdjacent(vector7) == 207); });\n\n    RunTest(\"Test Case 8\",\n            []() { assert(maxSubsetSumNoAdjacent(vector8) == 60); });\n\n    RunTest(\"Test Case 9\",\n            []() { assert(maxSubsetSumNoAdjacent(vector9) == 90); });\n\n    RunTest(\"Test Case 10\",\n            []() { assert(maxSubsetSumNoAdjacent(vector10) == 675); });\n\n    RunTest(\"Test Case 11\",\n            []() { assert(maxSubsetSumNoAdjacent(vector11) == 180); });\n\n    RunTest(\"Test Case 12\",\n            []() { assert(maxSubsetSumNoAdjacent(vector12) == 205); });\n\n    RunTest(\"Test Case 13\",\n            []() { assert(maxSubsetSumNoAdjacent(vector13) == 72); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n        vector<int> vector{75, 105, 120, 75, 90, 135};\n        assert(maxSubsetSumNoAdjacent(vector) == 330);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(n) time | O(n) space\nint maxSubsetSumNoAdjacent(vector<int> array) {\n  if (array.size() == 0) {\n    return 0;\n  } else if (array.size() == 1) {\n    return array[0];\n  }\n  vector<int> maxSums = array;\n  maxSums[1] = max(array[0], array[1]);\n  for (int i = 2; i < array.size(); i++) {\n    maxSums[i] = max(maxSums[i - 1], maxSums[i - 2] + array[i]);\n  }\n  return maxSums[array.size() - 1];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(n) time | O(1) space\nint maxSubsetSumNoAdjacent(vector<int> array) {\n  if (array.size() == 0) {\n    return 0;\n  } else if (array.size() == 1) {\n    return array[0];\n  }\n  int second = array[0];\n  int first = max(array[0], array[1]);\n  for (int i = 2; i < array.size(); i++) {\n    int current = max(first, second + array[i]);\n    second = first;\n    first = current;\n  }\n  return first;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int MaxSubsetSumNoAdjacent(int[] array) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] input = {1};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] input = {1, 2};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] input = {1, 2, 3};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] input = {1, 15, 3};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 15);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] input = {7, 10, 12, 7, 9, 14};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 33);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] input = {4, 3, 5, 200, 5, 3};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 207);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] input = {10, 5, 20, 25, 15, 5, 5, 15};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 60);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] input = {10, 5, 20, 25, 15, 5, 5, 15, 3, 15, 5, 5, 15};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 90);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] input = {125, 21, 250, 120, 150, 300};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 675);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tint[] input = {30, 25, 50, 55, 100};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 180);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tint[] input = {30, 25, 50, 55, 100, 120};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 205);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tint[] input = {7, 10, 12, 7, 9, 14, 15, 16, 25, 20, 4};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 72);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] input = {75, 105, 120, 75, 90, 135};\n\t\tUtils.AssertTrue(Program.MaxSubsetSumNoAdjacent(input) == 330);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static int MaxSubsetSumNoAdjacent(int[] array) {\n\t\tif (array.Length == 0) {\n\t\t\treturn 0;\n\t\t} else if (array.Length == 1) {\n\t\t\treturn array[0];\n\t\t}\n\t\tint[] maxSums = (int[]) array.Clone();\n\t\tmaxSums[1] = Math.Max(array[0], array[1]);\n\t\tfor (int i = 2; i < array.Length; i++) {\n\t\t\tmaxSums[i] = Math.Max(maxSums[i - 1], maxSums[i - 2] + array[i]);\n\t\t}\n\t\treturn maxSums[array.Length - 1];\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(n) time | O(1) space\n\tpublic static int MaxSubsetSumNoAdjacent(int[] array) {\n\t\tif (array.Length == 0) {\n\t\t\treturn 0;\n\t\t} else if (array.Length == 1) {\n\t\t\treturn array[0];\n\t\t}\n\t\tint second = array[0];\n\t\tint first = Math.Max(array[0], array[1]);\n\t\tfor (int i = 2; i < array.Length; i++) {\n\t\t\tint current = Math.Max(first, second + array[i]);\n\t\t\tsecond = first;\n\t\t\tfirst = current;\n\t\t}\n\t\treturn first;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc MaxSubsetSumNoAdjacent(array []int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{})\n\trequire.Equal(t, res, 0)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{1})\n\trequire.Equal(t, res, 1)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{1, 2})\n\trequire.Equal(t, res, 2)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{1, 2, 3})\n\trequire.Equal(t, res, 4)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{1, 15, 3})\n\trequire.Equal(t, res, 15)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{7, 10, 12, 7, 9, 14})\n\trequire.Equal(t, res, 33)\n}\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{4, 3, 5, 200, 5, 3})\n\trequire.Equal(t, res, 207)\n}\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{10, 5, 20, 25, 15, 5, 5, 15})\n\trequire.Equal(t, res, 60)\n}\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{10, 5, 20, 25, 15, 5, 5, 15, 3, 15, 5, 5, 15})\n\trequire.Equal(t, res, 90)\n}\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{125, 210, 250, 120, 150, 300})\n\trequire.Equal(t, res, 675)\n}\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{30, 25, 50, 55, 100})\n\trequire.Equal(t, res, 180)\n}\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{30, 25, 50, 55, 100, 120})\n\trequire.Equal(t, res, 205)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{7, 10, 12, 7, 9, 14, 15, 16, 25, 20, 4})\n\trequire.Equal(t, res, 72)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tres := MaxSubsetSumNoAdjacent([]int{75, 105, 120, 75, 90, 135})\n\trequire.Equal(t, res, 330)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(n) space\nfunc MaxSubsetSumNoAdjacent(array []int) int {\n\tif len(array) == 0 {\n\t\treturn 0\n\t} else if len(array) == 1 {\n\t\treturn array[0]\n\t}\n\tmaxSums := make([]int, len(array))\n\tmaxSums[0], maxSums[1] = array[0], max(array[0], array[1])\n\tfor i := 2; i < len(array); i++ {\n\t\tmaxSums[i] = max(maxSums[i-1], maxSums[i-2]+array[i])\n\t}\n\treturn maxSums[len(array)-1]\n}\n\nfunc max(a, b int) int {\n\tif a > b {\n\t\treturn a\n\t}\n\treturn b\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space\nfunc MaxSubsetSumNoAdjacent(array []int) int {\n\tif len(array) == 0 {\n\t\treturn 0\n\t} else if len(array) == 1 {\n\t\treturn array[0]\n\t}\n\tfirst := max(array[0], array[1])\n\tsecond := array[0]\n\tfor i := 2; i < len(array); i++ {\n\t\tcurrent := max(first, second+array[i])\n\t\tsecond = first\n\t\tfirst = current\n\t}\n\treturn first\n}\n\nfunc max(a, b int) int {\n\tif a > b {\n\t\treturn a\n\t}\n\treturn b\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int maxSubsetSumNoAdjacent(int[] array) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 0);\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] input = {1};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 1);\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] input = {1, 2};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 2);\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] input = {1, 2, 3};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 4);\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] input = {1, 15, 3};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 15);\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] input = {7, 10, 12, 7, 9, 14};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 33);\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] input = {4, 3, 5, 200, 5, 3};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 207);\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] input = {10, 5, 20, 25, 15, 5, 5, 15};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 60);\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] input = {10, 5, 20, 25, 15, 5, 5, 15, 3, 15, 5, 5, 15};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 90);\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] input = {125, 21, 250, 120, 150, 300};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 675);\n  }\n\n  @Test\n  public void TestCase11() {\n    int[] input = {30, 25, 50, 55, 100};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 180);\n  }\n\n  @Test\n  public void TestCase12() {\n    int[] input = {30, 25, 50, 55, 100, 120};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 205);\n  }\n\n  @Test\n  public void TestCase13() {\n    int[] input = {7, 10, 12, 7, 9, 14, 15, 16, 25, 20, 4};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 72);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] input = {75, 105, 120, 75, 90, 135};\n    Utils.assertTrue(Program.maxSubsetSumNoAdjacent(input) == 330);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  public static int maxSubsetSumNoAdjacent(int[] array) {\n    if (array.length == 0) {\n      return 0;\n    } else if (array.length == 1) {\n      return array[0];\n    }\n    int[] maxSums = array.clone();\n    maxSums[1] = Math.max(array[0], array[1]);\n    for (int i = 2; i < array.length; i++) {\n      maxSums[i] = Math.max(maxSums[i - 1], maxSums[i - 2] + array[i]);\n    }\n    return maxSums[array.length - 1];\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  public static int maxSubsetSumNoAdjacent(int[] array) {\n    if (array.length == 0) {\n      return 0;\n    } else if (array.length == 1) {\n      return array[0];\n    }\n    int second = array[0];\n    int first = Math.max(array[0], array[1]);\n    for (int i = 2; i < array.length; i++) {\n      int current = Math.max(first, second + array[i]);\n      second = first;\n      first = current;\n    }\n    return first;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function maxSubsetSumNoAdjacent(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.maxSubsetSumNoAdjacent = maxSubsetSumNoAdjacent;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([])).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([1])).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([1, 2])).to.deep.equal(2);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([1, 2, 3])).to.deep.equal(4);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([1, 15, 3])).to.deep.equal(15);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([7, 10, 12, 7, 9, 14])).to.deep.equal(33);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([4, 3, 5, 200, 5, 3])).to.deep.equal(207);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([10, 5, 20, 25, 15, 5, 5, 15])).to.deep.equal(60);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([10, 5, 20, 25, 15, 5, 5, 15, 3, 15, 5, 5, 15])).to.deep.equal(90);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([125, 210, 250, 120, 150, 300])).to.deep.equal(675);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([30, 25, 50, 55, 100])).to.deep.equal(180);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([30, 25, 50, 55, 100, 120])).to.deep.equal(205);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([7, 10, 12, 7, 9, 14, 15, 16, 25, 20, 4])).to.deep.equal(72);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([75, 105, 120, 75, 90, 135])).to.deep.equal(330);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction maxSubsetSumNoAdjacent(array) {\n  if (!array.length) return 0;\n  if (array.length === 1) return array[0];\n  const maxSums = array.slice();\n  maxSums[1] = Math.max(array[0], array[1]);\n  for (let i = 2; i < array.length; i++) {\n    maxSums[i] = Math.max(maxSums[i - 1], maxSums[i - 2] + array[i]);\n  }\n  return maxSums[maxSums.length - 1];\n}\n\nexports.maxSubsetSumNoAdjacent = maxSubsetSumNoAdjacent;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nfunction maxSubsetSumNoAdjacent(array) {\n  if (!array.length) return 0;\n  if (array.length === 1) return array[0];\n  let second = array[0];\n  let first = Math.max(array[0], array[1]);\n  for (let i = 2; i < array.length; i++) {\n    const current = Math.max(first, second + array[i]);\n    second = first;\n    first = current;\n  }\n  return first;\n}\n\nexports.maxSubsetSumNoAdjacent = maxSubsetSumNoAdjacent;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def maxSubsetSumNoAdjacent(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([]), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([1]), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([1, 2]), 2)\n\n    def test_case_4(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([1, 2, 3]), 4)\n\n    def test_case_5(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([1, 15, 3]), 15)\n\n    def test_case_6(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([7, 10, 12, 7, 9, 14]), 33)\n\n    def test_case_7(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([4, 3, 5, 200, 5, 3]), 207)\n\n    def test_case_8(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([10, 5, 20, 25, 15, 5, 5, 15]), 60)\n\n    def test_case_9(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([10, 5, 20, 25, 15, 5, 5, 15, 3, 15, 5, 5, 15]), 90)\n\n    def test_case_10(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([125, 210, 250, 120, 150, 300]), 675)\n\n    def test_case_11(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([30, 25, 50, 55, 100]), 180)\n\n    def test_case_12(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([30, 25, 50, 55, 100, 120]), 205)\n\n    def test_case_13(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([7, 10, 12, 7, 9, 14, 15, 16, 25, 20, 4]), 72)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.maxSubsetSumNoAdjacent([75, 105, 120, 75, 90, 135]), 330)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef maxSubsetSumNoAdjacent(array):\n    if not len(array):\n        return 0\n    elif len(array) == 1:\n        return array[0]\n    maxSums = array[:]\n    maxSums[1] = max(array[0], array[1])\n    for i in range(2, len(array)):\n        maxSums[i] = max(maxSums[i - 1], maxSums[i - 2] + array[i])\n    return maxSums[-1]\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space\ndef maxSubsetSumNoAdjacent(array):\n    if not len(array):\n        return 0\n    elif len(array) == 1:\n        return array[0]\n    second = array[0]\n    first = max(array[0], array[1])\n    for i in range(2, len(array)):\n        current = max(first, second + array[i])\n        second = first\n        first = current\n    return first\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func maximumSubsetSum(array: [Int]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(0, program.maximumSubsetSum(array: []))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(1, program.maximumSubsetSum(array: [1]))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(2, program.maximumSubsetSum(array: [1, 2]))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(4, program.maximumSubsetSum(array: [1, 2, 3]))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(15, program.maximumSubsetSum(array: [1, 15, 3]))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(33, program.maximumSubsetSum(array: [7, 10, 12, 7, 9, 14]))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(207, program.maximumSubsetSum(array: [4, 3, 5, 200, 5, 3]))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(60, program.maximumSubsetSum(array: [10, 5, 20, 25, 15, 5, 5, 15]))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(90, program.maximumSubsetSum(array: [10, 5, 20, 25, 15, 5, 5, 15, 3, 15, 5, 5, 15]))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(675, program.maximumSubsetSum(array: [125, 210, 250, 120, 150, 300]))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(180, program.maximumSubsetSum(array: [30, 25, 50, 55, 100]))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(205, program.maximumSubsetSum(array: [30, 25, 50, 55, 100, 120]))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(72, program.maximumSubsetSum(array: [7, 10, 12, 7, 9, 14, 15, 16, 25, 20, 4]))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(330, program.maximumSubsetSum(array: [75, 105, 120, 75, 90, 135]))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(n) space\n  func maximumSubsetSum(array: [Int]) -> Int {\n    if array.count == 0 {\n      return 0\n    }\n\n    if array.count == 1 {\n      return array.first!\n    }\n\n    var maxSums = array\n    maxSums[1] = max(maxSums[0], maxSums[1])\n\n    for i in 2 ..< array.count {\n      maxSums[i] = max(maxSums[i - 1], maxSums[i - 2] + array[i])\n    }\n\n    return maxSums[maxSums.count - 1]\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space\n  func maximumSubsetSum(array: [Int]) -> Int {\n    if array.count == 0 {\n      return 0\n    }\n\n    if array.count == 1 {\n      return array[0]\n    }\n\n    var second = array[0]\n    var first = max(array[0], array[1])\n\n    for i in 2 ..< array.count {\n      var current = max(first, second + array[i])\n      second = first\n      first = current\n    }\n\n    return first\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function maxSubsetSumNoAdjacent(array: number[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.maxSubsetSumNoAdjacent([75, 105, 120, 75, 90, 135])).to.deep.equal(330);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nexport function maxSubsetSumNoAdjacent(array: number[]) {\n  if (!array.length) return 0;\n  if (array.length === 1) return array[0];\n  const maxSums = array.slice();\n  maxSums[1] = Math.max(array[0], array[1]);\n  for (let i = 2; i < array.length; i++) {\n    maxSums[i] = Math.max(maxSums[i - 1], maxSums[i - 2] + array[i]);\n  }\n  return maxSums[maxSums.length - 1];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space\nexport function maxSubsetSumNoAdjacent(array: number[]) {\n  if (!array.length) return 0;\n  if (array.length === 1) return array[0];\n  let second = array[0];\n  let first = Math.max(array[0], array[1]);\n  for (let i = 2; i < array.length; i++) {\n    const current = Math.max(first, second + array[i]);\n    second = first;\n    first = current;\n  }\n  return first;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        75,
+        105,
+        120,
+        75,
+        90,
+        135
+      ]
+    },
+    {
+      "array": []
+    },
+    {
+      "array": [
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        2
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "array": [
+        1,
+        15,
+        3
+      ]
+    },
+    {
+      "array": [
+        7,
+        10,
+        12,
+        7,
+        9,
+        14
+      ]
+    },
+    {
+      "array": [
+        4,
+        3,
+        5,
+        200,
+        5,
+        3
+      ]
+    },
+    {
+      "array": [
+        10,
+        5,
+        20,
+        25,
+        15,
+        5,
+        5,
+        15
+      ]
+    },
+    {
+      "array": [
+        10,
+        5,
+        20,
+        25,
+        15,
+        5,
+        5,
+        15,
+        3,
+        15,
+        5,
+        5,
+        15
+      ]
+    },
+    {
+      "array": [
+        125,
+        210,
+        250,
+        120,
+        150,
+        300
+      ]
+    },
+    {
+      "array": [
+        30,
+        25,
+        50,
+        55,
+        100
+      ]
+    },
+    {
+      "array": [
+        30,
+        25,
+        50,
+        55,
+        100,
+        120
+      ]
+    },
+    {
+      "array": [
+        7,
+        10,
+        12,
+        7,
+        9,
+        14,
+        15,
+        16,
+        25,
+        20,
+        4
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      330,
+      0,
+      1,
+      2,
+      4,
+      15,
+      33,
+      207,
+      60,
+      90,
+      675,
+      180,
+      205,
+      72
+    ]
+  ]
+}

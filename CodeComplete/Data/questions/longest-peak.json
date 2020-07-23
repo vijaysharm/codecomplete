@@ -1,0 +1,311 @@
+{
+  "Summary": {
+    "Name": "Longest Peak",
+    "Category": "Arrays",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "date": "2020-03-29T00:00:00Z",
+      "number": 469,
+      "timeOne": 0,
+      "timeTwo": 1583,
+      "url": "https://player.vimeo.com/video/400907692"
+    }
+  },
+  "Prompt": "",
+  "Hints": "You can solve this question by iterating through the array from left to right once.\nIterate through the array from left to right, and treat every integer as the potential tip of a peak. To be the tip of a peak, an integer has to be strictly greater than its adjacent integers. What can you do when you find an actual tip?\nAs you iterate through the array from left to right, whenever you find a tip of a peak, expand outwards from the tip until you no longer have a peak. Given what peaks look like and how many peaks can therefore fit in an array, realize that this process results in a linear-time algorithm. Make sure to keep track of the longest peak you find as you iterate through the array.",
+  "SpaceTime": "O(n) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in an array of integers and returns the length of\n  the longest peak in the array.\n</p>\n<p>\n  A peak is defined as adjacent integers in the array that are <b>strictly</b>\n  increasing until they reach a tip (the highest value in the peak), at which\n  point they become <b>strictly</b> decreasing. At least three integers are required to\n  form a peak.\n</p>\n<p>\n  For example, the integers <span>1, 4, 10, 2</span> form a peak, but the\n  integers <span>4, 0, 10</span> don't and neither do the integers\n  <span>1, 2, 2, 0</span>. Similarly, the integers <span>1, 2, 3</span> don't\n  form a peak because there aren't any strictly decreasing integers after the\n  <span>3</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n6 <span class=\"CodeEditor-promptComment\">// 0, 10, 6, 5, -1, -3</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        1,
+        2,
+        3,
+        3,
+        4,
+        0,
+        10,
+        6,
+        5,
+        -1,
+        -3,
+        2,
+        3
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nint longestPeak(vector<int> array) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input = {};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 2\", []() {\n      vector<int> input = {1, 3, 2};\n      int expected = 3;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 3\", []() {\n      vector<int> input = {1, 2, 3, 4, 5, 1};\n      int expected = 6;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 4\", []() {\n      vector<int> input = {5, 4, 3, 2, 1, 2, 1};\n      int expected = 3;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 5\", []() {\n      vector<int> input = {5, 4, 3, 2, 1, 2, 10, 12, -3, 5, 6, 7, 10};\n      int expected = 5;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 6\", []() {\n      vector<int> input = {5, 4, 3, 2, 1, 2, 10, 12};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 7\", []() {\n      vector<int> input = {1, 2, 3, 4, 5, 6, 10, 100, 1000};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 8\", []() {\n      vector<int> input = {1, 2, 3, 3, 2, 1};\n      int expected = 0;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 9\", []() {\n      vector<int> input = {1, 1, 3, 2, 1};\n      int expected = 4;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 10\", []() {\n      vector<int> input = {1, 2, 3, 2, 1, 1};\n      int expected = 5;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 11\", []() {\n      vector<int> input = {1,  1,  1, 2,  3,  10, 12, -3, -3, 2, 3,  45, 800,\n                           99, 98, 0, -1, -1, 2,  3,  4,  5,  0, -1, -1};\n      int expected = 9;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n    RunTest(\"Test Case 12\", []() {\n      vector<int> input = {1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};\n      int expected = 6;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> input = {1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};\n      int expected = 6;\n      int actual = longestPeak(input);\n      assert(expected == actual);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n) time | O(1) space - where n is the length of the input array\nint longestPeak(vector<int> array) {\n  int longestPeakLength = 0;\n  int i = 1;\n  while (i < int(array.size() - 1)) {\n    bool isPeak = array[i - 1] < array[i] && array[i] > array[i + 1];\n    if (!isPeak) {\n      i += 1;\n      continue;\n    }\n\n    int leftIdx = i - 2;\n    while (leftIdx >= 0 && array[leftIdx] < array[leftIdx + 1]) {\n      leftIdx -= 1;\n    }\n\n    int rightIdx = i + 2;\n    while (rightIdx < array.size() && array[rightIdx] < array[rightIdx - 1]) {\n      rightIdx += 1;\n    }\n    int currentPeakLength = rightIdx - leftIdx - 1;\n    longestPeakLength = max(longestPeakLength, currentPeakLength);\n    i = rightIdx;\n  }\n  return longestPeakLength;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int LongestPeak(int[] array) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar input = new int[] {};\n\t\tvar expected = 0;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tvar input = new int[] {1, 3, 2};\n\t\tvar expected = 3;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tvar input = new int[] {1, 2, 3, 4, 5, 1};\n\t\tvar expected = 6;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tvar input = new int[] {5, 4, 3, 2, 1, 2, 1};\n\t\tvar expected = 3;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tvar input = new int[] {5, 4, 3, 2, 1, 2, 10, 12, -3, 5, 6, 7, 10};\n\t\tvar expected = 5;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tvar input = new int[] {5, 4, 3, 2, 1, 2, 10, 12};\n\t\tvar expected = 0;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tvar input = new int[] {1, 2, 3, 4, 5, 6, 10, 100, 1000};\n\t\tvar expected = 0;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tvar input = new int[] {1, 2, 3, 3, 2, 1};\n\t\tvar expected = 0;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tvar input = new int[] {1, 1, 3, 2, 1};\n\t\tvar expected = 4;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tvar input = new int[] {1, 2, 3, 2, 1, 1};\n\t\tvar expected = 5;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tvar input =\n\t\t  new int[] {\n\t\t\t1, 1, 1, 2, 3, 10, 12, -3, -3, 2, 3, 45, 800, 99, 98, 0, -1, -1, 2, 3, 4, 5,\n\t\t\t0, -1, -1\n\t\t};\n\t\tvar expected = 9;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tvar input = new int[] {1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};\n\t\tvar expected = 6;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar input = new int[] {1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};\n\t\tvar expected = 6;\n\t\tvar actual = Program.LongestPeak(input);\n\t\tUtils.AssertTrue(expected == actual);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(n) time | O(1) space - where n is the length of the input array\n\tpublic static int LongestPeak(int[] array) {\n\t\tint longestPeakLength = 0;\n\t\tint i = 1;\n\t\twhile (i < array.Length - 1) {\n\t\t\tbool isPeak = array[i - 1] < array[i] && array[i] > array[i + 1];\n\t\t\tif (!isPeak) {\n\t\t\t\ti += 1;\n\t\t\t\tcontinue;\n\t\t\t}\n\n\t\t\tint leftIdx = i - 2;\n\t\t\twhile (leftIdx >= 0 && array[leftIdx] < array[leftIdx + 1]) {\n\t\t\t\tleftIdx -= 1;\n\t\t\t}\n\n\t\t\tint rightIdx = i + 2;\n\t\t\twhile (rightIdx < array.Length && array[rightIdx] < array[rightIdx - 1]) {\n\t\t\t\trightIdx += 1;\n\t\t\t}\n\t\t\tint currentPeakLength = rightIdx - leftIdx - 1;\n\t\t\tif (currentPeakLength > longestPeakLength) {\n\t\t\t\tlongestPeakLength = currentPeakLength;\n\t\t\t}\n\t\t\ti = rightIdx;\n\t\t}\n\t\treturn longestPeakLength;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc LongestPeak(array []int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tarray := []int{}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 0, actual)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tarray := []int{1, 3, 2}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 3, actual)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tarray := []int{1, 2, 3, 4, 5, 1}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 6, actual)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tarray := []int{5, 4, 3, 2, 1, 2, 1}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 3, actual, 3)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tarray := []int{5, 4, 3, 2, 1, 2, 10, 12, -3, 5, 6, 7, 10}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 5, actual)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tarray := []int{5, 4, 3, 2, 1, 2, 10, 12}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 0, actual)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tarray := []int{1, 2, 3, 4, 5, 6, 10, 100, 1000}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 0, actual)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tarray := []int{1, 2, 3, 3, 2, 1}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 0, actual)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tarray := []int{1, 1, 3, 2, 1}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 4, actual)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\tarray := []int{1, 2, 3, 2, 1, 1}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 5, actual)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\tarray := []int{1, 1, 1, 2, 3, 10, 12, -3, -3, 2, 3, 45, 800, 99, 98, 0, -1, -1, 2, 3, 4, 5, 0, -1, -1}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 9, actual)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\tarray := []int{1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 6, actual)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tarray := []int{1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3}\n\tactual := LongestPeak(array)\n\trequire.Equal(t, 6, actual)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n) time | O(1) space - where n is the length of the input array\nfunc LongestPeak(array []int) int {\n\tlongestPeakLength := 0\n\ti := 1\n\tfor i < len(array)-1 {\n\t\tisPeak := array[i-1] < array[i] && array[i] > array[i+1]\n\t\tif !isPeak {\n\t\t\ti += 1\n\t\t\tcontinue\n\t\t}\n\n\t\tleftIdx := i - 2\n\t\tfor leftIdx >= 0 && array[leftIdx] < array[leftIdx+1] {\n\t\t\tleftIdx -= 1\n\t\t}\n\n\t\trightIdx := i + 2\n\t\tfor rightIdx < len(array) && array[rightIdx] < array[rightIdx-1] {\n\t\t\trightIdx += 1\n\t\t}\n\t\tcurrentPeakLength := rightIdx - leftIdx - 1\n\t\tif currentPeakLength > longestPeakLength {\n\t\t\tlongestPeakLength = currentPeakLength\n\t\t}\n\t\ti = rightIdx\n\t}\n\treturn longestPeakLength\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int longestPeak(int[] array) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input = new int[] {};\n    var expected = 0;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase2() {\n    var input = new int[] {1, 3, 2};\n    var expected = 3;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase3() {\n    var input = new int[] {1, 2, 3, 4, 5, 1};\n    var expected = 6;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase4() {\n    var input = new int[] {5, 4, 3, 2, 1, 2, 1};\n    var expected = 3;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase5() {\n    var input = new int[] {5, 4, 3, 2, 1, 2, 10, 12, -3, 5, 6, 7, 10};\n    var expected = 5;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase6() {\n    var input = new int[] {5, 4, 3, 2, 1, 2, 10, 12};\n    var expected = 0;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase7() {\n    var input = new int[] {1, 2, 3, 4, 5, 6, 10, 100, 1000};\n    var expected = 0;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase8() {\n    var input = new int[] {1, 2, 3, 3, 2, 1};\n    var expected = 0;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase9() {\n    var input = new int[] {1, 1, 3, 2, 1};\n    var expected = 4;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase10() {\n    var input = new int[] {1, 2, 3, 2, 1, 1};\n    var expected = 5;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase11() {\n    var input =\n        new int[] {\n          1, 1, 1, 2, 3, 10, 12, -3, -3, 2, 3, 45, 800, 99, 98, 0, -1, -1, 2, 3, 4, 5, 0, -1, -1\n        };\n    var expected = 9;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n\n  @Test\n  public void TestCase12() {\n    var input = new int[] {1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};\n    var expected = 6;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    var input = new int[] {1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3};\n    var expected = 6;\n    var actual = Program.longestPeak(input);\n    Utils.assertTrue(expected == actual);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space - where n is the length of the input array\n  public static int longestPeak(int[] array) {\n    int longestPeakLength = 0;\n    int i = 1;\n    while (i < array.length - 1) {\n      boolean isPeak = array[i - 1] < array[i] && array[i] > array[i + 1];\n      if (!isPeak) {\n        i += 1;\n        continue;\n      }\n\n      int leftIdx = i - 2;\n      while (leftIdx >= 0 && array[leftIdx] < array[leftIdx + 1]) {\n        leftIdx -= 1;\n      }\n\n      int rightIdx = i + 2;\n      while (rightIdx < array.length && array[rightIdx] < array[rightIdx - 1]) {\n        rightIdx += 1;\n      }\n      int currentPeakLength = rightIdx - leftIdx - 1;\n      if (currentPeakLength > longestPeakLength) {\n        longestPeakLength = currentPeakLength;\n      }\n      i = rightIdx;\n    }\n    return longestPeakLength;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function longestPeak(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.longestPeak = longestPeak;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const array = [];\n  const expected = 0;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #2', function () {\n  const array = [1, 3, 2];\n  const expected = 3;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #3', function () {\n  const array = [1, 2, 3, 4, 5, 1];\n  const expected = 6;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #4', function () {\n  const array = [5, 4, 3, 2, 1, 2, 1];\n  const expected = 3;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #5', function () {\n  const array = [5, 4, 3, 2, 1, 2, 10, 12, -3, 5, 6, 7, 10];\n  const expected = 5;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #6', function () {\n  const array = [5, 4, 3, 2, 1, 2, 10, 12];\n  const expected = 0;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #7', function () {\n  const array = [1, 2, 3, 4, 5, 6, 10, 100, 1000];\n  const expected = 0;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #8', function () {\n  const array = [1, 2, 3, 3, 2, 1];\n  const expected = 0;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #9', function () {\n  const array = [1, 1, 3, 2, 1];\n  const expected = 4;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #10', function () {\n  const array = [1, 2, 3, 2, 1, 1];\n  const expected = 5;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #11', function () {\n  const array = [1, 1, 1, 2, 3, 10, 12, -3, -3, 2, 3, 45, 800, 99, 98, 0, -1, -1, 2, 3, 4, 5, 0, -1, -1];\n  const expected = 9;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n\nit('Test Case #12', function () {\n  const array = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3];\n  const expected = 6;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const array = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3];\n  const expected = 6;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the input array\nfunction longestPeak(array) {\n  let longestPeakLength = 0;\n  let i = 1;\n  while (i < array.length - 1) {\n    const isPeak = array[i - 1] < array[i] && array[i + 1] < array[i];\n    if (!isPeak) {\n      i++;\n      continue;\n    }\n\n    let leftIdx = i - 2;\n    while (leftIdx >= 0 && array[leftIdx] < array[leftIdx + 1]) {\n      leftIdx--;\n    }\n    let rightIdx = i + 2;\n    while (rightIdx < array.length && array[rightIdx] < array[rightIdx - 1]) {\n      rightIdx++;\n    }\n\n    const currentPeakLength = rightIdx - leftIdx - 1;\n    longestPeakLength = Math.max(longestPeakLength, currentPeakLength);\n    i = rightIdx;\n  }\n  return longestPeakLength;\n}\n\nexports.longestPeak = longestPeak;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def longestPeak(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        array = []\n        expected = 0\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_2(self):\n        array = [1, 3, 2]\n        expected = 3\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_3(self):\n        array = [1, 2, 3, 4, 5, 1]\n        expected = 6\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_4(self):\n        array = [5, 4, 3, 2, 1, 2, 1]\n        expected = 3\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_5(self):\n        array = [5, 4, 3, 2, 1, 2, 10, 12, -3, 5, 6, 7, 10]\n        expected = 5\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_6(self):\n        array = [5, 4, 3, 2, 1, 2, 10, 12]\n        expected = 0\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_7(self):\n        array = [1, 2, 3, 4, 5, 6, 10, 100, 1000]\n        expected = 0\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_8(self):\n        array = [1, 2, 3, 3, 2, 1]\n        expected = 0\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_9(self):\n        array = [1, 1, 3, 2, 1]\n        expected = 4\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_10(self):\n        array = [1, 2, 3, 2, 1, 1]\n        expected = 5\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_11(self):\n        array = [1, 1, 1, 2, 3, 10, 12, -3, -3, 2, 3, 45, 800, 99, 98, 0, -1, -1, 2, 3, 4, 5, 0, -1, -1]\n        expected = 9\n        self.assertEqual(program.longestPeak(array), expected)\n\n    def test_case_12(self):\n        array = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3]\n        expected = 6\n        self.assertEqual(program.longestPeak(array), expected)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        array = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3]\n        expected = 6\n        self.assertEqual(program.longestPeak(array), expected)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(1) space - where n is the length of the input array\ndef longestPeak(array):\n    longestPeakLength = 0\n    i = 1\n    while i < len(array) - 1:\n        isPeak = array[i - 1] < array[i] and array[i] > array[i + 1]\n        if not isPeak:\n            i += 1\n            continue\n\n        leftIdx = i - 2\n        while leftIdx >= 0 and array[leftIdx] < array[leftIdx + 1]:\n            leftIdx -= 1\n        rightIdx = i + 2\n        while rightIdx < len(array) and array[rightIdx] < array[rightIdx - 1]:\n            rightIdx += 1\n\n        currentPeakLength = rightIdx - leftIdx - 1\n        longestPeakLength = max(longestPeakLength, currentPeakLength)\n        i = rightIdx\n    return longestPeakLength\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func longestPeak(array: [Int]) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let array = [Int]()\n      let expected = 0\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let array = [1, 3, 2]\n      let expected = 3\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let array = [1, 2, 3, 4, 5, 1]\n      let expected = 6\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let array = [5, 4, 3, 2, 1, 2, 1]\n      let expected = 3\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let array = [5, 4, 3, 2, 1, 2, 10, 12, -3, 5, 6, 7, 10]\n      let expected = 5\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let array = [5, 4, 3, 2, 1, 2, 10, 12]\n      let expected = 0\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let array = [1, 2, 3, 4, 5, 6, 10, 100, 1000]\n      let expected = 0\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let array = [1, 2, 3, 3, 2, 1]\n      let expected = 0\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let array = [1, 1, 3, 2, 1]\n      let expected = 4\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let array = [1, 2, 3, 2, 1, 1]\n      let expected = 5\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let array = [1, 1, 1, 2, 3, 10, 12, -3, -3, 2, 3, 45, 800, 99, 98, 0, -1, -1, 2, 3, 4, 5, 0, -1, -1]\n      let expected = 9\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      let array = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3]\n      let expected = 6\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let array = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3]\n      let expected = 6\n      let actual = program.longestPeak(array: array)\n      try assertEqual(expected, actual)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n) time | O(1) space - where n is the length of the input array\n  func longestPeak(array: [Int]) -> Int {\n    var longestPeakLength = 0\n    var i = 1\n    while i < array.count - 1 {\n      let isPeak = array[i - 1] < array[i] && array[i] > array[i + 1]\n      if !isPeak {\n        i += 1\n        continue\n      }\n\n      var leftIdx = i - 2\n      while leftIdx >= 0, array[leftIdx] < array[leftIdx + 1] {\n        leftIdx -= 1\n      }\n\n      var rightIdx = i + 2\n      while rightIdx < array.count, array[rightIdx] < array[rightIdx - 1] {\n        rightIdx += 1\n      }\n\n      let currentPeakLength = rightIdx - leftIdx - 1\n      if currentPeakLength > longestPeakLength {\n        longestPeakLength = currentPeakLength\n      }\n      i = rightIdx\n    }\n    return longestPeakLength\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function longestPeak(array: number[]) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const array = [1, 2, 3, 3, 4, 0, 10, 6, 5, -1, -3, 2, 3];\n  const expected = 6;\n  chai.expect(program.longestPeak(array)).to.deep.equal(expected);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(1) space - where n is the length of the input array\nexport function longestPeak(array: number[]) {\n  let longestPeakLength = 0;\n  let i = 1;\n  while (i < array.length - 1) {\n    const isPeak = array[i - 1] < array[i] && array[i + 1] < array[i];\n    if (!isPeak) {\n      i++;\n      continue;\n    }\n\n    let leftIdx = i - 2;\n    while (leftIdx >= 0 && array[leftIdx] < array[leftIdx + 1]) {\n      leftIdx--;\n    }\n    let rightIdx = i + 2;\n    while (rightIdx < array.length && array[rightIdx] < array[rightIdx - 1]) {\n      rightIdx++;\n    }\n\n    const currentPeakLength = rightIdx - leftIdx - 1;\n    longestPeakLength = Math.max(longestPeakLength, currentPeakLength);\n    i = rightIdx;\n  }\n  return longestPeakLength;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        1,
+        2,
+        3,
+        3,
+        4,
+        0,
+        10,
+        6,
+        5,
+        -1,
+        -3,
+        2,
+        3
+      ]
+    },
+    {
+      "array": []
+    },
+    {
+      "array": [
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        1
+      ]
+    },
+    {
+      "array": [
+        5,
+        4,
+        3,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "array": [
+        5,
+        4,
+        3,
+        2,
+        1,
+        2,
+        10,
+        12,
+        -3,
+        5,
+        6,
+        7,
+        10
+      ]
+    },
+    {
+      "array": [
+        5,
+        4,
+        3,
+        2,
+        1,
+        2,
+        10,
+        12
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        100,
+        1000
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        1,
+        1,
+        2,
+        3,
+        10,
+        12,
+        -3,
+        -3,
+        2,
+        3,
+        45,
+        800,
+        99,
+        98,
+        0,
+        -1,
+        -1,
+        2,
+        3,
+        4,
+        5,
+        0,
+        -1,
+        -1
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      6,
+      0,
+      3,
+      6,
+      3,
+      5,
+      0,
+      0,
+      0,
+      4,
+      5,
+      9
+    ]
+  ]
+}

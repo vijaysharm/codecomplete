@@ -1,0 +1,1031 @@
+{
+  "Summary": {
+    "Name": "BST Traversal",
+    "Category": "Binary Search Trees",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 404,
+      "timeOne": 0,
+      "timeTwo": 762,
+      "url": "https://player.vimeo.com/video/227838234"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Realize that in-order traversal simply means traversing left nodes before traversing current nodes before traversing right nodes. Try implementing this algorithm recursively by calling the inOrderTraverse method on a left node, then appending the current node's value to the input array, and then calling the inOrderTraverse method on a right node.\nApply the same logic described in Hint #1 for the two other traversal methods, but change the order in which you do things.\n",
+  "SpaceTime": "All three methods: O(n) time | O(n) space - where n is the number of nodes in the BST\n",
+  "PromptHTML": "<p>\n  Write three functions that take in a Binary Search Tree (BST) and an empty\n  array, traverse the BST, add its nodes' values to the input array, and return\n  that array. The three functions should traverse the BST using the in-order,\n  pre-order, and post-order tree-traversal techniques, respectively.\n</p>\n<p>\n  If you're unfamiliar with tree-traversal techniques, we recommend watching the\n  Conceptual Overview section of this question's video explanation before\n  starting to code.\n</p>\n<p>\n  Each <span>BST</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. A node is\n  said to be a valid <span>BST</span> node if and only if it satisfies the BST\n  property: its <span>value</span> is strictly greater than the values of every\n  node to its left; its <span>value</span> is less than or equal to the values\n  of every node to its right; and its children nodes are either valid\n  <span>BST</span> nodes themselves or <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> =   10\n       /     \\\n      5      15\n    /   \\       \\\n   2     5       22\n /\n1\n<span class=\"CodeEditor-promptParameter\">array</span> = []\n</pre>\n<h3>Sample Output</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">inOrderTraverse</span>: [1, 2, 5, 5, 10, 15, 22] <span class=\"CodeEditor-promptComment\">// where the array is the input array</span>\n<span class=\"CodeEditor-promptParameter\">preOrderTraverse</span>: [10, 5, 2, 1, 5, 15, 22] <span class=\"CodeEditor-promptComment\">// where the array is the input array</span>\n<span class=\"CodeEditor-promptParameter\">postOrderTraverse</span>: [1, 2, 5, 5, 22, 15, 10] <span class=\"CodeEditor-promptComment\">// where the array is the input array</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "5",
+            "right": "15",
+            "value": 10
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "5-2",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "10"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>left</span> and <span>right</span>\npointers and by the <span>root</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nclass BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int val);\n};\n\nvector<int> inOrderTraverse(BST *tree, vector<int> array) {\n  // Write your code here.\n  return {};\n}\n\nvector<int> preOrderTraverse(BST *tree, vector<int> array) {\n  // Write your code here.\n  return {};\n}\n\nvector<int> postOrderTraverse(BST *tree, vector<int> array) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "BST::BST(int val) {\n  value = val;\n  left = NULL;\n  right = NULL;\n}\n\nBST *insertIntoBST(BST *bst, int val) {\n  if (val < bst->value) {\n    if (bst->left == NULL) {\n      BST *newBST = new BST(val);\n      bst->left = newBST;\n    } else {\n      insertIntoBST(bst->left, val);\n    }\n  } else {\n    if (bst->right == NULL) {\n      BST *newBST = new BST(val);\n      bst->right = newBST;\n    } else {\n      insertIntoBST(bst->right, val);\n    }\n  }\n  return bst;\n}\n\nBST *insertIntoBST(BST *bst, vector<int> values) {\n  for (auto val : values) {\n    insertIntoBST(bst, val);\n  }\n  return bst;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BST test(10);\n      insertIntoBST(&test, {5, 15});\n      vector<int> expected{5, 10, 15};\n      assert(inOrderTraverse(&test, {}) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      BST test(10);\n      insertIntoBST(&test, {5, 15, 5, 2, 1, 22});\n      vector<int> expected{1, 2, 5, 5, 10, 15, 22};\n      assert(inOrderTraverse(&test, {}) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      BST test(100);\n      insertIntoBST(&test, {5, 15, 5, 2, 1, 22, 1, 1, 3, 1, 1, 502, 55000, 204,\n                            205, 207, 206, 208, 203});\n      vector<int> expected{1,  1,   1,   1,   1,   2,   3,   5,   5,   15,\n                           22, 100, 203, 204, 205, 206, 207, 208, 502, 55000};\n      assert(inOrderTraverse(&test, {}) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      BST test(10);\n      insertIntoBST(&test, {5, 15});\n      vector<int> expected{10, 5, 15};\n      assert(preOrderTraverse(&test, {}) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      BST test(10);\n      insertIntoBST(&test, {5, 15, 5, 2, 1, 22});\n      vector<int> expected{10, 5, 2, 1, 5, 15, 22};\n      assert(preOrderTraverse(&test, {}) == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      BST test(100);\n      insertIntoBST(&test, {5, 15, 5, 2, 1, 22, 1, 1, 3, 1, 1, 502, 55000, 204,\n                            205, 207, 206, 208, 203});\n      vector<int> expected{100, 5,  2,   1,   1,   1,   1,   1,   3,   15,\n                           5,   22, 502, 204, 203, 205, 207, 206, 208, 55000};\n      assert(preOrderTraverse(&test, {}) == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      BST test(10);\n      insertIntoBST(&test, {5, 15});\n      vector<int> expected{5, 15, 10};\n      assert(postOrderTraverse(&test, {}) == expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      BST test(10);\n      insertIntoBST(&test, {5, 15, 5, 2, 1, 22});\n      vector<int> expected{1, 2, 5, 5, 22, 15, 10};\n      assert(postOrderTraverse(&test, {}) == expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      BST test(100);\n      insertIntoBST(&test, {5, 15, 5, 2, 1, 22, 1, 1, 3, 1, 1, 502, 55000, 204,\n                            205, 207, 206, 208, 203});\n      vector<int> expected{1, 1,   1,   1,   1,   3,   2,   5,     22,  15,\n                           5, 203, 206, 208, 207, 205, 204, 55000, 502, 100};\n      assert(postOrderTraverse(&test, {}) == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nBST::BST(int val) {\n  value = val;\n  left = NULL;\n  right = NULL;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BST* root = new BST(10);\n      root->left = new BST(5);\n      root->left->left = new BST(2);\n      root->left->left->left = new BST(1);\n      root->left->right = new BST(5);\n      root->right = new BST(15);\n      root->right->right = new BST(22);\n\n      vector<int> inOrder{1, 2, 5, 5, 10, 15, 22};\n      vector<int> preOrder{10, 5, 2, 1, 5, 15, 22};\n      vector<int> postOrder{1, 2, 5, 5, 22, 15, 10};\n      assert(inOrderTraverse(root, {}) == inOrder);\n      assert(preOrderTraverse(root, {}) == preOrder);\n      assert(postOrderTraverse(root, {}) == postOrder);\n    });\n\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass BST {\npublic:\n  int value;\n  BST *left;\n  BST *right;\n\n  BST(int val);\n};\n\n// O(n) time | O(n) space\nvector<int> inOrderTraverse(BST *tree, vector<int> array) {\n  if (tree->left != NULL) {\n    array = inOrderTraverse(tree->left, array);\n  }\n  array.push_back(tree->value);\n  if (tree->right != NULL) {\n    array = inOrderTraverse(tree->right, array);\n  }\n  return array;\n}\n\n// O(n) time | O(n) space\nvector<int> preOrderTraverse(BST *tree, vector<int> array) {\n  array.push_back(tree->value);\n  if (tree->left != NULL) {\n    array = preOrderTraverse(tree->left, array);\n  }\n  if (tree->right != NULL) {\n    array = preOrderTraverse(tree->right, array);\n  }\n  return array;\n}\n\n// O(n) time | O(n) space\nvector<int> postOrderTraverse(BST *tree, vector<int> array) {\n  if (tree->left != NULL) {\n    array = postOrderTraverse(tree->left, array);\n  }\n  if (tree->right != NULL) {\n    array = postOrderTraverse(tree->right, array);\n  }\n  array.push_back(tree->value);\n  return array;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<int> InOrderTraverse(BST tree, List<int> array) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic static List<int> PreOrderTraverse(BST tree, List<int> array) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic static List<int> PostOrderTraverse(BST tree, List<int> array) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\tpublic TestBST test1;\n\tpublic TestBST test2;\n\tpublic TestBST test3;\n\n\tpublic ProgramTest() {\n\t\tthis.test1 = new TestBST(10);\n\t\tthis.test1.insert(5).insert(15);\n\t\tthis.test2 = new TestBST(10);\n\t\tthis.test2.insert(5).insert(15).insert(5).insert(2).insert(1).insert(22);\n\t\tthis.test3 = new TestBST(100);\n\t\tthis.test3.insert(5).insert(15).insert(5).insert(2).insert(1).insert(22).insert(1).\n\t\tinsert(1).insert(3).insert(1).insert(1).insert(502).insert(55000).insert(204).insert(\n\t\t\t205).insert(207).insert(206).insert(208).insert(203);\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t5, 10, 15\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.InOrderTraverse(this.test1, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t1, 2, 5, 5, 10, 15, 22\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.InOrderTraverse(this.test2, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t1, 1, 1, 1, 1, 2, 3, 5, 5, 15, 22, 100, 203, 204, 205, 206, 207, 208, 502,\n\t\t\t55000\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.InOrderTraverse(this.test3, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t10, 5, 15\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.PreOrderTraverse(this.test1, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t10, 5, 2, 1, 5, 15, 22\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.PreOrderTraverse(this.test2, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t100, 5, 2, 1, 1, 1, 1, 1, 3, 15, 5, 22, 502, 204, 203, 205, 207, 206, 208,\n\t\t\t55000\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.PreOrderTraverse(this.test3, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t5, 15, 10\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.PostOrderTraverse(this.test1, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t1, 2, 5, 5, 22, 15, 10\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.PostOrderTraverse(this.test2, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tList<int> expected = new List<int>(){\n\t\t\t1, 1, 1, 1, 1, 3, 2, 5, 22, 15, 5, 203, 206, 208, 207, 205, 204, 55000, 502,\n\t\t\t100\n\t\t};\n\t\tList<int> output = new List<int>();\n\t\tProgram.PostOrderTraverse(this.test3, output);\n\t\tUtils.AssertTrue(this.compare(output, expected));\n\t}\n\n\tprivate bool compare(List<int> array1, List<int> array2) {\n\t\tif (array1.Count != array2.Count) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < array1.Count; i++) {\n\t\t\tif (!array1[i].Equals(array2[i])) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n\n\tpublic class TestBST : Program.BST {\n\t\tpublic TestBST(int value) : base(value) {\n\t\t}\n\n\t\tpublic TestBST insert(int value) {\n\t\t\tProgram.BST current = null;\n\t\t\tif (value < this.value) {\n\t\t\t\tif (this.left == null) {\n\t\t\t\t\tProgram.BST newBST = new Program.BST(value);\n\t\t\t\t\tthis.left = newBST;\n\t\t\t\t\treturn this;\n\t\t\t\t} else {\n\t\t\t\t\tcurrent = this.left;\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (right == null) {\n\t\t\t\t\tProgram.BST newBST = new Program.BST(value);\n\t\t\t\t\tthis.right = newBST;\n\t\t\t\t\treturn this;\n\t\t\t\t} else {\n\t\t\t\t\tcurrent = this.right;\n\t\t\t\t}\n\t\t\t}\n\t\t\twhile (true) {\n\t\t\t\tif (value < current.value) {\n\t\t\t\t\tif (current.left == null) {\n\t\t\t\t\t\tProgram.BST newBST = new Program.BST(value);\n\t\t\t\t\t\tcurrent.left = newBST;\n\t\t\t\t\t\treturn this;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tcurrent = current.left;\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tif (current.right == null) {\n\t\t\t\t\t\tProgram.BST newBST = new Program.BST(value);\n\t\t\t\t\t\tcurrent.right = newBST;\n\t\t\t\t\t\treturn this;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tcurrent = current.right;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tvar root = new Program.BST(10);\n\t\troot.left = new Program.BST(5);\n\t\troot.left.left = new Program.BST(2);\n\t\troot.left.left.left = new Program.BST(1);\n\t\troot.left.right = new Program.BST(5);\n\t\troot.right = new Program.BST(15);\n\t\troot.right.right = new Program.BST(22);\n\n\t\tList<int> inOrder   = new List<int> {\n\t\t\t1, 2, 5, 5, 10, 15, 22\n\t\t};\n\t\tList<int> preOrder  = new List<int> {\n\t\t\t10, 5, 2, 1, 5, 15, 22\n\t\t};\n\t\tList<int> postOrder = new List<int> {\n\t\t\t1, 2, 5, 5, 22, 15, 10\n\t\t};\n\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.InOrderTraverse(root,\n\t\t  new List<int>()), inOrder));\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.PreOrderTraverse(root,\n\t\t  new List<int>()), preOrder));\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.PostOrderTraverse(root,\n\t\t  new List<int>()), postOrder));\n\t}\n\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(n) space\n\tpublic static List<int> InOrderTraverse(BST tree, List<int> array) {\n\t\tif (tree.left != null) {\n\t\t\tInOrderTraverse(tree.left, array);\n\t\t}\n\t\tarray.Add(tree.value);\n\t\tif (tree.right != null) {\n\t\t\tInOrderTraverse(tree.right, array);\n\t\t}\n\t\treturn array;\n\t}\n\n\t// O(n) time | O(n) space\n\tpublic static List<int> PreOrderTraverse(BST tree, List<int> array) {\n\t\tarray.Add(tree.value);\n\t\tif (tree.left != null) {\n\t\t\tPreOrderTraverse(tree.left, array);\n\t\t}\n\t\tif (tree.right != null) {\n\t\t\tPreOrderTraverse(tree.right, array);\n\t\t}\n\t\treturn array;\n\t}\n\n\t// O(n) time | O(n) space\n\tpublic static List<int> PostOrderTraverse(BST tree, List<int> array) {\n\t\tif (tree.left != null) {\n\t\t\tPostOrderTraverse(tree.left, array);\n\t\t}\n\t\tif (tree.right != null) {\n\t\t\tPostOrderTraverse(tree.right, array);\n\t\t}\n\t\tarray.Add(tree.value);\n\t\treturn array;\n\t}\n\n\tpublic class BST {\n\t\tpublic int value;\n\t\tpublic BST left;\n\t\tpublic BST right;\n\n\t\tpublic BST(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\nfunc (tree *BST) InOrderTraverse(array []int) []int {\n\t// Write your code here.\n\treturn nil\n}\n\nfunc (tree *BST) PreOrderTraverse(array []int) []int {\n\t// Write your code here.\n\treturn nil\n}\n\nfunc (tree *BST) PostOrderTraverse(array []int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBST(root int, values ...int) *BST {\n\ttree := &BST{Value: root}\n\tfor _, value := range values {\n\t\ttree.Insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BST) Insert(value int) {\n\tif value < tree.Value {\n\t\tif tree.Left == nil {\n\t\t\ttree.Left = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Left.Insert(value)\n\t\t}\n\t} else {\n\t\tif tree.Right == nil {\n\t\t\ttree.Right = &BST{Value: value}\n\t\t} else {\n\t\t\ttree.Right.Insert(value)\n\t\t}\n\t}\n}\n\nvar test1 = NewBST(10, 5, 15)\nvar test2 = NewBST(10, 5, 15, 5, 2, 1, 22)\nvar test3 = NewBST(100, 5, 15, 5, 2, 1, 22, 1, 1, 3, 1, 1, 502, 55000, 204, 205, 207, 206, 208, 203)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := test1.InOrderTraverse([]int{})\n\texpected := []int{5, 10, 15}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\toutput := test2.InOrderTraverse([]int{})\n\texpected := []int{1, 2, 5, 5, 10, 15, 22}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\toutput := test3.InOrderTraverse([]int{})\n\texpected := []int{1, 1, 1, 1, 1, 2, 3, 5, 5, 15, 22, 100, 203, 204, 205, 206, 207, 208, 502, 55000}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\toutput := test1.PreOrderTraverse([]int{})\n\texpected := []int{10, 5, 15}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\toutput := test2.PreOrderTraverse([]int{})\n\texpected := []int{10, 5, 2, 1, 5, 15, 22}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\toutput := test3.PreOrderTraverse([]int{})\n\texpected := []int{100, 5, 2, 1, 1, 1, 1, 1, 3, 15, 5, 22, 502, 204, 203, 205, 207, 206, 208, 55000}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\toutput := test1.PostOrderTraverse([]int{})\n\texpected := []int{5, 15, 10}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\toutput := test2.PostOrderTraverse([]int{})\n\texpected := []int{1, 2, 5, 5, 22, 15, 10}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\toutput := test3.PostOrderTraverse([]int{})\n\texpected := []int{1, 1, 1, 1, 1, 3, 2, 5, 22, 15, 5, 203, 206, 208, 207, 205, 204, 55000, 502, 100}\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewBST(value int) *BST {\n\treturn &BST{Value: value}\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\troot := NewBST(10)\n\troot.Left = NewBST(5)\n\troot.Left.Left = NewBST(2)\n\troot.Left.Left.Left = NewBST(1)\n\troot.Left.Right = NewBST(5)\n\troot.Right = NewBST(15)\n\troot.Right.Right = NewBST(22)\n\n\tinOrder := []int{1, 2, 5, 5, 10, 15, 22}\n\tpreOrder := []int{10, 5, 2, 1, 5, 15, 22}\n\tpostOrder := []int{1, 2, 5, 5, 22, 15, 10}\n\n\trequire.Equal(t, inOrder, root.InOrderTraverse([]int{}))\n\trequire.Equal(t, preOrder, root.PreOrderTraverse([]int{}))\n\trequire.Equal(t, postOrder, root.PostOrderTraverse([]int{}))\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype BST struct {\n\tValue int\n\n\tLeft  *BST\n\tRight *BST\n}\n\n// O(n) time | O(n) space\nfunc (tree *BST) InOrderTraverse(array []int) []int {\n\tif tree.Left != nil {\n\t\tarray = tree.Left.InOrderTraverse(array)\n\t}\n\tarray = append(array, tree.Value)\n\tif tree.Right != nil {\n\t\tarray = tree.Right.InOrderTraverse(array)\n\t}\n\treturn array\n}\n\n// O(n) time | O(n) space\nfunc (tree *BST) PreOrderTraverse(array []int) []int {\n\tarray = append(array, tree.Value)\n\tif tree.Left != nil {\n\t\tarray = tree.Left.PreOrderTraverse(array)\n\t}\n\tif tree.Right != nil {\n\t\tarray = tree.Right.PreOrderTraverse(array)\n\t}\n\treturn array\n}\n\n// O(n) time | O(n) space\nfunc (tree *BST) PostOrderTraverse(array []int) []int {\n\tif tree.Left != nil {\n\t\tarray = tree.Left.PostOrderTraverse(array)\n\t}\n\tif tree.Right != nil {\n\t\tarray = tree.Right.PostOrderTraverse(array)\n\t}\n\tarray = append(array, tree.Value)\n\treturn array\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.List;\n\nclass Program {\n  public static List<Integer> inOrderTraverse(BST tree, List<Integer> array) {\n    // Write your code here.\n    return null;\n  }\n\n  public static List<Integer> preOrderTraverse(BST tree, List<Integer> array) {\n    // Write your code here.\n    return null;\n  }\n\n  public static List<Integer> postOrderTraverse(BST tree, List<Integer> array) {\n    // Write your code here.\n    return null;\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  public TestBST test1;\n  public TestBST test2;\n  public TestBST test3;\n\n  public ProgramTest() {\n    this.test1 = new TestBST(10);\n    this.test1.insert(5).insert(15);\n    this.test2 = new TestBST(10);\n    this.test2.insert(5).insert(15).insert(5).insert(2).insert(1).insert(22);\n    this.test3 = new TestBST(100);\n    this.test3\n        .insert(5)\n        .insert(15)\n        .insert(5)\n        .insert(2)\n        .insert(1)\n        .insert(22)\n        .insert(1)\n        .insert(1)\n        .insert(3)\n        .insert(1)\n        .insert(1)\n        .insert(502)\n        .insert(55000)\n        .insert(204)\n        .insert(205)\n        .insert(207)\n        .insert(206)\n        .insert(208)\n        .insert(203);\n  }\n\n  @Test\n  public void TestCase1() {\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(5, 10, 15));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.inOrderTraverse(this.test1, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(1, 2, 5, 5, 10, 15, 22));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.inOrderTraverse(this.test2, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    List<Integer> expected =\n        new ArrayList<Integer>(\n            Arrays.asList(\n                1, 1, 1, 1, 1, 2, 3, 5, 5, 15, 22, 100, 203, 204, 205, 206, 207, 208, 502, 55000));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.inOrderTraverse(this.test3, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(10, 5, 15));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.preOrderTraverse(this.test1, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(10, 5, 2, 1, 5, 15, 22));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.preOrderTraverse(this.test2, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    List<Integer> expected =\n        new ArrayList<Integer>(\n            Arrays.asList(\n                100, 5, 2, 1, 1, 1, 1, 1, 3, 15, 5, 22, 502, 204, 203, 205, 207, 206, 208, 55000));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.preOrderTraverse(this.test3, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(5, 15, 10));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.postOrderTraverse(this.test1, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    List<Integer> expected = new ArrayList<Integer>(Arrays.asList(1, 2, 5, 5, 22, 15, 10));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.postOrderTraverse(this.test2, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    List<Integer> expected =\n        new ArrayList<Integer>(\n            Arrays.asList(\n                1, 1, 1, 1, 1, 3, 2, 5, 22, 15, 5, 203, 206, 208, 207, 205, 204, 55000, 502, 100));\n    List<Integer> output = new ArrayList<Integer>();\n    Program.postOrderTraverse(this.test3, output);\n    Utils.assertTrue(this.compare(output, expected));\n  }\n\n  private boolean compare(List<Integer> array1, List<Integer> array2) {\n    if (array1.size() != array2.size()) {\n      return false;\n    }\n    for (int i = 0; i < array1.size(); i++) {\n      if (!array1.get(i).equals(array2.get(i))) {\n        return false;\n      }\n    }\n    return true;\n  }\n\n  class TestBST extends Program.BST {\n    public TestBST(int value) {\n      super(value);\n    }\n\n    public TestBST insert(int value) {\n      Program.BST current = null;\n      if (value < this.value) {\n        if (this.left == null) {\n          Program.BST newBST = new Program.BST(value);\n          this.left = newBST;\n          return this;\n        } else {\n          current = this.left;\n        }\n      } else {\n        if (right == null) {\n          Program.BST newBST = new Program.BST(value);\n          this.right = newBST;\n          return this;\n        } else {\n          current = this.right;\n        }\n      }\n      while (true) {\n        if (value < current.value) {\n          if (current.left == null) {\n            Program.BST newBST = new Program.BST(value);\n            current.left = newBST;\n            return this;\n          } else {\n            current = current.left;\n          }\n        } else {\n          if (current.right == null) {\n            Program.BST newBST = new Program.BST(value);\n            current.right = newBST;\n            return this;\n          } else {\n            current = current.right;\n          }\n        }\n      }\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    var root = new Program.BST(10);\n    root.left = new Program.BST(5);\n    root.left.left = new Program.BST(2);\n    root.left.left.left = new Program.BST(1);\n    root.left.right = new Program.BST(5);\n    root.right = new Program.BST(15);\n    root.right.right = new Program.BST(22);\n\n    List<Integer> inOrder = Arrays.asList(new Integer[]{1, 2, 5, 5, 10, 15, 22});\n    List<Integer> preOrder = Arrays.asList(new Integer[]{10, 5, 2, 1, 5, 15, 22});\n    List<Integer> postOrder = Arrays.asList(new Integer[]{1, 2, 5, 5, 22, 15, 10});\n\n    Utils.assertTrue(Program.inOrderTraverse(root, new ArrayList<Integer>()).equals(inOrder));\n    Utils.assertTrue(Program.preOrderTraverse(root, new ArrayList<Integer>()).equals(preOrder));\n    Utils.assertTrue(Program.postOrderTraverse(root, new ArrayList<Integer>()).equals(postOrder));\n  }\n\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(n) space\n  public static List<Integer> inOrderTraverse(BST tree, List<Integer> array) {\n    if (tree.left != null) {\n      inOrderTraverse(tree.left, array);\n    }\n    array.add(tree.value);\n    if (tree.right != null) {\n      inOrderTraverse(tree.right, array);\n    }\n    return array;\n  }\n\n  // O(n) time | O(n) space\n  public static List<Integer> preOrderTraverse(BST tree, List<Integer> array) {\n    array.add(tree.value);\n    if (tree.left != null) {\n      preOrderTraverse(tree.left, array);\n    }\n    if (tree.right != null) {\n      preOrderTraverse(tree.right, array);\n    }\n    return array;\n  }\n\n  // O(n) time | O(n) space\n  public static List<Integer> postOrderTraverse(BST tree, List<Integer> array) {\n    if (tree.left != null) {\n      postOrderTraverse(tree.left, array);\n    }\n    if (tree.right != null) {\n      postOrderTraverse(tree.right, array);\n    }\n    array.add(tree.value);\n    return array;\n  }\n\n  static class BST {\n    public int value;\n    public BST left;\n    public BST right;\n\n    public BST(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function inOrderTraverse(tree, array) {\n  // Write your code here.\n}\n\nfunction preOrderTraverse(tree, array) {\n  // Write your code here.\n}\n\nfunction postOrderTraverse(tree, array) {\n  // Write your code here.\n}\n\n// Do not edit the lines below.\nexports.inOrderTraverse = inOrderTraverse;\nexports.preOrderTraverse = preOrderTraverse;\nexports.postOrderTraverse = postOrderTraverse;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nclass BST {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(value) {\n    if (value < this.value) {\n      if (this.left === null) {\n        this.left = new BST(value);\n      } else {\n        this.left.insert(value);\n      }\n    } else {\n      if (this.right === null) {\n        this.right = new BST(value);\n      } else {\n        this.right.insert(value);\n      }\n    }\n    return this;\n  }\n}\n\nconst test1 = new BST(10).insert(5).insert(15);\n\nconst test2 = new BST(10).insert(5).insert(15).insert(5).insert(2).insert(1).insert(22);\n\nconst test3 = new BST(100)\n  .insert(5)\n  .insert(15)\n  .insert(5)\n  .insert(2)\n  .insert(1)\n  .insert(22)\n  .insert(1)\n  .insert(1)\n  .insert(3)\n  .insert(1)\n  .insert(1)\n  .insert(502)\n  .insert(55000)\n  .insert(204)\n  .insert(205)\n  .insert(207)\n  .insert(206)\n  .insert(208)\n  .insert(203);\n\nit('Test Case #1', function () {\n  chai.expect(program.inOrderTraverse(test1, [])).to.deep.equal([5, 10, 15]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.inOrderTraverse(test2, [])).to.deep.equal([1, 2, 5, 5, 10, 15, 22]);\n});\n\nit('Test Case #3', function () {\n  chai\n    .expect(program.inOrderTraverse(test3, []))\n    .to.deep.equal([1, 1, 1, 1, 1, 2, 3, 5, 5, 15, 22, 100, 203, 204, 205, 206, 207, 208, 502, 55000]);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.preOrderTraverse(test1, [])).to.deep.equal([10, 5, 15]);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.preOrderTraverse(test2, [])).to.deep.equal([10, 5, 2, 1, 5, 15, 22]);\n});\n\nit('Test Case #6', function () {\n  chai\n    .expect(program.preOrderTraverse(test3, []))\n    .to.deep.equal([100, 5, 2, 1, 1, 1, 1, 1, 3, 15, 5, 22, 502, 204, 203, 205, 207, 206, 208, 55000]);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.postOrderTraverse(test1, [])).to.deep.equal([5, 15, 10]);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.postOrderTraverse(test2, [])).to.deep.equal([1, 2, 5, 5, 22, 15, 10]);\n});\n\nit('Test Case #9', function () {\n  chai\n    .expect(program.postOrderTraverse(test3, []))\n    .to.deep.equal([1, 1, 1, 1, 1, 3, 2, 5, 22, 15, 5, 203, 206, 208, 207, 205, 204, 55000, 502, 100]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nclass BST {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const root = new BST(10);\n  root.left = new BST(5);\n  root.left.left = new BST(2);\n  root.left.left.left = new BST(1);\n  root.left.right = new BST(5);\n  root.right = new BST(15);\n  root.right.right = new BST(22);\n  chai.expect(program.inOrderTraverse(root, [])).to.deep.equal([1, 2, 5, 5, 10, 15, 22]);\n  chai.expect(program.preOrderTraverse(root, [])).to.deep.equal([10, 5, 2, 1, 5, 15, 22]);\n  chai.expect(program.postOrderTraverse(root, [])).to.deep.equal([1, 2, 5, 5, 22, 15, 10]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(n) space\nfunction inOrderTraverse(tree, array) {\n  if (tree !== null) {\n    inOrderTraverse(tree.left, array);\n    array.push(tree.value);\n    inOrderTraverse(tree.right, array);\n  }\n  return array;\n}\n\n// O(n) time | O(n) space\nfunction preOrderTraverse(tree, array) {\n  if (tree !== null) {\n    array.push(tree.value);\n    preOrderTraverse(tree.left, array);\n    preOrderTraverse(tree.right, array);\n  }\n  return array;\n}\n\n// O(n) time | O(n) space\nfunction postOrderTraverse(tree, array) {\n  if (tree !== null) {\n    postOrderTraverse(tree.left, array);\n    postOrderTraverse(tree.right, array);\n    array.push(tree.value);\n  }\n  return array;\n}\n\nexports.inOrderTraverse = inOrderTraverse;\nexports.preOrderTraverse = preOrderTraverse;\nexports.postOrderTraverse = postOrderTraverse;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def inOrderTraverse(tree, array):\n    # Write your code here.\n    pass\n\n\ndef preOrderTraverse(tree, array):\n    # Write your code here.\n    pass\n\n\ndef postOrderTraverse(tree, array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def insert(self, value):\n        if value < self.value:\n            if self.left is None:\n                self.left = BST(value)\n            else:\n                self.left.insert(value)\n        else:\n            if self.right is None:\n                self.right = BST(value)\n            else:\n                self.right.insert(value)\n        return self\n\n\ntest1 = BST(10).insert(5).insert(15)\n\ntest2 = BST(10).insert(5).insert(15).insert(5).insert(2).insert(1).insert(22)\n\ntest3 = (\n    BST(100)\n    .insert(5)\n    .insert(15)\n    .insert(5)\n    .insert(2)\n    .insert(1)\n    .insert(22)\n    .insert(1)\n    .insert(1)\n    .insert(3)\n    .insert(1)\n    .insert(1)\n    .insert(502)\n    .insert(55000)\n    .insert(204)\n    .insert(205)\n    .insert(207)\n    .insert(206)\n    .insert(208)\n    .insert(203)\n)\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.inOrderTraverse(test1, []), [5, 10, 15])\n\n    def test_case_2(self):\n        self.assertEqual(program.inOrderTraverse(test2, []), [1, 2, 5, 5, 10, 15, 22])\n\n    def test_case_3(self):\n        self.assertEqual(\n            program.inOrderTraverse(test3, []),\n            [1, 1, 1, 1, 1, 2, 3, 5, 5, 15, 22, 100, 203, 204, 205, 206, 207, 208, 502, 55000],\n        )\n\n    def test_case_4(self):\n        self.assertEqual(program.preOrderTraverse(test1, []), [10, 5, 15])\n\n    def test_case_5(self):\n        self.assertEqual(program.preOrderTraverse(test2, []), [10, 5, 2, 1, 5, 15, 22])\n\n    def test_case_6(self):\n        self.assertEqual(\n            program.preOrderTraverse(test3, []),\n            [100, 5, 2, 1, 1, 1, 1, 1, 3, 15, 5, 22, 502, 204, 203, 205, 207, 206, 208, 55000],\n        )\n\n    def test_case_7(self):\n        self.assertEqual(program.postOrderTraverse(test1, []), [5, 15, 10])\n\n    def test_case_8(self):\n        self.assertEqual(program.postOrderTraverse(test2, []), [1, 2, 5, 5, 22, 15, 10])\n\n    def test_case_9(self):\n        self.assertEqual(\n            program.postOrderTraverse(test3, []),\n            [1, 1, 1, 1, 1, 3, 2, 5, 22, 15, 5, 203, 206, 208, 207, 205, 204, 55000, 502, 100],\n        )\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass BST:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        root = BST(10)\n        root.left = BST(5)\n        root.left.left = BST(2)\n        root.left.left.left = BST(1)\n        root.left.right = BST(5)\n        root.right = BST(15)\n        root.right.right = BST(22)\n\n        inOrder = [1, 2, 5, 5, 10, 15, 22]\n        preOrder = [10, 5, 2, 1, 5, 15, 22]\n        postOrder = [1, 2, 5, 5, 22, 15, 10]\n\n        self.assertEqual(program.inOrderTraverse(root, []), inOrder)\n        self.assertEqual(program.preOrderTraverse(root, []), preOrder)\n        self.assertEqual(program.postOrderTraverse(root, []), postOrder)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(n) space\ndef inOrderTraverse(tree, array):\n    if tree is not None:\n        inOrderTraverse(tree.left, array)\n        array.append(tree.value)\n        inOrderTraverse(tree.right, array)\n    return array\n\n\n# O(n) time | O(n) space\ndef preOrderTraverse(tree, array):\n    if tree is not None:\n        array.append(tree.value)\n        preOrderTraverse(tree.left, array)\n        preOrderTraverse(tree.right, array)\n    return array\n\n\n# O(n) time | O(n) space\ndef postOrderTraverse(tree, array):\n    if tree is not None:\n        postOrderTraverse(tree.left, array)\n        postOrderTraverse(tree.right, array)\n        array.append(tree.value)\n    return array\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is an input class. Do not edit.\n  class BST {\n    var value: Int?\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  func inOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n\n  func preOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n\n  func postOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    let firstBST = TestBST(value: 10).insert(value: 5).insert(value: 15)\n\n    let secondBST = TestBST(value: 10).insert(value: 5).insert(value: 15).insert(value: 5).insert(value: 2).insert(value: 1).insert(value: 22)\n\n    let thirdBST = TestBST(value: 100).insert(value: 5).insert(value: 15).insert(value: 5).insert(value: 2).insert(value: 1).insert(value: 22).insert(value: 1).insert(value: 1).insert(value: 3).insert(value: 1).insert(value: 1).insert(value: 502).insert(value: 55000).insert(value: 204).insert(value: 205).insert(value: 207).insert(value: 206).insert(value: 208).insert(value: 203)\n\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([5, 10, 15], program.inOrderTraversal(tree: firstBST, array: &output))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([1, 2, 5, 5, 10, 15, 22], program.inOrderTraversal(tree: secondBST, array: &output))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([1, 1, 1, 1, 1, 2, 3, 5, 5, 15, 22, 100, 203, 204, 205, 206, 207, 208, 502, 55000], program.inOrderTraversal(tree: thirdBST, array: &output))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([10, 5, 15], program.preOrderTraversal(tree: firstBST, array: &output))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([10, 5, 2, 1, 5, 15, 22], program.preOrderTraversal(tree: secondBST, array: &output))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([100, 5, 2, 1, 1, 1, 1, 1, 3, 15, 5, 22, 502, 204, 203, 205, 207, 206, 208, 55000], program.preOrderTraversal(tree: thirdBST, array: &output))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([5, 15, 10], program.postOrderTraversal(tree: firstBST, array: &output))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([1, 2, 5, 5, 22, 15, 10], program.postOrderTraversal(tree: secondBST, array: &output))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      var output = [Int]()\n      try assertEqual([1, 1, 1, 1, 1, 3, 2, 5, 22, 15, 5, 203, 206, 208, 207, 205, 204, 55000, 502, 100], program.postOrderTraversal(tree: thirdBST, array: &output))\n    }\n  }\n}\n\nclass TestBST: Program.BST {\n  func insert(value: Int) -> TestBST {\n    var currentNode: Program.BST? = self\n\n    while true {\n      if let node = currentNode, let currentNodeValue = node.value, value < currentNodeValue {\n        if node.left === nil {\n          node.left = TestBST(value: value)\n          break\n        } else {\n          currentNode = node.left\n        }\n      } else if let node = currentNode {\n        if node.right === nil {\n          node.right = TestBST(value: value)\n          break\n        } else {\n          currentNode = node.right\n        }\n      }\n    }\n\n    return self\n  }\n\n  func contains(value: Int) -> Bool {\n    var currentNode: Program.BST? = self\n    while currentNode !== nil {\n      if let node = currentNode, let selfValue = node.value, value < selfValue {\n        currentNode = node.left\n      } else if let node = currentNode, let selfValue = node.value, value > selfValue {\n        currentNode = node.right\n      } else {\n        return true\n      }\n    }\n\n    return false\n  }\n\n  func remove(value: Int?, parentNode: Program.BST?) -> TestBST {\n    var currentNode: Program.BST? = self\n    var parentNode: Program.BST? = parentNode\n\n    while currentNode !== nil {\n      if let node = currentNode, let selfValue = node.value, let valueToRemove = value, valueToRemove < selfValue {\n        parentNode = currentNode\n        currentNode = currentNode?.left\n      } else if let node = currentNode, let selfValue = node.value, let valueToRemove = value, valueToRemove > selfValue {\n        parentNode = currentNode\n        currentNode = currentNode?.right\n      } else if let node = currentNode {\n        if let _ = left, let right = right {\n          let rtbst = right as! TestBST\n          node.value = rtbst.getMinValue()\n          rtbst.remove(value: value, parentNode: node)\n        } else if parentNode === nil {\n          if let node = currentNode, let left = left {\n            node.value = left.value\n            node.left = left.left\n            node.right = left.right\n          } else if let node = currentNode, let right = right {\n            node.value = right.value\n            node.left = right.left\n            node.right = right.right\n          } else if let node = currentNode {\n            node.value = nil\n          }\n        } else if let parent = parentNode, let parentLeft = parent.left, parentLeft === self {\n          if let left = left {\n            parent.left = left\n          } else {\n            parent.left = right\n          }\n        } else if let parent = parentNode, let parentRight = parentNode?.right, parentRight === self {\n          if let left = left {\n            parent.right = left\n          } else {\n            parent.right = right\n          }\n        }\n      }\n    }\n    return self\n  }\n\n  func getMinValue() -> Int? {\n    var currentNode = self as Program.BST\n    while currentNode.left !== nil {\n      if let left = currentNode.left {\n        currentNode = left\n      }\n    }\n    return currentNode.value\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let root = Program.BST(value: 10)\n      root.left = Program.BST(value: 5)\n      root.left!.left = Program.BST(value: 2)\n      root.left!.left!.left = Program.BST(value: 1)\n      root.left!.right = Program.BST(value: 5)\n      root.right = Program.BST(value: 15)\n      root.right!.right = Program.BST(value: 22)\n\n      let inOrder = [1, 2, 5, 5, 10, 15, 22]\n      let preOrder = [10, 5, 2, 1, 5, 15, 22]\n      let postOrder = [1, 2, 5, 5, 22, 15, 10]\n\n      var output1 = [Int]()\n      var output2 = [Int]()\n      var output3 = [Int]()\n      try assertEqual(inOrder, program.inOrderTraversal(tree: root, array: &output1))\n      try assertEqual(preOrder, program.preOrderTraversal(tree: root, array: &output2))\n      try assertEqual(postOrder, program.postOrderTraversal(tree: root, array: &output3))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BST {\n    var value: Int?\n    var left: BST?\n    var right: BST?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  // O(n) time | O(n) space\n  func inOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {\n    if tree !== nil {\n      inOrderTraversal(tree: tree?.left, array: &array)\n\n      if let value = tree?.value {\n        array.append(value)\n      }\n\n      inOrderTraversal(tree: tree?.right, array: &array)\n    }\n\n    return array\n  }\n\n  // O(n) time | O(n) space\n  func preOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {\n    if tree !== nil {\n      if let value = tree?.value {\n        array.append(value)\n      }\n\n      preOrderTraversal(tree: tree?.left, array: &array)\n      preOrderTraversal(tree: tree?.right, array: &array)\n    }\n\n    return array\n  }\n\n  // O(n) time | O(n) space\n  func postOrderTraversal(tree: BST?, array: inout [Int]) -> [Int] {\n    if tree !== nil {\n      postOrderTraversal(tree: tree?.left, array: &array)\n      postOrderTraversal(tree: tree?.right, array: &array)\n\n      if let value = tree?.value {\n        array.append(value)\n      }\n    }\n\n    return array\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "class BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nexport function inOrderTraverse(tree: BST | null, array: number[]) {\n  // Write your code here.\n  return array;\n}\n\nexport function preOrderTraverse(tree: BST | null, array: number[]) {\n  // Write your code here.\n  return array;\n}\n\nexport function postOrderTraverse(tree: BST | null, array: number[]) {\n  // Write your code here.\n  return array;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nclass BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nit('Test Case #1', function () {\n  const root = new BST(10);\n  root.left = new BST(5);\n  root.left.left = new BST(2);\n  root.left.left.left = new BST(1);\n  root.left.right = new BST(5);\n  root.right = new BST(15);\n  root.right.right = new BST(22);\n  chai.expect(program.inOrderTraverse(root, [])).to.deep.equal([1, 2, 5, 5, 10, 15, 22]);\n  chai.expect(program.preOrderTraverse(root, [])).to.deep.equal([10, 5, 2, 1, 5, 15, 22]);\n  chai.expect(program.postOrderTraverse(root, [])).to.deep.equal([1, 2, 5, 5, 22, 15, 10]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BST {\n  value: number;\n  left: BST | null;\n  right: BST | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(n) space\nexport function inOrderTraverse(tree: BST | null, array: number[]) {\n  if (tree !== null) {\n    inOrderTraverse(tree.left, array);\n    array.push(tree.value);\n    inOrderTraverse(tree.right, array);\n  }\n  return array;\n}\n\n// O(n) time | O(n) space\nexport function preOrderTraverse(tree: BST | null, array: number[]) {\n  if (tree !== null) {\n    array.push(tree.value);\n    preOrderTraverse(tree.left, array);\n    preOrderTraverse(tree.right, array);\n  }\n  return array;\n}\n\n// O(n) time | O(n) space\nexport function postOrderTraverse(tree: BST | null, array: number[]) {\n  if (tree !== null) {\n    postOrderTraverse(tree.left, array);\n    postOrderTraverse(tree.right, array);\n    array.push(tree.value);\n  }\n  return array;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "5",
+            "right": "15",
+            "value": 10
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "5-2",
+            "value": 5
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "10"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "100",
+            "left": "5",
+            "right": "502",
+            "value": 100
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": "55000",
+            "value": 502
+          },
+          {
+            "id": "55000",
+            "left": "1001",
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "1001",
+            "left": null,
+            "right": "4500",
+            "value": 1001
+          },
+          {
+            "id": "4500",
+            "left": null,
+            "right": null,
+            "value": 4500
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "57",
+            "value": 22
+          },
+          {
+            "id": "57",
+            "left": null,
+            "right": "60",
+            "value": 57
+          },
+          {
+            "id": "60",
+            "left": null,
+            "right": null,
+            "value": 60
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": "-51",
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-51",
+            "left": "-403",
+            "right": null,
+            "value": -51
+          },
+          {
+            "id": "-403",
+            "left": null,
+            "right": null,
+            "value": -403
+          }
+        ],
+        "root": "100"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "5",
+            "right": "15",
+            "value": 10
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": null,
+            "value": 22
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "5-2",
+            "value": 5
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "1",
+            "left": "-5",
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-5",
+            "left": "-15",
+            "right": "-5-2",
+            "value": -5
+          },
+          {
+            "id": "-5-2",
+            "left": null,
+            "right": "-2",
+            "value": -5
+          },
+          {
+            "id": "-2",
+            "left": null,
+            "right": "-1",
+            "value": -2
+          },
+          {
+            "id": "-1",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "-15",
+            "left": "-22",
+            "right": null,
+            "value": -15
+          },
+          {
+            "id": "-22",
+            "left": null,
+            "right": null,
+            "value": -22
+          }
+        ],
+        "root": "10"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          }
+        ],
+        "root": "10"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "10",
+            "left": "5",
+            "right": "15",
+            "value": 10
+          },
+          {
+            "id": "15",
+            "left": null,
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "500",
+            "value": 22
+          },
+          {
+            "id": "500",
+            "left": "50",
+            "right": "1500",
+            "value": 500
+          },
+          {
+            "id": "1500",
+            "left": null,
+            "right": "10000",
+            "value": 1500
+          },
+          {
+            "id": "10000",
+            "left": "2200",
+            "right": null,
+            "value": 10000
+          },
+          {
+            "id": "2200",
+            "left": null,
+            "right": null,
+            "value": 2200
+          },
+          {
+            "id": "50",
+            "left": null,
+            "right": "200",
+            "value": 50
+          },
+          {
+            "id": "200",
+            "left": null,
+            "right": null,
+            "value": 200
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "5-2",
+            "value": 5
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "10"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "5000",
+            "left": "5",
+            "right": "55000",
+            "value": 5000
+          },
+          {
+            "id": "55000",
+            "left": null,
+            "right": null,
+            "value": 55000
+          },
+          {
+            "id": "5",
+            "left": "2",
+            "right": "15",
+            "value": 5
+          },
+          {
+            "id": "15",
+            "left": "5-2",
+            "right": "22",
+            "value": 15
+          },
+          {
+            "id": "22",
+            "left": null,
+            "right": "502",
+            "value": 22
+          },
+          {
+            "id": "502",
+            "left": "204",
+            "right": null,
+            "value": 502
+          },
+          {
+            "id": "204",
+            "left": "203",
+            "right": "205",
+            "value": 204
+          },
+          {
+            "id": "205",
+            "left": null,
+            "right": "207",
+            "value": 205
+          },
+          {
+            "id": "207",
+            "left": "206",
+            "right": "208",
+            "value": 207
+          },
+          {
+            "id": "208",
+            "left": null,
+            "right": null,
+            "value": 208
+          },
+          {
+            "id": "206",
+            "left": null,
+            "right": null,
+            "value": 206
+          },
+          {
+            "id": "203",
+            "left": null,
+            "right": null,
+            "value": 203
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "2",
+            "left": "1",
+            "right": "3",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "1",
+            "left": null,
+            "right": "1-2",
+            "value": 1
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": "1-3",
+            "value": 1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": "1-4",
+            "value": 1
+          },
+          {
+            "id": "1-4",
+            "left": null,
+            "right": "1-5",
+            "value": 1
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          }
+        ],
+        "root": "5000"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      {
+        "inOrderArray": [
+          1,
+          2,
+          5,
+          5,
+          10,
+          15,
+          22
+        ],
+        "postOrderArray": [
+          1,
+          2,
+          5,
+          5,
+          22,
+          15,
+          10
+        ],
+        "preOrderArray": [
+          10,
+          5,
+          2,
+          1,
+          5,
+          15,
+          22
+        ]
+      },
+      {
+        "inOrderArray": [
+          -403,
+          -51,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          3,
+          5,
+          5,
+          15,
+          22,
+          57,
+          60,
+          100,
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          502,
+          1001,
+          4500,
+          55000
+        ],
+        "postOrderArray": [
+          -403,
+          -51,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          2,
+          5,
+          60,
+          57,
+          22,
+          15,
+          5,
+          203,
+          206,
+          208,
+          207,
+          205,
+          204,
+          4500,
+          1001,
+          55000,
+          502,
+          100
+        ],
+        "preOrderArray": [
+          100,
+          5,
+          2,
+          1,
+          -51,
+          -403,
+          1,
+          1,
+          1,
+          1,
+          3,
+          15,
+          5,
+          22,
+          57,
+          60,
+          502,
+          204,
+          203,
+          205,
+          207,
+          206,
+          208,
+          55000,
+          1001,
+          4500
+        ]
+      },
+      {
+        "inOrderArray": [
+          -22,
+          -15,
+          -5,
+          -5,
+          -2,
+          -1,
+          1,
+          2,
+          5,
+          5,
+          10,
+          15,
+          22
+        ],
+        "postOrderArray": [
+          -22,
+          -15,
+          -1,
+          -2,
+          -5,
+          -5,
+          1,
+          2,
+          5,
+          5,
+          22,
+          15,
+          10
+        ],
+        "preOrderArray": [
+          10,
+          5,
+          2,
+          1,
+          -5,
+          -15,
+          -22,
+          -5,
+          -2,
+          -1,
+          5,
+          15,
+          22
+        ]
+      },
+      {
+        "inOrderArray": [
+          10
+        ],
+        "postOrderArray": [
+          10
+        ],
+        "preOrderArray": [
+          10
+        ]
+      },
+      {
+        "inOrderArray": [
+          1,
+          2,
+          5,
+          5,
+          10,
+          15,
+          22,
+          50,
+          200,
+          500,
+          1500,
+          2200,
+          10000
+        ],
+        "postOrderArray": [
+          1,
+          2,
+          5,
+          5,
+          200,
+          50,
+          2200,
+          10000,
+          1500,
+          500,
+          22,
+          15,
+          10
+        ],
+        "preOrderArray": [
+          10,
+          5,
+          2,
+          1,
+          5,
+          15,
+          22,
+          500,
+          50,
+          200,
+          1500,
+          10000,
+          2200
+        ]
+      },
+      {
+        "inOrderArray": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          3,
+          5,
+          5,
+          15,
+          22,
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          502,
+          5000,
+          55000
+        ],
+        "postOrderArray": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          2,
+          5,
+          203,
+          206,
+          208,
+          207,
+          205,
+          204,
+          502,
+          22,
+          15,
+          5,
+          55000,
+          5000
+        ],
+        "preOrderArray": [
+          5000,
+          5,
+          2,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3,
+          15,
+          5,
+          22,
+          502,
+          204,
+          203,
+          205,
+          207,
+          206,
+          208,
+          55000
+        ]
+      }
+    ]
+  ]
+}

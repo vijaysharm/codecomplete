@@ -1,0 +1,233 @@
+{
+  "Summary": {
+    "Name": "Levenshtein Distance",
+    "Category": "Dynamic Programming",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 655,
+      "timeOne": 0,
+      "timeTwo": 1564,
+      "url": "https://player.vimeo.com/video/224893903"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try building a two-dimensional array of the minimum numbers of edits for pairs of substrings of the input strings. Let the rows of the array represent substrings of the second input string str2. Let the first row represent the empty string. Let each row i thereafter represent the substrings of str2 from 0 to i, with i excluded. Let the columns similarly represent the first input string str1.\nBuild up the array mentioned in Hint #1 one row at a time. In other words, find the minimum numbers of edits between all the substrings of str1 represented by the columns and the empty string represented by the first row, then between all the substrings of str1 represented by the columns and the first letter of str2 represented by the second row, etc., until you compare both full strings. Find a formula that relates the minimum number of edits at any given point to previous numbers.\nAt any position (i, j) in the two-dimensional array, if str2[i] is equal to str1[j], then the edit distance at position (i, j) is equal to the one at position (i - 1, j - 1), since adding str2[i] and str1[j] to the substrings represented at position (i - 1, j - 1) does not require any additional edit operation. If str2[i] is not equal to str1[j] however, then the edit distance at position (i, j) is equal to 1 + the minimum of the edit distances at positions (i - 1, j) and (i, j - 1). Why is that the case?\nDo you really need to store the entire two-dimensional array mentioned in Hint #1? Identify what stored values you actually use throughout the process of building the array and come up with a way of storing only what you need and nothing more.\n",
+  "SpaceTime": "O(nm) time | O(min(n, m)) space - where n and m are the lengths of the two input strings\n",
+  "PromptHTML": "<p>\n  Write a function that takes in two strings and returns the minimum number of\n  edit operations that need to be performed on the first string to obtain the\n  second string.\n</p>\n<p>\n  There are three edit operations: insertion of a character, deletion of a\n  character, and substitution of a character for another.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">str1</span> = \"abc\"\n<span class=\"CodeEditor-promptParameter\">str2</span> = \"yabd\"\n</pre>\n<h3>Sample Output</h3>\n<pre>\n2 <span class=\"CodeEditor-promptComment\">// insert \"y\"; substitute \"c\" for \"d\"</span>\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "str1",
+      "Example": "abc",
+      "Schema": {
+        "type": "string"
+      }
+    },
+    {
+      "Name": "str2",
+      "Example": "yabd",
+      "Schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nint levenshteinDistance(string str1, string str2) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() { assert(levenshteinDistance(\"\", \"\") == 0); });\n\n    RunTest(\"Test Case 2\",\n            []() { assert(levenshteinDistance(\"\", \"abc\") == 3); });\n\n    RunTest(\"Test Case 3\",\n            []() { assert(levenshteinDistance(\"abc\", \"abc\") == 0); });\n\n    RunTest(\"Test Case 4\",\n            []() { assert(levenshteinDistance(\"abc\", \"abx\") == 1); });\n\n    RunTest(\"Test Case 5\",\n            []() { assert(levenshteinDistance(\"abc\", \"abcx\") == 1); });\n\n    RunTest(\"Test Case 6\",\n            []() { assert(levenshteinDistance(\"abc\", \"yabcx\") == 2); });\n\n    RunTest(\"Test Case 7\", []() {\n      assert(levenshteinDistance(\"codecomplete\", \"algozexpert\") == 1);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      assert(levenshteinDistance(\"abcdefghij\", \"1234567890\") == 10);\n    });\n\n    RunTest(\n        []() { assert(levenshteinDistance(\"abcdefghij\", \"a234567890\") == 9); });\n\n    RunTest(\"Test Case 9\",\n            []() { assert(levenshteinDistance(\"biting\", \"mitten\") == 4); });\n\n    RunTest(\"Test Case 10\",\n            []() { assert(levenshteinDistance(\"cereal\", \"saturday\") == 6); });\n\n    RunTest(\"Test Case 11\",\n            []() { assert(levenshteinDistance(\"cereal\", \"saturdzz\") == 7); });\n\n    RunTest(\n        []() { assert(levenshteinDistance(\"abbbbbbbbb\", \"bbbbbbbbba\") == 2); });\n\n    RunTest(\"Test Case 12\",\n            []() { assert(levenshteinDistance(\"abc\", \"yabd\") == 2); });\n\n    RunTest(\"Test Case 13\",\n            []() { assert(levenshteinDistance(\"xabc\", \"abcx\") == 2); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\",\n            []() { assert(levenshteinDistance(\"abc\", \"yabd\") == 2); });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(nm) time | O(nm) space\nint levenshteinDistance(string str1, string str2) {\n  vector<vector<int>> edits(str2.length() + 1,\n                            vector<int>(str1.length() + 1, 0));\n  for (int i = 0; i < str2.length() + 1; i++) {\n    for (int j = 0; j < str1.length() + 1; j++) {\n      edits[i][j] = j;\n    }\n    edits[i][0] = i;\n  }\n  for (int i = 1; i < str2.length() + 1; i++) {\n    for (int j = 1; j < str1.length() + 1; j++) {\n      if (str2[i - 1] == str1[j - 1]) {\n        edits[i][j] = edits[i - 1][j - 1];\n      } else {\n        edits[i][j] =\n            1 + min(edits[i - 1][j - 1], min(edits[i - 1][j], edits[i][j - 1]));\n      }\n    }\n  }\n  return edits[str2.length()][str1.length()];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(nm) time | O(min(n, m)) space\nint levenshteinDistance(string str1, string str2) {\n  string small = str1.length() < str2.length() ? str1 : str2;\n  string big = str1.length() >= str2.length() ? str1 : str2;\n  vector<int> evenEdits(small.length() + 1);\n  vector<int> oddEdits(small.length() + 1);\n  for (int j = 0; j < small.length() + 1; j++) {\n    evenEdits[j] = j;\n  }\n\n  vector<int> *currentEdits;\n  vector<int> *previousEdits;\n  for (int i = 1; i < big.length() + 1; i++) {\n    if (i % 2 == 1) {\n      currentEdits = &oddEdits;\n      previousEdits = &evenEdits;\n    } else {\n      currentEdits = &evenEdits;\n      previousEdits = &oddEdits;\n    }\n\n    (*currentEdits)[0] = i;\n    for (int j = 1; j < small.length() + 1; j++) {\n      if (big[i - 1] == small[j - 1]) {\n        (*currentEdits)[j] = previousEdits->at(j - 1);\n      } else {\n        (*currentEdits)[j] = 1 + min(previousEdits->at(j - 1),\n                                  min(previousEdits->at(j), currentEdits->at(j - 1)));\n      }\n    }\n  }\n  return big.length() % 2 == 0 ? evenEdits[small.length()]\n                               : oddEdits[small.length()];\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int LevenshteinDistance(string str1, string str2) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"\", \"\") == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"\", \"abc\") == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abc\", \"abc\") == 0);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abc\", \"abx\") == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abc\", \"abcx\") == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abc\", \"yabcx\") == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"codecomplete\", \"algozexpert\") == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abcdefghij\", \"1234567890\") == 10);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abcdefghij\", \"a234567890\") == 9);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"biting\", \"mitten\") == 4);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"cereal\", \"saturday\") == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"cereal\", \"saturdzz\") == 7);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abbbbbbbbb\", \"bbbbbbbbba\") == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abc\", \"yabd\") == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase15() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"xabc\", \"abcx\") == 2);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.LevenshteinDistance(\"abc\", \"yabd\") == 2);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(nm) time | O(nm) space\n\tpublic static int LevenshteinDistance(string str1, string str2) {\n\t\tint[,] edits = new int[str2.Length + 1,str1.Length + 1];\n\t\tfor (int i = 0; i < str2.Length + 1; i++) {\n\t\t\tfor (int j = 0; j < str1.Length + 1; j++) {\n\t\t\t\tedits[i,j] = j;\n\t\t\t}\n\t\t\tedits[i,0] = i;\n\t\t}\n\t\tfor (int i = 1; i < str2.Length + 1; i++) {\n\t\t\tfor (int j = 1; j < str1.Length + 1; j++) {\n\t\t\t\tif (str2[i  -1] == str1[j - 1]) {\n\t\t\t\t\tedits[i,j] = edits[i - 1,j - 1];\n\t\t\t\t} else {\n\t\t\t\t\tedits[i,\n\t\t\t\t\t  j] = 1 +\n\t\t\t\t\t  Math.Min(edits[i - 1,j - 1],\n\t\t\t\t\t    Math.Min(edits[i - 1,j],\n\t\t\t\t\t    edits[i,j - 1]));\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn edits[str2.Length,str1.Length];\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\npublic class Program {\n\t// O(nm) time | O(min(n, m)) space\n\tpublic static int LevenshteinDistance(string str1, string str2) {\n\t\tstring small = str1.Length < str2.Length ? str1 : str2;\n\t\tstring big = str1.Length >= str2.Length ? str1 : str2;\n\t\tint[] evenEdits = new int[small.Length + 1];\n\t\tint[] oddEdits = new int[small.Length + 1];\n\t\tfor (int j = 0; j < small.Length + 1; j++) {\n\t\t\tevenEdits[j] = j;\n\t\t}\n\t\tint[] currentEdits;\n\t\tint[] previousEdits;\n\t\tfor (int i = 1; i < big.Length + 1; i++) {\n\t\t\tif (i % 2 == 1) {\n\t\t\t\tcurrentEdits = oddEdits;\n\t\t\t\tpreviousEdits = evenEdits;\n\t\t\t} else {\n\t\t\t\tcurrentEdits = evenEdits;\n\t\t\t\tpreviousEdits = oddEdits;\n\t\t\t}\n\t\t\tcurrentEdits[0] = i;\n\t\t\tfor (int j = 1; j < small.Length + 1; j++) {\n\t\t\t\tif (big[i - 1] == small[j - 1]) {\n\t\t\t\t\tcurrentEdits[j] = previousEdits[j - 1];\n\t\t\t\t} else {\n\t\t\t\t\tcurrentEdits[j] = 1 + Math.Min(previousEdits[j - 1], Math.Min(\n\t\t\t\t\t\t    previousEdits[j],\n\t\t\t\t\t\t    currentEdits[j -\n\t\t\t\t\t\t    1]));\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn big.Length % 2 == 0 ? evenEdits[small.Length] : oddEdits[small.Length];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc LevenshteinDistance(a, b string) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"\", \"\"), 0)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"\", \"abc\"), 3)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abc\", \"abc\"), 0)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abc\", \"abx\"), 1)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abc\", \"abcx\"), 1)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abc\", \"yabcx\"), 2)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"codecomplete\", \"algozexpert\"), 1)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abcdefghij\", \"1234567890\"), 10)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abcdefghij\", \"a234567890\"), 9)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"biting\", \"mitten\"), 4)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"cereal\", \"saturday\"), 6)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"cereal\", \"saturdzz\"), 7)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abbbbbbbbb\", \"bbbbbbbbba\"), 2)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abc\", \"yabd\"), 2)\n}\n\nfunc (s *TestSuite) TestCase15(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"xabc\", \"abcx\"), 2)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\trequire.Equal(t, LevenshteinDistance(\"abc\", \"yabd\"), 2)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(nm) time | O(nm) space\nfunc LevenshteinDistance(a, b string) int {\n\tedits := make([][]int, len(b)+1)\n\tfor y := range edits {\n\t\tedits[y] = make([]int, len(a)+1)\n\t\tfor x := range edits[y] {\n\t\t\tedits[y][x] = x\n\t\t}\n\t}\n\tfor i := 1; i < len(b)+1; i++ {\n\t\tedits[i][0] = edits[i-1][0] + 1\n\t}\n\n\tfor i := 1; i < len(b)+1; i++ {\n\t\tfor j := 1; j < len(a)+1; j++ {\n\t\t\tif b[i-1] == a[j-1] {\n\t\t\t\tedits[i][j] = edits[i-1][j-1]\n\t\t\t} else {\n\t\t\t\tedits[i][j] = 1 + min(edits[i-1][j-1], edits[i-1][j], edits[i][j-1])\n\t\t\t}\n\t\t}\n\t}\n\treturn edits[len(b)][len(a)]\n}\n\nfunc min(args ...int) int {\n\tcurr := args[0]\n\tfor _, num := range args {\n\t\tif curr > num {\n\t\t\tcurr = num\n\t\t}\n\t}\n\treturn curr\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\n// O(nm) time | O(min(n, m)) space\nfunc LevenshteinDistance(a, b string) int {\n\tsmall, big := a, b\n\tif len(a) > len(b) {\n\t\tbig, small = small, big\n\t}\n\tevenEdits := make([]int, len(small)+1)\n\toddEdits := make([]int, len(small)+1)\n\tvar previousEdits, currentEdits []int\n\tfor i := range evenEdits {\n\t\tevenEdits[i] = i\n\t\toddEdits[i] = math.MinInt32\n\t}\n\tfor i := 1; i < len(big)+1; i++ {\n\t\tif i%2 == 1 {\n\t\t\tcurrentEdits, previousEdits = oddEdits, evenEdits\n\t\t} else {\n\t\t\tcurrentEdits, previousEdits = evenEdits, oddEdits\n\t\t}\n\t\tcurrentEdits[0] = i\n\t\tfor j := 1; j < len(small)+1; j++ {\n\t\t\tif big[i-1] == small[j-1] {\n\t\t\t\tcurrentEdits[j] = previousEdits[j-1]\n\t\t\t} else {\n\t\t\t\tcurrentEdits[j] = 1 + min(previousEdits[j-1], previousEdits[j], currentEdits[j-1])\n\t\t\t}\n\t\t}\n\t}\n\tif len(big)%2 == 0 {\n\t\treturn evenEdits[len(small)]\n\t}\n\treturn oddEdits[len(small)]\n}\n\nfunc min(args ...int) int {\n\tcurr := args[0]\n\tfor _, num := range args {\n\t\tif curr > num {\n\t\t\tcurr = num\n\t\t}\n\t}\n\treturn curr\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int levenshteinDistance(String str1, String str2) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.levenshteinDistance(\"\", \"\") == 0);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.levenshteinDistance(\"\", \"abc\") == 3);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abc\", \"abc\") == 0);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abc\", \"abx\") == 1);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abc\", \"abcx\") == 1);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abc\", \"yabcx\") == 2);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.levenshteinDistance(\"codecomplete\", \"algozexpert\") == 1);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abcdefghij\", \"1234567890\") == 10);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abcdefghij\", \"a234567890\") == 9);\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(Program.levenshteinDistance(\"biting\", \"mitten\") == 4);\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(Program.levenshteinDistance(\"cereal\", \"saturday\") == 6);\n  }\n\n  @Test\n  public void TestCase12() {\n    Utils.assertTrue(Program.levenshteinDistance(\"cereal\", \"saturdzz\") == 7);\n  }\n\n  @Test\n  public void TestCase13() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abbbbbbbbb\", \"bbbbbbbbba\") == 2);\n  }\n\n  @Test\n  public void TestCase14() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abc\", \"yabd\") == 2);\n  }\n\n  @Test\n  public void TestCase15() {\n    Utils.assertTrue(Program.levenshteinDistance(\"xabc\", \"abcx\") == 2);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.levenshteinDistance(\"abc\", \"yabd\") == 2);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nm) time | O(nm) space\n  public static int levenshteinDistance(String str1, String str2) {\n    int[][] edits = new int[str2.length() + 1][str1.length() + 1];\n    for (int i = 0; i < str2.length() + 1; i++) {\n      for (int j = 0; j < str1.length() + 1; j++) {\n        edits[i][j] = j;\n      }\n      edits[i][0] = i;\n    }\n    for (int i = 1; i < str2.length() + 1; i++) {\n      for (int j = 1; j < str1.length() + 1; j++) {\n        if (str2.charAt(i - 1) == str1.charAt(j - 1)) {\n          edits[i][j] = edits[i - 1][j - 1];\n        } else {\n          edits[i][j] =\n              1 + Math.min(edits[i - 1][j - 1], Math.min(edits[i - 1][j], edits[i][j - 1]));\n        }\n      }\n    }\n    return edits[str2.length()][str1.length()];\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nm) time | O(min(n, m)) space\n  public static int levenshteinDistance(String str1, String str2) {\n    String small = str1.length() < str2.length() ? str1 : str2;\n    String big = str1.length() >= str2.length() ? str1 : str2;\n    int[] evenEdits = new int[small.length() + 1];\n    int[] oddEdits = new int[small.length() + 1];\n    for (int j = 0; j < small.length() + 1; j++) {\n      evenEdits[j] = j;\n    }\n\n    int[] currentEdits;\n    int[] previousEdits;\n    for (int i = 1; i < big.length() + 1; i++) {\n      if (i % 2 == 1) {\n        currentEdits = oddEdits;\n        previousEdits = evenEdits;\n      } else {\n        currentEdits = evenEdits;\n        previousEdits = oddEdits;\n      }\n      currentEdits[0] = i;\n      for (int j = 1; j < small.length() + 1; j++) {\n        if (big.charAt(i - 1) == small.charAt(j - 1)) {\n          currentEdits[j] = previousEdits[j - 1];\n        } else {\n          currentEdits[j] =\n              1 + Math.min(previousEdits[j - 1], Math.min(previousEdits[j], currentEdits[j - 1]));\n        }\n      }\n    }\n    return big.length() % 2 == 0 ? evenEdits[small.length()] : oddEdits[small.length()];\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function levenshteinDistance(str1, str2) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.levenshteinDistance = levenshteinDistance;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.levenshteinDistance('', '')).to.deep.equal(0);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.levenshteinDistance('', 'abc')).to.deep.equal(3);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.levenshteinDistance('abc', 'abc')).to.deep.equal(0);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.levenshteinDistance('abc', 'abx')).to.deep.equal(1);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.levenshteinDistance('abc', 'abcx')).to.deep.equal(1);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.levenshteinDistance('abc', 'yabcx')).to.deep.equal(2);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.levenshteinDistance('codecomplete', 'algozexpert')).to.deep.equal(1);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.levenshteinDistance('abcdefghij', '1234567890')).to.deep.equal(10);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.levenshteinDistance('abcdefghij', 'a234567890')).to.deep.equal(9);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.levenshteinDistance('biting', 'mitten')).to.deep.equal(4);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.levenshteinDistance('cereal', 'saturday')).to.deep.equal(6);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.levenshteinDistance('cereal', 'saturdzz')).to.deep.equal(7);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.levenshteinDistance('abbbbbbbbb', 'bbbbbbbbba')).to.deep.equal(2);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.levenshteinDistance('abc', 'yabd')).to.deep.equal(2);\n});\n\nit('Test Case #15', function () {\n  chai.expect(program.levenshteinDistance('xabc', 'abcx')).to.deep.equal(2);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.levenshteinDistance('abc', 'yabd')).to.deep.equal(2);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nm) time | O(nm) space\nfunction levenshteinDistance(str1, str2) {\n  const edits = [];\n  for (let i = 0; i < str2.length + 1; i++) {\n    const row = [];\n    for (let j = 0; j < str1.length + 1; j++) {\n      row.push(j);\n    }\n    row[0] = i;\n    edits.push(row);\n  }\n  for (let i = 1; i < str2.length + 1; i++) {\n    for (let j = 1; j < str1.length + 1; j++) {\n      if (str2[i - 1] === str1[j - 1]) {\n        edits[i][j] = edits[i - 1][j - 1];\n      } else {\n        edits[i][j] = 1 + Math.min(edits[i - 1][j - 1], edits[i - 1][j], edits[i][j - 1]);\n      }\n    }\n  }\n  return edits[str2.length][str1.length];\n}\n\nexports.levenshteinDistance = levenshteinDistance;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nm) time | O(min(n, m)) space\nfunction levenshteinDistance(str1, str2) {\n  const small = str1.length < str2.length ? str1 : str2;\n  const big = str1.length >= str2.length ? str1 : str2;\n  const evenEdits = [];\n  const oddEdits = new Array(small.length + 1);\n  for (let j = 0; j < small.length + 1; j++) {\n    evenEdits.push(j);\n  }\n  for (let i = 1; i < big.length + 1; i++) {\n    let currentEdits, previousEdits;\n    if (i % 2 === 1) {\n      currentEdits = oddEdits;\n      previousEdits = evenEdits;\n    } else {\n      currentEdits = evenEdits;\n      previousEdits = oddEdits;\n    }\n    currentEdits[0] = i;\n    for (let j = 1; j < small.length + 1; j++) {\n      if (big[i - 1] === small[j - 1]) {\n        currentEdits[j] = previousEdits[j - 1];\n      } else {\n        currentEdits[j] = 1 + Math.min(previousEdits[j - 1], previousEdits[j], currentEdits[j - 1]);\n      }\n    }\n  }\n  return big.length % 2 === 0 ? evenEdits[small.length] : oddEdits[small.length];\n}\n\nexports.levenshteinDistance = levenshteinDistance;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def levenshteinDistance(str1, str2):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.levenshteinDistance(\"\", \"\"), 0)\n\n    def test_case_2(self):\n        self.assertEqual(program.levenshteinDistance(\"\", \"abc\"), 3)\n\n    def test_case_3(self):\n        self.assertEqual(program.levenshteinDistance(\"abc\", \"abc\"), 0)\n\n    def test_case_4(self):\n        self.assertEqual(program.levenshteinDistance(\"abc\", \"abx\"), 1)\n\n    def test_case_5(self):\n        self.assertEqual(program.levenshteinDistance(\"abc\", \"abcx\"), 1)\n\n    def test_case_6(self):\n        self.assertEqual(program.levenshteinDistance(\"abc\", \"yabcx\"), 2)\n\n    def test_case_7(self):\n        self.assertEqual(program.levenshteinDistance(\"codecomplete\", \"algozexpert\"), 1)\n\n    def test_case_8(self):\n        self.assertEqual(program.levenshteinDistance(\"abcdefghij\", \"1234567890\"), 10)\n\n    def test_case_9(self):\n        self.assertEqual(program.levenshteinDistance(\"abcdefghij\", \"a234567890\"), 9)\n\n    def test_case_10(self):\n        self.assertEqual(program.levenshteinDistance(\"biting\", \"mitten\"), 4)\n\n    def test_case_11(self):\n        self.assertEqual(program.levenshteinDistance(\"cereal\", \"saturday\"), 6)\n\n    def test_case_12(self):\n        self.assertEqual(program.levenshteinDistance(\"cereal\", \"saturdzz\"), 7)\n\n    def test_case_13(self):\n        self.assertEqual(program.levenshteinDistance(\"abbbbbbbbb\", \"bbbbbbbbba\"), 2)\n\n    def test_case_14(self):\n        self.assertEqual(program.levenshteinDistance(\"abc\", \"yabd\"), 2)\n\n    def test_case_15(self):\n        self.assertEqual(program.levenshteinDistance(\"xabc\", \"abcx\"), 2)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.levenshteinDistance(\"abc\", \"yabd\"), 2)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nm) time | O(nm) space\ndef levenshteinDistance(str1, str2):\n    edits = [[x for x in range(len(str1) + 1)] for y in range(len(str2) + 1)]\n    for i in range(1, len(str2) + 1):\n        edits[i][0] = edits[i - 1][0] + 1\n    for i in range(1, len(str2) + 1):\n        for j in range(1, len(str1) + 1):\n            if str2[i - 1] == str1[j - 1]:\n                edits[i][j] = edits[i - 1][j - 1]\n            else:\n                edits[i][j] = 1 + min(edits[i - 1][j - 1], edits[i - 1][j], edits[i][j - 1])\n    return edits[-1][-1]\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nm) time | O(min(n, m)) space\ndef levenshteinDistance(str1, str2):\n    small = str1 if len(str1) < len(str2) else str2\n    big = str1 if len(str1) >= len(str2) else str2\n    evenEdits = [x for x in range(len(small) + 1)]\n    oddEdits = [None for x in range(len(small) + 1)]\n    for i in range(1, len(big) + 1):\n        if i % 2 == 1:\n            currentEdits = oddEdits\n            previousEdits = evenEdits\n        else:\n            currentEdits = evenEdits\n            previousEdits = oddEdits\n        currentEdits[0] = i\n        for j in range(1, len(small) + 1):\n            if big[i - 1] == small[j - 1]:\n                currentEdits[j] = previousEdits[j - 1]\n            else:\n                currentEdits[j] = 1 + min(previousEdits[j - 1], previousEdits[j], currentEdits[j - 1])\n    return evenEdits[-1] if len(big) % 2 == 0 else oddEdits[-1]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func levenshteinDistance(firstString: String, secondString: String) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(0, program.levenshteinDistance(firstString: \"\", secondString: \"\"))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(3, program.levenshteinDistance(firstString: \"\", secondString: \"abc\"))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(0, program.levenshteinDistance(firstString: \"abc\", secondString: \"abc\"))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(1, program.levenshteinDistance(firstString: \"abc\", secondString: \"abx\"))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(1, program.levenshteinDistance(firstString: \"abc\", secondString: \"abcx\"))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(2, program.levenshteinDistance(firstString: \"abc\", secondString: \"yabcx\"))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(1, program.levenshteinDistance(firstString: \"codecomplete\", secondString: \"algozexpert\"))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(10, program.levenshteinDistance(firstString: \"abcdefghij\", secondString: \"1234567890\"))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(9, program.levenshteinDistance(firstString: \"abcdefghij\", secondString: \"a234567890\"))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(4, program.levenshteinDistance(firstString: \"biting\", secondString: \"mitten\"))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(6, program.levenshteinDistance(firstString: \"cereal\", secondString: \"saturday\"))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(7, program.levenshteinDistance(firstString: \"cereal\", secondString: \"saturdzz\"))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(2, program.levenshteinDistance(firstString: \"abbbbbbbbb\", secondString: \"bbbbbbbbba\"))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual(2, program.levenshteinDistance(firstString: \"abc\", secondString: \"yabd\"))\n    }\n    runTest(\"Test Case 15\") { () throws -> Void in\n      try assertEqual(2, program.levenshteinDistance(firstString: \"xabc\", secondString: \"abcx\"))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let output = program.levenshteinDistance(firstString: \"abc\", secondString: \"yabd\")\n      try assertEqual(2, output)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nd) time | O(nm) space)\n  func levenshteinDistance(firstString: String, secondString: String) -> Int {\n    var edits = [[Int]]()\n\n    for i in 0 ..< firstString.count + 1 {\n      var row = [Int]()\n\n      for j in 0 ..< secondString.count + 1 {\n        row.append(j)\n      }\n\n      row[0] = i\n      edits.append(row)\n    }\n\n    for i in 1 ..< firstString.count + 1 {\n      for j in 1 ..< secondString.count + 1 {\n        let firstIndex = firstString.index(firstString.startIndex, offsetBy: i - 1)\n        let secondIndex = secondString.index(secondString.startIndex, offsetBy: j - 1)\n\n        if firstString[firstIndex] == secondString[secondIndex] {\n          edits[i][j] = edits[i - 1][j - 1]\n        } else {\n          edits[i][j] = 1 + min(edits[i - 1][j - 1], min(edits[i][j - 1], edits[i - 1][j]))\n        }\n      }\n    }\n\n    return edits[firstString.count][secondString.count]\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(nd) time | O(min(n, m) space)\n  func levenshteinDistance(firstString: String, secondString: String) -> Int {\n    let small = firstString.count < secondString.count ? firstString : secondString\n    let big = firstString.count >= secondString.count ? firstString : secondString\n\n    var evenEdits = [Int]()\n    var oddEdits = Array(repeating: 0, count: small.count + 1)\n\n    for i in 0 ..< small.count + 1 {\n      evenEdits.append(i)\n    }\n\n    for i in 1 ..< big.count + 1 {\n      if i % 2 == 1 {\n        optimizedLevenshteinHelper(bigIndex: i, smallString: small, bigString: big, currentEdits: &oddEdits, previousEdits: &evenEdits)\n      } else {\n        optimizedLevenshteinHelper(bigIndex: i, smallString: small, bigString: big, currentEdits: &evenEdits, previousEdits: &oddEdits)\n      }\n    }\n\n    return big.count % 2 == 0 ? evenEdits[small.count] : oddEdits[small.count]\n  }\n\n  func optimizedLevenshteinHelper(bigIndex: Int, smallString: String, bigString: String, currentEdits: inout [Int], previousEdits: inout [Int]) {\n    currentEdits[0] = bigIndex\n\n    for j in 1 ..< smallString.count + 1 {\n      let firstIndex = bigString.index(bigString.startIndex, offsetBy: bigIndex - 1)\n      let secondIndex = smallString.index(smallString.startIndex, offsetBy: j - 1)\n\n      if bigString[firstIndex] == smallString[secondIndex] {\n        currentEdits[j] = previousEdits[j - 1]\n      } else {\n        currentEdits[j] = 1 + min(previousEdits[j], min(previousEdits[j - 1], currentEdits[j - 1]))\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function levenshteinDistance(str1: string, str2: string) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.levenshteinDistance('abc', 'yabd')).to.deep.equal(2);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nm) time | O(nm) space\nexport function levenshteinDistance(str1: string, str2: string) {\n  const edits: number[][] = [];\n  for (let i = 0; i < str2.length + 1; i++) {\n    const row: number[] = [];\n    for (let j = 0; j < str1.length + 1; j++) {\n      row.push(j);\n    }\n    row[0] = i;\n    edits.push(row);\n  }\n  for (let i = 1; i < str2.length + 1; i++) {\n    for (let j = 1; j < str1.length + 1; j++) {\n      if (str2[i - 1] === str1[j - 1]) {\n        edits[i][j] = edits[i - 1][j - 1];\n      } else {\n        edits[i][j] = 1 + Math.min(edits[i - 1][j - 1], edits[i - 1][j], edits[i][j - 1]);\n      }\n    }\n  }\n  return edits[str2.length][str1.length];\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nm) time | O(min(n, m)) space\nexport function levenshteinDistance(str1: string, str2: string) {\n  const small = str1.length < str2.length ? str1 : str2;\n  const big = str1.length >= str2.length ? str1 : str2;\n  const evenEdits: number[] = [];\n  const oddEdits: number[] = new Array(small.length + 1);\n  for (let j = 0; j < small.length + 1; j++) {\n    evenEdits.push(j);\n  }\n  for (let i = 1; i < big.length + 1; i++) {\n    let currentEdits, previousEdits;\n    if (i % 2 === 1) {\n      currentEdits = oddEdits;\n      previousEdits = evenEdits;\n    } else {\n      currentEdits = evenEdits;\n      previousEdits = oddEdits;\n    }\n    currentEdits[0] = i;\n    for (let j = 1; j < small.length + 1; j++) {\n      if (big[i - 1] === small[j - 1]) {\n        currentEdits[j] = previousEdits[j - 1];\n      } else {\n        currentEdits[j] = 1 + Math.min(previousEdits[j - 1], previousEdits[j], currentEdits[j - 1]);\n      }\n    }\n  }\n  return big.length % 2 === 0 ? evenEdits[small.length] : oddEdits[small.length];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "str1": "abc",
+      "str2": "yabd"
+    },
+    {
+      "str1": "",
+      "str2": ""
+    },
+    {
+      "str1": "",
+      "str2": "abc"
+    },
+    {
+      "str1": "abc",
+      "str2": "abc"
+    },
+    {
+      "str1": "abc",
+      "str2": "abx"
+    },
+    {
+      "str1": "abc",
+      "str2": "abcx"
+    },
+    {
+      "str1": "abc",
+      "str2": "yabcx"
+    },
+    {
+      "str1": "codecomplete",
+      "str2": "codezcomplete"
+    },
+    {
+      "str1": "abcdefghij",
+      "str2": "1234567890"
+    },
+    {
+      "str1": "abcdefghij",
+      "str2": "a234567890"
+    },
+    {
+      "str1": "biting",
+      "str2": "mitten"
+    },
+    {
+      "str1": "cereal",
+      "str2": "saturday"
+    },
+    {
+      "str1": "cereal",
+      "str2": "saturdzz"
+    },
+    {
+      "str1": "abbbbbbbbb",
+      "str2": "bbbbbbbbba"
+    },
+    {
+      "str1": "xabc",
+      "str2": "abcx"
+    },
+    {
+      "str1": "table",
+      "str2": "bal"
+    },
+    {
+      "str1": "gumbo",
+      "str2": "gambol"
+    }
+  ],
+  "JSONAnswers": [
+    [
+      2,
+      0,
+      3,
+      0,
+      1,
+      1,
+      2,
+      1,
+      10,
+      9,
+      4,
+      6,
+      7,
+      2,
+      2,
+      3,
+      2
+    ]
+  ]
+}

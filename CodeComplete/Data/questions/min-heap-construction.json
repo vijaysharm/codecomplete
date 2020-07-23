@@ -1,0 +1,960 @@
+{
+  "Summary": {
+    "Name": "Min Heap Construction",
+    "Category": "Heaps",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 301,
+      "timeOne": 0,
+      "timeTwo": 2366,
+      "url": "https://player.vimeo.com/video/228208211"
+    }
+  },
+  "Prompt": "",
+  "Hints": "For the buildHeap(), remove(), and insert() methods of the Heap, you will need to use the siftDown() and siftUp() methods. These two methods should essentially allow you to take any node in the heap and move it either down or up in the heap until it's in its final, appropriate position. This can be done by comparing the node in question to its child nodes in the case of siftDown() or to its parent node in the case of siftUp().\nIn an array-based Heap, you can easily access a node's children nodes and parent node by using the nodes' indices. If a node is located at index i, then its children nodes are located at indices 2 * i + 1 and 2 * i + 2, and its parent node is located at index Math.floor((i - 1) / 2).\nTo implement the buildHeap() method, you can either sift every node in the input array down to its final, correct position, or you can sift every node in the input array up to its final, correct position. What are the runtime implications of both approaches? Which methods (siftDown() or siftUp()) will insert() and remove() utilize? What about peek()?\n",
+  "SpaceTime": "BuildHeap: O(n) time | O(1) space - where n is the length of the input array\nSiftDown: O(log(n)) time | O(1) space - where n is the length of the heap\nSiftUp: O(log(n)) time | O(1) space - where n is the length of the heap\nPeek: O(1) | O(1)\nRemove: O(log(n)) time | O(1) space - where n is the length of the heap\nInsert: O(log(n)) time | O(1) space - where n is the length of the heap\n",
+  "PromptHTML": "<p>Implement a <span>MinHeap</span> class that supports:</p>\n<ul>\n  <li>- Building a Min Heap from an input array of integers.</li>\n  <li>- Inserting integers in the heap.</li>\n  <li>- Removing the heap's minimum / root value.</li>\n  <li>- Peeking at the heap's minimum / root value.</li>\n  <li>\n    - Sifting integers up and down the heap, which is to be used when inserting\n    and removing values.\n  </li>\n</ul>\n<p>Note that the heap should be represented in the form of an array.</p>\n<p>\n  If you're unfamiliar with Min Heaps, we recommend watching the\n  Conceptual Overview section of this question's video explanation before\n  starting to code.\n</p>\n<h3>Sample Usage</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41]\n\n<span class=\"CodeEditor-promptComment\">// All operations below are performed sequentially.</span>\n<span class=\"CodeEditor-promptParameter\">MinHeap</span>(array): - <span class=\"CodeEditor-promptComment\">// instantiate a MinHeap (calls the buildHeap method and populates the heap)</span>\n<span class=\"CodeEditor-promptParameter\">buildHeap</span>(array): - <span class=\"CodeEditor-promptComment\">[-5, 2, 6, 7, 8, 8, 24, 391, 24, 56, 12, 24, 48, 41]</span>\n<span class=\"CodeEditor-promptParameter\">insert</span>(76): - <span class=\"CodeEditor-promptComment\">[-5, 2, 6, 7, 8, 8, 24, 391, 24, 56, 12, 24, 48, 41, 76]</span>\n<span class=\"CodeEditor-promptParameter\">peek</span>(): -5\n<span class=\"CodeEditor-promptParameter\">remove</span>(): -5 <span class=\"CodeEditor-promptComment\">[2, 7, 6, 24, 8, 8, 24, 391, 76, 56, 12, 24, 48, 41]</span>\n<span class=\"CodeEditor-promptParameter\">peek</span>(): 2\n<span class=\"CodeEditor-promptParameter\">remove</span>(): 2 <span class=\"CodeEditor-promptComment\">[6, 7, 8, 24, 8, 24, 24, 391, 76, 56, 12, 41, 48]</span>\n<span class=\"CodeEditor-promptParameter\">peek</span>(): 6\n<span class=\"CodeEditor-promptParameter\">insert</span>(87): - <span class=\"CodeEditor-promptComment\">[6, 7, 8, 24, 8, 24, 24, 391, 76, 56, 12, 41, 48, 87]</span>\n</pre>",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        48,
+        12,
+        24,
+        7,
+        8,
+        -5,
+        24,
+        391,
+        24,
+        56,
+        2,
+        6,
+        8,
+        41
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "classMethodsToCall",
+      "Example": [
+        {
+          "arguments": [
+            76
+          ],
+          "method": "insert"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [
+            87
+          ],
+          "method": "insert"
+        }
+      ],
+      "Schema": {
+        "description": "These methods will be called in the order that they appear in below\non a <span>MinHeap</span> built from the <span>array</span> and with their respective arguments.\n",
+        "items": {
+          "properties": {
+            "arguments": {
+              "maxItems": 1,
+              "type": "array"
+            },
+            "method": {
+              "enum": [
+                "insert",
+                "peek",
+                "remove"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "arguments"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\n// Do not edit the class below except for the buildHeap,\n// siftDown, siftUp, peek, remove, and insert methods.\n// Feel free to add new properties and methods to the class.\nclass MinHeap {\npublic:\n  vector<int> heap;\n\n  MinHeap(vector<int> vector) { heap = buildHeap(&vector); }\n\n  vector<int> buildHeap(vector<int> *vector) {\n    // Write your code here.\n    return {};\n  }\n\n  void siftDown(int currentIdx, int endIdx, vector<int> *heap) {\n    // Write your code here.\n  }\n\n  void siftUp(int currentIdx, vector<int> *heap) {\n    // Write your code here.\n  }\n\n  int peek() {\n    // Write your code here.\n    return -1;\n  }\n\n  int remove() {\n    // Write your code here.\n    return -1;\n  }\n\n  void insert(int value) {\n    // Write your code here.\n  }\n};\n",
+      "StartingTest": "#include <algorithm>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      MinHeap test({2, 3, 1});\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      MinHeap test({1, 2, 3, 4, 5, 6, 7, 8, 9});\n\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      MinHeap test({48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41});\n      test.insert(76);\n      test.remove();\n      test.remove();\n      test.insert(87);\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      MinHeap test({-4, 5,  10, 8,  -10, -6, -4, -2, -5, 3,\n                    5,  -4, -5, -1, 1,   6,  -7, -6, -7, 8});\n\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      MinHeap test(\n          {-7, 2, 3, 8, -10, 4, -6, -10, -2, -7, 10, 5, 2, 9, -9, -5, 3, 8});\n      test.remove();\n      test.insert(-8);\n      test.remove();\n      test.insert(8);\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      MinHeap test({427,  787,  222,  996,  -359, -614, 246,  230,  107, -706,\n                    568,  9,    -246, 12,   -764, -212, -484, 603,  934, -848,\n                    -646, -991, 661,  -32,  -348, -474, -439, -56,  507, 736,\n                    635,  -171, -215, 564,  -710, 710,  565,  892,  970, -755,\n                    55,   821,  -3,   -153, 240,  -160, -610, -583, -27, 131});\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      MinHeap test({991,  -731, -882, 100,  280,  -43,  432,  771,  -581,\n                    180,  -382, -998, 847,  80,   -220, 680,  769,  -75,\n                    -817, 366,  956,  749,  471,  228,  -435, -269, 652,\n                    -331, -387, -657, -255, 382,  -216, -6,   -163, -681,\n                    980,  913,  -169, 972,  -523, 354,  747,  805,  382,\n                    -827, -796, 372,  753,  519,  906});\n      test.remove();\n      test.remove();\n      test.remove();\n      test.insert(992);\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      MinHeap test({544,  -578, 556,  713,  -655, -359, -810, -731, 194, -531,\n                    -685, 689,  -279, -738, 886,  -54,  -320, -500, 738, 445,\n                    -401, 993,  -753, 329,  -396, -924, -975, 376,  748, -356,\n                    972,  459,  399,  669,  -488, 568,  -702, 551,  763, -90,\n                    -249, -45,  452,  -917, 394,  195,  -877, 153,  153, 788,\n                    844,  867,  266,  -739, 904,  -154, -947, 464,  343, -312,\n                    150,  -656, 528,  61,   94,   -581});\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      MinHeap test({-823, 164,  48,   -987, 323,  399,  -293, 183,  -908, -376,\n                    14,   980,  965,  842,  422,  829,  59,   724,  -415, -733,\n                    356,  -855, -155, 52,   328,  -544, -371, -160, -942, -51,\n                    700,  -363, -353, -359, 238,  892,  -730, -575, 892,  490,\n                    490,  995,  572,  888,  -935, 919,  -191, 646,  -120, 125,\n                    -817, 341,  -575, 372,  -874, 243,  610,  -36,  -685, -337,\n                    -13,  295,  800,  -950, -949, -257, 631,  -542, 201,  -796,\n                    157,  950,  540,  -846, -265, 746,  355,  -578, -441, -254,\n                    -941, -738, -469, -167, -420, -126, -410, 59});\n      test.insert(2);\n      test.insert(22);\n      test.insert(222);\n      test.insert(2222);\n      test.remove();\n      test.remove();\n      test.remove();\n      test.remove();\n      vector<int>::iterator it =\n          min_element(test.heap.begin(), test.heap.end());\n      assert(test.heap.size() > 0);\n      assert(*it == test.heap[0]);\n      for (int currentIdx = test.heap.size() - 1; currentIdx >= 0;\n           currentIdx--) {\n        int parentIdx = (currentIdx - 1) / 2;\n        if (parentIdx < 0) {\n          break;\n        }\n        bool result = test.heap[currentIdx] >= test.heap[parentIdx];\n        assert(result == 1);\n      }\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <algorithm>\n\nbool isMinHeapPropertySatisfied(vector<int> array) {\n  for (int currentIdx = 1; currentIdx < array.size(); currentIdx++) {\n    int parentIdx = (currentIdx - 1) / 2;\n    if (parentIdx < 0) {\n      return true;\n    }\n    if (array[parentIdx] > array[currentIdx]) {\n      return false;\n    }\n  }\n  return true;\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      MinHeap minHeap({48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41});\n      minHeap.insert(76);\n      assert(isMinHeapPropertySatisfied(minHeap.heap));\n      assert(minHeap.peek() == -5);\n      assert(minHeap.remove() == -5);\n      assert(isMinHeapPropertySatisfied(minHeap.heap));\n      assert(minHeap.peek() == 2);\n      assert(minHeap.remove() == 2);\n      assert(isMinHeapPropertySatisfied(minHeap.heap));\n      assert(minHeap.peek() == 6);\n      minHeap.insert(87);\n      assert(isMinHeapPropertySatisfied(minHeap.heap));\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass MinHeap {\npublic:\n  vector<int> heap;\n\n  MinHeap(vector<int> vector) { heap = buildHeap(&vector); }\n\n  // O(n) time | O(1) space\n  vector<int> buildHeap(vector<int> *vector) {\n    int firstParentIdx = (vector->size() - 2) / 2;\n    for (int currentIdx = firstParentIdx; currentIdx >= 0; currentIdx--) {\n      siftDown(currentIdx, vector->size() - 1, vector);\n    }\n    return *vector;\n  }\n\n  // O(log(n)) time | O(1) space\n  void siftDown(int currentIdx, int endIdx, vector<int> *heap) {\n    int childOneIdx = currentIdx * 2 + 1;\n    while (childOneIdx <= endIdx) {\n      int childTwoIdx = currentIdx * 2 + 2 <= endIdx ? currentIdx * 2 + 2 : -1;\n      int idxToSwap;\n      if (childTwoIdx != -1 && heap->at(childTwoIdx) < heap->at(childOneIdx)) {\n        idxToSwap = childTwoIdx;\n      } else {\n        idxToSwap = childOneIdx;\n      }\n      if (heap->at(idxToSwap) < heap->at(currentIdx)) {\n        swap(currentIdx, idxToSwap, heap);\n        currentIdx = idxToSwap;\n        childOneIdx = currentIdx * 2 + 1;\n      } else {\n        return;\n      }\n    }\n  }\n\n  // O(log(n)) time | O(1) space\n  void siftUp(int currentIdx, vector<int> *heap) {\n    int parentIdx = (currentIdx - 1) / 2;\n    while (currentIdx > 0 && heap->at(currentIdx) < heap->at(parentIdx)) {\n      swap(currentIdx, parentIdx, heap);\n      currentIdx = parentIdx;\n      parentIdx = (currentIdx - 1) / 2;\n    }\n  }\n\n  int peek() { return heap[0]; }\n\n  int remove() {\n    swap(0, heap.size() - 1, &heap);\n    int valueToRemove = heap.back();\n    heap.pop_back();\n    siftDown(0, heap.size() - 1, &heap);\n    return valueToRemove;\n  }\n\n  void insert(int value) {\n    heap.push_back(value);\n    siftUp(heap.size() - 1, &heap);\n  }\n\n  void swap(int i, int j, vector<int> *heap) {\n    int temp = heap->at(j);\n    heap->at(j) = heap->at(i);\n    heap->at(i) = temp;\n  }\n};"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\n// Do not edit the class below except for the buildHeap,\n// siftDown, siftUp, Peek, Remove, and Insert methods.\n// Feel free to add new properties and methods to the class.\npublic class Program {\n\tpublic class MinHeap {\n\t\tpublic List<int> heap = new List<int>();\n\n\t\tpublic MinHeap(List<int> array) {\n\t\t\theap = buildHeap(array);\n\t\t}\n\n\t\tpublic List<int> buildHeap(List<int> array) {\n\t\t\t// Write your code here.\n\t\t\treturn null;\n\t\t}\n\n\t\tpublic void siftDown(int currentIdx, int endIdx, List<int> heap) {\n\t\t\t// Write your code here.\n\t\t}\n\n\t\tpublic void siftUp(int currentIdx, List<int> heap) {\n\t\t\t// Write your code here.\n\t\t}\n\n\t\tpublic int Peek() {\n\t\t\t// Write your code here.\n\t\t\treturn -1;\n\t\t}\n\n\t\tpublic int Remove() {\n\t\t\t// Write your code here.\n\t\t\treturn -1;\n\t\t}\n\n\t\tpublic void Insert(int value) {\n\t\t\t// Write your code here.\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\tProgram.MinHeap test1 = new Program.MinHeap(new List<int>(){\n\t\t2, 3, 1\n\t});\n\n\tProgram.MinHeap test2 = new Program.MinHeap(new List<int>(){\n\t\t1, 2, 3, 4, 5, 6, 7, 8, 9\n\t});\n\n\tProgram.MinHeap test3 = new Program.MinHeap(new List<int>(){\n\t\t48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41\n\t});\n\n\tProgram.MinHeap test4 = new Program.MinHeap(new List<int>(){\n\t\t-4, 5, 10, 8, -10, -6, -4, -2, -5, 3, 5, -4, -5, -1, 1, 6, -7, -6, -7, 8\n\t});\n\n\tProgram.MinHeap test5 = new Program.MinHeap(new List<int>(){\n\t\t-7, 2, 3, 8, -10, 4, -6, -10, -2, -7, 10, 5, 2, 9, -9, -5, 3, 8\n\t});\n\n\tProgram.MinHeap test6 = new Program.MinHeap(\n\t\tnew List<int>(){\n\t\t427, 787, 222, 996, -359, -614, 246, 230, 107, -706, 568, 9, -246, 12, -764, -212,\n\t\t-484, 603, 934, -848, -646, -991, 661, -32, -348, -474, -439, -56, 507, 736, 635, -171, -215, 564,\n\t\t-710, 710, 565, 892, 970, -755, 55, 821, -3, -153, 240, -160, -610, -583, -27, 131\n\t});\n\n\tProgram.MinHeap test7 = new Program.MinHeap(\n\t\tnew List<int>(){\n\t\t991, -731, -882, 100, 280, -43, 432, 771, -581, 180, -382, -998, 847, 80, -220, 680,\n\t\t769, -75, -817, 366, 956, 749, 471, 228, -435, -269, 652, -331, -387, -657, -255, 382, -216, -6,\n\t\t-163, -681, 980, 913, -169, 972, -523, 354, 747, 805, 382, -827, -796, 372, 753, 519, 906\n\t});\n\n\tProgram.MinHeap test8 = new Program.MinHeap(\n\t\tnew List<int>(){\n\t\t544, -578, 556, 713, -655, -359, -810, -731, 194, -531, -685, 689, -279, -738, 886,\n\t\t-54, -320, -500, 738, 445, -401, 993, -753, 329, -396, -924, -975, 376, 748, -356, 972, 459, 399, 669,\n\t\t-488, 568, -702, 551, 763, -90, -249, -45, 452, -917, 394, 195, -877, 153, 153, 788, 844, 867, 266, -739,\n\t\t904, -154, -947, 464, 343, -312, 150, -656, 528, 61, 94, -581\n\t});\n\n\tProgram.MinHeap test9 = new Program.MinHeap(\n\t\tnew List<int>(){\n\t\t-823, 164, 48, -987, 323, 399, -293, 183, -908, -376, 14, 980, 965, 842, 422, 829, 59, 724,\n\t\t-415, -733, 356, -855, -155, 52, 328, -544, -371, -160, -942, -51, 700, -363, -353, -359, 238, 892, -730,\n\t\t-575, 892, 490, 490, 995, 572, 888, -935, 919, -191, 646, -120, 125, -817, 341, -575, 372, -874, 243, 610,\n\t\t-36, -685, -337, -13, 295, 800, -950, -949, -257, 631, -542, 201, -796, 157, 950, 540, -846, -265, 746, 355,\n\t\t-578, -441, -254, -941, -738, -469, -167, -420, -126, -410, 59\n\t});\n\n\n\tpublic ProgramTest() {\n\t\ttest3.Insert(76);\n\t\ttest3.Remove();\n\t\ttest3.Remove();\n\t\ttest3.Insert(87);\n\t\ttest5.Remove();\n\t\ttest5.Insert(-8);\n\t\ttest5.Remove();\n\t\ttest5.Insert(8);\n\t\ttest7.Remove();\n\t\ttest7.Remove();\n\t\ttest7.Remove();\n\t\ttest7.Insert(992);\n\t\ttest9.Insert(2);\n\t\ttest9.Insert(22);\n\t\ttest9.Insert(222);\n\t\ttest9.Insert(2222);\n\t\ttest9.Remove();\n\t\ttest9.Remove();\n\t\ttest9.Remove();\n\t\ttest9.Remove();\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(test1.heap.Min() == test1.heap[0]);\n\t\tfor (int currentIdx = test1.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test1.heap[currentIdx] >= test1.heap[parentIdx]);\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(test2.heap.Min() == test2.heap[0]);\n\t\tfor (int currentIdx = test2.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test2.heap[currentIdx] >= test2.heap[parentIdx]);\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(test3.heap.Min() == test3.heap[0]);\n\t\tfor (int currentIdx = test3.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test3.heap[currentIdx] >= test3.heap[parentIdx]);\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(test4.heap.Min() == test4.heap[0]);\n\t\tfor (int currentIdx = test4.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test4.heap[currentIdx] >= test4.heap[parentIdx]);\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(test5.heap.Min() == test5.heap[0]);\n\t\tfor (int currentIdx = test5.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test5.heap[currentIdx] >= test5.heap[parentIdx]);\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(test6.heap.Min() == test6.heap[0]);\n\t\tfor (int currentIdx = test6.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test6.heap[currentIdx] >= test6.heap[parentIdx]);\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(test7.heap.Min() == test7.heap[0]);\n\t\tfor (int currentIdx = test7.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test7.heap[currentIdx] >= test7.heap[parentIdx]);\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(test8.heap.Min() == test8.heap[0]);\n\t\tfor (int currentIdx = test8.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test8.heap[currentIdx] >= test8.heap[parentIdx]);\n\t\t}\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(test9.heap.Min() == test9.heap[0]);\n\t\tfor (int currentIdx = test9.heap.Count - 1; currentIdx >= 0; currentIdx--) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tUtils.AssertTrue(test9.heap[currentIdx] >= test9.heap[parentIdx]);\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.MinHeap minHeap = new Program.MinHeap(new List<int>(){\n\t\t\t48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41\n\t\t});\n\t\tminHeap.Insert(76);\n\t\tUtils.AssertTrue(isMinHeapPropertySatisfied(minHeap.heap));\n\t\tUtils.AssertTrue(minHeap.Peek() == -5);\n\t\tUtils.AssertTrue(minHeap.Remove() == -5);\n\t\tUtils.AssertTrue(isMinHeapPropertySatisfied(minHeap.heap));\n\t\tUtils.AssertTrue(minHeap.Peek() == 2);\n\t\tUtils.AssertTrue(minHeap.Remove() == 2);\n\t\tUtils.AssertTrue(isMinHeapPropertySatisfied(minHeap.heap));\n\t\tUtils.AssertTrue(minHeap.Peek() == 6);\n\t\tminHeap.Insert(87);\n\t\tUtils.AssertTrue(isMinHeapPropertySatisfied(minHeap.heap));\n\t}\n\n\tbool isMinHeapPropertySatisfied(List<int> array) {\n\t\tfor (int currentIdx = 1; currentIdx < array.Count; currentIdx++) {\n\t\t\tint parentIdx = (currentIdx -1) / 2;\n\t\t\tif (parentIdx < 0) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t\tif (array[parentIdx] > array[currentIdx]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\tpublic class MinHeap {\n\t\tpublic List<int> heap = new List<int>();\n\n\t\tpublic MinHeap(List<int> array) {\n\t\t\theap = buildHeap(array);\n\t\t}\n\n\t\t// O(n) time | O(1) space\n\t\tpublic List<int> buildHeap(List<int> array) {\n\t\t\tint firstParentIdx = (array.Count - 2) / 2;\n\t\t\tfor (int currentIdx = firstParentIdx; currentIdx >= 0; currentIdx--) {\n\t\t\t\tsiftDown(currentIdx, array.Count - 1, array);\n\t\t\t}\n\t\t\treturn array;\n\t\t}\n\n\t\t// O(log(n)) time | O(1) space\n\t\tpublic void siftDown(int currentIdx, int endIdx, List<int> heap) {\n\t\t\tint childOneIdx = currentIdx * 2 + 1;\n\t\t\twhile (childOneIdx <= endIdx) {\n\t\t\t\tint childTwoIdx = currentIdx * 2 + 2 <=\n\t\t\t\t  endIdx ? currentIdx * 2 + 2 : -1;\n\t\t\t\tint idxToSwap;\n\t\t\t\tif (childTwoIdx != -1 && heap[childTwoIdx] < heap[childOneIdx]) {\n\t\t\t\t\tidxToSwap = childTwoIdx;\n\t\t\t\t} else {\n\t\t\t\t\tidxToSwap = childOneIdx;\n\t\t\t\t}\n\t\t\t\tif (heap[idxToSwap] < heap[currentIdx]) {\n\t\t\t\t\tswap(currentIdx, idxToSwap, heap);\n\t\t\t\t\tcurrentIdx = idxToSwap;\n\t\t\t\t\tchildOneIdx = currentIdx * 2 + 1;\n\t\t\t\t} else {\n\t\t\t\t\treturn;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\t// O(log(n)) time | O(1) space\n\t\tpublic void siftUp(int currentIdx, List<int> heap) {\n\t\t\tint parentIdx = (currentIdx - 1) / 2;\n\t\t\twhile (currentIdx > 0 && heap[currentIdx] < heap[parentIdx]) {\n\t\t\t\tswap(currentIdx, parentIdx, heap);\n\t\t\t\tcurrentIdx = parentIdx;\n\t\t\t\tparentIdx = (currentIdx - 1) / 2;\n\t\t\t}\n\t\t}\n\n\t\tpublic int Peek() {\n\t\t\treturn heap[0];\n\t\t}\n\n\t\tpublic int Remove() {\n\t\t\tswap(0, heap.Count - 1, heap);\n\t\t\tint valueToRemove = heap[heap.Count - 1];\n\t\t\theap.RemoveAt(heap.Count - 1);\n\t\t\tsiftDown(0, heap.Count - 1, heap);\n\t\t\treturn valueToRemove;\n\t\t}\n\n\t\tpublic void Insert(int value) {\n\t\t\theap.Add(value);\n\t\t\tsiftUp(heap.Count - 1, heap);\n\t\t}\n\n\t\tpublic void swap(int i, int j, List<int> heap) {\n\t\t\tint temp = heap[j];\n\t\t\theap[j] =  heap[i];\n\t\t\theap[i] =  temp;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\n// Do not edit the class below except for the buildHeap,\n// siftDown, siftUp, peek, remove, and insert methods.\n// Feel free to add new properties and methods to the class.\ntype MinHeap []int\n\nfunc NewMinHeap(array []int) *MinHeap {\n\t// Do not edit the lines below.\n\theap := MinHeap(array)\n\tptr := &heap\n\tptr.BuildHeap(array)\n\treturn ptr\n}\n\nfunc (h *MinHeap) BuildHeap(array []int) {\n\t// Write your code here.\n}\n\nfunc (h *MinHeap) siftDown(currentIndex, endIndex int) {\n\t// Write your code here.\n}\n\nfunc (h *MinHeap) siftUp() {\n\t// Write your code here.\n}\n\nfunc (h MinHeap) Peek() int {\n\t// Write your code here.\n\treturn -1\n}\n\nfunc (h *MinHeap) Remove() int {\n\t// Write your code here.\n\treturn -1\n}\n\nfunc (h *MinHeap) Insert(value int) {\n\t// Write your code here.\n}\n",
+      "StartingTest": "package main\n\nfunc (h *MinHeap) check() bool {\n\tfor current := 0; current < len(*h); current++ {\n\t\tparent := (current - 1) / 2\n\t\tif parent < 0 {\n\t\t\treturn true\n\t\t}\n\t\tif (*h)[current] < (*h)[parent] {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n\nvar test1 = NewMinHeap([]int{2, 3, 1})\n\nvar test2 = NewMinHeap([]int{1, 2, 3, 4, 5, 6, 7, 8, 9})\n\nvar test3 = NewMinHeap([]int{48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41})\n\nvar test4 = NewMinHeap([]int{-4, 5, 10, 8, -10, -6, -4, -2, -5, 3, 5, -4, -5, -1, 1, 6, -7, -6, -7, 8})\n\nvar test5 = NewMinHeap([]int{-7, 2, 3, 8, -10, 4, -6, -10, -2, -7, 10, 5, 2, 9, -9, -5, 3, 8})\n\nvar test6 = NewMinHeap([]int{427, 787, 222, 996, -359, -614, 246, 230, 107, -706, 568, 9, -246, 12, -764, -212, -484, 603, 934, -848, -646, -991, 661, -32, -348, -474, -439, -56, 507, 736, 635, -171, -215, 564, -710, 710, 565, 892, 970, -755, 55, 821, -3, -153, 240, -160, -610, -583, -27, 131})\n\nvar test7 = NewMinHeap([]int{991, -731, -882, 100, 280, -43, 432, 771, -581, 180, -382, -998, 847, 80, -220, 680, 769, -75, -817, 366, 956, 749, 471, 228, -435, -269, 652, -331, -387, -657, -255, 382, -216, -6, -163, -681, 980, 913, -169, 972, -523, 354, 747, 805, 382, -827, -796, 372, 753, 519, 906})\n\nvar test8 = NewMinHeap([]int{544, -578, 556, 713, -655, -359, -810, -731, 194, -531, -685, 689, -279, -738, 886, -54, -320, -500, 738, 445, -401, 993, -753, 329, -396, -924, -975, 376, 748, -356, 972, 459, 399, 669, -488, 568, -702, 551, 763, -90, -249, -45, 452, -917, 394, 195, -877, 153, 153, 788, 844, 867, 266, -739, 904, -154, -947, 464, 343, -312, 150, -656, 528, 61, 94, -581})\n\nvar test9 = NewMinHeap([]int{-823, 164, 48, -987, 323, 399, -293, 183, -908, -376, 14, 980, 965, 842, 422, 829, 59, 724, -415, -733, 356, -855, -155, 52, 328, -544, -371, -160, -942, -51, 700, -363, -353, -359, 238, 892, -730, -575, 892, 490, 490, 995, 572, 888, -935, 919, -191, 646, -120, 125, -817, 341, -575, 372, -874, 243, 610, -36, -685, -337, -13, 295, 800, -950, -949, -257, 631, -542, 201, -796, 157, 950, 540, -846, -265, 746, 355, -578, -441, -254, -941, -738, -469, -167, -420, -126, -410, 59})\n\nfunc init() {\n\ttest3.Insert(76)\n\ttest3.Remove()\n\ttest3.Remove()\n\ttest3.Insert(87)\n\n\ttest5.Remove()\n\ttest5.Insert(-8)\n\ttest5.Remove()\n\ttest5.Insert(8)\n\n\ttest7.Remove()\n\ttest7.Remove()\n\ttest7.Remove()\n\ttest7.Insert(992)\n\n\ttest9.Insert(2)\n\ttest9.Insert(22)\n\ttest9.Insert(222)\n\ttest9.Insert(2222)\n\ttest9.Remove()\n\ttest9.Remove()\n\ttest9.Remove()\n\ttest9.Remove()\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tif test1.Peek() != 1 {\n\t\tt.Fail()\n\t}\n\tif !test1.check() {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\tif test2.Peek() != 1 {\n\t\tt.Fail()\n\t}\n\tif !test2.check() {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\tif test3.Peek() != 6 {\n\t\tt.Fail()\n\t}\n\tif !test3.check() {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\tif test4.Peek() != -10 {\n\t\tt.Fail()\n\t}\n\tif !test4.check() {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\tif test5.Peek() != -9 {\n\t\tt.Fail()\n\t}\n\tif !test5.check() {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\tif test6.Peek() != -991 {\n\t\tt.Fail()\n\t}\n\tif !test6.check() {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\tif test7.Peek() != -817 {\n\t\tt.Fail()\n\t}\n\tif !test7.check() {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\tif test8.Peek() != -975 {\n\t\tt.Fail()\n\t}\n\tif !test8.check() {\n\t\tt.Fail()\n\t}\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\tif test9.Peek() != -941 {\n\t\tt.Fail()\n\t}\n\tif !test9.check() {\n\t\tt.Fail()\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport \"github.com/stretchr/testify/require\"\n\nfunc isMinHeapPropertySatisfied(heap MinHeap) bool {\n\tfor i := 1; i < len(heap); i++ {\n\t\tparentIdx := (i - 1) / 2\n\t\tif parentIdx < 0 {\n\t\t\treturn true\n\t\t}\n\n\t\tif heap[parentIdx] > heap[i] {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tvar minHeap = NewMinHeap([]int{48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41})\n\tminHeap.Insert(76)\n\trequire.Equal(t, true, isMinHeapPropertySatisfied(*minHeap))\n\trequire.Equal(t, -5, minHeap.Peek())\n\trequire.Equal(t, -5, minHeap.Remove())\n\trequire.Equal(t, true, isMinHeapPropertySatisfied(*minHeap))\n\trequire.Equal(t, 2, minHeap.Peek())\n\trequire.Equal(t, 2, minHeap.Remove())\n\trequire.Equal(t, true, isMinHeapPropertySatisfied(*minHeap))\n\trequire.Equal(t, 6, minHeap.Peek())\n\tminHeap.Insert(87)\n\trequire.Equal(t, true, isMinHeapPropertySatisfied(*minHeap))\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\ntype MinHeap []int\n\nfunc NewMinHeap(array []int) *MinHeap {\n\theap := MinHeap(array)\n\tptr := &heap\n\tptr.BuildHeap(array)\n\treturn ptr\n}\n\n// O(n) time | O(1) space\nfunc (h *MinHeap) BuildHeap(array []int) {\n\tfirst := (len(array) - 2) / 2\n\tfor currentIndex := first + 1; currentIndex >= 0; currentIndex-- {\n\t\th.siftDown(currentIndex, len(array)-1)\n\t}\n}\n\n// O(log(n)) time | O(1) space\nfunc (h *MinHeap) siftDown(currentIndex, endIndex int) {\n\tchildOneIdx := currentIndex*2 + 1\n\tfor childOneIdx <= endIndex {\n\t\tchildTwoIdx := -1\n\t\tif currentIndex*2+2 <= endIndex {\n\t\t\tchildTwoIdx = currentIndex*2 + 2\n\t\t}\n\t\tindexToSwap := childOneIdx\n\t\tif childTwoIdx > -1 && (*h)[childTwoIdx] < (*h)[childOneIdx] {\n\t\t\tindexToSwap = childTwoIdx\n\t\t}\n\t\tif (*h)[indexToSwap] < (*h)[currentIndex] {\n\t\t\th.swap(currentIndex, indexToSwap)\n\t\t\tcurrentIndex = indexToSwap\n\t\t\tchildOneIdx = currentIndex*2 + 1\n\t\t} else {\n\t\t\treturn\n\t\t}\n\t}\n}\n\n// O(log(n)) time | O(1) space\nfunc (h *MinHeap) siftUp() {\n\tcurrentIndex := h.length() - 1\n\tparentIndex := (currentIndex - 1) / 2\n\tfor currentIndex > 0 {\n\t\tcurrent, parent := (*h)[currentIndex], (*h)[parentIndex]\n\t\tif current < parent {\n\t\t\th.swap(currentIndex, parentIndex)\n\t\t\tcurrentIndex = parentIndex\n\t\t\tparentIndex = (currentIndex - 1) / 2\n\t\t} else {\n\t\t\treturn\n\t\t}\n\t}\n}\n\n// O(1) time | O(1) space\nfunc (h MinHeap) Peek() int {\n\tif len(h) == 0 {\n\t\treturn -1\n\t}\n\treturn h[0]\n}\n\n// O(log(n)) time | O(1) space\nfunc (h *MinHeap) Remove() int {\n\tl := h.length()\n\th.swap(0, l-1)\n\tpeeked := (*h)[l-1]\n\t*h = (*h)[0 : l-1]\n\th.siftDown(0, l-2)\n\treturn peeked\n}\n\n// O(log(n)) time | O(1) space\nfunc (h *MinHeap) Insert(value int) {\n\t*h = append(*h, value)\n\th.siftUp()\n}\n\nfunc (h MinHeap) swap(i, j int) {\n\th[i], h[j] = h[j], h[i]\n}\n\nfunc (h MinHeap) length() int {\n\treturn len(h)\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\n// Do not edit the class below except for the buildHeap,\n// siftDown, siftUp, peek, remove, and insert methods.\n// Feel free to add new properties and methods to the class.\nclass Program {\n  static class MinHeap {\n    List<Integer> heap = new ArrayList<Integer>();\n\n    public MinHeap(List<Integer> array) {\n      heap = buildHeap(array);\n    }\n\n    public List<Integer> buildHeap(List<Integer> array) {\n      // Write your code here.\n      return null;\n    }\n\n    public void siftDown(int currentIdx, int endIdx, List<Integer> heap) {\n      // Write your code here.\n    }\n\n    public void siftUp(int currentIdx, List<Integer> heap) {\n      // Write your code here.\n    }\n\n    public int peek() {\n      // Write your code here.\n      return -1;\n    }\n\n    public int remove() {\n      // Write your code here.\n      return -1;\n    }\n\n    public void insert(int value) {\n      // Write your code here.\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  Program.MinHeap test1 = new Program.MinHeap(new ArrayList<Integer>(Arrays.asList(2, 3, 1)));\n\n  Program.MinHeap test2 =\n      new Program.MinHeap(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9)));\n\n  Program.MinHeap test3 =\n      new Program.MinHeap(\n          new ArrayList<Integer>(\n              Arrays.asList(48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41)));\n\n  Program.MinHeap test4 =\n      new Program.MinHeap(\n          new ArrayList<Integer>(\n              Arrays.asList(\n                  -4, 5, 10, 8, -10, -6, -4, -2, -5, 3, 5, -4, -5, -1, 1, 6, -7, -6, -7, 8)));\n\n  Program.MinHeap test5 =\n      new Program.MinHeap(\n          new ArrayList<Integer>(\n              Arrays.asList(-7, 2, 3, 8, -10, 4, -6, -10, -2, -7, 10, 5, 2, 9, -9, -5, 3, 8)));\n\n  Program.MinHeap test6 =\n      new Program.MinHeap(\n          new ArrayList<Integer>(\n              Arrays.asList(\n                  427, 787, 222, 996, -359, -614, 246, 230, 107, -706, 568, 9, -246, 12, -764, -212,\n                  -484, 603, 934, -848, -646, -991, 661, -32, -348, -474, -439, -56, 507, 736, 635,\n                  -171, -215, 564, -710, 710, 565, 892, 970, -755, 55, 821, -3, -153, 240, -160,\n                  -610, -583, -27, 131)));\n\n  Program.MinHeap test7 =\n      new Program.MinHeap(\n          new ArrayList<Integer>(\n              Arrays.asList(\n                  991, -731, -882, 100, 280, -43, 432, 771, -581, 180, -382, -998, 847, 80, -220,\n                  680, 769, -75, -817, 366, 956, 749, 471, 228, -435, -269, 652, -331, -387, -657,\n                  -255, 382, -216, -6, -163, -681, 980, 913, -169, 972, -523, 354, 747, 805, 382,\n                  -827, -796, 372, 753, 519, 906)));\n\n  Program.MinHeap test8 =\n      new Program.MinHeap(\n          new ArrayList<Integer>(\n              Arrays.asList(\n                  544, -578, 556, 713, -655, -359, -810, -731, 194, -531, -685, 689, -279, -738,\n                  886, -54, -320, -500, 738, 445, -401, 993, -753, 329, -396, -924, -975, 376, 748,\n                  -356, 972, 459, 399, 669, -488, 568, -702, 551, 763, -90, -249, -45, 452, -917,\n                  394, 195, -877, 153, 153, 788, 844, 867, 266, -739, 904, -154, -947, 464, 343,\n                  -312, 150, -656, 528, 61, 94, -581)));\n\n  Program.MinHeap test9 =\n      new Program.MinHeap(\n          new ArrayList<Integer>(\n              Arrays.asList(\n                  -823, 164, 48, -987, 323, 399, -293, 183, -908, -376, 14, 980, 965, 842, 422, 829,\n                  59, 724, -415, -733, 356, -855, -155, 52, 328, -544, -371, -160, -942, -51, 700,\n                  -363, -353, -359, 238, 892, -730, -575, 892, 490, 490, 995, 572, 888, -935, 919,\n                  -191, 646, -120, 125, -817, 341, -575, 372, -874, 243, 610, -36, -685, -337, -13,\n                  295, 800, -950, -949, -257, 631, -542, 201, -796, 157, 950, 540, -846, -265, 746,\n                  355, -578, -441, -254, -941, -738, -469, -167, -420, -126, -410, 59)));\n\n  public ProgramTest() {\n    test3.insert(76);\n    test3.remove();\n    test3.remove();\n    test3.insert(87);\n    test5.remove();\n    test5.insert(-8);\n    test5.remove();\n    test5.insert(8);\n    test7.remove();\n    test7.remove();\n    test7.remove();\n    test7.insert(992);\n    test9.insert(2);\n    test9.insert(22);\n    test9.insert(222);\n    test9.insert(2222);\n    test9.remove();\n    test9.remove();\n    test9.remove();\n    test9.remove();\n  }\n\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Collections.min(test1.heap) == test1.heap.get(0));\n    for (int currentIdx = test1.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test1.heap.get(currentIdx) >= test1.heap.get(parentIdx));\n    }\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Collections.min(test2.heap) == test2.heap.get(0));\n    for (int currentIdx = test2.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test2.heap.get(currentIdx) >= test2.heap.get(parentIdx));\n    }\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Collections.min(test3.heap) == test3.heap.get(0));\n    for (int currentIdx = test3.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test3.heap.get(currentIdx) >= test3.heap.get(parentIdx));\n    }\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Collections.min(test4.heap) == test4.heap.get(0));\n    for (int currentIdx = test4.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test4.heap.get(currentIdx) >= test4.heap.get(parentIdx));\n    }\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Collections.min(test5.heap) == test5.heap.get(0));\n    for (int currentIdx = test5.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test5.heap.get(currentIdx) >= test5.heap.get(parentIdx));\n    }\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Collections.min(test6.heap) == test6.heap.get(0));\n    for (int currentIdx = test6.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test6.heap.get(currentIdx) >= test6.heap.get(parentIdx));\n    }\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Collections.min(test7.heap) == test7.heap.get(0));\n    for (int currentIdx = test7.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test7.heap.get(currentIdx) >= test7.heap.get(parentIdx));\n    }\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Collections.min(test8.heap) == test8.heap.get(0));\n    for (int currentIdx = test8.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test8.heap.get(currentIdx) >= test8.heap.get(parentIdx));\n    }\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(Collections.min(test9.heap) == test9.heap.get(0));\n    for (int currentIdx = test9.heap.size() - 1; currentIdx >= 0; currentIdx--) {\n      int parentIdx = (currentIdx - 1) / 2;\n      if (parentIdx < 0) {\n        break;\n      }\n      Utils.assertTrue(test9.heap.get(currentIdx) >= test9.heap.get(parentIdx));\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.MinHeap minHeap = new Program.MinHeap(new ArrayList<Integer>(Arrays.asList(48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41)));\n    minHeap.insert(76);\n    Utils.assertTrue(isMinHeapPropertySatisfied(minHeap.heap));\n    Utils.assertTrue(minHeap.peek() == -5);\n    Utils.assertTrue(minHeap.remove() == -5);\n    Utils.assertTrue(isMinHeapPropertySatisfied(minHeap.heap));\n    Utils.assertTrue(minHeap.peek() == 2);\n    Utils.assertTrue(minHeap.remove() == 2);\n    Utils.assertTrue(isMinHeapPropertySatisfied(minHeap.heap));\n    Utils.assertTrue(minHeap.peek() == 6);\n    minHeap.insert(87);\n    Utils.assertTrue(isMinHeapPropertySatisfied(minHeap.heap));\n  }\n\n  boolean isMinHeapPropertySatisfied(List<Integer> array) {\n  for (int currentIdx = 1; currentIdx < array.size(); currentIdx++) {\n    int parentIdx = (currentIdx - 1) / 2;\n    if (parentIdx < 0) {\n      return true;\n    }\n    if (array.get(parentIdx) > array.get(currentIdx)) {\n      return false;\n    }\n  }\n\n    return true;\n  }\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  static class MinHeap {\n    List<Integer> heap = new ArrayList<Integer>();\n\n    public MinHeap(List<Integer> array) {\n      heap = buildHeap(array);\n    }\n\n    // O(n) time | O(1) space\n    public List<Integer> buildHeap(List<Integer> array) {\n      int firstParentIdx = (array.size() - 2) / 2;\n      for (int currentIdx = firstParentIdx; currentIdx >= 0; currentIdx--) {\n        siftDown(currentIdx, array.size() - 1, array);\n      }\n      return array;\n    }\n\n    // O(log(n)) time | O(1) space\n    public void siftDown(int currentIdx, int endIdx, List<Integer> heap) {\n      int childOneIdx = currentIdx * 2 + 1;\n      while (childOneIdx <= endIdx) {\n        int childTwoIdx = currentIdx * 2 + 2 <= endIdx ? currentIdx * 2 + 2 : -1;\n        int idxToSwap;\n        if (childTwoIdx != -1 && heap.get(childTwoIdx) < heap.get(childOneIdx)) {\n          idxToSwap = childTwoIdx;\n        } else {\n          idxToSwap = childOneIdx;\n        }\n        if (heap.get(idxToSwap) < heap.get(currentIdx)) {\n          swap(currentIdx, idxToSwap, heap);\n          currentIdx = idxToSwap;\n          childOneIdx = currentIdx * 2 + 1;\n        } else {\n          return;\n        }\n      }\n    }\n\n    // O(log(n)) time | O(1) space\n    public void siftUp(int currentIdx, List<Integer> heap) {\n      int parentIdx = (currentIdx - 1) / 2;\n      while (currentIdx > 0 && heap.get(currentIdx) < heap.get(parentIdx)) {\n        swap(currentIdx, parentIdx, heap);\n        currentIdx = parentIdx;\n        parentIdx = (currentIdx - 1) / 2;\n      }\n    }\n\n    public int peek() {\n      return heap.get(0);\n    }\n\n    public int remove() {\n      swap(0, heap.size() - 1, heap);\n      int valueToRemove = heap.get(heap.size() - 1);\n      heap.remove(heap.size() - 1);\n      siftDown(0, heap.size() - 1, heap);\n      return valueToRemove;\n    }\n\n    public void insert(int value) {\n      heap.add(value);\n      siftUp(heap.size() - 1, heap);\n    }\n\n    public void swap(int i, int j, List<Integer> heap) {\n      Integer temp = heap.get(j);\n      heap.set(j, heap.get(i));\n      heap.set(i, temp);\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// Do not edit the class below except for the buildHeap,\n// siftDown, siftUp, peek, remove, and insert methods.\n// Feel free to add new properties and methods to the class.\nclass MinHeap {\n  constructor(array) {\n    this.heap = this.buildHeap(array);\n  }\n\n  buildHeap(array) {\n    // Write your code here.\n  }\n\n  siftDown() {\n    // Write your code here.\n  }\n\n  siftUp() {\n    // Write your code here.\n  }\n\n  peek() {\n    // Write your code here.\n  }\n\n  remove() {\n    // Write your code here.\n  }\n\n  insert(value) {\n    // Write your code here.\n  }\n}\n\n// Do not edit the line below.\nexports.MinHeap = MinHeap;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nconst test1 = new program.MinHeap([2, 3, 1]);\n\nconst test2 = new program.MinHeap([1, 2, 3, 4, 5, 6, 7, 8, 9]);\n\nconst test3 = new program.MinHeap([48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41]);\ntest3.insert(76);\ntest3.remove();\ntest3.remove();\ntest3.insert(87);\n\nconst test4 = new program.MinHeap([-4, 5, 10, 8, -10, -6, -4, -2, -5, 3, 5, -4, -5, -1, 1, 6, -7, -6, -7, 8]);\n\nconst test5 = new program.MinHeap([-7, 2, 3, 8, -10, 4, -6, -10, -2, -7, 10, 5, 2, 9, -9, -5, 3, 8]);\ntest5.remove();\ntest5.insert(-8);\ntest5.remove();\ntest5.insert(8);\n\nconst test6 = new program.MinHeap([\n  427,\n  787,\n  222,\n  996,\n  -359,\n  -614,\n  246,\n  230,\n  107,\n  -706,\n  568,\n  9,\n  -246,\n  12,\n  -764,\n  -212,\n  -484,\n  603,\n  934,\n  -848,\n  -646,\n  -991,\n  661,\n  -32,\n  -348,\n  -474,\n  -439,\n  -56,\n  507,\n  736,\n  635,\n  -171,\n  -215,\n  564,\n  -710,\n  710,\n  565,\n  892,\n  970,\n  -755,\n  55,\n  821,\n  -3,\n  -153,\n  240,\n  -160,\n  -610,\n  -583,\n  -27,\n  131,\n]);\n\nconst test7 = new program.MinHeap([\n  991,\n  -731,\n  -882,\n  100,\n  280,\n  -43,\n  432,\n  771,\n  -581,\n  180,\n  -382,\n  -998,\n  847,\n  80,\n  -220,\n  680,\n  769,\n  -75,\n  -817,\n  366,\n  956,\n  749,\n  471,\n  228,\n  -435,\n  -269,\n  652,\n  -331,\n  -387,\n  -657,\n  -255,\n  382,\n  -216,\n  -6,\n  -163,\n  -681,\n  980,\n  913,\n  -169,\n  972,\n  -523,\n  354,\n  747,\n  805,\n  382,\n  -827,\n  -796,\n  372,\n  753,\n  519,\n  906,\n]);\ntest7.remove();\ntest7.remove();\ntest7.remove();\ntest7.insert(992);\n\nconst test8 = new program.MinHeap([\n  544,\n  -578,\n  556,\n  713,\n  -655,\n  -359,\n  -810,\n  -731,\n  194,\n  -531,\n  -685,\n  689,\n  -279,\n  -738,\n  886,\n  -54,\n  -320,\n  -500,\n  738,\n  445,\n  -401,\n  993,\n  -753,\n  329,\n  -396,\n  -924,\n  -975,\n  376,\n  748,\n  -356,\n  972,\n  459,\n  399,\n  669,\n  -488,\n  568,\n  -702,\n  551,\n  763,\n  -90,\n  -249,\n  -45,\n  452,\n  -917,\n  394,\n  195,\n  -877,\n  153,\n  153,\n  788,\n  844,\n  867,\n  266,\n  -739,\n  904,\n  -154,\n  -947,\n  464,\n  343,\n  -312,\n  150,\n  -656,\n  528,\n  61,\n  94,\n  -581,\n]);\n\nconst test9 = new program.MinHeap([\n  -823,\n  164,\n  48,\n  -987,\n  323,\n  399,\n  -293,\n  183,\n  -908,\n  -376,\n  14,\n  980,\n  965,\n  842,\n  422,\n  829,\n  59,\n  724,\n  -415,\n  -733,\n  356,\n  -855,\n  -155,\n  52,\n  328,\n  -544,\n  -371,\n  -160,\n  -942,\n  -51,\n  700,\n  -363,\n  -353,\n  -359,\n  238,\n  892,\n  -730,\n  -575,\n  892,\n  490,\n  490,\n  995,\n  572,\n  888,\n  -935,\n  919,\n  -191,\n  646,\n  -120,\n  125,\n  -817,\n  341,\n  -575,\n  372,\n  -874,\n  243,\n  610,\n  -36,\n  -685,\n  -337,\n  -13,\n  295,\n  800,\n  -950,\n  -949,\n  -257,\n  631,\n  -542,\n  201,\n  -796,\n  157,\n  950,\n  540,\n  -846,\n  -265,\n  746,\n  355,\n  -578,\n  -441,\n  -254,\n  -941,\n  -738,\n  -469,\n  -167,\n  -420,\n  -126,\n  -410,\n  59,\n]);\ntest9.insert(2);\ntest9.insert(22);\ntest9.insert(222);\ntest9.insert(2222);\ntest9.remove();\ntest9.remove();\ntest9.remove();\ntest9.remove();\n\nit('Test Case #1', function () {\n  chai.expect(test1.heap[0] === Math.min.apply(null, test1.heap)).to.deep.equal(true);\n  for (let currentIdx = test1.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test1.heap[currentIdx] >= test1.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n\nit('Test Case #2', function () {\n  chai.expect(test2.heap[0] === Math.min.apply(null, test2.heap)).to.deep.equal(true);\n  for (let currentIdx = test2.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test2.heap[currentIdx] >= test2.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n\nit('Test Case #3', function () {\n  chai.expect(test3.heap[0] === Math.min.apply(null, test3.heap)).to.deep.equal(true);\n  for (let currentIdx = test3.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test3.heap[currentIdx] >= test3.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n\nit('Test Case #4', function () {\n  chai.expect(test4.heap[0] === Math.min.apply(null, test4.heap)).to.deep.equal(true);\n  for (let currentIdx = test4.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test4.heap[currentIdx] >= test4.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n\nit('Test Case #5', function () {\n  chai.expect(test5.heap[0] === Math.min.apply(null, test5.heap)).to.deep.equal(true);\n  for (let currentIdx = test5.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test5.heap[currentIdx] >= test5.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n\nit('Test Case #6', function () {\n  chai.expect(test6.heap[0] === Math.min.apply(null, test6.heap)).to.deep.equal(true);\n  for (let currentIdx = test6.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test6.heap[currentIdx] >= test6.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n\nit('Test Case #7', function () {\n  chai.expect(test7.heap[0] === Math.min.apply(null, test7.heap)).to.deep.equal(true);\n  for (let currentIdx = test7.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test7.heap[currentIdx] >= test7.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n\nit('Test Case #8', function () {\n  chai.expect(test8.heap[0] === Math.min.apply(null, test8.heap)).to.deep.equal(true);\n  for (let currentIdx = test8.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test8.heap[currentIdx] >= test8.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n\nit('Test Case #9', function () {\n  chai.expect(test9.heap[0] === Math.min.apply(null, test9.heap)).to.deep.equal(true);\n  for (let currentIdx = test9.heap.length - 1; currentIdx >= 0; currentIdx--) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (parentIdx < 0) break;\n    chai.expect(test9.heap[currentIdx] >= test9.heap[parentIdx]).to.deep.equal(true);\n  }\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nconst isMinHeapPropertySatisfied = array => {\n  for (let currentIdx = 1; currentIdx < array.length; currentIdx++) {\n    const parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (array[parentIdx] > array[currentIdx]) return false;\n  }\n  return true;\n};\n\nit('Test Case #1', function () {\n  const minHeap = new program.MinHeap([48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41]);\n  minHeap.insert(76);\n  chai.expect(isMinHeapPropertySatisfied(minHeap.heap)).to.deep.equal(true);\n  chai.expect(minHeap.peek()).to.deep.equal(-5);\n  chai.expect(minHeap.remove()).to.deep.equal(-5);\n  chai.expect(isMinHeapPropertySatisfied(minHeap.heap)).to.deep.equal(true);\n  chai.expect(minHeap.peek()).to.deep.equal(2);\n  chai.expect(minHeap.remove()).to.deep.equal(2);\n  chai.expect(isMinHeapPropertySatisfied(minHeap.heap)).to.deep.equal(true);\n  chai.expect(minHeap.peek()).to.deep.equal(6);\n  minHeap.insert(87);\n  chai.expect(isMinHeapPropertySatisfied(minHeap.heap)).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass MinHeap {\n  constructor(array) {\n    this.heap = this.buildHeap(array);\n  }\n\n  // O(n) time | O(1) space\n  buildHeap(array) {\n    const firstParentIdx = Math.floor((array.length - 2) / 2);\n    for (let currentIdx = firstParentIdx; currentIdx >= 0; currentIdx--) {\n      this.siftDown(currentIdx, array.length - 1, array);\n    }\n    return array;\n  }\n\n  // O(log(n)) time | O(1) space\n  siftDown(currentIdx, endIdx, heap) {\n    let childOneIdx = currentIdx * 2 + 1;\n    while (childOneIdx <= endIdx) {\n      const childTwoIdx = currentIdx * 2 + 2 <= endIdx ? currentIdx * 2 + 2 : -1;\n      let idxToSwap;\n      if (childTwoIdx !== -1 && heap[childTwoIdx] < heap[childOneIdx]) {\n        idxToSwap = childTwoIdx;\n      } else {\n        idxToSwap = childOneIdx;\n      }\n      if (heap[idxToSwap] < heap[currentIdx]) {\n        this.swap(currentIdx, idxToSwap, heap);\n        currentIdx = idxToSwap;\n        childOneIdx = currentIdx * 2 + 1;\n      } else {\n        return;\n      }\n    }\n  }\n\n  // O(log(n)) time | O(1) space\n  siftUp(currentIdx, heap) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    while (currentIdx > 0 && heap[currentIdx] < heap[parentIdx]) {\n      this.swap(currentIdx, parentIdx, heap);\n      currentIdx = parentIdx;\n      parentIdx = Math.floor((currentIdx - 1) / 2);\n    }\n  }\n\n  // O(1) time | O(1) space\n  peek() {\n    return this.heap[0];\n  }\n\n  // O(log(n)) time | O(1) space\n  remove() {\n    this.swap(0, this.heap.length - 1, this.heap);\n    const valueToRemove = this.heap.pop();\n    this.siftDown(0, this.heap.length - 1, this.heap);\n    return valueToRemove;\n  }\n\n  // O(log(n)) time | O(1) space\n  insert(value) {\n    this.heap.push(value);\n    this.siftUp(this.heap.length - 1, this.heap);\n  }\n\n  swap(i, j, heap) {\n    const temp = heap[j];\n    heap[j] = heap[i];\n    heap[i] = temp;\n  }\n}\n\n// Do not edit the line below.\nexports.MinHeap = MinHeap;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# Do not edit the class below except for the buildHeap,\n# siftDown, siftUp, peek, remove, and insert methods.\n# Feel free to add new properties and methods to the class.\nclass MinHeap:\n    def __init__(self, array):\n        # Do not edit the line below.\n        self.heap = self.buildHeap(array)\n\n    def buildHeap(self, array):\n        # Write your code here.\n        pass\n\n    def siftDown(self):\n        # Write your code here.\n        pass\n\n    def siftUp(self):\n        # Write your code here.\n        pass\n\n    def peek(self):\n        # Write your code here.\n        pass\n\n    def remove(self):\n        # Write your code here.\n        pass\n\n    def insert(self, value):\n        # Write your code here.\n        pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\ntest1 = program.MinHeap([2, 3, 1])\n\ntest2 = program.MinHeap([1, 2, 3, 4, 5, 6, 7, 8, 9])\n\ntest3 = program.MinHeap([48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41])\ntest3.insert(76)\ntest3.remove()\ntest3.remove()\ntest3.insert(87)\n\ntest4 = program.MinHeap([-4, 5, 10, 8, -10, -6, -4, -2, -5, 3, 5, -4, -5, -1, 1, 6, -7, -6, -7, 8])\n\ntest5 = program.MinHeap([-7, 2, 3, 8, -10, 4, -6, -10, -2, -7, 10, 5, 2, 9, -9, -5, 3, 8])\ntest5.remove()\ntest5.insert(-8)\ntest5.remove()\ntest5.insert(8)\n\ntest6 = program.MinHeap(\n    [\n        427,\n        787,\n        222,\n        996,\n        -359,\n        -614,\n        246,\n        230,\n        107,\n        -706,\n        568,\n        9,\n        -246,\n        12,\n        -764,\n        -212,\n        -484,\n        603,\n        934,\n        -848,\n        -646,\n        -991,\n        661,\n        -32,\n        -348,\n        -474,\n        -439,\n        -56,\n        507,\n        736,\n        635,\n        -171,\n        -215,\n        564,\n        -710,\n        710,\n        565,\n        892,\n        970,\n        -755,\n        55,\n        821,\n        -3,\n        -153,\n        240,\n        -160,\n        -610,\n        -583,\n        -27,\n        131,\n    ]\n)\n\ntest7 = program.MinHeap(\n    [\n        991,\n        -731,\n        -882,\n        100,\n        280,\n        -43,\n        432,\n        771,\n        -581,\n        180,\n        -382,\n        -998,\n        847,\n        80,\n        -220,\n        680,\n        769,\n        -75,\n        -817,\n        366,\n        956,\n        749,\n        471,\n        228,\n        -435,\n        -269,\n        652,\n        -331,\n        -387,\n        -657,\n        -255,\n        382,\n        -216,\n        -6,\n        -163,\n        -681,\n        980,\n        913,\n        -169,\n        972,\n        -523,\n        354,\n        747,\n        805,\n        382,\n        -827,\n        -796,\n        372,\n        753,\n        519,\n        906,\n    ]\n)\ntest7.remove()\ntest7.remove()\ntest7.remove()\ntest7.insert(992)\n\ntest8 = program.MinHeap(\n    [\n        544,\n        -578,\n        556,\n        713,\n        -655,\n        -359,\n        -810,\n        -731,\n        194,\n        -531,\n        -685,\n        689,\n        -279,\n        -738,\n        886,\n        -54,\n        -320,\n        -500,\n        738,\n        445,\n        -401,\n        993,\n        -753,\n        329,\n        -396,\n        -924,\n        -975,\n        376,\n        748,\n        -356,\n        972,\n        459,\n        399,\n        669,\n        -488,\n        568,\n        -702,\n        551,\n        763,\n        -90,\n        -249,\n        -45,\n        452,\n        -917,\n        394,\n        195,\n        -877,\n        153,\n        153,\n        788,\n        844,\n        867,\n        266,\n        -739,\n        904,\n        -154,\n        -947,\n        464,\n        343,\n        -312,\n        150,\n        -656,\n        528,\n        61,\n        94,\n        -581,\n    ]\n)\n\ntest9 = program.MinHeap(\n    [\n        -823,\n        164,\n        48,\n        -987,\n        323,\n        399,\n        -293,\n        183,\n        -908,\n        -376,\n        14,\n        980,\n        965,\n        842,\n        422,\n        829,\n        59,\n        724,\n        -415,\n        -733,\n        356,\n        -855,\n        -155,\n        52,\n        328,\n        -544,\n        -371,\n        -160,\n        -942,\n        -51,\n        700,\n        -363,\n        -353,\n        -359,\n        238,\n        892,\n        -730,\n        -575,\n        892,\n        490,\n        490,\n        995,\n        572,\n        888,\n        -935,\n        919,\n        -191,\n        646,\n        -120,\n        125,\n        -817,\n        341,\n        -575,\n        372,\n        -874,\n        243,\n        610,\n        -36,\n        -685,\n        -337,\n        -13,\n        295,\n        800,\n        -950,\n        -949,\n        -257,\n        631,\n        -542,\n        201,\n        -796,\n        157,\n        950,\n        540,\n        -846,\n        -265,\n        746,\n        355,\n        -578,\n        -441,\n        -254,\n        -941,\n        -738,\n        -469,\n        -167,\n        -420,\n        -126,\n        -410,\n        59,\n    ]\n)\ntest9.insert(2)\ntest9.insert(22)\ntest9.insert(222)\ntest9.insert(2222)\ntest9.remove()\ntest9.remove()\ntest9.remove()\ntest9.remove()\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(test1.heap[0] == min(test1.heap), True)\n        for currentIdx in range(len(test1.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test1.heap[currentIdx] >= test1.heap[parentIdx], True)\n\n    def test_case_2(self):\n        self.assertEqual(test2.heap[0] == min(test2.heap), True)\n        for currentIdx in range(len(test2.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test2.heap[currentIdx] >= test2.heap[parentIdx], True)\n\n    def test_case_3(self):\n        self.assertEqual(test3.heap[0] == min(test3.heap), True)\n        for currentIdx in range(len(test3.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test3.heap[currentIdx] >= test3.heap[parentIdx], True)\n\n    def test_case_4(self):\n        self.assertEqual(test4.heap[0] == min(test4.heap), True)\n        for currentIdx in range(len(test4.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test4.heap[currentIdx] >= test4.heap[parentIdx], True)\n\n    def test_case_5(self):\n        self.assertEqual(test5.heap[0] == min(test5.heap), True)\n        for currentIdx in range(len(test5.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test5.heap[currentIdx] >= test5.heap[parentIdx], True)\n\n    def test_case_6(self):\n        self.assertEqual(test6.heap[0] == min(test6.heap), True)\n        for currentIdx in range(len(test6.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test6.heap[currentIdx] >= test6.heap[parentIdx], True)\n\n    def test_case_7(self):\n        self.assertEqual(test7.heap[0] == min(test7.heap), True)\n        for currentIdx in range(len(test7.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test7.heap[currentIdx] >= test7.heap[parentIdx], True)\n\n    def test_case_8(self):\n        self.assertEqual(test8.heap[0] == min(test8.heap), True)\n        for currentIdx in range(len(test8.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test8.heap[currentIdx] >= test8.heap[parentIdx], True)\n\n    def test_case_9(self):\n        self.assertEqual(test9.heap[0] == min(test9.heap), True)\n        for currentIdx in range(len(test9.heap)):\n            parentIdx = (currentIdx - 1) // 2\n            if parentIdx < 0:\n                break\n            self.assertEqual(test9.heap[currentIdx] >= test9.heap[parentIdx], True)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\ndef isMinHeapPropertySatisfied(array):\n    for currentIdx in range(1, len(array)):\n        parentIdx = (currentIdx - 1) // 2\n        if array[parentIdx] > array[currentIdx]:\n            return False\n    return True\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        minHeap = program.MinHeap([48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41])\n        minHeap.insert(76)\n        self.assertTrue(isMinHeapPropertySatisfied(minHeap.heap))\n        self.assertEqual(minHeap.peek(), -5)\n        self.assertEqual(minHeap.remove(), -5)\n        self.assertTrue(isMinHeapPropertySatisfied(minHeap.heap))\n        self.assertEqual(minHeap.peek(), 2)\n        self.assertEqual(minHeap.remove(), 2)\n        self.assertTrue(isMinHeapPropertySatisfied(minHeap.heap))\n        self.assertEqual(minHeap.peek(), 6)\n        minHeap.insert(87)\n        self.assertTrue(isMinHeapPropertySatisfied(minHeap.heap))\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass MinHeap:\n    def __init__(self, array):\n        self.heap = self.buildHeap(array)\n\n    # O(n) time | O(1) space\n    def buildHeap(self, array):\n        firstParentIdx = (len(array) - 2) // 2\n        for currentIdx in reversed(range(firstParentIdx + 1)):\n            self.siftDown(currentIdx, len(array) - 1, array)\n        return array\n\n    # O(log(n)) time | O(1) space\n    def siftDown(self, currentIdx, endIdx, heap):\n        childOneIdx = currentIdx * 2 + 1\n        while childOneIdx <= endIdx:\n            childTwoIdx = currentIdx * 2 + 2 if currentIdx * 2 + 2 <= endIdx else -1\n            if childTwoIdx != -1 and heap[childTwoIdx] < heap[childOneIdx]:\n                idxToSwap = childTwoIdx\n            else:\n                idxToSwap = childOneIdx\n            if heap[idxToSwap] < heap[currentIdx]:\n                self.swap(currentIdx, idxToSwap, heap)\n                currentIdx = idxToSwap\n                childOneIdx = currentIdx * 2 + 1\n            else:\n                return\n\n    # O(log(n)) time | O(1) space\n    def siftUp(self, currentIdx, heap):\n        parentIdx = (currentIdx - 1) // 2\n        while currentIdx > 0 and heap[currentIdx] < heap[parentIdx]:\n            self.swap(currentIdx, parentIdx, heap)\n            currentIdx = parentIdx\n            parentIdx = (currentIdx - 1) // 2\n\n    # O(1) time | O(1) space\n    def peek(self):\n        return self.heap[0]\n\n    # O(log(n)) time | O(1) space\n    def remove(self):\n        self.swap(0, len(self.heap) - 1, self.heap)\n        valueToRemove = self.heap.pop()\n        self.siftDown(0, len(self.heap) - 1, self.heap)\n        return valueToRemove\n\n    # O(log(n)) time | O(1) space\n    def insert(self, value):\n        self.heap.append(value)\n        self.siftUp(len(self.heap) - 1, self.heap)\n\n    def swap(self, i, j, heap):\n        heap[i], heap[j] = heap[j], heap[i]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  class MinHeap {\n    var heap = [Int]()\n\n    init(array: [Int]) {\n      var array = array\n      heap = buildHeap(array: &array)\n    }\n\n    func buildHeap(array: inout [Int]) -> [Int] {\n      // Write your code here.\n      return []\n    }\n\n    func siftDown(currentIndex: inout Int, endIndex: inout Int, heap: inout [Int]) {\n      // Write your code here.\n    }\n\n    func siftUp(currentIndex: inout Int, heap: inout [Int]) {\n      // Write your code here.\n    }\n\n    func peek() -> Int {\n      // Write your code here.\n      return -1\n    }\n\n    func remove() -> Int {\n      // Write your code here.\n      return -1\n    }\n\n    func insert(value: Int) {\n      // Write your code here.\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [2, 3, 1])\n      try testMinHeap(heap: heap)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [1, 2, 3, 4, 5, 6, 7, 8, 9])\n      try testMinHeap(heap: heap)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41])\n      heap.insert(value: 76)\n      heap.remove()\n      heap.remove()\n      heap.insert(value: 87)\n      try testMinHeap(heap: heap)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [-4, 5, 10, 8, -10, -6, -4, -2, -5, 3, 5, -4, -5, -1, 1, 6, -7, -6, -7, 8])\n      try testMinHeap(heap: heap)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [-7, 2, 3, 8, -10, 4, -6, -10, -2, -7, 10, 5, 2, 9, -9, -5, 3, 8])\n      heap.remove()\n      heap.insert(value: -8)\n      heap.remove()\n      heap.insert(value: 8)\n      try testMinHeap(heap: heap)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [427, 787, 222, 996, -359, -614, 246, 230, 107, -706, 568, 9, -246, 12, -764, -212, -484, 603, 934, -848, -646, -991, 661, -32, -348, -474, -439, -56, 507, 736, 635, -171, -215, 564, -710, 710, 565, 892, 970, -755, 55, 821, -3, -153, 240, -160, -610, -583, -27, 131])\n      try testMinHeap(heap: heap)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [991, -731, -882, 100, 280, -43, 432, 771, -581, 180, -382, -998, 847, 80, -220, 680, 769, -75, -817, 366, 956, 749, 471, 228, -435, -269, 652, -331, -387, -657, -255, 382, -216, -6, -163, -681, 980, 913, -169, 972, -523, 354, 747, 805, 382, -827, -796, 372, 753, 519, 906])\n      heap.remove()\n      heap.remove()\n      heap.remove()\n      heap.insert(value: 992)\n      try testMinHeap(heap: heap)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [544, -578, 556, 713, -655, -359, -810, -731, 194, -531, -685, 689, -279, -738, 886, -54, -320, -500, 738, 445, -401, 993, -753, 329, -396, -924, -975, 376, 748, -356, 972, 459, 399, 669, -488, 568, -702, 551, 763, -90, -249, -45, 452, -917, 394, 195, -877, 153, 153, 788, 844, 867, 266, -739, 904, -154, -947, 464, 343, -312, 150, -656, 528, 61, 94, -581])\n      try testMinHeap(heap: heap)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let heap = Program.MinHeap(array: [-823, 164, 48, -987, 323, 399, -293, 183, -908, -376, 14, 980, 965, 842, 422, 829, 59, 724, -415, -733, 356, -855, -155, 52, 328, -544, -371, -160, -942, -51, 700, -363, -353, -359, 238, 892, -730, -575, 892, 490, 490, 995, 572, 888, -935, 919, -191, 646, -120, 125, -817, 341, -575, 372, -874, 243, 610, -36, -685, -337, -13, 295, 800, -950, -949, -257, 631, -542, 201, -796, 157, 950, 540, -846, -265, 746, 355, -578, -441, -254, -941, -738, -469, -167, -420, -126, -410, 59])\n      heap.insert(value: 2)\n      heap.insert(value: 22)\n      heap.insert(value: 222)\n      heap.insert(value: 2222)\n      heap.remove()\n      heap.remove()\n      heap.remove()\n      heap.remove()\n      try testMinHeap(heap: heap)\n    }\n  }\n\n  func testMinHeap(heap: Program.MinHeap) throws {\n    try assertEqual(heap.heap.min(), heap.heap.first)\n    try assert(heap.heap.count > 0)\n\n    for currentIndex in 0 ..< heap.heap.count - 1 {\n      var parentIndex = Double((currentIndex - 1) / 2)\n      parentIndex = parentIndex.rounded(.down)\n\n      if parentIndex < 0 {\n        break\n      }\n\n      try assert(heap.heap[currentIndex] >= heap.heap[Int(parentIndex)])\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let minHeap = Program.MinHeap(array: [48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41])\n      minHeap.insert(value: 76)\n      try assert(isMinHeapPropertySatisfied(array: minHeap.heap))\n      try assertEqual(minHeap.peek(), -5)\n      try assertEqual(minHeap.remove(), -5)\n      try assert(isMinHeapPropertySatisfied(array: minHeap.heap))\n      try assertEqual(minHeap.peek(), 2)\n      try assertEqual(minHeap.remove(), 2)\n      try assert(isMinHeapPropertySatisfied(array: minHeap.heap))\n      try assertEqual(minHeap.peek(), 6)\n      minHeap.insert(value: 87)\n      try assert(isMinHeapPropertySatisfied(array: minHeap.heap))\n    }\n  }\n\n  func isMinHeapPropertySatisfied(array: [Int]) -> Bool {\n    for currentIndex in 0 ..< array.count - 1 {\n      var parentIndex = Double((currentIndex - 1) / 2)\n      parentIndex = parentIndex.rounded(.down)\n\n      if parentIndex < 0 {\n        break\n      }\n\n      if array[Int(parentIndex)] > array[currentIndex] {\n        return false\n      }\n    }\n    return true\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class MinHeap {\n    var heap = [Int]()\n\n    init(array: [Int]) {\n      heap = array\n      buildHeap(array: array)\n    }\n\n    // O(n) time | O(1) space\n    func buildHeap(array: [Int]) {\n      var firstParentIndex = Double((array.count - 2) / 2)\n      firstParentIndex = firstParentIndex.rounded(.down)\n\n      for var currentIndex in (0 ... Int(firstParentIndex)).reversed() {\n        var endIndex = array.count - 1\n        siftDown(currentIndex: currentIndex, endIndex: endIndex)\n      }\n    }\n\n    // O(log(n)) time | O(1) space\n    func siftDown(currentIndex: Int, endIndex: Int) {\n      var childOneIdx = currentIndex * 2 + 1\n      var current = currentIndex\n      while childOneIdx <= endIndex {\n        var childTwoIdx = -1\n        if current * 2 + 2 <= endIndex {\n          childTwoIdx = current * 2 + 2\n        }\n        var indexToSwap = childOneIdx\n        if childTwoIdx > -1, heap[childTwoIdx] < heap[childOneIdx] {\n          indexToSwap = childTwoIdx\n        }\n\n        if heap[indexToSwap] < heap[current] {\n          swap(firstIndex: current, secondIndex: indexToSwap)\n          current = indexToSwap\n          childOneIdx = current * 2 + 1\n        } else {\n          return\n        }\n      }\n    }\n\n    // O(log(n)) time | O(1) space\n    func siftUp() {\n      var currentIndex = heap.count - 1\n      var parentIndex = (currentIndex - 1) / 2\n\n      while currentIndex > 0 {\n        var current = heap[currentIndex]\n        var parent = heap[Int(parentIndex)]\n        if current < parent {\n          swap(firstIndex: currentIndex, secondIndex: parentIndex)\n          currentIndex = parentIndex\n          parentIndex = (currentIndex - 1) / 2\n        } else {\n          return\n        }\n      }\n    }\n\n    // O(1) time | O(1) space\n    func peek() -> Int {\n      return heap[0]\n    }\n\n    // O(log(n)) time | O(1) space\n    func remove() -> Int {\n      var l = heap.count\n      swap(firstIndex: 0, secondIndex: l - 1)\n      var peeked = heap[l - 1]\n      heap.removeLast()\n      siftDown(currentIndex: 0, endIndex: l - 2)\n      return peeked\n    }\n\n    // O(log(n)) time | O(1) space\n    func insert(value: Int) {\n      heap.append(value)\n      siftUp()\n    }\n\n    // Generic swap function\n    func swap(firstIndex: Int, secondIndex: Int) {\n      let temp = heap[firstIndex]\n      heap[firstIndex] = heap[secondIndex]\n      heap[secondIndex] = temp\n    }\n\n    func length() -> Int {\n      return heap.count\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// Do not edit the class below except for the buildHeap,\n// siftDown, siftUp, peek, remove, and insert methods.\n// Feel free to add new properties and methods to the class.\nexport class MinHeap {\n  heap: number[];\n\n  constructor(array: number[]) {\n    this.heap = this.buildHeap(array);\n  }\n\n  buildHeap(array: number[]) {\n    // Write your code here.\n    return array;\n  }\n\n  siftDown() {\n    // Write your code here.\n  }\n\n  siftUp() {\n    // Write your code here.\n  }\n\n  peek() {\n    // Write your code here.\n    return -1;\n  }\n\n  remove() {\n    // Write your code here.\n    return -1;\n  }\n\n  insert(value: number) {\n    // Write your code here.\n  }\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nconst isMinHeapPropertySatisfied = (array: number[]) => {\n  for (let currentIdx = 1; currentIdx < array.length; currentIdx++) {\n    const parentIdx = Math.floor((currentIdx - 1) / 2);\n    if (array[parentIdx] > array[currentIdx]) return false;\n  }\n  return true;\n};\n\nit('Test Case #1', function () {\n  const minHeap = new program.MinHeap([48, 12, 24, 7, 8, -5, 24, 391, 24, 56, 2, 6, 8, 41]);\n  minHeap.insert(76);\n  chai.expect(isMinHeapPropertySatisfied(minHeap.heap)).to.deep.equal(true);\n  chai.expect(minHeap.peek()).to.deep.equal(-5);\n  chai.expect(minHeap.remove()).to.deep.equal(-5);\n  chai.expect(isMinHeapPropertySatisfied(minHeap.heap)).to.deep.equal(true);\n  chai.expect(minHeap.peek()).to.deep.equal(2);\n  chai.expect(minHeap.remove()).to.deep.equal(2);\n  chai.expect(isMinHeapPropertySatisfied(minHeap.heap)).to.deep.equal(true);\n  chai.expect(minHeap.peek()).to.deep.equal(6);\n  minHeap.insert(87);\n  chai.expect(isMinHeapPropertySatisfied(minHeap.heap)).to.deep.equal(true);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nexport class MinHeap {\n  heap: number[];\n\n  constructor(array: number[]) {\n    this.heap = this.buildHeap(array);\n  }\n\n  // O(n) time | O(1) space\n  buildHeap(array: number[]) {\n    const firstParentIdx = Math.floor((array.length - 2) / 2);\n    for (let currentIdx = firstParentIdx; currentIdx >= 0; currentIdx--) {\n      this.siftDown(currentIdx, array.length - 1, array);\n    }\n    return array;\n  }\n\n  // O(log(n)) time | O(1) space\n  siftDown(currentIdx: number, endIdx: number, heap: number[]) {\n    let childOneIdx = currentIdx * 2 + 1;\n    while (childOneIdx <= endIdx) {\n      const childTwoIdx = currentIdx * 2 + 2 <= endIdx ? currentIdx * 2 + 2 : -1;\n      let idxToSwap;\n      if (childTwoIdx !== -1 && heap[childTwoIdx] < heap[childOneIdx]) {\n        idxToSwap = childTwoIdx;\n      } else {\n        idxToSwap = childOneIdx;\n      }\n      if (heap[idxToSwap] < heap[currentIdx]) {\n        this.swap(currentIdx, idxToSwap, heap);\n        currentIdx = idxToSwap;\n        childOneIdx = currentIdx * 2 + 1;\n      } else {\n        return;\n      }\n    }\n  }\n\n  // O(log(n)) time | O(1) space\n  siftUp(currentIdx: number, heap: number[]) {\n    let parentIdx = Math.floor((currentIdx - 1) / 2);\n    while (currentIdx > 0 && heap[currentIdx] < heap[parentIdx]) {\n      this.swap(currentIdx, parentIdx, heap);\n      currentIdx = parentIdx;\n      parentIdx = Math.floor((currentIdx - 1) / 2);\n    }\n  }\n\n  // O(1) time | O(1) space\n  peek() {\n    return this.heap[0];\n  }\n\n  // O(log(n)) time | O(1) space\n  remove() {\n    this.swap(0, this.heap.length - 1, this.heap);\n    const valueToRemove = this.heap.pop();\n    this.siftDown(0, this.heap.length - 1, this.heap);\n    return valueToRemove;\n  }\n\n  // O(log(n)) time | O(1) space\n  insert(value: number) {\n    this.heap.push(value);\n    this.siftUp(this.heap.length - 1, this.heap);\n  }\n\n  swap(i: number, j: number, heap: number[]) {\n    const temp = heap[j];\n    heap[j] = heap[i];\n    heap[i] = temp;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        48,
+        12,
+        24,
+        7,
+        8,
+        -5,
+        24,
+        391,
+        24,
+        56,
+        2,
+        6,
+        8,
+        41
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            76
+          ],
+          "method": "insert"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [
+            87
+          ],
+          "method": "insert"
+        }
+      ]
+    },
+    {
+      "array": [
+        2,
+        3,
+        1
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [],
+          "method": "peek"
+        }
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [],
+          "method": "peek"
+        }
+      ]
+    },
+    {
+      "array": [
+        -4,
+        5,
+        10,
+        8,
+        -10,
+        -6,
+        -4,
+        -2,
+        -5,
+        3,
+        5,
+        -4,
+        -5,
+        -1,
+        1,
+        6,
+        -7,
+        -6,
+        -7,
+        8
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [],
+          "method": "peek"
+        }
+      ]
+    },
+    {
+      "array": [
+        -7,
+        2,
+        3,
+        8,
+        -10,
+        4,
+        -6,
+        -10,
+        -2,
+        -7,
+        10,
+        5,
+        2,
+        9,
+        -9,
+        -5,
+        3,
+        8
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [
+            -8
+          ],
+          "method": "insert"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        },
+        {
+          "arguments": [
+            8
+          ],
+          "method": "insert"
+        },
+        {
+          "arguments": [],
+          "method": "peek"
+        }
+      ]
+    },
+    {
+      "array": [
+        427,
+        787,
+        222,
+        996,
+        -359,
+        -614,
+        246,
+        230,
+        107,
+        -706,
+        568,
+        9,
+        -246,
+        12,
+        -764,
+        -212,
+        -484,
+        603,
+        934,
+        -848,
+        -646,
+        -991,
+        661,
+        -32,
+        -348,
+        -474,
+        -439,
+        -56,
+        507,
+        736,
+        635,
+        -171,
+        -215,
+        564,
+        -710,
+        710,
+        565,
+        892,
+        970,
+        -755,
+        55,
+        821,
+        -3,
+        -153,
+        240,
+        -160,
+        -610,
+        -583,
+        -27,
+        131
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [],
+          "method": "peek"
+        }
+      ]
+    },
+    {
+      "array": [
+        991,
+        -731,
+        -882,
+        100,
+        280,
+        -43,
+        432,
+        771,
+        -581,
+        180,
+        -382,
+        -998,
+        847,
+        80,
+        -220,
+        680,
+        769,
+        -75,
+        -817,
+        366,
+        956,
+        749,
+        471,
+        228,
+        -435,
+        -269,
+        652,
+        -331,
+        -387,
+        -657,
+        -255,
+        382,
+        -216,
+        -6,
+        -163,
+        -681,
+        980,
+        913,
+        -169,
+        972,
+        -523,
+        354,
+        747,
+        805,
+        382,
+        -827,
+        -796,
+        372,
+        753,
+        519,
+        906
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [
+            992
+          ],
+          "method": "insert"
+        }
+      ]
+    },
+    {
+      "array": [
+        544,
+        -578,
+        556,
+        713,
+        -655,
+        -359,
+        -810,
+        -731,
+        194,
+        -531,
+        -685,
+        689,
+        -279,
+        -738,
+        886,
+        -54,
+        -320,
+        -500,
+        738,
+        445,
+        -401,
+        993,
+        -753,
+        329,
+        -396,
+        -924,
+        -975,
+        376,
+        748,
+        -356,
+        972,
+        459,
+        399,
+        669,
+        -488,
+        568,
+        -702,
+        551,
+        763,
+        -90,
+        -249,
+        -45,
+        452,
+        -917,
+        394,
+        195,
+        -877,
+        153,
+        153,
+        788,
+        844,
+        867,
+        266,
+        -739,
+        904,
+        -154,
+        -947,
+        464,
+        343,
+        -312,
+        150,
+        -656,
+        528,
+        61,
+        94,
+        -581
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [],
+          "method": "peek"
+        }
+      ]
+    },
+    {
+      "array": [
+        -823,
+        164,
+        48,
+        -987,
+        323,
+        399,
+        -293,
+        183,
+        -908,
+        -376,
+        14,
+        980,
+        965,
+        842,
+        422,
+        829,
+        59,
+        724,
+        -415,
+        -733,
+        356,
+        -855,
+        -155,
+        52,
+        328,
+        -544,
+        -371,
+        -160,
+        -942,
+        -51,
+        700,
+        -363,
+        -353,
+        -359,
+        238,
+        892,
+        -730,
+        -575,
+        892,
+        490,
+        490,
+        995,
+        572,
+        888,
+        -935,
+        919,
+        -191,
+        646,
+        -120,
+        125,
+        -817,
+        341,
+        -575,
+        372,
+        -874,
+        243,
+        610,
+        -36,
+        -685,
+        -337,
+        -13,
+        295,
+        800,
+        -950,
+        -949,
+        -257,
+        631,
+        -542,
+        201,
+        -796,
+        157,
+        950,
+        540,
+        -846,
+        -265,
+        746,
+        355,
+        -578,
+        -441,
+        -254,
+        -941,
+        -738,
+        -469,
+        -167,
+        -420,
+        -126,
+        -410,
+        59
+      ],
+      "classMethodsToCall": [
+        {
+          "arguments": [
+            2
+          ],
+          "method": "insert"
+        },
+        {
+          "arguments": [
+            22
+          ],
+          "method": "insert"
+        },
+        {
+          "arguments": [
+            222
+          ],
+          "method": "insert"
+        },
+        {
+          "arguments": [
+            2222
+          ],
+          "method": "insert"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        },
+        {
+          "arguments": [],
+          "method": "remove"
+        }
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        {
+          "arguments": [
+            76
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": -5
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -5
+        },
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": 2
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": 2
+        },
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": 6
+        },
+        {
+          "arguments": [
+            87
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        }
+      ],
+      [
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": 1
+        }
+      ],
+      [
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": 1
+        }
+      ],
+      [
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": -10
+        }
+      ],
+      [
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -10
+        },
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": -10
+        },
+        {
+          "arguments": [
+            -8
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": -10
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -10
+        },
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": -9
+        },
+        {
+          "arguments": [
+            8
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": -9
+        }
+      ],
+      [
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": -991
+        }
+      ],
+      [
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -998
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -882
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -827
+        },
+        {
+          "arguments": [
+            992
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        }
+      ],
+      [
+        {
+          "arguments": [],
+          "method": "peek",
+          "minHeapPropertySatisfied": true,
+          "output": -975
+        }
+      ],
+      [
+        {
+          "arguments": [
+            2
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        },
+        {
+          "arguments": [
+            22
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        },
+        {
+          "arguments": [
+            222
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        },
+        {
+          "arguments": [
+            2222
+          ],
+          "method": "insert",
+          "minHeapPropertySatisfied": true,
+          "output": null
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -987
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -950
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -949
+        },
+        {
+          "arguments": [],
+          "method": "remove",
+          "minHeapPropertySatisfied": true,
+          "output": -942
+        }
+      ]
+    ]
+  ]
+}

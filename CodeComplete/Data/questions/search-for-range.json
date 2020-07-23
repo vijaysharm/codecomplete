@@ -1,0 +1,328 @@
+{
+  "Summary": {
+    "Name": "Search For Range",
+    "Category": "Searching",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "number": 755,
+      "timeOne": 0,
+      "timeTwo": 1009,
+      "url": "https://player.vimeo.com/video/249360328"
+    }
+  },
+  "Prompt": "",
+  "Hints": "The Binary Search algorithm involves a left pointer and a right pointer and using those pointers to find the middle number in an array in an effort to find a target number. Unlike with normal Binary Search however, here you cannot simply find the middle number of the array, compare it to the target, and stop once you find it because you are looking for a range rather than a single number. Instead, realize that whenever you find the middle number in the array, the following two scenarios are possible: either the middle number is not equal to the target number, in which case you must proceed with normal Binary Search, or the middle number is equal to the target number, in which case you must figure out if this middle number is an extremity of the range or not.\nTry applying an altered version of Binary Search twice: once to find the left extremity of the range and once to find the right extremity of the range. How can you accomplish this? What are the time complexity implications of this approach?\nCan you implement this algorithm iteratively? Are there any advantages to doing so?\n",
+  "SpaceTime": "O(log(n)) time | O(1) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a sorted array of integers as well as a target\n  integer. The function should use a variation of the Binary Search algorithm to\n  find a range of indices in between which the target number is contained in the\n  array and should return this range in the form of an array.\n</p>\n<p>\n  The first number in the output array should represent the first index at which\n  the target number is located, while the second number should represent the\n  last index at which the target number is located. The function should return\n  <span>[-1, -1]</span> if the integer isn't contained in the array.\n</p>\n<p>\n  If you're unfamiliar with Binary Search, we recommend watching the Conceptual\n  Overview section of the Binary Search question's video explanation before\n  starting to code.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73]\n<span class=\"CodeEditor-promptParameter\">target</span> = 45\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[4, 9]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        61,
+        71,
+        73
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    },
+    {
+      "Name": "target",
+      "Example": 45,
+      "Schema": {
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> searchForRange(vector<int> array, int target) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{0, 0};\n      assert(searchForRange({5, 7, 7, 8, 8, 10}, 5) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> expected{1, 2};\n      assert(searchForRange({5, 7, 7, 8, 8, 10}, 7) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> expected{3, 4};\n      assert(searchForRange({5, 7, 7, 8, 8, 10}, 8) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> expected{5, 5};\n      assert(searchForRange({5, 7, 7, 8, 8, 10}, 10) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> expected{-1, -1};\n      assert(searchForRange({5, 7, 7, 8, 8, 10}, 9) == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> expected{-1, -1};\n      assert(searchForRange({0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73},\n                            47) == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> expected{-1, -1};\n      assert(searchForRange({0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73},\n                            -1) == expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> expected{4, 9};\n      assert(searchForRange({0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73},\n                            45) == expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> expected{4, 12};\n      assert(searchForRange({0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 45, 45, 45},\n                            45) == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{4, 9};\n      assert(searchForRange({0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73},\n                            45) == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nvector<int> searchForRange(vector<int> array, int target);\nvoid alteredBinarySearch(vector<int> array, int target, int left, int right,\n                         vector<int> *finalRange, bool goLeft);\n\n// O(log(n)) time | O(log(n)) space\nvector<int> searchForRange(vector<int> array, int target) {\n  vector<int> finalRange{-1, -1};\n  alteredBinarySearch(array, target, 0, array.size() - 1, &finalRange, true);\n  alteredBinarySearch(array, target, 0, array.size() - 1, &finalRange, false);\n  return finalRange;\n}\n\nvoid alteredBinarySearch(vector<int> array, int target, int left, int right,\n                         vector<int> *finalRange, bool goLeft) {\n  if (left > right) {\n    return;\n  }\n  int mid = (left + right) / 2;\n  if (array[mid] < target) {\n    alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n  } else if (array[mid] > target) {\n    alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n  } else {\n    if (goLeft) {\n      if (mid == 0 || array[mid - 1] != target) {\n        finalRange->at(0) = mid;\n      } else {\n        alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n      }\n    } else {\n      if (mid == array.size() - 1 || array[mid + 1] != target) {\n        finalRange->at(1) = mid;\n      } else {\n        alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nvector<int> searchForRange(vector<int> array, int target);\nvoid alteredBinarySearch(vector<int> array, int target, int left, int right,\n                         vector<int> *finalRange, bool goLeft);\n\n// O(log(n)) time | O(1) space\nvector<int> searchForRange(vector<int> array, int target) {\n  vector<int> finalRange{-1, -1};\n  alteredBinarySearch(array, target, 0, array.size() - 1, &finalRange, true);\n  alteredBinarySearch(array, target, 0, array.size() - 1, &finalRange, false);\n  return finalRange;\n}\n\nvoid alteredBinarySearch(vector<int> array, int target, int left, int right,\n                         vector<int> *finalRange, bool goLeft) {\n  while (left <= right) {\n    int mid = (left + right) / 2;\n    if (array[mid] < target) {\n      left = mid + 1;\n    } else if (array[mid] > target) {\n      right = mid - 1;\n    } else {\n      if (goLeft) {\n        if (mid == 0 || array[mid - 1] != target) {\n          finalRange->at(0) = mid;\n          return;\n        } else {\n          right = mid - 1;\n        }\n      } else {\n        if (mid == array.size() - 1 || array[mid + 1] != target) {\n          finalRange->at(1) = mid;\n          return;\n        } else {\n          left = mid + 1;\n        }\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int[] SearchForRange(int[] array, int target) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {0, 0};\n\t\tint[] output = Program.SearchForRange(new int[] {5, 7, 7, 8, 8, 10}, 5);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] expected = {1, 2};\n\t\tint[] output = Program.SearchForRange(new int[] {5, 7, 7, 8, 8, 10}, 7);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] expected = {3, 4};\n\t\tint[] output = Program.SearchForRange(new int[] {5, 7, 7, 8, 8, 10}, 8);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] expected = {5, 5};\n\t\tint[] output = Program.SearchForRange(new int[] {5, 7, 7, 8, 8, 10}, 10);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] expected = {-1, -1};\n\t\tint[] output = Program.SearchForRange(new int[] {5, 7, 7, 8, 8, 10}, 9);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] expected = {-1, -1};\n\t\tint[] output = Program.SearchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45,\n\t\t                                                 45, 61, 71, 73}, 47);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] expected = {-1, -1};\n\t\tint[] output = Program.SearchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45,\n\t\t                                                 45, 61, 71, 73}, -1);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] expected = {4, 9};\n\t\tint[] output = Program.SearchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45,\n\t\t                                                 45, 61, 71, 73}, 45);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] expected = {4, 12};\n\t\tint[] output = Program.SearchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45,\n\t\t                                                 45, 45, 45, 45}, 45);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\tpublic bool compare(int[] arr1, int[] arr2) {\n\t\tif (arr1.Length != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Length; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {4, 9};\n\t\tint[] output = Program.SearchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45,\n\t\t                                                 45, 61, 71, 73}, 45);\n\t\tUtils.AssertTrue(compare(output, expected));\n\t}\n\n\tpublic bool compare(int[] arr1, int[] arr2) {\n\t\tif (arr1.Length != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Length; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(log(n)) time | O(log(n)) space\n\tpublic static int[] SearchForRange(int[] array, int target) {\n\t\tint[] finalRange = {-1, -1};\n\t\talteredBinarySearch(array, target, 0, array.Length - 1, finalRange, true);\n\t\talteredBinarySearch(array, target, 0, array.Length - 1, finalRange, false);\n\t\treturn finalRange;\n\t}\n\n\tpublic static void alteredBinarySearch(int[] array, int target, int left, int right,\n\t  int[] finalRange, bool goLeft) {\n\t\tif (left > right) {\n\t\t\treturn;\n\t\t}\n\t\tint mid = (left + right) / 2;\n\t\tif (array[mid] < target) {\n\t\t\talteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n\t\t} else if (array[mid] > target) {\n\t\t\talteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n\t\t} else {\n\t\t\tif (goLeft) {\n\t\t\t\tif (mid == 0 || array[mid - 1] != target) {\n\t\t\t\t\tfinalRange[0] = mid;\n\t\t\t\t} else {\n\t\t\t\t\talteredBinarySearch(array, target, left, mid - 1,\n\t\t\t\t\t  finalRange, goLeft);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (mid == array.Length - 1 || array[mid + 1] != target) {\n\t\t\t\t\tfinalRange[1] = mid;\n\t\t\t\t} else {\n\t\t\t\t\talteredBinarySearch(array, target, mid + 1, right,\n\t\t\t\t\t  finalRange, goLeft);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// O(log(n)) time | O(1) space\n\tpublic static int[] SearchForRange(int[] array, int target) {\n\t\tint[] finalRange = {-1, -1};\n\t\talteredBinarySearch(array, target, 0, array.Length - 1, finalRange, true);\n\t\talteredBinarySearch(array, target, 0, array.Length - 1, finalRange, false);\n\t\treturn finalRange;\n\t}\n\n\tpublic static void alteredBinarySearch(int[] array, int target, int left, int right,\n\t  int[] finalRange, bool goLeft) {\n\t\twhile (left <= right) {\n\t\t\tint mid = (left + right) / 2;\n\t\t\tif (array[mid] < target) {\n\t\t\t\tleft = mid + 1;\n\t\t\t} else if (array[mid] > target) {\n\t\t\t\tright = mid - 1;\n\t\t\t} else {\n\t\t\t\tif (goLeft) {\n\t\t\t\t\tif (mid == 0 || array[mid - 1] != target) {\n\t\t\t\t\t\tfinalRange[0] = mid;\n\t\t\t\t\t\treturn;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tright = mid - 1;\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tif (mid == array.Length - 1 || array[mid + 1] != target) {\n\t\t\t\t\t\tfinalRange[1] = mid;\n\t\t\t\t\t\treturn;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tleft = mid + 1;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc SearchForRange(array []int, target int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{0, 0}\n\toutput := SearchForRange([]int{5, 7, 7, 8, 8, 10}, 5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := []int{1, 2}\n\toutput := SearchForRange([]int{5, 7, 7, 8, 8, 10}, 7)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := []int{3, 4}\n\toutput := SearchForRange([]int{5, 7, 7, 8, 8, 10}, 8)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := []int{5, 5}\n\toutput := SearchForRange([]int{5, 7, 7, 8, 8, 10}, 10)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := []int{-1, -1}\n\toutput := SearchForRange([]int{5, 7, 7, 8, 8, 10}, 9)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := []int{-1, -1}\n\toutput := SearchForRange([]int{0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73}, 47)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := []int{-1, -1}\n\toutput := SearchForRange([]int{0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73}, -1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := []int{4, 9}\n\toutput := SearchForRange([]int{0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73}, 45)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := []int{4, 12}\n\toutput := SearchForRange([]int{0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 45, 45, 45}, 45)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{4, 9}\n\toutput := SearchForRange([]int{0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73}, 45)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(log(n)) time | O(log(n)) space\nfunc SearchForRange(array []int, target int) []int {\n\tfinalRange := []int{-1, -1}\n\talteredBinarySearch(array, target, 0, len(array)-1, finalRange, true)\n\talteredBinarySearch(array, target, 0, len(array)-1, finalRange, false)\n\treturn finalRange\n}\n\nfunc alteredBinarySearch(array []int, target, left, right int, finalRange []int, goLeft bool) {\n\tif left > right {\n\t\treturn\n\t}\n\tmid := (left + right) / 2\n\tif array[mid] < target {\n\t\talteredBinarySearch(array, target, mid+1, right, finalRange, goLeft)\n\t} else if array[mid] > target {\n\t\talteredBinarySearch(array, target, left, mid-1, finalRange, goLeft)\n\t} else {\n\t\tif goLeft {\n\t\t\tif mid == 0 || array[mid-1] != target {\n\t\t\t\tfinalRange[0] = mid\n\t\t\t} else {\n\t\t\t\talteredBinarySearch(array, target, left, mid-1, finalRange, goLeft)\n\t\t\t}\n\t\t} else {\n\t\t\tif mid == len(array)-1 || array[mid+1] != target {\n\t\t\t\tfinalRange[1] = mid\n\t\t\t} else {\n\t\t\t\talteredBinarySearch(array, target, mid+1, right, finalRange, goLeft)\n\t\t\t}\n\t\t}\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(log(n)) time | O(1) space\nfunc SearchForRange(array []int, target int) []int {\n\tfinalRange := []int{-1, -1}\n\talteredBinarySearch(array, target, 0, len(array)-1, finalRange, true)\n\talteredBinarySearch(array, target, 0, len(array)-1, finalRange, false)\n\treturn finalRange\n}\n\nfunc alteredBinarySearch(array []int, target, left, right int, finalRange []int, goLeft bool) {\n\tfor left <= right {\n\t\tmid := (left + right) / 2\n\t\tif array[mid] < target {\n\t\t\tleft = mid + 1\n\t\t} else if array[mid] > target {\n\t\t\tright = mid - 1\n\t\t} else {\n\t\t\tif goLeft {\n\t\t\t\tif mid == 0 || array[mid-1] != target {\n\t\t\t\t\tfinalRange[0] = mid\n\t\t\t\t\treturn\n\t\t\t\t} else {\n\t\t\t\t\tright = mid - 1\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif mid == len(array)-1 || array[mid+1] != target {\n\t\t\t\t\tfinalRange[1] = mid\n\t\t\t\t\treturn\n\t\t\t\t} else {\n\t\t\t\t\tleft = mid + 1\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int[] searchForRange(int[] array, int target) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] expected = {0, 0};\n    int[] output = Program.searchForRange(new int[] {5, 7, 7, 8, 8, 10}, 5);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] expected = {1, 2};\n    int[] output = Program.searchForRange(new int[] {5, 7, 7, 8, 8, 10}, 7);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] expected = {3, 4};\n    int[] output = Program.searchForRange(new int[] {5, 7, 7, 8, 8, 10}, 8);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] expected = {5, 5};\n    int[] output = Program.searchForRange(new int[] {5, 7, 7, 8, 8, 10}, 10);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] expected = {-1, -1};\n    int[] output = Program.searchForRange(new int[] {5, 7, 7, 8, 8, 10}, 9);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] expected = {-1, -1};\n    int[] output =\n        Program.searchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73}, 47);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] expected = {-1, -1};\n    int[] output =\n        Program.searchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73}, -1);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] expected = {4, 9};\n    int[] output =\n        Program.searchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73}, 45);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] expected = {4, 12};\n    int[] output =\n        Program.searchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 45, 45, 45}, 45);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  public boolean compare(int[] arr1, int[] arr2) {\n    if (arr1.length != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.length; i++) {\n      if (arr1[i] != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] expected = {4, 9};\n    int[] output =\n        Program.searchForRange(new int[] {0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73}, 45);\n    Utils.assertTrue(compare(output, expected));\n  }\n\n  public boolean compare(int[] arr1, int[] arr2) {\n    if (arr1.length != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.length; i++) {\n      if (arr1[i] != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(log(n)) space\n  public static int[] searchForRange(int[] array, int target) {\n    int[] finalRange = {-1, -1};\n    alteredBinarySearch(array, target, 0, array.length - 1, finalRange, true);\n    alteredBinarySearch(array, target, 0, array.length - 1, finalRange, false);\n    return finalRange;\n  }\n\n  public static void alteredBinarySearch(\n      int[] array, int target, int left, int right, int[] finalRange, boolean goLeft) {\n    if (left > right) {\n      return;\n    }\n    int mid = (left + right) / 2;\n    if (array[mid] < target) {\n      alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n    } else if (array[mid] > target) {\n      alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n    } else {\n      if (goLeft) {\n        if (mid == 0 || array[mid - 1] != target) {\n          finalRange[0] = mid;\n        } else {\n          alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n        }\n      } else {\n        if (mid == array.length - 1 || array[mid + 1] != target) {\n          finalRange[1] = mid;\n        } else {\n          alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n        }\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(1) space\n  public static int[] searchForRange(int[] array, int target) {\n    int[] finalRange = {-1, -1};\n    alteredBinarySearch(array, target, 0, array.length - 1, finalRange, true);\n    alteredBinarySearch(array, target, 0, array.length - 1, finalRange, false);\n    return finalRange;\n  }\n\n  public static void alteredBinarySearch(\n      int[] array, int target, int left, int right, int[] finalRange, boolean goLeft) {\n    while (left <= right) {\n      int mid = (left + right) / 2;\n      if (array[mid] < target) {\n        left = mid + 1;\n      } else if (array[mid] > target) {\n        right = mid - 1;\n      } else {\n        if (goLeft) {\n          if (mid == 0 || array[mid - 1] != target) {\n            finalRange[0] = mid;\n            return;\n          } else {\n            right = mid - 1;\n          }\n        } else {\n          if (mid == array.length - 1 || array[mid + 1] != target) {\n            finalRange[1] = mid;\n            return;\n          } else {\n            left = mid + 1;\n          }\n        }\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function searchForRange(array, target) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.searchForRange = searchForRange;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.searchForRange([5, 7, 7, 8, 8, 10], 5)).to.deep.equal([0, 0]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.searchForRange([5, 7, 7, 8, 8, 10], 7)).to.deep.equal([1, 2]);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.searchForRange([5, 7, 7, 8, 8, 10], 8)).to.deep.equal([3, 4]);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.searchForRange([5, 7, 7, 8, 8, 10], 10)).to.deep.equal([5, 5]);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.searchForRange([5, 7, 7, 8, 8, 10], 9)).to.deep.equal([-1, -1]);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 47)).to.deep.equal([-1, -1]);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], -1)).to.deep.equal([-1, -1]);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 45)).to.deep.equal([4, 9]);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 45, 45, 45], 45)).to.deep.equal([4, 12]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #8', function () {\n  chai.expect(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 45)).to.deep.equal([4, 9]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(log(n)) space\nfunction searchForRange(array, target) {\n  const finalRange = [-1, -1];\n  alteredBinarySearch(array, target, 0, array.length - 1, finalRange, true);\n  alteredBinarySearch(array, target, 0, array.length - 1, finalRange, false);\n  return finalRange;\n}\n\nfunction alteredBinarySearch(array, target, left, right, finalRange, goLeft) {\n  if (left > right) return;\n  const mid = Math.floor((left + right) / 2);\n  if (array[mid] < target) {\n    alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n  } else if (array[mid] > target) {\n    alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n  } else {\n    if (goLeft) {\n      if (mid === 0 || array[mid - 1] !== target) {\n        finalRange[0] = mid;\n      } else {\n        alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n      }\n    } else {\n      if (mid === array.length - 1 || array[mid + 1] !== target) {\n        finalRange[1] = mid;\n      } else {\n        alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n      }\n    }\n  }\n}\n\nexports.searchForRange = searchForRange;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(log(n)) time | O(1) space\nfunction searchForRange(array, target) {\n  const finalRange = [-1, -1];\n  alteredBinarySearch(array, target, 0, array.length - 1, finalRange, true);\n  alteredBinarySearch(array, target, 0, array.length - 1, finalRange, false);\n  return finalRange;\n}\n\nfunction alteredBinarySearch(array, target, left, right, finalRange, goLeft) {\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n    if (array[mid] < target) {\n      left = mid + 1;\n    } else if (array[mid] > target) {\n      right = mid - 1;\n    } else {\n      if (goLeft) {\n        if (mid === 0 || array[mid - 1] !== target) {\n          finalRange[0] = mid;\n          return;\n        } else {\n          right = mid - 1;\n        }\n      } else {\n        if (mid === array.length - 1 || array[mid + 1] !== target) {\n          finalRange[1] = mid;\n          return;\n        } else {\n          left = mid + 1;\n        }\n      }\n    }\n  }\n}\n\nexports.searchForRange = searchForRange;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def searchForRange(array, target):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.searchForRange([5, 7, 7, 8, 8, 10], 5), [0, 0])\n\n    def test_case_2(self):\n        self.assertEqual(program.searchForRange([5, 7, 7, 8, 8, 10], 7), [1, 2])\n\n    def test_case_3(self):\n        self.assertEqual(program.searchForRange([5, 7, 7, 8, 8, 10], 8), [3, 4])\n\n    def test_case_4(self):\n        self.assertEqual(program.searchForRange([5, 7, 7, 8, 8, 10], 10), [5, 5])\n\n    def test_case_5(self):\n        self.assertEqual(program.searchForRange([5, 7, 7, 8, 8, 10], 9), [-1, -1])\n\n    def test_case_6(self):\n        self.assertEqual(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 47), [-1, -1])\n\n    def test_case_7(self):\n        self.assertEqual(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], -1), [-1, -1])\n\n    def test_case_8(self):\n        self.assertEqual(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 45), [4, 9])\n\n    def test_case_9(self):\n        self.assertEqual(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 45, 45, 45], 45), [4, 12])\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 45), [4, 9])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(log(n)) time | O(log(n)) space\ndef searchForRange(array, target):\n    finalRange = [-1, -1]\n    alteredBinarySearch(array, target, 0, len(array) - 1, finalRange, True)\n    alteredBinarySearch(array, target, 0, len(array) - 1, finalRange, False)\n    return finalRange\n\n\ndef alteredBinarySearch(array, target, left, right, finalRange, goLeft):\n    if left > right:\n        return\n    mid = (left + right) // 2\n    if array[mid] < target:\n        alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft)\n    elif array[mid] > target:\n        alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft)\n    else:\n        if goLeft:\n            if mid == 0 or array[mid - 1] != target:\n                finalRange[0] = mid\n            else:\n                alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft)\n        else:\n            if mid == len(array) - 1 or array[mid + 1] != target:\n                finalRange[1] = mid\n            else:\n                alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft)\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(log(n)) time | O(1) space\ndef searchForRange(array, target):\n    finalRange = [-1, -1]\n    alteredBinarySearch(array, target, 0, len(array) - 1, finalRange, True)\n    alteredBinarySearch(array, target, 0, len(array) - 1, finalRange, False)\n    return finalRange\n\n\ndef alteredBinarySearch(array, target, left, right, finalRange, goLeft):\n    while left <= right:\n        mid = (left + right) // 2\n        if array[mid] < target:\n            left = mid + 1\n        elif array[mid] > target:\n            right = mid - 1\n        else:\n            if goLeft:\n                if mid == 0 or array[mid - 1] != target:\n                    finalRange[0] = mid\n                    return\n                else:\n                    right = mid - 1\n            else:\n                if mid == len(array) - 1 or array[mid + 1] != target:\n                    finalRange[1] = mid\n                    return\n                else:\n                    left = mid + 1\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func searchForRange(_ array: [Int], _ target: Int) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual([0, 0], program.searchForRange([5, 7, 7, 8, 8, 10], 5))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual([1, 2], program.searchForRange([5, 7, 7, 8, 8, 10], 7))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual([3, 4], program.searchForRange([5, 7, 7, 8, 8, 10], 8))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual([5, 5], program.searchForRange([5, 7, 7, 8, 8, 10], 10))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual([-1, -1], program.searchForRange([5, 7, 7, 8, 8, 10], 9))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual([-1, -1], program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 47))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual([-1, -1], program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], -1))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual([4, 9], program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 45))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual([4, 12], program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 45, 45, 45], 45))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual([4, 9], program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 45))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(log(n)) space\n  func searchForRange(_ array: [Int], _ target: Int) -> [Int] {\n    var finalRange = [-1, -1]\n\n    alteredBinarySearch(array, target, 0, array.count - 1, &finalRange, true)\n    alteredBinarySearch(array, target, 0, array.count - 1, &finalRange, false)\n    return finalRange\n  }\n\n  func alteredBinarySearch(_ array: [Int], _ target: Int, _ leftPointer: Int, _ rightPointer: Int, _ finalRange: inout [Int], _ goLeft: Bool) {\n    if leftPointer > rightPointer {\n      return\n    }\n\n    let middle = (leftPointer + rightPointer) / 2\n\n    if array[middle] > target {\n      alteredBinarySearch(array, target, leftPointer, middle - 1, &finalRange, goLeft)\n    } else if array[middle] < target {\n      alteredBinarySearch(array, target, middle + 1, rightPointer, &finalRange, goLeft)\n    } else {\n      if goLeft {\n        if middle == 0 || array[middle] != array[middle - 1] {\n          finalRange[0] = middle\n        } else {\n          alteredBinarySearch(array, target, leftPointer, middle - 1, &finalRange, goLeft)\n        }\n      } else {\n        if middle == array.count - 1 || array[middle] != array[middle + 1] {\n          finalRange[1] = middle\n        } else {\n          alteredBinarySearch(array, target, middle + 1, rightPointer, &finalRange, goLeft)\n        }\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(log(n)) time | O(1) space\n  func searchForRange(_ array: [Int], _ target: Int) -> [Int] {\n    var finalRange = [-1, -1]\n\n    var leftPointer = 0\n    var rightPointer = array.count - 1\n\n    alteredBinarySearch(array, target, &leftPointer, &rightPointer, &finalRange, true)\n\n    leftPointer = 0\n    rightPointer = array.count - 1\n    alteredBinarySearch(array, target, &leftPointer, &rightPointer, &finalRange, false)\n    return finalRange\n  }\n\n  func alteredBinarySearch(_ array: [Int], _ target: Int, _ leftPointer: inout Int, _ rightPointer: inout Int, _ finalRange: inout [Int], _ goLeft: Bool) {\n    while leftPointer <= rightPointer {\n      let middle = (leftPointer + rightPointer) / 2\n\n      if array[middle] > target {\n        rightPointer = middle - 1\n      } else if array[middle] < target {\n        leftPointer = middle + 1\n      } else {\n        if goLeft {\n          if middle == 0 || array[middle] != array[middle - 1] {\n            finalRange[0] = middle\n            return\n          } else {\n            rightPointer = middle - 1\n          }\n        } else {\n          if middle == array.count - 1 || array[middle] != array[middle + 1] {\n            finalRange[1] = middle\n            return\n          } else {\n            leftPointer = middle + 1\n          }\n        }\n      }\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "type Range = [number, number];\n\nexport function searchForRange(array: number[], target: number): Range {\n  // Write your code here.\n  return [-1, -1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #8', function () {\n  chai.expect(program.searchForRange([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73], 45)).to.deep.equal([4, 9]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Range = [number, number];\n\n// O(log(n)) time | O(log(n)) space\nexport function searchForRange(array: number[], target: number) {\n  const finalRange: Range = [-1, -1];\n  alteredBinarySearch(array, target, 0, array.length - 1, finalRange, true);\n  alteredBinarySearch(array, target, 0, array.length - 1, finalRange, false);\n  return finalRange;\n}\n\nfunction alteredBinarySearch(\n  array: number[],\n  target: number,\n  left: number,\n  right: number,\n  finalRange: Range,\n  goLeft: boolean,\n) {\n  if (left > right) return;\n  const mid = Math.floor((left + right) / 2);\n  if (array[mid] < target) {\n    alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n  } else if (array[mid] > target) {\n    alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n  } else {\n    if (goLeft) {\n      if (mid === 0 || array[mid - 1] !== target) {\n        finalRange[0] = mid;\n      } else {\n        alteredBinarySearch(array, target, left, mid - 1, finalRange, goLeft);\n      }\n    } else {\n      if (mid === array.length - 1 || array[mid + 1] !== target) {\n        finalRange[1] = mid;\n      } else {\n        alteredBinarySearch(array, target, mid + 1, right, finalRange, goLeft);\n      }\n    }\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ntype Range = [number, number];\n\n// O(log(n)) time | O(1) space\nexport function searchForRange(array: number[], target: number) {\n  const finalRange: Range = [-1, -1];\n  alteredBinarySearch(array, target, 0, array.length - 1, finalRange, true);\n  alteredBinarySearch(array, target, 0, array.length - 1, finalRange, false);\n  return finalRange;\n}\n\nfunction alteredBinarySearch(\n  array: number[],\n  target: number,\n  left: number,\n  right: number,\n  finalRange: Range,\n  goLeft: boolean,\n) {\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n    if (array[mid] < target) {\n      left = mid + 1;\n    } else if (array[mid] > target) {\n      right = mid - 1;\n    } else {\n      if (goLeft) {\n        if (mid === 0 || array[mid - 1] !== target) {\n          finalRange[0] = mid;\n          return;\n        } else {\n          right = mid - 1;\n        }\n      } else {\n        if (mid === array.length - 1 || array[mid + 1] !== target) {\n          finalRange[1] = mid;\n          return;\n        } else {\n          left = mid + 1;\n        }\n      }\n    }\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        61,
+        71,
+        73
+      ],
+      "target": 45
+    },
+    {
+      "array": [
+        5,
+        7,
+        7,
+        8,
+        8,
+        10
+      ],
+      "target": 5
+    },
+    {
+      "array": [
+        5,
+        7,
+        7,
+        8,
+        8,
+        10
+      ],
+      "target": 7
+    },
+    {
+      "array": [
+        5,
+        7,
+        7,
+        8,
+        8,
+        10
+      ],
+      "target": 8
+    },
+    {
+      "array": [
+        5,
+        7,
+        7,
+        8,
+        8,
+        10
+      ],
+      "target": 10
+    },
+    {
+      "array": [
+        5,
+        7,
+        7,
+        8,
+        8,
+        10
+      ],
+      "target": 9
+    },
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        61,
+        71,
+        73
+      ],
+      "target": 47
+    },
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        61,
+        71,
+        73
+      ],
+      "target": -1
+    },
+    {
+      "array": [
+        0,
+        1,
+        21,
+        33,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45,
+        45
+      ],
+      "target": 45
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        4,
+        9
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        5,
+        5
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        4,
+        12
+      ]
+    ]
+  ]
+}

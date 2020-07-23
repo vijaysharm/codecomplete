@@ -1,0 +1,678 @@
+{
+  "Summary": {
+    "Name": "Depth-first Search",
+    "Category": "Graphs",
+    "Difficulty": 1,
+    "Available": true,
+    "Metadata": {
+      "number": 101,
+      "timeOne": 0,
+      "timeTwo": 719,
+      "url": "https://player.vimeo.com/video/226842577"
+    }
+  },
+  "Prompt": "",
+  "Hints": "The Depth-first Search algorithm works by traversing a graph branch by branch. In other words, before traversing any Node's sibling Nodes, its children nodes must be traversed. How can you simply and effectively keep track of Nodes' sibling Nodes as you traverse them, all the while retaining the order in which you must traverse them?\nStart at the root Node and try simply calling the depthFirstSearch method on all of its children Nodes. Then, call the depthFirstSearch method on all children Nodes of each child node. Keep applying this logic until the entire graph has been traversed. Don't forget to add the current Node's name to the input array at every call of depthFirstSearch.\n",
+  "SpaceTime": "O(v + e) time | O(v) space - where v is the number of vertices of the input graph and e is the number of edges of the input graph\n",
+  "PromptHTML": "<p>\n  You're given a <span>Node</span> class that has a <span>name</span> and an\n  array of optional <span>children</span> nodes. When put together, nodes form\n  an acyclic tree-like structure.\n</p>\n<p>\n  Implement the <span>depthFirstSearch</span> method on the\n  <span>Node</span> class, which takes in an empty array, traverses the tree\n  using the Depth-first Search approach (specifically navigating the tree from\n  left to right), stores all of the nodes' names in the input array, and returns\n  it.\n</p>\n<p>\n  If you're unfamiliar with Depth-first Search, we recommend watching the\n  Conceptual Overview section of this question's video explanation before\n  starting to code.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">graph</span> = A\n     /  |  \\\n    B   C   D\n   / \\     / \\\n  E   F   G   H\n     / \\   \\\n    I   J   K\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "graph",
+      "Example": {
+        "nodes": [
+          {
+            "children": [
+              "B",
+              "C",
+              "D"
+            ],
+            "id": "A",
+            "value": "A"
+          },
+          {
+            "children": [
+              "E",
+              "F"
+            ],
+            "id": "B",
+            "value": "B"
+          },
+          {
+            "children": [],
+            "id": "C",
+            "value": "C"
+          },
+          {
+            "children": [
+              "G",
+              "H"
+            ],
+            "id": "D",
+            "value": "D"
+          },
+          {
+            "children": [],
+            "id": "E",
+            "value": "E"
+          },
+          {
+            "children": [
+              "I",
+              "J"
+            ],
+            "id": "F",
+            "value": "F"
+          },
+          {
+            "children": [
+              "K"
+            ],
+            "id": "G",
+            "value": "G"
+          },
+          {
+            "children": [],
+            "id": "H",
+            "value": "H"
+          },
+          {
+            "children": [],
+            "id": "I",
+            "value": "I"
+          },
+          {
+            "children": [],
+            "id": "J",
+            "value": "J"
+          },
+          {
+            "children": [],
+            "id": "K",
+            "value": "K"
+          }
+        ],
+        "startNode": "A"
+      },
+      "Schema": {
+        "description": "For the purpose of this question, a <span>graph</span> is represented by a list of <span>nodes</span> and a <span>startNode</span> node.\nEvery node has to have a unique string <span>id</span> that will be referenced by other nodes' lists of <span>children</span> and by the <span>startNode</span>.\nThe searching function will be called on the <span>startNode</span>.<br />\nRemember that your graph shouldn't have cycles!\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "children": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "id": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "children"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "startNode": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "startNode",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\n// Do not edit the class below except\n// for the depthFirstSearch method.\n// Feel free to add new properties\n// and methods to the class.\nclass Node {\npublic:\n  string name;\n  vector<Node *> children;\n\n  Node(string str) { name = str; }\n\n  vector<string> depthFirstSearch(vector<string> *array) {\n    // Write your code here.\n    return {};\n  }\n\n  Node *addChild(string name) {\n    Node *child = new Node(name);\n    children.push_back(child);\n    return this;\n  }\n};\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      Node test1(\"A\");\n      test1.addChild(\"B\")->addChild(\"C\");\n      test1.children[0]->addChild(\"D\");\n\n      vector<string> expected{\"A\", \"B\", \"D\", \"C\"};\n      vector<string> inputArray{};\n      assert(test1.depthFirstSearch(&inputArray) == expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      Node test2(\"A\");\n      test2.addChild(\"B\")->addChild(\"C\")->addChild(\"D\")->addChild(\"E\");\n      test2.children[1]->addChild(\"F\");\n      vector<string> expected{\"A\", \"B\", \"C\", \"F\", \"D\", \"E\"};\n      vector<string> inputArray{};\n      assert(test2.depthFirstSearch(&inputArray) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      Node test3(\"A\");\n      test3.addChild(\"B\");\n      test3.children[0]->addChild(\"C\");\n      test3.children[0]->children[0]->addChild(\"D\")->addChild(\"E\");\n      test3.children[0]->children[0]->children[0]->addChild(\"F\");\n      vector<string> expected{\"A\", \"B\", \"C\", \"D\", \"F\", \"E\"};\n      vector<string> inputArray{};\n      assert(test3.depthFirstSearch(&inputArray) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      Node test4(\"A\");\n      test4.addChild(\"B\")->addChild(\"C\")->addChild(\"D\");\n      test4.children[0]->addChild(\"E\")->addChild(\"F\");\n      test4.children[2]->addChild(\"G\")->addChild(\"H\");\n      test4.children[0]->children[1]->addChild(\"I\")->addChild(\"J\");\n      test4.children[2]->children[0]->addChild(\"K\");\n      vector<string> expected{\"A\", \"B\", \"E\", \"F\", \"I\", \"J\",\n                              \"C\", \"D\", \"G\", \"K\", \"H\"};\n      vector<string> inputArray{};\n      assert(test4.depthFirstSearch(&inputArray) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      Node test5(\"A\");\n      test5.addChild(\"B\")\n          ->addChild(\"C\")\n          ->addChild(\"D\")\n          ->addChild(\"L\")\n          ->addChild(\"M\");\n      test5.children[0]->addChild(\"E\")->addChild(\"F\")->addChild(\"O\");\n      test5.children[1]->addChild(\"P\");\n      test5.children[2]->addChild(\"G\")->addChild(\"H\");\n      test5.children[0]->children[0]->addChild(\"Q\")->addChild(\"R\");\n      test5.children[0]->children[1]->addChild(\"I\")->addChild(\"J\");\n      test5.children[2]->children[0]->addChild(\"K\");\n      test5.children[4]->addChild(\"S\")->addChild(\"T\")->addChild(\"U\")->addChild(\n          \"V\");\n      test5.children[4]->children[0]->addChild(\"W\")->addChild(\"X\");\n      test5.children[4]->children[0]->children[1]->addChild(\"Y\")->addChild(\"Z\");\n      vector<string> expected{\"A\", \"B\", \"E\", \"Q\", \"R\", \"F\", \"I\", \"J\", \"O\",\n                              \"C\", \"P\", \"D\", \"G\", \"K\", \"H\", \"L\", \"M\", \"S\",\n                              \"W\", \"X\", \"Y\", \"Z\", \"T\", \"U\", \"V\"};\n      vector<string> inputArray{};\n      assert(test5.depthFirstSearch(&inputArray) == expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      Node graph(\"A\");\n      graph.addChild(\"B\")->addChild(\"C\")->addChild(\"D\");\n      graph.children[0]->addChild(\"E\")->addChild(\"F\");\n      graph.children[2]->addChild(\"G\")->addChild(\"H\");\n      graph.children[0]->children[1]->addChild(\"I\")->addChild(\"J\");\n      graph.children[2]->children[0]->addChild(\"K\");\n\n      vector<string> expected{\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"};\n      vector<string> inputArray{};\n      assert(graph.depthFirstSearch(&inputArray) == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass Node {\npublic:\n  string name;\n  vector<Node *> children;\n\n  Node(string name) { this->name = name; }\n\n  // O(v + e) time | O(v) space\n  vector<string> depthFirstSearch(vector<string> *array) {\n    array->push_back(this->name);\n    for (int i = 0; i < this->children.size(); i++) {\n      children[i]->depthFirstSearch(array);\n    }\n    return *array;\n  }\n\n  Node *addChild(string name) {\n    Node *child = new Node(name);\n    children.push_back(child);\n    return this;\n  }\n};\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\t// Do not edit the class below except\n\t// for the DepthFirstSearch method.\n\t// Feel free to add new properties\n\t// and methods to the class.\n\tpublic class Node {\n\t\tpublic string name;\n\t\tpublic List<Node> children = new List<Node>();\n\n\t\tpublic Node(string name) {\n\t\t\tthis.name = name;\n\t\t}\n\n\t\tpublic List<string> DepthFirstSearch(List<string> array) {\n\t\t\t// Write your code here.\n\t\t\treturn null;\n\t\t}\n\n\t\tpublic Node AddChild(string name) {\n\t\t\tNode child = new Node(name);\n\t\t\tchildren.Add(child);\n\t\t\treturn this;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\tProgram.Node test1;\n\tProgram.Node test2;\n\tProgram.Node test3;\n\tProgram.Node test4;\n\tProgram.Node test5;\n\n\tpublic ProgramTest() {\n\t\ttest1 = new Program.Node(\"A\");\n\t\ttest1.AddChild(\"B\").AddChild(\"C\");\n\t\ttest1.children[0].AddChild(\"D\");\n\n\t\ttest2 = new Program.Node(\"A\");\n\t\ttest2.AddChild(\"B\").AddChild(\"C\").AddChild(\"D\").AddChild(\"E\");\n\t\ttest2.children[1].AddChild(\"F\");\n\n\t\ttest3 = new Program.Node(\"A\");\n\t\ttest3.AddChild(\"B\");\n\t\ttest3.children[0].AddChild(\"C\");\n\t\ttest3.children[0].children[0].AddChild(\"D\").AddChild(\"E\");\n\t\ttest3.children[0].children[0].children[0].AddChild(\"F\");\n\n\t\ttest4 = new Program.Node(\"A\");\n\t\ttest4.AddChild(\"B\").AddChild(\"C\").AddChild(\"D\");\n\t\ttest4.children[0].AddChild(\"E\").AddChild(\"F\");\n\t\ttest4.children[2].AddChild(\"G\").AddChild(\"H\");\n\t\ttest4.children[0].children[1].AddChild(\"I\").AddChild(\"J\");\n\t\ttest4.children[2].children[0].AddChild(\"K\");\n\n\t\ttest5 = new Program.Node(\"A\");\n\t\ttest5.AddChild(\"B\").AddChild(\"C\").AddChild(\"D\").AddChild(\"L\").AddChild(\"M\");\n\t\ttest5.children[0].AddChild(\"E\").AddChild(\"F\").AddChild(\"O\");\n\t\ttest5.children[1].AddChild(\"P\");\n\t\ttest5.children[2].AddChild(\"G\").AddChild(\"H\");\n\t\ttest5.children[0].children[0].AddChild(\"Q\").AddChild(\"R\");\n\t\ttest5.children[0].children[1].AddChild(\"I\").AddChild(\"J\");\n\t\ttest5.children[2].children[0].AddChild(\"K\");\n\t\ttest5.children[4].AddChild(\"S\").AddChild(\"T\").AddChild(\"U\").AddChild(\"V\");\n\t\ttest5.children[4].children[0].AddChild(\"W\").AddChild(\"X\");\n\t\ttest5.children[4].children[0].children[1].AddChild(\"Y\").AddChild(\"Z\");\n\t}\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tstring[] expected = {\"A\", \"B\", \"D\", \"C\"};\n\t\tList<string> inputArray = new List<string>();\n\t\tUtils.AssertTrue(compare(test1.DepthFirstSearch(inputArray), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tstring[] expected = {\"A\", \"B\", \"C\", \"F\", \"D\", \"E\"};\n\t\tList<string> inputArray = new List<string>();\n\t\tUtils.AssertTrue(compare(test2.DepthFirstSearch(inputArray), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tstring[] expected = {\"A\", \"B\", \"C\", \"D\", \"F\", \"E\"};\n\t\tList<string> inputArray = new List<string>();\n\t\tUtils.AssertTrue(compare(test3.DepthFirstSearch(inputArray), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tstring[] expected = {\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"};\n\t\tList<string> inputArray = new List<string>();\n\t\tUtils.AssertTrue(compare(test4.DepthFirstSearch(inputArray), expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tstring[] expected =\n\t\t{\"A\", \"B\", \"E\", \"Q\", \"R\", \"F\", \"I\", \"J\", \"O\", \"C\", \"P\", \"D\", \"G\", \"K\", \"H\", \"L\",\n\t\t \"M\", \"S\", \"W\", \"X\", \"Y\", \"Z\", \"T\", \"U\", \"V\"};\n\t\tList<string> inputArray = new List<string>();\n\t\tUtils.AssertTrue(compare(test5.DepthFirstSearch(inputArray), expected));\n\t}\n\n\tpublic static bool compare(List<string> arr1, string[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (!arr1[i].Equals(arr2[i])) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tProgram.Node graph = new Program.Node(\"A\");\n\t\tgraph.AddChild(\"B\").AddChild(\"C\").AddChild(\"D\");\n\t\tgraph.children[0].AddChild(\"E\").AddChild(\"F\");\n\t\tgraph.children[2].AddChild(\"G\").AddChild(\"H\");\n\t\tgraph.children[0].children[1].AddChild(\"I\").AddChild(\"J\");\n\t\tgraph.children[2].children[0].AddChild(\"K\");\n\t\tstring[] expected = {\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"};\n\t\tList<string> inputArray = new List<string>();\n\t\tUtils.AssertTrue(compare(graph.DepthFirstSearch(inputArray), expected));\n\t}\n\n\tpublic static bool compare(List<string> arr1, string[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (!arr1[i].Equals(arr2[i])) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\tpublic class Node {\n\t\tpublic string name;\n\t\tpublic List<Node> children = new List<Node>();\n\n\t\tpublic Node(string name) {\n\t\t\tthis.name = name;\n\t\t}\n\n\t\t// O(v + e) time | O(v) space\n\t\tpublic List<string> DepthFirstSearch(List<string> array) {\n\t\t\tarray.Add(this.name);\n\t\t\tfor (int i = 0; i < children.Count; i++) {\n\t\t\t\tchildren[i].DepthFirstSearch(array);\n\t\t\t}\n\t\t\treturn array;\n\t\t}\n\n\t\tpublic Node AddChild(string name) {\n\t\t\tNode child = new Node(name);\n\t\t\tchildren.Add(child);\n\t\t\treturn this;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\n// Do not edit the class below except\n// for the depthFirstSearch method.\n// Feel free to add new properties\n// and methods to the class.\ntype Node struct {\n\tName     string\n\tChildren []*Node\n}\n\nfunc (n *Node) DepthFirstSearch(array []string) []string {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewNode(name string) *Node {\n\treturn &Node{\n\t\tName:     name,\n\t\tChildren: []*Node{},\n\t}\n}\n\nfunc (n *Node) AddChildren(names ...string) *Node {\n\tfor _, name := range names {\n\t\tchild := Node{Name: name}\n\t\tn.Children = append(n.Children, &child)\n\t}\n\treturn n\n}\n\nvar test1 = NewNode(\"A\").AddChildren(\"B\", \"C\")\nvar test2 = NewNode(\"A\").AddChildren(\"B\", \"C\", \"D\", \"E\")\nvar test3 = NewNode(\"A\").AddChildren(\"B\")\nvar test4 = NewNode(\"A\").AddChildren(\"B\", \"C\", \"D\")\nvar test5 = NewNode(\"A\").AddChildren(\"B\", \"C\", \"D\", \"L\", \"M\")\n\nfunc init() {\n\ttest1.Children[0].AddChildren(\"D\")\n\ttest2.Children[1].AddChildren(\"F\")\n\ttest3.Children[0].AddChildren(\"C\")\n\ttest3.Children[0].Children[0].AddChildren(\"D\").AddChildren(\"E\")\n\ttest3.Children[0].Children[0].Children[0].AddChildren(\"F\")\n\ttest4.Children[0].AddChildren(\"E\").AddChildren(\"F\")\n\ttest4.Children[2].AddChildren(\"G\").AddChildren(\"H\")\n\ttest4.Children[0].Children[1].AddChildren(\"I\").AddChildren(\"J\")\n\ttest4.Children[2].Children[0].AddChildren(\"K\")\n\ttest5.Children[0].AddChildren(\"E\").AddChildren(\"F\").AddChildren(\"O\")\n\ttest5.Children[1].AddChildren(\"P\")\n\ttest5.Children[2].AddChildren(\"G\").AddChildren(\"H\")\n\ttest5.Children[0].Children[0].AddChildren(\"Q\").AddChildren(\"R\")\n\ttest5.Children[0].Children[1].AddChildren(\"I\").AddChildren(\"J\")\n\ttest5.Children[2].Children[0].AddChildren(\"K\")\n\ttest5.Children[4].AddChildren(\"S\").AddChildren(\"T\").AddChildren(\"U\").AddChildren(\"V\")\n\ttest5.Children[4].Children[0].AddChildren(\"W\").AddChildren(\"X\")\n\ttest5.Children[4].Children[0].Children[1].AddChildren(\"Y\").AddChildren(\"Z\")\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := test1.DepthFirstSearch([]string{})\n\texpected := []string{\"A\", \"B\", \"D\", \"C\"}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\toutput := test2.DepthFirstSearch([]string{})\n\texpected := []string{\"A\", \"B\", \"C\", \"F\", \"D\", \"E\"}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\toutput := test3.DepthFirstSearch([]string{})\n\texpected := []string{\"A\", \"B\", \"C\", \"D\", \"F\", \"E\"}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\toutput := test4.DepthFirstSearch([]string{})\n\texpected := []string{\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"}\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\toutput := test5.DepthFirstSearch([]string{})\n\texpected := []string{\"A\", \"B\", \"E\", \"Q\", \"R\", \"F\", \"I\", \"J\", \"O\", \"C\", \"P\", \"D\", \"G\", \"K\", \"H\", \"L\", \"M\", \"S\", \"W\", \"X\", \"Y\", \"Z\", \"T\", \"U\", \"V\"}\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc NewNode(name string) *Node {\n\treturn &Node{\n\t\tName:     name,\n\t\tChildren: []*Node{},\n\t}\n}\n\nfunc (n *Node) AddChildren(names ...string) *Node {\n\tfor _, name := range names {\n\t\tchild := Node{Name: name}\n\t\tn.Children = append(n.Children, &child)\n\t}\n\treturn n\n}\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\tvar graph = NewNode(\"A\").AddChildren(\"B\", \"C\", \"D\")\n\tgraph.Children[0].AddChildren(\"E\").AddChildren(\"F\")\n\tgraph.Children[2].AddChildren(\"G\").AddChildren(\"H\")\n\tgraph.Children[0].Children[1].AddChildren(\"I\").AddChildren(\"J\")\n\tgraph.Children[2].Children[0].AddChildren(\"K\")\n\toutput := graph.DepthFirstSearch([]string{})\n\texpected := []string{\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"}\n\trequire.Equal(t, expected, output)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// Do not edit the class below except\n// for the depthFirstSearch method.\n// Feel free to add new properties\n// and methods to the class.\ntype Node struct {\n\tName     string\n\tChildren []*Node\n}\n\n// O(v + e) time | O(v) space\nfunc (n *Node) DepthFirstSearch(array []string) []string {\n\tarray = append(array, n.Name)\n\tfor _, child := range n.Children {\n\t\tarray = child.DepthFirstSearch(array)\n\t}\n\treturn array\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  // Do not edit the class below except\n  // for the depthFirstSearch method.\n  // Feel free to add new properties\n  // and methods to the class.\n  static class Node {\n    String name;\n    List<Node> children = new ArrayList<Node>();\n\n    public Node(String name) {\n      this.name = name;\n    }\n\n    public List<String> depthFirstSearch(List<String> array) {\n      // Write your code here.\n      return null;\n    }\n\n    public Node addChild(String name) {\n      Node child = new Node(name);\n      children.add(child);\n      return this;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  Program.Node test1;\n  Program.Node test2;\n  Program.Node test3;\n  Program.Node test4;\n  Program.Node test5;\n\n  public ProgramTest() {\n    test1 = new Program.Node(\"A\");\n    test1.addChild(\"B\").addChild(\"C\");\n    test1.children.get(0).addChild(\"D\");\n\n    test2 = new Program.Node(\"A\");\n    test2.addChild(\"B\").addChild(\"C\").addChild(\"D\").addChild(\"E\");\n    test2.children.get(1).addChild(\"F\");\n\n    test3 = new Program.Node(\"A\");\n    test3.addChild(\"B\");\n    test3.children.get(0).addChild(\"C\");\n    test3.children.get(0).children.get(0).addChild(\"D\").addChild(\"E\");\n    test3.children.get(0).children.get(0).children.get(0).addChild(\"F\");\n\n    test4 = new Program.Node(\"A\");\n    test4.addChild(\"B\").addChild(\"C\").addChild(\"D\");\n    test4.children.get(0).addChild(\"E\").addChild(\"F\");\n    test4.children.get(2).addChild(\"G\").addChild(\"H\");\n    test4.children.get(0).children.get(1).addChild(\"I\").addChild(\"J\");\n    test4.children.get(2).children.get(0).addChild(\"K\");\n\n    test5 = new Program.Node(\"A\");\n    test5.addChild(\"B\").addChild(\"C\").addChild(\"D\").addChild(\"L\").addChild(\"M\");\n    test5.children.get(0).addChild(\"E\").addChild(\"F\").addChild(\"O\");\n    test5.children.get(1).addChild(\"P\");\n    test5.children.get(2).addChild(\"G\").addChild(\"H\");\n    test5.children.get(0).children.get(0).addChild(\"Q\").addChild(\"R\");\n    test5.children.get(0).children.get(1).addChild(\"I\").addChild(\"J\");\n    test5.children.get(2).children.get(0).addChild(\"K\");\n    test5.children.get(4).addChild(\"S\").addChild(\"T\").addChild(\"U\").addChild(\"V\");\n    test5.children.get(4).children.get(0).addChild(\"W\").addChild(\"X\");\n    test5.children.get(4).children.get(0).children.get(1).addChild(\"Y\").addChild(\"Z\");\n  }\n\n  @Test\n  public void TestCase1() {\n    String[] expected = {\"A\", \"B\", \"D\", \"C\"};\n    List<String> inputArray = new ArrayList<String>();\n    Utils.assertTrue(compare(test1.depthFirstSearch(inputArray), expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    String[] expected = {\"A\", \"B\", \"C\", \"F\", \"D\", \"E\"};\n    List<String> inputArray = new ArrayList<String>();\n    Utils.assertTrue(compare(test2.depthFirstSearch(inputArray), expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    String[] expected = {\"A\", \"B\", \"C\", \"D\", \"F\", \"E\"};\n    List<String> inputArray = new ArrayList<String>();\n    Utils.assertTrue(compare(test3.depthFirstSearch(inputArray), expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    String[] expected = {\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"};\n    List<String> inputArray = new ArrayList<String>();\n    Utils.assertTrue(compare(test4.depthFirstSearch(inputArray), expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    String[] expected = {\n      \"A\", \"B\", \"E\", \"Q\", \"R\", \"F\", \"I\", \"J\", \"O\", \"C\", \"P\", \"D\", \"G\", \"K\", \"H\", \"L\", \"M\", \"S\", \"W\",\n      \"X\", \"Y\", \"Z\", \"T\", \"U\", \"V\"\n    };\n    List<String> inputArray = new ArrayList<String>();\n    Utils.assertTrue(compare(test5.depthFirstSearch(inputArray), expected));\n  }\n\n  public static boolean compare(List<String> arr1, String[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (!arr1.get(i).equals(arr2[i])) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Program.Node graph = new Program.Node(\"A\");\n    graph.addChild(\"B\").addChild(\"C\").addChild(\"D\");\n    graph.children.get(0).addChild(\"E\").addChild(\"F\");\n    graph.children.get(2).addChild(\"G\").addChild(\"H\");\n    graph.children.get(0).children.get(1).addChild(\"I\").addChild(\"J\");\n    graph.children.get(2).children.get(0).addChild(\"K\");\n    String[] expected = {\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"};\n    List<String> inputArray = new ArrayList<String>();\n    Utils.assertTrue(compare(graph.depthFirstSearch(inputArray), expected));\n  }\n\n  public static boolean compare(List<String> arr1, String[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (!arr1.get(i).equals(arr2[i])) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  static class Node {\n    String name;\n    List<Node> children = new ArrayList<Node>();\n\n    public Node(String name) {\n      this.name = name;\n    }\n\n    // O(v + e) time | O(v) space\n    public List<String> depthFirstSearch(List<String> array) {\n      array.add(this.name);\n      for (int i = 0; i < children.size(); i++) {\n        children.get(i).depthFirstSearch(array);\n      }\n      return array;\n    }\n\n    public Node addChild(String name) {\n      Node child = new Node(name);\n      children.add(child);\n      return this;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "// Do not edit the class below except\n// for the depthFirstSearch method.\n// Feel free to add new properties\n// and methods to the class.\nclass Node {\n  constructor(name) {\n    this.name = name;\n    this.children = [];\n  }\n\n  addChild(name) {\n    this.children.push(new Node(name));\n    return this;\n  }\n\n  depthFirstSearch(array) {\n    // Write your code here.\n  }\n}\n\n// Do not edit the line below.\nexports.Node = Node;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nconst test1 = new program.Node('A');\ntest1.addChild('B').addChild('C');\ntest1.children[0].addChild('D');\n\nconst test2 = new program.Node('A');\ntest2.addChild('B').addChild('C').addChild('D').addChild('E');\ntest2.children[1].addChild('F');\n\nconst test3 = new program.Node('A');\ntest3.addChild('B');\ntest3.children[0].addChild('C');\ntest3.children[0].children[0].addChild('D').addChild('E');\ntest3.children[0].children[0].children[0].addChild('F');\n\nconst test4 = new program.Node('A');\ntest4.addChild('B').addChild('C').addChild('D');\ntest4.children[0].addChild('E').addChild('F');\ntest4.children[2].addChild('G').addChild('H');\ntest4.children[0].children[1].addChild('I').addChild('J');\ntest4.children[2].children[0].addChild('K');\n\nconst test5 = new program.Node('A');\ntest5.addChild('B').addChild('C').addChild('D').addChild('L').addChild('M');\ntest5.children[0].addChild('E').addChild('F').addChild('O');\ntest5.children[1].addChild('P');\ntest5.children[2].addChild('G').addChild('H');\ntest5.children[0].children[0].addChild('Q').addChild('R');\ntest5.children[0].children[1].addChild('I').addChild('J');\ntest5.children[2].children[0].addChild('K');\ntest5.children[4].addChild('S').addChild('T').addChild('U').addChild('V');\ntest5.children[4].children[0].addChild('W').addChild('X');\ntest5.children[4].children[0].children[1].addChild('Y').addChild('Z');\n\nit('Test Case #1', function () {\n  chai.expect(test1.depthFirstSearch([])).to.deep.equal(['A', 'B', 'D', 'C']);\n});\n\nit('Test Case #2', function () {\n  chai.expect(test2.depthFirstSearch([])).to.deep.equal(['A', 'B', 'C', 'F', 'D', 'E']);\n});\n\nit('Test Case #3', function () {\n  chai.expect(test3.depthFirstSearch([])).to.deep.equal(['A', 'B', 'C', 'D', 'F', 'E']);\n});\n\nit('Test Case #4', function () {\n  chai.expect(test4.depthFirstSearch([])).to.deep.equal(['A', 'B', 'E', 'F', 'I', 'J', 'C', 'D', 'G', 'K', 'H']);\n});\n\nit('Test Case #5', function () {\n  chai\n    .expect(test5.depthFirstSearch([]))\n    .to.deep.equal([\n      'A',\n      'B',\n      'E',\n      'Q',\n      'R',\n      'F',\n      'I',\n      'J',\n      'O',\n      'C',\n      'P',\n      'D',\n      'G',\n      'K',\n      'H',\n      'L',\n      'M',\n      'S',\n      'W',\n      'X',\n      'Y',\n      'Z',\n      'T',\n      'U',\n      'V',\n    ]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const graph = new program.Node('A');\n  graph.addChild('B').addChild('C').addChild('D');\n  graph.children[0].addChild('E').addChild('F');\n  graph.children[2].addChild('G').addChild('H');\n  graph.children[0].children[1].addChild('I').addChild('J');\n  graph.children[2].children[0].addChild('K');\n  chai.expect(graph.depthFirstSearch([])).to.deep.equal(['A', 'B', 'E', 'F', 'I', 'J', 'C', 'D', 'G', 'K', 'H']);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Node {\n  constructor(name) {\n    this.name = name;\n    this.children = [];\n  }\n\n  addChild(name) {\n    this.children.push(new Node(name));\n    return this;\n  }\n\n  // O(v + e) time | O(v) space\n  depthFirstSearch(array) {\n    array.push(this.name);\n    for (const child of this.children) {\n      child.depthFirstSearch(array);\n    }\n    return array;\n  }\n}\n\nexports.Node = Node;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "# Do not edit the class below except\n# for the depthFirstSearch method.\n# Feel free to add new properties\n# and methods to the class.\nclass Node:\n    def __init__(self, name):\n        self.children = []\n        self.name = name\n\n    def addChild(self, name):\n        self.children.append(Node(name))\n        return self\n\n    def depthFirstSearch(self, array):\n        # Write your code here.\n        pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\ntest1 = program.Node(\"A\")\ntest1.addChild(\"B\").addChild(\"C\")\ntest1.children[0].addChild(\"D\")\n\ntest2 = program.Node(\"A\")\ntest2.addChild(\"B\").addChild(\"C\").addChild(\"D\").addChild(\"E\")\ntest2.children[1].addChild(\"F\")\n\ntest3 = program.Node(\"A\")\ntest3.addChild(\"B\")\ntest3.children[0].addChild(\"C\")\ntest3.children[0].children[0].addChild(\"D\").addChild(\"E\")\ntest3.children[0].children[0].children[0].addChild(\"F\")\n\ntest4 = program.Node(\"A\")\ntest4.addChild(\"B\").addChild(\"C\").addChild(\"D\")\ntest4.children[0].addChild(\"E\").addChild(\"F\")\ntest4.children[2].addChild(\"G\").addChild(\"H\")\ntest4.children[0].children[1].addChild(\"I\").addChild(\"J\")\ntest4.children[2].children[0].addChild(\"K\")\n\ntest5 = program.Node(\"A\")\ntest5.addChild(\"B\").addChild(\"C\").addChild(\"D\").addChild(\"L\").addChild(\"M\")\ntest5.children[0].addChild(\"E\").addChild(\"F\").addChild(\"O\")\ntest5.children[1].addChild(\"P\")\ntest5.children[2].addChild(\"G\").addChild(\"H\")\ntest5.children[0].children[0].addChild(\"Q\").addChild(\"R\")\ntest5.children[0].children[1].addChild(\"I\").addChild(\"J\")\ntest5.children[2].children[0].addChild(\"K\")\ntest5.children[4].addChild(\"S\").addChild(\"T\").addChild(\"U\").addChild(\"V\")\ntest5.children[4].children[0].addChild(\"W\").addChild(\"X\")\ntest5.children[4].children[0].children[1].addChild(\"Y\").addChild(\"Z\")\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(test1.depthFirstSearch([]), [\"A\", \"B\", \"D\", \"C\"])\n\n    def test_case_2(self):\n        self.assertEqual(test2.depthFirstSearch([]), [\"A\", \"B\", \"C\", \"F\", \"D\", \"E\"])\n\n    def test_case_3(self):\n        self.assertEqual(test3.depthFirstSearch([]), [\"A\", \"B\", \"C\", \"D\", \"F\", \"E\"])\n\n    def test_case_4(self):\n        self.assertEqual(test4.depthFirstSearch([]), [\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"])\n\n    def test_case_5(self):\n        self.assertEqual(\n            test5.depthFirstSearch([]),\n            [\n                \"A\",\n                \"B\",\n                \"E\",\n                \"Q\",\n                \"R\",\n                \"F\",\n                \"I\",\n                \"J\",\n                \"O\",\n                \"C\",\n                \"P\",\n                \"D\",\n                \"G\",\n                \"K\",\n                \"H\",\n                \"L\",\n                \"M\",\n                \"S\",\n                \"W\",\n                \"X\",\n                \"Y\",\n                \"Z\",\n                \"T\",\n                \"U\",\n                \"V\",\n            ],\n        )\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        graph = program.Node(\"A\")\n        graph.addChild(\"B\").addChild(\"C\").addChild(\"D\")\n        graph.children[0].addChild(\"E\").addChild(\"F\")\n        graph.children[2].addChild(\"G\").addChild(\"H\")\n        graph.children[0].children[1].addChild(\"I\").addChild(\"J\")\n        graph.children[2].children[0].addChild(\"K\")\n        self.assertEqual(graph.depthFirstSearch([]), [\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\nclass Node:\n    def __init__(self, name):\n        self.children = []\n        self.name = name\n\n    def addChild(self, name):\n        self.children.append(Node(name))\n        return self\n\n    # O(v + e) time | O(v) space\n    def depthFirstSearch(self, array):\n        array.append(self.name)\n        for child in self.children:\n            child.depthFirstSearch(array)\n        return array\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  class Node {\n    let name: String\n    var children: [Node]\n\n    init(name: String) {\n      self.name = name\n      children = []\n    }\n\n    func addChild(name: String) -> Node {\n      let childNode = Node(name: name)\n      children.append(childNode)\n\n      return self\n    }\n\n    func depthFirstSearch(array: inout [String]) -> [String] {\n      // Write your code here.\n      return []\n    }\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let test1 = Program.Node(name: \"A\")\n      test1.addChild(name: \"B\").addChild(name: \"C\")\n      test1.children[0].addChild(name: \"D\")\n\n      var arrayToReturn = [String]()\n      try assertEqual([\"A\", \"B\", \"D\", \"C\"], test1.depthFirstSearch(array: &arrayToReturn))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let test2 = Program.Node(name: \"A\")\n      test2.addChild(name: \"B\").addChild(name: \"C\").addChild(name: \"D\").addChild(name: \"E\")\n      test2.children[1].addChild(name: \"F\")\n\n      var arrayToReturn = [String]()\n      try assertEqual([\"A\", \"B\", \"C\", \"F\", \"D\", \"E\"], test2.depthFirstSearch(array: &arrayToReturn))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let test3 = Program.Node(name: \"A\")\n      test3.addChild(name: \"B\")\n      test3.children[0].addChild(name: \"C\")\n      test3.children[0].children[0].addChild(name: \"D\").addChild(name: \"E\")\n      test3.children[0].children[0].children[0].addChild(name: \"F\")\n\n      var arrayToReturn = [String]()\n      try assertEqual([\"A\", \"B\", \"C\", \"D\", \"F\", \"E\"], test3.depthFirstSearch(array: &arrayToReturn))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let test4 = Program.Node(name: \"A\")\n      test4.addChild(name: \"B\").addChild(name: \"C\").addChild(name: \"D\")\n      test4.children[0].addChild(name: \"E\").addChild(name: \"F\")\n      test4.children[2].addChild(name: \"G\").addChild(name: \"H\")\n      test4.children[0].children[1].addChild(name: \"I\").addChild(name: \"J\")\n      test4.children[2].children[0].addChild(name: \"K\")\n\n      var arrayToReturn = [String]()\n      try assertEqual([\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"], test4.depthFirstSearch(array: &arrayToReturn))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let test5 = Program.Node(name: \"A\")\n      test5.addChild(name: \"B\").addChild(name: \"C\").addChild(name: \"D\").addChild(name: \"L\").addChild(name: \"M\")\n      test5.children[0].addChild(name: \"E\").addChild(name: \"F\").addChild(name: \"O\")\n      test5.children[1].addChild(name: \"P\")\n      test5.children[2].addChild(name: \"G\").addChild(name: \"H\")\n      test5.children[0].children[0].addChild(name: \"Q\").addChild(name: \"R\")\n      test5.children[0].children[1].addChild(name: \"I\").addChild(name: \"J\")\n      test5.children[2].children[0].addChild(name: \"K\")\n      test5.children[4].addChild(name: \"S\").addChild(name: \"T\").addChild(name: \"U\").addChild(name: \"V\")\n      test5.children[4].children[0].addChild(name: \"W\").addChild(name: \"X\")\n      test5.children[4].children[0].children[1].addChild(name: \"Y\").addChild(name: \"Z\")\n\n      var arrayToReturn = [String]()\n      try assertEqual([\"A\", \"B\", \"E\", \"Q\", \"R\", \"F\", \"I\", \"J\", \"O\", \"C\", \"P\", \"D\", \"G\", \"K\", \"H\", \"L\", \"M\", \"S\", \"W\", \"X\", \"Y\", \"Z\", \"T\", \"U\", \"V\"], test5.depthFirstSearch(array: &arrayToReturn))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let graph = Program.Node(name: \"A\")\n      graph.addChild(name: \"B\").addChild(name: \"C\").addChild(name: \"D\")\n      graph.children[0].addChild(name: \"E\").addChild(name: \"F\")\n      graph.children[2].addChild(name: \"G\").addChild(name: \"H\")\n      graph.children[0].children[1].addChild(name: \"I\").addChild(name: \"J\")\n      graph.children[2].children[0].addChild(name: \"K\")\n\n      var arrayToReturn = [String]()\n      try assertEqual([\"A\", \"B\", \"E\", \"F\", \"I\", \"J\", \"C\", \"D\", \"G\", \"K\", \"H\"], graph.depthFirstSearch(array: &arrayToReturn))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class Node {\n    let name: String\n    var children: [Node]\n\n    init(name: String) {\n      self.name = name\n      children = []\n    }\n\n    func addChild(name: String) -> Node {\n      let childNode = Node(name: name)\n      children.append(childNode)\n\n      return self\n    }\n\n    // O(v + e) time | O(v) space\n    func depthFirstSearch(array: inout [String]) -> [String] {\n      array.append(name)\n\n      for child in children {\n        child.depthFirstSearch(array: &array)\n      }\n\n      return array\n    }\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "// Do not edit the class below except\n// for the depthFirstSearch method.\n// Feel free to add new properties\n// and methods to the class.\nexport class Node {\n  name: string;\n  children: Node[];\n\n  constructor(name: string) {\n    this.name = name;\n    this.children = [];\n  }\n\n  addChild(name: string) {\n    this.children.push(new Node(name));\n    return this;\n  }\n\n  depthFirstSearch(array: string[]) {\n    // Write your code here.\n    return array;\n  }\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const graph = new program.Node('A');\n  graph.addChild('B').addChild('C').addChild('D');\n  graph.children[0].addChild('E').addChild('F');\n  graph.children[2].addChild('G').addChild('H');\n  graph.children[0].children[1].addChild('I').addChild('J');\n  graph.children[2].children[0].addChild('K');\n  chai.expect(graph.depthFirstSearch([])).to.deep.equal(['A', 'B', 'E', 'F', 'I', 'J', 'C', 'D', 'G', 'K', 'H']);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nexport class Node {\n  name: string;\n  children: Node[];\n\n  constructor(name: string) {\n    this.name = name;\n    this.children = [];\n  }\n\n  addChild(name: string) {\n    this.children.push(new Node(name));\n    return this;\n  }\n\n  // O(v + e) time | O(v) space\n  depthFirstSearch(array: string[]) {\n    array.push(this.name);\n    for (const child of this.children) {\n      child.depthFirstSearch(array);\n    }\n    return array;\n  }\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "graph": {
+        "nodes": [
+          {
+            "children": [
+              "B",
+              "C",
+              "D"
+            ],
+            "id": "A",
+            "value": "A"
+          },
+          {
+            "children": [
+              "E",
+              "F"
+            ],
+            "id": "B",
+            "value": "B"
+          },
+          {
+            "children": [],
+            "id": "C",
+            "value": "C"
+          },
+          {
+            "children": [
+              "G",
+              "H"
+            ],
+            "id": "D",
+            "value": "D"
+          },
+          {
+            "children": [],
+            "id": "E",
+            "value": "E"
+          },
+          {
+            "children": [
+              "I",
+              "J"
+            ],
+            "id": "F",
+            "value": "F"
+          },
+          {
+            "children": [
+              "K"
+            ],
+            "id": "G",
+            "value": "G"
+          },
+          {
+            "children": [],
+            "id": "H",
+            "value": "H"
+          },
+          {
+            "children": [],
+            "id": "I",
+            "value": "I"
+          },
+          {
+            "children": [],
+            "id": "J",
+            "value": "J"
+          },
+          {
+            "children": [],
+            "id": "K",
+            "value": "K"
+          }
+        ],
+        "startNode": "A"
+      }
+    },
+    {
+      "graph": {
+        "nodes": [
+          {
+            "children": [
+              "B",
+              "C"
+            ],
+            "id": "A",
+            "value": "A"
+          },
+          {
+            "children": [
+              "D"
+            ],
+            "id": "B",
+            "value": "B"
+          },
+          {
+            "children": [],
+            "id": "C",
+            "value": "C"
+          },
+          {
+            "children": [],
+            "id": "D",
+            "value": "D"
+          }
+        ],
+        "startNode": "A"
+      }
+    },
+    {
+      "graph": {
+        "nodes": [
+          {
+            "children": [
+              "B",
+              "C",
+              "D",
+              "E"
+            ],
+            "id": "A",
+            "value": "A"
+          },
+          {
+            "children": [],
+            "id": "B",
+            "value": "B"
+          },
+          {
+            "children": [
+              "F"
+            ],
+            "id": "C",
+            "value": "C"
+          },
+          {
+            "children": [],
+            "id": "D",
+            "value": "D"
+          },
+          {
+            "children": [],
+            "id": "E",
+            "value": "E"
+          },
+          {
+            "children": [],
+            "id": "F",
+            "value": "F"
+          }
+        ],
+        "startNode": "A"
+      }
+    },
+    {
+      "graph": {
+        "nodes": [
+          {
+            "children": [
+              "B"
+            ],
+            "id": "A",
+            "value": "A"
+          },
+          {
+            "children": [
+              "C"
+            ],
+            "id": "B",
+            "value": "B"
+          },
+          {
+            "children": [
+              "D",
+              "E"
+            ],
+            "id": "C",
+            "value": "C"
+          },
+          {
+            "children": [
+              "F"
+            ],
+            "id": "D",
+            "value": "D"
+          },
+          {
+            "children": [],
+            "id": "E",
+            "value": "E"
+          },
+          {
+            "children": [],
+            "id": "F",
+            "value": "F"
+          }
+        ],
+        "startNode": "A"
+      }
+    },
+    {
+      "graph": {
+        "nodes": [
+          {
+            "children": [
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "id": "A",
+            "value": "A"
+          },
+          {
+            "children": [
+              "G",
+              "H",
+              "I"
+            ],
+            "id": "B",
+            "value": "B"
+          },
+          {
+            "children": [
+              "J"
+            ],
+            "id": "C",
+            "value": "C"
+          },
+          {
+            "children": [
+              "K",
+              "L"
+            ],
+            "id": "D",
+            "value": "D"
+          },
+          {
+            "children": [],
+            "id": "E",
+            "value": "E"
+          },
+          {
+            "children": [
+              "M",
+              "N"
+            ],
+            "id": "F",
+            "value": "F"
+          },
+          {
+            "children": [],
+            "id": "G",
+            "value": "G"
+          },
+          {
+            "children": [
+              "O",
+              "P",
+              "Q",
+              "R"
+            ],
+            "id": "H",
+            "value": "H"
+          },
+          {
+            "children": [],
+            "id": "I",
+            "value": "I"
+          },
+          {
+            "children": [],
+            "id": "J",
+            "value": "J"
+          },
+          {
+            "children": [
+              "S"
+            ],
+            "id": "K",
+            "value": "K"
+          },
+          {
+            "children": [],
+            "id": "L",
+            "value": "L"
+          },
+          {
+            "children": [],
+            "id": "M",
+            "value": "M"
+          },
+          {
+            "children": [],
+            "id": "N",
+            "value": "N"
+          },
+          {
+            "children": [],
+            "id": "O",
+            "value": "O"
+          },
+          {
+            "children": [
+              "T",
+              "U"
+            ],
+            "id": "P",
+            "value": "P"
+          },
+          {
+            "children": [],
+            "id": "Q",
+            "value": "Q"
+          },
+          {
+            "children": [
+              "V"
+            ],
+            "id": "R",
+            "value": "R"
+          },
+          {
+            "children": [],
+            "id": "S",
+            "value": "S"
+          },
+          {
+            "children": [],
+            "id": "T",
+            "value": "T"
+          },
+          {
+            "children": [],
+            "id": "U",
+            "value": "U"
+          },
+          {
+            "children": [
+              "W",
+              "X",
+              "Y"
+            ],
+            "id": "V",
+            "value": "V"
+          },
+          {
+            "children": [],
+            "id": "W",
+            "value": "W"
+          },
+          {
+            "children": [
+              "Z"
+            ],
+            "id": "X",
+            "value": "X"
+          },
+          {
+            "children": [],
+            "id": "Y",
+            "value": "Y"
+          },
+          {
+            "children": [],
+            "id": "Z",
+            "value": "Z"
+          }
+        ],
+        "startNode": "A"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        "A",
+        "B",
+        "E",
+        "F",
+        "I",
+        "J",
+        "C",
+        "D",
+        "G",
+        "K",
+        "H"
+      ],
+      [
+        "A",
+        "B",
+        "D",
+        "C"
+      ],
+      [
+        "A",
+        "B",
+        "C",
+        "F",
+        "D",
+        "E"
+      ],
+      [
+        "A",
+        "B",
+        "C",
+        "D",
+        "F",
+        "E"
+      ],
+      [
+        "A",
+        "B",
+        "G",
+        "H",
+        "O",
+        "P",
+        "T",
+        "U",
+        "Q",
+        "R",
+        "V",
+        "W",
+        "X",
+        "Z",
+        "Y",
+        "I",
+        "C",
+        "J",
+        "D",
+        "K",
+        "S",
+        "L",
+        "E",
+        "F",
+        "M",
+        "N"
+      ]
+    ]
+  ]
+}

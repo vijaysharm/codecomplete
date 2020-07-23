@@ -1,0 +1,202 @@
+{
+  "Summary": {
+    "Name": "Number Of Binary Tree Topologies",
+    "Category": "Recursion",
+    "Difficulty": 4,
+    "Available": true,
+    "Metadata": {
+      "number": 612,
+      "timeOne": 0,
+      "timeTwo": 2030,
+      "url": "https://player.vimeo.com/video/262809662"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Every Binary Tree topology of n nodes where n is greater than 0 must have a root node and an amount of nodes on both of its sides totaling n - 1. For instance, one such topology could have a root node, n - 3 nodes in its left subtree, and 2 nodes in its right subtree. Another one could have a root node, 4 nodes in its left subtree, and n - 3 nodes in its right subtree. How many distinct Binary Tree topologies with a root node, a left subtree of x nodes, and a right subtree of n - 1 - x nodes are there?\nConsider a Binary Tree topology of n nodes with a root node, x nodes in its left subtree, and n - 1 - x nodes in its right subtree, and call this topology T1. This is one of possibly many topologies of n nodes. Realize that for every distinct topology T-Lk of x nodes (i.e. for every distinct topology of T1's left subtree) there is a corresponding, distinct topology of as many nodes as T1. Similarly, for every distinct topology T-Rk of n - 1 - x nodes (i.e. for every distinct topology of T1's right subtree) there is a corresponding, distinct topology of as many nodes as T1. In fact, every unique combination of left and right topologies T-Lk and T-Rk forms a distinct topology of as many nodes as T1, and this is true for every x between 0 and n - 1. Realizing this, can you implement a recursive algorithm that solves this problem?\nIterate through every number x between 0 and n - 1 inclusive; at every number x, recursively calculate the number of distinct topologies of x nodes and multiply that by the number of distinct topologies of n - 1 - x nodes. Sum all of the products that you calculate to find the total number of distinct topologies of n nodes.\nCan you improve the recursive algorithm mentioned in Hints #2 and #3 by using a caching system (memoization)? Can you implement the algorithm iteratively? Is there any advantage to doing so?\n",
+  "SpaceTime": "O(n^2) time | O(n) space - where n is the input number\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a non-negative integer <span>n</span> and\n  returns the number of possible Binary Tree topologies that can be created with\n  exactly n nodes.\n</p>\n<p>\n  A Binary Tree topology is defined as any Binary Tree configuration,\n  irrespective of node values. For instance, there exist only two Binary Tree\n  topologies when <span>n</span> is equal to <span>2</span>: a root node with a\n  left node, and a root node with a right node.\n</p>\n<p>\n  Note that when <span>n</span> is equal to <span>0</span>, there's one topology\n  that can be created: the <span>None</span> / <span>null</span> node.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">n</span> = 3\n</pre>\n<h3>Sample Output</h3>\n<pre>\n5\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "n",
+      "Example": 3,
+      "Schema": {
+        "minimum": 0,
+        "type": "integer"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "using namespace std;\n\nint numberOfBinaryTreeTopologies(int n) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\",\n            []() { assert(numberOfBinaryTreeTopologies(0) == 1); });\n\n    RunTest(\"Test Case 2\",\n            []() { assert(numberOfBinaryTreeTopologies(1) == 1); });\n\n    RunTest(\"Test Case 3\",\n            []() { assert(numberOfBinaryTreeTopologies(2) == 2); });\n\n    RunTest(\"Test Case 4\",\n            []() { assert(numberOfBinaryTreeTopologies(3) == 5); });\n\n    RunTest(\"Test Case 5\",\n            []() { assert(numberOfBinaryTreeTopologies(4) == 14); });\n\n    RunTest(\"Test Case 6\",\n            []() { assert(numberOfBinaryTreeTopologies(5) == 42); });\n\n    RunTest(\"Test Case 7\",\n            []() { assert(numberOfBinaryTreeTopologies(6) == 132); });\n\n    RunTest(\"Test Case 8\",\n            []() { assert(numberOfBinaryTreeTopologies(7) == 429); });\n\n    RunTest(\"Test Case 9\",\n            []() { assert(numberOfBinaryTreeTopologies(8) == 1430); });\n\n    RunTest(\"Test Case 10\",\n            []() { assert(numberOfBinaryTreeTopologies(9) == 4862); });\n\n    RunTest(\"Test Case 11\",\n            []() { assert(numberOfBinaryTreeTopologies(10) == 16796); });\n\n    RunTest(\"Test Case 12\",\n            []() { assert(numberOfBinaryTreeTopologies(11) == 58786); });\n\n    RunTest(\"Test Case 13\",\n            []() { assert(numberOfBinaryTreeTopologies(12) == 208012); });\n\n    RunTest(\"Test Case 14\",\n            []() { assert(numberOfBinaryTreeTopologies(13) == 742900); });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\",\n            []() { assert(numberOfBinaryTreeTopologies(3) == 5); });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// Upper Bound: O((n*(2n)!)/(n!(n+1)!)) time | O(n) space\nint numberOfBinaryTreeTopologies(int n) {\n  if (n == 0) {\n    return 1;\n  }\n  int numberOfTrees = 0;\n  for (int leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n    int rightTreeSize = n - 1 - leftTreeSize;\n    int numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize);\n    int numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize);\n    numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n  }\n  return numberOfTrees;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <unordered_map>\nusing namespace std;\n\nint helper(int n, unordered_map<int, int> *cache);\n\n// O(n^2) time | O(n) space\nint numberOfBinaryTreeTopologies(int n) {\n  unordered_map<int, int> cache{{0, 1}};\n  return helper(n, &cache);\n}\n\nint helper(int n, unordered_map<int, int> *cache) {\n  if (cache->find(n) != cache->end()) {\n    return cache->at(n);\n  }\n  int numberOfTrees = 0;\n  for (int leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n    int rightTreeSize = n - 1 - leftTreeSize;\n    int numberOfLeftTrees = helper(leftTreeSize, cache);\n    int numberOfRightTrees = helper(rightTreeSize, cache);\n    numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n  }\n  cache->insert({n, numberOfTrees});\n  return numberOfTrees;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing namespace std;\n\n// O(n^2) time | O(n) space\nint numberOfBinaryTreeTopologies(int n) {\n  vector<int> cache{1};\n  for (int m = 1; m < n + 1; m++) {\n    int numberOfTrees = 0;\n    for (int leftTreeSize = 0; leftTreeSize < m; leftTreeSize++) {\n      int rightTreeSize = m - 1 - leftTreeSize;\n      int numberOfLeftTrees = cache[leftTreeSize];\n      int numberOfRightTrees = cache[rightTreeSize];\n      numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n    }\n    cache.push_back(numberOfTrees);\n  }\n  return cache[n];\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int NumberOfBinaryTreeTopologies(int n) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n}\n",
+      "StartingTest": "public class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(0) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(1) == 1);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(2) == 2);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(3) == 5);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(4) == 14);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(5) == 42);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(6) == 132);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(7) == 429);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(8) == 1430);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(9) == 4862);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(10) == 16796);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(11) == 58786);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(12) == 208012);\n\t}\n\n\t[Test]\n\tpublic void TestCase14() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(13) == 742900);\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tUtils.AssertTrue(Program.NumberOfBinaryTreeTopologies(3) == 5);\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npublic class Program {\n\t// Upper Bound: O((n*(2n)!)/(n!(n+1)!)) time | O(n) space\n\tpublic static int NumberOfBinaryTreeTopologies(int n) {\n\t\tif (n == 0) {\n\t\t\treturn 1;\n\t\t}\n\t\tint numberOfTrees = 0;\n\t\tfor (int leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n\t\t\tint rightTreeSize = n - 1 - leftTreeSize;\n\t\t\tint numberOfLeftTrees = NumberOfBinaryTreeTopologies(leftTreeSize);\n\t\t\tint numberOfRightTrees = NumberOfBinaryTreeTopologies(rightTreeSize);\n\t\t\tnumberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n\t\t}\n\t\treturn numberOfTrees;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^2) time | O(n) space\n\tpublic static int NumberOfBinaryTreeTopologies(int n) {\n\t\tDictionary<int, int> cache = new Dictionary<int, int>();\n\t\tcache.Add(0, 1);\n\t\treturn NumberOfBinaryTreeTopologies(n, cache);\n\t}\n\n\tpublic static int NumberOfBinaryTreeTopologies(int n, Dictionary<int, int> cache) {\n\t\tif (cache.ContainsKey(n)) {\n\t\t\treturn cache[n];\n\t\t}\n\t\tint numberOfTrees = 0;\n\t\tfor (int leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n\t\t\tint rightTreeSize = n - 1 - leftTreeSize;\n\t\t\tint numberOfLeftTrees = NumberOfBinaryTreeTopologies(leftTreeSize, cache);\n\t\t\tint numberOfRightTrees = NumberOfBinaryTreeTopologies(rightTreeSize, cache);\n\t\t\tnumberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n\t\t}\n\t\tcache.Add(n, numberOfTrees);\n\t\treturn numberOfTrees;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n^2) time | O(n) space\n\tpublic static int NumberOfBinaryTreeTopologies(int n) {\n\t\tList<int> cache = new List<int>();\n\t\tcache.Add(1);\n\t\tfor (int m = 1; m < n + 1; m++) {\n\t\t\tint numberOfTrees = 0;\n\t\t\tfor (int leftTreeSize = 0; leftTreeSize < m; leftTreeSize++) {\n\t\t\t\tint rightTreeSize = m - 1 - leftTreeSize;\n\t\t\t\tint numberOfLeftTrees = cache[leftTreeSize];\n\t\t\t\tint numberOfRightTrees = cache[rightTreeSize];\n\t\t\t\tnumberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n\t\t\t}\n\t\t\tcache.Add(numberOfTrees);\n\t\t}\n\t\treturn cache[n];\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc NumberOfBinaryTreeTopologies(n int) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 1\n\toutput := NumberOfBinaryTreeTopologies(0)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := 1\n\toutput := NumberOfBinaryTreeTopologies(1)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := 2\n\toutput := NumberOfBinaryTreeTopologies(2)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := 5\n\toutput := NumberOfBinaryTreeTopologies(3)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := 14\n\toutput := NumberOfBinaryTreeTopologies(4)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := 42\n\toutput := NumberOfBinaryTreeTopologies(5)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := 132\n\toutput := NumberOfBinaryTreeTopologies(6)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := 429\n\toutput := NumberOfBinaryTreeTopologies(7)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := 1430\n\toutput := NumberOfBinaryTreeTopologies(8)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := 4862\n\toutput := NumberOfBinaryTreeTopologies(9)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\texpected := 16796\n\toutput := NumberOfBinaryTreeTopologies(10)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\texpected := 58786\n\toutput := NumberOfBinaryTreeTopologies(11)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\texpected := 208012\n\toutput := NumberOfBinaryTreeTopologies(12)\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase14(t *TestCase) {\n\texpected := 742900\n\toutput := NumberOfBinaryTreeTopologies(13)\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := 5\n\toutput := NumberOfBinaryTreeTopologies(3)\n\trequire.Equal(t, expected, output)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// Upper Bound: O((n*(2n)!)/(n!(n+1)!)) time | O(n) space\nfunc NumberOfBinaryTreeTopologies(n int) int {\n\tif n == 0 {\n\t\treturn 1\n\t}\n\tnumberOfTrees := 0\n\tfor leftTreeSize := 0; leftTreeSize < n; leftTreeSize++ {\n\t\trightTreeSize := n - 1 - leftTreeSize\n\t\tnumberOfLeftTrees := NumberOfBinaryTreeTopologies(leftTreeSize)\n\t\tnumberOfRightTrees := NumberOfBinaryTreeTopologies(rightTreeSize)\n\t\tnumberOfTrees += numberOfLeftTrees * numberOfRightTrees\n\t}\n\treturn numberOfTrees\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n^2) time | O(n) space\nfunc NumberOfBinaryTreeTopologies(n int) int {\n\treturn helper(n, map[int]int{0: 1})\n}\n\nfunc helper(n int, cache map[int]int) int {\n\tif val, found := cache[n]; found {\n\t\treturn val\n\t}\n\tnumberOfTrees := 0\n\tfor leftTreeSize := 0; leftTreeSize < n; leftTreeSize++ {\n\t\trightTreeSize := n - 1 - leftTreeSize\n\t\tnumberOfLeftTrees := helper(leftTreeSize, cache)\n\t\tnumberOfRightTrees := helper(rightTreeSize, cache)\n\t\tnumberOfTrees += numberOfLeftTrees * numberOfRightTrees\n\t}\n\tcache[n] = numberOfTrees\n\treturn numberOfTrees\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n^2) time | O(n) space\nfunc NumberOfBinaryTreeTopologies(n int) int {\n\tcache := []int{1}\n\tfor m := 1; m < n+1; m++ {\n\t\tnumberOfTrees := 0\n\t\tfor leftTreeSize := 0; leftTreeSize < m; leftTreeSize++ {\n\t\t\trightTreeSize := m - 1 - leftTreeSize\n\t\t\tnumberOfLeftTrees := cache[leftTreeSize]\n\t\t\tnumberOfRightTrees := cache[rightTreeSize]\n\t\t\tnumberOfTrees += numberOfLeftTrees * numberOfRightTrees\n\t\t}\n\t\tcache = append(cache, numberOfTrees)\n\t}\n\treturn cache[n]\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int numberOfBinaryTreeTopologies(int n) {\n    // Write your code here.\n    return -1;\n  }\n}\n",
+      "StartingTest": "class ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(0) == 1);\n  }\n\n  @Test\n  public void TestCase2() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(1) == 1);\n  }\n\n  @Test\n  public void TestCase3() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(2) == 2);\n  }\n\n  @Test\n  public void TestCase4() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(3) == 5);\n  }\n\n  @Test\n  public void TestCase5() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(4) == 14);\n  }\n\n  @Test\n  public void TestCase6() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(5) == 42);\n  }\n\n  @Test\n  public void TestCase7() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(6) == 132);\n  }\n\n  @Test\n  public void TestCase8() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(7) == 429);\n  }\n\n  @Test\n  public void TestCase9() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(8) == 1430);\n  }\n\n  @Test\n  public void TestCase10() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(9) == 4862);\n  }\n\n  @Test\n  public void TestCase11() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(10) == 16796);\n  }\n\n  @Test\n  public void TestCase12() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(11) == 58786);\n  }\n\n  @Test\n  public void TestCase13() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(12) == 208012);\n  }\n\n  @Test\n  public void TestCase14() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(13) == 742900);\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    Utils.assertTrue(Program.numberOfBinaryTreeTopologies(3) == 5);\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // Upper Bound: O((n*(2n)!)/(n!(n+1)!)) time | O(n) space\n  public static int numberOfBinaryTreeTopologies(int n) {\n    if (n == 0) {\n      return 1;\n    }\n    int numberOfTrees = 0;\n    for (int leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n      int rightTreeSize = n - 1 - leftTreeSize;\n      int numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize);\n      int numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize);\n      numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n    }\n    return numberOfTrees;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^2) time | O(n) space\n  public static int numberOfBinaryTreeTopologies(int n) {\n    Map<Integer, Integer> cache = new HashMap<Integer, Integer>();\n    cache.put(0, 1);\n    return numberOfBinaryTreeTopologies(n, cache);\n  }\n\n  public static int numberOfBinaryTreeTopologies(int n, Map<Integer, Integer> cache) {\n    if (cache.containsKey(n)) {\n      return cache.get(n);\n    }\n    int numberOfTrees = 0;\n    for (int leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n      int rightTreeSize = n - 1 - leftTreeSize;\n      int numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize, cache);\n      int numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize, cache);\n      numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n    }\n    cache.put(n, numberOfTrees);\n    return numberOfTrees;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n^2) time | O(n) space\n  public static int numberOfBinaryTreeTopologies(int n) {\n    List<Integer> cache = new ArrayList<Integer>();\n    cache.add(1);\n    for (int m = 1; m < n + 1; m++) {\n      int numberOfTrees = 0;\n      for (int leftTreeSize = 0; leftTreeSize < m; leftTreeSize++) {\n        int rightTreeSize = m - 1 - leftTreeSize;\n        int numberOfLeftTrees = cache.get(leftTreeSize);\n        int numberOfRightTrees = cache.get(rightTreeSize);\n        numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n      }\n      cache.add(numberOfTrees);\n    }\n    return cache.get(n);\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function numberOfBinaryTreeTopologies(n) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.numberOfBinaryTreeTopologies = numberOfBinaryTreeTopologies;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(0)).to.deep.equal(1);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(1)).to.deep.equal(1);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(2)).to.deep.equal(2);\n});\n\nit('Test Case #4', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(3)).to.deep.equal(5);\n});\n\nit('Test Case #5', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(4)).to.deep.equal(14);\n});\n\nit('Test Case #6', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(5)).to.deep.equal(42);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(6)).to.deep.equal(132);\n});\n\nit('Test Case #8', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(7)).to.deep.equal(429);\n});\n\nit('Test Case #9', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(8)).to.deep.equal(1430);\n});\n\nit('Test Case #10', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(9)).to.deep.equal(4862);\n});\n\nit('Test Case #11', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(10)).to.deep.equal(16796);\n});\n\nit('Test Case #12', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(11)).to.deep.equal(58786);\n});\n\nit('Test Case #13', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(12)).to.deep.equal(208012);\n});\n\nit('Test Case #14', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(13)).to.deep.equal(742900);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(3)).to.deep.equal(5);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Upper Bound: O((n*(2n)!)/(n!(n+1)!)) time | O(n) space\nfunction numberOfBinaryTreeTopologies(n) {\n  if (n === 0) return 1;\n  let numberOfTrees = 0;\n  for (let leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n    const rightTreeSize = n - 1 - leftTreeSize;\n    const numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize);\n    const numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize);\n    numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n  }\n  return numberOfTrees;\n}\n\nexports.numberOfBinaryTreeTopologies = numberOfBinaryTreeTopologies;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nfunction numberOfBinaryTreeTopologies(n, cache = {0: 1}) {\n  if (n in cache) return cache[n];\n  let numberOfTrees = 0;\n  for (let leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n    const rightTreeSize = n - 1 - leftTreeSize;\n    const numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize, cache);\n    const numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize, cache);\n    numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n  }\n  cache[n] = numberOfTrees;\n  return numberOfTrees;\n}\n\nexports.numberOfBinaryTreeTopologies = numberOfBinaryTreeTopologies;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nfunction numberOfBinaryTreeTopologies(n) {\n  const cache = [1];\n  for (let m = 1; m < n + 1; m++) {\n    let numberOfTrees = 0;\n    for (let leftTreeSize = 0; leftTreeSize < m; leftTreeSize++) {\n      const rightTreeSize = m - 1 - leftTreeSize;\n      const numberOfLeftTrees = cache[leftTreeSize];\n      const numberOfRightTrees = cache[rightTreeSize];\n      numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n    }\n    cache.push(numberOfTrees);\n  }\n  return cache[n];\n}\n\nexports.numberOfBinaryTreeTopologies = numberOfBinaryTreeTopologies;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def numberOfBinaryTreeTopologies(n):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(0), 1)\n\n    def test_case_2(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(1), 1)\n\n    def test_case_3(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(2), 2)\n\n    def test_case_4(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(3), 5)\n\n    def test_case_5(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(4), 14)\n\n    def test_case_6(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(5), 42)\n\n    def test_case_7(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(6), 132)\n\n    def test_case_8(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(7), 429)\n\n    def test_case_9(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(8), 1430)\n\n    def test_case_10(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(9), 4862)\n\n    def test_case_11(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(10), 16796)\n\n    def test_case_12(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(11), 58786)\n\n    def test_case_13(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(12), 208012)\n\n    def test_case_14(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(13), 742900)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.numberOfBinaryTreeTopologies(3), 5)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# Upper Bound: O((n*(2n)!)/(n!(n+1)!)) time | O(n) space\ndef numberOfBinaryTreeTopologies(n):\n    if n == 0:\n        return 1\n    numberOfTrees = 0\n    for leftTreeSize in range(n):\n        rightTreeSize = n - 1 - leftTreeSize\n        numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize)\n        numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize)\n        numberOfTrees += numberOfLeftTrees * numberOfRightTrees\n    return numberOfTrees\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space\ndef numberOfBinaryTreeTopologies(n, cache={0: 1}):\n    if n in cache:\n        return cache[n]\n    numberOfTrees = 0\n    for leftTreeSize in range(n):\n        rightTreeSize = n - 1 - leftTreeSize\n        numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize, cache)\n        numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize, cache)\n        numberOfTrees += numberOfLeftTrees * numberOfRightTrees\n    cache[n] = numberOfTrees\n    return numberOfTrees\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n^2) time | O(n) space\ndef numberOfBinaryTreeTopologies(n):\n    cache = [1]\n    for m in range(1, n + 1):\n        numberOfTrees = 0\n        for leftTreeSize in range(m):\n            rightTreeSize = m - 1 - leftTreeSize\n            numberOfLeftTrees = cache[leftTreeSize]\n            numberOfRightTrees = cache[rightTreeSize]\n            numberOfTrees += numberOfLeftTrees * numberOfRightTrees\n        cache.append(numberOfTrees)\n    return cache[n]\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func numberOfBinaryTreeTopologies(_ n: Int) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(1, program.numberOfBinaryTreeTopologies(0))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      try assertEqual(1, program.numberOfBinaryTreeTopologies(1))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      try assertEqual(2, program.numberOfBinaryTreeTopologies(2))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      try assertEqual(5, program.numberOfBinaryTreeTopologies(3))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      try assertEqual(14, program.numberOfBinaryTreeTopologies(4))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      try assertEqual(42, program.numberOfBinaryTreeTopologies(5))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      try assertEqual(132, program.numberOfBinaryTreeTopologies(6))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      try assertEqual(429, program.numberOfBinaryTreeTopologies(7))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      try assertEqual(1430, program.numberOfBinaryTreeTopologies(8))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      try assertEqual(4862, program.numberOfBinaryTreeTopologies(9))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      try assertEqual(16796, program.numberOfBinaryTreeTopologies(10))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      try assertEqual(58786, program.numberOfBinaryTreeTopologies(11))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      try assertEqual(208_012, program.numberOfBinaryTreeTopologies(12))\n    }\n    runTest(\"Test Case 14\") { () throws -> Void in\n      try assertEqual(742_900, program.numberOfBinaryTreeTopologies(13))\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      try assertEqual(5, program.numberOfBinaryTreeTopologies(3))\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // Upper Bound: (O(n * (2n)!)/(n!(n + 1)!)) time | O(n) space\n  func numberOfBinaryTreeTopologies(_ n: Int) -> Int {\n    if n == 0 {\n      return 1\n    }\n\n    var numberOfTopologies = 0\n\n    for leftTreeSize in 0 ..< n {\n      let rightTreeSize = n - 1 - leftTreeSize\n\n      let leftNumberOfTopologies = numberOfBinaryTreeTopologies(leftTreeSize)\n      let rightNumberOfTopologies = numberOfBinaryTreeTopologies(rightTreeSize)\n      numberOfTopologies += leftNumberOfTopologies * rightNumberOfTopologies\n    }\n\n    return numberOfTopologies\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(1) space\n  func numberOfBinaryTreeTopologies(_ n: Int) -> Int {\n    var cache = [0: 1]\n    return numberOfBinaryTreeTopologiesHelper(n, &cache)\n  }\n\n  func numberOfBinaryTreeTopologiesHelper(_ n: Int, _ cache: inout [Int: Int]) -> Int {\n    if let cachedValue = cache[n] {\n      return cachedValue\n    }\n\n    var numberOfTopologies = 0\n\n    for leftTreeSize in 0 ..< n {\n      let rightTreeSize = n - 1 - leftTreeSize\n\n      let leftNumberOfTopologies = numberOfBinaryTreeTopologiesHelper(leftTreeSize, &cache)\n      let rightNumberOfTopologies = numberOfBinaryTreeTopologiesHelper(rightTreeSize, &cache)\n      numberOfTopologies += leftNumberOfTopologies * rightNumberOfTopologies\n    }\n\n    cache[n] = numberOfTopologies\n    return numberOfTopologies\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n^2) time | O(1) space\n  func numberOfBinaryTreeTopologies(_ n: Int) -> Int {\n    var cache = [1]\n\n    for currentMax in stride(from: 1, through: n, by: 1) {\n      var numberOfTopologies = 0\n\n      for leftTreeSize in stride(from: 0, to: currentMax, by: 1) {\n        let rightTreeSize = currentMax - 1 - leftTreeSize\n\n        let leftNumberOfTopologies = cache[leftTreeSize]\n        let rightNumberOfTopologies = cache[rightTreeSize]\n        numberOfTopologies += leftNumberOfTopologies * rightNumberOfTopologies\n      }\n\n      cache.append(numberOfTopologies)\n    }\n\n    return cache[n]\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function numberOfBinaryTreeTopologies(n: number) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.numberOfBinaryTreeTopologies(3)).to.deep.equal(5);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// Upper Bound: O((n*(2n)!)/(n!(n+1)!)) time | O(n) space\nexport function numberOfBinaryTreeTopologies(n: number) {\n  if (n === 0) return 1;\n  let numberOfTrees = 0;\n  for (let leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n    const rightTreeSize = n - 1 - leftTreeSize;\n    const numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize);\n    const numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize);\n    numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n  }\n  return numberOfTrees;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\ninterface Cache {\n  [key: number]: number;\n}\n\n// O(n^2) time | O(n) space\nexport function numberOfBinaryTreeTopologies(n: number, cache: Cache = {0: 1}) {\n  if (n in cache) return cache[n];\n  let numberOfTrees = 0;\n  for (let leftTreeSize = 0; leftTreeSize < n; leftTreeSize++) {\n    const rightTreeSize = n - 1 - leftTreeSize;\n    const numberOfLeftTrees = numberOfBinaryTreeTopologies(leftTreeSize, cache);\n    const numberOfRightTrees = numberOfBinaryTreeTopologies(rightTreeSize, cache);\n    numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n  }\n  cache[n] = numberOfTrees;\n  return numberOfTrees;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n^2) time | O(n) space\nexport function numberOfBinaryTreeTopologies(n: number) {\n  const cache = [1];\n  for (let m = 1; m < n + 1; m++) {\n    let numberOfTrees = 0;\n    for (let leftTreeSize = 0; leftTreeSize < m; leftTreeSize++) {\n      const rightTreeSize = m - 1 - leftTreeSize;\n      const numberOfLeftTrees = cache[leftTreeSize];\n      const numberOfRightTrees = cache[rightTreeSize];\n      numberOfTrees += numberOfLeftTrees * numberOfRightTrees;\n    }\n    cache.push(numberOfTrees);\n  }\n  return cache[n];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "n": 3
+    },
+    {
+      "n": 0
+    },
+    {
+      "n": 1
+    },
+    {
+      "n": 2
+    },
+    {
+      "n": 4
+    },
+    {
+      "n": 5
+    },
+    {
+      "n": 6
+    },
+    {
+      "n": 7
+    },
+    {
+      "n": 8
+    },
+    {
+      "n": 9
+    },
+    {
+      "n": 10
+    },
+    {
+      "n": 11
+    },
+    {
+      "n": 12
+    }
+  ],
+  "JSONAnswers": [
+    [
+      5,
+      1,
+      1,
+      2,
+      14,
+      42,
+      132,
+      429,
+      1430,
+      4862,
+      16796,
+      58786,
+      208012
+    ]
+  ]
+}

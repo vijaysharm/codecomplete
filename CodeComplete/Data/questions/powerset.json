@@ -1,0 +1,779 @@
+{
+  "Summary": {
+    "Name": "Powerset",
+    "Category": "Recursion",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 603,
+      "timeOne": 0,
+      "timeTwo": 756,
+      "url": "https://player.vimeo.com/video/227400775"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Try thinking about the base cases. What is the powerset of the empty set? What is the powerset of sets of length 1?\nIf you were to take the input set X and add an element to it, how would the resulting powerset change?\nCan you solve this problem recursively? Can you solve it iteratively? What are the advantages and disadvantages of using either approach?\n",
+  "SpaceTime": "O(n*2^n) time | O(n*2^n) space - where n is the length of the input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in an array of unique integers and returns its\n  powerset.\n</p>\n<p>\n  The powerset <span>P(X)</span> of a set <span>X</span> is the set of all\n  subsets of <span>X</span>. For example, the powerset of <span>[1,2]</span> is\n  <span>[[], [1], [2], [1,2]]</span>.\n</p>\n<p>\n  Note that the sets in the powerset do not need to be in any particular order.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">array</span> = [1, 2, 3]\n</pre>\n<h3>Sample Output</h3>\n<pre>\n[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]\n</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "array",
+      "Example": [
+        1,
+        2,
+        3
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "type": "array",
+        "uniqueItems": true
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<vector<int>> powerset(vector<int> array) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "#include <algorithm>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> output = powerset({});\n      for (int i = 0; i < output.size(); i++) {\n        sort(output[i].begin(), output[i].end());\n      }\n      assert(output.size() == 1);\n      vector<vector<int>>::iterator it =\n          find(output.begin(), output.end(), vector<int>{});\n      assert(it != output.end());\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<vector<int>> output = powerset({1});\n      for (int i = 0; i < output.size(); i++) {\n        sort(output[i].begin(), output[i].end());\n      }\n      assert(output.size() == 2);\n      vector<vector<int>>::iterator it =\n          find(output.begin(), output.end(), vector<int>{});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1});\n      assert(it != output.end());\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<vector<int>> output = powerset({1, 2});\n      for (int i = 0; i < output.size(); i++) {\n        sort(output[i].begin(), output[i].end());\n      }\n      assert(output.size() == 4);\n      vector<vector<int>>::iterator it =\n          find(output.begin(), output.end(), vector<int>{});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2});\n      assert(it != output.end());\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<vector<int>> output = powerset({1, 2, 3});\n      for (int i = 0; i < output.size(); i++) {\n        sort(output[i].begin(), output[i].end());\n      }\n      assert(output.size() == 8);\n      vector<vector<int>>::iterator it =\n          find(output.begin(), output.end(), vector<int>{});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2, 3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2, 3});\n      assert(it != output.end());\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<vector<int>> output = powerset({1, 2, 3, 4});\n      for (int i = 0; i < output.size(); i++) {\n        sort(output[i].begin(), output[i].end());\n      }\n      assert(output.size() == 16);\n      vector<vector<int>>::iterator it =\n          find(output.begin(), output.end(), vector<int>{});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{4});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 4});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2, 3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2, 4});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{3, 4});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2, 3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2, 4});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 3, 4});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2, 3, 4});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2, 3, 4});\n      assert(it != output.end());\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <algorithm>\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<vector<int>> output = powerset({1, 2, 3});\n      for (int i = 0; i < output.size(); i++) {\n        sort(output[i].begin(), output[i].end());\n      }\n      assert(output.size() == 8);\n      vector<vector<int>>::iterator it =\n          find(output.begin(), output.end(), vector<int>{});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{2, 3});\n      assert(it != output.end());\n      it = find(output.begin(), output.end(), vector<int>{1, 2, 3});\n      assert(it != output.end());\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nvector<vector<int>> powersetHelper(vector<int> array, int idx);\n\n// O(n*2^n) time | O(n*2^n) space\nvector<vector<int>> powerset(vector<int> array) {\n  return powersetHelper(array, array.size() - 1);\n}\n\nvector<vector<int>> powersetHelper(vector<int> array, int idx) {\n  if (idx < 0) {\n    return vector<vector<int>>{{}};\n  }\n  int ele = array[idx];\n  vector<vector<int>> subsets = powersetHelper(array, idx - 1);\n  int length = subsets.size();\n  for (int i = 0; i < length; i++) {\n    vector<int> currentSubset = subsets[i];\n    vector<int> newSubset = currentSubset;\n    newSubset.push_back(ele);\n    subsets.push_back(newSubset);\n  }\n  return subsets;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\n// O(n*2^n) time | O(n*2^n) space\nvector<vector<int>> powerset(vector<int> array) {\n  vector<vector<int>> subsets = {{}};\n  for (int ele : array) {\n    int length = subsets.size();\n    for (int i = 0; i < length; i++) {\n      vector<int> currentSubset = subsets[i];\n      currentSubset.push_back(ele);\n      subsets.push_back(currentSubset);\n    }\n  }\n  return subsets;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "using System.Collections.Generic;\n\npublic class Program {\n\tpublic static List<List<int> > Powerset(List<int> array) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<List<int> > output = Program.Powerset(new List<int>());\n\t\tUtils.AssertTrue(output.Count == 1);\n\t\tUtils.AssertTrue(Contains(output, new int[] {}));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tList<List<int> > output = Program.Powerset(new List<int>(){\n\t\t\t1\n\t\t});\n\t\tUtils.AssertTrue(output.Count == 2);\n\t\tUtils.AssertTrue(Contains(output, new int[] {}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1}));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tList<List<int> > output = Program.Powerset(new List<int>(){\n\t\t\t1, 2\n\t\t});\n\t\tUtils.AssertTrue(output.Count == 4);\n\t\tUtils.AssertTrue(Contains(output, new int[] {}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2}));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tList<List<int> > output = Program.Powerset(new List<int>(){\n\t\t\t1, 2, 3\n\t\t});\n\t\tUtils.AssertTrue(output.Count == 8);\n\t\tUtils.AssertTrue(Contains(output, new int[] {}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2, 3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2, 3}));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tList<List<int> > output = Program.Powerset(new List<int>(){\n\t\t\t1, 2, 3, 4\n\t\t});\n\t\tUtils.AssertTrue(output.Count == 16);\n\t\tUtils.AssertTrue(Contains(output, new int[] {}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2, 3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2, 3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {4}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 4}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2, 4}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2, 4}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {3, 4}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 3, 4}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2, 3, 4}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2, 3, 4}));\n\t}\n\n\tpublic bool Contains(List<List<int> > arr1, int[] arr2) {\n\t\tforeach (List<int> subArr in arr1) {\n\t\t\tsubArr.Sort();\n\t\t\tif (compare(subArr, arr2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n\n\tpublic bool compare(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tList<List<int> > output = Program.Powerset(new List<int>(){\n\t\t\t1, 2, 3\n\t\t});\n\t\tUtils.AssertTrue(output.Count == 8);\n\t\tUtils.AssertTrue(Contains(output, new int[] {}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {2, 3}));\n\t\tUtils.AssertTrue(Contains(output, new int[] {1, 2, 3}));\n\t}\n\n\tpublic bool Contains(List<List<int> > arr1, int[] arr2) {\n\t\tforeach (List<int> subArr in arr1) {\n\t\t\tsubArr.Sort();\n\t\t\tif (compare(subArr, arr2)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\t\treturn false;\n\t}\n\n\tpublic bool compare(List<int> arr1, int[] arr2) {\n\t\tif (arr1.Count != arr2.Length) {\n\t\t\treturn false;\n\t\t}\n\t\tfor (int i = 0; i < arr1.Count; i++) {\n\t\t\tif (arr1[i] != arr2[i]) {\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t\treturn true;\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n*2^n) time | O(n*2^n) space\n\tpublic static List<List<int> > Powerset(List<int> array) {\n\t\treturn Powerset(array, array.Count - 1);\n\t}\n\n\tpublic static List<List<int> > Powerset(List<int> array, int idx) {\n\t\tif (idx < 0) {\n\t\t\tList<List<int> > emptySet = new List<List<int> >();\n\t\t\temptySet.Add(new List<int>());\n\t\t\treturn emptySet;\n\t\t}\n\t\tint ele = array[idx];\n\t\tList<List<int> > subsets = Powerset(array, idx - 1);\n\t\tint length = subsets.Count;\n\t\tfor (int i = 0; i < length; i++) {\n\t\t\tList<int> currentSubset = new List<int>(subsets[i]);\n\t\t\tcurrentSubset.Add(ele);\n\t\t\tsubsets.Add(currentSubset);\n\t\t}\n\t\treturn subsets;\n\t}\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n*2^n) time | O(n*2^n) space\n\tpublic static List<List<int> > Powerset(List<int> array) {\n\t\tList<List<int> > subsets = new List<List<int> >();\n\t\tsubsets.Add(new List<int>());\n\t\tforeach (int ele in array) {\n\t\t\tint length = subsets.Count;\n\t\t\tfor (int i = 0; i < length; i++) {\n\t\t\t\tList<int> currentSubset = new List<int>(subsets[i]);\n\t\t\t\tcurrentSubset.Add(ele);\n\t\t\t\tsubsets.Add(currentSubset);\n\t\t\t}\n\t\t}\n\t\treturn subsets;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc Powerset(array []int) [][]int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"sort\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := Powerset([]int{})\n\tif len(output) != 1 {\n\t\tt.Fail()\n\t}\n\tcontains(t, output, []int{})\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\toutput := Powerset([]int{1})\n\tif len(output) != 2 {\n\t\tt.Fail()\n\t}\n\tcontains(t, output, []int{})\n\tcontains(t, output, []int{1})\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\toutput := Powerset([]int{1, 2})\n\tif len(output) != 4 {\n\t\tt.Fail()\n\t}\n\tcontains(t, output, []int{})\n\tcontains(t, output, []int{1})\n\tcontains(t, output, []int{2})\n\tcontains(t, output, []int{1, 2})\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\toutput := Powerset([]int{1, 2, 3})\n\tif len(output) != 8 {\n\t\tt.Fail()\n\t}\n\tcontains(t, output, []int{})\n\tcontains(t, output, []int{1})\n\tcontains(t, output, []int{2})\n\tcontains(t, output, []int{1, 2})\n\tcontains(t, output, []int{3})\n\tcontains(t, output, []int{1, 3})\n\tcontains(t, output, []int{2, 3})\n\tcontains(t, output, []int{1, 2, 3})\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\toutput := Powerset([]int{1, 2, 3, 4})\n\tif len(output) != 16 {\n\t\tt.Fail()\n\t}\n\tcontains(t, output, []int{})\n\tcontains(t, output, []int{1})\n\tcontains(t, output, []int{2})\n\tcontains(t, output, []int{1, 2})\n\tcontains(t, output, []int{3})\n\tcontains(t, output, []int{1, 3})\n\tcontains(t, output, []int{2, 3})\n\tcontains(t, output, []int{1, 2, 3})\n\tcontains(t, output, []int{4})\n\tcontains(t, output, []int{1, 4})\n\tcontains(t, output, []int{2, 4})\n\tcontains(t, output, []int{1, 2, 4})\n\tcontains(t, output, []int{3, 4})\n\tcontains(t, output, []int{1, 3, 4})\n\tcontains(t, output, []int{2, 3, 4})\n\tcontains(t, output, []int{1, 2, 3, 4})\n}\n\nfunc contains(t *TestCase, out [][]int, element []int) {\n\tsort.Ints(element)\n\tfor _, item := range out {\n\t\tsort.Ints(item)\n\t\tif arraysEqual(item, element) {\n\t\t\treturn\n\t\t}\n\t}\n\tt.Fail()\n}\n\nfunc arraysEqual(a []int, b []int) bool {\n\tif len(a) != len(b) {\n\t\treturn false\n\t}\n\tfor i := range a {\n\t\tif a[i] != b[i] {\n\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\toutput := Powerset([]int{1, 2, 3})\n\trequire.Contains(t, output, []int{})\n\trequire.Contains(t, output, []int{1})\n\trequire.Contains(t, output, []int{2})\n\trequire.Contains(t, output, []int{1, 2})\n\trequire.Contains(t, output, []int{3})\n\trequire.Contains(t, output, []int{1, 3})\n\trequire.Contains(t, output, []int{2, 3})\n\trequire.Contains(t, output, []int{1, 2, 3})\n\trequire.Len(t, output, 8)\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n*2^n) time | O(n*2^n) space\nfunc Powerset(array []int) [][]int {\n\treturn powerset(array, len(array)-1)\n}\n\nfunc powerset(array []int, index int) [][]int {\n\tif index < 0 {\n\t\treturn [][]int{{}}\n\t}\n\tsubsets := powerset(array, index-1)\n\tele := array[index]\n\tlength := len(subsets)\n\tfor i := 0; i < length; i++ {\n\t\tcurrentSubset := subsets[i]\n\t\tnewsubset := append([]int{}, currentSubset...)\n\t\tnewsubset = append(newsubset, ele)\n\t\tsubsets = append(subsets, newsubset)\n\t}\n\treturn subsets\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\n// O(n*2^n) time | O(n*2^n) space\nfunc Powerset(array []int) [][]int {\n\tsubsets := [][]int{{}}\n\tfor _, ele := range array {\n\t\tlength := len(subsets)\n\t\tfor i := 0; i < length; i++ {\n\t\t\tcurrentSubset := subsets[i]\n\t\t\tnewsubset := append([]int{}, currentSubset...)\n\t\t\tnewsubset = append(newsubset, ele)\n\t\t\tsubsets = append(subsets, newsubset)\n\t\t}\n\t}\n\treturn subsets\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static List<List<Integer>> powerset(List<Integer> array) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<List<Integer>> output = Program.powerset(new ArrayList<Integer>());\n    Utils.assertTrue(output.size() == 1);\n    Utils.assertTrue(contains(output, new int[] {}));\n  }\n\n  @Test\n  public void TestCase2() {\n    List<List<Integer>> output = Program.powerset(new ArrayList<Integer>(Arrays.asList(1)));\n    Utils.assertTrue(output.size() == 2);\n    Utils.assertTrue(contains(output, new int[] {}));\n    Utils.assertTrue(contains(output, new int[] {1}));\n  }\n\n  @Test\n  public void TestCase3() {\n    List<List<Integer>> output = Program.powerset(new ArrayList<Integer>(Arrays.asList(1, 2)));\n    Utils.assertTrue(output.size() == 4);\n    Utils.assertTrue(contains(output, new int[] {}));\n    Utils.assertTrue(contains(output, new int[] {1}));\n    Utils.assertTrue(contains(output, new int[] {2}));\n    Utils.assertTrue(contains(output, new int[] {1, 2}));\n  }\n\n  @Test\n  public void TestCase4() {\n    List<List<Integer>> output = Program.powerset(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));\n    Utils.assertTrue(output.size() == 8);\n    Utils.assertTrue(contains(output, new int[] {}));\n    Utils.assertTrue(contains(output, new int[] {1}));\n    Utils.assertTrue(contains(output, new int[] {2}));\n    Utils.assertTrue(contains(output, new int[] {1, 2}));\n    Utils.assertTrue(contains(output, new int[] {3}));\n    Utils.assertTrue(contains(output, new int[] {1, 3}));\n    Utils.assertTrue(contains(output, new int[] {2, 3}));\n    Utils.assertTrue(contains(output, new int[] {1, 2, 3}));\n  }\n\n  @Test\n  public void TestCase5() {\n    List<List<Integer>> output =\n        Program.powerset(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4)));\n    Utils.assertTrue(output.size() == 16);\n    Utils.assertTrue(contains(output, new int[] {}));\n    Utils.assertTrue(contains(output, new int[] {1}));\n    Utils.assertTrue(contains(output, new int[] {2}));\n    Utils.assertTrue(contains(output, new int[] {1, 2}));\n    Utils.assertTrue(contains(output, new int[] {3}));\n    Utils.assertTrue(contains(output, new int[] {1, 3}));\n    Utils.assertTrue(contains(output, new int[] {2, 3}));\n    Utils.assertTrue(contains(output, new int[] {1, 2, 3}));\n    Utils.assertTrue(contains(output, new int[] {4}));\n    Utils.assertTrue(contains(output, new int[] {1, 4}));\n    Utils.assertTrue(contains(output, new int[] {2, 4}));\n    Utils.assertTrue(contains(output, new int[] {1, 2, 4}));\n    Utils.assertTrue(contains(output, new int[] {3, 4}));\n    Utils.assertTrue(contains(output, new int[] {1, 3, 4}));\n    Utils.assertTrue(contains(output, new int[] {2, 3, 4}));\n    Utils.assertTrue(contains(output, new int[] {1, 2, 3, 4}));\n  }\n\n  public boolean contains(List<List<Integer>> arr1, int[] arr2) {\n    for (List<Integer> subArr : arr1) {\n      Collections.sort(subArr);\n      if (compare(subArr, arr2)) {\n        return true;\n      }\n    }\n    return false;\n  }\n\n  public boolean compare(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.*;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    List<List<Integer>> output = Program.powerset(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));\n    Utils.assertTrue(output.size() == 8);\n    Utils.assertTrue(contains(output, new int[] {}));\n    Utils.assertTrue(contains(output, new int[] {1}));\n    Utils.assertTrue(contains(output, new int[] {2}));\n    Utils.assertTrue(contains(output, new int[] {1, 2}));\n    Utils.assertTrue(contains(output, new int[] {3}));\n    Utils.assertTrue(contains(output, new int[] {1, 3}));\n    Utils.assertTrue(contains(output, new int[] {2, 3}));\n    Utils.assertTrue(contains(output, new int[] {1, 2, 3}));\n  }\n\n  public boolean contains(List<List<Integer>> arr1, int[] arr2) {\n    for (List<Integer> subArr : arr1) {\n      Collections.sort(subArr);\n      if (compare(subArr, arr2)) {\n        return true;\n      }\n    }\n    return false;\n  }\n\n  public boolean compare(List<Integer> arr1, int[] arr2) {\n    if (arr1.size() != arr2.length) {\n      return false;\n    }\n    for (int i = 0; i < arr1.size(); i++) {\n      if (arr1.get(i) != arr2[i]) {\n        return false;\n      }\n    }\n    return true;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n*2^n) time | O(n*2^n) space\n  public static List<List<Integer>> powerset(List<Integer> array) {\n    return powerset(array, array.size() - 1);\n  }\n\n  public static List<List<Integer>> powerset(List<Integer> array, int idx) {\n    if (idx < 0) {\n      List<List<Integer>> emptySet = new ArrayList<List<Integer>>();\n      emptySet.add(new ArrayList<Integer>());\n      return emptySet;\n    }\n    int ele = array.get(idx);\n    List<List<Integer>> subsets = powerset(array, idx - 1);\n    int length = subsets.size();\n    for (int i = 0; i < length; i++) {\n      List<Integer> currentSubset = new ArrayList<Integer>(subsets.get(i));\n      currentSubset.add(ele);\n      subsets.add(currentSubset);\n    }\n    return subsets;\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n*2^n) time | O(n*2^n) space\n  public static List<List<Integer>> powerset(List<Integer> array) {\n    List<List<Integer>> subsets = new ArrayList<List<Integer>>();\n    subsets.add(new ArrayList<Integer>());\n    for (Integer ele : array) {\n      int length = subsets.size();\n      for (int i = 0; i < length; i++) {\n        List<Integer> currentSubset = new ArrayList<Integer>(subsets.get(i));\n        currentSubset.add(ele);\n        subsets.add(currentSubset);\n      }\n    }\n    return subsets;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function powerset(array) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.powerset = powerset;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nfunction sortAndStringify(array) {\n  return array.sort((a, b) => a - b).join(',');\n}\n\nit('Test Case #1', function () {\n  const output = program.powerset([]).map(sortAndStringify);\n  chai.expect(output.length === 1).to.be.true;\n  chai.expect(output).to.include('');\n});\n\nit('Test Case #2', function () {\n  const output = program.powerset([1]).map(sortAndStringify);\n  chai.expect(output.length === 2).to.be.true;\n  chai.expect(output).to.include('');\n  chai.expect(output).to.include('1');\n});\n\nit('Test Case #3', function () {\n  const output = program.powerset([1, 2]).map(sortAndStringify);\n  chai.expect(output.length === 4).to.be.true;\n  chai.expect(output).to.include('');\n  chai.expect(output).to.include('1');\n  chai.expect(output).to.include('2');\n  chai.expect(output).to.include('1,2');\n});\n\nit('Test Case #4', function () {\n  const output = program.powerset([1, 2, 3]).map(sortAndStringify);\n  chai.expect(output.length === 8).to.be.true;\n  chai.expect(output).to.include('');\n  chai.expect(output).to.include('1');\n  chai.expect(output).to.include('2');\n  chai.expect(output).to.include('1,2');\n  chai.expect(output).to.include('3');\n  chai.expect(output).to.include('1,3');\n  chai.expect(output).to.include('2,3');\n  chai.expect(output).to.include('1,2,3');\n});\n\nit('Test Case #5', function () {\n  const output = program.powerset([1, 2, 3, 4]).map(sortAndStringify);\n  chai.expect(output.length === 16).to.be.true;\n  chai.expect(output).to.include('');\n  chai.expect(output).to.include('1');\n  chai.expect(output).to.include('2');\n  chai.expect(output).to.include('1,2');\n  chai.expect(output).to.include('3');\n  chai.expect(output).to.include('1,3');\n  chai.expect(output).to.include('2,3');\n  chai.expect(output).to.include('1,2,3');\n  chai.expect(output).to.include('4');\n  chai.expect(output).to.include('1,4');\n  chai.expect(output).to.include('2,4');\n  chai.expect(output).to.include('1,2,4');\n  chai.expect(output).to.include('3,4');\n  chai.expect(output).to.include('1,3,4');\n  chai.expect(output).to.include('2,3,4');\n  chai.expect(output).to.include('1,2,3,4');\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nfunction sortAndStringify(array) {\n  return array.sort((a, b) => a - b).join(',');\n}\n\nit('Test Case #1', function () {\n  const output = program.powerset([1, 2, 3]).map(sortAndStringify);\n  chai.expect(output.length === 8).to.be.true;\n  chai.expect(output).to.include('');\n  chai.expect(output).to.include('1');\n  chai.expect(output).to.include('2');\n  chai.expect(output).to.include('1,2');\n  chai.expect(output).to.include('3');\n  chai.expect(output).to.include('1,3');\n  chai.expect(output).to.include('2,3');\n  chai.expect(output).to.include('1,2,3');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n*2^n) time | O(n*2^n) space\nfunction powerset(array, idx = null) {\n  if (idx === null) {\n    idx = array.length - 1;\n  }\n  if (idx < 0) {\n    return [[]];\n  }\n  const ele = array[idx];\n  const subsets = powerset(array, idx - 1);\n  const length = subsets.length;\n  for (let i = 0; i < length; i++) {\n    const currentSubset = subsets[i];\n    subsets.push(currentSubset.concat(ele));\n  }\n  return subsets;\n}\n\nexports.powerset = powerset;\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n*2^n) time | O(n*2^n) space\nfunction powerset(array) {\n  const subsets = [[]];\n  for (const ele of array) {\n    const length = subsets.length;\n    for (let i = 0; i < length; i++) {\n      const currentSubset = subsets[i];\n      subsets.push(currentSubset.concat(ele));\n    }\n  }\n  return subsets;\n}\n\nexports.powerset = powerset;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def powerset(array):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        output = list(map(lambda x: set(x), program.powerset([])))\n        self.assertTrue(len(output) == 1)\n        self.assertTrue(set([]) in output)\n\n    def test_case_2(self):\n        output = list(map(lambda x: set(x), program.powerset([1])))\n        self.assertTrue(len(output) == 2)\n        self.assertTrue(set([]) in output)\n        self.assertTrue(set([1]) in output)\n\n    def test_case_3(self):\n        output = list(map(lambda x: set(x), program.powerset([1, 2])))\n        self.assertTrue(len(output) == 4)\n        self.assertTrue(set([]) in output)\n        self.assertTrue(set([1]) in output)\n        self.assertTrue(set([2]) in output)\n        self.assertTrue(set([1, 2]) in output)\n\n    def test_case_4(self):\n        output = list(map(lambda x: set(x), program.powerset([1, 2, 3])))\n        self.assertTrue(len(output) == 8)\n        self.assertTrue(set([]) in output)\n        self.assertTrue(set([1]) in output)\n        self.assertTrue(set([2]) in output)\n        self.assertTrue(set([1, 2]) in output)\n        self.assertTrue(set([3]) in output)\n        self.assertTrue(set([1, 3]) in output)\n        self.assertTrue(set([2, 3]) in output)\n        self.assertTrue(set([1, 2, 3]) in output)\n\n    def test_case_5(self):\n        output = list(map(lambda x: set(x), program.powerset([1, 2, 3, 4])))\n        self.assertTrue(len(output) == 16)\n        self.assertTrue(set([]) in output)\n        self.assertTrue(set([1]) in output)\n        self.assertTrue(set([2]) in output)\n        self.assertTrue(set([1, 2]) in output)\n        self.assertTrue(set([3]) in output)\n        self.assertTrue(set([1, 3]) in output)\n        self.assertTrue(set([2, 3]) in output)\n        self.assertTrue(set([1, 2, 3]) in output)\n        self.assertTrue(set([4]) in output)\n        self.assertTrue(set([1, 4]) in output)\n        self.assertTrue(set([2, 4]) in output)\n        self.assertTrue(set([1, 2, 4]) in output)\n        self.assertTrue(set([3, 4]) in output)\n        self.assertTrue(set([1, 3, 4]) in output)\n        self.assertTrue(set([2, 3, 4]) in output)\n        self.assertTrue(set([1, 2, 3, 4]) in output)\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        output = list(map(lambda x: set(x), program.powerset([1, 2, 3])))\n        self.assertTrue(len(output) == 8)\n        self.assertTrue(set([]) in output)\n        self.assertTrue(set([1]) in output)\n        self.assertTrue(set([2]) in output)\n        self.assertTrue(set([1, 2]) in output)\n        self.assertTrue(set([3]) in output)\n        self.assertTrue(set([1, 3]) in output)\n        self.assertTrue(set([2, 3]) in output)\n        self.assertTrue(set([1, 2, 3]) in output)\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n*2^n) time | O(n*2^n) space\ndef powerset(array, idx=None):\n    if idx is None:\n        idx = len(array) - 1\n    if idx < 0:\n        return [[]]\n    ele = array[idx]\n    subsets = powerset(array, idx - 1)\n    for i in range(len(subsets)):\n        currentSubset = subsets[i]\n        subsets.append(currentSubset + [ele])\n    return subsets\n",
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n*2^n) time | O(n*2^n) space\ndef powerset(array):\n    subsets = [[]]\n    for ele in array:\n        for i in range(len(subsets)):\n            currentSubset = subsets[i]\n            subsets.append(currentSubset + [ele])\n    return subsets\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func powerset(array: [Int], index: Int? = nil) -> [[Int]] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var firstTest = program.powerset(array: [])\n      var firstTestStringified = sortAndStringify(array: firstTest)\n      try assertEqual(1, firstTestStringified.count)\n      try assert(firstTestStringified.contains(\"\"))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var secondTest = program.powerset(array: [1])\n      var secondTestStringified = sortAndStringify(array: secondTest)\n      try assertEqual(2, secondTestStringified.count)\n      try assert(secondTestStringified.contains(\"\"))\n      try assert(secondTestStringified.contains(\"1\"))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var thirdTest = program.powerset(array: [1, 2])\n      var thirdTestStringified = sortAndStringify(array: thirdTest)\n      try assertEqual(4, thirdTestStringified.count)\n      try assert(thirdTestStringified.contains(\"\"))\n      try assert(thirdTestStringified.contains(\"1\"))\n      try assert(thirdTestStringified.contains(\"2\"))\n      try assert(thirdTestStringified.contains(\"1, 2\"))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var fourthTest = program.powerset(array: [1, 2, 3])\n      var fourthTestStringified = sortAndStringify(array: fourthTest)\n      try assertEqual(8, fourthTestStringified.count)\n      try assert(fourthTestStringified.contains(\"\"))\n      try assert(fourthTestStringified.contains(\"1\"))\n      try assert(fourthTestStringified.contains(\"2\"))\n      try assert(fourthTestStringified.contains(\"1, 2\"))\n      try assert(fourthTestStringified.contains(\"3\"))\n      try assert(fourthTestStringified.contains(\"1, 3\"))\n      try assert(fourthTestStringified.contains(\"2, 3\"))\n      try assert(fourthTestStringified.contains(\"1, 2, 3\"))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var fifthTest = program.powerset(array: [1, 2, 3, 4])\n      var fifthTestStringified = sortAndStringify(array: fifthTest)\n      try assertEqual(16, fifthTestStringified.count)\n      try assert(fifthTestStringified.contains(\"\"))\n      try assert(fifthTestStringified.contains(\"1\"))\n      try assert(fifthTestStringified.contains(\"2\"))\n      try assert(fifthTestStringified.contains(\"1, 2\"))\n      try assert(fifthTestStringified.contains(\"3\"))\n      try assert(fifthTestStringified.contains(\"1, 3\"))\n      try assert(fifthTestStringified.contains(\"2, 3\"))\n      try assert(fifthTestStringified.contains(\"1, 2, 3\"))\n      try assert(fifthTestStringified.contains(\"4\"))\n      try assert(fifthTestStringified.contains(\"1, 4\"))\n      try assert(fifthTestStringified.contains(\"2, 4\"))\n      try assert(fifthTestStringified.contains(\"1, 2, 4\"))\n      try assert(fifthTestStringified.contains(\"3, 4\"))\n      try assert(fifthTestStringified.contains(\"1, 3, 4\"))\n      try assert(fifthTestStringified.contains(\"2, 3, 4\"))\n      try assert(fifthTestStringified.contains(\"1, 2, 3, 4\"))\n    }\n  }\n\n  func sortAndStringify(array: [[Int]]) -> [String] {\n    var result = [String]()\n\n    for var set in array {\n      set = set.sorted()\n\n      var string = String()\n\n      for item in set {\n        string.append(\"\\(item)\")\n\n        if item != set.last {\n          string.append(\", \")\n        }\n      }\n\n      result.append(string)\n    }\n\n    return result\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var fourthTest = program.powerset(array: [1, 2, 3])\n      var fourthTestStringified = sortAndStringify(array: fourthTest)\n      try assertEqual(8, fourthTestStringified.count)\n      try assert(fourthTestStringified.contains(\"\"))\n      try assert(fourthTestStringified.contains(\"1\"))\n      try assert(fourthTestStringified.contains(\"2\"))\n      try assert(fourthTestStringified.contains(\"1, 2\"))\n      try assert(fourthTestStringified.contains(\"3\"))\n      try assert(fourthTestStringified.contains(\"1, 3\"))\n      try assert(fourthTestStringified.contains(\"2, 3\"))\n      try assert(fourthTestStringified.contains(\"1, 2, 3\"))\n    }\n  }\n\n  func sortAndStringify(array: [[Int]]) -> [String] {\n    var result = [String]()\n\n    for var set in array {\n      set = set.sorted()\n\n      var string = String()\n\n      for item in set {\n        string.append(\"\\(item)\")\n\n        if item != set.last {\n          string.append(\", \")\n        }\n      }\n\n      result.append(string)\n    }\n\n    return result\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n * 2^n) time | O(n * 2^n) space\n  func powerset(array: [Int], index: Int? = nil) -> [[Int]] {\n    var index = index\n\n    if index == nil {\n      index = array.count - 1\n    }\n\n    if index! < 0 {\n      return [[]]\n    }\n\n    let element = array[index!]\n    var subsets = powerset(array: array, index: index! - 1)\n    let length = subsets.count\n\n    for i in 0 ..< length {\n      let currentSubset = subsets[i]\n      subsets.append(currentSubset + [element])\n    }\n\n    return subsets\n  }\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  // O(n * 2^n) time | O(n * 2^n) space\n  func powerset(array: [Int]) -> [[Int]] {\n    var subsets: [[Int]] = [[]]\n\n    for element in array {\n      for subset in subsets {\n        subsets.append(subset + [element])\n      }\n    }\n    return subsets\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function powerset(array: number[]) {\n  // Write your code here.\n  return [[-1]];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nfunction sortAndStringify(array: number[]) {\n  return array.sort((a, b) => a - b).join(',');\n}\n\nit('Test Case #1', function () {\n  const output = program.powerset([1, 2, 3]).map(sortAndStringify);\n  chai.expect(output.length === 8).to.be.true;\n  chai.expect(output).to.include('');\n  chai.expect(output).to.include('1');\n  chai.expect(output).to.include('2');\n  chai.expect(output).to.include('1,2');\n  chai.expect(output).to.include('3');\n  chai.expect(output).to.include('1,3');\n  chai.expect(output).to.include('2,3');\n  chai.expect(output).to.include('1,2,3');\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n*2^n) time | O(n*2^n) space\nexport function powerset(array: number[], idx: number | null = null): number[][] {\n  if (idx === null) {\n    idx = array.length - 1;\n  }\n  if (idx < 0) {\n    return [[]];\n  }\n  const ele = array[idx];\n  const subsets = powerset(array, idx - 1);\n  const length = subsets.length;\n  for (let i = 0; i < length; i++) {\n    const currentSubset = subsets[i];\n    subsets.push(currentSubset.concat(ele));\n  }\n  return subsets;\n}\n",
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n*2^n) time | O(n*2^n) space\nexport function powerset(array: number[]) {\n  const subsets: number[][] = [[]];\n  for (const ele of array) {\n    const length = subsets.length;\n    for (let i = 0; i < length; i++) {\n      const currentSubset = subsets[i];\n      subsets.push(currentSubset.concat(ele));\n    }\n  }\n  return subsets;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "array": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "array": []
+    },
+    {
+      "array": [
+        1
+      ]
+    },
+    {
+      "array": [
+        1,
+        2
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "array": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        [],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ],
+      [
+        []
+      ],
+      [
+        [],
+        [
+          1
+        ]
+      ],
+      [
+        [],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      [
+        [],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ],
+      [
+        [],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          1,
+          2,
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          1,
+          4,
+          5
+        ],
+        [
+          2,
+          4,
+          5
+        ],
+        [
+          1,
+          2,
+          4,
+          5
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          1,
+          3,
+          4,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      ],
+      [
+        [],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          1,
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          2,
+          3,
+          4
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ],
+        [
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          3,
+          5
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          1,
+          2,
+          3,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          1,
+          4,
+          5
+        ],
+        [
+          2,
+          4,
+          5
+        ],
+        [
+          1,
+          2,
+          4,
+          5
+        ],
+        [
+          3,
+          4,
+          5
+        ],
+        [
+          1,
+          3,
+          4,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        [
+          6
+        ],
+        [
+          1,
+          6
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          1,
+          2,
+          6
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          1,
+          3,
+          6
+        ],
+        [
+          2,
+          3,
+          6
+        ],
+        [
+          1,
+          2,
+          3,
+          6
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          1,
+          4,
+          6
+        ],
+        [
+          2,
+          4,
+          6
+        ],
+        [
+          1,
+          2,
+          4,
+          6
+        ],
+        [
+          3,
+          4,
+          6
+        ],
+        [
+          1,
+          3,
+          4,
+          6
+        ],
+        [
+          2,
+          3,
+          4,
+          6
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          1,
+          5,
+          6
+        ],
+        [
+          2,
+          5,
+          6
+        ],
+        [
+          1,
+          2,
+          5,
+          6
+        ],
+        [
+          3,
+          5,
+          6
+        ],
+        [
+          1,
+          3,
+          5,
+          6
+        ],
+        [
+          2,
+          3,
+          5,
+          6
+        ],
+        [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        [
+          4,
+          5,
+          6
+        ],
+        [
+          1,
+          4,
+          5,
+          6
+        ],
+        [
+          2,
+          4,
+          5,
+          6
+        ],
+        [
+          1,
+          2,
+          4,
+          5,
+          6
+        ],
+        [
+          3,
+          4,
+          5,
+          6
+        ],
+        [
+          1,
+          3,
+          4,
+          5,
+          6
+        ],
+        [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      ]
+    ]
+  ]
+}

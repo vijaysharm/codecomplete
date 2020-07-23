@@ -1,0 +1,379 @@
+{
+  "Summary": {
+    "Name": "Smallest Difference",
+    "Category": "Arrays",
+    "Difficulty": 2,
+    "Available": true,
+    "Metadata": {
+      "number": 455,
+      "timeOne": 0,
+      "timeTwo": 943,
+      "url": "https://player.vimeo.com/video/226846336"
+    }
+  },
+  "Prompt": "",
+  "Hints": "Instead of generating all possible pairs of numbers, try somehow only looking at pairs that you know could actually have the smallest difference. How can you accomplish this?\nWould it help if the two arrays were sorted? If the arrays were sorted and you were looking at a given pair of numbers, could you efficiently find the next pair of numbers to look at? What are the runtime implications of sorting the arrays?\nStart by sorting both arrays, as per Hint #2. Put a pointer at the beginning of both arrays and evaluate the absolute difference of the pointer-numbers. If the difference is equal to zero, then you've found the closest pair; otherwise, increment the pointer of the smaller of the two numbers to find a potentially better pair. Continue until you get a pair with a difference of zero or until one of the pointers gets out of range of its array.\n",
+  "SpaceTime": "O(nlog(n) + mlog(m)) time | O(1) space - where n is the length of the first input array and m is the length of the second input array\n",
+  "PromptHTML": "<p>\n  Write a function that takes in two non-empty arrays of integers, finds the\n  pair of numbers (one from each array) whose absolute difference is closest to\n  zero, and returns an array containing these two numbers, with the number from\n  the first array in the first position.\n</p>\n<p>\n  You can assume that there will only be one pair of numbers with the smallest\n  difference.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">arrayOne</span> = [-1, 5, 10, 20, 28, 3]\n<span class=\"CodeEditor-promptParameter\">arrayTwo</span> = [26, 134, 135, 15, 17]\n</pre>\n<h3>Sample Output</h3>\n<pre>[28, 26]</pre>\n",
+  "Notes": "",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": null,
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "arrayOne",
+      "Example": [
+        -1,
+        5,
+        10,
+        20,
+        28,
+        3
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    {
+      "Name": "arrayTwo",
+      "Example": [
+        26,
+        134,
+        135,
+        15,
+        17
+      ],
+      "Schema": {
+        "items": {
+          "type": "integer"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nvector<int> smallestDifference(vector<int> arrayOne, vector<int> arrayTwo) {\n  // Write your code here.\n  return {};\n}\n",
+      "StartingTest": "class ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{20, 17};\n      assert(smallestDifference({-1, 5, 10, 20, 3}, {26, 134, 135, 15, 17}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      vector<int> expected{28, 26};\n      assert(smallestDifference({-1, 5, 10, 20, 28, 3},\n                                {26, 134, 135, 15, 17}) == expected);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      vector<int> expected{25, 1005};\n      assert(smallestDifference({10, 0, 20, 25},\n                                {1005, 1006, 1014, 1032, 1031}) == expected);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      vector<int> expected{25, 1005};\n      assert(smallestDifference({10, 0, 20, 25, 2200},\n                                {1005, 1006, 1014, 1032, 1031}) == expected);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      vector<int> expected{2000, 1032};\n      assert(smallestDifference({10, 0, 20, 25, 2000},\n                                {1005, 1006, 1014, 1032, 1031}) == expected);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      vector<int> expected{954, 954};\n      assert(smallestDifference({240, 124, 86, 111, 2, 84, 954, 27, 89},\n                                {1, 3, 954, 19, 8}) == expected);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      vector<int> expected{20, 21};\n      assert(smallestDifference({0, 20}, {21, -2}) == expected);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      vector<int> expected{1000, 1014};\n      assert(smallestDifference({10, 1000}, {-1441, -124, -25, 1014, 1500, 660,\n                                             410, 245, 530}) == expected);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      vector<int> expected{-123, -124};\n      assert(smallestDifference(\n                 {10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123},\n                 {-1441, -124, -25, 1014, 1500, 660, 410, 245, 530}) ==\n             expected);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      vector<int> expected{530, 530};\n      assert(smallestDifference(\n                 {10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123, 530},\n                 {-1441, -124, -25, 1014, 1500, 660, 410, 245, 530}) ==\n             expected);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      vector<int> expected{28, 26};\n      assert(smallestDifference({-1, 5, 10, 20, 28, 3},\n                                {26, 134, 135, 15, 17}) == expected);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\n#include <algorithm>\n#include <climits>\nusing namespace std;\n\n// O(nlog(n) + mlog(m)) time | O(1) space\nvector<int> smallestDifference(vector<int> arrayOne, vector<int> arrayTwo) {\n  sort(arrayOne.begin(), arrayOne.end());\n  sort(arrayTwo.begin(), arrayTwo.end());\n  int idxOne = 0;\n  int idxTwo = 0;\n  int smallest = INT_MAX;\n  int current = INT_MAX;\n  vector<int> smallestPair;\n  while (idxOne < arrayOne.size() && idxTwo < arrayTwo.size()) {\n    int firstNum = arrayOne[idxOne];\n    int secondNum = arrayTwo[idxTwo];\n    if (firstNum < secondNum) {\n      current = secondNum - firstNum;\n      idxOne++;\n    } else if (secondNum < firstNum) {\n      current = firstNum - secondNum;\n      idxTwo++;\n    } else {\n      return vector<int>{firstNum, secondNum};\n    }\n    if (smallest > current) {\n      smallest = current;\n      smallestPair = {firstNum, secondNum};\n    }\n  }\n  return smallestPair;\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int[] SmallestDifference(int[] arrayOne, int[] arrayTwo) {\n\t\t// Write your code here.\n\t\treturn null;\n\t}\n}\n",
+      "StartingTest": "using System.Linq;\n\npublic class ProgramTest {\n\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {20, 17};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {-1,\n\t\t                                                                                5,\n\t\t                                                                                10,\n\t\t                                                                                20,\n\t\t                                                                                3},\n\t\t  new int[] {26,\n\t\t             134,\n\t\t             135,\n\t\t             15,\n\t\t             17}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tint[] expected = {28, 26};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {-1,\n\t\t                                                                                5,\n\t\t                                                                                10,\n\t\t                                                                                20,\n\t\t                                                                                28,\n\t\t                                                                                3},\n\t\t  new int[] {26,\n\t\t             134,\n\t\t             135,\n\t\t             15,\n\t\t             17}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tint[] expected = {25, 1005};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {10,\n\t\t                                                                                0,\n\t\t                                                                                20,\n\t\t                                                                                25},\n\t\t  new int[] {1005,\n\t\t             1006,\n\t\t             1014,\n\t\t             1032,\n\t\t             1031}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tint[] expected = {25, 1005};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {10,\n\t\t                                                                                0,\n\t\t                                                                                20,\n\t\t                                                                                25,\n\t\t                                                                                2200},\n\t\t  new int[] {1005,\n\t\t             1006,\n\t\t             1014,\n\t\t             1032,\n\t\t             1031}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tint[] expected = {2000, 1032};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {10,\n\t\t                                                                                0,\n\t\t                                                                                20,\n\t\t                                                                                25,\n\t\t                                                                                2000},\n\t\t  new int[] {1005,\n\t\t             1006,\n\t\t             1014,\n\t\t             1032,\n\t\t             1031}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tint[] expected = {954, 954};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {240,\n\t\t                                                                                124,\n\t\t                                                                                86,\n\t\t                                                                                111,\n\t\t                                                                                2,\n\t\t                                                                                84,\n\t\t                                                                                954,\n\t\t                                                                                27,\n\t\t                                                                                89},\n\t\t  new int[] {1,\n\t\t             3,\n\t\t             954,\n\t\t             19,\n\t\t             8}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tint[] expected = {20, 21};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {0,\n\t\t                                                                                20},\n\t\t  new int[] {21,\n\t\t             -2}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tint[] expected = {1000, 1014};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {10,\n\t\t                                                                                1000},\n\t\t  new int[] {-\n\t\t             1441,\n\t\t             -124,\n\t\t             -25,\n\t\t             1014,\n\t\t             1500,\n\t\t             660,\n\t\t             410,\n\t\t             245,\n\t\t             530}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tint[] expected = {-123, -124};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {10,\n\t\t                                                                                1000,\n\t\t                                                                                9124,\n\t\t                                                                                2142,\n\t\t                                                                                59,\n\t\t                                                                                24,\n\t\t                                                                                596,\n\t\t                                                                                591,\n\t\t                                                                                124,\n\t\t                                                                                -123},\n\t\t  new int[] {-\n\t\t             1441,\n\t\t             -124,\n\t\t             -25,\n\t\t             1014,\n\t\t             1500,\n\t\t             660,\n\t\t             410,\n\t\t             245,\n\t\t             530}),\n\t\t  expected));\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tint[] expected = {530, 530};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {10,\n\t\t                                                                                1000,\n\t\t                                                                                9124,\n\t\t                                                                                2142,\n\t\t                                                                                59,\n\t\t                                                                                24,\n\t\t                                                                                596,\n\t\t                                                                                591,\n\t\t                                                                                124,\n\t\t                                                                                -123,\n\t\t                                                                                530},\n\t\t  new int[] {-\n\t\t             1441,\n\t\t             -124,\n\t\t             -25,\n\t\t             1014,\n\t\t             1500,\n\t\t             660,\n\t\t             410,\n\t\t             245,\n\t\t             530}),\n\t\t  expected));\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Linq;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tint[] expected = {28, 26};\n\t\tUtils.AssertTrue(Enumerable.SequenceEqual(Program.SmallestDifference(new int[] {-1,\n\t\t                                                                                5,\n\t\t                                                                                10,\n\t\t                                                                                20,\n\t\t                                                                                28,\n\t\t                                                                                3},\n\t\t  new int[] {26,\n\t\t             134,\n\t\t             135,\n\t\t             15,\n\t\t             17}),\n\t\t  expected));\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\n\npublic class Program {\n\t// O(nlog(n) + mlog(m)) time | O(1) space\n\tpublic static int[] SmallestDifference(int[] arrayOne, int[] arrayTwo) {\n\t\tArray.Sort(arrayOne);\n\t\tArray.Sort(arrayTwo);\n\t\tint idxOne = 0;\n\t\tint idxTwo = 0;\n\t\tint smallest = Int32.MaxValue;\n\t\tint current = Int32.MaxValue;\n\t\tint[] smallestPair = new int[2];\n\t\twhile (idxOne < arrayOne.Length && idxTwo < arrayTwo.Length) {\n\t\t\tint firstNum = arrayOne[idxOne];\n\t\t\tint secondNum = arrayTwo[idxTwo];\n\t\t\tif (firstNum < secondNum) {\n\t\t\t\tcurrent = secondNum - firstNum;\n\t\t\t\tidxOne++;\n\t\t\t} else if (secondNum < firstNum) {\n\t\t\t\tcurrent = firstNum - secondNum;\n\t\t\t\tidxTwo++;\n\t\t\t} else {\n\t\t\t\treturn new int[] {firstNum, secondNum};\n\t\t\t}\n\t\t\tif (smallest > current) {\n\t\t\t\tsmallest = current;\n\t\t\t\tsmallestPair = new int[] {firstNum, secondNum};\n\t\t\t}\n\t\t}\n\t\treturn smallestPair;\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\nfunc SmallestDifference(array1, array2 []int) []int {\n\t// Write your code here.\n\treturn nil\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{20, 17}\n\toutput := SmallestDifference([]int{-1, 5, 10, 20, 3}, []int{26, 134, 135, 15, 17})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\texpected := []int{28, 26}\n\toutput := SmallestDifference([]int{-1, 5, 10, 20, 28, 3}, []int{26, 134, 135, 15, 17})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\texpected := []int{25, 1005}\n\toutput := SmallestDifference([]int{10, 0, 20, 25}, []int{1005, 1006, 1014, 1032, 1031})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\texpected := []int{25, 1005}\n\toutput := SmallestDifference([]int{10, 0, 20, 25, 2200}, []int{1005, 1006, 1014, 1032, 1031})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\texpected := []int{2000, 1032}\n\toutput := SmallestDifference([]int{10, 0, 20, 25, 2000}, []int{1005, 1006, 1014, 1032, 1031})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\texpected := []int{954, 954}\n\toutput := SmallestDifference([]int{240, 124, 86, 111, 2, 84, 954, 27, 89}, []int{1, 3, 954, 19, 8})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\texpected := []int{20, 21}\n\toutput := SmallestDifference([]int{0, 20}, []int{21, -2})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\texpected := []int{1000, 1014}\n\toutput := SmallestDifference([]int{10, 1000}, []int{-1441, -124, -25, 1014, 1500, 660, 410, 245, 530})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\texpected := []int{-123, -124}\n\toutput := SmallestDifference([]int{10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123}, []int{-1441, -124, -25, 1014, 1500, 660, 410, 245, 530})\n\trequire.Equal(t, expected, output)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\texpected := []int{530, 530}\n\toutput := SmallestDifference([]int{10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123, 530}, []int{-1441, -124, -25, 1014, 1500, 660, 410, 245, 530})\n\trequire.Equal(t, expected, output)\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\texpected := []int{28, 26}\n\toutput := SmallestDifference([]int{-1, 5, 10, 20, 28, 3}, []int{26, 134, 135, 15, 17})\n\trequire.Equal(t, expected, output)\n}",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport (\n\t\"math\"\n\t\"sort\"\n)\n\n// O(nlog(n) + mlog(m)) time | O(1) space\nfunc SmallestDifference(array1, array2 []int) []int {\n\tsort.Ints(array1)\n\tsort.Ints(array2)\n\tidxOne, idxTwo := 0, 0\n\tsmallest, current := math.MaxInt32, math.MaxInt32\n\tsmallestPair := []int{}\n\tfor idxOne < len(array1) && idxTwo < len(array2) {\n\t\tfirst, second := array1[idxOne], array2[idxTwo]\n\t\tif first < second {\n\t\t\tcurrent = second - first\n\t\t\tidxOne += 1\n\t\t} else if second < first {\n\t\t\tcurrent = first - second\n\t\t\tidxTwo += 1\n\t\t} else {\n\t\t\treturn []int{first, second}\n\t\t}\n\t\tif smallest > current {\n\t\t\tsmallest = current\n\t\t\tsmallestPair = []int{first, second}\n\t\t}\n\t}\n\treturn smallestPair\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int[] smallestDifference(int[] arrayOne, int[] arrayTwo) {\n    // Write your code here.\n    return null;\n  }\n}\n",
+      "StartingTest": "import java.util.Arrays;\n\nclass ProgramTest {\n\n  @Test\n  public void TestCase1() {\n    int[] expected = {20, 17};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {-1, 5, 10, 20, 3}, new int[] {26, 134, 135, 15, 17}),\n            expected));\n  }\n\n  @Test\n  public void TestCase2() {\n    int[] expected = {28, 26};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {-1, 5, 10, 20, 28, 3}, new int[] {26, 134, 135, 15, 17}),\n            expected));\n  }\n\n  @Test\n  public void TestCase3() {\n    int[] expected = {25, 1005};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {10, 0, 20, 25}, new int[] {1005, 1006, 1014, 1032, 1031}),\n            expected));\n  }\n\n  @Test\n  public void TestCase4() {\n    int[] expected = {25, 1005};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {10, 0, 20, 25, 2200}, new int[] {1005, 1006, 1014, 1032, 1031}),\n            expected));\n  }\n\n  @Test\n  public void TestCase5() {\n    int[] expected = {2000, 1032};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {10, 0, 20, 25, 2000}, new int[] {1005, 1006, 1014, 1032, 1031}),\n            expected));\n  }\n\n  @Test\n  public void TestCase6() {\n    int[] expected = {954, 954};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {240, 124, 86, 111, 2, 84, 954, 27, 89}, new int[] {1, 3, 954, 19, 8}),\n            expected));\n  }\n\n  @Test\n  public void TestCase7() {\n    int[] expected = {20, 21};\n    Utils.assertTrue(\n        Arrays.equals(Program.smallestDifference(new int[] {0, 20}, new int[] {21, -2}), expected));\n  }\n\n  @Test\n  public void TestCase8() {\n    int[] expected = {1000, 1014};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {10, 1000}, new int[] {-1441, -124, -25, 1014, 1500, 660, 410, 245, 530}),\n            expected));\n  }\n\n  @Test\n  public void TestCase9() {\n    int[] expected = {-123, -124};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123},\n                new int[] {-1441, -124, -25, 1014, 1500, 660, 410, 245, 530}),\n            expected));\n  }\n\n  @Test\n  public void TestCase10() {\n    int[] expected = {530, 530};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123, 530},\n                new int[] {-1441, -124, -25, 1014, 1500, 660, 410, 245, 530}),\n            expected));\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.Arrays;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    int[] expected = {28, 26};\n    Utils.assertTrue(\n        Arrays.equals(\n            Program.smallestDifference(\n                new int[] {-1, 5, 10, 20, 28, 3}, new int[] {26, 134, 135, 15, 17}),\n            expected));\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.Arrays;\n\nclass Program {\n  // O(nlog(n) + mlog(m)) time | O(1) space\n  public static int[] smallestDifference(int[] arrayOne, int[] arrayTwo) {\n    Arrays.sort(arrayOne);\n    Arrays.sort(arrayTwo);\n    int idxOne = 0;\n    int idxTwo = 0;\n    int smallest = Integer.MAX_VALUE;\n    int current = Integer.MAX_VALUE;\n    int[] smallestPair = new int[2];\n    while (idxOne < arrayOne.length && idxTwo < arrayTwo.length) {\n      int firstNum = arrayOne[idxOne];\n      int secondNum = arrayTwo[idxTwo];\n      if (firstNum < secondNum) {\n        current = secondNum - firstNum;\n        idxOne++;\n      } else if (secondNum < firstNum) {\n        current = firstNum - secondNum;\n        idxTwo++;\n      } else {\n        return new int[] {firstNum, secondNum};\n      }\n      if (smallest > current) {\n        smallest = current;\n        smallestPair = new int[] {firstNum, secondNum};\n      }\n    }\n    return smallestPair;\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function smallestDifference(arrayOne, arrayTwo) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.smallestDifference = smallestDifference;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.smallestDifference([-1, 5, 10, 20, 3], [26, 134, 135, 15, 17])).to.deep.equal([20, 17]);\n});\n\nit('Test Case #2', function () {\n  chai.expect(program.smallestDifference([-1, 5, 10, 20, 28, 3], [26, 134, 135, 15, 17])).to.deep.equal([28, 26]);\n});\n\nit('Test Case #3', function () {\n  chai.expect(program.smallestDifference([10, 0, 20, 25], [1005, 1006, 1014, 1032, 1031])).to.deep.equal([25, 1005]);\n});\n\nit('Test Case #4', function () {\n  chai\n    .expect(program.smallestDifference([10, 0, 20, 25, 2200], [1005, 1006, 1014, 1032, 1031]))\n    .to.deep.equal([25, 1005]);\n});\n\nit('Test Case #5', function () {\n  chai\n    .expect(program.smallestDifference([10, 0, 20, 25, 2000], [1005, 1006, 1014, 1032, 1031]))\n    .to.deep.equal([2000, 1032]);\n});\n\nit('Test Case #6', function () {\n  chai\n    .expect(program.smallestDifference([240, 124, 86, 111, 2, 84, 954, 27, 89], [1, 3, 954, 19, 8]))\n    .to.deep.equal([954, 954]);\n});\n\nit('Test Case #7', function () {\n  chai.expect(program.smallestDifference([0, 20], [21, -2])).to.deep.equal([20, 21]);\n});\n\nit('Test Case #8', function () {\n  chai\n    .expect(program.smallestDifference([10, 1000], [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530]))\n    .to.deep.equal([1000, 1014]);\n});\n\nit('Test Case #9', function () {\n  chai\n    .expect(\n      program.smallestDifference(\n        [10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123],\n        [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530],\n      ),\n    )\n    .to.deep.equal([-123, -124]);\n});\n\nit('Test Case #10', function () {\n  chai\n    .expect(\n      program.smallestDifference(\n        [10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123, 530],\n        [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530],\n      ),\n    )\n    .to.deep.equal([530, 530]);\n});\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  chai.expect(program.smallestDifference([-1, 5, 10, 20, 28, 3], [26, 134, 135, 15, 17])).to.deep.equal([28, 26]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nlog(n) + mlog(m)) time | O(1) space\nfunction smallestDifference(arrayOne, arrayTwo) {\n  arrayOne.sort((a, b) => a - b);\n  arrayTwo.sort((a, b) => a - b);\n  let idxOne = 0;\n  let idxTwo = 0;\n  let smallest = Infinity;\n  let current = Infinity;\n  let smallestPair = [];\n  while (idxOne < arrayOne.length && idxTwo < arrayTwo.length) {\n    let firstNum = arrayOne[idxOne];\n    let secondNum = arrayTwo[idxTwo];\n    if (firstNum < secondNum) {\n      current = secondNum - firstNum;\n      idxOne++;\n    } else if (secondNum < firstNum) {\n      current = firstNum - secondNum;\n      idxTwo++;\n    } else {\n      return [firstNum, secondNum];\n    }\n    if (smallest > current) {\n      smallest = current;\n      smallestPair = [firstNum, secondNum];\n    }\n  }\n  return smallestPair;\n}\n\nexports.smallestDifference = smallestDifference;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def smallestDifference(arrayOne, arrayTwo):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.smallestDifference([-1, 5, 10, 20, 3], [26, 134, 135, 15, 17]), [20, 17])\n\n    def test_case_2(self):\n        self.assertEqual(program.smallestDifference([-1, 5, 10, 20, 28, 3], [26, 134, 135, 15, 17]), [28, 26])\n\n    def test_case_3(self):\n        self.assertEqual(program.smallestDifference([10, 0, 20, 25], [1005, 1006, 1014, 1032, 1031]), [25, 1005])\n\n    def test_case_4(self):\n        self.assertEqual(program.smallestDifference([10, 0, 20, 25, 2200], [1005, 1006, 1014, 1032, 1031]), [25, 1005])\n\n    def test_case_5(self):\n        self.assertEqual(\n            program.smallestDifference([10, 0, 20, 25, 2000], [1005, 1006, 1014, 1032, 1031]), [2000, 1032]\n        )\n\n    def test_case_6(self):\n        self.assertEqual(\n            program.smallestDifference([240, 124, 86, 111, 2, 84, 954, 27, 89], [1, 3, 954, 19, 8]), [954, 954]\n        )\n\n    def test_case_7(self):\n        self.assertEqual(program.smallestDifference([0, 20], [21, -2]), [20, 21])\n\n    def test_case_8(self):\n        self.assertEqual(\n            program.smallestDifference([10, 1000], [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530]), [1000, 1014]\n        )\n\n    def test_case_9(self):\n        self.assertEqual(\n            program.smallestDifference(\n                [10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123], [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530]\n            ),\n            [-123, -124],\n        )\n\n    def test_case_10(self):\n        self.assertEqual(\n            program.smallestDifference(\n                [10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123, 530],\n                [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530],\n            ),\n            [530, 530],\n        )\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        self.assertEqual(program.smallestDifference([-1, 5, 10, 20, 28, 3], [26, 134, 135, 15, 17]), [28, 26])\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(nlog(n) + mlog(m)) time | O(1) space\ndef smallestDifference(arrayOne, arrayTwo):\n    arrayOne.sort()\n    arrayTwo.sort()\n    idxOne = 0\n    idxTwo = 0\n    smallest = float(\"inf\")\n    current = float(\"inf\")\n    smallestPair = []\n    while idxOne < len(arrayOne) and idxTwo < len(arrayTwo):\n        firstNum = arrayOne[idxOne]\n        secondNum = arrayTwo[idxTwo]\n        if firstNum < secondNum:\n            current = secondNum - firstNum\n            idxOne += 1\n        elif secondNum < firstNum:\n            current = firstNum - secondNum\n            idxTwo += 1\n        else:\n            return [firstNum, secondNum]\n        if smallest > current:\n            smallest = current\n            smallestPair = [firstNum, secondNum]\n    return smallestPair\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  func smallestDifference(arrayOne: inout [Int], arrayTwo: inout [Int]) -> [Int] {\n    // Write your code here.\n    return []\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var firstArray = [-1, 5, 10, 20, 3]\n      var secondArray = [26, 134, 135, 15, 17]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([20, 17], difference)\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      var firstArray = [-1, 5, 10, 20, 28, 3]\n      var secondArray = [26, 134, 135, 15, 17]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([28, 26], difference)\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      var firstArray = [10, 0, 20, 25]\n      var secondArray = [1005, 1006, 1014, 1032, 1031]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([25, 1005], difference)\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      var firstArray = [10, 0, 20, 25, 2200]\n      var secondArray = [1005, 1006, 1014, 1032, 1031]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([25, 1005], difference)\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      var firstArray = [10, 0, 20, 25, 2000]\n      var secondArray = [1005, 1006, 1014, 1032, 1031]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([2000, 1032], difference)\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      var firstArray = [240, 124, 86, 111, 2, 84, 954, 27, 89]\n      var secondArray = [1, 3, 954, 19, 8]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([954, 954], difference)\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      var firstArray = [0, 20]\n      var secondArray = [21, -2]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([20, 21], difference)\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      var firstArray = [10, 1000]\n      var secondArray = [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([1000, 1014], difference)\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      var firstArray = [10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123]\n      var secondArray = [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([-123, -124], difference)\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      var firstArray = [10, 1000, 9124, 2142, 59, 24, 596, 591, 124, -123, 530]\n      var secondArray = [-1441, -124, -25, 1014, 1500, 660, 410, 245, 530]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([530, 530], difference)\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      var firstArray = [-1, 5, 10, 20, 28, 3]\n      var secondArray = [26, 134, 135, 15, 17]\n      let difference = program.smallestDifference(arrayOne: &firstArray, arrayTwo: &secondArray)\n      try assertEqual([28, 26], difference)\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  func smallestDifference(arrayOne: inout [Int], arrayTwo: inout [Int]) -> [Int] {\n    arrayOne.sort()\n    arrayTwo.sort()\n\n    var idxOne = 0\n    var idxTwo = 0\n\n    var current = Int.max\n    var smallest = Int.max\n\n    var smallestPair: [Int] = []\n\n    while idxOne < arrayOne.count, idxTwo < arrayTwo.count {\n      let firstNum = arrayOne[idxOne]\n      let secondNum = arrayTwo[idxTwo]\n\n      if firstNum < secondNum {\n        current = secondNum - firstNum\n        idxOne = idxOne + 1\n      } else if firstNum > secondNum {\n        current = firstNum - secondNum\n        idxTwo = idxTwo + 1\n      } else {\n        return [firstNum, secondNum]\n      }\n\n      if smallest > current {\n        smallest = current\n        smallestPair = [firstNum, secondNum]\n      }\n    }\n\n    return smallestPair\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "export function smallestDifference(arrayOne: number[], arrayTwo: number[]) {\n  // Write your code here.\n  return [-1, -1];\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  chai.expect(program.smallestDifference([-1, 5, 10, 20, 28, 3], [26, 134, 135, 15, 17])).to.deep.equal([28, 26]);\n});\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(nlog(n) + mlog(m)) time | O(1) space\nexport function smallestDifference(arrayOne: number[], arrayTwo: number[]) {\n  arrayOne.sort((a, b) => a - b);\n  arrayTwo.sort((a, b) => a - b);\n  let idxOne = 0;\n  let idxTwo = 0;\n  let smallest = Infinity;\n  let current = Infinity;\n  let smallestPair: number[] = [];\n  while (idxOne < arrayOne.length && idxTwo < arrayTwo.length) {\n    let firstNum = arrayOne[idxOne];\n    let secondNum = arrayTwo[idxTwo];\n    if (firstNum < secondNum) {\n      current = secondNum - firstNum;\n      idxOne++;\n    } else if (secondNum < firstNum) {\n      current = firstNum - secondNum;\n      idxTwo++;\n    } else {\n      return [firstNum, secondNum];\n    }\n    if (smallest > current) {\n      smallest = current;\n      smallestPair = [firstNum, secondNum];\n    }\n  }\n  return smallestPair;\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "arrayOne": [
+        -1,
+        5,
+        10,
+        20,
+        28,
+        3
+      ],
+      "arrayTwo": [
+        26,
+        134,
+        135,
+        15,
+        17
+      ]
+    },
+    {
+      "arrayOne": [
+        -1,
+        5,
+        10,
+        20,
+        3
+      ],
+      "arrayTwo": [
+        26,
+        134,
+        135,
+        15,
+        17
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        0,
+        20,
+        25
+      ],
+      "arrayTwo": [
+        1005,
+        1006,
+        1014,
+        1032,
+        1031
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        0,
+        20,
+        25,
+        2200
+      ],
+      "arrayTwo": [
+        1005,
+        1006,
+        1014,
+        1032,
+        1031
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        0,
+        20,
+        25,
+        2000
+      ],
+      "arrayTwo": [
+        1005,
+        1006,
+        1014,
+        1032,
+        1031
+      ]
+    },
+    {
+      "arrayOne": [
+        240,
+        124,
+        86,
+        111,
+        2,
+        84,
+        954,
+        27,
+        89
+      ],
+      "arrayTwo": [
+        1,
+        3,
+        954,
+        19,
+        8
+      ]
+    },
+    {
+      "arrayOne": [
+        0,
+        20
+      ],
+      "arrayTwo": [
+        21,
+        -2
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        1000
+      ],
+      "arrayTwo": [
+        -1441,
+        -124,
+        -25,
+        1014,
+        1500,
+        660,
+        410,
+        245,
+        530
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        1000,
+        9124,
+        2142,
+        59,
+        24,
+        596,
+        591,
+        124,
+        -123
+      ],
+      "arrayTwo": [
+        -1441,
+        -124,
+        -25,
+        1014,
+        1500,
+        660,
+        410,
+        245,
+        530
+      ]
+    },
+    {
+      "arrayOne": [
+        10,
+        1000,
+        9124,
+        2142,
+        59,
+        24,
+        596,
+        591,
+        124,
+        -123,
+        530
+      ],
+      "arrayTwo": [
+        -1441,
+        -124,
+        -25,
+        1014,
+        1500,
+        660,
+        410,
+        245,
+        530
+      ]
+    }
+  ],
+  "JSONAnswers": [
+    [
+      [
+        28,
+        26
+      ],
+      [
+        20,
+        17
+      ],
+      [
+        25,
+        1005
+      ],
+      [
+        25,
+        1005
+      ],
+      [
+        2000,
+        1032
+      ],
+      [
+        954,
+        954
+      ],
+      [
+        20,
+        21
+      ],
+      [
+        1000,
+        1014
+      ],
+      [
+        -123,
+        -124
+      ],
+      [
+        530,
+        530
+      ]
+    ]
+  ]
+}

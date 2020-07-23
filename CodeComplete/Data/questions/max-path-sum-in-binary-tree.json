@@ -1,0 +1,1808 @@
+{
+  "Summary": {
+    "Name": "Max Path Sum In Binary Tree",
+    "Category": "Binary Trees",
+    "Difficulty": 3,
+    "Available": true,
+    "Metadata": {
+      "date": "2018-10-20T00:00:00Z",
+      "number": 359,
+      "timeOne": 0,
+      "timeTwo": 2142,
+      "url": "https://player.vimeo.com/video/291379597"
+    }
+  },
+  "Prompt": "",
+  "Hints": "If you were to imagine each node in a Binary Tree as the root of the Binary Tree, temporarily eliminating all of the nodes that come above it, how would you find the max path sum for each of these newly imagined Binary Trees? In simpler terms, how can you find the max path sum for each subtree in the Binary Tree?\nFor every node in a Binary Tree, there are four options for the max path sum that includes its value: the node's value alone, the node's value plus the max path sum of its left subtree, the node's value plus the max path sum of its right subtree, or the node's value plus the max path sum of both its subtrees.\nA recursive algorithm that computes each node's max path sum and uses it to compute its parents' nodes' max path sums seems appropriate, but realize that you cannot have a path going through a node and both its subtrees as well as that node's parent node. In other words, the fourth option mentioned in Hint #2 poses a challenge to implementing a recursive algorithm that solves this problem. How can you get around it?\n",
+  "SpaceTime": "O(n) time | O(log(n)) space - where n is the number of nodes in the Binary Tree\n",
+  "PromptHTML": "<p>\n  Write a function that takes in a Binary Tree and returns its max path sum.\n</p>\n<p>\n  A path is a collection of connected nodes in a tree where no node is connected\n  to more than two other nodes; a path sum is the sum of the values of the nodes\n  in a particular path.\n</p>\n<p>\n  Each <span>BinaryTree</span> node has an integer <span>value</span>, a\n  <span>left</span> child node, and a <span>right</span> child node. Children\n  nodes can either be <span>BinaryTree</span> nodes themselves or\n  <span>None</span> / <span>null</span>.\n</p>\n<h3>Sample Input</h3>\n<pre>\n<span class=\"CodeEditor-promptParameter\">tree</span> = 1\n    /     \\\n   2       3\n /   \\   /   \\\n4     5 6     7\n</pre>\n<h3>Sample Output</h3>\n<pre>\n18 <span class=\"CodeEditor-promptComment\">// 5 + 2 + 1 + 3 + 7</span>\n</pre>\n",
+  "Notes": "<p>\n  In the video explanation, we forget to handle the edge case where all nodes in\n  the input Binary Tree have negative values.\n</p>\n<p>\n  In this case, the <span>maxPathSum</span> is guaranteed to be negative, since\n  there are no positive-valued nodes.\n</p>\n<p>\n  This means that we can't set the base-case\n  <span>leftMaxPathSum</span> and <span>rightMaxPathSum</span> values, when the\n  left and/or right child nodes are <span>null</span>, to 0. Setting them to 0\n  means that the final <span>maxPathSum</span> will always be 0, since the final\n  computation in our recursive method will compare 0 to a negative value.\n</p>\n<pre>\nmaxPathSum = max(leftMaxPathSum, rightMaxPathSum, maxSumAsRootNode)\n</pre>\n<p>\n  This operation will always yield 0 when <span>maxSumAsRootNode</span> is\n  negative and <span>leftMaxPathSum</span> and/or\n  <span>rightMaxPathSum</span> are 0.\n</p>\n<p>\n  Therefore, we set the base-case <span>leftMaxPathSum</span> and\n  <span>rightMaxPathSum</span> values, when the left and/or right child nodes\n  are <span>null</span>, to <span>-Infinity</span> (or whatever the min number\n  in your programming language is).\n</p>\n<pre>\nif tree is None:\n    return (0, float(\"-inf\"))\n</pre>\n",
+  "IsLongOutput": false,
+  "Visualization": {
+    "inputType": "tree",
+    "outputType": null
+  },
+  "CustomInputLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "CustomInputVars": [
+    {
+      "Name": "tree",
+      "Example": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          }
+        ],
+        "root": "1"
+      },
+      "Schema": {
+        "description": "A Binary Tree is represented by a list of <span>nodes</span> and a <span>root</span> node. Every node has to\nhave a unique string <span>id</span> that will be referenced by other nodes' <span>left</span> and <span>right</span>\npointers and by the <span>root</span>.\n",
+        "properties": {
+          "nodes": {
+            "items": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "left": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "right": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "id",
+                "value",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "root": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "root",
+          "nodes"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "Resources": {
+    "cpp": {
+      "Language": "cpp",
+      "StartingCode": "#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value);\n  void insert(vector<int> values, int i = 0);\n};\n\nint maxPathSum(BinaryTree tree) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "#include <deque>\n\nBinaryTree::BinaryTree(int value) {\n  this->value = value;\n  this->left = NULL;\n  this->right = NULL;\n}\n\nvoid BinaryTree::insert(vector<int> values, int i) {\n  if (i >= values.size()) {\n    return;\n  }\n  deque<BinaryTree *> queue;\n  queue.push_back(this);\n  while (queue.size() > 0) {\n    BinaryTree *current = queue.front();\n    queue.pop_front();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->right);\n  }\n  this->insert(values, i + 1);\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree test(1);\n      test.insert({2, 3});\n      assert(maxPathSum(test) == 6);\n    });\n\n    RunTest(\"Test Case 2\", []() {\n      BinaryTree test(1);\n      test.insert({2, -1});\n      assert(maxPathSum(test) == 3);\n    });\n\n    RunTest(\"Test Case 3\", []() {\n      BinaryTree test(1);\n      test.insert({-5, 3, 6});\n      assert(maxPathSum(test) == 6);\n    });\n\n    RunTest(\"Test Case 4\", []() {\n      BinaryTree test(1);\n      test.insert({2, 3, 4, 5, 6, 7});\n      assert(maxPathSum(test) == 18);\n    });\n\n    RunTest(\"Test Case 5\", []() {\n      BinaryTree test(1);\n      test.insert({-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1});\n      assert(maxPathSum(test) == 154);\n    });\n\n    RunTest(\"Test Case 6\", []() {\n      BinaryTree test(1);\n      test.insert(\n          {-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100});\n      assert(maxPathSum(test) == 201);\n    });\n\n    RunTest(\"Test Case 7\", []() {\n      BinaryTree test(1);\n      test.insert(\n          {-10, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100});\n      assert(maxPathSum(test) == 203);\n    });\n\n    RunTest(\"Test Case 8\", []() {\n      BinaryTree test(1);\n      test.insert({-150, -5, 30,  75, -20, -21, 5, 1,  3,   -3,\n                   100,  2,  100, 1,  100, 100, 5, 10, 150, -8});\n      assert(maxPathSum(test) == 228);\n    });\n\n    RunTest(\"Test Case 9\", []() {\n      BinaryTree test(1);\n      test.insert({-150, -5, 30,  75, -20, -21, 5, 1,  3,   -3,\n                   100,  2,  100, 1,  100, 100, 5, 10, 150, 151});\n      assert(maxPathSum(test) == 304);\n    });\n\n    RunTest(\"Test Case 10\", []() {\n      BinaryTree test(1);\n      test.insert({-5, -3, 0,  2,  2,  1,  -3,   3,  1,   1, 0, 5, 1, 1,  0,\n                   1,  1,  -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0});\n      assert(maxPathSum(test) == 9);\n    });\n\n    RunTest(\"Test Case 11\", []() {\n      BinaryTree test(1);\n      test.insert({-5, -3, 0,  2,  2,  1,  -3,   -4, 1,   1, 0, 5, 1, 1,  0,\n                   1,  10, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0});\n      assert(maxPathSum(test) == 10);\n    });\n\n    RunTest(\"Test Case 12\", []() {\n      BinaryTree test(1);\n      test.insert({-5, -3, 0, 2, 2,  1,  -3, -4, 1,  1,    0,  5,\n                   1,  1,  0, 1, 3,  -1, -1, -6, -1, -100, -9, -91,\n                   2,  1,  0, 1, -5, 0,  3,  1,  2,  2,    7,  -5});\n      assert(maxPathSum(test) == 10);\n    });\n\n    RunTest(\"Test Case 13\", []() {\n      BinaryTree test(1);\n      test.insert({-5, -3, 0,  2,  2,  1,  -3,   3,  1,   1, 0, 5, 1, 1, 0,\n                   1,  1,  -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, 5, 0});\n      assert(maxPathSum(test) == 13);\n    });\n  }\n};\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\n#include <deque>\n\nBinaryTree::BinaryTree(int value) {\n  this->value = value;\n  this->left = NULL;\n  this->right = NULL;\n}\n\nvoid BinaryTree::insert(vector<int> values, int i) {\n  if (i >= values.size()) {\n    return;\n  }\n  deque<BinaryTree *> queue;\n  queue.push_back(this);\n  while (queue.size() > 0) {\n    BinaryTree *current = queue.front();\n    queue.pop_front();\n    if (current->left == NULL) {\n      current->left = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->left);\n    if (current->right == NULL) {\n      current->right = new BinaryTree(values[i]);\n      break;\n    }\n    queue.push_back(current->right);\n  }\n  this->insert(values, i + 1);\n}\n\nclass ProgramTest : public TestSuite {\npublic:\n  void Run() {\n    RunTest(\"Test Case 1\", []() {\n      BinaryTree test(1);\n      test.insert({2, 3, 4, 5, 6, 7});\n      assert(maxPathSum(test) == 18);\n    });\n  }\n};\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n#include <vector>\nusing namespace std;\n\nclass BinaryTree {\npublic:\n  int value;\n  BinaryTree *left;\n  BinaryTree *right;\n\n  BinaryTree(int value);\n  void insert(vector<int> values, int i = 0);\n};\n\nvector<int> findMaxSum(BinaryTree *tree);\n\n// O(n) time | O(log(n)) space\nint maxPathSum(BinaryTree tree) {\n  vector<int> maxSumArray = findMaxSum(&tree);\n  return maxSumArray[1];\n}\n\nvector<int> findMaxSum(BinaryTree *tree) {\n  if (tree == NULL) {\n    return vector<int>{0, INT_MIN};\n  }\n\n  vector<int> leftMaxSumArray = findMaxSum(tree->left);\n  int leftMaxSumAsBranch = leftMaxSumArray[0];\n  int leftMaxPathSum = leftMaxSumArray[1];\n\n  vector<int> rightMaxSumArray = findMaxSum(tree->right);\n  int rightMaxSumAsBranch = rightMaxSumArray[0];\n  int rightMaxPathSum = rightMaxSumArray[1];\n\n  int maxChildSumAsBranch = max(leftMaxSumAsBranch, rightMaxSumAsBranch);\n  int maxSumAsBranch = max(maxChildSumAsBranch + tree->value, tree->value);\n  int maxSumAsRootNode = max(\n      leftMaxSumAsBranch + tree->value + rightMaxSumAsBranch, maxSumAsBranch);\n  int maxPathSum = max(leftMaxPathSum, max(rightMaxPathSum, maxSumAsRootNode));\n\n  return vector<int>{maxSumAsBranch, maxPathSum};\n}\n"
+      ]
+    },
+    "csharp": {
+      "Language": "csharp",
+      "StartingCode": "public class Program {\n\tpublic static int MaxPathSum(BinaryTree tree) {\n\t\t// Write your code here.\n\t\treturn -1;\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n",
+      "StartingTest": "using System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {2, 3}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase2() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {2, -1}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 3);\n\t}\n\n\t[Test]\n\tpublic void TestCase3() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-5, 3, 6}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 6);\n\t}\n\n\t[Test]\n\tpublic void TestCase4() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 18);\n\t}\n\n\t[Test]\n\tpublic void TestCase5() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 154);\n\t}\n\n\t[Test]\n\tpublic void TestCase6() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100},\n\t\t  0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 201);\n\t}\n\n\t[Test]\n\tpublic void TestCase7() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-10, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100},\n\t\t  0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 203);\n\t}\n\n\t[Test]\n\tpublic void TestCase8() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100,\n\t\t                       100, 5, 10, 150, -8}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 228);\n\t}\n\n\t[Test]\n\tpublic void TestCase9() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100,\n\t\t                       100, 5, 10, 150, 151}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 304);\n\t}\n\n\t[Test]\n\tpublic void TestCase10() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1,\n\t\t                       -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 9);\n\t}\n\n\t[Test]\n\tpublic void TestCase11() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 10, -1,\n\t\t                       -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 10);\n\t}\n\n\t[Test]\n\tpublic void TestCase12() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 3, -1,\n\t\t                       -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0, 3, 1, 2, 2, 7,\n\t\t                       -5}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 10);\n\t}\n\n\t[Test]\n\tpublic void TestCase13() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {-5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1,\n\t\t                       -6, -1, -100, -9, -91, 2, 1, 0, 1, 5, 0}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 13);\n\t}\n\n\tpublic class TestBinaryTree : Program.BinaryTree {\n\t\tpublic TestBinaryTree(int value) : base(value) {\n\t\t}\n\n\t\tpublic void insert(int[] values, int i) {\n\t\t\tif (i >= values.Length) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tList<Program.BinaryTree> queue = new List<Program.BinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\tvar index = 0;\n\t\t\twhile (index < queue.Count) {\n\t\t\t\tProgram.BinaryTree current = queue[index];\n\t\t\t\tindex += 1;\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new Program.BinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.left);\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new Program.BinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.right);\n\t\t\t}\n\t\t\tinsert(values, i + 1);\n\t\t}\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nusing System.Collections.Generic;\n\npublic class ProgramTest {\n\t[Test]\n\tpublic void TestCase1() {\n\t\tTestBinaryTree test = new TestBinaryTree(1);\n\t\ttest.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n\t\tUtils.AssertTrue(Program.MaxPathSum(test) == 18);\n\t}\n\n\tpublic class TestBinaryTree : Program.BinaryTree {\n\t\tpublic TestBinaryTree(int value) : base(value) {\n\t\t}\n\n\t\tpublic void insert(int[] values, int i) {\n\t\t\tif (i >= values.Length) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tList<Program.BinaryTree> queue = new List<Program.BinaryTree>();\n\t\t\tqueue.Add(this);\n\t\t\tvar index = 0;\n\t\t\twhile (index < queue.Count) {\n\t\t\t\tProgram.BinaryTree current = queue[index];\n\t\t\t\tindex += 1;\n\t\t\t\tif (current.left == null) {\n\t\t\t\t\tcurrent.left = new Program.BinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.left);\n\t\t\t\tif (current.right == null) {\n\t\t\t\t\tcurrent.right = new Program.BinaryTree(values[i]);\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t\tqueue.Add(current.right);\n\t\t\t}\n\t\t\tinsert(values, i + 1);\n\t\t}\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nusing System;\nusing System.Collections.Generic;\n\npublic class Program {\n\t// O(n) time | O(log(n)) space\n\tpublic static int MaxPathSum(BinaryTree tree) {\n\t\tList<int> maxSumArray = findMaxSum(tree);\n\t\treturn maxSumArray[1];\n\t}\n\n\tpublic static List<int> findMaxSum(BinaryTree tree) {\n\t\tif (tree == null) {\n\t\t\treturn new List<int>(){\n\t\t\t\t       0, Int32.MinValue\n\t\t\t};\n\t\t}\n\t\tList<int> leftMaxSumArray = findMaxSum(tree.left);\n\t\tint leftMaxSumAsBranch = leftMaxSumArray[0];\n\t\tint leftMaxPathSum = leftMaxSumArray[1];\n\n\t\tList<int> rightMaxSumArray = findMaxSum(tree.right);\n\t\tint rightMaxSumAsBranch = rightMaxSumArray[0];\n\t\tint rightMaxPathSum = rightMaxSumArray[1];\n\n\t\tint maxChildSumAsBranch = Math.Max(leftMaxSumAsBranch, rightMaxSumAsBranch);\n\t\tint maxSumAsBranch = Math.Max(maxChildSumAsBranch + tree.value, tree.value);\n\t\tint maxSumAsRootNode = Math.Max(\n\t\t\tleftMaxSumAsBranch + tree.value + rightMaxSumAsBranch,\n\t\t\tmaxSumAsBranch\n\t\t\t);\n\t\tint maxPathSum = Math.Max(leftMaxPathSum, Math.Max(rightMaxPathSum,\n\t\t    maxSumAsRootNode));\n\n\t\treturn new List<int>(){\n\t\t\t       maxSumAsBranch, maxPathSum\n\t\t};\n\t}\n\n\tpublic class BinaryTree {\n\t\tpublic int value;\n\t\tpublic BinaryTree left;\n\t\tpublic BinaryTree right;\n\n\t\tpublic BinaryTree(int value) {\n\t\t\tthis.value = value;\n\t\t}\n\t}\n}\n"
+      ]
+    },
+    "go": {
+      "Language": "go",
+      "StartingCode": "package main\n\ntype BinaryTree struct {\n\tValue       int\n\tLeft, Right *BinaryTree\n}\n\nfunc MaxPathSum(tree *BinaryTree) int {\n\t// Write your code here.\n\treturn -1\n}\n",
+      "StartingTest": "package main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{2, 3})\n\trequire.Equal(t, MaxPathSum(test), 6)\n}\n\nfunc (s *TestSuite) TestCase2(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{2, -1})\n\trequire.Equal(t, MaxPathSum(test), 3)\n}\n\nfunc (s *TestSuite) TestCase3(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-5, 3, 6})\n\trequire.Equal(t, MaxPathSum(test), 6)\n}\n\nfunc (s *TestSuite) TestCase4(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{2, 3, 4, 5, 6, 7})\n\trequire.Equal(t, MaxPathSum(test), 18)\n}\n\nfunc (s *TestSuite) TestCase5(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1})\n\trequire.Equal(t, MaxPathSum(test), 154)\n}\n\nfunc (s *TestSuite) TestCase6(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100})\n\trequire.Equal(t, MaxPathSum(test), 201)\n}\n\nfunc (s *TestSuite) TestCase7(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-10, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100})\n\trequire.Equal(t, MaxPathSum(test), 203)\n}\n\nfunc (s *TestSuite) TestCase8(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100, 100, 5, 10, 150, -8})\n\trequire.Equal(t, MaxPathSum(test), 228)\n}\n\nfunc (s *TestSuite) TestCase9(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100, 100, 5, 10, 150, 151})\n\trequire.Equal(t, MaxPathSum(test), 304)\n}\n\nfunc (s *TestSuite) TestCase10(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0})\n\trequire.Equal(t, MaxPathSum(test), 9)\n}\n\nfunc (s *TestSuite) TestCase11(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 10, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0})\n\trequire.Equal(t, MaxPathSum(test), 10)\n}\n\nfunc (s *TestSuite) TestCase12(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 3, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0, 3, 1, 2, 2, 7, -5})\n\trequire.Equal(t, MaxPathSum(test), 10)\n}\n\nfunc (s *TestSuite) TestCase13(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{-5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, 5, 0})\n\trequire.Equal(t, MaxPathSum(test), 13)\n}\n\nfunc NewBinaryTree(value int) *BinaryTree {\n\treturn &BinaryTree{Value: value}\n}\n\nfunc (tree *BinaryTree) insertAll(values []int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) insert(value int) {\n\tqueue := []*BinaryTree{tree}\n\tvar current *BinaryTree\n\tfor len(queue) > 0 {\n\t\tcurrent, queue = queue[0], queue[1:]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Left)\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Right)\n\t}\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\npackage main\n\nimport (\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc (s *TestSuite) TestCase1(t *TestCase) {\n\ttest := NewBinaryTree(1).insertAll([]int{2, 3, 4, 5, 6, 7})\n\trequire.Equal(t, MaxPathSum(test), 18)\n}\n\nfunc NewBinaryTree(value int) *BinaryTree {\n\treturn &BinaryTree{Value: value}\n}\n\nfunc (tree *BinaryTree) insertAll(values []int) *BinaryTree {\n\tfor _, value := range values {\n\t\ttree.insert(value)\n\t}\n\treturn tree\n}\n\nfunc (tree *BinaryTree) insert(value int) {\n\tqueue := []*BinaryTree{tree}\n\tvar current *BinaryTree\n\tfor len(queue) > 0 {\n\t\tcurrent, queue = queue[0], queue[1:]\n\t\tif current.Left == nil {\n\t\t\tcurrent.Left = NewBinaryTree(value)\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Left)\n\t\tif current.Right == nil {\n\t\t\tcurrent.Right = NewBinaryTree(value)\n\t\t\tbreak\n\t\t}\n\t\tqueue = append(queue, current.Right)\n\t}\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\npackage main\n\nimport \"math\"\n\ntype BinaryTree struct {\n\tValue       int\n\tLeft, Right *BinaryTree\n}\n\n// O(n) time | O(log(n)) space\nfunc MaxPathSum(tree *BinaryTree) int {\n\t_, maxSum := findMaxSum(tree)\n\treturn maxSum\n}\n\nfunc findMaxSum(tree *BinaryTree) (int, int) {\n\tif tree == nil {\n\t\treturn 0, math.MinInt32\n\t}\n\tleftMaxSumAsBranch, leftMaxPathSum := findMaxSum(tree.Left)\n\trightMaxSumAsBranch, rightMaxPathSum := findMaxSum(tree.Right)\n\tmaxChildSumAsBranch := max(leftMaxSumAsBranch, rightMaxSumAsBranch)\n\n\tvalue := tree.Value\n\tmaxSumAsBranch := max(maxChildSumAsBranch+value, value)\n\tmaxSumAsRootNode := max(leftMaxSumAsBranch+value+rightMaxSumAsBranch, maxSumAsBranch)\n\tmaxPathSum := max(leftMaxPathSum, rightMaxPathSum, maxSumAsRootNode)\n\n\treturn maxSumAsBranch, maxPathSum\n}\n\nfunc max(first int, vals ...int) int {\n\tfor _, val := range vals {\n\t\tif val > first {\n\t\t\tfirst = val\n\t\t}\n\t}\n\treturn first\n}\n"
+      ]
+    },
+    "java": {
+      "Language": "java",
+      "StartingCode": "import java.util.*;\n\nclass Program {\n  public static int maxPathSum(BinaryTree tree) {\n    // Write your code here.\n    return -1;\n  }\n\n  static class BinaryTree {\n    public int value;\n    public BinaryTree left;\n    public BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n",
+      "StartingTest": "import java.util.ArrayDeque;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(new int[] {2, 3}, 0);\n    Utils.assertTrue(Program.maxPathSum(test) == 6);\n  }\n\n  @Test\n  public void TestCase2() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(new int[] {2, -1}, 0);\n    Utils.assertTrue(Program.maxPathSum(test) == 3);\n  }\n\n  @Test\n  public void TestCase3() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(new int[] {-5, 3, 6}, 0);\n    Utils.assertTrue(Program.maxPathSum(test) == 6);\n  }\n\n  @Test\n  public void TestCase4() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n    Utils.assertTrue(Program.maxPathSum(test) == 18);\n  }\n\n  @Test\n  public void TestCase5() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(new int[] {-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1}, 0);\n    Utils.assertTrue(Program.maxPathSum(test) == 154);\n  }\n\n  @Test\n  public void TestCase6() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(new int[] {-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100}, 0);\n    Utils.assertTrue(Program.maxPathSum(test) == 201);\n  }\n\n  @Test\n  public void TestCase7() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(new int[] {-10, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100}, 0);\n    Utils.assertTrue(Program.maxPathSum(test) == 203);\n  }\n\n  @Test\n  public void TestCase8() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(\n        new int[] {\n          -150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100, 100, 5, 10, 150, -8\n        },\n        0);\n    Utils.assertTrue(Program.maxPathSum(test) == 228);\n  }\n\n  @Test\n  public void TestCase9() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(\n        new int[] {\n          -150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100, 100, 5, 10, 150, 151\n        },\n        0);\n    Utils.assertTrue(Program.maxPathSum(test) == 304);\n  }\n\n  @Test\n  public void TestCase10() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(\n        new int[] {\n          -5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1, -6, -1, -100, -9, -91, 2, 1,\n          0, 1, -5, 0\n        },\n        0);\n    Utils.assertTrue(Program.maxPathSum(test) == 9);\n  }\n\n  @Test\n  public void TestCase11() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(\n        new int[] {\n          -5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 10, -1, -1, -6, -1, -100, -9, -91, 2,\n          1, 0, 1, -5, 0\n        },\n        0);\n    Utils.assertTrue(Program.maxPathSum(test) == 10);\n  }\n\n  @Test\n  public void TestCase12() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(\n        new int[] {\n          -5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 3, -1, -1, -6, -1, -100, -9, -91, 2,\n          1, 0, 1, -5, 0, 3, 1, 2, 2, 7, -5\n        },\n        0);\n    Utils.assertTrue(Program.maxPathSum(test) == 10);\n  }\n\n  @Test\n  public void TestCase13() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(\n        new int[] {\n          -5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1, -6, -1, -100, -9, -91, 2, 1,\n          0, 1, 5, 0\n        },\n        0);\n    Utils.assertTrue(Program.maxPathSum(test) == 13);\n  }\n\n  class TestBinaryTree extends Program.BinaryTree {\n    public TestBinaryTree(int value) {\n      super(value);\n    }\n\n    public void insert(int[] values, int i) {\n      if (i >= values.length) {\n        return;\n      }\n      ArrayDeque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n      queue.addLast(this);\n      while (queue.size() > 0) {\n        Program.BinaryTree current = queue.pollFirst();\n        if (current.left == null) {\n          current.left = new Program.BinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.left);\n        if (current.right == null) {\n          current.right = new Program.BinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.right);\n      }\n      insert(values, i + 1);\n    }\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport java.util.ArrayDeque;\n\nclass ProgramTest {\n  @Test\n  public void TestCase1() {\n    TestBinaryTree test = new TestBinaryTree(1);\n    test.insert(new int[] {2, 3, 4, 5, 6, 7}, 0);\n    Utils.assertTrue(Program.maxPathSum(test) == 18);\n  }\n\n  class TestBinaryTree extends Program.BinaryTree {\n    public TestBinaryTree(int value) {\n      super(value);\n    }\n\n    public void insert(int[] values, int i) {\n      if (i >= values.length) {\n        return;\n      }\n      ArrayDeque<Program.BinaryTree> queue = new ArrayDeque<Program.BinaryTree>();\n      queue.addLast(this);\n      while (queue.size() > 0) {\n        Program.BinaryTree current = queue.pollFirst();\n        if (current.left == null) {\n          current.left = new Program.BinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.left);\n        if (current.right == null) {\n          current.right = new Program.BinaryTree(values[i]);\n          break;\n        }\n        queue.addLast(current.right);\n      }\n      insert(values, i + 1);\n    }\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nimport java.util.*;\n\nclass Program {\n  // O(n) time | O(log(n)) space\n  public static int maxPathSum(BinaryTree tree) {\n    List<Integer> maxSumArray = findMaxSum(tree);\n    return maxSumArray.get(1);\n  }\n\n  public static List<Integer> findMaxSum(BinaryTree tree) {\n    if (tree == null) {\n      return new ArrayList<Integer>(Arrays.asList(0, Integer.MIN_VALUE));\n    }\n    List<Integer> leftMaxSumArray = findMaxSum(tree.left);\n    Integer leftMaxSumAsBranch = leftMaxSumArray.get(0);\n    Integer leftMaxPathSum = leftMaxSumArray.get(1);\n\n    List<Integer> rightMaxSumArray = findMaxSum(tree.right);\n    Integer rightMaxSumAsBranch = rightMaxSumArray.get(0);\n    Integer rightMaxPathSum = rightMaxSumArray.get(1);\n\n    Integer maxChildSumAsBranch = Math.max(leftMaxSumAsBranch, rightMaxSumAsBranch);\n    Integer maxSumAsBranch = Math.max(maxChildSumAsBranch + tree.value, tree.value);\n    Integer maxSumAsRootNode =\n        Math.max(leftMaxSumAsBranch + tree.value + rightMaxSumAsBranch, maxSumAsBranch);\n    int maxPathSum = Math.max(leftMaxPathSum, Math.max(rightMaxPathSum, maxSumAsRootNode));\n\n    return new ArrayList<Integer>(Arrays.asList(maxSumAsBranch, maxPathSum));\n  }\n\n  static class BinaryTree {\n    public int value;\n    public BinaryTree left;\n    public BinaryTree right;\n\n    public BinaryTree(int value) {\n      this.value = value;\n    }\n  }\n}\n"
+      ]
+    },
+    "javascript": {
+      "Language": "javascript",
+      "StartingCode": "function maxPathSum(tree) {\n  // Write your code here.\n}\n\n// Do not edit the line below.\nexports.maxPathSum = maxPathSum;\n",
+      "StartingTest": "const program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const test = new BinaryTree(1).insert([2, 3]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(6);\n});\n\nit('Test Case #2', function () {\n  const test = new BinaryTree(1).insert([2, -1]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(3);\n});\n\nit('Test Case #3', function () {\n  const test = new BinaryTree(1).insert([-5, 3, 6]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(6);\n});\n\nit('Test Case #4', function () {\n  const test = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(18);\n});\n\nit('Test Case #5', function () {\n  const test = new BinaryTree(1).insert([-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(154);\n});\n\nit('Test Case #6', function () {\n  const test = new BinaryTree(1).insert([-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(201);\n});\n\nit('Test Case #7', function () {\n  const test = new BinaryTree(1).insert([-10, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(203);\n});\n\nit('Test Case #8', function () {\n  const test = new BinaryTree(1).insert([\n    -150,\n    -5,\n    30,\n    75,\n    -20,\n    -21,\n    5,\n    1,\n    3,\n    -3,\n    100,\n    2,\n    100,\n    1,\n    100,\n    100,\n    5,\n    10,\n    150,\n    -8,\n  ]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(228);\n});\n\nit('Test Case #9', function () {\n  const test = new BinaryTree(1).insert([\n    -150,\n    -5,\n    30,\n    75,\n    -20,\n    -21,\n    5,\n    1,\n    3,\n    -3,\n    100,\n    2,\n    100,\n    1,\n    100,\n    100,\n    5,\n    10,\n    150,\n    151,\n  ]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(304);\n});\n\nit('Test Case #10', function () {\n  const test = new BinaryTree(1).insert([\n    -5,\n    -3,\n    0,\n    2,\n    2,\n    1,\n    -3,\n    3,\n    1,\n    1,\n    0,\n    5,\n    1,\n    1,\n    0,\n    1,\n    1,\n    -1,\n    -1,\n    -6,\n    -1,\n    -100,\n    -9,\n    -91,\n    2,\n    1,\n    0,\n    1,\n    -5,\n    0,\n  ]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(9);\n});\n\nit('Test Case #11', function () {\n  const test = new BinaryTree(1).insert([\n    -5,\n    -3,\n    0,\n    2,\n    2,\n    1,\n    -3,\n    -4,\n    1,\n    1,\n    0,\n    5,\n    1,\n    1,\n    0,\n    1,\n    10,\n    -1,\n    -1,\n    -6,\n    -1,\n    -100,\n    -9,\n    -91,\n    2,\n    1,\n    0,\n    1,\n    -5,\n    0,\n  ]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(10);\n});\n\nit('Test Case #12', function () {\n  const test = new BinaryTree(1).insert([\n    -5,\n    -3,\n    0,\n    2,\n    2,\n    1,\n    -3,\n    -4,\n    1,\n    1,\n    0,\n    5,\n    1,\n    1,\n    0,\n    1,\n    3,\n    -1,\n    -1,\n    -6,\n    -1,\n    -100,\n    -9,\n    -91,\n    2,\n    1,\n    0,\n    1,\n    -5,\n    0,\n    3,\n    1,\n    2,\n    2,\n    7,\n    -5,\n  ]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(10);\n});\n\nit('Test Case #13', function () {\n  const test = new BinaryTree(1).insert([\n    -5,\n    -3,\n    0,\n    2,\n    2,\n    1,\n    -3,\n    3,\n    1,\n    1,\n    0,\n    5,\n    1,\n    1,\n    0,\n    1,\n    1,\n    -1,\n    -1,\n    -6,\n    -1,\n    -100,\n    -9,\n    -91,\n    2,\n    1,\n    0,\n    1,\n    5,\n    0,\n  ]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(13);\n});\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nconst program = require('./program');\nconst chai = require('chai');\n\nit('Test Case #1', function () {\n  const test = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(18);\n});\n\nclass BinaryTree {\n  constructor(value) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(values, i = 0) {\n    if (i >= values.length) return;\n    const queue = [this];\n    while (queue.length > 0) {\n      let current = queue.shift();\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\n// O(n) time | O(log(n)) space\nfunction maxPathSum(tree) {\n  const [_, maxSum] = findMaxSum(tree);\n  return maxSum;\n}\n\nfunction findMaxSum(tree) {\n  if (tree === null) return [0, -Infinity];\n\n  const [leftMaxSumAsBranch, leftMaxPathSum] = findMaxSum(tree.left);\n  const [rightMaxSumAsBranch, rightMaxPathSum] = findMaxSum(tree.right);\n  const maxChildSumAsBranch = Math.max(leftMaxSumAsBranch, rightMaxSumAsBranch);\n\n  const {value} = tree;\n  const maxSumAsBranch = Math.max(maxChildSumAsBranch + value, value);\n  const maxSumAsRootNode = Math.max(leftMaxSumAsBranch + value + rightMaxSumAsBranch, maxSumAsBranch);\n  const maxPathSum = Math.max(leftMaxPathSum, rightMaxPathSum, maxSumAsRootNode);\n\n  return [maxSumAsBranch, maxPathSum];\n}\n\nexports.maxPathSum = maxPathSum;\n"
+      ]
+    },
+    "python": {
+      "Language": "python",
+      "StartingCode": "def maxPathSum(tree):\n    # Write your code here.\n    pass\n",
+      "StartingTest": "import program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test = BinaryTree(1).insert([2, 3])\n        self.assertEqual(program.maxPathSum(test), 6)\n\n    def test_case_2(self):\n        test = BinaryTree(1).insert([2, -1])\n        self.assertEqual(program.maxPathSum(test), 3)\n\n    def test_case_3(self):\n        test = BinaryTree(1).insert([-5, 3, 6])\n        self.assertEqual(program.maxPathSum(test), 6)\n\n    def test_case_4(self):\n        test = BinaryTree(1).insert([2, 3, 4, 5, 6, 7])\n        self.assertEqual(program.maxPathSum(test), 18)\n\n    def test_case_5(self):\n        test = BinaryTree(1).insert([-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1])\n        self.assertEqual(program.maxPathSum(test), 154)\n\n    def test_case_6(self):\n        test = BinaryTree(1).insert([-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100])\n        self.assertEqual(program.maxPathSum(test), 201)\n\n    def test_case_7(self):\n        test = BinaryTree(1).insert([-10, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100])\n        self.assertEqual(program.maxPathSum(test), 203)\n\n    def test_case_8(self):\n        test = BinaryTree(1).insert([-150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100, 100, 5, 10, 150, -8])\n        self.assertEqual(program.maxPathSum(test), 228)\n\n    def test_case_9(self):\n        test = BinaryTree(1).insert(\n            [-150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100, 100, 5, 10, 150, 151]\n        )\n        self.assertEqual(program.maxPathSum(test), 304)\n\n    def test_case_10(self):\n        test = BinaryTree(1).insert(\n            [-5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0]\n        )\n        self.assertEqual(program.maxPathSum(test), 9)\n\n    def test_case_11(self):\n        test = BinaryTree(1).insert(\n            [-5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 10, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0]\n        )\n        self.assertEqual(program.maxPathSum(test), 10)\n\n    def test_case_12(self):\n        test = BinaryTree(1).insert(\n            [\n                -5,\n                -3,\n                0,\n                2,\n                2,\n                1,\n                -3,\n                -4,\n                1,\n                1,\n                0,\n                5,\n                1,\n                1,\n                0,\n                1,\n                3,\n                -1,\n                -1,\n                -6,\n                -1,\n                -100,\n                -9,\n                -91,\n                2,\n                1,\n                0,\n                1,\n                -5,\n                0,\n                3,\n                1,\n                2,\n                2,\n                7,\n                -5,\n            ]\n        )\n        self.assertEqual(program.maxPathSum(test), 10)\n\n    def test_case_13(self):\n        test = BinaryTree(1).insert(\n            [-5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, 5, 0]\n        )\n        self.assertEqual(program.maxPathSum(test), 13)\n\n\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n",
+      "SandboxCode": "# This file is initialized with a code version of this\n# question's sample test case. Feel free to add, edit,\n# or remove test cases in this file as you see fit!\n\nimport program\nimport unittest\n\n\nclass TestProgram(unittest.TestCase):\n    def test_case_1(self):\n        test = BinaryTree(1).insert([2, 3, 4, 5, 6, 7])\n        self.assertEqual(program.maxPathSum(test), 18)\n\n\nclass BinaryTree:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\n    def insert(self, values, i=0):\n        if i >= len(values):\n            return\n        queue = [self]\n        while len(queue) > 0:\n            current = queue.pop(0)\n            if current.left is None:\n                current.left = BinaryTree(values[i])\n                break\n            queue.append(current.left)\n            if current.right is None:\n                current.right = BinaryTree(values[i])\n                break\n            queue.append(current.right)\n        self.insert(values, i + 1)\n        return self\n",
+      "Solutions": [
+        "# Copyright © 2020 Code Complete. All rights reserved.\n\n# O(n) time | O(log(n)) space\ndef maxPathSum(tree):\n    _, maxSum = findMaxSum(tree)\n    return maxSum\n\n\ndef findMaxSum(tree):\n    if tree is None:\n        return (0, float(\"-inf\"))\n\n    leftMaxSumAsBranch, leftMaxPathSum = findMaxSum(tree.left)\n    rightMaxSumAsBranch, rightMaxPathSum = findMaxSum(tree.right)\n    maxChildSumAsBranch = max(leftMaxSumAsBranch, rightMaxSumAsBranch)\n\n    value = tree.value\n    maxSumAsBranch = max(maxChildSumAsBranch + value, value)\n    maxSumAsRootNode = max(leftMaxSumAsBranch + value + rightMaxSumAsBranch, maxSumAsBranch)\n    maxPathSum = max(leftMaxPathSum, rightMaxPathSum, maxSumAsRootNode)\n\n    return (maxSumAsBranch, maxPathSum)\n"
+      ]
+    },
+    "swift": {
+      "Language": "swift",
+      "StartingCode": "class Program {\n  // This is an input class. Do not edit.\n  class BinaryTree {\n    var value: Int?\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  func maxPathSum(tree: BinaryTree?) -> Int {\n    // Write your code here.\n    return -1\n  }\n}\n",
+      "StartingTest": "class ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let firstTest = TestBinaryTree(value: 1).insert(values: [2, 3], index: 0)\n      try assertEqual(6, program.maxPathSum(tree: firstTest))\n    }\n    runTest(\"Test Case 2\") { () throws -> Void in\n      let secondTest = TestBinaryTree(value: 1).insert(values: [2, -1], index: 0)\n      try assertEqual(3, program.maxPathSum(tree: secondTest))\n    }\n    runTest(\"Test Case 3\") { () throws -> Void in\n      let thirdTest = TestBinaryTree(value: 1).insert(values: [-5, 3, 6], index: 0)\n      try assertEqual(6, program.maxPathSum(tree: thirdTest))\n    }\n    runTest(\"Test Case 4\") { () throws -> Void in\n      let fourthTest = TestBinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6, 7], index: 0)\n      try assertEqual(18, program.maxPathSum(tree: fourthTest))\n    }\n    runTest(\"Test Case 5\") { () throws -> Void in\n      let fifthTest = TestBinaryTree(value: 1).insert(values: [-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1], index: 0)\n      try assertEqual(154, program.maxPathSum(tree: fifthTest))\n    }\n    runTest(\"Test Case 6\") { () throws -> Void in\n      let sixthTest = TestBinaryTree(value: 1).insert(values: [-10, -5, 30, 45, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100], index: 0)\n      try assertEqual(201, program.maxPathSum(tree: sixthTest))\n    }\n    runTest(\"Test Case 7\") { () throws -> Void in\n      let seventhTest = TestBinaryTree(value: 1).insert(values: [-10, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100], index: 0)\n      try assertEqual(203, program.maxPathSum(tree: seventhTest))\n    }\n    runTest(\"Test Case 8\") { () throws -> Void in\n      let eightTest = TestBinaryTree(value: 1).insert(values: [-150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100, 100, 5, 10, 150, -8], index: 0)\n      try assertEqual(228, program.maxPathSum(tree: eightTest))\n    }\n    runTest(\"Test Case 9\") { () throws -> Void in\n      let ninthTest = TestBinaryTree(value: 1).insert(values: [-150, -5, 30, 75, -20, -21, 5, 1, 3, -3, 100, 2, 100, 1, 100, 100, 5, 10, 150, 151], index: 0)\n      try assertEqual(304, program.maxPathSum(tree: ninthTest))\n    }\n    runTest(\"Test Case 10\") { () throws -> Void in\n      let tenthTest = TestBinaryTree(value: 1).insert(values: [-5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0], index: 0)\n      try assertEqual(9, program.maxPathSum(tree: tenthTest))\n    }\n    runTest(\"Test Case 11\") { () throws -> Void in\n      let eleventhTest = TestBinaryTree(value: 1).insert(values: [-5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 10, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0], index: 0)\n      try assertEqual(10, program.maxPathSum(tree: eleventhTest))\n    }\n    runTest(\"Test Case 12\") { () throws -> Void in\n      let twelfthTest = TestBinaryTree(value: 1).insert(values: [-5, -3, 0, 2, 2, 1, -3, -4, 1, 1, 0, 5, 1, 1, 0, 1, 3, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, -5, 0, 3, 1, 2, 2, 7, -5], index: 0)\n      try assertEqual(10, program.maxPathSum(tree: twelfthTest))\n    }\n    runTest(\"Test Case 13\") { () throws -> Void in\n      let thirteenthTest = TestBinaryTree(value: 1).insert(values: [-5, -3, 0, 2, 2, 1, -3, 3, 1, 1, 0, 5, 1, 1, 0, 1, 1, -1, -1, -6, -1, -100, -9, -91, 2, 1, 0, 1, 5, 0], index: 0)\n      try assertEqual(13, program.maxPathSum(tree: thirteenthTest))\n    }\n  }\n}\n\nclass TestBinaryTree: Program.BinaryTree {\n  func insert(values: [Int], index: Int) -> Program.BinaryTree? {\n    if index >= values.count { return nil }\n\n    var queue: [Program.BinaryTree?] = [self]\n\n    while queue.count > 0 {\n      let current = queue.removeFirst()\n\n      if current?.left === nil {\n        current?.left = TestBinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.left)\n\n      if current?.right === nil {\n        current?.right = TestBinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.right)\n    }\n\n    insert(values: values, index: index + 1)\n    return self\n  }\n}\n",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nclass ProgramTest: TestSuite {\n  func test() {\n    let program = Program()\n    runTest(\"Test Case 1\") { () throws -> Void in\n      let fourthTest = TestBinaryTree(value: 1).insert(values: [2, 3, 4, 5, 6, 7], index: 0)\n      try assertEqual(18, program.maxPathSum(tree: fourthTest))\n    }\n  }\n}\n\nclass TestBinaryTree: Program.BinaryTree {\n  func insert(values: [Int], index: Int) -> Program.BinaryTree? {\n    if index >= values.count { return nil }\n\n    var queue: [Program.BinaryTree?] = [self]\n\n    while queue.count > 0 {\n      let current = queue.removeFirst()\n\n      if current?.left === nil {\n        current?.left = TestBinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.left)\n\n      if current?.right === nil {\n        current?.right = TestBinaryTree(value: values[index])\n        break\n      }\n\n      queue.append(current?.right)\n    }\n\n    insert(values: values, index: index + 1)\n    return self\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass Program {\n  class BinaryTree {\n    var value: Int?\n    var left: BinaryTree?\n    var right: BinaryTree?\n\n    init(value: Int) {\n      self.value = value\n      left = nil\n      right = nil\n    }\n  }\n\n  // O(n) time | O(log(n)) space\n  func maxPathSum(tree: BinaryTree?) -> Int {\n    let rootMaxSumTuple = findMaxSum(tree: tree)\n    return rootMaxSumTuple.1\n  }\n\n  func findMaxSum(tree: BinaryTree?) -> (Int, Int) {\n    if tree === nil {\n      return (0, Int.min)\n    }\n\n    let leftMaxSumTuple = findMaxSum(tree: tree?.left)\n    let rightMaxSumTuple = findMaxSum(tree: tree?.right)\n    let childStraightMaxSum = max(leftMaxSumTuple.0, rightMaxSumTuple.0)\n\n    let value = tree!.value!\n\n    let currentStraightMaxSum = max(value + childStraightMaxSum, value)\n    let currentTriangleMaxSum = max(leftMaxSumTuple.0 + value + rightMaxSumTuple.0, currentStraightMaxSum)\n    let currentMaxSum = max(max(leftMaxSumTuple.1, rightMaxSumTuple.1), currentTriangleMaxSum)\n\n    return (currentStraightMaxSum, currentMaxSum)\n  }\n}\n"
+      ]
+    },
+    "typescript": {
+      "Language": "typescript",
+      "StartingCode": "class BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nfunction maxPathSum(tree: BinaryTree) {\n  // Write your code here.\n  return -1;\n}\n",
+      "StartingTest": "",
+      "SandboxCode": "// This file is initialized with a code version of this\n// question's sample test case. Feel free to add, edit,\n// or remove test cases in this file as you see fit!\n\nimport * as program from './program';\nimport * as chai from 'chai';\n\nit('Test Case #1', function () {\n  const test = new BinaryTree(1).insert([2, 3, 4, 5, 6, 7]);\n  chai.expect(program.maxPathSum(test)).to.deep.equal(18);\n});\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n\n  insert(values: number[], i = 0): BinaryTree {\n    if (i >= values.length) return this;\n    const queue: BinaryTree[] = [this];\n    while (queue.length > 0) {\n      let current = queue.shift()!;\n      if (current.left === null) {\n        current.left = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.left);\n      if (current.right === null) {\n        current.right = new BinaryTree(values[i]);\n        break;\n      }\n      queue.push(current.right);\n    }\n    this.insert(values, i + 1);\n    return this;\n  }\n}\n",
+      "Solutions": [
+        "// Copyright © 2020 Code Complete. All rights reserved.\n\nclass BinaryTree {\n  value: number;\n  left: BinaryTree | null;\n  right: BinaryTree | null;\n\n  constructor(value: number) {\n    this.value = value;\n    this.left = null;\n    this.right = null;\n  }\n}\n\n// O(n) time | O(log(n)) space\nexport function maxPathSum(tree: BinaryTree) {\n  const [_, maxSum] = findMaxSum(tree);\n  return maxSum;\n}\n\nfunction findMaxSum(tree: BinaryTree | null) {\n  if (tree === null) return [0, -Infinity];\n\n  const [leftMaxSumAsBranch, leftMaxPathSum] = findMaxSum(tree.left);\n  const [rightMaxSumAsBranch, rightMaxPathSum] = findMaxSum(tree.right);\n  const maxChildSumAsBranch = Math.max(leftMaxSumAsBranch, rightMaxSumAsBranch);\n\n  const {value} = tree;\n  const maxSumAsBranch = Math.max(maxChildSumAsBranch + value, value);\n  const maxSumAsRootNode = Math.max(leftMaxSumAsBranch + value + rightMaxSumAsBranch, maxSumAsBranch);\n  const maxPathSum = Math.max(leftMaxPathSum, rightMaxPathSum, maxSumAsRootNode);\n\n  return [maxSumAsBranch, maxPathSum];\n}\n"
+      ]
+    }
+  },
+  "JSONTestLanguages": [
+    "javascript",
+    "cpp",
+    "python",
+    "java",
+    "csharp",
+    "go",
+    "swift",
+    "typescript"
+  ],
+  "JSONTests": [
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": "6",
+            "right": "7",
+            "value": 3
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          },
+          {
+            "id": "2",
+            "left": "4",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "4",
+            "left": null,
+            "right": null,
+            "value": 4
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "2",
+            "right": "-1",
+            "value": 1
+          },
+          {
+            "id": "-1",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-5",
+            "right": "3",
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "-5",
+            "left": "6",
+            "right": null,
+            "value": -5
+          },
+          {
+            "id": "6",
+            "left": null,
+            "right": null,
+            "value": 6
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-10",
+            "right": "-5",
+            "value": 1
+          },
+          {
+            "id": "-5",
+            "left": "-20",
+            "right": "-21",
+            "value": -5
+          },
+          {
+            "id": "-21",
+            "left": "100-2",
+            "right": "1-3",
+            "value": -21
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "100-2",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-20",
+            "left": "100",
+            "right": "2",
+            "value": -20
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "100",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-10",
+            "left": "30",
+            "right": "45",
+            "value": -10
+          },
+          {
+            "id": "45",
+            "left": "3",
+            "right": "-3",
+            "value": 45
+          },
+          {
+            "id": "-3",
+            "left": null,
+            "right": null,
+            "value": -3
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "30",
+            "left": "5",
+            "right": "1-2",
+            "value": 30
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "5",
+            "left": null,
+            "right": null,
+            "value": 5
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-10",
+            "right": "-5",
+            "value": 1
+          },
+          {
+            "id": "-5",
+            "left": "-20",
+            "right": "-21",
+            "value": -5
+          },
+          {
+            "id": "-21",
+            "left": "100-3",
+            "right": "1-3",
+            "value": -21
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "100-3",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-20",
+            "left": "100-2",
+            "right": "2",
+            "value": -20
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "100-2",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-10",
+            "left": "30",
+            "right": "45",
+            "value": -10
+          },
+          {
+            "id": "45",
+            "left": "3",
+            "right": "-3",
+            "value": 45
+          },
+          {
+            "id": "-3",
+            "left": null,
+            "right": null,
+            "value": -3
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "30",
+            "left": "5",
+            "right": "1-2",
+            "value": 30
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "5",
+            "left": "100",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "100",
+            "left": null,
+            "right": null,
+            "value": 100
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-10",
+            "right": "-5",
+            "value": 1
+          },
+          {
+            "id": "-5",
+            "left": "-20",
+            "right": "-21",
+            "value": -5
+          },
+          {
+            "id": "-21",
+            "left": "100-3",
+            "right": "1-3",
+            "value": -21
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "100-3",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-20",
+            "left": "100-2",
+            "right": "2",
+            "value": -20
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "100-2",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-10",
+            "left": "30",
+            "right": "75",
+            "value": -10
+          },
+          {
+            "id": "75",
+            "left": "3",
+            "right": "-3",
+            "value": 75
+          },
+          {
+            "id": "-3",
+            "left": null,
+            "right": null,
+            "value": -3
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          },
+          {
+            "id": "30",
+            "left": "5",
+            "right": "1-2",
+            "value": 30
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "5",
+            "left": "100",
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "100",
+            "left": null,
+            "right": null,
+            "value": 100
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-150",
+            "right": "-5",
+            "value": 1
+          },
+          {
+            "id": "-5",
+            "left": "-20",
+            "right": "-21",
+            "value": -5
+          },
+          {
+            "id": "-21",
+            "left": "100-4",
+            "right": "1-3",
+            "value": -21
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "100-4",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-20",
+            "left": "100-3",
+            "right": "2",
+            "value": -20
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "100-3",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-150",
+            "left": "30",
+            "right": "75",
+            "value": -150
+          },
+          {
+            "id": "75",
+            "left": "3",
+            "right": "-3",
+            "value": 75
+          },
+          {
+            "id": "-3",
+            "left": null,
+            "right": null,
+            "value": -3
+          },
+          {
+            "id": "3",
+            "left": "150",
+            "right": "-8",
+            "value": 3
+          },
+          {
+            "id": "-8",
+            "left": null,
+            "right": null,
+            "value": -8
+          },
+          {
+            "id": "150",
+            "left": null,
+            "right": null,
+            "value": 150
+          },
+          {
+            "id": "30",
+            "left": "5",
+            "right": "1-2",
+            "value": 30
+          },
+          {
+            "id": "1-2",
+            "left": "5-2",
+            "right": "10",
+            "value": 1
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "5",
+            "left": "100",
+            "right": "100-2",
+            "value": 5
+          },
+          {
+            "id": "100-2",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "100",
+            "left": null,
+            "right": null,
+            "value": 100
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-150",
+            "right": "-5",
+            "value": 1
+          },
+          {
+            "id": "-5",
+            "left": "-20",
+            "right": "-21",
+            "value": -5
+          },
+          {
+            "id": "-21",
+            "left": "100-4",
+            "right": "1-3",
+            "value": -21
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "100-4",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-20",
+            "left": "100-3",
+            "right": "2",
+            "value": -20
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "100-3",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "-150",
+            "left": "30",
+            "right": "75",
+            "value": -150
+          },
+          {
+            "id": "75",
+            "left": "3",
+            "right": "-3",
+            "value": 75
+          },
+          {
+            "id": "-3",
+            "left": null,
+            "right": null,
+            "value": -3
+          },
+          {
+            "id": "3",
+            "left": "150",
+            "right": "151",
+            "value": 3
+          },
+          {
+            "id": "151",
+            "left": null,
+            "right": null,
+            "value": 151
+          },
+          {
+            "id": "150",
+            "left": null,
+            "right": null,
+            "value": 150
+          },
+          {
+            "id": "30",
+            "left": "5",
+            "right": "1-2",
+            "value": 30
+          },
+          {
+            "id": "1-2",
+            "left": "5-2",
+            "right": "10",
+            "value": 1
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "5",
+            "left": "100",
+            "right": "100-2",
+            "value": 5
+          },
+          {
+            "id": "100-2",
+            "left": null,
+            "right": null,
+            "value": 100
+          },
+          {
+            "id": "100",
+            "left": null,
+            "right": null,
+            "value": 100
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-5",
+            "right": "-3-2",
+            "value": 1
+          },
+          {
+            "id": "-3-2",
+            "left": "2-2",
+            "right": "1-7",
+            "value": -3
+          },
+          {
+            "id": "1-7",
+            "left": "1-8",
+            "right": "1-10",
+            "value": 1
+          },
+          {
+            "id": "1-10",
+            "left": "-5-2",
+            "right": "0-5",
+            "value": 1
+          },
+          {
+            "id": "0-5",
+            "left": null,
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "-5-2",
+            "left": null,
+            "right": null,
+            "value": -5
+          },
+          {
+            "id": "1-8",
+            "left": "0-4",
+            "right": "1-9",
+            "value": 1
+          },
+          {
+            "id": "1-9",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "0-4",
+            "left": null,
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "2-2",
+            "left": "0-3",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "2-3",
+            "right": "1-6",
+            "value": 5
+          },
+          {
+            "id": "1-6",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2-3",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "0-3",
+            "left": "-9",
+            "right": "-91",
+            "value": 0
+          },
+          {
+            "id": "-91",
+            "left": null,
+            "right": null,
+            "value": -91
+          },
+          {
+            "id": "-9",
+            "left": null,
+            "right": null,
+            "value": -9
+          },
+          {
+            "id": "-5",
+            "left": "0",
+            "right": "2",
+            "value": -5
+          },
+          {
+            "id": "2",
+            "left": "1-4",
+            "right": "1-5",
+            "value": 2
+          },
+          {
+            "id": "1-5",
+            "left": "-1-3",
+            "right": "-100",
+            "value": 1
+          },
+          {
+            "id": "-100",
+            "left": null,
+            "right": null,
+            "value": -100
+          },
+          {
+            "id": "-1-3",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "1-4",
+            "left": "-1-2",
+            "right": "-6",
+            "value": 1
+          },
+          {
+            "id": "-6",
+            "left": null,
+            "right": null,
+            "value": -6
+          },
+          {
+            "id": "-1-2",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "0",
+            "left": "-3",
+            "right": "3",
+            "value": 0
+          },
+          {
+            "id": "3",
+            "left": "1-3",
+            "right": "-1",
+            "value": 3
+          },
+          {
+            "id": "-1",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-3",
+            "left": "0-2",
+            "right": "1-2",
+            "value": -3
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "0-2",
+            "left": null,
+            "right": null,
+            "value": 0
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-5",
+            "right": "-3-2",
+            "value": 1
+          },
+          {
+            "id": "-3-2",
+            "left": "2-2",
+            "right": "1-6",
+            "value": -3
+          },
+          {
+            "id": "1-6",
+            "left": "1-7",
+            "right": "1-9",
+            "value": 1
+          },
+          {
+            "id": "1-9",
+            "left": "-5-2",
+            "right": "0-5",
+            "value": 1
+          },
+          {
+            "id": "0-5",
+            "left": null,
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "-5-2",
+            "left": null,
+            "right": null,
+            "value": -5
+          },
+          {
+            "id": "1-7",
+            "left": "0-4",
+            "right": "1-8",
+            "value": 1
+          },
+          {
+            "id": "1-8",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "0-4",
+            "left": null,
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "2-2",
+            "left": "0-3",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "2-3",
+            "right": "1-5",
+            "value": 5
+          },
+          {
+            "id": "1-5",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2-3",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "0-3",
+            "left": "-9",
+            "right": "-91",
+            "value": 0
+          },
+          {
+            "id": "-91",
+            "left": null,
+            "right": null,
+            "value": -91
+          },
+          {
+            "id": "-9",
+            "left": null,
+            "right": null,
+            "value": -9
+          },
+          {
+            "id": "-5",
+            "left": "0",
+            "right": "2",
+            "value": -5
+          },
+          {
+            "id": "2",
+            "left": "1-3",
+            "right": "1-4",
+            "value": 2
+          },
+          {
+            "id": "1-4",
+            "left": "-1-3",
+            "right": "-100",
+            "value": 1
+          },
+          {
+            "id": "-100",
+            "left": null,
+            "right": null,
+            "value": -100
+          },
+          {
+            "id": "-1-3",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "1-3",
+            "left": "-1-2",
+            "right": "-6",
+            "value": 1
+          },
+          {
+            "id": "-6",
+            "left": null,
+            "right": null,
+            "value": -6
+          },
+          {
+            "id": "-1-2",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "0",
+            "left": "-3",
+            "right": "-4",
+            "value": 0
+          },
+          {
+            "id": "-4",
+            "left": "10",
+            "right": "-1",
+            "value": -4
+          },
+          {
+            "id": "-1",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "10",
+            "left": null,
+            "right": null,
+            "value": 10
+          },
+          {
+            "id": "-3",
+            "left": "0-2",
+            "right": "1-2",
+            "value": -3
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "0-2",
+            "left": null,
+            "right": null,
+            "value": 0
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-5",
+            "right": "-3-2",
+            "value": 1
+          },
+          {
+            "id": "-3-2",
+            "left": "2-4",
+            "right": "1-7",
+            "value": -3
+          },
+          {
+            "id": "1-7",
+            "left": "1-8",
+            "right": "1-10",
+            "value": 1
+          },
+          {
+            "id": "1-10",
+            "left": "-5-3",
+            "right": "0-5",
+            "value": 1
+          },
+          {
+            "id": "0-5",
+            "left": null,
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "-5-3",
+            "left": null,
+            "right": null,
+            "value": -5
+          },
+          {
+            "id": "1-8",
+            "left": "0-4",
+            "right": "1-9",
+            "value": 1
+          },
+          {
+            "id": "1-9",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "0-4",
+            "left": null,
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "2-4",
+            "left": "0-3",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "2-5",
+            "right": "1-6",
+            "value": 5
+          },
+          {
+            "id": "1-6",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2-5",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "0-3",
+            "left": "-9",
+            "right": "-91",
+            "value": 0
+          },
+          {
+            "id": "-91",
+            "left": null,
+            "right": null,
+            "value": -91
+          },
+          {
+            "id": "-9",
+            "left": null,
+            "right": null,
+            "value": -9
+          },
+          {
+            "id": "-5",
+            "left": "0",
+            "right": "2-3",
+            "value": -5
+          },
+          {
+            "id": "2-3",
+            "left": "1-4",
+            "right": "1-5",
+            "value": 2
+          },
+          {
+            "id": "1-5",
+            "left": "-1-3",
+            "right": "-100",
+            "value": 1
+          },
+          {
+            "id": "-100",
+            "left": null,
+            "right": null,
+            "value": -100
+          },
+          {
+            "id": "-1-3",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "1-4",
+            "left": "-1-2",
+            "right": "-6",
+            "value": 1
+          },
+          {
+            "id": "-6",
+            "left": null,
+            "right": null,
+            "value": -6
+          },
+          {
+            "id": "-1-2",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "0",
+            "left": "-3",
+            "right": "-4",
+            "value": 0
+          },
+          {
+            "id": "-4",
+            "left": "3-2",
+            "right": "-1",
+            "value": -4
+          },
+          {
+            "id": "-1",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "3-2",
+            "left": "7",
+            "right": "-5-2",
+            "value": 3
+          },
+          {
+            "id": "-5-2",
+            "left": null,
+            "right": null,
+            "value": -5
+          },
+          {
+            "id": "7",
+            "left": null,
+            "right": null,
+            "value": 7
+          },
+          {
+            "id": "-3",
+            "left": "0-2",
+            "right": "1-3",
+            "value": -3
+          },
+          {
+            "id": "1-3",
+            "left": "2",
+            "right": "2-2",
+            "value": 1
+          },
+          {
+            "id": "2-2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "0-2",
+            "left": "3",
+            "right": "1-2",
+            "value": 0
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "1",
+            "left": "-5",
+            "right": "-3-2",
+            "value": 1
+          },
+          {
+            "id": "-3-2",
+            "left": "2-2",
+            "right": "1-7",
+            "value": -3
+          },
+          {
+            "id": "1-7",
+            "left": "1-8",
+            "right": "1-10",
+            "value": 1
+          },
+          {
+            "id": "1-10",
+            "left": "5-2",
+            "right": "0-5",
+            "value": 1
+          },
+          {
+            "id": "0-5",
+            "left": null,
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "5-2",
+            "left": null,
+            "right": null,
+            "value": 5
+          },
+          {
+            "id": "1-8",
+            "left": "0-4",
+            "right": "1-9",
+            "value": 1
+          },
+          {
+            "id": "1-9",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "0-4",
+            "left": null,
+            "right": null,
+            "value": 0
+          },
+          {
+            "id": "2-2",
+            "left": "0-3",
+            "right": "5",
+            "value": 2
+          },
+          {
+            "id": "5",
+            "left": "2-3",
+            "right": "1-6",
+            "value": 5
+          },
+          {
+            "id": "1-6",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "2-3",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "0-3",
+            "left": "-9",
+            "right": "-91",
+            "value": 0
+          },
+          {
+            "id": "-91",
+            "left": null,
+            "right": null,
+            "value": -91
+          },
+          {
+            "id": "-9",
+            "left": null,
+            "right": null,
+            "value": -9
+          },
+          {
+            "id": "-5",
+            "left": "0",
+            "right": "2",
+            "value": -5
+          },
+          {
+            "id": "2",
+            "left": "1-4",
+            "right": "1-5",
+            "value": 2
+          },
+          {
+            "id": "1-5",
+            "left": "-1-3",
+            "right": "-100",
+            "value": 1
+          },
+          {
+            "id": "-100",
+            "left": null,
+            "right": null,
+            "value": -100
+          },
+          {
+            "id": "-1-3",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "1-4",
+            "left": "-1-2",
+            "right": "-6",
+            "value": 1
+          },
+          {
+            "id": "-6",
+            "left": null,
+            "right": null,
+            "value": -6
+          },
+          {
+            "id": "-1-2",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "0",
+            "left": "-3",
+            "right": "3",
+            "value": 0
+          },
+          {
+            "id": "3",
+            "left": "1-3",
+            "right": "-1",
+            "value": 3
+          },
+          {
+            "id": "-1",
+            "left": null,
+            "right": null,
+            "value": -1
+          },
+          {
+            "id": "1-3",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "-3",
+            "left": "0-2",
+            "right": "1-2",
+            "value": -3
+          },
+          {
+            "id": "1-2",
+            "left": null,
+            "right": null,
+            "value": 1
+          },
+          {
+            "id": "0-2",
+            "left": null,
+            "right": null,
+            "value": 0
+          }
+        ],
+        "root": "1"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "-2",
+            "left": null,
+            "right": null,
+            "value": -2
+          }
+        ],
+        "root": "-2"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "-2",
+            "left": "-1",
+            "right": null,
+            "value": -2
+          },
+          {
+            "id": "-1",
+            "left": null,
+            "right": null,
+            "value": -1
+          }
+        ],
+        "root": "-2"
+      }
+    },
+    {
+      "tree": {
+        "nodes": [
+          {
+            "id": "-2",
+            "left": "-1",
+            "right": null,
+            "value": -2
+          },
+          {
+            "id": "-1",
+            "left": "2",
+            "right": "3",
+            "value": -1
+          },
+          {
+            "id": "2",
+            "left": null,
+            "right": null,
+            "value": 2
+          },
+          {
+            "id": "3",
+            "left": null,
+            "right": null,
+            "value": 3
+          }
+        ],
+        "root": "-2"
+      }
+    }
+  ],
+  "JSONAnswers": [
+    [
+      18,
+      6,
+      3,
+      6,
+      154,
+      201,
+      203,
+      228,
+      304,
+      9,
+      10,
+      10,
+      13,
+      -2,
+      -1,
+      4
+    ]
+  ]
+}
