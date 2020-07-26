@@ -69,38 +69,108 @@ public class DarkTheme: Theme {
 	let successColour = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1)
 	
 	let css = """
+	* {
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-webkit-text-size-adjust: none;
+	}
+	html,body {
+		background-color: #001529;
+	}
 	.container {
 		font-size: 20px;
 		font-family: Helvetica,Arial,sans-serif;
 	}
-	p, li {
+	.container p, .container li {
 		color: #FFF;
 		margin: 0 0 10px;
 	}
-	span {
+	.container span {
 		border: 1px solid #000;
-		background-color: #15314b
-		border-radius: 4px;
+		background-color: #14324B;
+		border-radius: 8px;
 		padding: 0 5px 2px;
 		font-family: monospace;
 		display: inline-block;
 		line-height: 1.3;
 	}
-	h3 {
+	.container h3 {
 		color: #F8E71C;
 		font-size: 21px;
 		margin: 30px 0 5px;
 		font-weight: 400;
 	}
-	pre {
+	.container pre {
 		color: #fff;
 		background-color: rgb(2, 32, 60);
 		border-radius: 4px;
 		font-family: monospace;
 		overflow: auto;
 	}
-	.CodeEditor-promptParameter {
+	.container .CodeEditor-promptParameter {
 		color: #6d9cbe
+	}
+
+	.info {
+		font-size: 18px;
+		font-family: Helvetica,Arial,sans-serif;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+		padding-bottom: 16px;
+	}
+	.info .spacer {
+		flex-grow: 1;
+	}
+	.info .difficulty {
+		color: white;
+	}
+	.info .categpry {
+		color: darkgray;
+	}
+	.info .indicator {
+		width: 20px;
+		height: 20px;
+		border-radius: 6px;
+		display: inline-block;
+		margin-right: 8px;
+	}
+	.info .easy {
+		background-color: rgb(126, 211, 33);
+	}
+	.info .medium {
+		background-color: rgb(74, 144, 226);
+	}
+	.info .hard {
+		background-color: rgb(208, 2, 27);
+	}
+	.info .very-hard {
+		background-color: rgb(144, 19, 254);
+	}
+	.info .extremely-hard {
+		background-color: black;
+	}
+	.info .state {
+		width: 17px;
+		height: 17px;
+		border-radius: 50%;
+		border: 3px solid rgb(126, 211, 33);
+		margin-right: 8px;
+	}
+	.info .success {
+		width: 17px;
+		height: 17px;
+		border-radius: 50%;
+		border: 3px solid rgb(126, 211, 33);
+		background-color: rgb(126, 211, 33);
+	}
+	.info .fail {
+		width: 17px;
+		height: 17px;
+		border-radius: 50%;
+		border: 3px solid rgb(208, 2, 27);
+		background-color: rgb(208, 2, 27);
 	}
 	"""
 }

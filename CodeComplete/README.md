@@ -1,8 +1,16 @@
 #  Code Complete
 
 ## TODOs
- 	
-### Version X 	
+
+List of characters used in all solutions (90 characters):  !"$%&'()*+,-./012345689:;<=>?ABCDEFGHIJKLMNOPRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}
+
+### Version 1.1
+	* [ ] Add timer
+	* [x] Show console on compilation failure (not test tab)
+	* [x] Make prompt a webview for better styling
+
+### Version X
+      * [ ] If compilation error happens, and console is shown, should we show a toast to say "go back to code"? 
 	* [ ] Analytics
 	* [ ] Fix bst-construction and linked-list-construction tests
 	* [ ] Sort problems appropriately
@@ -14,7 +22,6 @@
 	* [ ] Support themes
 	* [ ] Implement "whiteboard" mode. Allow users to write their answers on a canvas
 		* [ ] Is it possible to convert the handwritten code to actual code to be run?
-	* [ ] Add timer
 	* [ ] Add toast suggesting the user take a hint after X seconds of idle
 	* [ ] Support increasing font size
 	* [ ] Have user editable tests

@@ -66,7 +66,7 @@ class QuestionViewController: UIViewController {
 	
 	private let lexer = JavaScriptLexer()
 	private let theme = CodeComplete.theme
-	private let engine = CodeEngine()
+//	private let engine = CodeEngine()
 	
 	private let javascript = JavaScriptSyntax()
 	private var hidden: [Bool] = []
@@ -160,6 +160,7 @@ class QuestionViewController: UIViewController {
 		
 		let promptView = PromptView(question: question, state: database.state(name: question.Summary.Name))
 		let console = ConsoleView(message: "Run your code when you're ready.")
+		let consolePanel = GenericPanel(cellName: "C", tabName: "Console", content: console)
 		let testView = TestsView(question: question, json: json, highlightr: highlightr)
 		testView.revealed = { self.hidden[$0].toggle() }
 		let testPanel = TestsPanel(view: testView)
@@ -170,17 +171,30 @@ class QuestionViewController: UIViewController {
 		)
 		codePanel.run = {
 			codePanel.set(enabled: false)
-			self.engine.run(code: $0, question: question) { results in
+			// TODO: Need to find out why when code engine is a property
+			// TODO: of the class, changes to the code don't seem to give
+			// TODO: Different results
+			let engine = CodeEngine()
+			engine.run(code: $0, question: question) { results in
 				codePanel.set(enabled: true)
-				self.showTest(
-					question: question,
-					results: results,
-					prompt: promptView,
-					console: console,
-					testPanel: testPanel,
-					showActual: true
-				)
-				self.panel?.showPanel(panel: testPanel)
+				switch results {
+				case .success(let result):
+					self.showTest(
+						question: question,
+						result: result,
+						prompt: promptView,
+						console: console,
+						testPanel: testPanel,
+						showActual: true
+					)
+					self.panel?.showPanel(panel: testPanel)
+					break;
+				case .failure(let error):
+					self.showConsole(error: error, console: console)
+					self.panel?.showPanel(panel: consolePanel)
+					break;
+				}
+				
 			}
 		}
 		codePanel.restore = {
@@ -204,33 +218,46 @@ class QuestionViewController: UIViewController {
 		let solutions = SolutionsPanel(question: question, lexer: javascript)
 		solutions.run = {
 			solutions.set(enabled: false)
-			self.engine.run(code: $0, question: question) { results in
+			// TODO: Need to find out why when code engine is a property
+			// TODO: of the class, changes to the code don't seem to give
+			// TODO: Different results
+			let engine = CodeEngine()
+			engine.run(code: $0, question: question) { results in
 				solutions.set(enabled: true)
-				self.showTest(
-					question: question,
-					results: results,
-					prompt: promptView,
-					console: console,
-					testPanel: testPanel,
-					showActual: false
-				)
-				self.panel?.showPanel(panel: testPanel)
+
+				switch results {
+				case .success(let result):
+					self.showTest(
+						question: question,
+						result: result,
+						prompt: promptView,
+						console: console,
+						testPanel: testPanel,
+						showActual: false
+					)
+					self.panel?.showPanel(panel: testPanel)
+					break;
+				case .failure(let error):
+					self.showConsole(error: error, console: console)
+					self.panel?.showPanel(panel: consolePanel)
+					break;
+				}
 			}
 		}
 		
 		if (!database.fullScreen) {
 			var rightPanels: [QuestionPanelDelegate] = [
 				codePanel,
-				Genericanel(cellName: "C", tabName: "Console", content: console),
+				consolePanel,
 			]
 			#if DEBUG
-			rightPanels.append(Genericanel(cellName: "DT", tabName: "Tests", content: testDebugPanel))
-			rightPanels.append(Genericanel(cellName: "SB", tabName: "Sandbox Test", content: sandboxTestPanel))
+			rightPanels.append(GenericPanel(cellName: "DT", tabName: "Tests", content: testDebugPanel))
+			rightPanels.append(GenericPanel(cellName: "SB", tabName: "Sandbox Test", content: sandboxTestPanel))
 			#endif
 			
 			let leftPanels: [QuestionPanelDelegate] = [
-				Genericanel(cellName: "P", tabName: "Prompt", content: promptView, padding: padding),
-				Genericanel(cellName: "H", tabName: "Hints", content: HintsView(question: question), padding: padding),
+				GenericPanel(cellName: "P", tabName: "Prompt", content: promptView, padding: padding),
+				GenericPanel(cellName: "H", tabName: "Hints", content: HintsView(question: question), padding: padding),
 				testPanel,
 				solutions
 			]
@@ -238,16 +265,16 @@ class QuestionViewController: UIViewController {
 			self.panel = SplitPanel(leftPanels: leftPanels, rightPanels: rightPanels)
 		} else {
 			var panels = [
-				Genericanel(cellName: "P", tabName: "Prompt", content: promptView, padding: padding),
+				GenericPanel(cellName: "P", tabName: "Prompt", content: promptView, padding: padding),
 				codePanel,
-				Genericanel(cellName: "H", tabName: "Hints", content: HintsView(question: question), padding: padding),
+				GenericPanel(cellName: "H", tabName: "Hints", content: HintsView(question: question), padding: padding),
 				testPanel,
 				solutions,
-				Genericanel(cellName: "C", tabName: "Console", content: console),
+				consolePanel,
 			]
 			#if DEBUG
-			panels.append(Genericanel(cellName: "DT", tabName: "Tests", content: testDebugPanel))
-			panels.append(Genericanel(cellName: "SB", tabName: "Sandbox Test", content: sandboxTestPanel))
+			panels.append(GenericPanel(cellName: "DT", tabName: "Tests", content: testDebugPanel))
+			panels.append(GenericPanel(cellName: "SB", tabName: "Sandbox Test", content: sandboxTestPanel))
 			#endif
 			self.panel = SinglePanel(panels: panels)
 		}
@@ -337,49 +364,47 @@ class QuestionViewController: UIViewController {
 	
 	private func showTest(
 		question: Question,
-		results: Result<TestResults, EngineError>,
+		result: TestResults,
 		prompt: PromptView,
 		console: ConsoleView,
 		testPanel: TestsPanel,
 		showActual: Bool
 	) {
-		switch results {
-		case .success(let result):
-			let success = result.tests.first { !$0.success } == nil
-			console.set(text: result.logs.joined(separator: "\n\n"), success: success)
-			let view = ResultsView(
-				question: question,
-				results: result.tests,
-				hidden: hidden,
-				json: json,
-				highlightr: highlightr,
-				success: success,
-				showActual: showActual
-			)
-			view.revealed = { self.hidden[$0].toggle() }
-			testPanel.set(results: view)
-			if showActual {
-				let state = success ? "success" : "fail"
-				database.set(state: state, name: question.Summary.Name)
-				prompt.set(state: state)
-				changes.append(question.Summary.Name)
-			}
+		let success = result.tests.first { !$0.success } == nil
+		console.set(text: result.logs.joined(separator: "\n\n"), success: success)
+		let view = ResultsView(
+			question: question,
+			results: result.tests,
+			hidden: hidden,
+			json: json,
+			highlightr: highlightr,
+			success: success,
+			showActual: showActual
+		)
+		view.revealed = { self.hidden[$0].toggle() }
+		testPanel.set(results: view)
+		if showActual {
+			let state = success ? "success" : "fail"
+			database.set(state: state, name: question.Summary.Name)
+			prompt.set(state: state)
+			changes.append(question.Summary.Name)
+		}
+	}
+	
+	private func showConsole(error: EngineError, console: ConsoleView) {
+		switch error {
+		case .unknown:
+			console.set(text: "Unknown failure", success: false)
+			break
+		case .internalError(let reason):
+			console.set(text: reason, success: false)
 			break;
-		case .failure(let error):
-			switch error {
-			case .unknown:
-				console.set(text: "Unknown failure", success: false)
-				break
-			case .internalError(let reason):
-				console.set(text: reason, success: false)
-				break;
-			case .engineCreationException:
-				console.set(text: "Code execution engine creation error", success: false)
-				break;
-			case .executionException(let reason):
-				console.set(text: reason ?? "Code execution error", success: false)
-				break;
-			}
+		case .engineCreationException:
+			console.set(text: "Code execution engine creation error", success: false)
+			break;
+		case .executionException(let reason):
+			console.set(text: reason ?? "Code execution error", success: false)
+			break;
 		}
 	}
 	
@@ -388,7 +413,7 @@ class QuestionViewController: UIViewController {
 	}
 }
 
-class CodePanel: Genericanel, SyntaxTextViewDelegate {
+class CodePanel: GenericPanel, SyntaxTextViewDelegate {
 	private let name: String
 	private let database: Database
 	private let code: MultipleCodeEditors
@@ -453,7 +478,7 @@ class CodePanel: Genericanel, SyntaxTextViewDelegate {
 	}
 }
 
-class SolutionsPanel: Genericanel {
+class SolutionsPanel: GenericPanel {
 	private let code: MultipleCodeEditors
 	private let button = ActionButton(text: "Run Code")
 	var run: ((String) -> Void)?
@@ -484,7 +509,7 @@ class SolutionsPanel: Genericanel {
 	}
 }
 
-class TestsPanel: Genericanel {
+class TestsPanel: GenericPanel {
 	private var current: UIView
 	
 	init(view: TestsView) {

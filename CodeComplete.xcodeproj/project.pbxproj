@@ -1203,7 +1203,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "CodeComplete/Code Complete.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = R89W5J5L69;
 				INFOPLIST_FILE = CodeComplete/Info.plist;
@@ -1212,6 +1212,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
 				PRODUCT_NAME = "Code Complete";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";
@@ -1227,7 +1228,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "CodeComplete/Code Complete.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R89W5J5L69;
 				INFOPLIST_FILE = CodeComplete/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1235,6 +1236,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
 				PRODUCT_NAME = "Code Complete";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";

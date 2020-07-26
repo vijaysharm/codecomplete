@@ -9,6 +9,7 @@ import UIKit
 import Sourceful
 import Highlightr
 import Purchases
+import WebKit
 
 class Label: UILabel {
 	init(text: String = "") {
@@ -325,6 +326,82 @@ class HtmlView: UITextView {
 		if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
 			self.attributedText = attributedString
 		}
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
+
+class WebView: WKWebView {
+	init(question: Question, state: String?) {
+		let config = WKWebViewConfiguration()
+		super.init(frame: .zero, configuration: config)
+		
+		translatesAutoresizingMaskIntoConstraints = false
+		isOpaque = false
+		backgroundColor = CodeComplete.theme.tertiary
+		
+		let categpry = "#\(question.Summary.Category.lowercased().split(separator: " ").joined(separator: ""))"
+		var difficulty = ""
+		var indicator = ""
+		if question.Summary.Difficulty == 1 {
+			difficulty = "Easy"
+			indicator = "easy"
+		} else if question.Summary.Difficulty == 2 {
+			difficulty = "Medium"
+			indicator = "medium"
+		} else if question.Summary.Difficulty == 3 {
+			difficulty = "Hard"
+			indicator = "hard"
+		} else if question.Summary.Difficulty == 4 {
+			difficulty = "Very Hard"
+			indicator = "very-hard"
+		} else {
+			difficulty = "Extremely Hard"
+			indicator = "extremely-hard"
+		}
+		
+		let state = getStateClass(state: state);
+		
+		let html = """
+		<!DOCTYPE html>
+		<html lang="en">
+			<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="initial-scale=1.0" />
+				<style>\(CodeComplete.theme.css)</style>
+			</head>
+
+			<body>
+				<div class="info">
+					<span class="state \(state)"></span>
+					<span class="indicator \(indicator)"></span>
+					<span class="difficulty">\(difficulty)</span>
+					<span class="spacer"></span>
+					<span class="categpry">\(categpry)</span>
+				</div>
+				<div class="container">\(question.PromptHTML)</div>
+			</body>
+		</html>
+		"""
+		loadHTMLString(html, baseURL: nil)
+	}
+	
+	func set(state: String?) {
+		let state = getStateClass(state: state);
+		evaluateJavaScript("document.querySelector('.state').className='state \(state)';", completionHandler: nil)
+	}
+	
+	private func getStateClass(state: String?) -> String {
+		if state == nil {
+			return ""
+		} else if state != nil && state! == "success" {
+			return "success"
+		} else if state != nil && state! == "fail" {
+			return "fail"
+		}
+		return ""
 	}
 	
 	required init?(coder: NSCoder) {
@@ -1435,7 +1512,7 @@ class PanelDelegate: QuestionPanelDelegate {
 	}
 }
 
-class Genericanel: QuestionPanelDelegate {
+class GenericPanel: QuestionPanelDelegate {
 	private let cellName: String
 	private let tabName: String
 	private let content: UIView?
@@ -1497,104 +1574,18 @@ class ConsoleView: View {
 }
 
 class PromptView: View {
-	private let circle = IconView(systemIcon: "circle", color: CodeComplete.theme.successColour)
-	private let difficultyLabel = Label(text: "Easy")
-	private let difficultyIndicator = ColouredSquare()
-	private let categoryLabel = Label(text: "Arrays")
-	private let promptView: HtmlView
+	private let promptView: WebView
 	
 	init(question: Question, state: String?) {
-		promptView = HtmlView(content: question.PromptHTML)
+		promptView = WebView(question: question, state: state)
 		super.init()
 		
-		set(state: state)
-		categoryLabel.text = "#\(question.Summary.Category.lowercased().split(separator: " ").joined(separator: ""))"
-		categoryLabel.textColor = .lightGray
-		if question.Summary.Difficulty == 1 {
-			difficultyLabel.text = "Easy"
-			difficultyIndicator.backgroundColor = UIColor(red: 126/255, green: 211/255, blue: 33/255, alpha: 1.0)
-		} else if question.Summary.Difficulty == 2 {
-			difficultyLabel.text = "Medium"
-			difficultyIndicator.backgroundColor = UIColor(red: 74/255, green: 144/255, blue: 226/255, alpha: 1.0)
-		} else if question.Summary.Difficulty == 3 {
-			difficultyLabel.text = "Hard"
-			difficultyIndicator.backgroundColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1.0)
-		} else if question.Summary.Difficulty == 4 {
-			difficultyLabel.text = "Very Hard"
-			difficultyIndicator.backgroundColor = UIColor(red: 144/255, green: 19/255, blue: 254/255, alpha: 1.0)
-		} else {
-			difficultyLabel.text = "Extremely Hard"
-			difficultyIndicator.backgroundColor = .black
-		}
-		
-		let container = View()
-		container.addSubview(circle)
-		container.addSubview(difficultyIndicator)
-		container.addSubview(difficultyLabel)
-		container.addSubview(categoryLabel)
-		
 		addSubview(promptView)
-		addSubview(container)
-		
-		NSLayoutConstraint.activate([
-			circle.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-			circle.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-			circle.widthAnchor.constraint(equalToConstant: 28),
-			circle.heightAnchor.constraint(equalToConstant: 28),
-			
-			difficultyIndicator.leadingAnchor.constraint(equalTo: circle.trailingAnchor, constant: 8),
-			difficultyIndicator.centerYAnchor.constraint(equalTo: container.centerYAnchor),
-			difficultyIndicator.widthAnchor.constraint(equalToConstant: 24),
-			difficultyIndicator.heightAnchor.constraint(equalToConstant: 24),
-			difficultyLabel.topAnchor.constraint(equalTo: container.topAnchor),
-			difficultyLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-			difficultyLabel.leadingAnchor.constraint(equalTo: difficultyIndicator.trailingAnchor, constant: 8),
-			
-			categoryLabel.topAnchor.constraint(equalTo: container.topAnchor),
-			categoryLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-			categoryLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -8),
-			
-			container.topAnchor.constraint(equalTo: topAnchor),
-			container.leadingAnchor.constraint(equalTo: leadingAnchor),
-			container.trailingAnchor.constraint(equalTo: trailingAnchor),
-			container.heightAnchor.constraint(equalToConstant: 48),
-			
-			promptView.topAnchor.constraint(equalTo: container.bottomAnchor),
-			promptView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			promptView.trailingAnchor.constraint(equalTo: trailingAnchor),
-			promptView.bottomAnchor.constraint(equalTo: bottomAnchor),
-		])
+		fill(with: promptView)
 	}
 	
 	func set(state: String?) {
-		if state == nil {
-			let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold, scale: .default)
-			circle.image = UIImage(
-				systemName: "circle",
-				withConfiguration: config
-			)!.withTintColor(
-				CodeComplete.theme.successColour,
-				renderingMode: .alwaysOriginal
-			)
-		} else if state != nil && state! == "success" {
-			let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold, scale: .default)
-			circle.image = UIImage(
-				systemName: "circle.fill",
-				withConfiguration: config
-			)!.withTintColor(
-				CodeComplete.theme.successColour,
-				renderingMode: .alwaysOriginal
-			)
-		} else if state != nil && state! == "fail" {
-			let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold, scale: .default)
-			circle.image = UIImage(
-				systemName: "circle.fill",
-				withConfiguration: config
-			)!.withTintColor(
-				CodeComplete.theme.failedColour,
-				renderingMode: .alwaysOriginal
-			)
-		}
+		promptView.set(state: state)
 	}
 	
 	required init?(coder: NSCoder) {
@@ -1635,7 +1626,11 @@ class SplitPanel: View, QuestionView {
 	}
 	
 	func showPanel(panel: QuestionPanelDelegate) {
-		self.left.set(index: 2)
+		if let _ = panel as? TestsPanel {
+			self.left.set(index: 2)
+		} else {
+			self.right.set(index: 1)
+		}
 	}
 	
 	deinit {
@@ -1671,7 +1666,11 @@ class SinglePanel: View, QuestionView {
 	}
 	
 	func showPanel(panel: QuestionPanelDelegate) {
-		self.panel.set(index: 3)
+		if let _ = panel as? TestsPanel {
+			self.panel.set(index: 3)
+		} else {
+			self.panel.set(index: 5)
+		}
 	}
 }
 
