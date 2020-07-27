@@ -63,6 +63,8 @@ class QuestionViewController: UIViewController {
 	
 	private var panel: (View & QuestionView)? = nil
 	private let locked = LockedView()
+	private let timer = QuestionTimer()
+	private var timerBottomConstraint: NSLayoutConstraint? = nil
 	
 	private let lexer = JavaScriptLexer()
 	private let theme = CodeComplete.theme
@@ -88,16 +90,17 @@ class QuestionViewController: UIViewController {
 		
 		let nextQuestionButton = UIBarButtonItem(image: UIImage(systemName: "arrow.right"), style: .plain, target: self, action: #selector(nextQuestion))
 		nextQuestionButton.tintColor = CodeComplete.theme.textPrimary
-		let feedbackButtton = UIBarButtonItem(image: UIImage(systemName: "text.bubble"), style: .plain, target: self, action: #selector(feedback))
-		feedbackButtton.tintColor = CodeComplete.theme.textPrimary
 		sizeButtton = UIBarButtonItem(
 			image: UIImage(systemName: database.fullScreen ? "uiwindow.split.2x1" : "macwindow"),
 			style: .plain,
 			target: self,
 			action: #selector(resize)
 		)
-		feedbackButtton.tintColor = CodeComplete.theme.textPrimary
-		navigationItem.rightBarButtonItems = [nextQuestionButton, feedbackButtton, sizeButtton]
+		sizeButtton.tintColor = CodeComplete.theme.textPrimary
+		let overflowButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(displayActionSheet))
+		overflowButton.tintColor = CodeComplete.theme.textPrimary
+		
+		navigationItem.rightBarButtonItems = [overflowButton, nextQuestionButton, sizeButtton]
 		
 		let question = provider.next()
 		self.show(question: question)
@@ -108,6 +111,7 @@ class QuestionViewController: UIViewController {
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		timer.stop()
 		guard self.isMovingFromParent else { return }
 		self.delegate?(changes)
 	}
@@ -132,14 +136,35 @@ class QuestionViewController: UIViewController {
 		self.show(question: question)
 	}
 	
-	@objc func feedback() {
-		TestFairy.showFeedbackForm("5b3af35e59a1e074e2d50675b1b629306cf0cfbd", takeScreenshot: true)
-	}
-	
 	@objc func resize() {
 		database.fullScreen.toggle()
 		sizeButtton.image = UIImage(systemName: database.fullScreen ? "uiwindow.split.2x1" : "macwindow")
 		self.show(question: provider.current())
+	}
+	
+	@IBAction func displayActionSheet(_ sender: Any) {
+		let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+		let timerAction = UIAlertAction(title: timer.isActive() ? "Stop Timer" : "Start Timer", style: .default) { _ in
+			if self.timer.isActive() {
+				self.timerBottomConstraint?.constant = 50
+				self.timer.stop()
+			} else {
+				self.timerBottomConstraint?.constant = -8
+				self.timer.start()
+			}
+		}
+		
+		let feedbackAction = UIAlertAction(title: "Give Feedback", style: .default) { _ in
+			TestFairy.showFeedbackForm("5b3af35e59a1e074e2d50675b1b629306cf0cfbd", takeScreenshot: true)
+		}
+		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+
+		optionMenu.addAction(timerAction)
+		optionMenu.addAction(feedbackAction)
+		optionMenu.addAction(cancelAction)
+		
+		self.present(optionMenu, animated: true, completion: nil)
 	}
 	
 	private func show(question: Question) {
@@ -280,6 +305,7 @@ class QuestionViewController: UIViewController {
 		}
 		
 		view.addSubview(panel!)
+		view.addSubview(timer)
 		
 		if isLocked {
 			view.addSubview(locked)
@@ -306,11 +332,17 @@ class QuestionViewController: UIViewController {
 			}
 		}
 		
+		timerBottomConstraint = timer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 50)
 		NSLayoutConstraint.activate([
 			panel!.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
 			panel!.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
 			panel!.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
-			panel!.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8)
+			panel!.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+			
+			timer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
+			timerBottomConstraint!,
+			timer.heightAnchor.constraint(equalToConstant: 18),
+			timer.widthAnchor.constraint(equalToConstant: 60),
 		])
 	}
 	

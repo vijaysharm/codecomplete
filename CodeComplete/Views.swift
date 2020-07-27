@@ -1717,3 +1717,64 @@ extension Purchases.Package {
         }
 	}
 }
+
+class QuestionTimer: Label {
+	private var timer: Timer? = nil
+	private var date: Date? = nil
+	
+	init() {
+		super.init(text: "00:00")
+		
+		backgroundColor = UIColor.black.withAlphaComponent(0.7)
+		font = UIFont.systemFont(ofSize: 12)
+		textAlignment = .center
+		
+		clipsToBounds = true;
+		layer.masksToBounds = true;
+		layer.cornerRadius = 10;
+	}
+	
+	func isActive() -> Bool {
+		return timer != nil
+	}
+	
+	func start() {
+		timer?.invalidate()
+		date = Date()
+		
+		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+	}
+	
+	func stop() {
+		timer?.invalidate()
+		timer = nil
+		date = nil
+	}
+	
+	@objc func fireTimer() {
+		guard let date = date else { return }
+		let now = Date()
+		let total = now.timeIntervalSince(date)
+		text = duration(miliseconds: total)
+	}
+	
+	private func duration(miliseconds: Double) -> String {
+		let seconds = Int(floor(miliseconds))
+		let ss = seconds % 60
+		let mm = Int(floor(Double(seconds / 60))) % 60
+		let hh = Int(floor(Double(seconds) / 60.0))
+		if hh >= 1 {
+			let s = String(format: "%02d", ss)
+			let m = String(format: "%02d", mm)
+			return "\(hh):\(m):\(s)"
+		} else {
+			let s = String(format: "%02d", ss)
+			let m = String(format: "%02d", mm)
+			return "\(m):\(s)"
+		}
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
