@@ -1,4 +1,10 @@
 PODS:
+  - FBSDKCoreKit (7.1.1):
+    - FBSDKCoreKit/Basics (= 7.1.1)
+    - FBSDKCoreKit/Core (= 7.1.1)
+  - FBSDKCoreKit/Basics (7.1.1)
+  - FBSDKCoreKit/Core (7.1.1):
+    - FBSDKCoreKit/Basics
   - Firebase/Analytics (6.23.0):
     - Firebase/Core
   - Firebase/Auth (6.23.0):
@@ -122,6 +128,7 @@ PODS:
   - TestFairy (1.24.4)
 
 DEPENDENCIES:
+  - FBSDKCoreKit (~> 7.1.1)
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Crashlytics
@@ -135,6 +142,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - FBSDKCoreKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -172,6 +180,7 @@ CHECKOUT OPTIONS:
     :git: "git@github.com:twostraws/Sourceful.git"
 
 SPEC CHECKSUMS:
+  FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
   Firebase: 585ae467b3edda6a5444e788fda6888f024d8d6f
   FirebaseAnalytics: 558f7a03d19de451093032c806f39d5f9dff096e
   FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
@@ -199,6 +208,6 @@ SPEC CHECKSUMS:
   SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
   TestFairy: 3950daeb0c5c53d0b09b2a14c718ff3bd806b7d2
 
-PODFILE CHECKSUM: d1c870fc370e132d2c5e4485282d2d03db33f911
+PODFILE CHECKSUM: 74b804e1b9e87023c7c19e09165260451422af46
 
 COCOAPODS: 1.8.4

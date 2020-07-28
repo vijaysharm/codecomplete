@@ -14,11 +14,12 @@ target 'CodeComplete' do
   pod 'Firebase/Functions'
   pod 'Firebase/Analytics'
   pod 'Firebase/Messaging'
-	pod 'Firebase/Crashlytics'
-	pod 'SwiftKeychainWrapper', '3.4.0'
-	pod 'TestFairy', '~> 1.24.4'
+  pod 'Firebase/Crashlytics'
+  pod 'SwiftKeychainWrapper', '3.4.0'
+  pod 'TestFairy', '~> 1.24.4'
+  pod 'FBSDKCoreKit', '~> 7.1.1'
 	
-	target 'CodeCompleteTests' do
+  target 'CodeCompleteTests' do
     inherit! :search_paths
   end
 end

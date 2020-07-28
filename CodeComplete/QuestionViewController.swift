@@ -9,6 +9,7 @@ import UIKit
 import Sourceful
 import Highlightr
 import Purchases
+import FBSDKCoreKit
 
 class QuestionProvider {
 	private let model: QuestionsViewModel
@@ -387,6 +388,7 @@ class QuestionViewController: UIViewController {
 				message: message
 			) { _ in
 				if success {
+					AppEvents.logPurchase(99.99, currency: "USD")
 					self.changes.append(question.Summary.Name)
 					self.buildView(question: question, locked: false)
 				}
