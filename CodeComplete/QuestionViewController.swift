@@ -148,7 +148,6 @@ class QuestionViewController: UIViewController {
 
 		let timerAction = UIAlertAction(title: timer.isActive() ? "Stop Timer" : "Start Timer", style: .default) { _ in
 			if self.timer.isActive() {
-				self.timerBottomConstraint?.constant = 50
 				self.timer.stop()
 			} else {
 				self.timerBottomConstraint?.constant = -8
@@ -164,6 +163,7 @@ class QuestionViewController: UIViewController {
 		optionMenu.addAction(timerAction)
 		optionMenu.addAction(feedbackAction)
 		optionMenu.addAction(cancelAction)
+		optionMenu.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem;
 		
 		self.present(optionMenu, animated: true, completion: nil)
 	}
