@@ -355,7 +355,7 @@ class QuestionViewController: UIViewController {
 		self.locked.set(dialog: spinner, size: CGSize(width: 48, height: 48))
 		service.puchase(package: package) { (success, error) in
 			spinner.stopAnimating()
-			self.checkPurchase(success: success, error: error, question: question)
+			self.checkPurchase(success: success, error: error, question: question, package: package)
 		}
 	}
 	
@@ -367,11 +367,11 @@ class QuestionViewController: UIViewController {
 		self.locked.set(dialog: spinner, size: CGSize(width: 48, height: 48))
 		service.restore { (success, error) in
 			spinner.stopAnimating()
-			self.checkPurchase(success: success, error: error, question: question)
+			self.checkPurchase(success: success, error: error, question: question, package: nil)
 		}
 	}
 	
-	private func checkPurchase(success: Bool, error: Error?, question: Question) {
+	private func checkPurchase(success: Bool, error: Error?, question: Question, package: Purchases.Package?) {
 		if let error = error {
 			print("\(error.localizedDescription)")
 			self.alert(
@@ -388,7 +388,16 @@ class QuestionViewController: UIViewController {
 				message: message
 			) { _ in
 				if success {
-					AppEvents.logPurchase(99.99, currency: "USD")
+					if let package = package {
+						AppEvents.logEvent(
+							.subscribe,
+							valueToSum: package.product.price.doubleValue,
+							parameters: [
+								AppEvents.ParameterName.orderID.rawValue: package.product.productIdentifier,
+								AppEvents.ParameterName.currency.rawValue: "USD",
+							]
+						)
+					}
 					self.changes.append(question.Summary.Name)
 					self.buildView(question: question, locked: false)
 				}
