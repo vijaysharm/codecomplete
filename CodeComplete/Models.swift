@@ -124,9 +124,12 @@ class Question {
 		let first = self.data["JSONAnswers"] as! [Any]
 		let stuff = first[0] as! [Any]
 		let answers = stuff.map { (item: Any) -> String in
-//			let data = try! JSONSerialization.data(withJSONObject: item, options: [])
-//			return String(data: data, encoding: .utf8)!
-			return "\(item)"
+			if (!JSONSerialization.isValidJSONObject(item)) {
+				return "\(item)"
+			}
+			
+			let data = try! JSONSerialization.data(withJSONObject: item, options: [])
+			return String(data: data, encoding: .utf8)!
 		}
 		return answers
 	}()

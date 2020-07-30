@@ -4,11 +4,6 @@
 
 List of characters used in all solutions (90 characters):  !"$%&'()*+,-./012345689:;<=>?ABCDEFGHIJKLMNOPRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}
 
-### Version 1.1
-	* [ ] Add timer
-	* [x] Show console on compilation failure (not test tab)
-	* [x] Make prompt a webview for better styling
-
 ### Version X
       * [ ] If compilation error happens, and console is shown, should we show a toast to say "go back to code"? 
 	* [ ] Analytics
@@ -18,7 +13,6 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Improve overall app styling
 	* [ ] Implement Filter button
 	* [ ] Implement "starring" questions
-	* [ ] Show question test status "passed", "fail", etc...
 	* [ ] Support themes
 	* [ ] Implement "whiteboard" mode. Allow users to write their answers on a canvas
 		* [ ] Is it possible to convert the handwritten code to actual code to be run?
@@ -26,7 +20,14 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Support increasing font size
 	* [ ] Have user editable tests
 	
+### Version 1.1
+	* [x] Add timer
+	* [x] Show console on compilation failure (not test tab)
+	* [x] Make prompt a webview for better styling
+	* [x] Include Facebook SDK for purchase tracking
+	
 ### Version 1	
+	* [x] Show question test status "passed", "fail", etc...
 	* [x] Marketing copy and images
 	* [x] App Landing page
 	* [x] Support full screen (source panel takes over the prompt panel)

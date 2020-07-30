@@ -16,8 +16,23 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb650193642261824</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>650193642261824</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<false/>
+	<key>FacebookDisplayName</key>
+	<string>Code Complete</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
@@ -56,20 +71,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-	  <dict>
-	  <key>CFBundleURLSchemes</key>
-	  <array>
-		<string>fb650193642261824</string>
-	  </array>
-	  </dict>
-	</array>
-	<key>FacebookAppID</key>
-	<string>650193642261824</string>
-	<key>FacebookDisplayName</key>
-	<string>Code Complete</string>
-	<key>FacebookAutoLogAppEventsEnabled</key>
-	<false/>
 </dict>
 </plist>
