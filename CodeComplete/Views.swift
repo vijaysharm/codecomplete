@@ -1317,6 +1317,42 @@ class ResultView: View {
 	}
 }
 
+class ResultViewHeader: View {
+	private let title: Label
+	private let subtitle: Label
+	
+	init(title: String, subtitle: String) {
+		self.title = Label(text: title)
+		self.subtitle = Label(text: subtitle)
+		
+		super.init()
+		
+		self.title.textAlignment = .center
+		self.title.font = CodeComplete.theme.questionTitle
+		self.title.numberOfLines = 0
+		self.subtitle.textAlignment = .center
+		self.subtitle.textColor = .lightGray
+		
+		addSubview(self.title)
+		addSubview(self.subtitle)
+		
+		NSLayoutConstraint.activate([
+			self.title.topAnchor.constraint(equalTo: topAnchor),
+			self.title.leadingAnchor.constraint(equalTo: leadingAnchor),
+			self.title.trailingAnchor.constraint(equalTo: trailingAnchor),
+			self.title.bottomAnchor.constraint(equalTo: self.subtitle.topAnchor, constant: -8),
+			
+			self.subtitle.leadingAnchor.constraint(equalTo: leadingAnchor),
+			self.subtitle.trailingAnchor.constraint(equalTo: trailingAnchor),
+			self.subtitle.bottomAnchor.constraint(equalTo: bottomAnchor),
+		])
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
+
 class ResultsView: ScrollableStackView {
 	var revealed: ((Int) -> Void)?
 	init(
@@ -1329,13 +1365,19 @@ class ResultsView: ScrollableStackView {
 		showActual: Bool
 	) {
 		super.init()
-		
+
 		let tests = question.JSONTests
 		let answers = question.JSONAnswers
+		
+		let count = tests.count
+		var successCount = 0
+		var views: [ResultView] = []
+		
 		for (index, test) in tests.enumerated() {
 			let result = results[index]
 			let actual = result.actual as? String ?? (result.success ? answers[index] : "undefined")
 			let expected = result.expected as? String ?? answers[index]
+			successCount = successCount + (result.success ? 1 : 0)
 			let view = ResultView(
 				success: result.success,
 				title: "Test Case \(index + 1)",
@@ -1347,8 +1389,14 @@ class ResultsView: ScrollableStackView {
 			view.revealed = {
 				self.revealed?(index)
 			}
-			super.contentView.addArrangedSubview(view)
+			views.append(view)
 		}
+		
+		super.contentView.addArrangedSubview(ResultViewHeader(
+			title: success ? "Yay, code passed all the test cases!" : "Aww, code failed at least one of the test cases.",
+			subtitle: "\(successCount)/\(count) test cases passed"
+		))
+		views.forEach { super.contentView.addArrangedSubview($0) }
 		
 		layer.borderWidth = 2
 		layer.borderColor = success ? CodeComplete.theme.successColour.cgColor : CodeComplete.theme.failedColour.cgColor
