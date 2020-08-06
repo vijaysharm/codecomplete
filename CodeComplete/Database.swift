@@ -14,7 +14,11 @@ class Database {
 	
 	var fullScreen: Bool {
 		get {
-			keystore.bool(forKey: "fullScreen") ?? false
+			if let fs = keystore.bool(forKey: "fullScreen") {
+				return fs
+			}
+			
+			return UIScreen.main.traitCollection.horizontalSizeClass == .compact
 		}
 		set {
 			keystore.set(newValue, forKey: "fullScreen")

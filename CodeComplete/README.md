@@ -4,6 +4,11 @@
 
 List of characters used in all solutions (90 characters):  !"$%&'()*+,-./012345689:;<=>?ABCDEFGHIJKLMNOPRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}
 
+### Version 1.3
+	* [ ] Show Progress
+	* [ ] Show x of y failed/passed tests
+	* [ ] Push notifications
+
 ### Version X
       * [ ] If compilation error happens, and console is shown, should we show a toast to say "go back to code"? 
 	* [ ] Analytics
@@ -20,7 +25,7 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Support increasing font size
 	* [ ] Have user editable tests
 	
-### Version 1.1
+### Version 1.1 / 1.2
 	* [x] Add timer
 	* [x] Show console on compilation failure (not test tab)
 	* [x] Make prompt a webview for better styling

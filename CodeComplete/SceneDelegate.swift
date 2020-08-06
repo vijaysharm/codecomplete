@@ -18,8 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let windowScene = (scene as? UIWindowScene) else { return }
 		let window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window.windowScene = windowScene
-		
-		FirebaseApp.configure()
+
 		Auth.auth().signInAnonymously() { (_, error) in
 			if error != nil { Auth.auth().signInAnonymously() { (_, _) in } }
 		}
