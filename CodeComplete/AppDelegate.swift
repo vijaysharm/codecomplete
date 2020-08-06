@@ -12,10 +12,14 @@ import FBSDKCoreKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		Settings.loggingBehaviors = [.appEvents]
         ApplicationDelegate.shared.application(
             application,
             didFinishLaunchingWithOptions: launchOptions
         )
+		
+		TestFairy.setServerEndpoint("app3-vijay1.testfairy.com")
+		TestFairy.begin("5b3af35e59a1e074e2d50675b1b629306cf0cfbd", withOptions: ["verbose": true])
 		return true
 	}
 

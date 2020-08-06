@@ -31,6 +31,8 @@
 	<string>650193642261824</string>
 	<key>FacebookAutoLogAppEventsEnabled</key>
 	<false/>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<false/>
 	<key>FacebookDisplayName</key>
 	<string>Code Complete</string>
 	<key>LSRequiresIPhoneOS</key>

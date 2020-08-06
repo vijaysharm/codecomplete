@@ -24,11 +24,11 @@ class Service {
 		}
 
 		purchase.isActive(subscription: "all_problem_access") { isActive in
-//			#if DEBUG
-//			callback(true)
-//			#else
+			#if DEBUG
+			callback(false)
+			#else
 			callback(!isActive)
-//			#endif
+			#endif
 		}
 	}
 	

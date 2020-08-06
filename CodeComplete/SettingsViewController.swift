@@ -7,7 +7,7 @@
 
 import UIKit
 
-public enum Settings: String {
+public enum SettingsType: String {
 	case contactUs = "Contact Us"
 	case restorePurchase = "Restore Purchases"
 	case termsOfService = "Terms of Service"
@@ -32,7 +32,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 	}()
 	
 	private let items = [
-		Settings.contactUs,
+		SettingsType.contactUs,
 		.termsOfService,
 		.privacyPolicy,
 		.restorePurchase,
