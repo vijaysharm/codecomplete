@@ -7,9 +7,11 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 ### Version 1.3
 	* [ ] Show Progress
 	* [ ] Show x of y failed/passed tests
-	* [ ] Push notifications
+	* [x] Push notifications
 
 ### Version X
+	* [ ] Add countdown timer (currenly have count-up timer)
+	* [ ] Splash / Onboarding view (including asking for push notification access)
       * [ ] If compilation error happens, and console is shown, should we show a toast to say "go back to code"? 
 	* [ ] Analytics
 	* [ ] Fix bst-construction and linked-list-construction tests

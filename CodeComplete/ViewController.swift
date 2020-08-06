@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-	private let header = HeaderView()
+	private let filter = HeaderView()
 	private lazy var collection: UICollectionView = { [unowned self] in
 		let layout = UICollectionViewFlowLayout()
 		layout.sectionHeadersPinToVisibleBounds = true
@@ -50,29 +50,29 @@ class ViewController: UIViewController {
 		
 		view.backgroundColor = CodeComplete.theme.primary
 		view.addSubview(collection)
-		view.addSubview(header)
+		view.addSubview(filter)
 		
 		let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settings))
 		settingsButton.tintColor = CodeComplete.theme.textPrimary
 		navigationItem.rightBarButtonItem = settingsButton
 		
 		NSLayoutConstraint.activate([
-			header.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-			header.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-			header.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+			filter.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+			filter.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+			filter.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
 			
 			collection.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-			collection.bottomAnchor.constraint(equalTo: header.topAnchor),
+			collection.bottomAnchor.constraint(equalTo: filter.topAnchor),
 			collection.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
 			collection.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
 		])
 		
-		header.onChange = {
-			self.filtered = self.header.filter(questions: self.questions)
+		filter.onChange = {
+			self.filtered = self.filter.filter(questions: self.questions)
 			self.collection.reloadData()
 		}
 		
-		filtered = header.filter(questions: self.questions)
+		filtered = filter.filter(questions: self.questions)
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)

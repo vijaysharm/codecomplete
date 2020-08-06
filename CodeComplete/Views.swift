@@ -1778,3 +1778,115 @@ class QuestionTimer: Label {
 		fatalError("init(coder:) has not been implemented")
 	}
 }
+
+class HorizontalProgressBar: View {
+	var colour: UIColor? = .gray
+	var progress: CGFloat = 0.5 {
+		didSet { setNeedsDisplay() }
+	}
+	
+	private let progressLayer = CALayer()
+	private let backgroundMask = CAShapeLayer()
+	
+	override init() {
+		super.init()
+		layer.addSublayer(progressLayer)
+		backgroundColor = .green
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func draw(_ rect: CGRect) {
+		backgroundMask.path = UIBezierPath(roundedRect: rect, cornerRadius: rect.height * 0.25).cgPath
+		layer.mask = backgroundMask
+		
+		let progressRect = CGRect(origin: .zero, size: CGSize(width: rect.width * progress, height: rect.height))
+		
+		progressLayer.frame = progressRect
+		progressLayer.backgroundColor = colour?.cgColor
+	}
+}
+
+class PlainCircularProgressBar: View {
+	var ringWidth: CGFloat = 5
+    var colour: UIColor? = .gray {
+        didSet { setNeedsDisplay() }
+    }
+    var progress: CGFloat = 0 {
+        didSet { setNeedsDisplay() }
+    }
+
+    private var progressLayer = CAShapeLayer()
+    private var backgroundMask = CAShapeLayer()
+
+    override init() {
+        super.init()
+        setupLayers()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupLayers()
+    }
+
+    private func setupLayers() {
+        backgroundMask.lineWidth = ringWidth
+        backgroundMask.fillColor = nil
+        backgroundMask.strokeColor = UIColor.black.cgColor
+        layer.mask = backgroundMask
+
+        progressLayer.lineWidth = ringWidth
+        progressLayer.fillColor = nil
+        layer.addSublayer(progressLayer)
+        layer.transform = CATransform3DMakeRotation(CGFloat(90 * Double.pi / 180), 0, 0, -1)
+    }
+
+    override func draw(_ rect: CGRect) {
+        let circlePath = UIBezierPath(ovalIn: rect.insetBy(dx: ringWidth / 2, dy: ringWidth / 2))
+        backgroundMask.path = circlePath.cgPath
+
+        progressLayer.path = circlePath.cgPath
+        progressLayer.lineCap = .round
+        progressLayer.strokeStart = 0
+        progressLayer.strokeEnd = progress
+        progressLayer.strokeColor = colour?.cgColor
+    }
+}
+
+class ProgressView: View {
+	private let label = Label()
+	private let progress = PlainCircularProgressBar()
+	
+	override init() {
+		super.init()
+		
+		addSubview(progress)
+		addSubview(label)
+		
+		label.text = "18 Questions out of 100 Completed"
+		
+		NSLayoutConstraint.activate([
+			label.leadingAnchor.constraint(equalTo: leadingAnchor),
+			label.trailingAnchor.constraint(equalTo: trailingAnchor),
+			label.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+			label.bottomAnchor.constraint(equalTo: progress.topAnchor, constant: -8),
+			
+			progress.leadingAnchor.constraint(equalTo: leadingAnchor),
+			progress.trailingAnchor.constraint(equalTo: trailingAnchor),
+			progress.bottomAnchor.constraint(equalTo: bottomAnchor),
+			progress.heightAnchor.constraint(equalToConstant: 20)
+		])
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		self.setNeedsDisplay()
+		progress.setNeedsDisplay()
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
