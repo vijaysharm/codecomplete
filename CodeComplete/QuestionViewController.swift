@@ -388,16 +388,6 @@ class QuestionViewController: UIViewController {
 				message: message
 			) { _ in
 				if success {
-					if let package = package {
-						AppEvents.logEvent(
-							.subscribe,
-							valueToSum: package.product.price.doubleValue,
-							parameters: [
-								AppEvents.ParameterName.orderID.rawValue: package.product.productIdentifier,
-								AppEvents.ParameterName.currency.rawValue: "USD",
-							]
-						)
-					}
 					self.changes.append(question.Summary.Name)
 					self.buildView(question: question, locked: false)
 				}

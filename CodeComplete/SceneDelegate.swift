@@ -23,8 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			if error != nil { Auth.auth().signInAnonymously() { (_, _) in } }
 		}
 		
-		AppEvents.logEvent(.viewedContent)
-
 		let url = Bundle.main.url(forResource: "question-list", withExtension: "json")!
 		let data = try! Data(contentsOf: url)
 		let questions: QuestionList = try! JSONDecoder().decode(QuestionList.self, from: data)
