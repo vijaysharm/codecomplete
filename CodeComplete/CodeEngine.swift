@@ -13,6 +13,7 @@ enum EngineError: Error {
 	case internalError(reason: String)
 	case engineCreationException
 	case executionException(reason: String?)
+	case timeout
 }
 
 class CodeEngine {
@@ -23,9 +24,31 @@ class CodeEngine {
 		callback: @escaping (Result<TestResults, EngineError>) -> Void
 	) {
 		DispatchQueue.global(qos: .userInitiated).async {
-			let result = self.javascript.run(code: code, question: question)
+			var result: Result<TestResults, EngineError>?
+			let semaphore = DispatchSemaphore(value: 0)
+		
+			DispatchQueue.global(qos: .userInitiated).async {
+				result = self.javascript.run(code: code, question: question)
+				semaphore.signal()
+			}
+			let timeout = semaphore.wait(timeout: .now() + 5)
+			
+			let value: Result<TestResults, EngineError>
+			switch timeout {
+			case .success:
+				if result == nil {
+					value = .failure(.unknown)
+				} else {
+					value = result!
+				}
+				break
+			case .timedOut:
+				value = .failure(.timeout)
+				break
+			}
+			
 			DispatchQueue.main.async {
-				callback(result)
+				callback(value)
 			}
 		}
 	}

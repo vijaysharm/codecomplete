@@ -186,7 +186,7 @@ class QuestionViewController: UIViewController {
 		
 		let promptView = PromptView(question: question, state: database.state(name: question.Summary.Name))
 		let console = ConsoleView(message: "Run your code when you're ready.")
-		let consolePanel = GenericPanel(cellName: "C", tabName: "Console", content: console)
+		let consolePanel = GenericPanel(cellName: "Console", tabName: "Console", content: console)
 		let testView = TestsView(question: question, json: json, highlightr: highlightr)
 		testView.revealed = { self.hidden[$0].toggle() }
 		let testPanel = TestsPanel(view: testView)
@@ -274,33 +274,33 @@ class QuestionViewController: UIViewController {
 		if (!database.fullScreen) {
 			var rightPanels: [QuestionPanelDelegate] = [
 				codePanel,
+				solutions,
 				consolePanel,
 			]
 			#if DEBUG
-			rightPanels.append(GenericPanel(cellName: "DT", tabName: "Tests", content: testDebugPanel))
-			rightPanels.append(GenericPanel(cellName: "SB", tabName: "Sandbox Test", content: sandboxTestPanel))
+			rightPanels.append(GenericPanel(cellName: "Debug Tests", tabName: "Tests", content: testDebugPanel))
+			rightPanels.append(GenericPanel(cellName: "Sandbox Test", tabName: "Sandbox Test", content: sandboxTestPanel))
 			#endif
 			
 			let leftPanels: [QuestionPanelDelegate] = [
-				GenericPanel(cellName: "P", tabName: "Prompt", content: promptView, padding: padding),
-				GenericPanel(cellName: "H", tabName: "Hints", content: HintsView(question: question), padding: padding),
-				testPanel,
-				solutions
+				GenericPanel(cellName: "Prpmpt", tabName: "Prompt", content: promptView, padding: padding),
+				GenericPanel(cellName: "Hints", tabName: "Hints", content: HintsView(question: question), padding: padding),
+				testPanel
 			]
 			
 			self.panel = SplitPanel(leftPanels: leftPanels, rightPanels: rightPanels)
 		} else {
 			var panels = [
-				GenericPanel(cellName: "P", tabName: "Prompt", content: promptView, padding: padding),
+				GenericPanel(cellName: "Prompts", tabName: "Prompt", content: promptView, padding: padding),
 				codePanel,
-				GenericPanel(cellName: "H", tabName: "Hints", content: HintsView(question: question), padding: padding),
+				GenericPanel(cellName: "Hints", tabName: "Hints", content: HintsView(question: question), padding: padding),
 				testPanel,
 				solutions,
 				consolePanel,
 			]
 			#if DEBUG
-			panels.append(GenericPanel(cellName: "DT", tabName: "Tests", content: testDebugPanel))
-			panels.append(GenericPanel(cellName: "SB", tabName: "Sandbox Test", content: sandboxTestPanel))
+			panels.append(GenericPanel(cellName: "Dedbug Tests", tabName: "Tests", content: testDebugPanel))
+			panels.append(GenericPanel(cellName: "Sandbox Test", tabName: "Sandbox Test", content: sandboxTestPanel))
 			#endif
 			self.panel = SinglePanel(panels: panels)
 		}
@@ -431,13 +431,16 @@ class QuestionViewController: UIViewController {
 			break
 		case .internalError(let reason):
 			console.set(text: reason, success: false)
-			break;
+			break
 		case .engineCreationException:
 			console.set(text: "Code execution engine creation error", success: false)
-			break;
+			break
 		case .executionException(let reason):
 			console.set(text: reason ?? "Code execution error", success: false)
-			break;
+			break
+		case .timeout:
+			console.set(text: "Code execution timed out", success: false)
+			break
 		}
 	}
 	
@@ -450,8 +453,8 @@ class CodePanel: GenericPanel, SyntaxTextViewDelegate {
 	private let name: String
 	private let database: Database
 	private let code: MultipleCodeEditors
-	private let reset = ImageButton(systemIcon: "gobackward")
-	private let button = ActionButton(text: "Run Code")
+	private let reset = ImageButton(systemIcon: "gobackward", padding: UIEdgeInsets(top: 6, left: 4, bottom: 6, right: 4))
+	private let button = ActionImageButton(systemIcon: "play.fill", padding: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
 	private let lexer: JavaScriptLexer
 	
 	var run: ((String) -> Void)?
@@ -473,11 +476,9 @@ class CodePanel: GenericPanel, SyntaxTextViewDelegate {
 		code.set(edittable: true)
 		code.set(theme: CodeComplete.theme.sourceCode)
 		
-		super.init(cellName: "YS", tabName: "Your Solutions", content: code)
+		super.init(cellName: "Your Solutions", tabName: "Your Solutions", content: code)
 		code.set(delegate: self)
 		
-		button.setTitle("Run Code", for: .normal)
-		button.setTitle("Running", for: .disabled)
 		button.action = {
 			self.run?(self.code.getCurrentText())
 		}
@@ -485,15 +486,13 @@ class CodePanel: GenericPanel, SyntaxTextViewDelegate {
 		reset.action = {
 			self.restore?()
 		}
+		
+		code.actions.contentView.addArrangedSubview(button)
+		code.actions.contentView.addArrangedSubview(reset)
 	}
 	
 	func setCurrent(code: String) {
 		self.code.setCurrent(text: code)
-	}
-	
-	override func configure(panel: QuestionPanel, tab: Int, actions: UIStackView) {
-		actions.addArrangedSubview(reset)
-		actions.addArrangedSubview(button)
 	}
 	
 	func didChangeText(_ syntaxTextView: SyntaxTextView) {
@@ -513,7 +512,7 @@ class CodePanel: GenericPanel, SyntaxTextViewDelegate {
 
 class SolutionsPanel: GenericPanel {
 	private let code: MultipleCodeEditors
-	private let button = ActionButton(text: "Run Code")
+	private let button = ActionImageButton(systemIcon: "play.fill", padding: UIEdgeInsets(top: 6, left: 4, bottom: 6, right: 4))
 	var run: ((String) -> Void)?
 	
 	init(question: Question, lexer: SyntaxTextViewDelegate) {
@@ -521,7 +520,7 @@ class SolutionsPanel: GenericPanel {
 		code.set(delegate: lexer)
 		code.set(edittable: false)
 		code.set(theme: CodeComplete.theme.sourceCode)
-		super.init(cellName: "S", tabName: "Our Solutions", content: BlurredView(content: code, tip: "Tap to reveal solutions"))
+		super.init(cellName: "Our Solutions", tabName: "Our Solutions", content: BlurredView(content: code, tip: "Tap to reveal solutions"))
 		
 		question.Resources.javascript.Solutions.enumerated().forEach {
 			self.code.set(text: $0.element, at: $0.offset)
@@ -531,10 +530,8 @@ class SolutionsPanel: GenericPanel {
 			let solution = question.Resources.javascript.Solutions[self.code.getCurrent()]
 			self.run?(solution)
 		}
-	}
-	
-	override func configure(panel: QuestionPanel, tab: Int, actions: UIStackView) {
-		actions.addArrangedSubview(button)
+		
+		code.actions.contentView.addArrangedSubview(button)
 	}
 	
 	func set(enabled: Bool) {
@@ -547,7 +544,7 @@ class TestsPanel: GenericPanel {
 	
 	init(view: TestsView) {
 		self.current = view
-		super.init(cellName: "T", tabName: "Tests")
+		super.init(cellName: "Tests", tabName: "Tests")
 	}
 	
 	func set(results: ResultsView) {

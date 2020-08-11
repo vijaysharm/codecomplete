@@ -116,7 +116,6 @@ protocol QuestionPanelDelegate {
 	func tabCount(panel: QuestionPanel) -> Int
 	func configure(panel: QuestionPanel, tab: Int, cell: QuickPanelCellView)
 	func configure(panel: QuestionPanel, tab: Int, label: Label)
-	func configure(panel: QuestionPanel, tab: Int, actions: UIStackView)
 	func configure(panel: QuestionPanel, tab: Int, content: View)
 }
 
@@ -143,10 +142,11 @@ class QuickPanelCellView: UICollectionViewCell {
 class QuestionPanel: View {
 	private lazy var collection: UICollectionView = { [unowned self] in
 		let layout = UICollectionViewFlowLayout()
+		layout.scrollDirection = .horizontal
 		
 		let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
 		view.translatesAutoresizingMaskIntoConstraints = false
-		view.showsVerticalScrollIndicator = true
+		view.showsVerticalScrollIndicator = false
 		view.showsHorizontalScrollIndicator = false
 		view.allowsMultipleSelection = false
 		view.delegate = self
@@ -157,16 +157,6 @@ class QuestionPanel: View {
 		return view
 	}()
 	private let content = View()
-	private let actions: UIStackView = {
-		let view = UIStackView()
-		view.translatesAutoresizingMaskIntoConstraints = false
-		view.axis = .horizontal
-		view.distribution = .fill
-		view.alignment = .fill
-		
-		return view
-	}()
-	private let title = Label()
 	private let theme = CodeComplete.theme
 	
 	private var selection = 0
@@ -181,81 +171,37 @@ class QuestionPanel: View {
         clipsToBounds = true
 		
 		content.backgroundColor = theme.tertiary
-		title.textColor = theme.textPrimary
-		title.font = UIFont.boldSystemFont(ofSize: UIFont.labelFontSize)
 		collection.backgroundColor = theme.secondary
 		
-		let titleContainer = View()
-		titleContainer.backgroundColor = theme.tertiary
-		titleContainer.addSubview(title)
-		titleContainer.addSubview(actions)
-		title.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-		actions.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-		
-		addSubview(titleContainer)
 		addSubview(content)
 		addSubview(collection)
 		
 		NSLayoutConstraint.activate([
 			collection.leadingAnchor.constraint(equalTo: leadingAnchor),
 			collection.topAnchor.constraint(equalTo: topAnchor),
-			collection.bottomAnchor.constraint(equalTo: bottomAnchor),
-			collection.widthAnchor.constraint(equalToConstant: 48),
+			collection.trailingAnchor.constraint(equalTo: trailingAnchor),
+			collection.heightAnchor.constraint(equalToConstant: 48),
 			
-			titleContainer.leadingAnchor.constraint(equalTo: collection.trailingAnchor),
-			titleContainer.topAnchor.constraint(equalTo: topAnchor),
-			titleContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
-			titleContainer.heightAnchor.constraint(equalToConstant: 48),
-			
-			actions.leadingAnchor.constraint(equalTo: title.trailingAnchor),
-			actions.topAnchor.constraint(equalTo: titleContainer.topAnchor),
-			actions.trailingAnchor.constraint(equalTo: titleContainer.trailingAnchor),
-			actions.heightAnchor.constraint(equalToConstant: 48),
-			
-			title.topAnchor.constraint(equalTo: titleContainer.topAnchor),
-			title.leadingAnchor.constraint(equalTo: titleContainer.leadingAnchor, constant: 16),
-			title.bottomAnchor.constraint(equalTo: titleContainer.bottomAnchor),
-			
-			content.topAnchor.constraint(equalTo: titleContainer.bottomAnchor),
+			content.topAnchor.constraint(equalTo: collection.bottomAnchor),
 			content.bottomAnchor.constraint(equalTo: bottomAnchor),
-			content.leadingAnchor.constraint(equalTo: collection.trailingAnchor),
+			content.leadingAnchor.constraint(equalTo: leadingAnchor),
 			content.trailingAnchor.constraint(equalTo: trailingAnchor),
 		])
 	}
 	
 	func set(index: Int) {
 		content.subviews.forEach { $0.removeFromSuperview() }
-		actions.removeAllArrangedSubviews()
 		
 		selection = index
 		collection.selectItem(at: IndexPath(item: index, section: 0), animated: true, scrollPosition: .top)
 		collection.reloadData()
 		
-		delegate?.configure(panel: self, tab: index, label: title)
 		delegate?.configure(panel: self, tab: index, content: content)
-		delegate?.configure(panel: self, tab: index, actions: actions)
 	}
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-}
-
-extension UIStackView {
-    
-    func removeAllArrangedSubviews() {
-        
-        let removedSubviews = arrangedSubviews.reduce([]) { (allSubviews, subview) -> [UIView] in
-            self.removeArrangedSubview(subview)
-            return allSubviews + [subview]
-        }
-        
-        // Deactivate all constraints
-//        NSLayoutConstraint.deactivate(removedSubviews.flatMap({ $0.constraints }))
-        
-        // Remove the views from self
-        removedSubviews.forEach({ $0.removeFromSuperview() })
-    }
 }
 
 extension QuestionPanel: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
@@ -283,10 +229,9 @@ extension QuestionPanel: UICollectionViewDelegateFlowLayout, UICollectionViewDat
 	}
 	
 	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		CGSize(width: 48, height: 48)
+		CGSize(width: 140, height: 48)
     }
-	
-	
+
 	public func collectionView(_ collectionView: UICollectionView,
 						layout collectionViewLayout: UICollectionViewLayout,
 						insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -447,6 +392,35 @@ class ActionButton: UIButton {
 	}
 }
 
+class ActionImageButton: UIButton {
+	var action: (() -> Void)?
+	
+	init(systemIcon: String, padding: UIEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)) {
+		super.init(frame: .zero)
+		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .bold, scale: .large)
+		let boldSmallSymbolImage = UIImage(systemName: systemIcon, withConfiguration: config)
+		tintColor = CodeComplete.theme.textPrimary
+		contentEdgeInsets = padding
+		setImage(boldSmallSymbolImage, for: .normal)
+		backgroundColor = CodeComplete.theme.action
+		
+		addTarget(self, action: #selector(runAction), for: .touchUpInside)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func set(enabled: Bool) {
+		backgroundColor = enabled ? CodeComplete.theme.action : CodeComplete.theme.disabled
+		isEnabled = enabled
+	}
+	
+	@objc func runAction() {
+		action?()
+	}
+}
+
 class Link: ActionButton {
 	override init(text: String = "", padding: UIEdgeInsets = UIEdgeInsets(top: 1, left: 16, bottom: 1, right: 16)) {
 		super.init(text: text, padding: padding)
@@ -464,7 +438,7 @@ class ImageButton: UIButton {
 	
 	init(systemIcon: String, padding: UIEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)) {
 		super.init(frame: .zero)
-		let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold, scale: .large)
+		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .bold, scale: .large)
 		let boldSmallSymbolImage = UIImage(systemName: systemIcon, withConfiguration: config)
 		tintColor = CodeComplete.theme.textPrimary
 		contentEdgeInsets = padding
@@ -616,7 +590,6 @@ class LabelCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout,
 		CGSize(width: 100, height: 48)
     }
 	
-	
 	public func collectionView(_ collectionView: UICollectionView,
 						layout collectionViewLayout: UICollectionViewLayout,
 						insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -634,6 +607,7 @@ class MultipleCodeEditors: View {
 	private var editors: [CodeEditor]
 	private let codeContainer = View()
 	private var current: Int
+	let actions = ScrollableStackView(padding: 0, spacing: 0)
 	
 	init(_ count: Int) {
 		editors = [CodeEditor](repeating: CodeEditor(), count: count)
@@ -657,19 +631,25 @@ class MultipleCodeEditors: View {
 		
 		addSubview(buttonContainer)
 		addSubview(codeContainer)
+		addSubview(actions)
 		
 		let editor = editors[current]
 		codeContainer.addSubview(editor)
 		codeContainer.fill(with: editor)
 		
 		NSLayoutConstraint.activate([
+			actions.topAnchor.constraint(equalTo: topAnchor),
+			actions.leadingAnchor.constraint(equalTo: leadingAnchor),
+			actions.widthAnchor.constraint(equalToConstant: 48),
+			actions.bottomAnchor.constraint(equalTo: bottomAnchor),
+			
 			buttonContainer.topAnchor.constraint(equalTo: topAnchor),
-			buttonContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+			buttonContainer.leadingAnchor.constraint(equalTo: actions.trailingAnchor, constant: 8),
 			buttonContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
-			buttonContainer.heightAnchor.constraint(equalToConstant: 48),
+			buttonContainer.heightAnchor.constraint(equalToConstant: 32),
 			
 			codeContainer.topAnchor.constraint(equalTo: buttonContainer.bottomAnchor),
-			codeContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+			codeContainer.leadingAnchor.constraint(equalTo: actions.trailingAnchor),
 			codeContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
 			codeContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
 		])
@@ -1414,26 +1394,39 @@ class ScrollableStackView: UIScrollView {
 		view.axis = .vertical
 		view.distribution = .fill
 		view.alignment = .fill
-		view.spacing = 16
 		
 		return view
 	}()
 	
-	init() {
+	init(padding: CGFloat = 16, spacing: CGFloat = 16) {
 		super.init(frame: .zero)
 		translatesAutoresizingMaskIntoConstraints = false
 		
+		contentView.spacing = spacing
 		addSubview(contentView)
 		
 		let contentLayoutGuide = self.contentLayoutGuide
 		let frameLayoutGuide = self.frameLayoutGuide
 		NSLayoutConstraint.activate([
-			contentView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor, constant: 16),
-			contentView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: -16),
-			contentView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor, constant: 16),
+			contentView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor, constant: padding),
+			contentView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: -padding),
+			contentView.leadingAnchor.constraint(equalTo: contentLayoutGuide.leadingAnchor, constant: padding),
 			contentView.trailingAnchor.constraint(equalTo: contentLayoutGuide.trailingAnchor),
-			contentView.widthAnchor.constraint(equalTo: frameLayoutGuide.widthAnchor, constant: -32)
+			contentView.widthAnchor.constraint(equalTo: frameLayoutGuide.widthAnchor, constant: -2 * padding)
 		])
+	}
+	
+	func removeAllArrangedSubviews() {
+		let removedSubviews = contentView.arrangedSubviews.reduce([]) { (allSubviews, subview) -> [UIView] in
+			contentView.removeArrangedSubview(subview)
+			return allSubviews + [subview]
+		}
+		
+		// Deactivate all constraints
+        // NSLayoutConstraint.deactivate(removedSubviews.flatMap({ $0.constraints }))
+		
+		// Remove the views from self
+		removedSubviews.forEach({ $0.removeFromSuperview() })
 	}
 	
 	required init?(coder: NSCoder) {
@@ -1554,10 +1547,6 @@ class PanelDelegate: QuestionPanelDelegate {
 	func configure(panel: QuestionPanel, tab: Int, cell: QuickPanelCellView) {
 		panels[tab].configure(panel: panel, tab: tab, cell: cell)
 	}
-	
-	func configure(panel: QuestionPanel, tab: Int, actions: UIStackView) {
-		panels[tab].configure(panel: panel, tab: tab, actions: actions)
-	}
 }
 
 class GenericPanel: QuestionPanelDelegate {
@@ -1581,7 +1570,6 @@ class GenericPanel: QuestionPanelDelegate {
 	func tabCount(panel: QuestionPanel) -> Int { fatalError() }
 	func configure(panel: QuestionPanel, tab: Int, cell: QuickPanelCellView) { cell.label.text = cellName }
 	func configure(panel: QuestionPanel, tab: Int, label: Label) { label.text = tabName }
-	func configure(panel: QuestionPanel, tab: Int, actions: UIStackView) {}
 	func configure(panel: QuestionPanel, tab: Int, content: View) {
 		if let body = self.content {
 			content.addSubview(body)
@@ -1666,7 +1654,7 @@ class SplitPanel: View, QuestionView {
 			right.topAnchor.constraint(equalTo: topAnchor),
 			right.bottomAnchor.constraint(equalTo: bottomAnchor),
 			right.trailingAnchor.constraint(equalTo: trailingAnchor),
-			right.leadingAnchor.constraint(equalTo: left.trailingAnchor)
+			right.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5, constant: -4),
 		])
 		
 		left.set(index: 0)
@@ -1677,7 +1665,7 @@ class SplitPanel: View, QuestionView {
 		if let _ = panel as? TestsPanel {
 			self.left.set(index: 2)
 		} else {
-			self.right.set(index: 1)
+			self.right.set(index: 2)
 		}
 	}
 	
