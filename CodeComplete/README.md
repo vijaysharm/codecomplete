@@ -22,7 +22,11 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Add toast suggesting the user take a hint after X seconds of idle
 	* [ ] Support increasing font size
 	* [ ] Have user editable tests
-	
+
+### Version 1.4
+	* [x] Improve layout for mobile
+	* [x] Kill code execution after 5 seconds
+
 ### Version 1.3
 	* [x] Show x of y failed/passed tests
 	* [x] Push notifications
