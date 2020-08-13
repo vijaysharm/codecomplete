@@ -10,6 +10,7 @@ import Sourceful
 import Highlightr
 import Purchases
 import WebKit
+import Firebase
 
 class Label: UILabel {
 	init(text: String = "") {
@@ -195,6 +196,13 @@ class QuestionPanel: View {
 		selection = index
 		collection.selectItem(at: IndexPath(item: index, section: 0), animated: true, scrollPosition: .top)
 		collection.reloadData()
+		collection.scrollToItem(at: IndexPath(item: index, section: 0), at: .right, animated: true)
+		
+		Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+			AnalyticsParameterItemID: "\(index)",
+			AnalyticsParameterItemName: "\(index)",
+			AnalyticsParameterContentType: "tab"
+		])
 		
 		delegate?.configure(panel: self, tab: index, content: content)
 	}

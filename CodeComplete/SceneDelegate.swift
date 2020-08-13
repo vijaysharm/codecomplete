@@ -19,8 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let window = UIWindow(frame: windowScene.coordinateSpace.bounds)
 		window.windowScene = windowScene
 
-		Auth.auth().signInAnonymously() { (_, error) in
-			if error != nil { Auth.auth().signInAnonymously() { (_, _) in } }
+		Auth.auth().signInAnonymously() { (result, error) in
+			if error != nil { Auth.auth().signInAnonymously() { (result, _) in
+				if let result = result { DispatchQueue.main.async { TestFairy.setUserId(result.user.uid) } }
+			} }
+			else if let result = result { DispatchQueue.main.async { TestFairy.setUserId(result.user.uid) } }
 		}
 		
 		let url = Bundle.main.url(forResource: "question-list", withExtension: "json")!
@@ -30,9 +33,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			purchase: PurchaseService(purchaseId: "wNaMDhfDzonBOOBnLJlPKQOuxphZUJEd"),
 			free: [
 				"Find Three Largest Numbers",
-				"Search In Sorted Matrix",
-				"Quickselect",
-				"Longest String Chain"
+				"Binary Search",
+				"Product Sum",
+				"Nth Fibonacci"
 			]
 		)
 		let database = Database()

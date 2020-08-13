@@ -8,4 +8,5 @@ ${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework
 ${BUILT_PRODUCTS_DIR}/Purchases/Purchases.framework
 ${BUILT_PRODUCTS_DIR}/Sourceful/Sourceful.framework
 ${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework
+${BUILT_PRODUCTS_DIR}/SwiftRater/SwiftRater.framework
 ${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42834D2224E5B4E400D1B40A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42834D2124E5B4E400D1B40A /* iAd.framework */; };
 		42CFAB3124950E630006C268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3024950E630006C268 /* AppDelegate.swift */; };
 		42CFAB3324950E630006C268 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3224950E630006C268 /* SceneDelegate.swift */; };
 		42CFAB3524950E630006C268 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3424950E630006C268 /* ViewController.swift */; };
@@ -249,7 +250,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		42CFAB2D24950E630006C268 /* Code Complete.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code Complete.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42834D2124E5B4E400D1B40A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		42CFAB2D24950E630006C268 /* Code Complete - Interview Prep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code Complete - Interview Prep.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42CFAB3024950E630006C268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42CFAB3224950E630006C268 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		42CFAB3424950E630006C268 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42834D2224E5B4E400D1B40A /* iAd.framework in Frameworks */,
 				804526FD6A818CCCD7FD7D70 /* Pods_CodeComplete.framework in Frameworks */,
 				42CFAD7524AACFAF0006C268 /* StoreKit.framework in Frameworks */,
 			);
@@ -410,6 +413,7 @@
 		026BF4A8F2677DF36E169070 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42834D2124E5B4E400D1B40A /* iAd.framework */,
 				42CFAD7424AACFAF0006C268 /* StoreKit.framework */,
 				75E39C23FFEB29BD59FAE10F /* Pods_CodeComplete.framework */,
 				836CB8B0E1E3B72FFCC11E87 /* Pods_CodeCompleteTests.framework */,
@@ -431,7 +435,7 @@
 		42CFAB2E24950E630006C268 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				42CFAB2D24950E630006C268 /* Code Complete.app */,
+				42CFAB2D24950E630006C268 /* Code Complete - Interview Prep.app */,
 				42CFACD7249FCCAA0006C268 /* CodeCompleteTests.xctest */,
 			);
 			name = Products;
@@ -641,7 +645,7 @@
 			);
 			name = CodeComplete;
 			productName = CodeComplete;
-			productReference = 42CFAB2D24950E630006C268 /* Code Complete.app */;
+			productReference = 42CFAB2D24950E630006C268 /* Code Complete - Interview Prep.app */;
 			productType = "com.apple.product-type.application";
 		};
 		42CFACD6249FCCAA0006C268 /* CodeCompleteTests */ = {
@@ -1212,9 +1216,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
-				PRODUCT_NAME = "Code Complete";
+				PRODUCT_NAME = "Code Complete - Interview Prep";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1236,9 +1240,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
-				PRODUCT_NAME = "Code Complete";
+				PRODUCT_NAME = "Code Complete - Interview Prep";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

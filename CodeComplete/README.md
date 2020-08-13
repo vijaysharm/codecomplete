@@ -23,6 +23,12 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Support increasing font size
 	* [ ] Have user editable tests
 
+### Version 1.5
+	* [x] Analytics
+	* [x] Ad Keyword information
+	* [x] Copy Solution
+	* [x] Review Dialog
+	
 ### Version 1.4
 	* [x] Improve layout for mobile
 	* [x] Kill code execution after 5 seconds

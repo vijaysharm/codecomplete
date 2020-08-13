@@ -10,6 +10,7 @@ import Sourceful
 import Highlightr
 import Purchases
 import FBSDKCoreKit
+import Firebase
 
 class QuestionProvider {
 	private let model: QuestionsViewModel
@@ -43,6 +44,12 @@ class QuestionProvider {
 			section = (section + 1) % model.sectionCount
 			index = 0
 		}
+		
+		Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+			AnalyticsParameterItemID: "\(name)",
+			AnalyticsParameterItemName: "\(question.Summary.Name)",
+			AnalyticsParameterContentType: "question"
+		])
 		
 		_current = question
 		return question
@@ -133,11 +140,21 @@ class QuestionViewController: UIViewController {
 	}
 	
 	@objc func nextQuestion() {
+		Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+			AnalyticsParameterItemID: "nextQuestion",
+			AnalyticsParameterItemName: "Next Question",
+			AnalyticsParameterContentType: "action"
+		])
 		let question = provider.next()
 		self.show(question: question)
 	}
 	
 	@objc func resize() {
+		Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+			AnalyticsParameterItemID: "resize",
+			AnalyticsParameterItemName: "Resize Screen",
+			AnalyticsParameterContentType: "action"
+		])
 		database.fullScreen.toggle()
 		sizeButtton.image = UIImage(systemName: database.fullScreen ? "uiwindow.split.2x1" : "macwindow")
 		self.show(question: provider.current())
@@ -152,6 +169,11 @@ class QuestionViewController: UIViewController {
 			} else {
 				self.timerBottomConstraint?.constant = -8
 				self.timer.start()
+				Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+					AnalyticsParameterItemID: "timerStart",
+					AnalyticsParameterItemName: "Start Timer",
+					AnalyticsParameterContentType: "action"
+				])
 			}
 		}
 		
@@ -165,6 +187,11 @@ class QuestionViewController: UIViewController {
 		optionMenu.addAction(cancelAction)
 		optionMenu.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem;
 		
+		Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+			AnalyticsParameterItemID: "overflow",
+			AnalyticsParameterItemName: "Overflow Opttions",
+			AnalyticsParameterContentType: "action"
+		])
 		self.present(optionMenu, animated: true, completion: nil)
 	}
 	
@@ -196,6 +223,12 @@ class QuestionViewController: UIViewController {
 			database: database
 		)
 		codePanel.run = {
+			Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+				AnalyticsParameterItemID: "runYourSolution",
+				AnalyticsParameterItemName: "Run Your Solution",
+				AnalyticsParameterContentType: "action"
+			])
+			
 			codePanel.set(enabled: false)
 			// TODO: Need to find out why when code engine is a property
 			// TODO: of the class, changes to the code don't seem to give
@@ -224,6 +257,11 @@ class QuestionViewController: UIViewController {
 			}
 		}
 		codePanel.restore = {
+			Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+				AnalyticsParameterItemID: "restore",
+				AnalyticsParameterItemName: "Restore Code",
+				AnalyticsParameterContentType: "action"
+			])
 			self.confirm(title: "Restore Default Code", message: "You're about to reset your solution. Any work you've done on this solution will be lost.\nAre you sure you want to continue?") { _ in
 				codePanel.setCurrent(code: question.Resources.javascript.StartingCode)
 			}
@@ -243,6 +281,11 @@ class QuestionViewController: UIViewController {
 
 		let solutions = SolutionsPanel(question: question, lexer: javascript)
 		solutions.run = {
+			Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+				AnalyticsParameterItemID: "runourSolution",
+				AnalyticsParameterItemName: "Run Our Solution",
+				AnalyticsParameterContentType: "action"
+			])
 			solutions.set(enabled: false)
 			// TODO: Need to find out why when code engine is a property
 			// TODO: of the class, changes to the code don't seem to give
@@ -268,6 +311,17 @@ class QuestionViewController: UIViewController {
 					self.panel?.showPanel(panel: consolePanel)
 					break;
 				}
+			}
+		}
+		
+		solutions.copy = { code in
+			Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+				AnalyticsParameterItemID: "copy",
+				AnalyticsParameterItemName: "Copy solution",
+				AnalyticsParameterContentType: "action"
+			])
+			self.confirm(title: "Copy Solution", message: "You're about to copy our soltion into your solution. Any work you've done on this solution will be lost.\nAre you sure you want to continue?") { _ in
+				codePanel.setCurrent(code: code)
 			}
 		}
 		
@@ -453,8 +507,8 @@ class CodePanel: GenericPanel, SyntaxTextViewDelegate {
 	private let name: String
 	private let database: Database
 	private let code: MultipleCodeEditors
-	private let reset = ImageButton(systemIcon: "gobackward", padding: UIEdgeInsets(top: 6, left: 4, bottom: 6, right: 4))
-	private let button = ActionImageButton(systemIcon: "play.fill", padding: UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4))
+	private let reset = ImageButton(systemIcon: "gobackward", padding: UIEdgeInsets(top: 11, left: 4, bottom: 11, right: 4))
+	private let button = ActionImageButton(systemIcon: "play.fill", padding: UIEdgeInsets(top: 13, left: 4, bottom: 13, right: 4))
 	private let lexer: JavaScriptLexer
 	
 	var run: ((String) -> Void)?
@@ -512,8 +566,10 @@ class CodePanel: GenericPanel, SyntaxTextViewDelegate {
 
 class SolutionsPanel: GenericPanel {
 	private let code: MultipleCodeEditors
-	private let button = ActionImageButton(systemIcon: "play.fill", padding: UIEdgeInsets(top: 6, left: 4, bottom: 6, right: 4))
+	private let copyButton = ImageButton(systemIcon: "doc.on.doc", padding: UIEdgeInsets(top: 10, left: 4, bottom: 10, right: 4))
+	private let button = ActionImageButton(systemIcon: "play.fill", padding: UIEdgeInsets(top: 13, left: 4, bottom: 13, right: 4))
 	var run: ((String) -> Void)?
+	var copy: ((String) -> Void)?
 	
 	init(question: Question, lexer: SyntaxTextViewDelegate) {
 		code = MultipleCodeEditors(question.Resources.javascript.Solutions.count)
@@ -531,7 +587,13 @@ class SolutionsPanel: GenericPanel {
 			self.run?(solution)
 		}
 		
+		copyButton.action = {
+			let solution = question.Resources.javascript.Solutions[self.code.getCurrent()]
+			self.copy?(solution)
+		}
+		
 		code.actions.contentView.addArrangedSubview(button)
+		code.actions.contentView.addArrangedSubview(copyButton)
 	}
 	
 	func set(enabled: Bool) {

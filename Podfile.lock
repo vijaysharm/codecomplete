@@ -125,6 +125,7 @@ PODS:
   - Purchases (3.2.2)
   - Sourceful (0.3.0)
   - SwiftKeychainWrapper (3.4.0)
+  - SwiftRater (1.8.0)
   - TestFairy (1.24.4)
 
 DEPENDENCIES:
@@ -138,6 +139,7 @@ DEPENDENCIES:
   - Purchases (= 3.2.2)
   - "Sourceful (from `git@github.com:twostraws/Sourceful.git`, branch `main`)"
   - SwiftKeychainWrapper (= 3.4.0)
+  - SwiftRater
   - TestFairy (~> 1.24.4)
 
 SPEC REPOS:
@@ -167,6 +169,7 @@ SPEC REPOS:
     - Protobuf
     - Purchases
     - SwiftKeychainWrapper
+    - SwiftRater
     - TestFairy
 
 EXTERNAL SOURCES:
@@ -206,8 +209,9 @@ SPEC CHECKSUMS:
   Purchases: 392c729893c011c7d4d37d7f7c9f863e597d4a9b
   Sourceful: 2cb307cb9053bb409871890116604f04f7e89bc8
   SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
+  SwiftRater: 6094fa6e9b3866ff8beca0a871b4b5f9ab896a6d
   TestFairy: 3950daeb0c5c53d0b09b2a14c718ff3bd806b7d2
 
-PODFILE CHECKSUM: 74b804e1b9e87023c7c19e09165260451422af46
+PODFILE CHECKSUM: 56f12f01d2a56f0ecf5188525ff5d63c64349bf1
 
 COCOAPODS: 1.8.4

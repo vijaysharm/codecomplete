@@ -8,6 +8,9 @@
 import UIKit
 import FBSDKCoreKit
 import Firebase
+import SwiftRater
+import iAd
+import AdSupport
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,9 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		UNUserNotificationCenter.current().delegate = self
 		let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-		UNUserNotificationCenter.current().requestAuthorization(
-			options: authOptions,
-			completionHandler: {_, _ in })
+		UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { authorized, _ in
+			DispatchQueue.main.async {
+				TestFairy.setAttribute("push-notification-enabled", withValue: authorized ? "yes" : "no")
+			}
+		}
 		application.registerForRemoteNotifications()
 		Messaging.messaging().delegate = self
 		
@@ -29,11 +34,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application,
             didFinishLaunchingWithOptions: launchOptions
         )
+		SwiftRater.daysUntilPrompt = 2
+        SwiftRater.usesUntilPrompt = 3
+        SwiftRater.significantUsesUntilPrompt = 2
+        SwiftRater.daysBeforeReminding = 2
+        SwiftRater.showLaterButton = true
+        SwiftRater.debugMode = true
+		#if !DEBUG
+		SwiftRater.debugMode = false
+		#endif
+		SwiftRater.appLaunched()
 		
+		TestFairy.disableCrashHandler()
+		TestFairy.setFeedbackEmailVisible(false)
 		TestFairy.setServerEndpoint("app3-vijay1.testfairy.com")
 		#if !DEBUG
 		TestFairy.begin("5b3af35e59a1e074e2d50675b1b629306cf0cfbd", withOptions: ["verbose": true])
 		#endif
+		collectAdAttributtion()
 		return true
 	}
 
@@ -101,6 +119,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	  print(userInfo)
 
 	  completionHandler(UIBackgroundFetchResult.newData)
+	}
+	
+	private func collectAdAttributtion() {
+		ADClient.shared().requestAttributionDetails({ (attributionDetails, error) in
+			guard error == nil else { return }
+			guard let details = attributionDetails else { return }
+			for (type, dictionary) in details {
+				guard let data = dictionary as? Dictionary<AnyHashable, Any> else { continue }
+				DispatchQueue.main.async {
+					TestFairy.setAttribute("Attributtion Version", withValue: type)
+				}
+				for (key, string) in data {
+					guard let value = string as? String, let _ = key as? String else { continue }
+					DispatchQueue.main.async {
+						TestFairy.setAttribute((key as! String), withValue: value)
+					}
+				}
+			}
+		});
 	}
 }
 

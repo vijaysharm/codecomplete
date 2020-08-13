@@ -193,12 +193,19 @@
 			<key>orderHint</key>
 			<integer>27</integer>
 		</dict>
-		<key>TestFairy.xcscheme</key>
+		<key>SwiftRater.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>28</integer>
+		</dict>
+		<key>TestFairy.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>29</integer>
 		</dict>
 		<key>nanopb.xcscheme</key>
 		<dict>
