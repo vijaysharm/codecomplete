@@ -18,7 +18,7 @@ target 'CodeComplete' do
   pod 'SwiftKeychainWrapper', '3.4.0'
   pod 'TestFairy', '~> 1.24.4'
   pod 'FBSDKCoreKit', '~> 7.1.1'
-  pod "SwiftRater"
+  pod "SwiftRater", '~> 1.8.0'
 	
   target 'CodeCompleteTests' do
     inherit! :search_paths

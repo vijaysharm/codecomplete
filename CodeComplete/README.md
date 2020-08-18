@@ -5,6 +5,11 @@
 List of characters used in all solutions (90 characters):  !"$%&'()*+,-./012345689:;<=>?ABCDEFGHIJKLMNOPRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}
 
 ### Version X
+	* [ ] Tabs: Behavioral, System, Coding, Data Structures, Community	
+	* [ ] System Expert Prompt: Many systems design questions are intentionally left very vague and are literally given in the form of `Design Foobar`. It's your job to ask clarifying questions to better understand the system that you have to build.
+	We've laid out some of these questions below; their answers should give you some guidance on the problem. Before looking at them, we encourage you to take few minutes to think about what questions you'd ask in a real interview.
+	* [ ] System Expert Solution: Our solution walkthroughs are meant to supplement our video solutions. We recommend starting with the video solution and using the walkthrough either as a point of reference while you watch the video or as a review tool if you need to brush up on this question's solution later on.
+	* [ ] Create Video ad for app store
 	* [ ] Show Progress (0 of 100 questions completed)
 	* [ ] Add countdown timer (currenly have count-up timer)
 	* [ ] Splash / Onboarding view (including asking for push notification access)
@@ -15,7 +20,7 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Improve code highlighting in source code editor
 	* [ ] Improve overall app styling
 	* [ ] Implement Filter button
-	* [ ] Implement "starring" questions
+	* [ ] Implement "starring" questions [Maybe require login?]
 	* [ ] Support themes
 	* [ ] Implement "whiteboard" mode. Allow users to write their answers on a canvas
 		* [ ] Is it possible to convert the handwritten code to actual code to be run?
