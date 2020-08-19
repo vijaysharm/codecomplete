@@ -25,6 +25,19 @@ class Database {
 		}
 	}
 	
+	var onboarding: Bool {
+		get {
+			if let onboarding = keystore.bool(forKey: "onboarding") {
+				return onboarding
+			}
+			
+			return false
+		}
+		set {
+			keystore.set(newValue, forKey: "onboarding")
+		}
+	}
+	
 	func set(solution: String, name: String, index: Int) {
 		let clean = name.lowercased().replacingOccurrences(of: " ", with: "-")
 		keystore.set(solution, forKey: "solution-\(clean)-\(index)")

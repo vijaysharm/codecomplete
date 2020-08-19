@@ -15,6 +15,7 @@ public enum SettingsType: String {
 	case personalize = "Personalize"
 	case review = "Rate Us"
 	case feedback = "Give Feedback"
+	case onboard = "Welcome Screen"
 	case empty = ""
 	case secret = " "
 }
@@ -32,7 +33,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 	}()
 	
 	private let items = [
-		SettingsType.contactUs,
+		SettingsType.onboard,
+		.contactUs,
 		.termsOfService,
 		.privacyPolicy,
 		.restorePurchase,
@@ -40,10 +42,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 		.review
 	]
 	private let service: Service
+	private let database: Database
 	
 	var delegate: (() -> Void)?
-	init(service: Service) {
+	init(
+		service: Service,
+		database: Database
+	) {
 		self.service = service
+		self.database = database
 		super.init(nibName: nil, bundle: nil)
 		title = "Settings"
 		
@@ -100,6 +107,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 			break
 		case .feedback:
 			TestFairy.showFeedbackForm("5b3af35e59a1e074e2d50675b1b629306cf0cfbd", takeScreenshot: false)
+			break
+		case .onboard:
+			let controller = OnboardingViewController()
+			controller.delegate = {
+				$0.dismiss(animated: true)
+			}
+			self.present(controller, animated: true)
 			break
 		default:
 			break

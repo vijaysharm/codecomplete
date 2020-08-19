@@ -63,6 +63,88 @@ class ScrollView: UIScrollView {
 	}
 }
 
+class HorizontalPageView: UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+	class PageViewCellView: UICollectionViewCell {
+		override init(frame: CGRect) {
+			super.init(frame: frame)
+			translatesAutoresizingMaskIntoConstraints = false
+		}
+		
+		func fill(view content: UIView) {
+			subviews.forEach { $0.removeFromSuperview() }
+			
+			addSubview(content)
+			NSLayoutConstraint.activate([
+				content.topAnchor.constraint(equalTo: topAnchor),
+				content.bottomAnchor.constraint(equalTo: bottomAnchor),
+				content.leadingAnchor.constraint(equalTo: leadingAnchor),
+				content.trailingAnchor.constraint(equalTo: trailingAnchor),
+			])
+		}
+		
+		required init?(coder: NSCoder) {
+			fatalError("init(coder:) has not been implemented")
+		}
+	}
+	
+	private let content: [UIView]
+	var pageChanged: ((Int) -> Void)?
+	
+	init(content: [UIView]) {
+		self.content = content
+		let layout = UICollectionViewFlowLayout()
+		layout.scrollDirection = .horizontal
+		super.init(frame: .zero, collectionViewLayout: layout)
+		
+		translatesAutoresizingMaskIntoConstraints = false
+			
+		isPagingEnabled = true
+		showsVerticalScrollIndicator = false
+		showsHorizontalScrollIndicator = false
+		allowsMultipleSelection = false
+		delegate = self
+		dataSource = self
+		backgroundColor = nil
+		register(PageViewCellView.self, forCellWithReuseIdentifier: "cell")
+	}
+	
+	func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		let item = Int(targetContentOffset.pointee.x / scrollView.frame.width)
+		pageChanged?(item)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		content.count
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PageViewCellView
+		let content = self.content[indexPath.row]
+		cell.fill(view: content)
+		return cell
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+
+	public func collectionView(_ collectionView: UICollectionView,
+						layout collectionViewLayout: UICollectionViewLayout,
+						insetForSectionAt section: Int) -> UIEdgeInsets {
+		.zero
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView,
+						layout collectionViewLayout: UICollectionViewLayout,
+						minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		0
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
+
 class ColouredSquare: View {
 	init(colour: UIColor = .black) {
 		super.init()
@@ -411,7 +493,7 @@ class ActionImageButton: UIButton {
 		contentEdgeInsets = padding
 		setImage(boldSmallSymbolImage, for: .normal)
 		backgroundColor = CodeComplete.theme.action
-		
+		translatesAutoresizingMaskIntoConstraints = false
 		addTarget(self, action: #selector(runAction), for: .touchUpInside)
 	}
 	
@@ -451,6 +533,7 @@ class ImageButton: UIButton {
 		tintColor = CodeComplete.theme.textPrimary
 		contentEdgeInsets = padding
 		setImage(boldSmallSymbolImage, for: .normal)
+		translatesAutoresizingMaskIntoConstraints = false
 		
 		addTarget(self, action: #selector(runAction), for: .touchUpInside)
 	}

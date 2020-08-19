@@ -79,7 +79,7 @@ class ViewController: UIViewController {
 	}
 	
 	@objc func settings() {
-		let controller = SettingsViewController(service: service)
+		let controller = SettingsViewController(service: service, database: database)
 		controller.delegate = {
 			self.collection.reloadData()
 		}
@@ -99,6 +99,17 @@ class ViewController: UIViewController {
 		let bounds = UIScreen.main.bounds
 		self.view.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.size.height)
 		self.view.layoutIfNeeded()
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		if !database.onboarding {
+			let controller = OnboardingViewController(skippable: false)
+			controller.delegate = {
+				self.database.onboarding = true
+				$0.dismiss(animated: true)
+			}
+			self.present(controller, animated: true)
+		}
 	}
 	
 	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -162,10 +173,10 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
 		let fullWidth = Int(fullWidthF)
 		let possibleColumns = fullWidth / 250
 		if possibleColumns == 0 || possibleColumns == 1 {
-			return CGSize(width: fullWidth, height: fullWidth)
+			return CGSize(width: fullWidth, height: 190)
 		}
 		let size = (fullWidthF - (CGFloat(possibleColumns - 1) * 16)) / CGFloat(possibleColumns)
-		return CGSize(width: size, height: size)
+		return CGSize(width: size, height: 190)
     }
 	
 	public func collectionView(_ collectionView: UICollectionView,

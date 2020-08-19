@@ -4,6 +4,11 @@
 
 List of characters used in all solutions (90 characters):  !"$%&'()*+,-./012345689:;<=>?ABCDEFGHIJKLMNOPRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}
 
+### Version 1.6
+	* [x] Splash / Onboarding view (including asking for push notification access)
+	* [ ] Timer pause, resume
+	* [ ] Analytics: count working/failing solution, # of completed questions
+
 ### Version X
 	* [ ] Tabs: Behavioral, System, Coding, Data Structures, Community	
 	* [ ] System Expert Prompt: Many systems design questions are intentionally left very vague and are literally given in the form of `Design Foobar`. It's your job to ask clarifying questions to better understand the system that you have to build.
@@ -12,7 +17,6 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Create Video ad for app store
 	* [ ] Show Progress (0 of 100 questions completed)
 	* [ ] Add countdown timer (currenly have count-up timer)
-	* [ ] Splash / Onboarding view (including asking for push notification access)
       * [ ] If compilation error happens, and console is shown, should we show a toast to say "go back to code"? 
 	* [ ] Analytics
 	* [ ] Fix bst-construction and linked-list-construction tests

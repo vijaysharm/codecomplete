@@ -20,12 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		FirebaseApp.configure()
 		
 		UNUserNotificationCenter.current().delegate = self
-		let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-		UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { authorized, _ in
-			DispatchQueue.main.async {
-				TestFairy.setAttribute("push-notification-enabled", withValue: authorized ? "yes" : "no")
-			}
-		}
 		application.registerForRemoteNotifications()
 		Messaging.messaging().delegate = self
 		
