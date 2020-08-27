@@ -482,6 +482,10 @@ class QuestionViewController: UIViewController {
 			database.set(state: state, name: question.Summary.Name)
 			prompt.set(state: state)
 			changes.append(question.Summary.Name)
+			Analytics.logEvent("runSolution", parameters: [
+				AnalyticsParameterItemName: question.Summary.Name,
+				AnalyticsParameterContentType: success
+			])
 		}
 	}
 	
@@ -560,6 +564,9 @@ class CodePanel: GenericPanel, SyntaxTextViewDelegate {
 		guard let editor = syntaxTextView as? CodeEditor else { return }
 		guard let index = code.index(of: editor) else { return }
 		database.set(solution: syntaxTextView.contentTextView.text, name: name, index: index)
+		Analytics.logEvent("addedCode", parameters: [
+			AnalyticsParameterItemName: name
+		])
 	}
 	
 	func lexerForSource(_ source: String) -> Lexer {

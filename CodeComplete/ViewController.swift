@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
 	private let filter = HeaderView()
@@ -68,6 +69,8 @@ class ViewController: UIViewController {
 		])
 		
 		filter.onChange = {
+			Analytics.logEvent("search", parameters: nil)
+
 			self.filtered = self.filter.filter(questions: self.questions)
 			self.collection.reloadData()
 		}

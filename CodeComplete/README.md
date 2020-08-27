@@ -4,12 +4,8 @@
 
 List of characters used in all solutions (90 characters):  !"$%&'()*+,-./012345689:;<=>?ABCDEFGHIJKLMNOPRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz{|}
 
-### Version 1.6
-	* [x] Splash / Onboarding view (including asking for push notification access)
-	* [ ] Timer pause, resume
-	* [ ] Analytics: count working/failing solution, # of completed questions
-
 ### Version X
+	* [ ] Analytics: count working/failing solution, # of completed questions
 	* [ ] Tabs: Behavioral, System, Coding, Data Structures, Community	
 	* [ ] System Expert Prompt: Many systems design questions are intentionally left very vague and are literally given in the form of `Design Foobar`. It's your job to ask clarifying questions to better understand the system that you have to build.
 	We've laid out some of these questions below; their answers should give you some guidance on the problem. Before looking at them, we encourage you to take few minutes to think about what questions you'd ask in a real interview.
@@ -31,6 +27,10 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Add toast suggesting the user take a hint after X seconds of idle
 	* [ ] Support increasing font size
 	* [ ] Have user editable tests
+
+### Version 1.6
+	* [x] Splash / Onboarding view (including asking for push notification access)
+	* [x] Timer pause, resume
 
 ### Version 1.5
 	* [x] Analytics
