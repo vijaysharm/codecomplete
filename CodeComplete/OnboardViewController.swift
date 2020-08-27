@@ -35,29 +35,29 @@ class OnboardingViewController: UIViewController {
 		
 		let notification = PortraitPageView(
 			title: "Stay Up to Date",
-			substitle: "If you want to be notified as we improve the app, or launch promotions, consider signing up for notifications.",
+			subtitle: "If you want to be notified as we improve the app, or launch promotions, consider signing up for notifications.",
 			image: UIImage(named: "code-complete-onboard-4")
 		)
 		let onboard = [
 			PortraitPageView(
 				title: "Welcome to Code Complete",
-				substitle: "The ultimate resource to prepare for coding interviews. Everything you need, in one streamlined platform.",
+				subtitle: "The ultimate resource to prepare for coding interviews. Everything you need, in one streamlined platform.",
 				image: UIImage(named: "code-complete-onboard-1")
 			),
 			PortraitPageView(
 				title: "Read. Write. Run.",
-				substitle: "Coding out solutions to algorithm problems is the best way to practice. Our Javascript code-execution environment lets you type out your answers and run them against our test cases.",
+				subtitle: "Coding out solutions to algorithm problems is the best way to practice. Our Javascript code-execution environment lets you type out your answers and run them against our test cases.",
 				image: UIImage(named: "code-complete-onboard-2")
 			),
 			PortraitPageView(
 				title: "Decide. Commit. Succeed.",
-				substitle: "Many of our users have gotten offers from awesome companies. They all used Code Complete as the backbone for their technical coding interview preparation.",
+				subtitle: "Many of our users have gotten offers from awesome companies. They all used Code Complete as the backbone for their technical coding interview preparation.",
 				image: UIImage(named: "code-complete-onboard-3")
 			),
 			notification,
 			PortraitPageView(
 				title: "Help Make Code Complete Better.",
-				substitle: "We're a small team of passionate engineers. We want to help people take control of their careers by helping them prepare for coding interviews. You can help improve the platform by providing feedback or leaving a review. Your contribution goes a long way to helping us help others.",
+				subtitle: "We're a small team of passionate engineers. We want to help people take control of their careers by helping them prepare for coding interviews. You can help improve the platform by providing feedback or leaving a review. Your contribution goes a long way to helping us help others.",
 				image: UIImage(named: "code-complete-onboard-5"),
 				nextButtonImage: "checkmark"
 			),
@@ -131,7 +131,7 @@ class PortraitPageView: View {
 	
 	init(
 		title: String,
-		substitle: String,
+		subtitle: String,
 		image: UIImage?,
 		nextButtonImage: String = "arrow.right"
 	) {
@@ -144,7 +144,7 @@ class PortraitPageView: View {
 		pageTitle.font = CodeComplete.theme.questionTitle
 		pageTitle.textColor = .black
 		
-		let pageSubtitle = Label(text: substitle)
+		let pageSubtitle = Label(text: subtitle)
 		pageSubtitle.numberOfLines = 0
 		pageSubtitle.textAlignment = .center
 		pageSubtitle.textColor = .darkGray

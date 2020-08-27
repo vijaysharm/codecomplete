@@ -1220,7 +1220,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
 				PRODUCT_NAME = "Code Complete";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";
@@ -1244,7 +1244,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
 				PRODUCT_NAME = "Code Complete";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";

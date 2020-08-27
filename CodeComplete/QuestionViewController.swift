@@ -110,6 +110,10 @@ class QuestionViewController: UIViewController {
 		
 		navigationItem.rightBarButtonItems = [overflowButton, nextQuestionButton, sizeButtton]
 		
+		timer.stopButton.action =  {
+			self.setTimerState(hide: true)
+		}
+		
 		let question = provider.next()
 		self.show(question: question)
 		
@@ -164,17 +168,7 @@ class QuestionViewController: UIViewController {
 		let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
 		let timerAction = UIAlertAction(title: timer.isActive() ? "Stop Timer" : "Start Timer", style: .default) { _ in
-			if self.timer.isActive() {
-				self.timer.stop()
-			} else {
-				self.timerBottomConstraint?.constant = -8
-				self.timer.start()
-				Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-					AnalyticsParameterItemID: "timerStart",
-					AnalyticsParameterItemName: "Start Timer",
-					AnalyticsParameterContentType: "action"
-				])
-			}
+			self.setTimerState(hide: false)
 		}
 		
 		let feedbackAction = UIAlertAction(title: "Give Feedback", style: .default) { _ in
@@ -193,6 +187,21 @@ class QuestionViewController: UIViewController {
 			AnalyticsParameterContentType: "action"
 		])
 		self.present(optionMenu, animated: true, completion: nil)
+	}
+	
+	private func setTimerState(hide: Bool) {
+		if self.timer.isActive() {
+			self.timer.stop()
+			if hide { self.timerBottomConstraint?.constant = 50 }
+		} else {
+			self.timerBottomConstraint?.constant = -8
+			self.timer.start()
+			Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+				AnalyticsParameterItemID: "timerStart",
+				AnalyticsParameterItemName: "Start Timer",
+				AnalyticsParameterContentType: "action"
+			])
+		}
 	}
 	
 	private func show(question: Question) {
@@ -396,8 +405,6 @@ class QuestionViewController: UIViewController {
 			
 			timer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -8),
 			timerBottomConstraint!,
-			timer.heightAnchor.constraint(equalToConstant: 18),
-			timer.widthAnchor.constraint(equalToConstant: 60),
 		])
 	}
 	

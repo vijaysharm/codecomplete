@@ -528,14 +528,19 @@ class ImageButton: UIButton {
 	
 	init(systemIcon: String, padding: UIEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)) {
 		super.init(frame: .zero)
-		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .bold, scale: .large)
-		let boldSmallSymbolImage = UIImage(systemName: systemIcon, withConfiguration: config)
+
+		setSystemIcon(systemIcon)
 		tintColor = CodeComplete.theme.textPrimary
 		contentEdgeInsets = padding
-		setImage(boldSmallSymbolImage, for: .normal)
 		translatesAutoresizingMaskIntoConstraints = false
 		
 		addTarget(self, action: #selector(runAction), for: .touchUpInside)
+	}
+	
+	func setSystemIcon(_ systemIcon: String) {
+		let config = UIImage.SymbolConfiguration(pointSize: 16, weight: .bold, scale: .large)
+		let boldSmallSymbolImage = UIImage(systemName: systemIcon, withConfiguration: config)
+		setImage(boldSmallSymbolImage, for: .normal)
 	}
 	
 	required init?(coder: NSCoder) {
@@ -1845,20 +1850,64 @@ extension Purchases.Package {
 	}
 }
 
-class QuestionTimer: Label {
-	private var timer: Timer? = nil
-	private var date: Date? = nil
+class QuestionTimer: View {
+	enum State {
+		case stopped
+		case running
+		case paused
+	}
 	
-	init() {
-		super.init(text: "00:00")
+	private let label = Label(text: "00:00")
+	private var timer: Timer? = nil
+	private var seconds: Int? = nil
+	
+	let stopButton = ImageButton(systemIcon: "xmark", padding: .zero)
+	private let controlButton = ImageButton(systemIcon: "pause.circle", padding: .zero)
+	
+	override init() {
+		super.init()
 		
 		backgroundColor = UIColor.black.withAlphaComponent(0.7)
-		font = UIFont.systemFont(ofSize: 12)
-		textAlignment = .center
+		label.font = UIFont.systemFont(ofSize: 12)
+		label.textAlignment = .center
 		
 		clipsToBounds = true;
 		layer.masksToBounds = true;
-		layer.cornerRadius = 10;
+		layer.cornerRadius = 15;
+		
+		addSubview(controlButton)
+		addSubview(label)
+		addSubview(stopButton)
+		
+		controlButton.action = {
+			if self.isActive() {
+				self.pause()
+				self.controlButton.setSystemIcon("play.circle")
+			} else {
+				self.resume()
+				self.controlButton.setSystemIcon("pause.circle")
+			}
+		}
+		
+		NSLayoutConstraint.activate([
+			controlButton.topAnchor.constraint(equalTo: topAnchor),
+			controlButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+			controlButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+			controlButton.widthAnchor.constraint(equalTo: controlButton.heightAnchor),
+			
+			stopButton.topAnchor.constraint(equalTo: topAnchor),
+			stopButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+			stopButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+			stopButton.widthAnchor.constraint(equalTo: stopButton.heightAnchor),
+			
+			label.topAnchor.constraint(equalTo: topAnchor),
+			label.bottomAnchor.constraint(equalTo: bottomAnchor),
+			label.leadingAnchor.constraint(equalTo: controlButton.trailingAnchor),
+			label.trailingAnchor.constraint(equalTo: stopButton.leadingAnchor),
+			
+			heightAnchor.constraint(equalToConstant: 30),
+			widthAnchor.constraint(equalToConstant: 120),
+		])
 	}
 	
 	func isActive() -> Bool {
@@ -1867,26 +1916,35 @@ class QuestionTimer: Label {
 	
 	func start() {
 		timer?.invalidate()
-		date = Date()
-		
+		seconds = 0
+		label.text = duration(seconds: 0)
 		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
 	}
 	
 	func stop() {
 		timer?.invalidate()
 		timer = nil
-		date = nil
+		seconds = nil
 	}
 	
 	@objc func fireTimer() {
-		guard let date = date else { return }
-		let now = Date()
-		let total = now.timeIntervalSince(date)
-		text = duration(miliseconds: total)
+		guard let _ = seconds else { return }
+		self.seconds! += 1
+		label.text = duration(seconds: self.seconds!)
 	}
 	
-	private func duration(miliseconds: Double) -> String {
-		let seconds = Int(floor(miliseconds))
+	private func pause() {
+		timer?.invalidate()
+		timer = nil
+	}
+	
+	private func resume() {
+		timer?.invalidate()
+		
+		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+	}
+	
+	private func duration(seconds: Int) -> String {
 		let ss = seconds % 60
 		let mm = Int(floor(Double(seconds / 60))) % 60
 		let hh = Int(floor(Double(seconds) / 60.0))
