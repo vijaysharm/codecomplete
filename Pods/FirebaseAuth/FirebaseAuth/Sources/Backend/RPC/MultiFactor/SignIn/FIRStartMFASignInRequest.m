@@ -18,19 +18,23 @@
 
 static NSString *const kStartMFASignInEndPoint = @"accounts/mfaSignIn:start";
 
+/** @var kTenantIDKey
+    @brief The key for the tenant id value in the request.
+ */
+static NSString *const kTenantIDKey = @"tenantId";
+
 @implementation FIRStartMFASignInRequest
 
-- (nullable instancetype)initWithMFAProvider:(NSString *)MFAProvider
-                        MFAPendingCredential:(NSString *)MFAPendingCredential
-                             MFAEnrollmentID:(NSString *)MFAEnrollmentID
-                                  signInInfo:(FIRAuthProtoStartMFAPhoneRequestInfo *)signInInfo
-                        requestConfiguration:(FIRAuthRequestConfiguration *)requestConfiguration {
+- (nullable instancetype)
+    initWithMFAPendingCredential:(NSString *)MFAPendingCredential
+                 MFAEnrollmentID:(NSString *)MFAEnrollmentID
+                      signInInfo:(FIRAuthProtoStartMFAPhoneRequestInfo *)signInInfo
+            requestConfiguration:(FIRAuthRequestConfiguration *)requestConfiguration {
   self = [super initWithEndpoint:kStartMFASignInEndPoint
             requestConfiguration:requestConfiguration
              useIdentityPlatform:YES
                       useStaging:NO];
   if (self) {
-    _MFAProvider = MFAProvider;
     _MFAPendingCredential = MFAPendingCredential;
     _MFAEnrollmentID = MFAEnrollmentID;
     _signInInfo = signInInfo;
@@ -40,9 +44,6 @@ static NSString *const kStartMFASignInEndPoint = @"accounts/mfaSignIn:start";
 
 - (nullable id)unencodedHTTPRequestBodyWithError:(NSError *__autoreleasing _Nullable *)error {
   NSMutableDictionary *postBody = [NSMutableDictionary dictionary];
-  if (_MFAProvider) {
-    postBody[@"mfaProvider"] = _MFAProvider;
-  }
   if (_MFAPendingCredential) {
     postBody[@"mfaPendingCredential"] = _MFAPendingCredential;
   }
@@ -53,6 +54,9 @@ static NSString *const kStartMFASignInEndPoint = @"accounts/mfaSignIn:start";
     if ([_signInInfo isKindOfClass:[FIRAuthProtoStartMFAPhoneRequestInfo class]]) {
       postBody[@"phoneSignInInfo"] = [_signInInfo dictionary];
     }
+  }
+  if (self.tenantID) {
+    postBody[kTenantIDKey] = self.tenantID;
   }
   return [postBody copy];
 }

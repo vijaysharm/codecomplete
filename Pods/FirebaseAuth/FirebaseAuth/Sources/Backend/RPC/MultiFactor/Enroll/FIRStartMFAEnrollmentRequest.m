@@ -20,10 +20,14 @@
 
 static NSString *const kStartMFAEnrollmentEndPoint = @"accounts/mfaEnrollment:start";
 
+/** @var kTenantIDKey
+    @brief The key for the tenant id value in the request.
+ */
+static NSString *const kTenantIDKey = @"tenantId";
+
 @implementation FIRStartMFAEnrollmentRequest
 
 - (nullable instancetype)initWithIDToken:(NSString *)IDToken
-                     multiFactorProvider:(NSString *)multiFactorProvider
                           enrollmentInfo:(FIRAuthProtoStartMFAPhoneRequestInfo *)enrollmentInfo
                     requestConfiguration:(FIRAuthRequestConfiguration *)requestConfiguration {
   self = [super initWithEndpoint:kStartMFAEnrollmentEndPoint
@@ -32,7 +36,6 @@ static NSString *const kStartMFAEnrollmentEndPoint = @"accounts/mfaEnrollment:st
                       useStaging:NO];
   if (self) {
     _IDToken = IDToken;
-    _multiFactorProvider = multiFactorProvider;
     _enrollmentInfo = enrollmentInfo;
   }
   return self;
@@ -43,13 +46,13 @@ static NSString *const kStartMFAEnrollmentEndPoint = @"accounts/mfaEnrollment:st
   if (_IDToken) {
     postBody[@"idToken"] = _IDToken;
   }
-  if (_multiFactorProvider) {
-    postBody[@"mfaProvider"] = _multiFactorProvider;
-  }
   if (_enrollmentInfo) {
     if ([_enrollmentInfo isKindOfClass:[FIRAuthProtoStartMFAPhoneRequestInfo class]]) {
       postBody[@"phoneEnrollmentInfo"] = [_enrollmentInfo dictionary];
     }
+  }
+  if (self.tenantID) {
+    postBody[kTenantIDKey] = self.tenantID;
   }
   return [postBody copy];
 }

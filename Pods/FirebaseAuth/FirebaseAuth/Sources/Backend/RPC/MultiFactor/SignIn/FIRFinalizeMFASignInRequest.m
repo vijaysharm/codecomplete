@@ -18,19 +18,22 @@
 
 static NSString *const kFinalizeMFASignInEndPoint = @"accounts/mfaSignIn:finalize";
 
+/** @var kTenantIDKey
+    @brief The key for the tenant id value in the request.
+ */
+static NSString *const kTenantIDKey = @"tenantId";
+
 @implementation FIRFinalizeMFASignInRequest
 
-- (nullable instancetype)initWithMFAProvider:(NSString *)MFAProvider
-                        MFAPendingCredential:(NSString *)MFAPendingCredential
-                            verificationInfo:
-                                (FIRAuthProtoFinalizeMFAPhoneRequestInfo *)verificationInfo
-                        requestConfiguration:(FIRAuthRequestConfiguration *)requestConfiguration {
+- (nullable instancetype)
+    initWithMFAPendingCredential:(NSString *)MFAPendingCredential
+                verificationInfo:(FIRAuthProtoFinalizeMFAPhoneRequestInfo *)verificationInfo
+            requestConfiguration:(FIRAuthRequestConfiguration *)requestConfiguration {
   self = [super initWithEndpoint:kFinalizeMFASignInEndPoint
             requestConfiguration:requestConfiguration
              useIdentityPlatform:YES
                       useStaging:NO];
   if (self) {
-    _MFAProvider = MFAProvider;
     _MFAPendingCredential = MFAPendingCredential;
     _verificationInfo = verificationInfo;
   }
@@ -39,9 +42,6 @@ static NSString *const kFinalizeMFASignInEndPoint = @"accounts/mfaSignIn:finaliz
 
 - (nullable id)unencodedHTTPRequestBodyWithError:(NSError *__autoreleasing _Nullable *)error {
   NSMutableDictionary *postBody = [NSMutableDictionary dictionary];
-  if (_MFAProvider) {
-    postBody[@"mfaProvider"] = _MFAProvider;
-  }
   if (_MFAPendingCredential) {
     postBody[@"mfaPendingCredential"] = _MFAPendingCredential;
   }
@@ -49,6 +49,9 @@ static NSString *const kFinalizeMFASignInEndPoint = @"accounts/mfaSignIn:finaliz
     if ([_verificationInfo isKindOfClass:[FIRAuthProtoFinalizeMFAPhoneRequestInfo class]]) {
       postBody[@"phoneVerificationInfo"] = [_verificationInfo dictionary];
     }
+  }
+  if (self.tenantID) {
+    postBody[kTenantIDKey] = self.tenantID;
   }
   return [postBody copy];
 }

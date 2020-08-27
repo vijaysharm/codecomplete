@@ -18,10 +18,14 @@
 
 static NSString *const kFinalizeMFAEnrollmentEndPoint = @"accounts/mfaEnrollment:finalize";
 
+/** @var kTenantIDKey
+    @brief The key for the tenant id value in the request.
+ */
+static NSString *const kTenantIDKey = @"tenantId";
+
 @implementation FIRFinalizeMFAEnrollmentRequest
 
 - (nullable instancetype)initWithIDToken:(NSString *)IDToken
-                             MFAProvider:(NSString *)MFAProvider
                              displayName:(NSString *)displayName
                         verificationInfo:(FIRAuthProtoFinalizeMFAPhoneRequestInfo *)verificationInfo
                     requestConfiguration:(FIRAuthRequestConfiguration *)requestConfiguration {
@@ -31,7 +35,6 @@ static NSString *const kFinalizeMFAEnrollmentEndPoint = @"accounts/mfaEnrollment
                       useStaging:NO];
   if (self) {
     _IDToken = IDToken;
-    _MFAProvider = MFAProvider;
     _displayName = displayName;
     _verificationInfo = verificationInfo;
   }
@@ -43,9 +46,6 @@ static NSString *const kFinalizeMFAEnrollmentEndPoint = @"accounts/mfaEnrollment
   if (_IDToken) {
     postBody[@"idToken"] = _IDToken;
   }
-  if (_MFAProvider) {
-    postBody[@"mfaProvider"] = _MFAProvider;
-  }
   if (_displayName) {
     postBody[@"displayName"] = _displayName;
   }
@@ -53,6 +53,9 @@ static NSString *const kFinalizeMFAEnrollmentEndPoint = @"accounts/mfaEnrollment
     if ([_verificationInfo isKindOfClass:[FIRAuthProtoFinalizeMFAPhoneRequestInfo class]]) {
       postBody[@"phoneVerificationInfo"] = [_verificationInfo dictionary];
     }
+  }
+  if (self.tenantID) {
+    postBody[kTenantIDKey] = self.tenantID;
   }
   return [postBody copy];
 }
