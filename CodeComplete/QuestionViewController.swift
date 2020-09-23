@@ -192,7 +192,7 @@ class QuestionViewController: UIViewController {
 	private func setTimerState(hide: Bool) {
 		if self.timer.isActive() {
 			self.timer.stop()
-			if hide { self.timerBottomConstraint?.constant = 50 }
+			if hide { self.timerBottomConstraint?.constant = (self.view.frame.height + 50) }
 		} else {
 			self.timerBottomConstraint?.constant = -8
 			self.timer.start()

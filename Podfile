@@ -16,7 +16,7 @@ target 'CodeComplete' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Crashlytics'
   pod 'SwiftKeychainWrapper', '3.4.0'
-  pod 'TestFairy', '~> 1.25.5'
+  pod 'TestFairy', '~> 1.26.1'
   pod 'FBSDKCoreKit', '~> 7.1.1'
   pod "SwiftRater", '~> 1.8.0'
 	
