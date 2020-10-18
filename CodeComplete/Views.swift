@@ -341,7 +341,7 @@ class HtmlView: UITextView {
 		translatesAutoresizingMaskIntoConstraints = false
 		isEditable = false
 		isSelectable = false
-		isScrollEnabled = true
+		isScrollEnabled = false
 		showsHorizontalScrollIndicator = true
 		showsVerticalScrollIndicator = true
 		backgroundColor = nil
@@ -938,7 +938,7 @@ class BlurredView: View {
 	private var gesture: UITapGestureRecognizer!
 	var revealed: (() -> Void)?
 	
-	init(content: UIView, tip: String = "Tap to reveal") {
+	init(content: UIView, tip: String = "Tap to reveal", padding: UIEdgeInsets = .zero) {
 		super.init()
 		
 		gesture = UITapGestureRecognizer(target: self, action: #selector(showContent))
@@ -951,9 +951,9 @@ class BlurredView: View {
 		blurView.addGestureRecognizer(gesture)
 		self.message.addGestureRecognizer(gesture)
 		
-		fill(with: content)
+		fill(with: content, padding: padding)
 		fill(with: blurView)
-		fill(with: self.message)
+		fill(with: self.message, padding: padding)
 	}
 	
 	

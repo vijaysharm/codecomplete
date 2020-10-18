@@ -76,7 +76,7 @@ class QuestionViewController: UIViewController {
 	
 	private let lexer = JavaScriptLexer()
 	private let theme = CodeComplete.theme
-//	private let engine = CodeEngine()
+//	private let engine = CodeEngine() // TODO: For some reason, using a shared instance doesn't run edited code
 	
 	private let javascript = JavaScriptSyntax()
 	private var hidden: [Bool] = []
@@ -117,8 +117,8 @@ class QuestionViewController: UIViewController {
 		let question = provider.next()
 		self.show(question: question)
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -192,7 +192,7 @@ class QuestionViewController: UIViewController {
 	private func setTimerState(hide: Bool) {
 		if self.timer.isActive() {
 			self.timer.stop()
-			if hide { self.timerBottomConstraint?.constant = (self.view.frame.height + 50) }
+			if hide { self.timerBottomConstraint?.constant = (self.view.frame.height + 100) }
 		} else {
 			self.timerBottomConstraint?.constant = -8
 			self.timer.start()
@@ -354,7 +354,7 @@ class QuestionViewController: UIViewController {
 			self.panel = SplitPanel(leftPanels: leftPanels, rightPanels: rightPanels)
 		} else {
 			var panels = [
-				GenericPanel(cellName: "Prompts", tabName: "Prompt", content: promptView, padding: padding),
+				GenericPanel(cellName: "Prompt", tabName: "Prompt", content: promptView, padding: padding),
 				codePanel,
 				GenericPanel(cellName: "Hints", tabName: "Hints", content: HintsView(question: question), padding: padding),
 				testPanel,
@@ -396,7 +396,7 @@ class QuestionViewController: UIViewController {
 			}
 		}
 		
-		timerBottomConstraint = timer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 50)
+		timerBottomConstraint = timer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 100)
 		NSLayoutConstraint.activate([
 			panel!.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
 			panel!.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),

@@ -201,3 +201,25 @@ struct TestResults {
 	let tests: [TestResult]
 	let logs: [String]
 }
+
+struct Hint: Decodable {
+	let question: String
+	let answer: String
+}
+
+struct Walkthrough: Decodable {
+	let title: String
+	let content: String
+}
+
+struct SystemDesignQuestion: Decodable {
+	let name: String
+	let available: Bool
+	let prompt: String
+	let walkthrough: [Walkthrough]
+	let hints: [Hint]
+}
+
+struct SystemDesignList: Decodable {
+	let design: [SystemDesignQuestion]
+}

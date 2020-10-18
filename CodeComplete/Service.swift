@@ -26,6 +26,7 @@ class Service {
 		purchase.isActive(subscription: "all_problem_access") { isActive in
 			#if DEBUG
 			callback(false)
+//			callback(!isActive)
 			#else
 			callback(!isActive)
 			#endif

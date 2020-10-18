@@ -26,9 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			else if let result = result { DispatchQueue.main.async { TestFairy.setUserId(result.user.uid) } }
 		}
 		
-		let url = Bundle.main.url(forResource: "question-list", withExtension: "json")!
-		let data = try! Data(contentsOf: url)
-		let questions: QuestionList = try! JSONDecoder().decode(QuestionList.self, from: data)
+		let database = Database()
 		let service = Service(
 			purchase: PurchaseService(purchaseId: "wNaMDhfDzonBOOBnLJlPKQOuxphZUJEd"),
 			free: [
@@ -38,15 +36,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				"Nth Fibonacci"
 			]
 		)
-		let database = Database()
 		
-		let viewController = ViewController(
-			questions: questions.Problems.filter({ $0.Available }),
-			service: service,
+		let techQuestions = createQuestionsViewController(service: service, database: database)
+		let designQuestions = createSystemDesignListViewController(service: service, database: database)
+		let settings = createSettingsViewController(service: service, database: database)
+		let tabs = TabViewContrtoller(
+			techQuestions: techQuestions,
+			designQuestions: designQuestions,
+			settings: settings,
 			database: database
 		)
-		let navigation = UINavigationController(rootViewController: viewController)
-		navigation.navigationBar.prefersLargeTitles = true
+		
+		let navigation = UINavigationController(rootViewController: tabs)
+		navigation.navigationBar.prefersLargeTitles = false
 		navigation.navigationBar.barTintColor = CodeComplete.theme.tertiary;
 		navigation.navigationBar.tintColor = CodeComplete.theme.textPrimary;
 		navigation.navigationBar.backgroundColor = CodeComplete.theme.tertiary
@@ -102,5 +104,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// to restore the scene back to its current state.
 	}
 
+	private func createSettingsViewController(
+		service: Service,
+		database: Database
+	) -> SettingsViewController {
+//		let settingsButton = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settings))
+//		settingsButton.tintColor = CodeComplete.theme.textPrimary
+//		navigationItem.rightBarButtonItem = settingsButton
+		
+		let controller = SettingsViewController(service: service, database: database)
+		controller.delegate = {}
+		
+		return controller
+	}
 
+	private func createQuestionsViewController(
+		service: Service,
+		database: Database
+	) -> ViewController {
+		let url = Bundle.main.url(forResource: "question-list", withExtension: "json")!
+		let data = try! Data(contentsOf: url)
+		let questions: QuestionList = try! JSONDecoder().decode(QuestionList.self, from: data)
+		let viewController = ViewController(
+			questions: questions.Problems.filter({ $0.Available }),
+			service: service,
+			database: database
+		)
+		
+		return viewController
+	}
+	
+	private func createSystemDesignListViewController(
+		service: Service,
+		database: Database
+	) -> SystemDesignListViewController {
+		let url = Bundle.main.url(forResource: "system-expert", withExtension: "json")!
+		let data = try! Data(contentsOf: url)
+		let questions: SystemDesignList = try! JSONDecoder().decode(SystemDesignList.self, from: data)
+//		let questions: QuestionList = try! JSONDecoder().decode(QuestionList.self, from: data)
+		let viewController = SystemDesignListViewController(
+			questions: questions.design.filter({ $0.available }),
+			service: service,
+			database: database
+		)
+		
+		return viewController
+	}
 }

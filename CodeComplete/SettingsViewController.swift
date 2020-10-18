@@ -70,7 +70,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
-		cell.backgroundColor = nil
+		cell.backgroundColor = UIColor.clear
 		cell.textLabel?.text = items[indexPath.row].rawValue
 		cell.textLabel?.textColor = .white
 		

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		42834D2224E5B4E400D1B40A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42834D2124E5B4E400D1B40A /* iAd.framework */; };
 		42834D2424EB5D6600D1B40A /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42834D2324EB5D6600D1B40A /* OnboardViewController.swift */; };
+		428E7087251AE73D008F3B5E /* system-expert.json in Resources */ = {isa = PBXBuildFile; fileRef = 428E7086251AE73D008F3B5E /* system-expert.json */; };
+		428E708B251AF9EC008F3B5E /* TabViewContrtoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428E708A251AF9EC008F3B5E /* TabViewContrtoller.swift */; };
 		42CFAB3124950E630006C268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3024950E630006C268 /* AppDelegate.swift */; };
 		42CFAB3324950E630006C268 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3224950E630006C268 /* SceneDelegate.swift */; };
 		42CFAB3524950E630006C268 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3424950E630006C268 /* ViewController.swift */; };
@@ -236,6 +238,8 @@
 		42CFAD7524AACFAF0006C268 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42CFAD7424AACFAF0006C268 /* StoreKit.framework */; };
 		42CFAD7824AC01120006C268 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAD7724AC01120006C268 /* SettingsViewController.swift */; };
 		42CFAD7A24AC0C240006C268 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42CFAD7924AC0C230006C268 /* GoogleService-Info.plist */; };
+		42D02711251C2D8600BBBFD4 /* SystemDesignListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D02710251C2D8600BBBFD4 /* SystemDesignListViewController.swift */; };
+		42D02715251C2DAE00BBBFD4 /* SystemDesignViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D02714251C2DAE00BBBFD4 /* SystemDesignViewController.swift */; };
 		804526FD6A818CCCD7FD7D70 /* Pods_CodeComplete.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E39C23FFEB29BD59FAE10F /* Pods_CodeComplete.framework */; };
 		FBDF75C7DE11333BE4F3D093 /* Pods_CodeCompleteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836CB8B0E1E3B72FFCC11E87 /* Pods_CodeCompleteTests.framework */; };
 /* End PBXBuildFile section */
@@ -253,6 +257,8 @@
 /* Begin PBXFileReference section */
 		42834D2124E5B4E400D1B40A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		42834D2324EB5D6600D1B40A /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
+		428E7086251AE73D008F3B5E /* system-expert.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "system-expert.json"; sourceTree = "<group>"; };
+		428E708A251AF9EC008F3B5E /* TabViewContrtoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewContrtoller.swift; sourceTree = "<group>"; };
 		42CFAB2D24950E630006C268 /* Code Complete.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code Complete.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42CFAB3024950E630006C268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42CFAB3224950E630006C268 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -382,6 +388,8 @@
 		42CFAD7724AC01120006C268 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		42CFAD7924AC0C230006C268 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42CFAD7C24B2378A0006C268 /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
+		42D02710251C2D8600BBBFD4 /* SystemDesignListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDesignListViewController.swift; sourceTree = "<group>"; };
+		42D02714251C2DAE00BBBFD4 /* SystemDesignViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDesignViewController.swift; sourceTree = "<group>"; };
 		46A52447C2491EC05CFEA1DC /* Pods-CodeComplete.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeComplete.release.xcconfig"; path = "Target Support Files/Pods-CodeComplete/Pods-CodeComplete.release.xcconfig"; sourceTree = "<group>"; };
 		75E39C23FFEB29BD59FAE10F /* Pods_CodeComplete.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodeComplete.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CD477A6090C8E96D5FBC608 /* Pods-CodeCompleteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeCompleteTests.release.xcconfig"; path = "Target Support Files/Pods-CodeCompleteTests/Pods-CodeCompleteTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -460,8 +468,11 @@
 				42CFAB3224950E630006C268 /* SceneDelegate.swift */,
 				42CFAB3424950E630006C268 /* ViewController.swift */,
 				42CFAC132495311D0006C268 /* QuestionViewController.swift */,
+				42D02710251C2D8600BBBFD4 /* SystemDesignListViewController.swift */,
+				42D02714251C2DAE00BBBFD4 /* SystemDesignViewController.swift */,
 				42CFAD7724AC01120006C268 /* SettingsViewController.swift */,
 				42834D2324EB5D6600D1B40A /* OnboardViewController.swift */,
+				428E708A251AF9EC008F3B5E /* TabViewContrtoller.swift */,
 				42CFAC152495323D0006C268 /* Views.swift */,
 				42CFAC11249511890006C268 /* Models.swift */,
 				42CFAC17249695250006C268 /* JavaScriptLexer.swift */,
@@ -485,6 +496,7 @@
 		42CFAB452495103B0006C268 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				428E7086251AE73D008F3B5E /* system-expert.json */,
 				42CFABAB249510780006C268 /* question-list.json */,
 				42CFAB46249510780006C268 /* questions */,
 			);
@@ -677,7 +689,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Vijay Sharma";
 				TargetAttributes = {
 					42CFAB2C24950E630006C268 = {
@@ -736,6 +748,7 @@
 				42CFAC10249510780006C268 /* question-list.json in Resources */,
 				42CFABF7249510780006C268 /* right-smaller-than.json in Resources */,
 				42CFABD4249510780006C268 /* lru-cache.json in Resources */,
+				428E7087251AE73D008F3B5E /* system-expert.json in Resources */,
 				42CFABC2249510780006C268 /* heap-sort.json in Resources */,
 				42CFAC01249510780006C268 /* smallest-difference.json in Resources */,
 				42CFABD3249510780006C268 /* lowest-common-manager.json in Resources */,
@@ -1048,7 +1061,10 @@
 				42CFAD7324AAB9F90006C268 /* Service.swift in Sources */,
 				42CFAC18249695260006C268 /* JavaScriptLexer.swift in Sources */,
 				42834D2424EB5D6600D1B40A /* OnboardViewController.swift in Sources */,
+				42D02711251C2D8600BBBFD4 /* SystemDesignListViewController.swift in Sources */,
+				428E708B251AF9EC008F3B5E /* TabViewContrtoller.swift in Sources */,
 				42CFAB3324950E630006C268 /* SceneDelegate.swift in Sources */,
+				42D02715251C2DAE00BBBFD4 /* SystemDesignViewController.swift in Sources */,
 				42CFAC24249C39690006C268 /* CodeEngine.swift in Sources */,
 				42CFAC12249511890006C268 /* Models.swift in Sources */,
 				42CFAD6B24AA01C40006C268 /* PurchaseService.swift in Sources */,
@@ -1116,6 +1132,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1176,6 +1193,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
