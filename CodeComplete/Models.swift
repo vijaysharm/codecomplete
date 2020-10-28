@@ -207,9 +207,15 @@ struct Hint: Decodable {
 	let answer: String
 }
 
+struct WalkthroughImage: Decodable {
+	let name: String
+	let `extension`: String
+}
+
 struct Walkthrough: Decodable {
 	let title: String
 	let content: String
+	let image: WalkthroughImage?
 }
 
 struct SystemDesignQuestion: Decodable {

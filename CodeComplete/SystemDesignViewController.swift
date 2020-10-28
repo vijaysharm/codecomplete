@@ -411,9 +411,15 @@ class DesignWalkthroughView: UIScrollView {
 
 		let hints = question.walkthrough
 		for (_, hint) in hints.enumerated() {
-			contentView.addArrangedSubview(
-				HiddenSolutionView(title: hint.title, hint: hint.content)
-			)
+			if let hintImage = hint.image, let image = UIImage(named: "\(hintImage.name).\(hintImage.extension)") {
+				contentView.addArrangedSubview(
+					HiddenSolutionImageView(title: hint.title, image: image)
+				)
+			} else {
+				contentView.addArrangedSubview(
+					HiddenSolutionTextView(title: hint.title, hint: hint.content)
+				)
+			}
 		}
 
 		addSubview(contentView)
@@ -453,7 +459,7 @@ class DesignClarifyingQuestionsView: UIScrollView {
 		let hints = question.hints
 		for (index, hint) in hints.enumerated() {
 			contentView.addArrangedSubview(
-				HiddenSolutionView(
+				HiddenSolutionTextView(
 					title: "Question \(index + 1)",
 					hint: """
 					<div class="container">
@@ -520,7 +526,7 @@ class DesignSolutionView: View, SyntaxTextViewDelegate {
 	}
 }
 
-class HiddenSolutionView: View {
+class HiddenSolutionTextView: View {
 	init(title: String, hint: String) {
 		super.init()
 
@@ -539,6 +545,55 @@ class HiddenSolutionView: View {
 		hintLabelContainer.fill(with: hintLabel, padding: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
 		
 		let hintView = BlurredView(content: hintLabelContainer)
+
+		addSubview(titleView)
+		addSubview(hintView)
+
+		NSLayoutConstraint.activate([
+			titleLabel.topAnchor.constraint(equalTo: titleView.topAnchor),
+			titleLabel.bottomAnchor.constraint(equalTo: titleView.bottomAnchor),
+			titleLabel.leadingAnchor.constraint(equalTo: titleView.leadingAnchor, constant: 16),
+			titleLabel.trailingAnchor.constraint(equalTo: titleView.trailingAnchor),
+
+			titleView.topAnchor.constraint(equalTo: topAnchor),
+			titleView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			titleView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			titleView.heightAnchor.constraint(equalToConstant: 48),
+
+			hintView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
+			hintView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			hintView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			hintView.bottomAnchor.constraint(equalTo: bottomAnchor)
+		])
+	}
+
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
+
+class HiddenSolutionImageView: View {
+	init(title: String, image: UIImage) {
+		super.init()
+
+		layer.cornerRadius = 8
+		clipsToBounds = true
+
+		let titleLabel = Label(text: String(title))
+		let titleView = View()
+		titleView.addSubview(titleLabel)
+		titleView.backgroundColor = CodeComplete.theme.secondary
+
+		let hintImage = UIImageView(image: image)
+		hintImage.translatesAutoresizingMaskIntoConstraints = false
+		hintImage.contentMode = .scaleAspectFit
+		
+		let hintImageContainer = View()
+		hintImageContainer.backgroundColor = CodeComplete.theme.secondary
+		hintImageContainer.addSubview(hintImage)
+		hintImageContainer.fill(with: hintImage, padding: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+		
+		let hintView = BlurredView(content: hintImageContainer)
 
 		addSubview(titleView)
 		addSubview(hintView)

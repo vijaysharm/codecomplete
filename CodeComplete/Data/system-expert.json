@@ -2216,7 +2216,11 @@
 			},
 			{
 			   "title":"System Diagram",
-			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=code_deployment.png\"\n  alt=\"Final Systems Architecture\"\n/\u003e"
+			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=code_deployment.png\"\n  alt=\"Final Systems Architecture\"\n/\u003e",
+			   "image": {
+				   "name": "code_deployment",
+				   "extension": "png"
+			   }
 			}
 		 ],
 		 "hints":[
@@ -2309,7 +2313,11 @@
 			},
 			{
 			   "title":"System Diagram",
-			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=algoexpert.png\"\n  alt=\"Final Systems Architecture\"\n/\u003e"
+			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=algoexpert.png\"\n  alt=\"Final Systems Architecture\"\n/\u003e",
+			   "image": {
+				   "name": "algoexpert",
+				   "extension": "png"
+			   }
 			}
 		 ],
 		 "hints":[
@@ -2378,7 +2386,11 @@
 			},
 			{
 			   "title":"System Diagram",
-			   "content":"\u003cimg width=\"100%\" src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=stockbroker.png\" alt=\"Final Systems Architecture\"/\u003e"
+			   "content":"\u003cimg width=\"100%\" src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=stockbroker.png\" alt=\"Final Systems Architecture\"/\u003e",
+			   "image": {
+				   "name": "stockbroker",
+				   "extension": "png"
+			   }
 			}
 		 ],
 		 "hints":[
@@ -2463,7 +2475,11 @@
 			},
 			{
 			   "title":"System Diagram",
-			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=facebook.png\"\n  alt=\"Final Systems Architecture\"\n/\u003e"
+			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=facebook.png\"\n  alt=\"Final Systems Architecture\"\n/\u003e",
+			   "image": {
+				   "name": "facebook",
+				   "extension": "png"
+			   }
 			}
 		 ],
 		 "hints":[
@@ -2540,7 +2556,11 @@
 			},
 			{
 			   "title":"System Diagram",
-			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=google_drive.png\"\n  alt=\"Final Systems Architecture\"\n/\u003e"
+			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://prod.api.algoexpert.io/api/problems/v1/assets?path=google_drive.png\"\n  alt=\"Final Systems Architecture\"\n/\u003e",
+			   "image": {
+				   "name": "google_drive",
+				   "extension": "png"
+			   }
 			}
 		 ],
 		 "hints":[
@@ -2674,7 +2694,11 @@
 			},
 			{
 			   "title":"System Diagram",
-			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://assets.algoexpert.io/se-diagrams/netflix.svg\"\n  alt=\"Final Systems Architecture\"\n/\u003e"
+			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://assets.algoexpert.io/se-diagrams/netflix.svg\"\n  alt=\"Final Systems Architecture\"\n/\u003e",
+			   "image": {
+				   "name": "netflix",
+				   "extension": "png"
+			   }
 			}
 		 ],
 		 "hints":[
@@ -2796,7 +2820,11 @@
 			},
 			{
 			   "title":"System Diagram",
-			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://assets.algoexpert.io/se-diagrams/slack.svg\"\n  alt=\"Final Systems Architecture\"\n/\u003e"
+			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://assets.algoexpert.io/se-diagrams/slack.svg\"\n  alt=\"Final Systems Architecture\"\n/\u003e",
+			   "image": {
+				   "name": "slack",
+				   "extension": "png"
+			   }
 			}
 		 ],
 		 "hints":[
@@ -2873,7 +2901,11 @@
 			},
 			{
 			   "title":"System Diagram",
-			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://assets.algoexpert.io/se-diagrams/airbnb.svg\"\n  alt=\"Final Systems Architecture\"\n/\u003e"
+			   "content":"\u003cimg\n  width=\"100%\"\n  src=\"https://assets.algoexpert.io/se-diagrams/airbnb.svg\"\n  alt=\"Final Systems Architecture\"\n/\u003e",
+			   "image": {
+				   "name": "airbnb",
+				   "extension": "png"
+			   }
 			}
 		 ],
 		 "hints":[

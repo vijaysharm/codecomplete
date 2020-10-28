@@ -11,6 +11,14 @@
 		42834D2424EB5D6600D1B40A /* OnboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42834D2324EB5D6600D1B40A /* OnboardViewController.swift */; };
 		428E7087251AE73D008F3B5E /* system-expert.json in Resources */ = {isa = PBXBuildFile; fileRef = 428E7086251AE73D008F3B5E /* system-expert.json */; };
 		428E708B251AF9EC008F3B5E /* TabViewContrtoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428E708A251AF9EC008F3B5E /* TabViewContrtoller.swift */; };
+		429311B32549130F00C82DE6 /* airbnb.png in Resources */ = {isa = PBXBuildFile; fileRef = 429311AB2549130F00C82DE6 /* airbnb.png */; };
+		429311B42549130F00C82DE6 /* algoexpert.png in Resources */ = {isa = PBXBuildFile; fileRef = 429311AC2549130F00C82DE6 /* algoexpert.png */; };
+		429311B52549130F00C82DE6 /* code_deployment.png in Resources */ = {isa = PBXBuildFile; fileRef = 429311AD2549130F00C82DE6 /* code_deployment.png */; };
+		429311B62549130F00C82DE6 /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 429311AE2549130F00C82DE6 /* facebook.png */; };
+		429311B72549130F00C82DE6 /* google_drive.png in Resources */ = {isa = PBXBuildFile; fileRef = 429311AF2549130F00C82DE6 /* google_drive.png */; };
+		429311B82549130F00C82DE6 /* netflix.png in Resources */ = {isa = PBXBuildFile; fileRef = 429311B02549130F00C82DE6 /* netflix.png */; };
+		429311B92549130F00C82DE6 /* slack.png in Resources */ = {isa = PBXBuildFile; fileRef = 429311B12549130F00C82DE6 /* slack.png */; };
+		429311BA2549130F00C82DE6 /* stockbroker.png in Resources */ = {isa = PBXBuildFile; fileRef = 429311B22549130F00C82DE6 /* stockbroker.png */; };
 		42CFAB3124950E630006C268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3024950E630006C268 /* AppDelegate.swift */; };
 		42CFAB3324950E630006C268 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3224950E630006C268 /* SceneDelegate.swift */; };
 		42CFAB3524950E630006C268 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CFAB3424950E630006C268 /* ViewController.swift */; };
@@ -259,6 +267,14 @@
 		42834D2324EB5D6600D1B40A /* OnboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewController.swift; sourceTree = "<group>"; };
 		428E7086251AE73D008F3B5E /* system-expert.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "system-expert.json"; sourceTree = "<group>"; };
 		428E708A251AF9EC008F3B5E /* TabViewContrtoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewContrtoller.swift; sourceTree = "<group>"; };
+		429311AB2549130F00C82DE6 /* airbnb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airbnb.png; sourceTree = "<group>"; };
+		429311AC2549130F00C82DE6 /* algoexpert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = algoexpert.png; sourceTree = "<group>"; };
+		429311AD2549130F00C82DE6 /* code_deployment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = code_deployment.png; sourceTree = "<group>"; };
+		429311AE2549130F00C82DE6 /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
+		429311AF2549130F00C82DE6 /* google_drive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = google_drive.png; sourceTree = "<group>"; };
+		429311B02549130F00C82DE6 /* netflix.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = netflix.png; sourceTree = "<group>"; };
+		429311B12549130F00C82DE6 /* slack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slack.png; sourceTree = "<group>"; };
+		429311B22549130F00C82DE6 /* stockbroker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stockbroker.png; sourceTree = "<group>"; };
 		42CFAB2D24950E630006C268 /* Code Complete.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Code Complete.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42CFAB3024950E630006C268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42CFAB3224950E630006C268 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -431,6 +447,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		429311AA2549130F00C82DE6 /* system-design-images */ = {
+			isa = PBXGroup;
+			children = (
+				429311AB2549130F00C82DE6 /* airbnb.png */,
+				429311AC2549130F00C82DE6 /* algoexpert.png */,
+				429311AD2549130F00C82DE6 /* code_deployment.png */,
+				429311AE2549130F00C82DE6 /* facebook.png */,
+				429311AF2549130F00C82DE6 /* google_drive.png */,
+				429311B02549130F00C82DE6 /* netflix.png */,
+				429311B12549130F00C82DE6 /* slack.png */,
+				429311B22549130F00C82DE6 /* stockbroker.png */,
+			);
+			path = "system-design-images";
+			sourceTree = "<group>";
+		};
 		42CFAB2424950E620006C268 = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +527,7 @@
 		42CFAB452495103B0006C268 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				429311AA2549130F00C82DE6 /* system-design-images */,
 				428E7086251AE73D008F3B5E /* system-expert.json */,
 				42CFABAB249510780006C268 /* question-list.json */,
 				42CFAB46249510780006C268 /* questions */,
@@ -726,6 +758,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				42CFABBF249510780006C268 /* flatten-binary-tree.json in Resources */,
+				429311B82549130F00C82DE6 /* netflix.png in Resources */,
+				429311B52549130F00C82DE6 /* code_deployment.png in Resources */,
 				42CFABE7249510780006C268 /* number-of-binary-tree-topologies.json in Resources */,
 				42CFABF5249510780006C268 /* reverse-linked-list.json in Resources */,
 				42CFABEB249510780006C268 /* palindrome-partitioning-min-cuts.json in Resources */,
@@ -761,6 +795,7 @@
 				42CFABBB249510780006C268 /* disk-stacking.json in Resources */,
 				42CFAC0A249510780006C268 /* underscorify-substring.json in Resources */,
 				42CFABC4249510780006C268 /* interweaving-strings.json in Resources */,
+				429311B62549130F00C82DE6 /* facebook.png in Resources */,
 				42CFABAE249510780006C268 /* apartment-hunting.json in Resources */,
 				42CFABE9249510780006C268 /* numbers-in-pi.json in Resources */,
 				42CFABB9249510780006C268 /* continuous-median.json in Resources */,
@@ -771,8 +806,10 @@
 				42CFABCA249510780006C268 /* largest-range.json in Resources */,
 				42CFABB1249510780006C268 /* boggle-board.json in Resources */,
 				42CFABD2249510780006C268 /* longest-substring-without-duplication.json in Resources */,
+				429311B42549130F00C82DE6 /* algoexpert.png in Resources */,
 				42CFAC0F249510780006C268 /* zigzag-traverse.json in Resources */,
 				42CFABC9249510780006C268 /* knuth—morris—pratt-algorithm.json in Resources */,
+				429311BA2549130F00C82DE6 /* stockbroker.png in Resources */,
 				42CFAC07249510780006C268 /* three-number-sum.json in Resources */,
 				42CFABB3249510780006C268 /* breadth-first-search.json in Resources */,
 				42CFACD1249C4DAA0006C268 /* chai.js in Resources */,
@@ -803,6 +840,7 @@
 				42CFABD0249510780006C268 /* longest-peak.json in Resources */,
 				42CFABE5249510780006C268 /* node-depths.json in Resources */,
 				42CFABDE249510780006C268 /* min-max-stack-construction.json in Resources */,
+				429311B92549130F00C82DE6 /* slack.png in Resources */,
 				42CFAC04249510780006C268 /* square-of-zeroes.json in Resources */,
 				42CFABD1249510780006C268 /* longest-string-chain.json in Resources */,
 				42CFABE0249510780006C268 /* min-number-of-jumps.json in Resources */,
@@ -811,11 +849,13 @@
 				42CFABAD249510780006C268 /* all-kinds-of-node-depths.json in Resources */,
 				42CFABC0249510780006C268 /* four-number-sum.json in Resources */,
 				42CFABBC249510780006C268 /* find-closest-value-in-bst.json in Resources */,
+				429311B72549130F00C82DE6 /* google_drive.png in Resources */,
 				42CFABD9249510780006C268 /* merge-linked-lists.json in Resources */,
 				42CFABBA249510780006C268 /* depth-first-search.json in Resources */,
 				42CFABC6249510780006C268 /* iterative-in-order-traversal.json in Resources */,
 				42CFABE6249510780006C268 /* nth-fibonacci.json in Resources */,
 				42CFAC0C249510780006C268 /* validate-subsequence.json in Resources */,
+				429311B32549130F00C82DE6 /* airbnb.png in Resources */,
 				42CFABAF249510780006C268 /* balanced-brackets.json in Resources */,
 				42CFABFB249510780006C268 /* search-in-sorted-matrix.json in Resources */,
 				42CFABDC249510780006C268 /* min-heap-construction.json in Resources */,
@@ -1229,7 +1269,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "CodeComplete/Code Complete.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = R89W5J5L69;
 				INFOPLIST_FILE = CodeComplete/Info.plist;
@@ -1238,7 +1278,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
 				PRODUCT_NAME = "Code Complete";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";
@@ -1254,7 +1294,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "CodeComplete/Code Complete.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R89W5J5L69;
 				INFOPLIST_FILE = CodeComplete/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1262,7 +1302,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = ca.vijaysharma.CodeComplete;
 				PRODUCT_NAME = "Code Complete";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/CodeComplete/Bridge.h";
