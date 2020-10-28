@@ -7,9 +7,11 @@ target 'CodeComplete' do
 
   # Pods for CodeComplete
 	# Using git directly because some pieces of the class were not made public in 0.2.0
-  pod 'Sourceful', :git => 'git@github.com:twostraws/Sourceful.git', :branch => 'main'
+	# Looks like newer commits of Sourceful depend on SwiftUI which seems to break when archiving
+	# this project
+  pod 'Sourceful', :git => 'git@github.com:twostraws/Sourceful.git', :commit => '9cdd591c415342679eea178e416a36837d0934e7'
   pod 'Highlightr', '~> 2.1.0'
-  pod 'Purchases', '3.2.2'
+  pod 'Purchases'
   pod 'Firebase/Auth'
   pod 'Firebase/Functions'
   pod 'Firebase/Analytics'

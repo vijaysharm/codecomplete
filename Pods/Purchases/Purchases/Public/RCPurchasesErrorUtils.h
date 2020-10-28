@@ -40,7 +40,6 @@ NS_SWIFT_NAME(Purchases.ErrorUtils)
  */
 + (NSError *)backendErrorWithBackendCode:(nullable NSNumber *)backendCode backendMessage:(nullable NSString *)backendMessage;
 
-
 /**
  * Maps an RCBackendError code to a [RCPurchasesErrorCode] code. Constructs an NSError with the mapped code and adds a
  * [RCUnderlyingErrorKey] in the [NSError.userInfo] dictionary. The backend error code will be mapped using
@@ -70,6 +69,27 @@ NS_SWIFT_NAME(Purchases.ErrorUtils)
  * if there are no previous purchases.
  */
 + (NSError *)missingReceiptFileError;
+
+/**
+ * Constructs an NSError with the [RCInvalidAppUserIdError] code.
+ *
+ * @note This error is used when the appUserID can't be found in user defaults. This can happen if user defaults
+ * are removed manually or if the OS deletes entries when running out of space.
+ */
++ (NSError *)missingAppUserIDError;
+
+/**
+ * Constructs an NSError with the [RCPaymentPendingError] code.
+ *
+ * @note This error is used during an “ask to buy” flow for a payment. The completion block of the purchasing function
+ * will get this error to indicate the guardian has to complete the purchase.
+ */
++ (NSError *)paymentDeferredError;
+
+/**
+ * Constructs an NSError with the [RCUnknownError] code.
+ */
++ (NSError *)unknownError;
 
 /**
  * Maps an SKErrorCode code to a RCPurchasesErrorCode code. Constructs an NSError with the mapped code and adds a

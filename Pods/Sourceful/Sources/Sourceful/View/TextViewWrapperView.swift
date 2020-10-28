@@ -16,7 +16,7 @@ import Foundation
 
 #if os(macOS)
 	
-	class TextViewWrapperView: _View {
+	class TextViewWrapperView: View {
 		
 		override func hitTest(_ point: NSPoint) -> NSView? {
 			// Disable interaction, so we're not blocking the text view.

@@ -15,7 +15,7 @@ class JavaScriptSyntax: SyntaxTextViewDelegate {
 	}
 }
 
-class JavaScriptLexer: SourceCodeRegexLexer {
+class XJavaScriptLexer: SourceCodeRegexLexer {
 	public func generators(source: String) -> [TokenGenerator] {
 		var generators = [TokenGenerator?]()
 		

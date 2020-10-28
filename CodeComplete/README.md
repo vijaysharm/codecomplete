@@ -27,12 +27,12 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Add a heading text explaining what each section is on each list-view page i.e. Tech: "Welcome to the technical questions, here you can ...... "
 	* [ ] System Expert Solution: Our solution walkthroughs are meant to supplement our video solutions. We recommend starting with the video solution and using the walkthrough either as a point of reference while you watch the video or as a review tool if you need to brush up on this question's solution later on.
 	* [ ] Move layout change button into overflow button
+	* [ ] Timer is hidden behind keyboard
 	
 ### Version 1.7
 	* [x] Tabs: System, Coding, Settings
 	* [x] Save System design solutions
-	* [ ] Fix System Design images in walthrough tab
-	* [ ] Timer is hidden behind keyboard
+	* [x] Fix System Design images in walthrough tab
 
 ### Version 1.6
 	* [x] Splash / Onboarding view (including asking for push notification access)

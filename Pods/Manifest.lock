@@ -108,7 +108,9 @@ PODS:
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
   - PromisesObjC (1.2.11)
-  - Purchases (3.2.2)
+  - Purchases (3.7.5):
+    - PurchasesCoreSwift (= 3.7.5)
+  - PurchasesCoreSwift (3.7.5)
   - Sourceful (0.3.0)
   - SwiftKeychainWrapper (3.4.0)
   - SwiftRater (1.8.0)
@@ -122,8 +124,8 @@ DEPENDENCIES:
   - Firebase/Functions
   - Firebase/Messaging
   - Highlightr (~> 2.1.0)
-  - Purchases (= 3.2.2)
-  - "Sourceful (from `git@github.com:twostraws/Sourceful.git`, branch `main`)"
+  - Purchases
+  - "Sourceful (from `git@github.com:twostraws/Sourceful.git`, commit `9cdd591c415342679eea178e416a36837d0934e7`)"
   - SwiftKeychainWrapper (= 3.4.0)
   - SwiftRater (~> 1.8.0)
   - TestFairy
@@ -149,18 +151,19 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Purchases
+    - PurchasesCoreSwift
     - SwiftKeychainWrapper
     - SwiftRater
     - TestFairy
 
 EXTERNAL SOURCES:
   Sourceful:
-    :branch: main
+    :commit: 9cdd591c415342679eea178e416a36837d0934e7
     :git: "git@github.com:twostraws/Sourceful.git"
 
 CHECKOUT OPTIONS:
   Sourceful:
-    :commit: ef82b07261dceeedb6e48f1ecd4f4305b5cd10f8
+    :commit: 9cdd591c415342679eea178e416a36837d0934e7
     :git: "git@github.com:twostraws/Sourceful.git"
 
 SPEC CHECKSUMS:
@@ -182,12 +185,13 @@ SPEC CHECKSUMS:
   Highlightr: 595f3e100737c8de41113385da8bd0b5b65212c6
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
-  Purchases: 392c729893c011c7d4d37d7f7c9f863e597d4a9b
+  Purchases: 7ebce9418bc16732c3c3bb4b6ff7e7e397de024e
+  PurchasesCoreSwift: 50636e307c1ab76c7a7894a87d042665f2fe0be9
   Sourceful: 2cb307cb9053bb409871890116604f04f7e89bc8
   SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
   SwiftRater: 6094fa6e9b3866ff8beca0a871b4b5f9ab896a6d
   TestFairy: befde7f3a468f4b2bb76d52f2a330d5a73b96624
 
-PODFILE CHECKSUM: 518eae19b7f283ce960cba4ce325c917e94b0897
+PODFILE CHECKSUM: 9f49c61aefd1a174f51a5ccfdee65c94b8958328
 
 COCOAPODS: 1.8.4
