@@ -204,7 +204,6 @@ class SystemDesignViewController: UIViewController {
 		let padding = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
 				
 		if (database.fullScreen) {
-			
 			let panels = [
 				GenericPanel(cellName: "Prompt", tabName: "Prompt", content: SystemDesignPrompt(question: question, state: database.state(name: question.name)), padding: padding),
 				GenericPanel(cellName: "Your Solution", tabName: "Your Solution", content: DesignSolutionView(question: question, database: database), padding: padding),
@@ -216,7 +215,7 @@ class SystemDesignViewController: UIViewController {
 			self.panel = SplitPanel(
 				leftPanels: [
 					GenericPanel(cellName: "Prompt", tabName: "Prompt", content: SystemDesignPrompt(question: question, state: database.state(name: question.name)), padding: padding),
-					GenericPanel(cellName: "Clarifying Questions", tabName: "Clarifying Questions", content: DesignClarifyingQuestionsView(question: question), padding: padding),
+					GenericPanel(cellName: "Questions", tabName: "Questions", content: DesignClarifyingQuestionsView(question: question), padding: padding),
 					GenericPanel(cellName: "Walkthrough", tabName: "Walkthrough", content: DesignWalkthroughView(question: question), padding: padding)
 				],
 				rightPanels: [
@@ -498,10 +497,10 @@ class DesignSolutionView: View, SyntaxTextViewDelegate {
 		self.question = question
 		super.init()
 		
-		editor.delegate = self
 		editor.theme = CodeComplete.theme.sourceCode
 		editor.contentTextView.isEditable = true
 		editor.text = database.solution(name: question.name, index: 0) ?? ""
+		editor.delegate = self
 		
 		addSubview(editor)
 		fill(with: editor)

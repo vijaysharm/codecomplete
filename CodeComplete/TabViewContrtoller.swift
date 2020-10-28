@@ -26,9 +26,16 @@ class TabViewContrtoller: UITabBarController {
 		self.database = database
 		super.init(nibName: nil, bundle: nil)
 		
-		self.tech.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-		self.design.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 1)
-		self.settings.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 2)
+		let appearance = UITabBarAppearance()
+		appearance.backgroundColor = CodeComplete.theme.primary
+		setTabBarItemColors(appearance.stackedLayoutAppearance)
+		setTabBarItemColors(appearance.inlineLayoutAppearance)
+		setTabBarItemColors(appearance.compactInlineLayoutAppearance)
+		self.tabBar.standardAppearance = appearance
+		
+		self.tech.tabBarItem = UITabBarItem(title: "Technical", image: UIImage(systemName: "chevron.left.slash.chevron.right"), tag: 0)
+		self.design.tabBarItem = UITabBarItem(title: "System", image: UIImage(systemName: "globe"), tag: 1)
+		self.settings.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 2)
 		
 		self.viewControllers = [techQuestions, designQuestions, settings]
 		self.title = "Code Complete"
@@ -51,6 +58,14 @@ class TabViewContrtoller: UITabBarController {
 		} else if item.tag == 1 {
 			self.design.refresh()
 		}
+	}
+	
+	private func setTabBarItemColors(_ itemAppearance: UITabBarItemAppearance) {
+		itemAppearance.normal.iconColor = CodeComplete.theme.textPrimary
+		itemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: CodeComplete.theme.textPrimary]
+		
+		itemAppearance.selected.iconColor = CodeComplete.theme.action
+		itemAppearance.selected.titleTextAttributes = [NSAttributedString.Key.foregroundColor: CodeComplete.theme.action]
 	}
 	
 	required init?(coder: NSCoder) {

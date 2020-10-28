@@ -33,7 +33,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				"Find Three Largest Numbers",
 				"Binary Search",
 				"Product Sum",
-				"Nth Fibonacci"
+				"Nth Fibonacci",
+				
+				"Design A Code-Deployment System"
 			]
 		)
 		

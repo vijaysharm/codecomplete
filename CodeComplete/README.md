@@ -6,10 +6,7 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 
 ### Version X
 	* [ ] Analytics: count working/failing solution, # of completed questions
-	* [ ] Tabs: Behavioral, System, Coding, Data Structures, Community	
-	* [ ] System Expert Prompt: Many systems design questions are intentionally left very vague and are literally given in the form of `Design Foobar`. It's your job to ask clarifying questions to better understand the system that you have to build.
-	We've laid out some of these questions below; their answers should give you some guidance on the problem. Before looking at them, we encourage you to take few minutes to think about what questions you'd ask in a real interview.
-	* [ ] System Expert Solution: Our solution walkthroughs are meant to supplement our video solutions. We recommend starting with the video solution and using the walkthrough either as a point of reference while you watch the video or as a review tool if you need to brush up on this question's solution later on.
+	* [ ] Tabs: Behavioral, Data Structures, Community	
 	* [ ] Create Video ad for app store
 	* [ ] Show Progress (0 of 100 questions completed)
 	* [ ] Add countdown timer (currenly have count-up timer)
@@ -27,6 +24,15 @@ List of characters used in all solutions (90 characters):  !"$%&'()*+,-./0123456
 	* [ ] Add toast suggesting the user take a hint after X seconds of idle
 	* [ ] Support increasing font size
 	* [ ] Have user editable tests
+	* [ ] Add a heading text explaining what each section is on each list-view page i.e. Tech: "Welcome to the technical questions, here you can ...... "
+	* [ ] System Expert Solution: Our solution walkthroughs are meant to supplement our video solutions. We recommend starting with the video solution and using the walkthrough either as a point of reference while you watch the video or as a review tool if you need to brush up on this question's solution later on.
+	* [ ] Move layout change button into overflow button
+	
+### Version 1.7
+	* [x] Tabs: System, Coding, Settings
+	* [x] Save System design solutions
+	* [ ] Fix System Design images in walthrough tab
+	* [ ] Timer is hidden behind keyboard
 
 ### Version 1.6
 	* [x] Splash / Onboarding view (including asking for push notification access)
