@@ -102,6 +102,7 @@ PODS:
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.5.0)
   - Highlightr (2.1.0)
+  - Instructions (2.0.0)
   - nanopb (2.30906.0):
     - nanopb/decode (= 2.30906.0)
     - nanopb/encode (= 2.30906.0)
@@ -114,7 +115,7 @@ PODS:
   - Sourceful (0.3.0)
   - SwiftKeychainWrapper (3.4.0)
   - SwiftRater (1.8.0)
-  - TestFairy (1.26.6)
+  - TestFairy (1.26.7)
 
 DEPENDENCIES:
   - FBSDKCoreKit (~> 7.1.1)
@@ -124,6 +125,7 @@ DEPENDENCIES:
   - Firebase/Functions
   - Firebase/Messaging
   - Highlightr (~> 2.1.0)
+  - Instructions (~> 2.0.0)
   - Purchases
   - "Sourceful (from `git@github.com:twostraws/Sourceful.git`, commit `9cdd591c415342679eea178e416a36837d0934e7`)"
   - SwiftKeychainWrapper (= 3.4.0)
@@ -148,6 +150,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - Highlightr
+    - Instructions
     - nanopb
     - PromisesObjC
     - Purchases
@@ -183,6 +186,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: ffb2f4159f2c897c6e8992bd7fbcdef8a300589c
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   Highlightr: 595f3e100737c8de41113385da8bd0b5b65212c6
+  Instructions: debf9cedeaf8d095108fd35d2c54b97ccf769e65
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   Purchases: 7ebce9418bc16732c3c3bb4b6ff7e7e397de024e
@@ -190,8 +194,8 @@ SPEC CHECKSUMS:
   Sourceful: 2cb307cb9053bb409871890116604f04f7e89bc8
   SwiftKeychainWrapper: 6fc49fbf7d4a6b0772917acb0e53a1639f6078d6
   SwiftRater: 6094fa6e9b3866ff8beca0a871b4b5f9ab896a6d
-  TestFairy: befde7f3a468f4b2bb76d52f2a330d5a73b96624
+  TestFairy: 08f637ac292b4c7decda5c97704c754024b7de2c
 
-PODFILE CHECKSUM: 9f49c61aefd1a174f51a5ccfdee65c94b8958328
+PODFILE CHECKSUM: cab90398c39fc8efc7489ff74fe82e406f9990d5
 
 COCOAPODS: 1.8.4

@@ -21,6 +21,7 @@ target 'CodeComplete' do
   pod 'TestFairy'
   pod 'FBSDKCoreKit', '~> 7.1.1'
   pod "SwiftRater", '~> 1.8.0'
+  pod 'Instructions', '~> 2.0.0'
 	
   target 'CodeCompleteTests' do
     inherit! :search_paths
